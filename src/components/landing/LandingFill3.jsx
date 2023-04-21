@@ -4,7 +4,7 @@ import { BsArrowRight } from "react-icons/bs";
 const LandingFill3 = () => {
   return (
     <section
-      className="relative min-h-[80vh]  w-full overflow-x-hidden bg-bgColor cstm-flex-col p-5
+      className="relative min-h-screen  w-full overflow-x-hidden bg-bgColor cstm-flex-col p-5
                 l-s:p-10
                 l-l:px-20"
     >

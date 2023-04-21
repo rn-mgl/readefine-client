@@ -7,14 +7,14 @@ import Link from "next/link";
 const LandingHero = () => {
   return (
     <section
-      className="relative min-h-screen h-auto w-full cstm-flex-col bg-bgColor p-2 overflow-x-hidden  gap-10
+      className="relative min-h-screen h-auto w-full cstm-flex-col bg-bgColor p-2 overflow-hidden  gap-5
                  t:cstm-flex-row t:min-h-[80vh]
                  l-s:min-h-screen"
     >
       <div
         className="cstm-flex-col gap-4 p-2 z-10 relative h-2/4 m-l:w-10/12 t:h-auto t:w-6/12 t:items-start
-                  l-s:w-7/12
-                  l-l:w-6/12"
+                  l-s:w-6/12
+                  l-l:w-5/12"
       >
         <p
           className="font-mukta font-extrabold text-bgColor text-3xl
@@ -41,7 +41,7 @@ const LandingHero = () => {
         >
           <Link
             href="/login"
-            className="w-full p-2 text-prmColor2 font-mukta font-extrabold rounded-md bg-scndColor2 border-2 border-scndColor2 text-center
+            className="w-full p-2 text-bgColor font-mukta font-extrabold rounded-md bg-scndColor2 border-2 border-scndColor2 text-center
                     m-l:text-base
                     l-s:text-lg"
           >
@@ -50,7 +50,7 @@ const LandingHero = () => {
 
           <Link
             href="/login"
-            className="w-full p-2 font-mukta font-extrabold rounded-md border-2 border-bgColor text-bgColor backdrop-blur-sm bg-bgColor bg-opacity-30 text-center
+            className="w-full p-2 font-mukta font-extrabold rounded-md border-2 border-bgColor text-prmColor2 backdrop-blur-sm bg-bgColor bg-opacity-30 text-center
                     m-l:text-base
                     l-s:text-lg"
           >
@@ -78,12 +78,10 @@ const LandingHero = () => {
       <Image
         src={bgLanding}
         alt="bg"
-        className="absolute w-full top-60 -left-10 z-0 scale-[4] 
-                    m-m:top-40
-                    m-l:top-24
-                    t:scale-[1.5] t:-top-2 t:left-20
-                    l-s:scale-[1.2] l-s:top-0 l-s:left-9
-                    l-l:-top-52 l-l:left-32"
+        className="absolute w-full top-auto bottom-auto left-auto right-auto z-0 scale-[4] 
+                    t:scale-150 t:-top-12
+                    l-s:scale-105 l-s:top-auto
+                    l-l:scale-x-[1.02] l-l:scale-y-100 l-l:-top-28"
         priority
       />
     </section>

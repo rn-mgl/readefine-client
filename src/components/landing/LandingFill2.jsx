@@ -1,6 +1,5 @@
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
 import bgLanding from "../../../public/Landing BG 2.svg";
 import Fill2Links from "./Landing Components/Fill2Links";
 
@@ -35,12 +34,9 @@ const LandingFill2 = () => {
       <Image
         src={bgLanding}
         alt="landing2"
-        className="absolute -top-6 left-28 scale-[7] -rotate-90
-                  m-m:scale-[6] m-m:left-28 m-m:-top-12
-                  m-l:left-36 m-l:-top-20
-                  t:scale-[3] t:left-24 t:top-0
-                  l-s:scale-[2] l-s:rotate-0 l-s:-top-44 l-s:left-4
-                  l-l:scale-[1.5] l-l:-top-80 l-l:left-8"
+        className="absolute scale-[7] top-auto bottom-auto
+                  t:scale-[3] t:left-36 t:top-[26rem]
+                  l-s:scale-100 l-s:left-auto l-s:top-auto l-s:rotate-0"
       />
     </section>
   );
