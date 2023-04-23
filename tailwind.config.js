@@ -1,16 +1,13 @@
+const tw = require("tailwindcss/defaultTheme");
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./app/**/*.{js,ts,jsx,tsx}", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       colors: {
-        bgColor: "#EBF0F9",
-        prmColor1: "#3966bf",
-        prmColor2: "#223459",
-        scndColor1: "#ff7bac",
-        scndColor2: "#f24182",
-        accntColor1: "#f2e85e",
-        accntColor2: "#f2c53d",
+        prmColor: "#542ACA",
+        scndColor: "#4BFCE1",
+        accntColor: "#F6F6F6",
       },
       screens: {
         "m-s": "320px",
@@ -28,8 +25,8 @@ module.exports = {
         },
       },
       fontFamily: {
-        mukta: ["var(--font-mukta)"],
-        poppins: ["var(--font-poppins)"],
+        mukta: ["var(--font-mukta)", tw.fontFamily.sans],
+        poppins: ["var(--font-poppins)", tw.fontFamily.sans],
       },
       animation: {
         float: "float 8s ease-in-out infinite alternate",
