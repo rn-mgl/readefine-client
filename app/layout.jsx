@@ -1,6 +1,6 @@
 import { Mukta, Poppins } from "next/font/google";
 import "./globals.css";
-import Navbar from "../src/components/global/Navbar";
+import Navbar from "../src/components/global/navbar";
 
 export const metadata = {
   title: "Readefine",
