@@ -1,6 +1,6 @@
 import { Mukta, Poppins } from "next/font/google";
 import "./globals.css";
-import Navbar from "../src/components/global/Navbar";
+import Nav from "../src/components/global/Nav";
 
 export const metadata = {
   title: "Readefine",
@@ -26,7 +26,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${poppins.variable} ${mukta.variable} transition-all`}>
       <body>
-        <Navbar />
+        <Nav />
         {children}
       </body>
     </html>

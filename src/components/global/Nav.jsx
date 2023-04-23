@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 
-const Navbar = () => {
+const Nav = () => {
   return (
     <Link
       href="/"
@@ -14,4 +14,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default Nav;
