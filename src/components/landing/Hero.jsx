@@ -1,4 +1,4 @@
-import ButtonLink from "../links/ButtonLink";
+import ButtonLink from "../link/ButtonLink";
 import book from "../../../public/landing book.png";
 import Image from "next/image";
 

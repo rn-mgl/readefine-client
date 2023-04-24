@@ -1,5 +1,5 @@
 import React from "react";
-import ButtonLink from "../links/ButtonLink";
+import ButtonLink from "../link/ButtonLink";
 
 const Purpose = () => {
   return (

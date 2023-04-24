@@ -25,13 +25,12 @@ module.exports = {
         },
       },
       fontFamily: {
-        mukta: ["var(--font-mukta)", tw.fontFamily.sans],
-        poppins: ["var(--font-poppins)", tw.fontFamily.sans],
+        poppins: ["var(--font-poppins)", "var(--font-mukta)", "var(--font-lato)"],
       },
       animation: {
         float: "float 8s ease-in-out infinite alternate",
       },
     },
   },
-  plugins: [],
+  plugins: [require("tailwind-scrollbar")],
 };
