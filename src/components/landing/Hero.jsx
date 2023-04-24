@@ -4,8 +4,8 @@ import Image from "next/image";
 
 const Hero = () => {
   return (
-    <div
-      className="min-h-screen w-full bg-prmColor to-accntColor px-5 text-center cstm-flex-col font-poppins text-accntColor gap-4 pt-20
+    <section
+      className="min-h-screen w-full bg-prmColor  px-5 text-center cstm-flex-col font-poppins text-accntColor gap-4 pt-20
                 m-m:px-5
                 t:px-10
                 l-s:gap-4"
@@ -44,7 +44,7 @@ const Hero = () => {
         className="animate-float drop-shadow-lg w-10/12
                   t:w-96"
       />
-    </div>
+    </section>
   );
 };
 
