@@ -1,8 +1,8 @@
 import React from "react";
 import bookLadder from "../../../public/BookLadder.svg";
-import intersectM from "../../../public/IntersectM.svg";
-import intersectT from "../../../public/IntersectT.svg";
-import intersectL from "../../../public/IntersectT.svg";
+import intersectSM from "../../../public/IntersectSM.svg";
+import intersectST from "../../../public/IntersectST.svg";
+import intersectSL from "../../../public/IntersectSL.svg";
 import Image from "next/image";
 
 const Definition = () => {
@@ -14,19 +14,19 @@ const Definition = () => {
     >
       <div className="cstm-flex-col">
         <Image
-          src={intersectM}
+          src={intersectSM}
           alt="intersect"
           className="w-full top-0 left-0 absolute t:hidden"
           priority
         />
         <Image
-          src={intersectT}
+          src={intersectST}
           alt="intersect"
           className="hidden w-full top-0 left-0 absolute t:block l-s:hidden"
           priority
         />
         <Image
-          src={intersectL}
+          src={intersectSL}
           alt="intersect"
           className="hidden w-full top-0 left-0 absolute l-s:-translate-y-44 l-s:block
                     l-l:-translate-y-[26rem]"

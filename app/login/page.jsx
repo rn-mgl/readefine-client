@@ -1,10 +1,11 @@
 import React from "react";
 import Image from "next/image";
-import intersectM from "../../public/IntersectM.svg";
-import intersectT from "../../public/IntersectT.svg";
-import intersectL from "../../public/IntersectL.svg";
+import intersectSM from "../../public/IntersectSM.svg";
+import intersectST from "../../public/IntersectST.svg";
+import intersectSL from "../../public/IntersectSL.svg";
 import InputComp from "../../src/components/input/InputComp";
 import ButtonComp from "../../src/components/input/ButtonComp";
+import { CiLock, CiUser } from "react-icons/ci";
 
 const Login = () => {
   return (
@@ -20,13 +21,25 @@ const Login = () => {
       </p>
       <br />
       <div
-        className="w-full rounded-md bg-prmColor bg-opacity-20 backdrop-blur-sm border-[1px] border-prmColor border-opacity-40 p-5 cstm-flex-col gap-5 relative z-10 shadow-lg
+        className="w-full rounded-md bg-prmColor bg-opacity-20 backdrop-blur-md border-[1px] border-prmColor border-opacity-40 p-5 cstm-flex-col gap-5 relative z-10 shadow-lg
                   t:w-8/12
                   l-s:w-6/12
                   l-l:w-4/12"
       >
-        <InputComp id="username" label="Username" type="text" />
-        <InputComp id="password" label="Password" type="password" />
+        <InputComp
+          id="username"
+          placeholder="Username"
+          type="text"
+          spellCheck={false}
+          icon={<CiUser />}
+        />
+        <InputComp
+          id="password"
+          placeholder="Password"
+          type="password"
+          spellCheck={false}
+          icon={<CiLock />}
+        />
         <ButtonComp
           type="submit"
           fontColor="text-accntColor"
@@ -37,19 +50,19 @@ const Login = () => {
       </div>
 
       <Image
-        src={intersectM}
+        src={intersectSM}
         alt="intersect"
         className="w-full bottom-0 left-0 absolute rotate-180 t:hidden"
         priority
       />
       <Image
-        src={intersectT}
+        src={intersectST}
         alt="intersect"
         className="hidden w-full bottom-0 rotate-180 left-0 absolute t:block l-s:hidden"
         priority
       />
       <Image
-        src={intersectL}
+        src={intersectSL}
         alt="intersect"
         className="hidden w-full bottom-0 rotate-180 left-0 absolute l-s:block"
         priority

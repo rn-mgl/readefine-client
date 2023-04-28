@@ -2,41 +2,36 @@
 import React from "react";
 
 const InputComp = (props) => {
-  const [selectedField, setSelectedField] = React.useState([]);
+  const [selectedField, setSelectedField] = React.useState("");
 
   const handleSelectedField = (field) => {
-    setSelectedField((prev) => [...prev, field]);
+    setSelectedField(field);
   };
-  console.log(selectedField);
-  const isSelected = (field) => {
-    return selectedField.includes(field);
+
+  const isSelected = () => {
+    return selectedField == props.id;
   };
 
   return (
-    <div className="relative font-poppins  font-light text-prmColor w-full cstm-flex-col ">
-      <label
-        htmlFor={props.id}
-        className={`w-full absolute translate-x-3.5 text-sm select-none transition-all
-                    ${
-                      isSelected(props.id)
-                        ? "translate-x-1.5 -translate-y-5 text-xs l-s:-translate-y-6"
-                        : "translate-x-0 -translate-y-0 text-sm t:"
-                    }
-                    l-s:text-base`}
-        onClick={() => handleSelectedField(props.id)}
-      >
-        {props.label}
-      </label>
+    <div className="relative font-poppins text-prmColor w-full cstm-flex-col ">
+      {props.icon ? (
+        <div className="absolute right-3 text-lg transition-all">{props.icon}</div>
+      ) : null}
       <input
         type={props.type}
         id={props.id}
         name={props.id}
+        spellCheck={props.spellCheck}
         placeholder={props.placeholder}
-        className="rounded-md shadow-md bg-accntColor p-2 w-full text-sm font-normal
+        onFocus={() => handleSelectedField(props.id)}
+        className={`${
+          isSelected() ? "rounded-full px-4 l-s:px-6" : "rounded-md px-2 l-s:px-3"
+        }           rounded-md shadow-md bg-accntColor p-2 w-full text-sm font-normal transition-all
+                    placeholder:text-prmColor placeholder:text-opacity-50
                     focus:outline-none focus:border-none
                     m-l:text-base
                     t:text-lg
-                    l-s:text-xl"
+                    l-s:p-3`}
       />
     </div>
   );

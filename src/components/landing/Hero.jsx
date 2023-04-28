@@ -33,8 +33,8 @@ const Hero = () => {
         className="w-full cstm-flex-col gap-4
                   l-s:cstm-flex-row"
       >
-        <ButtonLink to="login" fontColor="text-prmColor" bgColor="bg-scndColor" label="Log In" />
-        <ButtonLink to="login" fontColor="text-prmColor" bgColor="bg-accntColor" label="Sign Up" />
+        <ButtonLink to="login" fontColor="text-prmColor" bgColor="bg-accntColor" label="Log In" />
+        <ButtonLink to="signup" fontColor="text-prmColor" bgColor="bg-scndColor" label="Sign Up" />
       </div>
 
       <Image
