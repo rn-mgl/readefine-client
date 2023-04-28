@@ -28,8 +28,7 @@ const Definition = () => {
         <Image
           src={intersectSL}
           alt="intersect"
-          className="hidden w-full top-0 left-0 absolute l-s:-translate-y-44 l-s:block
-                    l-l:-translate-y-[26rem]"
+          className="hidden w-full top-0 left-0 absolute l-s:block"
           priority
         />
 
