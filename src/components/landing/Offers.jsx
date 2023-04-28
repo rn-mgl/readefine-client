@@ -31,7 +31,7 @@ const Offers = () => {
           label="take tests"
           image={penAndPaper}
           imagePos="left-0"
-          flexOrientation="flex-row-reverse"
+          flexOrientation="l-s:flex-row-reverse"
         />
         <OfferCards to="#" label="brain teasers" image={brainTeaser} imagePos="right-0" />
       </div>

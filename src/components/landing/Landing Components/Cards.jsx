@@ -10,7 +10,7 @@ const OfferCards = (props) => {
                 m-m:h-80
                 m-l:h-96
                 t:w-96
-                l-s:w-8/12 l-s:h-72 l-s:cstm-flex-row l-s:${props.flexOrientation}
+                l-s:w-8/12 l-s:h-72 l-s:cstm-flex-row ${props.flexOrientation}
                 l-l:w-6/12`}
     >
       <div
