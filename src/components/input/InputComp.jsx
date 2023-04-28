@@ -26,7 +26,7 @@ const InputComp = (props) => {
         onFocus={() => handleSelectedField(props.id)}
         className={`${
           isSelected() ? "rounded-full px-4 l-s:px-6" : "rounded-md px-2 l-s:px-3"
-        }           rounded-md shadow-md bg-accntColor p-2 w-full text-sm font-normal transition-all
+        }           shadow-md bg-accntColor p-2 w-full text-sm font-normal transition-all
                     placeholder:text-prmColor placeholder:text-opacity-50
                     focus:outline-none focus:border-none
                     m-l:text-base
