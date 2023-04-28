@@ -5,9 +5,9 @@ import Image from "next/image";
 const Hero = () => {
   return (
     <section
-      className="min-h-screen w-full bg-prmColor  px-5 text-center cstm-flex-col font-poppins text-accntColor gap-4 pt-20
+      className="min-h-screen w-full bg-prmColor  px-5 text-center cstm-flex-col font-poppins text-accntColor gap-4 
                 m-m:px-5
-                t:px-10
+                t:px-10 t:pt-20
                 l-s:gap-4"
     >
       <p

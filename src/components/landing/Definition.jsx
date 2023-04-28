@@ -1,5 +1,5 @@
 import React from "react";
-import lexile from "../../../public/lexile.png";
+import bookLadder from "../../../public/BookLadder.svg";
 import intersectM from "../../../public/IntersectM.svg";
 import intersectT from "../../../public/IntersectT.svg";
 import intersectL from "../../../public/IntersectT.svg";
@@ -59,7 +59,7 @@ const Definition = () => {
         className="w-10/12 absolute bottom-5 left-2/4 -translate-x-2/4 cstm-flex-col
                   t:w-96"
       >
-        <Image src={lexile} alt="lexile" className="animate-float drop-shadow-lg" priority />
+        <Image src={bookLadder} alt="lexile" className="animate-float drop-shadow-lg" priority />
       </div>
     </section>
   );
