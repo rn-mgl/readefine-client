@@ -6,7 +6,7 @@ import { BsArrowRight } from "react-icons/bs";
 const OfferCards = (props) => {
   return (
     <div
-      className={`relative bg-prmColor border-[1px] border-prmColor shadow-md shadow-prmColor bg-opacity-30 rounded-md p-5 font-poppins w-full h-72 text-accntColor cstm-flex-col justify-start gap-4 text-center
+      className={`relative bg-prmColor  bg-opacity-30 rounded-md p-5 font-poppins w-full h-72 text-accntColor cstm-flex-col justify-start gap-4 text-center
                 m-m:h-80
                 m-l:h-96
                 t:w-96
