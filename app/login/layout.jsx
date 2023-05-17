@@ -1,5 +1,5 @@
 import React from "react";
-import Nav from "../../src/components/global/Nav";
+import Logo from "../../src/components/global/Logo";
 
 export const metadata = {
   title: "Readefine | Log In",
@@ -10,7 +10,7 @@ const RootLayout = ({ children }) => {
   return (
     <main>
       <div className="text-prmColor">
-        <Nav />
+        <Logo />
       </div>
 
       {children}

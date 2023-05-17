@@ -10,6 +10,10 @@
   .cstm-flex-row {
     @apply flex flex-row items-center justify-center;
   }
+
+  .cstm-separator {
+    @apply w-full h-[.5px] bg-black bg-opacity-10;
+  }
 }
 
 button:hover {

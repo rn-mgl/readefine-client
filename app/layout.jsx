@@ -1,6 +1,5 @@
 import { Mukta, Poppins, Lato } from "next/font/google";
 import "./globals.css";
-import Nav from "../src/components/global/Nav";
 import React from "react";
 
 export const metadata = {
@@ -36,13 +35,7 @@ export default function RootLayout({ children }) {
       lang="en"
       className={`${poppins.variable} ${mukta.variable} ${lato.variable} transition-all scrollbar-thin scrollbar-thumb-scndColor scrollbar-track-accntColor`}
     >
-      <body>
-        <div className="text-accntColor">
-          <Nav />
-        </div>
-
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

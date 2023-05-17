@@ -1,5 +1,5 @@
 import React from "react";
-import Nav from "../../src/components/global/Nav";
+import Nav from "../../src/components/global/Logo";
 
 export const metadata = {
   title: "Readefine | Sign Up",
