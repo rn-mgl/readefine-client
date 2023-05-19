@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import AdminLink from "../adminNav/AdminLink";
+import AdminLink from "../nav/AdminLink";
 
 import { BiMenu, BiTask, BiLogOut } from "react-icons/bi";
 import { BsPenFill, BsPatchQuestionFill } from "react-icons/bs";
