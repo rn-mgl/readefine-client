@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import AdminLink from "../AdminNav/AdminLink";
+import AdminLink from "../adminNav/AdminLink";
 
 import { BiMenu, BiTask, BiLogOut } from "react-icons/bi";
 import { BsPenFill, BsPatchQuestionFill } from "react-icons/bs";
@@ -32,7 +32,8 @@ const AdminNav = () => {
         className={`${
           isOpen ? "m-s:translate-x-0" : "m-s:-translate-x-full"
         } bg-white w-full h-screen text-center fixed p-5 transition-all cstm-flex-col justify-start gap-5 z-10
-            l-s:translate-x-0 l-s:left-0 l-s:top-0 l-s:w-[20%]`}
+            l-s:translate-x-0 l-s:left-0 l-s:top-0 l-s:w-[30%]
+            l-l:w-[20%]`}
       >
         <IoCloseSharp
           className="scale-150 cursor-pointer absolute top-6 left-6

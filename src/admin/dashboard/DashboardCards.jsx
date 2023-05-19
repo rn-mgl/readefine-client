@@ -4,11 +4,15 @@ import Link from "next/link";
 
 const DashboardCards = (props) => {
   return (
-    <div className="bg-white p-5 rounded-2xl cstm-flex-col gap-4">
+    <div
+      className="bg-white p-5 rounded-2xl cstm-flex-col gap-4
+                l-s:w-[18.5rem]
+                l-l:w-fit"
+    >
       <Image src={props.image} alt="temp" className="rounded-2xl" priority />
       <div
         className="w-full cstm-flex-col gap-1 font-poppins
-                  l-s:items-start"
+                  l-l:items-start"
       >
         <p
           className="font-bold text-black
@@ -26,12 +30,12 @@ const DashboardCards = (props) => {
 
       <div
         className="w-full cstm-flex-col gap-1 font-poppins
-                  l-s:cstm-flex-row"
+                  l-l:cstm-flex-row"
       >
         <p
           className="font-bold text-prmColor
                     t:text-base
-                    l-s:mr-auto"
+                    l-l:mr-auto"
         >
           Current count: {props.count}
         </p>

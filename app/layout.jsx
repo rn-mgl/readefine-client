@@ -33,7 +33,7 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      className={`${poppins.variable} ${mukta.variable} ${lato.variable} transition-all scrollbar-thin scrollbar-thumb-scndColor scrollbar-track-accntColor`}
+      className={`${poppins.variable} ${mukta.variable} ${lato.variable} font-poppins transition-all cstm-scrollbar`}
     >
       <body>{children}</body>
     </html>
