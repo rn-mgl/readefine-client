@@ -1,8 +1,23 @@
+"use client";
 import React from "react";
 import AdminPageHeader from "@/src/components/src/admin/global/PageHeader";
 import UsersFilter from "@/src/components/src/admin/users/UsersFilter";
+import axios from "axios";
+import { useGlobalContext } from "@/src/components/context";
 
 const AdminUsers = () => {
+  const [users, setUsers] = React.useState([]);
+
+  const { url } = useGlobalContext();
+
+  const fetchUsers = React.useCallback(async () => {
+    try {
+      const { data } = await axios.get(`${url}/admin_user`);
+    } catch (error) {
+      console.log(error);
+    }
+  });
+
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <AdminPageHeader subHeader="Readefine" mainHeader="Users" />

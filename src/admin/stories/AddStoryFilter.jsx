@@ -1,7 +1,7 @@
 import React from "react";
 import { IoAddOutline } from "react-icons/io5";
 
-const AddStoryFilter = () => {
+const AddStoryFilter = (props) => {
   return (
     <div
       className="cstm-flex-row gap-2 justify-start relative w-full overflow-x-auto p-2 cstm-scrollbar
@@ -58,7 +58,7 @@ const AddStoryFilter = () => {
         />
       </div>
       <div className="hover:bg-black hover:bg-opacity-10 transition-all rounded-full p-2">
-        <IoAddOutline className="cursor-pointer text-prmColor scale-150" />
+        <IoAddOutline onClick={props.addPage} className="cursor-pointer text-prmColor scale-150" />
       </div>
     </div>
   );

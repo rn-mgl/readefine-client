@@ -1,6 +1,7 @@
 import { Mukta, Poppins, Lato } from "next/font/google";
 import "./globals.css";
 import React from "react";
+import { AppProvider } from "../context";
 
 export const metadata = {
   title: "Readefine",
@@ -31,11 +32,13 @@ const lato = Lato({
 
 export default function RootLayout({ children }) {
   return (
-    <html
-      lang="en"
-      className={`${poppins.variable} ${mukta.variable} ${lato.variable} font-poppins transition-all cstm-scrollbar`}
-    >
-      <body>{children}</body>
-    </html>
+    <AppProvider>
+      <html
+        lang="en"
+        className={`${poppins.variable} ${mukta.variable} ${lato.variable} font-poppins transition-all cstm-scrollbar`}
+      >
+        <body>{children}</body>
+      </html>
+    </AppProvider>
   );
 }

@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import Image from "next/image";
 import intersectSM from "../../public/IntersectSM.svg";
@@ -5,9 +6,50 @@ import intersectST from "../../public/IntersectST.svg";
 import intersectSL from "../../public/IntersectSL.svg";
 import InputComp from "../../src/components/input/InputComp";
 import ButtonComp from "../../src/components/input/ButtonComp";
-import { CiLock, CiUser } from "react-icons/ci";
+import { CiLock, CiUser, CiUnlock } from "react-icons/ci";
+import { useGlobalContext } from "../../context";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const AdminLogin = () => {
+  const [loginData, setLoginData] = React.useState({
+    candidateIdentifier: "",
+    candidatePassword: "",
+  });
+  const [visiblePassword, setVisiblePassword] = React.useState(false);
+
+  const { url } = useGlobalContext();
+
+  const router = useRouter();
+
+  const handleVisiblePassword = () => {
+    setVisiblePassword((prev) => !prev);
+  };
+
+  const handleLoginData = ({ name, value }) => {
+    setLoginData((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
+  };
+
+  const loginAdmin = async (e) => {
+    e.preventDefault();
+
+    try {
+      const { data } = await axios.post(`${url}/auth_admin/admin_login`, { loginData });
+
+      if (data) {
+        localStorage.setItem("readefine_admin_token", `Admin Bearer ${data.token}`);
+        router.push("/controller");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="w-full h-screen bg-prmColor p-5 cstm-flex-col font-poppins overflow-hidden">
       <p
@@ -20,25 +62,36 @@ const AdminLogin = () => {
         Log In
       </p>
       <br />
-      <div
+      <form
         className="w-full rounded-md bg-accntColor bg-opacity-20 backdrop-blur-md border-[1px] border-accntColor border-opacity-40 p-5 cstm-flex-col gap-5 relative z-10 shadow-lg
                   t:w-8/12
                   l-s:w-6/12
                   l-l:w-4/12"
+        onSubmit={(e) => loginAdmin(e)}
       >
         <InputComp
-          id="username"
-          placeholder="Username"
+          id="candidateIdentifier"
+          placeholder="Username or Email"
           type="text"
           spellCheck={false}
           icon={<CiUser />}
+          onChange={(e) => handleLoginData(e.target)}
+          value={loginData.candidateIdentifier}
         />
         <InputComp
-          id="password"
+          id="candidatePassword"
           placeholder="Password"
-          type="password"
+          type={visiblePassword ? "text" : "password"}
           spellCheck={false}
-          icon={<CiLock />}
+          icon={
+            visiblePassword ? (
+              <CiUnlock onClick={handleVisiblePassword} />
+            ) : (
+              <CiLock onClick={handleVisiblePassword} />
+            )
+          }
+          onChange={(e) => handleLoginData(e.target)}
+          value={loginData.candidatePassword}
         />
         <ButtonComp
           type="submit"
@@ -47,7 +100,7 @@ const AdminLogin = () => {
           label="Log In"
           css="w-full"
         />
-      </div>
+      </form>
 
       <Image
         src={intersectSM}
