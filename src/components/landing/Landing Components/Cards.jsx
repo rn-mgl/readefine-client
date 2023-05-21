@@ -25,7 +25,7 @@ const OfferCards = (props) => {
                     m-l:w-32 m-l:bottom-14
                     l-s:static l-s:bottom-auto l-s:left-auto l-s:right-auto l-s:w-56`}
         />
-        <Link className="font-extrabold text-xl cstm-flex-row gap-2" href={props.to}>
+        <Link className="font-extrabold text-base cstm-flex-row gap-2" href={props.to}>
           {props.label} <BsArrowRight />
         </Link>
       </div>

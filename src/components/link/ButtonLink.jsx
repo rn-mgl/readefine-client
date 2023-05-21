@@ -4,10 +4,8 @@ const ButtonLink = (props) => {
   return (
     <Link
       href={props.to}
-      className={`text-center rounded-md font-poppins text-sm font-extrabold ${props.fontColor} ${props.bgColor} w-36 p-2
-                m-l:text-base
-                t:text-lg t:w-44
-                l-s:text-xl l-s:p-3`}
+      className={`text-center font-poppins text-sm font-extrabold ${props.fontColor} ${props.bgColor} ${props.css} p-2 px-4
+                t:text-base`}
     >
       {props.label}
     </Link>

@@ -4,10 +4,8 @@ const ButtonComp = (props) => {
   return (
     <button
       type={props.type}
-      className={`text-center rounded-md font-poppins text-sm font-extrabold ${props.fontColor} ${props.bgColor} ${props.css} p-2
-                m-l:text-base
-                t:text-lg
-                l-s:text-xl l-s:p-3`}
+      className={`text-center rounded-full font-poppins text-sm font-extrabold ${props.fontColor} ${props.bgColor} ${props.css} p-2 px-4
+              t:text-base`}
     >
       {props.label}
     </button>

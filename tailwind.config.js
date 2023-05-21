@@ -23,12 +23,19 @@ module.exports = {
           "50%": { transform: "translateY(4%)" },
           "100%": { transform: "translateY(-4%)" },
         },
+
+        fadeIn: {
+          "0%": { opacity: "0", transform: "translateY(-10%)" },
+          "50%": { opacity: "0.5" },
+          "100%": { opacity: "1", transform: "translateY(0%)" },
+        },
       },
       fontFamily: {
         poppins: ["var(--font-poppins)", "var(--font-mukta)", "var(--font-lato)"],
       },
       animation: {
         float: "float 8s ease-in-out infinite alternate",
+        fadeIn: "fadeIn 1s ease-in-out",
       },
     },
   },

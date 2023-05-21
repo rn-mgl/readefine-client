@@ -19,9 +19,7 @@ const InputComp = (props) => {
                    shadow-md bg-accntColor p-2 w-full text-sm font-normal transition-all
                     placeholder:text-prmColor placeholder:text-opacity-50
                     focus:outline-none focus:border-none
-                    m-l:text-base
-                    t:text-lg
-                    l-s:p-3"
+                    m-l:text-base"
       />
     </div>
   );

@@ -26,7 +26,13 @@ const Purpose = () => {
         utilizing a scientifically-based framework, the program can help students develop critical
         reading skills and become lifelong learners.
       </p>
-      <ButtonLink to="#" label="Start Now" fontColor="text-scndColor" bgColor="bg-prmColor" />
+      <ButtonLink
+        to="/signup"
+        label="Start Now"
+        fontColor="text-scndColor"
+        bgColor="bg-prmColor"
+        css="rounded-md"
+      />
     </section>
   );
 };

@@ -9,6 +9,7 @@ const Hero = () => {
                 m-m:px-5
                 t:px-10 t:pt-20
                 l-s:gap-4"
+      id="hero"
     >
       <p
         className=" font-extrabold text-2xl
@@ -33,8 +34,20 @@ const Hero = () => {
         className="w-full cstm-flex-col gap-4
                   l-s:cstm-flex-row"
       >
-        <ButtonLink to="login" fontColor="text-prmColor" bgColor="bg-accntColor" label="Log In" />
-        <ButtonLink to="signup" fontColor="text-prmColor" bgColor="bg-scndColor" label="Sign Up" />
+        <ButtonLink
+          to="login"
+          fontColor="text-prmColor"
+          bgColor="bg-accntColor"
+          label="Log In"
+          css="w-full rounded-md t:w-32"
+        />
+        <ButtonLink
+          to="signup"
+          fontColor="text-prmColor"
+          bgColor="bg-scndColor"
+          label="Sign Up"
+          css="w-full rounded-md t:w-32"
+        />
       </div>
 
       <Image
