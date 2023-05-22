@@ -15,8 +15,6 @@ import { useRouter } from "next/navigation";
 const AdminDashboard = () => {
   const router = useRouter();
 
-  console.log(1);
-
   React.useEffect(() => {
     if (!adminIsLogged()) {
       router.push("/filter");
@@ -84,10 +82,6 @@ const AdminDashboard = () => {
       </div>
     </div>
   );
-};
-
-export const getServerSideProps = async ({ req, res }) => {
-  console.log(req);
 };
 
 export default AdminDashboard;
