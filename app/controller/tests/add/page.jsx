@@ -3,7 +3,7 @@ import React from "react";
 import AdminPageHeader from "@/src/components/src/admin/global/PageHeader";
 import AddTestFilter from "@/src/components/src/admin/tests/AddTestFilter";
 import AddTestPage from "@/src/components/src/admin/tests/AddTestPage";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { adminIsLogged } from "@/src/components/src/security/verifications";
 
 const AddTest = () => {
