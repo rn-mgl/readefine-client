@@ -3,6 +3,8 @@ import React from "react";
 import AdminPageHeader from "@/src/components/src/admin/global/PageHeader";
 import AddTestFilter from "@/src/components/src/admin/tests/AddTestFilter";
 import AddTestPage from "@/src/components/src/admin/tests/AddTestPage";
+import { useRouter } from "next/router";
+import { adminIsLogged } from "@/src/components/src/security/verifications";
 
 const AddTest = () => {
   const [pages, setPages] = React.useState([
@@ -33,6 +35,8 @@ const AddTest = () => {
     });
   };
 
+  const router = useRouter();
+
   const testPages = pages.map((page) => {
     return (
       <React.Fragment key={page.testNumber}>
@@ -40,6 +44,12 @@ const AddTest = () => {
       </React.Fragment>
     );
   });
+
+  React.useEffect(() => {
+    if (!adminIsLogged()) {
+      router.push("/filter");
+    }
+  }, [adminIsLogged, router]);
 
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">

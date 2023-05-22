@@ -1,9 +1,20 @@
+"use client";
 import React from "react";
 import AdminPageHeader from "@/src/components/src/admin/global/PageHeader";
 import RiddlesFilter from "@/src/components/src/admin/riddles/RiddlesFilter";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { adminIsLogged } from "@/src/components/src/security/verifications";
 
 const AdminRiddles = () => {
+  const router = useRouter();
+
+  React.useEffect(() => {
+    if (!adminIsLogged()) {
+      router.push("/filter");
+    }
+  }, [adminIsLogged, router]);
+
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <AdminPageHeader subHeader="Readefine" mainHeader="Riddles" />

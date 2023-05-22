@@ -6,8 +6,9 @@ import intersectAT from "../../public/IntersectAT.svg";
 import intersectAL from "../../public/IntersectAL.svg";
 import InputComp from "../../src/components/input/InputComp";
 import ButtonComp from "../../src/components/input/ButtonComp";
-import { CiLock, CiUser, CiMail, CiUnlock } from "react-icons/ci";
+
 import axios from "axios";
+import { CiLock, CiUser, CiMail, CiUnlock } from "react-icons/ci";
 import { useGlobalContext } from "../../context";
 import { useRouter } from "next/navigation";
 

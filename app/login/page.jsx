@@ -42,7 +42,12 @@ const Login = () => {
 
       if (data) {
         localStorage.getItem("readefine_token", `Bearer ${data.token}`);
-        router.push("/");
+
+        if (data.user.is_verified) {
+          router.push("/");
+        } else {
+          router.push(`/sending`);
+        }
       }
     } catch (error) {
       console.log(error);

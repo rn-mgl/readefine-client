@@ -6,10 +6,10 @@ import intersectST from "../../public/IntersectST.svg";
 import intersectSL from "../../public/IntersectSL.svg";
 import InputComp from "../../src/components/input/InputComp";
 import ButtonComp from "../../src/components/input/ButtonComp";
-import { CiLock, CiUser, CiUnlock } from "react-icons/ci";
-import { useGlobalContext } from "../../context";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { CiLock, CiUser, CiUnlock } from "react-icons/ci";
+import { useGlobalContext } from "../../context";
 
 const AdminLogin = () => {
   const [loginData, setLoginData] = React.useState({

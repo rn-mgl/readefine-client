@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import AdminPageHeader from "../../src/admin/global/PageHeader";
 import DashboardCards from "../../src/admin/dashboard/DashboardCards";
@@ -8,8 +9,20 @@ import DashboardCardImage4 from "../../public/DashboardCardImage4.svg";
 import DashboardCardImage5 from "../../public/DashboardCardImage5.svg";
 import DashboardCardImage6 from "../../public/DashboardCardImage6.svg";
 import DashboardCardImage7 from "../../public/DashboardCardImage7.svg";
+import { adminIsLogged } from "../../src/security/verifications";
+import { useRouter } from "next/navigation";
 
 const AdminDashboard = () => {
+  const router = useRouter();
+
+  console.log(1);
+
+  React.useEffect(() => {
+    if (!adminIsLogged()) {
+      router.push("/filter");
+    }
+  }, [router, adminIsLogged]);
+
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <AdminPageHeader subHeader="Counts" mainHeader="Main Dashboard" />
@@ -71,6 +84,10 @@ const AdminDashboard = () => {
       </div>
     </div>
   );
+};
+
+export const getServerSideProps = async ({ req, res }) => {
+  console.log(req);
 };
 
 export default AdminDashboard;
