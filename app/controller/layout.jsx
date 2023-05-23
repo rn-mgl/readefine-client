@@ -1,15 +1,19 @@
+"use client";
 import React from "react";
 import AdminNav from "../../src/admin/global/AdminNav";
+import { SessionProvider } from "next-auth/react";
 
 export const metadata = {
   title: "Admin | Dashboard",
 };
 
-const RootLayout = ({ children }) => {
+const RootLayout = ({ children, session }) => {
   return (
     <main className="l-s:cstm-flex-row w-full">
-      <AdminNav />
-      {children}
+      <SessionProvider session={session}>
+        <AdminNav />
+        {children}
+      </SessionProvider>
     </main>
   );
 };

@@ -48,7 +48,6 @@ const Signup = () => {
       });
 
       if (data) {
-        localStorage.setItem("readefine_token", `Bearer ${data.token}`);
         router.push("/sending");
       }
     } catch (error) {

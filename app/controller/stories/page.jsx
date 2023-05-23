@@ -4,22 +4,97 @@ import AdminPageHeader from "../../../src/admin/global/PageHeader";
 import StoriesCards from "@/src/components/src/admin/stories/StoriesCards";
 import DashboardCardImage3 from "../../../public/DashboardCardImage3.svg";
 import StoriesFilter from "@/src/components/src/admin/stories/StoriesFilter";
-import { adminIsLogged } from "@/src/components/src/security/verifications";
-import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { useGlobalContext } from "@/src/components/context";
+import axios from "axios";
 
 const AdminStories = () => {
-  const router = useRouter();
+  const [stories, setStories] = React.useState([]);
+  const [searchFilter, setSearchFilter] = React.useState({ toSearch: "title", searchKey: "" });
+  const [lexileRangeFilter, setLexileRangeFilter] = React.useState({ from: 0, to: 1250 });
+  const [sortFilter, setSortFilter] = React.useState({ toSort: "title", sortMode: "ASC" });
+  const [dateRangeFilter, setDateRangeFilter] = React.useState({ from: "", to: "" });
+  const { data: session } = useSession();
+
+  const { url } = useGlobalContext();
+
+  const user = session?.user?.name;
+
+  const handleSearchFilter = ({ name, value }) => {
+    setSearchFilter((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
+  };
+
+  const handleDateRangeFilter = ({ name, value }) => {
+    setDateRangeFilter((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
+  };
+
+  const handleLexileRangeFilter = ({ name, value }) => {
+    setLexileRangeFilter((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
+  };
+
+  const handleSortFilter = ({ name, value }) => {
+    setSortFilter((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
+  };
+
+  const getAllStories = React.useCallback(async () => {
+    try {
+      const { data } = await axios.get(`${url}/admin_story/`, {
+        headers: { Authorization: user.token },
+        params: {
+          searchFilter,
+          lexileRangeFilter,
+          sortFilter,
+          dateRangeFilter,
+        },
+      });
+
+      if (data) {
+        setStories(data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, [url, user, setStories, searchFilter, lexileRangeFilter, sortFilter, dateRangeFilter]);
 
   React.useEffect(() => {
-    if (!adminIsLogged()) {
-      router.push("/filter");
+    if (user) {
+      getAllStories();
     }
-  }, [adminIsLogged, router]);
+  }, [getAllStories, user]);
 
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <AdminPageHeader subHeader="Readefine" mainHeader="Stories" />
-      <StoriesFilter />
+      <StoriesFilter
+        handleSearchFilter={handleSearchFilter}
+        handleDateRangeFilter={handleDateRangeFilter}
+        handleLexileRangeFilter={handleLexileRangeFilter}
+        handleSortFilter={handleSortFilter}
+        searchFilter={searchFilter}
+        lexileRangeFilter={lexileRangeFilter}
+        sortFilter={sortFilter}
+        dateRangeFilter={dateRangeFilter}
+      />
       <div
         className="w-full     
                   l-s:w-[70%] l-s:ml-auto
@@ -28,96 +103,7 @@ const AdminStories = () => {
         <div
           className="cstm-flex-col gap-5 justify-start w-full transition-all 
                   t:cstm-flex-row t:flex-wrap"
-        >
-          <StoriesCards
-            image={DashboardCardImage3}
-            title="Title"
-            author="author"
-            lexile={300}
-            genre="genre"
-            to="/controller/stories/123"
-          />
-          <StoriesCards
-            image={DashboardCardImage3}
-            title="Title"
-            author="author"
-            lexile={300}
-            genre="genre"
-            to="/controller/stories/123"
-          />
-          <StoriesCards
-            image={DashboardCardImage3}
-            title="Title"
-            author="author"
-            lexile={300}
-            genre="genre"
-            to="/controller/stories/123"
-          />
-          <StoriesCards
-            image={DashboardCardImage3}
-            title="Title"
-            author="author"
-            lexile={300}
-            genre="genre"
-            to="/controller/stories/123"
-          />
-          <StoriesCards
-            image={DashboardCardImage3}
-            title="Title"
-            author="author"
-            lexile={300}
-            genre="genre"
-            to="/controller/stories/123"
-          />
-          <StoriesCards
-            image={DashboardCardImage3}
-            title="Title"
-            author="author"
-            lexile={300}
-            genre="genre"
-            to="/controller/stories/123"
-          />
-          <StoriesCards
-            image={DashboardCardImage3}
-            title="Title"
-            author="author"
-            lexile={300}
-            genre="genre"
-            to="/controller/stories/123"
-          />
-          <StoriesCards
-            image={DashboardCardImage3}
-            title="Title"
-            author="author"
-            lexile={300}
-            genre="genre"
-            to="/controller/stories/123"
-          />
-          <StoriesCards
-            image={DashboardCardImage3}
-            title="Title"
-            author="author"
-            lexile={300}
-            genre="genre"
-            to="/controller/stories/123"
-          />
-          <StoriesCards
-            image={DashboardCardImage3}
-            title="Title"
-            author="author"
-            lexile={300}
-            genre="genre"
-            to="/controller/stories/123"
-          />
-          <StoriesCards
-            image={DashboardCardImage3}
-            title="Title"
-            author="author"
-            lexile={300}
-            genre="genre"
-            to="/controller/stories/123"
-          />
-        </div>
+        ></div>
       </div>
     </div>
   );

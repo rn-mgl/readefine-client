@@ -31,7 +31,7 @@ module.exports = {
         },
       },
       fontFamily: {
-        poppins: ["var(--font-poppins)", "var(--font-mukta)", "var(--font-lato)"],
+        poppins: ["var(--font-poppins)"],
       },
       animation: {
         float: "float 8s ease-in-out infinite alternate",

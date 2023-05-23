@@ -7,9 +7,10 @@ import intersectSL from "../../public/IntersectSL.svg";
 import InputComp from "../../src/components/input/InputComp";
 import ButtonComp from "../../src/components/input/ButtonComp";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { CiLock, CiUser, CiUnlock } from "react-icons/ci";
 import { useGlobalContext } from "../../context";
+import { signIn } from "next-auth/react";
 
 const AdminLogin = () => {
   const [loginData, setLoginData] = React.useState({
@@ -38,16 +39,12 @@ const AdminLogin = () => {
   const loginAdmin = async (e) => {
     e.preventDefault();
 
-    try {
-      const { data } = await axios.post(`${url}/auth_admin/admin_login`, { loginData });
-
-      if (data) {
-        localStorage.setItem("readefine_admin_token", `Admin Bearer ${data.token}`);
-        router.push("/controller");
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    await signIn("admin-credentials", {
+      candidateIdentifier: loginData.candidateIdentifier,
+      candidatePassword: loginData.candidatePassword,
+      redirect: true,
+      callbackUrl: "/controller",
+    });
   };
 
   return (

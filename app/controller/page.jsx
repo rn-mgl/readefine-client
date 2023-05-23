@@ -9,17 +9,37 @@ import DashboardCardImage4 from "../../public/DashboardCardImage4.svg";
 import DashboardCardImage5 from "../../public/DashboardCardImage5.svg";
 import DashboardCardImage6 from "../../public/DashboardCardImage6.svg";
 import DashboardCardImage7 from "../../public/DashboardCardImage7.svg";
-import { adminIsLogged } from "../../src/security/verifications";
-import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import axios from "axios";
+import { useGlobalContext } from "../../context";
 
 const AdminDashboard = () => {
-  const router = useRouter();
+  const [counts, setCounts] = React.useState({});
+
+  const { data: session } = useSession({ required: true });
+
+  const user = session?.user?.name;
+
+  const { url } = useGlobalContext();
+
+  const getCounts = React.useCallback(async () => {
+    if (user) {
+      try {
+        const { data } = await axios.get(`${url}/admin_dashboard`, {
+          headers: { Authorization: user.token },
+        });
+        if (data) {
+          setCounts(data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }, [user, url, setCounts]);
 
   React.useEffect(() => {
-    if (!adminIsLogged()) {
-      router.push("/filter");
-    }
-  }, [router, adminIsLogged]);
+    getCounts();
+  }, [getCounts]);
 
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
@@ -34,49 +54,49 @@ const AdminDashboard = () => {
           image={DashboardCardImage1}
           label="Users"
           subLabel="new member: name"
-          count={4}
+          count={counts.userCount}
           to="/controller/users"
         />
         <DashboardCards
           image={DashboardCardImage2}
           label="Stories"
           subLabel="new story: title"
-          count={4}
+          count={counts.storyCount}
           to="/controller/stories"
         />
         <DashboardCards
           image={DashboardCardImage3}
           label="Tests"
           subLabel="updated by: name"
-          count={4}
+          count={counts.testCount}
           to="/controller/tests"
         />
         <DashboardCards
           image={DashboardCardImage4}
           label="Questions & Answers"
           subLabel="updated by: name"
-          count={4}
+          count={counts.questionCount}
           to="/controller/tests"
         />
         <DashboardCards
           image={DashboardCardImage5}
           label="Achievements & Tasks"
           subLabel="updated by: name"
-          count={4}
+          count={counts.achievementCount}
           to="/controller/achievements"
         />
         <DashboardCards
           image={DashboardCardImage6}
           label="Rewards"
           subLabel="updated by: name"
-          count={4}
+          count={counts.rewardCount}
           to="/controller/rewards"
         />
         <DashboardCards
           image={DashboardCardImage7}
           label="Riddles"
           subLabel="updated by: name"
-          count={4}
+          count={counts.riddleCount}
           to="/controller/riddles"
         />
       </div>

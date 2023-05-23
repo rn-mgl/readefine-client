@@ -10,6 +10,7 @@ import { CiLock, CiUser, CiUnlock } from "react-icons/ci";
 import { useGlobalContext } from "../../context";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 const Login = () => {
   const [loginData, setLoginData] = React.useState({
@@ -37,21 +38,29 @@ const Login = () => {
 
   const loginUser = async (e) => {
     e.preventDefault();
-    try {
-      const { data } = await axios.post(`${url}/auth_client/client_login`, { loginData });
 
-      if (data) {
-        localStorage.getItem("readefine_token", `Bearer ${data.token}`);
+    await signIn("client-credentials", {
+      candidateIdentifier: loginData.candidateIdentifier,
+      candidatePassword: loginData.candidatePassword,
+      callbackUrl: "/",
+      redirect: true,
+    });
 
-        if (data.user.is_verified) {
-          router.push("/");
-        } else {
-          router.push(`/sending`);
-        }
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    // try {
+    //   const { data } = await axios.post(`${url}/auth_client/client_login`, { loginData });
+
+    //   if (data) {
+    //     localStorage.getItem("readefine_token", `Bearer ${data.token}`);
+
+    //     if (data.user.is_verified) {
+    //       router.push("/");
+    //     } else {
+    //       router.push(`/sending`);
+    //     }
+    //   }
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
 
   return (
