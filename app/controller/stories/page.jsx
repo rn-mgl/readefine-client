@@ -13,7 +13,7 @@ const AdminStories = () => {
   const [searchFilter, setSearchFilter] = React.useState({ toSearch: "title", searchKey: "" });
   const [lexileRangeFilter, setLexileRangeFilter] = React.useState({ from: 0, to: 1250 });
   const [sortFilter, setSortFilter] = React.useState({ toSort: "title", sortMode: "ASC" });
-  const [dateRangeFilter, setDateRangeFilter] = React.useState({ from: "", to: "" });
+  const [dateRangeFilter, setDateRangeFilter] = React.useState({ from: "", to: new Date() });
   const { data: session } = useSession();
 
   const { url } = useGlobalContext();
@@ -37,6 +37,8 @@ const AdminStories = () => {
       };
     });
   };
+
+  console.log(stories);
 
   const handleLexileRangeFilter = ({ name, value }) => {
     setLexileRangeFilter((prev) => {
@@ -76,6 +78,21 @@ const AdminStories = () => {
     }
   }, [url, user, setStories, searchFilter, lexileRangeFilter, sortFilter, dateRangeFilter]);
 
+  const storiesCards = stories.map((story) => {
+    return (
+      <React.Fragment key={story.story_id}>
+        <StoriesCards
+          image={story.book_cover ? story.book_cover : DashboardCardImage3}
+          title={story.title}
+          author={story.author}
+          lexile={story.lexile}
+          genre={story.genre}
+          to={`/controller/stories/${story.story_id}`}
+        />
+      </React.Fragment>
+    );
+  });
+
   React.useEffect(() => {
     if (user) {
       getAllStories();
@@ -103,7 +120,9 @@ const AdminStories = () => {
         <div
           className="cstm-flex-col gap-5 justify-start w-full transition-all 
                   t:cstm-flex-row t:flex-wrap"
-        ></div>
+        >
+          {storiesCards}
+        </div>
       </div>
     </div>
   );

@@ -4,6 +4,12 @@ import Offers from "../src/components/landing/Offers";
 import Logo from "../src/components/global/Logo";
 import Purpose from "../src/components/landing/Purpose";
 
+export const metadata = {
+  title: "Readefine",
+  description:
+    "An approach to developing the reading comprehension skills of elementary students in the contemporary world.",
+};
+
 export default function Home() {
   return (
     <main className="w-full h-full flex flex-col relative">

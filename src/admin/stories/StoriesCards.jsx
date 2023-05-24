@@ -5,25 +5,28 @@ import Link from "next/link";
 const StoriesCards = (props) => {
   return (
     <div
-      className="bg-white p-5 rounded-2xl cstm-flex-col gap-4
-                t:w-56
-                l-s:w-52
-                l-l:w-fit"
+      className="bg-white p-5 rounded-2xl cstm-flex-col gap-4 w-full h-96
+                t:w-56 t:h-[19rem]
+                l-s:w-52 
+                l-l:w-fit l-l:h-96"
     >
-      <Image src={props.image} alt="temp" className="rounded-2xl" priority />
+      <div className="w-full max-h-52 cstm-flex-col overflow-clip rounded-2xl bg-white">
+        <Image src={props.image} alt="temp" width={250} height={200} priority />
+      </div>
+
       <div className="cstm-flex-row w-full">
         <div className="cstm-flex-col gap-1 font-poppins mr-auto items-start">
           <p
             className="font-bold text-black
                       t:text-base"
           >
-            {props.title}
+            {props.title ? props.title : "Title"}
           </p>
           <p
             className="opacity-50 text-sm
                      t:text-base"
           >
-            {props.author}
+            {props.author ? props.author : "author"}
           </p>
         </div>
         <div className="cstm-flex-col gap-1 font-poppins items-end">
@@ -37,7 +40,7 @@ const StoriesCards = (props) => {
             className="opacity-50 text-sm
                     t:text-base"
           >
-            {props.genre}
+            {props.genre ? props.genre : "Genre"}
           </p>
         </div>
       </div>

@@ -1,13 +1,9 @@
-import { Mukta, Poppins, Lato } from "next/font/google";
+"use client";
 import "./globals.css";
 import React from "react";
+import { Mukta, Poppins, Lato } from "next/font/google";
 import { AppProvider } from "../context";
-
-export const metadata = {
-  title: "Readefine",
-  description:
-    "An approach to developing the reading comprehension skills of elementary students in the contemporary world.",
-};
+import { SessionProvider } from "next-auth/react";
 
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -30,14 +26,16 @@ const lato = Lato({
   variable: "--font-lato",
 });
 
-export default function RootLayout({ children }) {
+export default function RootLayout({ children, session }) {
   return (
     <AppProvider>
       <html
         lang="en"
         className={`${poppins.variable} ${mukta.variable} ${lato.variable} font-poppins transition-all cstm-scrollbar`}
       >
-        <body>{children}</body>
+        <SessionProvider session={session}>
+          <body>{children}</body>
+        </SessionProvider>
       </html>
     </AppProvider>
   );

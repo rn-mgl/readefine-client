@@ -7,10 +7,8 @@ import intersectSL from "../../public/IntersectSL.svg";
 import InputComp from "../../src/components/input/InputComp";
 import ButtonComp from "../../src/components/input/ButtonComp";
 import { CiLock, CiUser, CiUnlock } from "react-icons/ci";
-import { useGlobalContext } from "../../context";
-import axios from "axios";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
 
 const Login = () => {
   const [loginData, setLoginData] = React.useState({
@@ -19,9 +17,11 @@ const Login = () => {
   });
   const [visiblePassword, setVisiblePassword] = React.useState(false);
 
-  const { url } = useGlobalContext();
-
   const router = useRouter();
+
+  const { data: session } = useSession();
+
+  const user = session?.user?.name;
 
   const handleVisiblePassword = () => {
     setVisiblePassword((prev) => !prev);
@@ -45,23 +45,13 @@ const Login = () => {
       callbackUrl: "/",
       redirect: true,
     });
-
-    // try {
-    //   const { data } = await axios.post(`${url}/auth_client/client_login`, { loginData });
-
-    //   if (data) {
-    //     localStorage.getItem("readefine_token", `Bearer ${data.token}`);
-
-    //     if (data.user.is_verified) {
-    //       router.push("/");
-    //     } else {
-    //       router.push(`/sending`);
-    //     }
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    // }
   };
+
+  React.useEffect(() => {
+    if (user) {
+      router.push("/");
+    }
+  }, [user, router]);
 
   return (
     <div className="w-full h-screen bg-accntColor p-5 cstm-flex-col font-poppins overflow-hidden">
