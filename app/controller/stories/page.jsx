@@ -38,8 +38,6 @@ const AdminStories = () => {
     });
   };
 
-  console.log(stories);
-
   const handleLexileRangeFilter = ({ name, value }) => {
     setLexileRangeFilter((prev) => {
       return {
