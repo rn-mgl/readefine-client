@@ -19,7 +19,6 @@ const AddStoryFilter = (props) => {
             className="hidden peer"
             name="file"
             id="fileCover"
-            required={true}
             onChange={(e) => props.selectedFileViewer(e, props.setStoryFilter)}
           />
           <BiImage className="scale-150 text-prmColor peer-checked" />

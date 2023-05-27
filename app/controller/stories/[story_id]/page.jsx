@@ -35,13 +35,19 @@ const SingleStory = ({ params }) => {
     setCanDeleteStory((prev) => !prev);
   };
 
-  const storyPages = pages.map((page, index) => {
+  const storyPages = pages?.map((page, index) => {
     return (
       <div
         className="absolute left-2/4 -translate-x-2/4 w-full z-10 justify-start "
         key={page.content_id}
       >
-        <StoryPage activePage={activePage} page={page} index={index} maxPage={pages.length} />
+        <StoryPage
+          title={story?.title}
+          activePage={activePage}
+          page={page}
+          index={index}
+          maxPage={pages.length}
+        />
       </div>
     );
   });
@@ -121,29 +127,32 @@ const SingleStory = ({ params }) => {
       </div>
 
       <div
-        className="w-full gap-5 min-h-screen bg-white rounded-2xl h-full p-2 relative overflow-x-hidden overflow-y-auto
+        className="w-full gap-5 max-h-screen h-[80vh] bg-white rounded-2xl p-5 relative overflow-x-hidden overflow-y-auto
                     l-s:w-[70%] l-s:ml-auto
                     l-l:w-[80%]"
       >
-        {storyPages}
-      </div>
+        <div
+          className="hover:bg-black hover:bg-opacity-10 p-2 rounded-full absolute bottom-3
+                      l-s:bottom-2/4 l-s:-translate-y-2/4 z-20"
+        >
+          <BiChevronLeft
+            className="scale-150 text-black  cursor-pointer t:scale-[2]"
+            onClick={handleDecrement}
+            onKeyDown={(e) => handleDecrement(e)}
+          />
+        </div>
 
-      <div
-        className="cstm-flex-row gap-5 mt-auto  
-                    l-s:w-[70%] l-s:ml-auto
-                    l-l:w-[80%]"
-      >
-        <BiChevronLeft
-          className="scale-150 cursor-pointer"
-          onClick={handleDecrement}
-          onKeyDown={(e) => handleDecrement(e)}
-        />
-        <p className="mt-auto">{activePage + 1}</p>
-        <BiChevronRight
-          className="scale-150 cursor-pointer"
-          onClick={handleIncrement}
-          onKeyDown={(e) => handleIncrement(e)}
-        />
+        {storyPages}
+        <div
+          className="hover:bg-black hover:bg-opacity-10 p-2 rounded-full absolute bottom-3 right-5
+                      l-s:bottom-2/4 l-s:-translate-y-2/4 z-20"
+        >
+          <BiChevronRight
+            className="scale-150 text-black  cursor-pointer t:scale-[2]"
+            onClick={handleIncrement}
+            onKeyDown={(e) => handleIncrement(e)}
+          />
+        </div>
       </div>
     </div>
   );

@@ -4,14 +4,16 @@ import Link from "next/link";
 
 const StoriesCards = (props) => {
   return (
-    <div
-      className="bg-white p-5 rounded-2xl cstm-flex-col gap-4 w-full h-96
-                t:w-56 t:h-[19rem]
-                l-s:w-52 
-                l-l:w-fit l-l:h-96"
-    >
-      <div className="w-full max-h-52 cstm-flex-col overflow-clip rounded-2xl bg-white">
-        <Image src={props.image} alt="temp" width={250} height={200} priority />
+    <div className="bg-white p-5 rounded-2xl cstm-flex-col gap-4 w-fit">
+      <div className="w-full h-fit cstm-flex-col overflow-clip  bg-white">
+        <Image
+          src={props.image}
+          alt="temp"
+          width={250}
+          height={200}
+          priority
+          className="rounded-2xl"
+        />
       </div>
 
       <div className="cstm-flex-row w-full">
@@ -45,13 +47,22 @@ const StoriesCards = (props) => {
         </div>
       </div>
 
-      <Link
-        href={props.to}
-        className="w-full text-center font-poppins text-sm font-normal bg-prmColor text-accntColor rounded-full p-2
+      <div className="cstm-flex-col w-full gap-2">
+        <Link
+          href={props.visit}
+          className="w-full text-center font-poppins text-sm font-normal bg-prmColor text-accntColor rounded-full p-2
                 t:text-base"
-      >
-        Visit
-      </Link>
+        >
+          Visit
+        </Link>
+        <Link
+          href={props.test}
+          className="w-full text-center font-poppins text-sm font-normal bg-scndColor text-prmColor rounded-full p-2
+                t:text-base"
+        >
+          Test
+        </Link>
+      </div>
     </div>
   );
 };

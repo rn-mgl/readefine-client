@@ -55,6 +55,7 @@ const AddStoryPage = (props) => {
             accept="image/*"
             type="file"
             className="hidden peer"
+            formNoValidate
             name="file"
             id={`filePage${props.page.pageNumber}`}
             onChange={(e) =>

@@ -85,7 +85,8 @@ const AdminStories = () => {
           author={story.author}
           lexile={story.lexile}
           genre={story.genre}
-          to={`/controller/stories/${story.story_id}`}
+          visit={`/controller/stories/${story.story_id}`}
+          test={`/controller/tests/${story.story_id}`}
         />
       </React.Fragment>
     );

@@ -18,9 +18,13 @@ const StoryPage = (props) => {
   }
 
   return (
-    <div className={`w-full cstm-flex-col gap-5 p-2 transition-all absolute ${position}`}>
-      <p className="text-prmColor font-bold">{props.page?.header}</p>
-      <FileViewer src={props.page?.image} width={content ? "w-full t:w-96" : "w-full h-fit"} />
+    <div className={`cstm-flex-col gap-5 p-2 transition-all absolute ${position} w-full`}>
+      <p className="text-black font-semibold">
+        {props.page?.header ? props.page?.header : props.title}
+      </p>
+
+      <FileViewer src={props.page?.image} width={content ? "w-full t:w-96" : "w-fit"} />
+
       {content ? <p className="text-sm whitespace-pre-wrap w-full indent-10">{content}</p> : null}
     </div>
   );
