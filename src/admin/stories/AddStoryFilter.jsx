@@ -1,6 +1,7 @@
 import React from "react";
-import { IoAddOutline } from "react-icons/io5";
+
 import { BiImage } from "react-icons/bi";
+import InputFilter from "../../components/filter/InputFilter";
 
 const AddStoryFilter = (props) => {
   return (
@@ -24,81 +25,46 @@ const AddStoryFilter = (props) => {
           <BiImage className="scale-150 text-prmColor peer-checked" />
         </label>
       </div>
-      <div className="p-2 bg-white font-poppins rounded-md shadow-md whitespace-nowrap cstm-flex-row">
-        <div className="bg-neutral-50 p-1 px-2 rounded-l-md outline-none border-neutral-200 border-2 text-sm">
-          <p>Title</p>
-        </div>
-        <input
-          className="p-1 px-2  bg-white font-poppins rounded-r-md border-neutral-200 border-2 border-l-0 text-sm
-                    focus:outline-none "
-          placeholder="Title"
-          name="title"
-          type="text"
-          required={true}
-          value={props.storyFilter.title}
-          onChange={(e) => props.handleStoryFilter(e.target)}
-        />
-      </div>
 
-      <div className="p-2 bg-white font-poppins rounded-md shadow-md whitespace-nowrap cstm-flex-row">
-        <div className="bg-neutral-50 p-1 px-2 rounded-l-md outline-none border-neutral-200 border-2 text-sm">
-          <p>Author</p>
-        </div>
-        <input
-          className="p-1 px-2  bg-white font-poppins rounded-r-md border-neutral-200 border-2 border-l-0 text-sm
-                    focus:outline-none "
-          placeholder="Author's Name"
-          name="author"
-          type="text"
-          required={true}
-          value={props.storyFilter.author}
-          onChange={(e) => props.handleStoryFilter(e.target)}
-        />
-      </div>
+      <InputFilter
+        label="Title"
+        placeholder="Title"
+        name="title"
+        type="text"
+        required={true}
+        value={props.storyFilter.title}
+        onChange={props.handleStoryFilter}
+      />
 
-      <div className="p-2 bg-white font-poppins rounded-md shadow-md whitespace-nowrap cstm-flex-row">
-        <div className="bg-neutral-50 p-1 px-2 rounded-l-md outline-none border-neutral-200 border-2 text-sm">
-          <p>Genre</p>
-        </div>
-        <input
-          className="p-1 px-2  bg-white font-poppins rounded-r-md border-neutral-200 border-2 border-l-0 text-sm
-                    focus:outline-none "
-          placeholder="Genre"
-          name="genre"
-          type="text"
-          required={true}
-          value={props.storyFilter.genre}
-          onChange={(e) => props.handleStoryFilter(e.target)}
-        />
-      </div>
+      <InputFilter
+        label="Author"
+        placeholder="Author"
+        name="author"
+        type="text"
+        required={true}
+        value={props.storyFilter.author}
+        onChange={props.handleStoryFilter}
+      />
 
-      <div className="p-2 bg-white font-poppins rounded-md shadow-md whitespace-nowrap cstm-flex-row">
-        <div className="bg-neutral-50 p-1 px-2 rounded-l-md outline-none border-neutral-200 border-2 text-sm">
-          <p>Lexile</p>
-        </div>
-        <input
-          className="p-1 px-2  bg-white font-poppins rounded-r-md border-neutral-200 border-2 border-l-0 text-sm
-                    focus:outline-none"
-          placeholder="Lexile Level"
-          name="lexile"
-          type="number"
-          required={true}
-          value={props.storyFilter.lexile}
-          onChange={(e) => props.handleStoryFilter(e.target)}
-        />
-      </div>
+      <InputFilter
+        label="Genre"
+        placeholder="Genre"
+        name="genre"
+        type="text"
+        required={true}
+        value={props.storyFilter.genre}
+        onChange={props.handleStoryFilter}
+      />
 
-      <div className="p-2 bg-white font-poppins rounded-md shadow-md whitespace-nowrap cstm-flex-row">
-        <div className="bg-neutral-50 p-1 px-2 rounded-md outline-none border-neutral-200 border-2 text-sm">
-          <p>Add Page</p>
-        </div>
-        <div className="hover:bg-black hover:bg-opacity-10 transition-all rounded-full p-2">
-          <IoAddOutline
-            onClick={props.addPage}
-            className="cursor-pointer text-prmColor scale-150"
-          />
-        </div>
-      </div>
+      <InputFilter
+        label="Lexile"
+        placeholder="Lexile"
+        name="lexile"
+        type="number"
+        required={true}
+        value={props.storyFilter.lexile}
+        onChange={props.handleStoryFilter}
+      />
     </div>
   );
 };

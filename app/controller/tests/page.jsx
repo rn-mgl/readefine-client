@@ -61,7 +61,7 @@ const AdminTests = () => {
     return (
       <React.Fragment key={t.test_id}>
         <TestsCards
-          image={DashboardCardImage2}
+          image={t.book_cover}
           title={t.title}
           author={t.author}
           lexile={t.lexile}
@@ -89,7 +89,7 @@ const AdminTests = () => {
     } catch (error) {
       console.log(error);
     }
-  }, [url, user, setTests]);
+  }, [url, user, setTests, searchFilter, lexileRangeFilter, sortFilter, dateRangeFilter]);
 
   React.useEffect(() => {
     if (user) {

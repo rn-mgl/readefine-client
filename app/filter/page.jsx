@@ -53,8 +53,7 @@ const AdminLogin = () => {
         className=" font-extrabold text-2xl text-accntColor
                     m-l:text-3xl
                     t:text-4xl
-                    l-s:text-5xl
-                    l-l:text-6xl"
+                    l-s:text-5xl"
       >
         Log In
       </p>

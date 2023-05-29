@@ -1,80 +1,61 @@
 import React from "react";
+import TestChoices from "./TestChoices";
 
 const AddTestPage = (props) => {
+  const answerValue = props.page[`answer${props.testNumber}`];
   return (
     <div className=" w-full cstm-flex-col gap-2">
       <div
         className="table-fixed p-5 rounded-2xl cstm-flex-col overflow-auto w-full h-screen justify-start items-start bg-white text-sm gap-2 shadow-md cstm-scrollbar
-            l-s:h-72"
+            t:h-96 l-s:h-72"
       >
-        <div className="cstm-flex-row w-full">
-          <textarea
-            name=""
-            id=""
-            cols="30"
-            rows="1"
-            className="resize-none p-2 focus:outline-none font-bold text-prmColor mr-auto"
-            defaultValue={`${props.testNumber}.)`}
-          ></textarea>
-        </div>
+        <p className="resize-none p-2 focus:outline-none font-bold text-prmColor mr-auto">
+          {`${props.testNumber}.)`}
+        </p>
 
         <div className="cstm-separator" />
         <div className="w-full h-full cstm-flex-col">
           <textarea
-            name=""
-            id=""
+            name="testQuestion"
+            id="testQuestion"
             cols="30"
             rows="1"
-            className="resize-none p-2 focus:outline-none w-full h-full mr-auto"
-            defaultValue="question..."
+            onChange={(e) => props.handlePages(props.testNumber, e.target)}
+            value={props.page.testQuestion}
+            placeholder="question..."
+            className="resize-none p-2 focus:outline-none w-full h-full mr-auto placeholder:opacity-50"
           ></textarea>
         </div>
       </div>
       <div className="w-full h-full cstm-flex-col gap-2">
-        <div className="cstm-flex-row gap-2 w-full">
-          <input type="radio" name="answer" id="" />
-          <textarea
-            name=""
-            id=""
-            cols="30"
-            rows="1"
-            className="resize-none p-4 focus:outline-none w-full h-full ml-auto rounded-2xl text-sm shadow-md"
-            defaultValue="choice 1"
-          ></textarea>
-        </div>
-        <div className="cstm-flex-row gap-2 w-full">
-          <input type="radio" name="answer" id="" />
-          <textarea
-            name=""
-            id=""
-            cols="30"
-            rows="1"
-            className="resize-none p-4 focus:outline-none w-full h-full ml-auto rounded-2xl text-sm shadow-md"
-            defaultValue="choice 2"
-          ></textarea>
-        </div>
-        <div className="cstm-flex-row gap-2 w-full">
-          <input type="radio" name="answer" id="" />
-          <textarea
-            name=""
-            id=""
-            cols="30"
-            rows="1"
-            className="resize-none p-4 focus:outline-none w-full h-full ml-auto rounded-2xl text-sm shadow-md"
-            defaultValue="choice 3"
-          ></textarea>
-        </div>
-        <div className="cstm-flex-row gap-2 w-full">
-          <input type="radio" name="answer" id="" />
-          <textarea
-            name=""
-            id=""
-            cols="30"
-            rows="1"
-            className="resize-none p-4 focus:outline-none w-full h-full ml-auto rounded-2xl text-sm shadow-md"
-            defaultValue="choice 4"
-          ></textarea>
-        </div>
+        <TestChoices
+          checked={answerValue === props.page.choice1}
+          choiceValue={props.page.choice1}
+          handlePages={props.handlePages}
+          testNumber={props.testNumber}
+          name="choice1"
+        />
+        <TestChoices
+          checked={answerValue === props.page.choice2}
+          choiceValue={props.page.choice2}
+          handlePages={props.handlePages}
+          testNumber={props.testNumber}
+          name="choice2"
+        />
+        <TestChoices
+          checked={answerValue === props.page.choice3}
+          choiceValue={props.page.choice3}
+          handlePages={props.handlePages}
+          testNumber={props.testNumber}
+          name="choice3"
+        />
+        <TestChoices
+          checked={answerValue === props.page.choice4}
+          choiceValue={props.page.choice4}
+          handlePages={props.handlePages}
+          testNumber={props.testNumber}
+          name="choice4"
+        />
       </div>
     </div>
   );

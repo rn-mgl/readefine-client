@@ -10,9 +10,13 @@ import { AiFillHome, AiFillBook } from "react-icons/ai";
 import { HiUser } from "react-icons/hi2";
 import { GiAchievement } from "react-icons/gi";
 import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const AdminNav = () => {
+  const { data: session } = useSession();
   const [isOpen, setIsOpen] = React.useState(false);
+
+  const user = session?.user?.name;
 
   const path = usePathname();
 
@@ -111,7 +115,9 @@ const AdminNav = () => {
           <div className="w-10 h-10 rounded-full bg-prmColor bg-opacity-30" />
           <div className="cstm-flex-col font-poppins items-start">
             <p className="text-xs">Welcome</p>
-            <p className="font-bold text-prmColor">Name Surname</p>
+            <p className="font-bold text-prmColor">
+              {user?.name} {user?.surname}
+            </p>
           </div>
 
           <Link href="/" className="ml-auto ">

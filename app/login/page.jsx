@@ -47,20 +47,13 @@ const Login = () => {
     });
   };
 
-  React.useEffect(() => {
-    if (user) {
-      router.push("/");
-    }
-  }, [user, router]);
-
   return (
     <div className="w-full h-screen bg-accntColor p-5 cstm-flex-col font-poppins overflow-hidden">
       <p
         className=" font-extrabold text-2xl text-prmColor
                     m-l:text-3xl
                     t:text-4xl
-                    l-s:text-5xl
-                    l-l:text-6xl"
+                    l-s:text-5xl"
       >
         Log In
       </p>

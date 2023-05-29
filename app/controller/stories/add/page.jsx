@@ -5,6 +5,7 @@ import AdminPageHeader from "@/src/components/src/admin/global/PageHeader";
 import AddStoryPage from "@/src/components/src/admin/stories/AddStoryPage";
 import axios from "axios";
 import FilePreview from "@/src/components/src/components/global/FilePreview";
+import { IoAddOutline } from "react-icons/io5";
 
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/components/context";
@@ -49,8 +50,6 @@ const AddStory = () => {
       })
     );
   };
-
-  console.log(pages);
 
   const handleStoryFilter = ({ name, value }) => {
     setStoryFilter((prev) => {
@@ -148,13 +147,18 @@ const AddStory = () => {
         ) : null}
         {allPages}
 
-        <button
-          type="submit"
-          className="w-fit text-center font-poppins ml-auto text-sm font-normal bg-prmColor text-accntColor rounded-full p-2 px-4
+        <div className="cstm-flex-row w-full ">
+          <div className="hover:bg-black hover:bg-opacity-10 transition-all rounded-full p-2 mr-auto">
+            <IoAddOutline onClick={addPage} className="cursor-pointer text-prmColor scale-150" />
+          </div>
+          <button
+            type="submit"
+            className="w-fit text-center font-poppins ml-auto text-sm font-normal bg-prmColor text-accntColor rounded-full p-2 px-4
                 t:text-base"
-        >
-          Publish Book
-        </button>
+          >
+            Publish Book
+          </button>
+        </div>
       </form>
     </div>
   );

@@ -11,6 +11,7 @@ import axios from "axios";
 import { CiLock, CiUser, CiMail, CiUnlock } from "react-icons/ci";
 import { useGlobalContext } from "../../context";
 import { useRouter } from "next/navigation";
+import SelectComp from "../../src/components/input/SelectComp";
 
 const Signup = () => {
   const [userData, setUserData] = React.useState({
@@ -61,8 +62,7 @@ const Signup = () => {
         className=" font-extrabold text-2xl text-accntColor
                     m-l:text-3xl
                     t:text-4xl
-                    l-s:text-5xl
-                    l-l:text-6xl"
+                    l-s:text-5xl"
       >
         Sign Up
       </p>
@@ -126,25 +126,18 @@ const Signup = () => {
           value={userData.password}
           onChange={(e) => handleUserData(e.target)}
         />
-        <select
-          className="focus:rounded-full focus:px-4 focus:l-s:px-6 rounded-md px-2 l-s:px-3
-          shadow-md bg-accntColor p-2 w-full text-sm font-normal transition-all
-          text-prmColor 
-           focus:outline-none focus:border-none
-           m-l:text-base
-           t:text-lg
-           l-s:p-3"
-          name="gradeLevel"
+        <SelectComp
           value={userData.gradeLevel}
-          onChange={(e) => handleUserData(e.target)}
-        >
-          <option value={1}>Grade 1</option>
-          <option value={2}>Grade 2</option>
-          <option value={3}>Grade 3</option>
-          <option value={4}>Grade 4</option>
-          <option value={5}>Grade 5</option>
-          <option value={6}>Grade 6</option>
-        </select>
+          onChange={handleUserData}
+          labelValue={[
+            { label: "Grade 1", value: 1 },
+            { label: "Grade 2", value: 2 },
+            { label: "Grade 3", value: 3 },
+            { label: "Grade 4", value: 4 },
+            { label: "Grade 5", value: 5 },
+            { label: "Grade 6", value: 6 },
+          ]}
+        />
         <ButtonComp
           type="submit"
           fontColor="text-prmColor"
