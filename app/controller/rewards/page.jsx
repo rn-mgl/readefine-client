@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/components/context";
 
+import { inputDate } from "@/src/src/functions/localDate";
 import axios from "axios";
 import { typeConversion } from "@/src/src/functions/typeConversion";
 
@@ -19,8 +20,8 @@ const AdminRewards = () => {
   });
   const [sortFilter, setSortFilter] = React.useState({ toSort: "reward_name", sortMode: "ASC" });
   const [dateRangeFilter, setDateRangeFilter] = React.useState({
-    from: "19990101T123000.000Z",
-    to: new Date(),
+    from: "",
+    to: inputDate(new Date().toLocaleDateString()),
   });
   const { data: session } = useSession({ required: true });
 

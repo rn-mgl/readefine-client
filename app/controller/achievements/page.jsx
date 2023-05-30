@@ -4,7 +4,7 @@ import AdminPageHeader from "../../../src/admin/global/PageHeader";
 import DashboardCardImage6 from "../../../public/DashboardCardImage6.svg";
 import AchievementsFilter from "@/src/src/admin/achievements/AchievementsFilter";
 import AchievementsCards from "@/src/src/admin/achievements/AchievementsCards";
-import { useRouter } from "next/navigation";
+import { inputDate } from "@/src/src/functions/localDate";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/components/context";
 import axios from "axios";
@@ -21,7 +21,10 @@ const AdminAchievements = () => {
     toSort: "achievement_name",
     sortMode: "ASC",
   });
-  const [dateRangeFilter, setDateRangeFilter] = React.useState({ from: "", to: new Date() });
+  const [dateRangeFilter, setDateRangeFilter] = React.useState({
+    from: "",
+    to: inputDate(new Date().toLocaleDateString()),
+  });
   const { data: session } = useSession({ required: true });
 
   const user = session?.user?.name;

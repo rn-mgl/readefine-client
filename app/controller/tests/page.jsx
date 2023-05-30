@@ -4,7 +4,7 @@ import AdminPageHeader from "../../../src/admin/global/PageHeader";
 import TestsCards from "@/src/src/admin/tests/TestsCards";
 import TestsFilter from "@/src/components/src/admin/tests/TestsFilter";
 import axios from "axios";
-
+import { inputDate } from "@/src/src/functions/localDate";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/components/context";
 
@@ -13,7 +13,10 @@ const AdminTests = () => {
   const [searchFilter, setSearchFilter] = React.useState({ toSearch: "title", searchKey: "" });
   const [lexileRangeFilter, setLexileRangeFilter] = React.useState({ from: 0, to: 1250 });
   const [sortFilter, setSortFilter] = React.useState({ toSort: "title", sortMode: "ASC" });
-  const [dateRangeFilter, setDateRangeFilter] = React.useState({ from: "", to: new Date() });
+  const [dateRangeFilter, setDateRangeFilter] = React.useState({
+    from: "",
+    to: inputDate(new Date().toLocaleDateString()),
+  });
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();

@@ -16,8 +16,8 @@ const FindRewards = (props) => {
   });
   const [sortFilter, setSortFilter] = React.useState({ toSort: "reward_name", sortMode: "ASC" });
   const [dateRangeFilter, setDateRangeFilter] = React.useState({
-    from: "19990101T123000.000Z",
-    to: new Date(),
+    from: "",
+    to: inputDate(new Date().toLocaleDateString()),
   });
   const { data: session } = useSession({ required: true });
 

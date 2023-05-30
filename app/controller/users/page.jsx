@@ -4,7 +4,7 @@ import AdminPageHeader from "@/src/components/src/admin/global/PageHeader";
 import UsersFilter from "@/src/components/src/admin/users/UsersFilter";
 import axios from "axios";
 import { useGlobalContext } from "@/src/components/context";
-import { localizeDate } from "@/src/components/src/functions/localDate";
+import { localizeDate, inputDate } from "@/src/src/functions/localDate";
 import { useSession } from "next-auth/react";
 
 const AdminUsers = () => {
@@ -12,7 +12,10 @@ const AdminUsers = () => {
   const [searchFilter, setSearchFilter] = React.useState({ toSearch: "name", searchKey: "" });
   const [sortFilter, setSortFilter] = React.useState({ toSort: "name", sortMode: "ASC" });
   const [lexileRangeFilter, setLexileRangeFilter] = React.useState({ from: 0, to: 1250 });
-  const [dateRangeFilter, setDateRangeFilter] = React.useState({ from: "", to: new Date() });
+  const [dateRangeFilter, setDateRangeFilter] = React.useState({
+    from: "",
+    to: inputDate(new Date().toLocaleDateString()),
+  });
   const { data: session } = useSession({ required: true });
 
   const { url } = useGlobalContext();

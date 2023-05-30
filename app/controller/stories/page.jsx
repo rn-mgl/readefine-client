@@ -5,6 +5,7 @@ import StoriesCards from "@/src/src/admin/stories/StoriesCards";
 import DashboardCardImage3 from "../../../public/DashboardCardImage3.svg";
 import StoriesFilter from "@/src/components/src/admin/stories/StoriesFilter";
 import { useSession } from "next-auth/react";
+import { inputDate } from "@/src/src/functions/localDate";
 import { useGlobalContext } from "@/src/components/context";
 import axios from "axios";
 
@@ -13,7 +14,10 @@ const AdminStories = () => {
   const [searchFilter, setSearchFilter] = React.useState({ toSearch: "title", searchKey: "" });
   const [lexileRangeFilter, setLexileRangeFilter] = React.useState({ from: 0, to: 1250 });
   const [sortFilter, setSortFilter] = React.useState({ toSort: "title", sortMode: "ASC" });
-  const [dateRangeFilter, setDateRangeFilter] = React.useState({ from: "", to: new Date() });
+  const [dateRangeFilter, setDateRangeFilter] = React.useState({
+    from: "",
+    to: inputDate(new Date().toLocaleDateString()),
+  });
   const { data: session } = useSession();
 
   const { url } = useGlobalContext();
