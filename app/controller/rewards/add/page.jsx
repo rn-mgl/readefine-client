@@ -2,7 +2,7 @@
 import React from "react";
 import AdminPageHeader from "@/src/components/src/admin/global/PageHeader";
 import FilePreview from "@/src/components/src/components/global/FilePreview";
-import AddRewardFilter from "@/src/components/src/admin/rewards/AddRewardFilter";
+import AddRewardFilter from "@/src/src/admin/rewards/AddRewardFilter";
 
 import * as fileFns from "../../../../src/functions/fileFns";
 import { BiImage } from "react-icons/bi";
