@@ -1,23 +1,15 @@
 "use client";
 import React from "react";
 import AdminPageHeader from "../../../src/admin/global/PageHeader";
-import RewardsFilter from "@/src/components/src/admin/rewards/RewardsFilter";
-import RewardsCards from "@/src/components/src/admin/rewards/RewardsCards";
+import RewardsFilter from "@/src/src/admin/rewards/RewardsFilter";
+import RewardsCards from "@/src/src/admin/rewards/RewardsCards";
 
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/components/context";
 
 import axios from "axios";
-
-const typeConversion = {
-  user_session: "Sessions",
-  read_story: "Read Stories",
-  answered_dangle: "Answered Dangles",
-  answered_decipher: "Answered Deciphers",
-  answered_riddles: "Answered Riddles",
-  user: "Lexile Growth",
-};
+import { typeConversion } from "@/src/src/functions/typeConversion";
 
 const AdminRewards = () => {
   const [rewards, setRewards] = React.useState([]);
@@ -100,19 +92,20 @@ const AdminRewards = () => {
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <AdminPageHeader subHeader="Readefine" mainHeader="Rewards" />
-      <RewardsFilter
-        handleSearchFilter={handleSearchFilter}
-        handleDateRangeFilter={handleDateRangeFilter}
-        handleSortFilter={handleSortFilter}
-        searchFilter={searchFilter}
-        sortFilter={sortFilter}
-        dateRangeFilter={dateRangeFilter}
-      />
+
       <div
         className="w-full     
                   l-s:w-[70%] l-s:ml-auto
                   l-l:w-[80%]"
       >
+        <RewardsFilter
+          handleSearchFilter={handleSearchFilter}
+          handleDateRangeFilter={handleDateRangeFilter}
+          handleSortFilter={handleSortFilter}
+          searchFilter={searchFilter}
+          sortFilter={sortFilter}
+          dateRangeFilter={dateRangeFilter}
+        />
         <div
           className="cstm-flex-col gap-5 justify-start w-full transition-all 
                   t:cstm-flex-row t:flex-wrap"

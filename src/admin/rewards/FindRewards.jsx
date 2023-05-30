@@ -5,16 +5,8 @@ import axios from "axios";
 import { IoClose } from "react-icons/io5";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
+import { typeConversion } from "../../functions/typeConversion";
 import FindCards from "./FindCards";
-
-const typeConversion = {
-  user_session: "Sessions",
-  read_story: "Read Stories",
-  answered_dangle: "Answered Dangles",
-  answered_decipher: "Answered Deciphers",
-  answered_riddles: "Answered Riddles",
-  user: "Lexile Growth",
-};
 
 const FindRewards = (props) => {
   const [rewards, setRewards] = React.useState([]);
@@ -95,9 +87,12 @@ const FindRewards = (props) => {
   }, [user, getRewards]);
 
   return (
-    <div className="p-5 backdrop-blur-md fixed top-0 left-0 w-full min-h-screen cstm-flex-col gap-2 justify-start z-20">
+    <div className="p-5 backdrop-blur-md bg-black bg-opacity-20 fixed top-0 left-0 w-full min-h-screen cstm-flex-col gap-2 justify-start z-20">
       <div className="p-2 ml-auto cstm-flex-col w-fit z-20 hover:bg-black hover:bg-opacity-10 rounded-full">
-        <IoClose className="text-prmColor scale-150" onClick={props.handleCanSelectReward} />
+        <IoClose
+          className="text-prmColor scale-150 cursor-pointer"
+          onClick={props.handleCanSelectReward}
+        />
       </div>
 
       <div
@@ -114,7 +109,7 @@ const FindRewards = (props) => {
           dateRangeFilter={dateRangeFilter}
         />
         <div
-          className="cstm-flex-col gap-5 justify-start w-full transition-all 
+          className="cstm-flex-col gap-5 justify-start w-full transition-all
               t:cstm-flex-row t:flex-wrap"
         >
           {rewardsCards}

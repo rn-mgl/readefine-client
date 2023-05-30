@@ -9,7 +9,7 @@ const AchievementsCards = (props) => {
         <Image
           src={props.image}
           alt="temp"
-          width={220}
+          width={240}
           height={200}
           priority
           className="rounded-2xl"

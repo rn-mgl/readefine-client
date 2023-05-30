@@ -9,7 +9,7 @@ const TestsCards = (props) => {
         <Image
           src={props.image}
           alt="temp"
-          width={250}
+          width={240}
           height={200}
           priority
           className="rounded-2xl"

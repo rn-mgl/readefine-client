@@ -9,7 +9,7 @@ const StoriesCards = (props) => {
         <Image
           src={props.image}
           alt="temp"
-          width={250}
+          width={240}
           height={200}
           priority
           className="rounded-2xl"
@@ -24,41 +24,24 @@ const StoriesCards = (props) => {
           >
             {props.title ? props.title : "Title"}
           </p>
-          <p
-            className="opacity-50 text-sm
-                     t:text-base"
-          >
-            {props.author ? props.author : "author"}
-          </p>
+          <p className="opacity-50 text-sm">{props.author ? props.author : "author"}</p>
         </div>
         <div className="cstm-flex-col gap-1 font-poppins items-end">
-          <p
-            className="font-bold text-prmColor 
-                    t:text-base"
-          >
-            {props.lexile}L
-          </p>
-          <p
-            className="opacity-50 text-sm
-                    t:text-base"
-          >
-            {props.genre ? props.genre : "Genre"}
-          </p>
+          <p className="font-bold text-prmColor t:text-base">{props.lexile}L</p>
+          <p className="opacity-50 text-sm">{props.genre ? props.genre : "Genre"}</p>
         </div>
       </div>
 
       <div className="cstm-flex-col w-full gap-2">
         <Link
           href={props.visit}
-          className="w-full text-center font-poppins text-sm font-normal bg-prmColor text-accntColor rounded-full p-2
-                t:text-base"
+          className="w-full text-center font-poppins text-sm font-normal bg-prmColor text-accntColor rounded-full p-2"
         >
           Visit
         </Link>
         <Link
           href={props.test}
-          className="w-full text-center font-poppins text-sm font-normal bg-scndColor text-prmColor rounded-full p-2
-                t:text-base"
+          className="w-full text-center font-poppins text-sm font-normal bg-scndColor text-prmColor rounded-full p-2"
         >
           Test
         </Link>

@@ -2,12 +2,13 @@
 import React from "react";
 import AdminPageHeader from "../../../src/admin/global/PageHeader";
 import DashboardCardImage6 from "../../../public/DashboardCardImage6.svg";
-import AchievementsFilter from "@/src/components/src/admin/achievements/AchievementsFilter";
-import AchievementsCards from "@/src/components/src/admin/achievements/AchievementsCards";
+import AchievementsFilter from "@/src/src/admin/achievements/AchievementsFilter";
+import AchievementsCards from "@/src/src/admin/achievements/AchievementsCards";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/components/context";
 import axios from "axios";
+import { typeConversion } from "@/src/src/functions/typeConversion";
 
 const AdminAchievements = () => {
   const [achievements, setAchievements] = React.useState([]);
@@ -25,7 +26,6 @@ const AdminAchievements = () => {
 
   const user = session?.user?.name;
   const { url } = useGlobalContext();
-  const router = useRouter();
 
   const handleSearchFilter = ({ name, value }) => {
     setSearchFilter((prev) => {
@@ -69,7 +69,7 @@ const AdminAchievements = () => {
         <AchievementsCards
           image={DashboardCardImage6}
           title={achievement.achievement_name}
-          type={achievement.achievement_type}
+          type={typeConversion[achievement.achievement_type]}
           goal={achievement.goal}
           to={`/controller/achievements/${achievement.achievement_id}`}
         />
@@ -106,21 +106,22 @@ const AdminAchievements = () => {
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <AdminPageHeader subHeader="Readefine" mainHeader="Achievements & Tasks" />
-      <AchievementsFilter
-        handleSearchFilter={handleSearchFilter}
-        handleDateRangeFilter={handleDateRangeFilter}
-        handleGoalRangeFilter={handleGoalRangeFilter}
-        handleSortFilter={handleSortFilter}
-        searchFilter={searchFilter}
-        goalRangeFilter={goalRangeFilter}
-        sortFilter={sortFilter}
-        dateRangeFilter={dateRangeFilter}
-      />
+
       <div
         className="w-full     
                   l-s:w-[70%] l-s:ml-auto
                   l-l:w-[80%]"
       >
+        <AchievementsFilter
+          handleSearchFilter={handleSearchFilter}
+          handleDateRangeFilter={handleDateRangeFilter}
+          handleGoalRangeFilter={handleGoalRangeFilter}
+          handleSortFilter={handleSortFilter}
+          searchFilter={searchFilter}
+          goalRangeFilter={goalRangeFilter}
+          sortFilter={sortFilter}
+          dateRangeFilter={dateRangeFilter}
+        />
         <div
           className="cstm-flex-col gap-5 justify-start w-full transition-all 
                   t:cstm-flex-row t:flex-wrap"

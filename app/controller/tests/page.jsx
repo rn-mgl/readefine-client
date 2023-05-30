@@ -1,12 +1,11 @@
 "use client";
 import React from "react";
 import AdminPageHeader from "../../../src/admin/global/PageHeader";
-import TestsCards from "@/src/components/src/admin/tests/TestsCards";
-import DashboardCardImage2 from "../../../public/DashboardCardImage2.svg";
+import TestsCards from "@/src/src/admin/tests/TestsCards";
 import TestsFilter from "@/src/components/src/admin/tests/TestsFilter";
-import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
 import axios from "axios";
+
+import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/components/context";
 
 const AdminTests = () => {

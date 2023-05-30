@@ -7,11 +7,7 @@ import RangeFilter from "../../components/filter/RangeFilter";
 
 const AchievementsFilter = (props) => {
   return (
-    <div
-      className="cstm-flex-row gap-2 justify-start relative w-full overflow-x-auto p-2 cstm-scrollbar
-                l-s:w-[70%] l-s:ml-auto
-                l-l:w-[80%]"
-    >
+    <div className="cstm-flex-row gap-2 justify-start relative w-full overflow-x-auto p-2 cstm-scrollbar">
       <Link
         href="/controller/achievements/add"
         className="hover:bg-black hover:bg-opacity-10 transition-all p-2 rounded-full"

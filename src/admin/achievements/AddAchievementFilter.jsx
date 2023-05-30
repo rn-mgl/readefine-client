@@ -56,17 +56,14 @@ const AddAchievementFilter = (props) => {
           onClick={props.handleCanSelectReward}
           className={`bg-neutral-50 p-1 px-2 ${
             hasReward ? "rounded-l-md" : "rounded-md"
-          } outline-none border-neutral-200 border-2 text-sm`}
+          } outline-none border-neutral-200 border-2 text-sm cursor-pointer`}
         >
           <p>Reward</p>
         </div>
         {hasReward ? (
-          <input
-            className="p-1 px-2  bg-white font-poppins rounded-r-md border-neutral-200 border-2 border-l-0 text-sm
-                    focus:outline-none "
-            type="text"
-            value={props.achievement.reward.name}
-          />
+          <p className="p-1 px-2  bg-white font-poppins rounded-r-md border-neutral-200 border-2 border-l-0 text-sm">
+            {props.achievement.reward.name}
+          </p>
         ) : null}
       </div>
     </div>

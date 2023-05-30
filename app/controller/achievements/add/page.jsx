@@ -58,7 +58,7 @@ const AddAchievement = () => {
       );
 
       if (data) {
-        console.log(data);
+        router.push("/controller/achievements");
       }
     } catch (error) {
       console.log(error);

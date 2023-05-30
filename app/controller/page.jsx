@@ -58,14 +58,14 @@ const AdminDashboard = () => {
           to="/controller/users"
         />
         <DashboardCards
-          image={DashboardCardImage2}
+          image={DashboardCardImage3}
           label="Stories"
           subLabel="new story: title"
           count={counts.storyCount}
           to="/controller/stories"
         />
         <DashboardCards
-          image={DashboardCardImage3}
+          image={DashboardCardImage2}
           label="Tests"
           subLabel="updated by: name"
           count={counts.testCount}
