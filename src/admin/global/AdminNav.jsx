@@ -88,18 +88,18 @@ const AdminNav = () => {
         />
 
         <AdminLink
-          to="/controller/achievements"
-          icon={<BiTask className="scale-125" />}
-          label="Achievements & Tasks"
-          isActive={path === "/controller/achievements"}
-          toggleOpenNav={toggleOpenNav}
-        />
-
-        <AdminLink
           to="/controller/rewards"
           icon={<GiAchievement className="scale-125" />}
           label="Rewards"
           isActive={path === "/controller/rewards"}
+          toggleOpenNav={toggleOpenNav}
+        />
+
+        <AdminLink
+          to="/controller/achievements"
+          icon={<BiTask className="scale-125" />}
+          label="Achievements & Tasks"
+          isActive={path === "/controller/achievements"}
           toggleOpenNav={toggleOpenNav}
         />
 

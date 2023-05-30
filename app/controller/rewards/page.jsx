@@ -1,25 +1,113 @@
 "use client";
 import React from "react";
 import AdminPageHeader from "../../../src/admin/global/PageHeader";
-import DashboardCardImage5 from "../../../public/DashboardCardImage5.svg";
 import RewardsFilter from "@/src/components/src/admin/rewards/RewardsFilter";
 import RewardsCards from "@/src/components/src/admin/rewards/RewardsCards";
-import { adminIsLogged } from "@/src/components/src/security/verifications";
+
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { useGlobalContext } from "@/src/components/context";
+
+import axios from "axios";
+
+const typeConversion = {
+  user_session: "Sessions",
+  read_story: "Read Stories",
+  answered_dangle: "Answered Dangles",
+  answered_decipher: "Answered Deciphers",
+  answered_riddles: "Answered Riddles",
+  user: "Lexile Growth",
+};
 
 const AdminRewards = () => {
+  const [rewards, setRewards] = React.useState([]);
+  const [searchFilter, setSearchFilter] = React.useState({
+    toSearch: "reward_name",
+    searchKey: "",
+  });
+  const [sortFilter, setSortFilter] = React.useState({ toSort: "reward_name", sortMode: "ASC" });
+  const [dateRangeFilter, setDateRangeFilter] = React.useState({
+    from: "19990101T123000.000Z",
+    to: new Date(),
+  });
+  const { data: session } = useSession({ required: true });
+
+  const user = session?.user?.name;
+  const { url } = useGlobalContext();
   const router = useRouter();
 
-  React.useEffect(() => {
-    if (!adminIsLogged()) {
-      router.push("/filter");
+  const handleSearchFilter = ({ name, value }) => {
+    setSearchFilter((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
+  };
+
+  const handleDateRangeFilter = ({ name, value }) => {
+    setDateRangeFilter((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
+  };
+
+  const handleSortFilter = ({ name, value }) => {
+    setSortFilter((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
+  };
+
+  const rewardsCards = rewards.map((reward) => {
+    return (
+      <React.Fragment key={reward.reward_id}>
+        <RewardsCards
+          image={reward.reward}
+          title={reward.reward_name}
+          type={typeConversion[reward.reward_type]}
+          to={`/controller/rewards/${reward.reward_id}`}
+        />
+      </React.Fragment>
+    );
+  });
+
+  const getRewards = React.useCallback(async () => {
+    try {
+      const { data } = await axios.get(`${url}/admin_reward`, {
+        params: { searchFilter, sortFilter, dateRangeFilter },
+        headers: { Authorization: user.token },
+      });
+
+      if (data) {
+        setRewards(data);
+      }
+    } catch (error) {
+      console.log(error);
     }
-  }, [adminIsLogged, router]);
+  }, [url, user, setRewards, searchFilter, sortFilter, dateRangeFilter]);
+
+  React.useEffect(() => {
+    if (user) {
+      getRewards();
+    }
+  }, [user, getRewards]);
 
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <AdminPageHeader subHeader="Readefine" mainHeader="Rewards" />
-      <RewardsFilter />
+      <RewardsFilter
+        handleSearchFilter={handleSearchFilter}
+        handleDateRangeFilter={handleDateRangeFilter}
+        handleSortFilter={handleSortFilter}
+        searchFilter={searchFilter}
+        sortFilter={sortFilter}
+        dateRangeFilter={dateRangeFilter}
+      />
       <div
         className="w-full     
                   l-s:w-[70%] l-s:ml-auto
@@ -29,108 +117,7 @@ const AdminRewards = () => {
           className="cstm-flex-col gap-5 justify-start w-full transition-all 
                   t:cstm-flex-row t:flex-wrap"
         >
-          <RewardsCards
-            image={DashboardCardImage5}
-            title="Reward Name"
-            type="type"
-            to="/controller/rewards/123"
-          />
-          <RewardsCards
-            image={DashboardCardImage5}
-            title="Reward Name"
-            type="type"
-            to="/controller/rewards/123"
-          />{" "}
-          <RewardsCards
-            image={DashboardCardImage5}
-            title="Reward Name"
-            type="type"
-            to="/controller/rewards/123"
-          />{" "}
-          <RewardsCards
-            image={DashboardCardImage5}
-            title="Reward Name"
-            type="type"
-            to="/controller/rewards/123"
-          />{" "}
-          <RewardsCards
-            image={DashboardCardImage5}
-            title="Reward Name"
-            type="type"
-            to="/controller/rewards/123"
-          />{" "}
-          <RewardsCards
-            image={DashboardCardImage5}
-            title="Reward Name"
-            type="type"
-            to="/controller/rewards/123"
-          />{" "}
-          <RewardsCards
-            image={DashboardCardImage5}
-            title="Reward Name"
-            type="type"
-            to="/controller/rewards/123"
-          />{" "}
-          <RewardsCards
-            image={DashboardCardImage5}
-            title="Reward Name"
-            type="type"
-            to="/controller/rewards/123"
-          />{" "}
-          <RewardsCards
-            image={DashboardCardImage5}
-            title="Reward Name"
-            type="type"
-            to="/controller/rewards/123"
-          />{" "}
-          <RewardsCards
-            image={DashboardCardImage5}
-            title="Reward Name"
-            type="type"
-            to="/controller/rewards/123"
-          />{" "}
-          <RewardsCards
-            image={DashboardCardImage5}
-            title="Reward Name"
-            type="type"
-            to="/controller/rewards/123"
-          />{" "}
-          <RewardsCards
-            image={DashboardCardImage5}
-            title="Reward Name"
-            type="type"
-            to="/controller/rewards/123"
-          />{" "}
-          <RewardsCards
-            image={DashboardCardImage5}
-            title="Reward Name"
-            type="type"
-            to="/controller/rewards/123"
-          />{" "}
-          <RewardsCards
-            image={DashboardCardImage5}
-            title="Reward Name"
-            type="type"
-            to="/controller/rewards/123"
-          />{" "}
-          <RewardsCards
-            image={DashboardCardImage5}
-            title="Reward Name"
-            type="type"
-            to="/controller/rewards/123"
-          />{" "}
-          <RewardsCards
-            image={DashboardCardImage5}
-            title="Reward Name"
-            type="type"
-            to="/controller/rewards/123"
-          />{" "}
-          <RewardsCards
-            image={DashboardCardImage5}
-            title="Reward Name"
-            type="type"
-            to="/controller/rewards/123"
-          />
+          {rewardsCards}
         </div>
       </div>
     </div>

@@ -2,9 +2,10 @@ import React from "react";
 import { BiImage } from "react-icons/bi";
 import FilePreview from "../../components/global/FilePreview";
 import * as fileFns from "../../../src/functions/fileFns";
+import { wordCount } from "../../functions/wordCount";
 
 const AddStoryPage = (props) => {
-  const wordCount = props.page.pageContent.split(" ").length - 1;
+  const words = wordCount(props.page?.pageContent);
   return (
     <div className="table-fixed p-5 rounded-2xl cstm-flex-col overflow-auto w-full h-screen justify-start items-start bg-white text-sm gap-2 shadow-md cstm-scrollbar">
       <div className="cstm-flex-row w-full gap-5">
@@ -65,7 +66,7 @@ const AddStoryPage = (props) => {
           <BiImage className="scale-150 text-prmColor peer-checked" />
         </label>
         <p>
-          {wordCount > 1 ? "Words" : "Word"}: {wordCount}
+          {words > 1 ? "Words" : "Word"}: {words}
         </p>
       </div>
     </div>

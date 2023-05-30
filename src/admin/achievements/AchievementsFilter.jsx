@@ -1,8 +1,11 @@
 import React from "react";
 import { IoAddOutline } from "react-icons/io5";
 import Link from "next/link";
+import SearchFilter from "../../components/filter/SearchFilter";
+import SortFilter from "../../components/filter/SortFilter";
+import RangeFilter from "../../components/filter/RangeFilter";
 
-const AchievementsFilter = () => {
+const AchievementsFilter = (props) => {
   return (
     <div
       className="cstm-flex-row gap-2 justify-start relative w-full overflow-x-auto p-2 cstm-scrollbar
@@ -16,62 +19,44 @@ const AchievementsFilter = () => {
         <IoAddOutline className="text-prmColor cursor-pointer scale-150" />
       </Link>
 
-      <div className="p-2 bg-white font-poppins rounded-md shadow-md whitespace-nowrap cstm-flex-row">
-        <div className="bg-neutral-50 p-1 px-2 rounded-l-md outline-none border-neutral-200 border-2 text-sm">
-          <p>Name</p>
-        </div>
-        <input
-          className="p-1 px-2  bg-white font-poppins rounded-r-md border-neutral-200 border-2 border-l-0 text-sm
-                    focus:outline-none "
-        />
-      </div>
+      <SearchFilter
+        searchFilter={props.searchFilter}
+        handleSearchFilter={props.handleSearchFilter}
+        labelValue={[
+          { label: "Name", value: "achievement_name" },
+          { label: "Type", value: "achievement_type" },
+          { label: "Goal", value: "goal" },
+        ]}
+      />
 
-      <div className="p-2 bg-white font-poppins rounded-md shadow-md whitespace-nowrap cstm-flex-row">
-        <div className="bg-neutral-50 p-1 px-2 rounded-l-md outline-none border-neutral-200 border-2 text-sm">
-          <p>Type</p>
-        </div>
-        <input
-          className="p-1 px-2  bg-white font-poppins rounded-r-md border-neutral-200 border-2 border-l-0 text-sm
-                    focus:outline-none "
-        />
-      </div>
+      <SortFilter
+        sortFilter={props.sortFilter}
+        handleSortFilter={props.handleSortFilter}
+        labelValue={[
+          { label: "Name", value: "achievement_name" },
+          { label: "Type", value: "achievement_type" },
+          { label: "Goal", value: "goal" },
+          { label: "Date", value: "date_added" },
+        ]}
+      />
 
-      <div className="p-2 bg-white font-poppins rounded-md shadow-md whitespace-nowrap cstm-flex-row">
-        <div className="bg-neutral-50 p-1 px-2 rounded-l-md outline-none border-neutral-200 border-2 text-sm">
-          <p>Goal</p>
-        </div>
-        <input
-          className="p-1 px-2  bg-white font-poppins rounded-r-md border-neutral-200 border-2 border-l-0 text-sm
-                    focus:outline-none "
-        />
-      </div>
+      <RangeFilter
+        fromLabel="Goal From"
+        handleRangeFilter={props.handleGoalRangeFilter}
+        fromRange={props.goalRangeFilter.from}
+        type="number"
+        toLabel="Goal To"
+        toRange={props.goalRangeFilter.to}
+      />
 
-      <div className="p-2 bg-white font-poppins rounded-md shadow-md whitespace-nowrap">
-        <select className="bg-neutral-50 p-1 px-2 rounded-l-md outline-none border-neutral-200 border-2 text-sm">
-          <option>Name</option>
-          <option>Type</option>
-          <option>Goal</option>
-          <option>Date Added</option>
-        </select>
-        <select
-          className="p-1 px-2  bg-white font-poppins rounded-r-md border-neutral-200 border-2 border-l-0 text-sm
-                    focus:outline-none "
-        >
-          <option>Ascending</option>
-          <option>Descending</option>
-        </select>
-      </div>
-
-      <div className="p-2 bg-white font-poppins rounded-md shadow-md whitespace-nowrap cstm-flex-row">
-        <div className="bg-neutral-50 p-1 px-2 rounded-l-md outline-none border-neutral-200 border-2 text-sm">
-          <p>Date Added</p>
-        </div>
-        <input
-          className="px-2 p-1 bg-white font-poppins rounded-r-md border-neutral-200 border-2 border-l-0 text-sm
-                    focus:outline-none "
-          type="date"
-        />
-      </div>
+      <RangeFilter
+        fromLabel="Date From"
+        handleRangeFilter={props.handleDateRangeFilter}
+        fromRange={props.dateRangeFilter.from}
+        type="date"
+        toLabel="Date To"
+        toRange={props.dateRangeFilter.to}
+      />
     </div>
   );
 };

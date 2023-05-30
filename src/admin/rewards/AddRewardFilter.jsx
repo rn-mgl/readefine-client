@@ -1,22 +1,26 @@
 import React from "react";
-import { IoAddOutline } from "react-icons/io5";
+import SelectFilter from "../../components/filter/SelectFilter";
 
-const AddRewardFilter = () => {
+const AddRewardFilter = (props) => {
   return (
-    <div
-      className="cstm-flex-row gap-2 justify-start relative w-full overflow-x-auto p-2 cstm-scrollbar
-                l-s:w-[70%] l-s:ml-auto
-                l-l:w-[80%]"
-    >
-      <div className="p-2 bg-white font-poppins rounded-md shadow-md whitespace-nowrap cstm-flex-row">
-        <div className="bg-neutral-50 p-1 px-2 rounded-l-md outline-none border-neutral-200 border-2 text-sm">
-          <p>Reward</p>
-        </div>
-        <input
-          className="p-1 px-2  bg-white font-poppins rounded-r-md border-neutral-200 border-2 border-l-0 text-sm
-                    focus:outline-none "
-        />
-      </div>
+    <div className="cstm-flex-row gap-2 justify-start relative w-full overflow-x-auto py-2 cstm-scrollbar">
+      <SelectFilter
+        onChange={props.handleReward}
+        selectValue={props.reward.type}
+        name="type"
+        label="Type"
+        labelValue={[
+          { label: "Sessions", value: "user_session" },
+          { label: "Read Stories", value: "read_story" },
+          { label: "Answered Dangles", value: "answered_dangle" },
+          { label: "Answered Deciphers", value: "answered_decipher" },
+          { label: "Answered Riddles", value: "answered_riddles" },
+          { label: "Dangle Score", value: "answered_dangle" },
+          { label: "Decipher Score", value: "answered_decipher" },
+          { label: "Riddle Score", value: "answered_riddles" },
+          { label: "Lexile Growth", value: "user" },
+        ]}
+      />
     </div>
   );
 };

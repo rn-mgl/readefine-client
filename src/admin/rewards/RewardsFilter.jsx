@@ -1,8 +1,11 @@
 import React from "react";
 import { IoAddOutline } from "react-icons/io5";
 import Link from "next/link";
+import SearchFilter from "../../components/filter/SearchFilter";
+import SortFilter from "../../components/filter/SortFilter";
+import RangeFilter from "../../components/filter/RangeFilter";
 
-const RewardsFilter = () => {
+const RewardsFilter = (props) => {
   return (
     <div
       className="cstm-flex-row gap-2 justify-start relative w-full overflow-x-auto p-2 cstm-scrollbar
@@ -16,50 +19,33 @@ const RewardsFilter = () => {
         <IoAddOutline className="text-prmColor cursor-pointer scale-150" />
       </Link>
 
-      <div className="p-2 bg-white font-poppins rounded-md shadow-md whitespace-nowrap cstm-flex-row">
-        <div className="bg-neutral-50 p-1 px-2 rounded-l-md outline-none border-neutral-200 border-2 text-sm">
-          <p>Name</p>
-        </div>
-        <input
-          className="p-1 px-2  bg-white font-poppins rounded-r-md border-neutral-200 border-2 border-l-0 text-sm
-                    focus:outline-none "
-        />
-      </div>
+      <SearchFilter
+        handleSearchFilter={props.handleSearchFilter}
+        searchFilter={props.searchFilter}
+        labelValue={[
+          { label: "Name", value: "reward_name" },
+          { label: "Type", value: "reward_type" },
+        ]}
+      />
 
-      <div className="p-2 bg-white font-poppins rounded-md shadow-md whitespace-nowrap cstm-flex-row">
-        <div className="bg-neutral-50 p-1 px-2 rounded-l-md outline-none border-neutral-200 border-2 text-sm">
-          <p>Type</p>
-        </div>
-        <input
-          className="p-1 px-2  bg-white font-poppins rounded-r-md border-neutral-200 border-2 border-l-0 text-sm
-                    focus:outline-none "
-        />
-      </div>
+      <SortFilter
+        handleSortFilter={props.handleSortFilter}
+        sortFilter={props.sortFilter}
+        labelValue={[
+          { label: "Name", value: "reward_name" },
+          { label: "Date", value: "date_added" },
+          { label: "Type", value: "reward_type" },
+        ]}
+      />
 
-      <div className="p-2 bg-white font-poppins rounded-md shadow-md whitespace-nowrap">
-        <select className="bg-neutral-50 p-1 px-2 rounded-l-md outline-none border-neutral-200 border-2 text-sm">
-          <option>Name</option>
-          <option>Date Added</option>
-        </select>
-        <select
-          className="p-1 px-2  bg-white font-poppins rounded-r-md border-neutral-200 border-2 border-l-0 text-sm
-                    focus:outline-none "
-        >
-          <option>Ascending</option>
-          <option>Descending</option>
-        </select>
-      </div>
-
-      <div className="p-2 bg-white font-poppins rounded-md shadow-md whitespace-nowrap cstm-flex-row">
-        <div className="bg-neutral-50 p-1 px-2 rounded-l-md outline-none border-neutral-200 border-2 text-sm">
-          <p>Date Added</p>
-        </div>
-        <input
-          className="px-2 p-1 bg-white font-poppins rounded-r-md border-neutral-200 border-2 border-l-0 text-sm
-                    focus:outline-none "
-          type="date"
-        />
-      </div>
+      <RangeFilter
+        fromLabel="Date From"
+        handleRangeFilter={props.handleDateRangeFilter}
+        fromRange={props.dateRangeFilter.from}
+        type="date"
+        toLabel="Date To"
+        toRange={props.dateRangeFilter.to}
+      />
     </div>
   );
 };

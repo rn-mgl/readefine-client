@@ -79,18 +79,18 @@ const AdminDashboard = () => {
           to="/controller/tests"
         />
         <DashboardCards
-          image={DashboardCardImage5}
-          label="Achievements & Tasks"
-          subLabel="updated by: name"
-          count={counts.achievementCount}
-          to="/controller/achievements"
-        />
-        <DashboardCards
           image={DashboardCardImage6}
           label="Rewards"
           subLabel="updated by: name"
           count={counts.rewardCount}
           to="/controller/rewards"
+        />
+        <DashboardCards
+          image={DashboardCardImage5}
+          label="Achievements & Tasks"
+          subLabel="updated by: name"
+          count={counts.achievementCount}
+          to="/controller/achievements"
         />
         <DashboardCards
           image={DashboardCardImage7}

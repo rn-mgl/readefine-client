@@ -4,13 +4,17 @@ import Link from "next/link";
 
 const AchievementsCards = (props) => {
   return (
-    <div
-      className="bg-white p-5 rounded-2xl cstm-flex-col gap-4
-                t:w-56
-                l-s:w-52
-                l-l:w-fit"
-    >
-      <Image src={props.image} alt="temp" className="rounded-2xl" priority />
+    <div className="bg-white p-5 rounded-2xl cstm-flex-col gap-4 w-fit">
+      <div className="w-full h-fit cstm-flex-col overflow-clip  bg-white">
+        <Image
+          src={props.image}
+          alt="temp"
+          width={220}
+          height={200}
+          priority
+          className="rounded-2xl"
+        />
+      </div>
       <div className="cstm-flex-row w-full">
         <div className="cstm-flex-col gap-1 font-poppins mr-auto items-start">
           <p

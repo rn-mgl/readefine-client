@@ -57,8 +57,6 @@ const AdminStories = () => {
   };
 
   const getAllStories = React.useCallback(async () => {
-    const { from } = lexileRangeFilter;
-
     try {
       const { data } = await axios.get(`${url}/admin_story/`, {
         headers: { Authorization: user.token },
