@@ -10,15 +10,8 @@ const AddRewardFilter = (props) => {
         name="type"
         label="Type"
         labelValue={[
-          { label: "Sessions", value: "user_session" },
-          { label: "Read Stories", value: "read_story" },
-          { label: "Answered Dangles", value: "answered_dangle" },
-          { label: "Answered Deciphers", value: "answered_decipher" },
-          { label: "Answered Riddles", value: "answered_riddles" },
-          { label: "Dangle Score", value: "answered_dangle" },
-          { label: "Decipher Score", value: "answered_decipher" },
-          { label: "Riddle Score", value: "answered_riddles" },
-          { label: "Lexile Growth", value: "user" },
+          { label: "Badge", value: "badge" },
+          { label: "Trophy", value: "trophy" },
         ]}
       />
     </div>
