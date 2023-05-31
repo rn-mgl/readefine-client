@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import AddStoryFilter from "@/src/components/src/admin/stories/AddStoryFilter";
-import AdminPageHeader from "@/src/components/src/admin/global/PageHeader";
+import AdminPageHeader from "@/src/src/admin/global/PageHeader";
 import AddStoryPage from "@/src/components/src/admin/stories/AddStoryPage";
 import axios from "axios";
 import FilePreview from "@/src/components/src/components/global/FilePreview";

@@ -1,13 +1,13 @@
 "use client";
 import React from "react";
-import AdminPageHeader from "@/src/components/src/admin/global/PageHeader";
-import FilePreview from "@/src/components/src/components/global/FilePreview";
+import AdminPageHeader from "@/src/src/admin/global/PageHeader";
+import FilePreview from "@/src/src/components/global/FilePreview";
 import AddRewardFilter from "@/src/src/admin/rewards/AddRewardFilter";
 
 import * as fileFns from "../../../../src/functions/fileFns";
 import { BiImage } from "react-icons/bi";
 import { useSession } from "next-auth/react";
-import { wordCount } from "@/src/components/src/functions/wordCount";
+import { wordCount } from "@/src/src/functions/wordCount";
 import { useGlobalContext } from "@/src/components/context";
 import axios from "axios";
 

@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import AdminPageHeader from "@/src/components/src/admin/global/PageHeader";
+import AdminPageHeader from "@/src/src/admin/global/PageHeader";
 import AddAchievementFilter from "@/src/src/admin/achievements/AddAchievementFilter";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
