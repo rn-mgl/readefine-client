@@ -8,7 +8,7 @@ import * as fileFns from "../../../../src/functions/fileFns";
 import { BiImage } from "react-icons/bi";
 import { useSession } from "next-auth/react";
 import { wordCount } from "@/src/src/functions/wordCount";
-import { useGlobalContext } from "@/src/components/context";
+import { useGlobalContext } from "@/src/context";
 import axios from "axios";
 
 const AddReward = () => {

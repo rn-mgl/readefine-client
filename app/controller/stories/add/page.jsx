@@ -1,14 +1,14 @@
 "use client";
 import React from "react";
-import AddStoryFilter from "@/src/components/src/admin/stories/AddStoryFilter";
+import AddStoryFilter from "@/src/src/admin/stories/AddStoryFilter";
 import AdminPageHeader from "@/src/src/admin/global/PageHeader";
-import AddStoryPage from "@/src/components/src/admin/stories/AddStoryPage";
+import AddStoryPage from "@/src/src/admin/stories/AddStoryPage";
 import axios from "axios";
 import FilePreview from "@/src/src/components/global/FilePreview";
 import { IoAddOutline } from "react-icons/io5";
 
 import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/src/components/context";
+import { useGlobalContext } from "@/src/context";
 import { useRouter } from "next/navigation";
 
 import * as fileFns from "../../../../src/functions/fileFns";
