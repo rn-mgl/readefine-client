@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import AdminPageHeader from "@/src/components/src/admin/global/PageHeader";
+import AdminPageHeader from "@/src/src/admin/global/PageHeader";
 import AddTestPage from "@/src/components/src/admin/tests/AddTestPage";
 
 import { IoAddOutline } from "react-icons/io5";

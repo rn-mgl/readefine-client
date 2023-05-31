@@ -4,7 +4,7 @@ import AddStoryFilter from "@/src/components/src/admin/stories/AddStoryFilter";
 import AdminPageHeader from "@/src/src/admin/global/PageHeader";
 import AddStoryPage from "@/src/components/src/admin/stories/AddStoryPage";
 import axios from "axios";
-import FilePreview from "@/src/components/src/components/global/FilePreview";
+import FilePreview from "@/src/src/components/global/FilePreview";
 import { IoAddOutline } from "react-icons/io5";
 
 import { useSession } from "next-auth/react";
