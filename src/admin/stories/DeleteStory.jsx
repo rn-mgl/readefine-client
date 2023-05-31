@@ -1,10 +1,11 @@
 "use client";
-import { useGlobalContext } from "@/src/components/context";
+import React from "react";
 import axios from "axios";
+
+import { IoClose } from "react-icons/io5";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import React from "react";
-import { IoClose } from "react-icons/io5";
+import { useGlobalContext } from "@/src/context";
 
 const DeleteStory = (props) => {
   const [confirmation, setConfirmation] = React.useState("");
@@ -53,7 +54,7 @@ const DeleteStory = (props) => {
       >
         <form
           onSubmit={(e) => deleteStory(e)}
-          className="w-11/12 rounded-md bg-white min-h-[15rem] shadow-md my-auto cstm-flex-col justify-start p-2 text-center gap-5
+          className="w-11/12 rounded-md bg-white min-h-[15rem] shadow-md my-auto cstm-flex-col justify-start p-2 text-center gap-5 absolute
                     t:w-7/12
                     l-s:w-6/12
                     l-l:w-4/12"
@@ -61,7 +62,7 @@ const DeleteStory = (props) => {
           <div className="w-full">
             <p className="text-prmColor font-bold">Delete Story?</p>
             <p className="text-xs font-light">
-              <span className="font-semibold">note:</span> once you delete a story, it cannot
+              <span className="font-semibold">note:</span> once you delete a story, it cannot be
               retrieved.
             </p>
           </div>

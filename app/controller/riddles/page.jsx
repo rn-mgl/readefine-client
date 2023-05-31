@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import AdminPageHeader from "@/src/components/src/admin/global/PageHeader";
+import AdminPageHeader from "@/src/src/admin/global/PageHeader";
 import RiddlesFilter from "@/src/src/admin/riddles/RiddlesFilter";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
@@ -20,8 +20,6 @@ const AdminRiddles = () => {
 
   const { url } = useGlobalContext();
   const user = session?.user?.name;
-
-  console.log(dateRangeFilter);
 
   const handleSearchFilter = ({ name, value }) => {
     setSearchFilter((prev) => {
@@ -54,12 +52,35 @@ const AdminRiddles = () => {
     return (
       <tr
         key={riddle.riddle_id}
-        className="p-2 cstm-flex-row justify-start gap-10 text-center w-full "
+        className="p-2 cstm-flex-col justify-start gap-5 text-center w-full rounded-md bg-accntColor
+                  t:bg-white t:cstm-flex-row"
       >
-        <td className="whitespace-pre-wrap text-justify max-h-32 truncate">{riddle.riddle}</td>
-        <td>{riddle.answer}</td>
-        <td>{localizeDate(riddle.date_added)}</td>
-        <td className=" cstm-flex-col">
+        <td className="t:hidden">
+          <p className="text-prmColor font-bold text-sm t:hidden">Riddle</p>
+        </td>
+
+        <td className="whitespace-pre-wrap text-justify t:w-[40%]">{riddle.riddle}</td>
+
+        <td className="t:hidden">
+          <div className="cstm-separator t:hidden" />
+        </td>
+
+        <td className="t:hidden">
+          <p className="text-prmColor font-bold text-sm t:hidden">Answer</p>
+        </td>
+
+        <td className="t:w-[20%]">{riddle.answer}</td>
+
+        <td className="t:hidden">
+          <div className="cstm-separator t:hidden" />
+        </td>
+
+        <td className="t:hidden">
+          <p className="text-prmColor font-bold text-sm t:hidden">Date Added</p>
+        </td>
+
+        <td className="t:w-[20%]">{localizeDate(riddle.date_added)}</td>
+        <td className="t:w-[20%] cstm-flex-col">
           <Link
             href={`/controller/riddles/${riddle.riddle_id}`}
             className="w-full text-center font-poppins text-sm font-normal bg-prmColor text-accntColor rounded-full p-2"
@@ -97,7 +118,7 @@ const AdminRiddles = () => {
   }, [user, url, getRiddles]);
 
   return (
-    <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
+    <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-2 justify-start">
       <AdminPageHeader subHeader="Readefine" mainHeader="Riddles" />
       <RiddlesFilter
         handleSearchFilter={handleSearchFilter}
@@ -109,20 +130,21 @@ const AdminRiddles = () => {
       />
 
       <table
-        className="table-fixed p-4 rounded-md cstm-flex-col overflow-auto w-full h-[70vh] justify-start items-start bg-white text-sm gap-5 
+        className="table-fixed p-4 rounded-md cstm-flex-col overflow-auto w-full h-[80vh] justify-start items-start bg-white text-sm 
+                t:gap-5 
                 l-s:w-[70%] l-s:ml-auto border-collapse
                 l-l:w-[80%]"
       >
         <thead className="w-full ">
-          <tr className="p-2 cstm-flex-row justify-start gap-10 text-center text-prmColor w-full">
-            <th>Riddle Statement</th>
-            <th>Answer</th>
-            <th>Date Added</th>
-            <th>Link</th>
+          <tr className="p-2 cstm-flex-row justify-start gap-10 text-center text-prmColor w-full hidden t:flex">
+            <th className="w-[40%]">Riddle Statement</th>
+            <th className="w-[20%]">Answer</th>
+            <th className="w-[20%]">Date Added</th>
+            <th className="w-[20%]">Link</th>
           </tr>
         </thead>
 
-        <tbody className="w-full">{riddleRow}</tbody>
+        <tbody className="w-full cstm-flex-col gap-5">{riddleRow}</tbody>
       </table>
     </div>
   );

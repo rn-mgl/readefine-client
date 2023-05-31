@@ -1,6 +1,7 @@
 import React from "react";
 
 const AdminPageHeader = (props) => {
+  const fontColor = props.mainHeader?.includes("Edit") ? "text-scndColor" : "text-prmColor";
   return (
     <div
       className="text-center font-poppins w-full
@@ -14,8 +15,8 @@ const AdminPageHeader = (props) => {
         {props.subHeader}
       </p>
       <p
-        className="font-bold text-xl text-prmColor
-                  t:text-2xl"
+        className={`font-bold text-xl ${fontColor}
+                  t:text-2xl`}
       >
         {props.mainHeader}
       </p>

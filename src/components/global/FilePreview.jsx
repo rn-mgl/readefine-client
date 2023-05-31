@@ -4,16 +4,13 @@ import { IoClose } from "react-icons/io5";
 
 const FilePreview = (props) => {
   return (
-    <div
-      className="w-full cstm-flex-col rounded-2xl p-2 gap-2
-                t:w-72"
-    >
+    <div className="w-full cstm-flex-col rounded-2xl p-2 gap-2 t:w-80">
       <Image
         src={props.src}
         alt="preview"
         className="w-fit rounded-2xl overflow-clip"
-        width={100}
-        height={100}
+        width={300}
+        height={300}
       />
       <div className="w-full cstm-flex-row gap-5">
         {props.purpose && props.name ? (

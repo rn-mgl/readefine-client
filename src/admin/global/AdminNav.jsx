@@ -10,7 +10,7 @@ import { AiFillHome, AiFillBook } from "react-icons/ai";
 import { HiUser } from "react-icons/hi2";
 import { GiAchievement } from "react-icons/gi";
 import { usePathname } from "next/navigation";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 
 const AdminNav = () => {
   const { data: session } = useSession();
@@ -19,6 +19,10 @@ const AdminNav = () => {
   const user = session?.user?.name;
 
   const path = usePathname();
+
+  const logOut = () => {
+    signOut({ callbackUrl: "/", redirect: true });
+  };
 
   const toggleOpenNav = () => {
     setIsOpen((prev) => !prev);
@@ -119,10 +123,11 @@ const AdminNav = () => {
               {user?.name} {user?.surname}
             </p>
           </div>
-
-          <Link href="/" className="ml-auto ">
-            <BiLogOut className="scale-150" />
-          </Link>
+          <div className="ml-auto hover:bg-black hover:bg-opacity-10 rounded-full transition-all p-2">
+            <div onClick={logOut}>
+              <BiLogOut className="scale-125" />
+            </div>
+          </div>
         </div>
       </div>
     </>

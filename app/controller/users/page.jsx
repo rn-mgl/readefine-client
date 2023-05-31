@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import AdminPageHeader from "@/src/components/src/admin/global/PageHeader";
+import AdminPageHeader from "@/src/src/admin/global/PageHeader";
 import UsersFilter from "@/src/components/src/admin/users/UsersFilter";
 import axios from "axios";
 import { useGlobalContext } from "@/src/components/context";

@@ -43,6 +43,31 @@ export const selectedPageFileViewer = (page, e, setState) => {
   );
 };
 
+export const selectedUploadFileViewer = (page, e, setState) => {
+  const file = e.target.files;
+
+  if (!file || file.length < 1) {
+    return null;
+  }
+
+  const details = file[0];
+  const name = details.name;
+  const src = URL.createObjectURL(details);
+
+  setState((prev) =>
+    prev.map((p) => {
+      if (p.page === page) {
+        return {
+          ...p,
+          file: { src, name },
+          rawFile: file,
+        };
+      }
+      return p;
+    })
+  );
+};
+
 export const clearFiles = (setState) => {
   setState((prev) => {
     return {
@@ -59,6 +84,32 @@ export const clearPageFile = (page, setState) => {
       if (p.pageNumber === page) {
         return {
           ...p,
+          file: { src: null, name: null },
+          rawFile: null,
+        };
+      }
+      return p;
+    })
+  );
+};
+
+export const clearUpload = (setState) => {
+  setState((prev) => {
+    return {
+      ...prev,
+      file: { name: null, src: null },
+      rawFile: null,
+    };
+  });
+};
+
+export const clearPageUpload = (page, setState) => {
+  setState((prev) =>
+    prev.map((p) => {
+      if (p.page === page) {
+        return {
+          ...p,
+          image: null,
           file: { src: null, name: null },
           rawFile: null,
         };

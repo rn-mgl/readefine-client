@@ -8,7 +8,7 @@ import RangeFilter from "../../components/filter/RangeFilter";
 const RiddlesFilter = (props) => {
   return (
     <div
-      className="cstm-flex-row gap-2 justify-start relative w-full overflow-x-auto p-2
+      className="cstm-flex-row gap-2 justify-start relative w-full overflow-x-auto py-2
                 l-s:w-[70%] l-s:ml-auto
                 l-l:w-[80%]"
     >

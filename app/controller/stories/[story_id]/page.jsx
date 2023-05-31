@@ -1,17 +1,17 @@
 "use client";
 import React from "react";
 
-import AdminPageHeader from "@/src/components/src/admin/global/PageHeader";
-import StoryPage from "@/src/components/src/components/stories/StoryPage";
+import AdminPageHeader from "@/src/src/admin/global/PageHeader";
+import StoryPage from "@/src/src/components/stories/StoryPage";
 import axios from "axios";
 
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/src/components/context";
+import { useGlobalContext } from "@/src/context";
 import { BsArrowLeft } from "react-icons/bs";
 import Link from "next/link";
-import DeleteStory from "@/src/components/src/admin/stories/DeleteStory";
+import DeleteStory from "@/src/src/admin/stories/DeleteStory";
 
 const SingleStory = ({ params }) => {
   const [story, setStory] = React.useState({});
@@ -118,11 +118,11 @@ const SingleStory = ({ params }) => {
           href={`/controller/stories/edit/${params.story_id}`}
           className="hover:bg-black hover:bg-opacity-10 p-2 rounded-full"
         >
-          <AiFillEdit className=" text-prmColor" />
+          <AiFillEdit className=" text-prmColor cursor-pointer" />
         </Link>
 
         <div className="hover:bg-black hover:bg-opacity-10 p-2 rounded-full">
-          <AiFillDelete className=" text-prmColor" onClick={handleCanDeleteStory} />
+          <AiFillDelete className="text-prmColor cursor-pointer" onClick={handleCanDeleteStory} />
         </div>
       </div>
 
@@ -132,7 +132,7 @@ const SingleStory = ({ params }) => {
                     l-l:w-[80%]"
       >
         <div
-          className="hover:bg-black hover:bg-opacity-10 p-2 rounded-full absolute bottom-3
+          className="hover:bg-black hover:bg-opacity-10 p-2 rounded-full absolute bottom-3 
                       l-s:bottom-2/4 l-s:-translate-y-2/4 z-20"
         >
           <BiChevronLeft
@@ -143,6 +143,7 @@ const SingleStory = ({ params }) => {
         </div>
 
         {storyPages}
+
         <div
           className="hover:bg-black hover:bg-opacity-10 p-2 rounded-full absolute bottom-3 right-5
                       l-s:bottom-2/4 l-s:-translate-y-2/4 z-20"
@@ -153,6 +154,8 @@ const SingleStory = ({ params }) => {
             onKeyDown={(e) => handleIncrement(e)}
           />
         </div>
+
+        <p className="absolute bottom-4 left-2/4 -translate-x-2/4 text-sm">{activePage}</p>
       </div>
     </div>
   );
