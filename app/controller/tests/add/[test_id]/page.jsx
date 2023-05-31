@@ -1,13 +1,13 @@
 "use client";
 import React from "react";
 import AdminPageHeader from "@/src/src/admin/global/PageHeader";
-import AddTestPage from "@/src/components/src/admin/tests/AddTestPage";
+import AddTestPage from "@/src/src/admin/tests/AddTestPage";
 
 import { IoAddOutline } from "react-icons/io5";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/src/components/context";
-import ActionLabel from "@/src/components/src/components/global/ActionLabel";
+import { useGlobalContext } from "@/src/context";
+import ActionLabel from "@/src/src/components/global/ActionLabel";
 import axios from "axios";
 
 const AddTest = ({ params }) => {

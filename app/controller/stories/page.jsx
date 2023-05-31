@@ -90,7 +90,7 @@ const AdminStories = () => {
           lexile={story.lexile}
           genre={story.genre}
           visit={`/controller/stories/${story.story_id}`}
-          test={`/controller/tests/${story.story_id}`}
+          test={`/controller/tests/${story.test_id}`}
         />
       </React.Fragment>
     );

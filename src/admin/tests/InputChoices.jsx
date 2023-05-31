@@ -1,6 +1,6 @@
 import React from "react";
 
-const TestChoices = (props) => {
+const InputChoices = (props) => {
   const answerIdentifier = `answer${props.testNumber}`;
   return (
     <div className="cstm-flex-row gap-2 w-full">
@@ -36,4 +36,4 @@ const TestChoices = (props) => {
   );
 };
 
-export default TestChoices;
+export default InputChoices;

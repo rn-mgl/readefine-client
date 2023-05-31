@@ -1,5 +1,5 @@
 import React from "react";
-import TestChoices from "./TestChoices";
+import InputChoices from "./InputChoices";
 
 const AddTestPage = (props) => {
   const answerValue = props.page[`answer${props.testNumber}`];
@@ -28,28 +28,28 @@ const AddTestPage = (props) => {
         </div>
       </div>
       <div className="w-full h-full cstm-flex-col gap-2">
-        <TestChoices
+        <InputChoices
           checked={answerValue === props.page.choice1}
           choiceValue={props.page.choice1}
           handlePages={props.handlePages}
           testNumber={props.testNumber}
           name="choice1"
         />
-        <TestChoices
+        <InputChoices
           checked={answerValue === props.page.choice2}
           choiceValue={props.page.choice2}
           handlePages={props.handlePages}
           testNumber={props.testNumber}
           name="choice2"
         />
-        <TestChoices
+        <InputChoices
           checked={answerValue === props.page.choice3}
           choiceValue={props.page.choice3}
           handlePages={props.handlePages}
           testNumber={props.testNumber}
           name="choice3"
         />
-        <TestChoices
+        <InputChoices
           checked={answerValue === props.page.choice4}
           choiceValue={props.page.choice4}
           handlePages={props.handlePages}

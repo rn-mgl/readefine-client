@@ -6,7 +6,7 @@ import AchievementsFilter from "@/src/src/admin/achievements/AchievementsFilter"
 import AchievementsCards from "@/src/src/admin/achievements/AchievementsCards";
 import { inputDate } from "@/src/src/functions/localDate";
 import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/src/components/context";
+import { useGlobalContext } from "@/src/context";
 import axios from "axios";
 import { typeConversion } from "@/src/src/functions/typeConversion";
 

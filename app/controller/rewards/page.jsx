@@ -6,7 +6,7 @@ import RewardsCards from "@/src/src/admin/rewards/RewardsCards";
 
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/src/components/context";
+import { useGlobalContext } from "@/src/context";
 
 import { inputDate } from "@/src/src/functions/localDate";
 import axios from "axios";
