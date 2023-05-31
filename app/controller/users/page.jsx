@@ -1,9 +1,9 @@
 "use client";
 import React from "react";
 import AdminPageHeader from "@/src/src/admin/global/PageHeader";
-import UsersFilter from "@/src/components/src/admin/users/UsersFilter";
+import UsersFilter from "@/src/src/admin/users/UsersFilter";
 import axios from "axios";
-import { useGlobalContext } from "@/src/components/context";
+import { useGlobalContext } from "@/src/context";
 import { localizeDate, inputDate } from "@/src/src/functions/localDate";
 import { useSession } from "next-auth/react";
 

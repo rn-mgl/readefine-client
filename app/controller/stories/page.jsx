@@ -8,7 +8,7 @@ import axios from "axios";
 
 import { useSession } from "next-auth/react";
 import { inputDate } from "@/src/src/functions/localDate";
-import { useGlobalContext } from "@/src/components/context";
+import { useGlobalContext } from "@/src/context";
 
 const AdminStories = () => {
   const [stories, setStories] = React.useState([]);

@@ -1,10 +1,11 @@
 "use client";
-import UnverifiedImage from "@/src/components/src/components/verify/UnverifiedImage";
-import VerifiedImage from "@/src/components/src/components/verify/VerifiedImage";
-import VerifyingImage from "@/src/components/src/components/verify/VerifyingImage";
+import UnverifiedImage from "@/src/src/components/verify/UnverifiedImage";
+import VerifiedImage from "@/src/src/components/verify/VerifiedImage";
+import VerifyingImage from "@/src/src/components/verify/VerifyingImage";
 import React from "react";
-import { useGlobalContext } from "@/src/components/context";
 import axios from "axios";
+
+import { useGlobalContext } from "@/src/context";
 import { usePathname } from "next/navigation";
 
 const Verify = () => {
