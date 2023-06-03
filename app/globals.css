@@ -59,3 +59,7 @@ td:not(:first-of-type),
 th:not(:first-of-type) {
   min-width: 7rem;
 }
+
+input[type="password"]::-ms-reveal {
+  display: none;
+}

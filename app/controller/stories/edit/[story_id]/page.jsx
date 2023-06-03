@@ -3,8 +3,9 @@ import React from "react";
 import AdminPageHeader from "@/src/src/admin/global/PageHeader";
 import axios from "axios";
 import FilePreview from "@/src/src/components/global/FilePreview";
-import { IoAddOutline } from "react-icons/io5";
 
+import { IoAddOutline } from "react-icons/io5";
+import { BsArrowLeft } from "react-icons/bs";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { useRouter } from "next/navigation";
@@ -12,6 +13,7 @@ import { useRouter } from "next/navigation";
 import * as fileFns from "../../../../../src/functions/fileFns";
 import EditStoryPage from "@/src/src/admin/stories/EditStoryPage";
 import EditStoryFilter from "@/src/src/admin/stories/EditStoryFilter";
+import Link from "next/link";
 
 const EditStory = ({ params }) => {
   const [story, setStory] = React.useState({});
@@ -155,7 +157,7 @@ const EditStory = ({ params }) => {
   }, [getPages, user]);
 
   return (
-    <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
+    <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-2 justify-start">
       <AdminPageHeader subHeader="Stories" mainHeader="Edit Story" />
 
       <form
@@ -163,6 +165,13 @@ const EditStory = ({ params }) => {
                 l-l:w-[80%]"
         onSubmit={(e) => editBook(e)}
       >
+        <Link
+          type="button"
+          href="/controller/stories"
+          className="w-fit hover:bg-black hover:bg-opacity-10 p-2 rounded-full mr-auto"
+        >
+          <BsArrowLeft className=" text-prmColor" />
+        </Link>
         <EditStoryFilter
           addPage={addPage}
           handleStory={handleStory}

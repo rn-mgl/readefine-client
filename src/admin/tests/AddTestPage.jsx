@@ -1,5 +1,6 @@
 import React from "react";
 import InputChoices from "./InputChoices";
+import { AiFillDelete } from "react-icons/ai";
 
 const AddTestPage = (props) => {
   const answerValue = props.page[`answer${props.testNumber}`];

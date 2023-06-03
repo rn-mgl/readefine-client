@@ -25,6 +25,8 @@ const AdminStories = () => {
 
   const user = session?.user?.name;
 
+  console.log(stories);
+
   const handleSearchFilter = ({ name, value }) => {
     setSearchFilter((prev) => {
       return {

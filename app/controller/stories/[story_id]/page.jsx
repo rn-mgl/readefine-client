@@ -16,19 +16,19 @@ import DeleteStory from "@/src/src/admin/stories/DeleteStory";
 const SingleStory = ({ params }) => {
   const [story, setStory] = React.useState({});
   const [pages, setPages] = React.useState([]);
-  const [activePage, setActivePage] = React.useState(0);
+  const [activePage, setActivePage] = React.useState(1);
   const [canDeleteStory, setCanDeleteStory] = React.useState(false);
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
   const user = session?.user?.name;
 
-  const handleIncrement = (e) => {
-    setActivePage((prev) => (prev + 1 > pages.length - 1 ? 0 : prev + 1));
+  const handleIncrement = () => {
+    setActivePage((prev) => (prev + 1 > pages.length ? 0 : prev + 1));
   };
 
-  const handleDecrement = (e) => {
-    setActivePage((prev) => (prev - 1 < 0 ? pages.length - 1 : prev - 1));
+  const handleDecrement = () => {
+    setActivePage((prev) => (prev - 1 < 0 ? pages.length : prev - 1));
   };
 
   const handleCanDeleteStory = () => {
@@ -45,7 +45,7 @@ const SingleStory = ({ params }) => {
           title={story?.title}
           activePage={activePage}
           page={page}
-          index={index}
+          index={index + 1}
           maxPage={pages.length}
         />
       </div>
@@ -99,7 +99,7 @@ const SingleStory = ({ params }) => {
         <DeleteStory
           confirmation={story?.title}
           handleCanDeleteStory={handleCanDeleteStory}
-          story_id={story?.story_id}
+          storyId={story?.story_id}
         />
       ) : null}
 

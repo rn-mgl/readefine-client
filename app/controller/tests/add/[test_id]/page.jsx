@@ -30,7 +30,6 @@ const AddTest = ({ params }) => {
   const user = session?.user?.name;
 
   const handlePages = (number, { name, value }) => {
-    console.log(name, value);
     setPages((prev) =>
       prev.map((t) => {
         if (t.testNumber === number) {
@@ -45,10 +44,12 @@ const AddTest = ({ params }) => {
   };
 
   const addPage = () => {
-    const answer = `answer${pages.length + 1}`;
+    const pageLen = pages ? pages.length + 1 : 1;
+    const answer = `answer${pageLen}`;
+    if (pageLen >= 10) return;
     setPages((prev) => {
       const newPage = {
-        testNumber: pages.length + 1,
+        testNumber: pageLen,
         testQuestion: "",
         choice1: "choice 1",
         choice2: "choice 2",
@@ -56,13 +57,19 @@ const AddTest = ({ params }) => {
         choice4: "choice 4",
         [answer]: null,
       };
-
-      return [...prev, newPage];
+      if (prev) {
+        return [...prev, newPage];
+      } else {
+        return [newPage];
+      }
     });
   };
 
   const createTest = async (e) => {
     e.preventDefault();
+
+    if (pages.length < 10) return;
+
     try {
       const { data } = await axios.post(
         `${url}/admin_test`,
@@ -78,10 +85,15 @@ const AddTest = ({ params }) => {
     }
   };
 
-  const testPages = pages.map((page) => {
+  const testPages = pages?.map((page) => {
     return (
       <React.Fragment key={page.testNumber}>
-        <AddTestPage handlePages={handlePages} testNumber={page.testNumber} page={page} />
+        <AddTestPage
+          handlePages={handlePages}
+          testNumber={page.testNumber}
+          page={page}
+          deletePage={() => deletePage(page.testNumber)}
+        />
       </React.Fragment>
     );
   });

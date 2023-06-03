@@ -29,6 +29,12 @@ module.exports = {
           "50%": { opacity: "0.5" },
           "100%": { opacity: "1", transform: "translateY(0%)" },
         },
+
+        slideDown: {
+          "0%": { transform: "translateY(-100%)" },
+          "80%": { transform: "translateY(10%)" },
+          "100%": { transform: "translateY(0%)" },
+        },
       },
       fontFamily: {
         poppins: ["var(--font-poppins)"],
@@ -36,6 +42,7 @@ module.exports = {
       animation: {
         float: "float 8s ease-in-out infinite alternate",
         fadeIn: "fadeIn 1s ease-in-out",
+        slideDown: "slideDown 1s ease-in-out",
       },
     },
   },

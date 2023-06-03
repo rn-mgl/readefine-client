@@ -7,7 +7,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useGlobalContext } from "@/src/context";
 
-const DeleteStory = (props) => {
+const DeleteTest = (props) => {
   const [confirmation, setConfirmation] = React.useState("");
 
   const { data: session } = useSession();
@@ -22,7 +22,7 @@ const DeleteStory = (props) => {
 
   const router = useRouter();
 
-  const deleteStory = async (e) => {
+  const deleteTest = async (e) => {
     e.preventDefault();
 
     if (confirmation !== props.confirmation) {
@@ -30,7 +30,7 @@ const DeleteStory = (props) => {
     }
 
     try {
-      const { data } = await axios.delete(`${url}/admin_story/${props.storyId}`, {
+      const { data } = await axios.delete(`${url}/admin_test/${props.testId}`, {
         headers: { Authorization: user.token },
       });
 
@@ -45,7 +45,7 @@ const DeleteStory = (props) => {
   return (
     <div className="w-full min-h-screen backdrop-blur-md fixed z-30 top-0 left-0 p-5 cstm-flex-col justify-start">
       <div className="hover:bg-black hover:bg-opacity-10 p-2 rounded-full ml-auto">
-        <IoClose onClick={props.handleCanDeleteStory} className="text-prmColor scale-150 " />
+        <IoClose onClick={props.handleCanDeleteTest} className="text-prmColor scale-150 " />
       </div>
 
       <div
@@ -53,16 +53,16 @@ const DeleteStory = (props) => {
                   l-l:w-[80%]"
       >
         <form
-          onSubmit={(e) => deleteStory(e)}
+          onSubmit={(e) => deleteTest(e)}
           className="w-11/12 rounded-md bg-white min-h-[15rem] shadow-md my-auto cstm-flex-col justify-start p-2 text-center gap-5 absolute
                     t:w-7/12
                     l-s:w-6/12
                     l-l:w-4/12"
         >
           <div className="w-full">
-            <p className="text-prmColor font-bold">Delete Story?</p>
+            <p className="text-prmColor font-bold">Delete Test?</p>
             <p className="text-xs font-light">
-              <span className="font-semibold">note:</span> once you delete a story, it cannot be
+              <span className="font-semibold">note:</span> once you delete a test, it cannot be
               retrieved.
             </p>
           </div>
@@ -96,4 +96,4 @@ const DeleteStory = (props) => {
   );
 };
 
-export default DeleteStory;
+export default DeleteTest;
