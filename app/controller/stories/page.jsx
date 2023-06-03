@@ -25,8 +25,6 @@ const AdminStories = () => {
 
   const user = session?.user?.name;
 
-  console.log(stories);
-
   const handleSearchFilter = ({ name, value }) => {
     setSearchFilter((prev) => {
       return {
@@ -84,6 +82,7 @@ const AdminStories = () => {
   }, [url, user, setStories, searchFilter, lexileRangeFilter, sortFilter, dateRangeFilter]);
 
   const storiesCards = stories.map((story) => {
+    const testId = story?.test_id ? story?.test_id : story.story_id;
     return (
       <React.Fragment key={story.story_id}>
         <StoriesCards
@@ -93,7 +92,7 @@ const AdminStories = () => {
           lexile={story.lexile}
           genre={story.genre}
           visit={`/controller/stories/${story.story_id}`}
-          test={`/controller/tests/${story.test_id}`}
+          test={`/controller/tests/${testId}`}
         />
       </React.Fragment>
     );

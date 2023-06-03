@@ -1,9 +1,18 @@
 import React from "react";
 import SelectFilter from "../../components/filter/SelectFilter";
+import Link from "next/link";
+import { BsArrowLeft } from "react-icons/bs";
 
 const AddRewardFilter = (props) => {
   return (
     <div className="cstm-flex-row gap-2 justify-start relative w-full overflow-x-auto py-2 cstm-scrollbar">
+      <Link
+        type="button"
+        href="/controller/rewards"
+        className="w-fit hover:bg-black hover:bg-opacity-10 p-2 rounded-full mr-auto"
+      >
+        <BsArrowLeft className=" text-prmColor" />
+      </Link>
       <SelectFilter
         onChange={props.handleReward}
         selectValue={props.reward.type}

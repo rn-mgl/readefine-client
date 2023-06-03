@@ -46,7 +46,7 @@ const AddTest = ({ params }) => {
   const addPage = () => {
     const pageLen = pages ? pages.length + 1 : 1;
     const answer = `answer${pageLen}`;
-    if (pageLen >= 10) return;
+    if (pageLen > 10) return;
     setPages((prev) => {
       const newPage = {
         testNumber: pageLen,
