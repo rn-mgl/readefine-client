@@ -12,10 +12,7 @@ const StoriesFilter = (props) => {
                 l-s:w-[70%] l-s:ml-auto
                 l-l:w-[80%]"
     >
-      <Link
-        href="/controller/stories/add"
-        className="hover:bg-black hover:bg-opacity-10 transition-all p-2 rounded-full"
-      >
+      <Link href="/controller/stories/add" className="cstm-bg-hover">
         <IoAddOutline className="text-prmColor cursor-pointer scale-150" />
       </Link>
 

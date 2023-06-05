@@ -5,12 +5,12 @@ import Link from "next/link";
 const RewardsCards = (props) => {
   return (
     <div className="bg-white p-5 rounded-2xl cstm-flex-col gap-4 w-fit">
-      <div className="w-full h-fit cstm-flex-col overflow-clip bg-white">
+      <div className="w-full h-fit cstm-flex-col overflow-clip bg-accntColor p-2 rounded-2xl">
         <Image
           src={props.image}
           alt="temp"
-          className="rounded-2xl"
-          width={240}
+          className="rounded-2xl drop-shadow-md"
+          width={250}
           height={200}
           priority
         />

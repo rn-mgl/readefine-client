@@ -207,21 +207,15 @@ const SingleTest = ({ params }) => {
           <b>note:</b> admin submissions are <b>not</b> recorded
         </p>
         <div className="cstm-flex-row w-full t:w-10/12 l-l:w-8/12">
-          <Link
-            href="/controller/tests"
-            className="w-fit hover:bg-black hover:bg-opacity-10 p-2 rounded-full mr-auto"
-          >
+          <Link href="/controller/tests" className="w-fit cstm-bg-hover mr-auto">
             <BsArrowLeft className=" text-prmColor" />
           </Link>
 
-          <Link
-            href={`/controller/tests/edit/${params.test_id}`}
-            className="hover:bg-black hover:bg-opacity-10 p-2 rounded-full"
-          >
+          <Link href={`/controller/tests/edit/${params.test_id}`} className="cstm-bg-hover">
             <AiFillEdit className=" text-prmColor cursor-pointer" />
           </Link>
 
-          <div className="hover:bg-black hover:bg-opacity-10 p-2 rounded-full">
+          <div className="cstm-bg-hover">
             <AiFillDelete className="text-prmColor cursor-pointer" onClick={handleCanDeleteTest} />
           </div>
         </div>

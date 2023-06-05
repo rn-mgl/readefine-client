@@ -49,7 +49,7 @@ const AddStoryPage = (props) => {
 
       <div className="w-full cstm-flex-row gap-5">
         <label
-          className="mr-auto hover:bg-black hover:bg-opacity-10 p-2 rounded-full cursor-pointer"
+          className="mr-auto cstm-bg-hover cursor-pointer"
           htmlFor={`filePage${props.page.pageNumber}`}
         >
           <input

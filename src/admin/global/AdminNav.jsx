@@ -123,7 +123,7 @@ const AdminNav = () => {
               {user?.name} {user?.surname}
             </p>
           </div>
-          <div className="ml-auto hover:bg-black hover:bg-opacity-10 rounded-full transition-all p-2">
+          <div className="ml-auto cstm-bg-hover">
             <div onClick={logOut}>
               <BiLogOut className="scale-125" />
             </div>

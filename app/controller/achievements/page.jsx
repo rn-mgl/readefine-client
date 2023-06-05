@@ -1,14 +1,16 @@
 "use client";
 import React from "react";
 import AdminPageHeader from "../../../src/admin/global/PageHeader";
-import DashboardCardImage6 from "../../../public/DashboardCardImage6.svg";
 import AchievementsFilter from "@/src/src/admin/achievements/AchievementsFilter";
-import AchievementsCards from "@/src/src/admin/achievements/AchievementsCards";
+import axios from "axios";
+
+import { specificsConversion, typeConversion } from "@/src/src/functions/typeConversion";
+import { localizeDate } from "@/src/src/functions/localDate";
 import { inputDate } from "@/src/src/functions/localDate";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
-import axios from "axios";
-import { typeConversion } from "@/src/src/functions/typeConversion";
+import Link from "next/link";
+import AchievementsCards from "@/src/src/admin/achievements/AchievementsCards";
 
 const AdminAchievements = () => {
   const [achievements, setAchievements] = React.useState([]);
@@ -66,15 +68,17 @@ const AdminAchievements = () => {
     });
   };
 
-  const achievementsCards = achievements.map((achievement) => {
+  const achievementCards = achievements.map((a) => {
     return (
-      <React.Fragment key={achievement.achievement_id}>
+      <React.Fragment key={a.achievement_id}>
         <AchievementsCards
-          image={DashboardCardImage6}
-          title={achievement.achievement_name}
-          type={typeConversion[achievement.achievement_type]}
-          goal={achievement.goal}
-          to={`/controller/achievements/${achievement.achievement_id}`}
+          image={a.reward}
+          title={a.achievement_name}
+          type={typeConversion[a.achievement_type]}
+          specifics={specificsConversion[a.specifics]}
+          task={a.task}
+          goal={a.goal}
+          to={`/controller/achievements/${a.achievement_id}`}
         />
       </React.Fragment>
     );
@@ -125,11 +129,9 @@ const AdminAchievements = () => {
           sortFilter={sortFilter}
           dateRangeFilter={dateRangeFilter}
         />
-        <div
-          className="cstm-flex-col gap-5 justify-start w-full transition-all 
-                  t:cstm-flex-row t:flex-wrap"
-        >
-          {achievementsCards}
+
+        <div className="w-full cstm-flex-col gap-5 t:items-start t:cstm-flex-row">
+          {achievementCards}
         </div>
       </div>
     </div>

@@ -119,10 +119,7 @@ const AddReward = () => {
         </div>
 
         <div className="pt-4 cstm-flex-row w-full">
-          <label
-            className="mr-auto hover:bg-black hover:bg-opacity-10 p-2 rounded-full cursor-pointer"
-            htmlFor="file"
-          >
+          <label className="mr-auto cstm-bg-hover" htmlFor="file">
             <input
               accept="image/*"
               type="file"

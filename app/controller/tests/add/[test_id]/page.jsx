@@ -110,7 +110,7 @@ const AddTest = ({ params }) => {
         {testPages}
 
         <div className="cstm-flex-row w-full">
-          <div className="hover:bg-black hover:bg-opacity-10 transition-all rounded-full p-2 mr-auto relative group">
+          <div className="cstm-bg-hover mr-auto relative group">
             <ActionLabel label="Add Page" />
             <IoAddOutline onClick={addPage} className="cursor-pointer text-prmColor scale-150" />
           </div>

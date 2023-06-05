@@ -44,7 +44,7 @@ const DeleteTest = (props) => {
 
   return (
     <div className="w-full min-h-screen backdrop-blur-md fixed z-30 top-0 left-0 p-5 cstm-flex-col justify-start">
-      <div className="hover:bg-black hover:bg-opacity-10 p-2 rounded-full ml-auto">
+      <div className="cstm-bg-hover ml-auto">
         <IoClose onClick={props.handleCanDeleteTest} className="text-prmColor scale-150 " />
       </div>
 
@@ -73,8 +73,8 @@ const DeleteTest = (props) => {
           </p>
 
           <input
-            className="p-1 px-2 text-prmColor bg-white font-poppins rounded-md border-neutral-200 border-2 text-sm w-full
-                              focus:outline-none "
+            className="p-2 text-prmColor bg-white font-poppins rounded-md border-neutral-200 border-2 w-full
+            focus:outline-none"
             placeholder="Confirmation"
             name="title"
             type="text"

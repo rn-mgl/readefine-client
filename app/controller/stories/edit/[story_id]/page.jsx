@@ -165,11 +165,7 @@ const EditStory = ({ params }) => {
                 l-l:w-[80%]"
         onSubmit={(e) => editBook(e)}
       >
-        <Link
-          type="button"
-          href="/controller/stories"
-          className="w-fit hover:bg-black hover:bg-opacity-10 p-2 rounded-full mr-auto"
-        >
+        <Link type="button" href="/controller/stories" className="w-fit cstm-bg-hover mr-auto">
           <BsArrowLeft className=" text-prmColor" />
         </Link>
         <EditStoryFilter
@@ -194,7 +190,7 @@ const EditStory = ({ params }) => {
         {allPages}
 
         <div className="cstm-flex-row w-full ">
-          <div className="hover:bg-black hover:bg-opacity-10 transition-all rounded-full p-2 mr-auto">
+          <div className="cstm-bg-hover mr-auto">
             <IoAddOutline onClick={addPage} className="cursor-pointer text-prmColor scale-150" />
           </div>
           <button

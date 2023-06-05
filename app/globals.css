@@ -22,6 +22,10 @@
   .cstm-scrollbar {
     @apply scrollbar-thin scrollbar-thumb-scndColor scrollbar-track-accntColor;
   }
+
+  .cstm-bg-hover {
+    @apply hover:bg-black hover:bg-opacity-10 transition-all p-2 rounded-full cursor-pointer;
+  }
 }
 
 button:hover {

@@ -128,7 +128,7 @@ const EditTest = ({ params }) => {
         <Link
           type="button"
           href={`/controller/tests/${testId}`}
-          className="w-fit hover:bg-black hover:bg-opacity-10 p-2 rounded-full mr-auto"
+          className="w-fit cstm-bg-hover mr-auto"
         >
           <BsArrowLeft className=" text-prmColor" />
         </Link>

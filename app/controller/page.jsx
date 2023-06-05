@@ -72,13 +72,6 @@ const AdminDashboard = () => {
           to="/controller/tests"
         />
         <DashboardCards
-          image={DashboardCardImage4}
-          label="Questions & Answers"
-          subLabel="updated by: name"
-          count={counts.questionCount}
-          to="/controller/tests"
-        />
-        <DashboardCards
           image={DashboardCardImage6}
           label="Rewards"
           subLabel="updated by: name"

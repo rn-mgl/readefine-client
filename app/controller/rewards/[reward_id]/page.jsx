@@ -52,40 +52,38 @@ const SingleReward = ({ params }) => {
           handleCanDeleteReward={handleCanDeleteReward}
         />
       ) : null}
+
       <div
-        className="w-full l-s:w-[70%] l-s:ml-auto cstm-flex-row
+        className="w-full t:w-8/12 l-s:w-[70%] l-s:ml-auto cstm-flex-col
                     l-l:w-[80%]"
       >
-        <Link
-          href="/controller/stories"
-          className="w-fit hover:bg-black hover:bg-opacity-10 p-2 rounded-full mr-auto"
-        >
-          <BsArrowLeft className=" text-prmColor" />
-        </Link>
+        <div className="cstm-flex-col gap-2 w-full l-s:w-10/12 l-l:w-8/12">
+          <div className="w-full cstm-flex-row">
+            <Link href="/controller/rewards" className="cstm-bg-hover">
+              <BsArrowLeft className=" text-prmColor" />
+            </Link>
 
-        <Link
-          href={`/controller/rewards/edit/${rewardId}`}
-          className="hover:bg-black hover:bg-opacity-10 p-2 rounded-full"
-        >
-          <AiFillEdit className=" text-prmColor cursor-pointer" />
-        </Link>
+            <Link href={`/controller/rewards/edit/${rewardId}`} className="cstm-bg-hover">
+              <AiFillEdit className=" text-prmColor cursor-pointer" />
+            </Link>
 
-        <div className="hover:bg-black hover:bg-opacity-10 p-2 rounded-full">
-          <AiFillDelete className="text-prmColor cursor-pointer" onClick={handleCanDeleteReward} />
-        </div>
-      </div>
-      <div
-        className="w-full l-s:w-[70%] l-s:ml-auto cstm-flex-col gap-2
-                    l-l:w-[80%]"
-      >
-        <div className="table-fixed p-5 rounded-2xl cstm-flex-col overflow-auto w-full h-[70vh] justify-start items-start bg-white text-sm gap-2 shadow-md cstm-scrollbar">
-          <div className="w-full h-full cstm-flex-col bg-accntColor rounded-2xl">
-            <FileViewer src={reward?.reward} />
+            <div className="cstm-bg-hover">
+              <AiFillDelete
+                className="text-prmColor cursor-pointer"
+                onClick={handleCanDeleteReward}
+              />
+            </div>
           </div>
-        </div>
-        <div className="bg-white rounded-2xl p-2 w-full shadow-md text-center cstm-flex-col gap-2">
-          <p className="text-xs font-semibold text-prmColor">description</p>
-          <p className="">{reward?.description}</p>
+          <div className="p-5 rounded-2xl gap-5 cstm-flex-col overflow-auto w-full h-[80vh] justify-start bg-white text-sm shadow-md cstm-scrollbar">
+            <div className="w-full h-full cstm-flex-col bg-accntColor rounded-2xl p-5">
+              <div className="w-fit animate-float drop-shadow-md">
+                <FileViewer src={reward?.reward} />
+              </div>
+            </div>
+            <p className="text-sm font-bold text-prmColor">{reward?.reward_type}</p>
+            <div className="cstm-separator" />
+            <p className="text-sm text-center">{reward?.description}</p>
+          </div>
         </div>
       </div>
     </div>

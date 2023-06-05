@@ -107,21 +107,15 @@ const SingleStory = ({ params }) => {
         className="w-full l-s:w-[70%] l-s:ml-auto cstm-flex-row
                     l-l:w-[80%]"
       >
-        <Link
-          href="/controller/stories"
-          className="w-fit hover:bg-black hover:bg-opacity-10 p-2 rounded-full mr-auto"
-        >
+        <Link href="/controller/stories" className="w-fit cstm-bg-hover mr-auto">
           <BsArrowLeft className=" text-prmColor" />
         </Link>
 
-        <Link
-          href={`/controller/stories/edit/${params.story_id}`}
-          className="hover:bg-black hover:bg-opacity-10 p-2 rounded-full"
-        >
+        <Link href={`/controller/stories/edit/${params.story_id}`} className="cstm-bg-hover">
           <AiFillEdit className=" text-prmColor cursor-pointer" />
         </Link>
 
-        <div className="hover:bg-black hover:bg-opacity-10 p-2 rounded-full">
+        <div className="cstm-bg-hover">
           <AiFillDelete className="text-prmColor cursor-pointer" onClick={handleCanDeleteStory} />
         </div>
       </div>
@@ -132,7 +126,7 @@ const SingleStory = ({ params }) => {
                     l-l:w-[80%]"
       >
         <div
-          className="hover:bg-black hover:bg-opacity-10 p-2 rounded-full absolute bottom-3 
+          className="cstm-bg-hover absolute bottom-3 
                       l-s:bottom-2/4 l-s:-translate-y-2/4 z-20"
         >
           <BiChevronLeft
@@ -145,7 +139,7 @@ const SingleStory = ({ params }) => {
         {storyPages}
 
         <div
-          className="hover:bg-black hover:bg-opacity-10 p-2 rounded-full absolute bottom-3 right-5
+          className="cstm-bg-hover absolute bottom-3 right-5
                       l-s:bottom-2/4 l-s:-translate-y-2/4 z-20"
         >
           <BiChevronRight

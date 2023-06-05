@@ -50,10 +50,7 @@ const EditStoryPage = (props) => {
       </div>
 
       <div className="w-full cstm-flex-row gap-5">
-        <label
-          className="mr-auto hover:bg-black hover:bg-opacity-10 p-2 rounded-full cursor-pointer"
-          htmlFor={`filePage${page}`}
-        >
+        <label className="mr-auto cstm-bg-hover cursor-pointer" htmlFor={`filePage${page}`}>
           <input
             accept="image/*"
             type="file"

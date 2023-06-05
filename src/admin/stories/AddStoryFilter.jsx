@@ -10,10 +10,7 @@ const AddStoryFilter = (props) => {
         <div className="bg-neutral-50 p-1 px-2 rounded-md outline-none border-neutral-200 border-2 text-sm">
           <p>Book Cover</p>
         </div>
-        <label
-          className="mr-auto  hover:bg-black hover:bg-opacity-10 p-2 rounded-full cursor-pointer"
-          htmlFor="fileCover"
-        >
+        <label className="mr-auto  cstm-bg-hover cursor-pointer" htmlFor="fileCover">
           <input
             accept="image/*"
             type="file"
