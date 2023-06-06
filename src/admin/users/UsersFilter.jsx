@@ -17,7 +17,7 @@ const UsersFilter = (props) => {
           { label: "First Name", value: "name" },
           { label: "Last Name", value: "surname" },
           { label: "Username", value: "username" },
-          { label: "Lexile", value: "lexile_level" },
+          { label: "Lexile", value: "lexile" },
           { label: "Grade", value: "grade_level" },
         ]}
       />
@@ -29,7 +29,7 @@ const UsersFilter = (props) => {
           { label: "First Name", value: "name" },
           { label: "Last Name", value: "surname" },
           { label: "Username", value: "username" },
-          { label: "Lexile", value: "lexile_level" },
+          { label: "Lexile", value: "lexile" },
           { label: "Grade", value: "grade_level" },
           { label: "Date Joined", value: "date_joined" },
         ]}

@@ -6,6 +6,7 @@ import axios from "axios";
 import { useGlobalContext } from "@/src/context";
 import { localizeDate, inputDate } from "@/src/src/functions/localDate";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 
 const AdminUsers = () => {
   const [users, setUsers] = React.useState([]);
@@ -70,9 +71,17 @@ const AdminUsers = () => {
         <td>{user.surname}</td>
         <td>{user.name}</td>
         <td>{user.username}</td>
-        <td>{user.lexile_level}L</td>
+        <td>{user.lexile}L</td>
         <td>{user.grade_level}</td>
         <td>{localizeDate(user.date_joined)}</td>
+        <td className="cstm-flex-col">
+          <Link
+            href={`/controller/users/${user.user_id}`}
+            className="bg-prmColor rounded-full p-2 text-white w-full"
+          >
+            Visit
+          </Link>
+        </td>
       </tr>
     );
   });
@@ -127,6 +136,7 @@ const AdminUsers = () => {
             <th>Lexile</th>
             <th>Grade</th>
             <th>Date Joined</th>
+            <th>View</th>
           </tr>
         </thead>
 
