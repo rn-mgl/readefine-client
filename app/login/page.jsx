@@ -17,12 +17,6 @@ const Login = () => {
   });
   const [visiblePassword, setVisiblePassword] = React.useState(false);
 
-  const router = useRouter();
-
-  const { data: session } = useSession();
-
-  const user = session?.user?.name;
-
   const handleVisiblePassword = () => {
     setVisiblePassword((prev) => !prev);
   };

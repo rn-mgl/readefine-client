@@ -26,6 +26,7 @@ export const authOptions = {
         }
       },
     }),
+
     CredentialsProvider({
       id: "client-credentials",
       name: "Client Credentials",
@@ -34,6 +35,7 @@ export const authOptions = {
         candidateIdentifier: { label: "Username", type: "text" },
         candidatePassword: { label: "Password", type: "password" },
       },
+
       async authorize(credentials, req) {
         const { data } = await axios.post("http://192.168.1.121:9000/auth_client/client_login", {
           loginData: credentials,

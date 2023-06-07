@@ -15,14 +15,21 @@ export const inputDate = (date) => {
   return newDate;
 };
 
-export const getDaysInMonth = (d) => {
+export const getDaysInMonth = (d, complete) => {
   const currDate = new Date(d).getDate();
   const date = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
   let days = [];
 
-  while (currDate >= date.getDate() && date.getMonth() === new Date().getMonth()) {
-    days.push(date.getDate());
-    date.setDate(date.getDate() + 1);
+  if (complete) {
+    while (date.getMonth() === new Date().getMonth()) {
+      days.push(date.getDate());
+      date.setDate(date.getDate() + 1);
+    }
+  } else {
+    while (currDate > date.getDate() && date.getMonth() === new Date().getMonth()) {
+      days.push(date.getDate());
+      date.setDate(date.getDate() + 1);
+    }
   }
 
   return days;
