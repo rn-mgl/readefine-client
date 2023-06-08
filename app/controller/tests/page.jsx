@@ -112,11 +112,7 @@ const AdminTests = () => {
         sortFilter={sortFilter}
         dateRangeFilter={dateRangeFilter}
       />
-      <div
-        className="w-full     
-                  l-s:w-[70%] l-s:ml-auto
-                  l-l:w-[80%]"
-      >
+      <div className="w-full cstm-w-limit">
         <div
           className="cstm-flex-col gap-5 justify-start w-full transition-all 
                   t:cstm-flex-row t:flex-wrap"

@@ -89,11 +89,7 @@ const EditReward = ({ params }) => {
     <div className="w-full min-h-screen bg-accntColor p-5 cstm-flex-col gap-2 justify-start">
       <AdminPageHeader subHeader={reward?.reward_name} mainHeader="Edit Reward" />
 
-      <form
-        onSubmit={(e) => editReward(e)}
-        className="w-full cstm-flex-col l-s:w-[70%] l-s:ml-auto border-collapse gap-2
-                l-l:w-[80%]"
-      >
+      <form onSubmit={(e) => editReward(e)} className="w-full cstm-flex-col border-collapse gap-2">
         <EditRewardFilter handleReward={handleReward} reward={reward} />
         <div
           className="cstm-flex-col gap-5 w-full

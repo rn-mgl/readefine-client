@@ -96,8 +96,7 @@ const EditAchievement = ({ params }) => {
 
       <form
         onSubmit={(e) => editAchievement(e)}
-        className="w-full cstm-flex-col l-s:w-[70%] l-s:ml-auto border-collapse gap-2
-                l-l:w-[80%]"
+        className="w-full cstm-flex-col cstm-w-limit border-collapse gap-2"
       >
         <Link href="/controller/achievements" className="cstm-bg-hover mr-auto">
           <BsArrowLeft className="text-prmColor cursor-pointer scale-125" />

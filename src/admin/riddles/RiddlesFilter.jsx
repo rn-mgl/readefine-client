@@ -7,11 +7,7 @@ import RangeFilter from "../../components/filter/RangeFilter";
 
 const RiddlesFilter = (props) => {
   return (
-    <div
-      className="cstm-flex-row gap-2 justify-start relative w-full overflow-x-auto py-2
-                l-s:w-[70%] l-s:ml-auto
-                l-l:w-[80%]"
-    >
+    <div className="cstm-flex-row gap-2 justify-start relative w-full overflow-x-auto py-2 cstm-w-limit">
       <Link href="/controller/riddles/add" className="cstm-bg-hover">
         <IoAddOutline className="text-prmColor cursor-pointer scale-150" />
       </Link>

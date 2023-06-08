@@ -94,11 +94,7 @@ const AdminRewards = () => {
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <AdminPageHeader subHeader="Readefine" mainHeader="Rewards" />
 
-      <div
-        className="w-full     
-                  l-s:w-[70%] l-s:ml-auto
-                  l-l:w-[80%]"
-      >
+      <div className="w-full cstm-w-limit">
         <RewardsFilter
           handleSearchFilter={handleSearchFilter}
           handleDateRangeFilter={handleDateRangeFilter}

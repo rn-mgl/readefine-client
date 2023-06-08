@@ -48,10 +48,7 @@ const DeleteStory = (props) => {
         <IoClose onClick={props.handleCanDeleteStory} className="text-prmColor scale-150 " />
       </div>
 
-      <div
-        className="cstm-flex-col w-full l-s:w-[70%] l-s:ml-auto border-collapse h-screen
-                  l-l:w-[80%]"
-      >
+      <div className="cstm-flex-col w-full cstm-w-limit border-collapse h-screen">
         <form
           onSubmit={(e) => deleteStory(e)}
           className="w-11/12 rounded-md bg-white min-h-[15rem] shadow-md my-auto cstm-flex-col justify-start p-2 text-center gap-5 absolute

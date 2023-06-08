@@ -103,10 +103,7 @@ const SingleStory = ({ params }) => {
         />
       ) : null}
 
-      <div
-        className="w-full l-s:w-[70%] l-s:ml-auto cstm-flex-row
-                    l-l:w-[80%]"
-      >
+      <div className="w-full cstm-w-limit cstm-flex-row">
         <Link href="/controller/stories" className="w-fit cstm-bg-hover mr-auto">
           <BsArrowLeft className=" text-prmColor" />
         </Link>
@@ -120,11 +117,7 @@ const SingleStory = ({ params }) => {
         </div>
       </div>
 
-      <div
-        className="w-full gap-5 max-h-screen h-[80vh] bg-white rounded-2xl p-5 relative overflow-x-hidden overflow-y-auto
-                    l-s:w-[70%] l-s:ml-auto
-                    l-l:w-[80%]"
-      >
+      <div className="w-full gap-5 max-h-screen h-[80vh] bg-white rounded-2xl p-5 relative overflow-x-hidden overflow-y-auto cstm-w-limit">
         <div
           className="cstm-bg-hover absolute bottom-3 
                       l-s:bottom-2/4 l-s:-translate-y-2/4 z-20"

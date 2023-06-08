@@ -7,11 +7,7 @@ import RangeFilter from "../../components/filter/RangeFilter";
 
 const StoriesFilter = (props) => {
   return (
-    <div
-      className="cstm-flex-row gap-2 justify-start relative w-full overflow-x-auto p-2 cstm-scrollbar
-                l-s:w-[70%] l-s:ml-auto
-                l-l:w-[80%]"
-    >
+    <div className="cstm-flex-row gap-2 justify-start relative w-full overflow-x-auto p-2 cstm-scrollbar cstm-w-limit">
       <Link href="/controller/stories/add" className="cstm-bg-hover">
         <IoAddOutline className="text-prmColor cursor-pointer scale-150" />
       </Link>

@@ -198,11 +198,7 @@ const SingleTest = ({ params }) => {
           testId={params.test_id}
         />
       ) : null}
-      <div
-        className="cstm-flex-col gap-2 w-full 
-                  l-s:w-[70%] l-s:ml-auto
-                  l-l:w-[80%]"
-      >
+      <div className="cstm-flex-col gap-2 w-full cstm-w-limit">
         <p className="text-sm text-center">
           <b>note:</b> admin submissions are <b>not</b> recorded
         </p>

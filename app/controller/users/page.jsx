@@ -123,8 +123,7 @@ const AdminUsers = () => {
 
       <table
         className="table-fixed p-4 rounded-md cstm-flex-col overflow-auto w-full h-screen justify-start items-start bg-white text-sm gap-5 
-                l-s:w-[70%] l-s:ml-auto border-collapse
-                l-l:w-[80%]"
+        cstm-w-limit border-collapse"
       >
         <thead className="w-full ">
           <tr className="p-2 cstm-flex-row justify-start gap-10 text-center text-prmColor drop-shadow-md">

@@ -53,10 +53,7 @@ const SingleReward = ({ params }) => {
         />
       ) : null}
 
-      <div
-        className="w-full t:w-8/12 l-s:w-[70%] l-s:ml-auto cstm-flex-col
-                    l-l:w-[80%]"
-      >
+      <div className="w-full t:w-8/12 cstm-w-limit cstm-flex-col">
         <div className="cstm-flex-col gap-2 w-full l-s:w-10/12 l-l:w-8/12">
           <div className="w-full cstm-flex-row">
             <Link href="/controller/rewards" className="cstm-bg-hover">

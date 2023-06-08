@@ -57,10 +57,7 @@ const SingleAchievement = ({ params }) => {
           achievementId={achievementId}
         />
       ) : null}
-      <div
-        className="cstm-flex-col l-s:w-[70%] l-s:ml-auto w-full gap-2
-                  l-l:w-[80%]"
-      >
+      <div className="cstm-flex-col cstm-w-limit w-full gap-2">
         <div className="cstm-flex-row text-prmColor w-full t:w-10/12 l-l:w-8/12">
           <div className="cstm-bg-hover mr-auto">
             <Link href="/controller/achievements">

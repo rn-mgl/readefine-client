@@ -116,8 +116,7 @@ const AdminAchievements = () => {
 
       <div
         className="w-full     
-                  l-s:w-[70%] l-s:ml-auto
-                  l-l:w-[80%]"
+        cstm-w-limit"
       >
         <AchievementsFilter
           handleSearchFilter={handleSearchFilter}

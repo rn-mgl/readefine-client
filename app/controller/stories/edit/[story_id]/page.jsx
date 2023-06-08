@@ -161,8 +161,7 @@ const EditStory = ({ params }) => {
       <AdminPageHeader subHeader="Stories" mainHeader="Edit Story" />
 
       <form
-        className="w-full cstm-flex-col gap-2 l-s:w-[70%] l-s:ml-auto border-collapse
-                l-l:w-[80%]"
+        className="w-full cstm-flex-col gap-2 cstm-w-limit border-collapse"
         onSubmit={(e) => editBook(e)}
       >
         <Link type="button" href="/controller/stories" className="w-fit cstm-bg-hover mr-auto">

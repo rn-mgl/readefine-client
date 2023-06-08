@@ -6,11 +6,13 @@ import Link from "next/link";
 
 import { Chart as ChartJS } from "chart.js/auto";
 import { defaults } from "chart.js";
-import { Line } from "react-chartjs-2";
-import { getDaysInMonth, monthMap } from "@/src/src/functions/localDate";
+import { Line, Scatter } from "react-chartjs-2";
+import { getDaysInMonth, localizeDate, monthMap } from "@/src/src/functions/localDate";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { BsArrowLeft } from "react-icons/bs";
+import Image from "next/image";
+import { AiOutlineMail } from "react-icons/ai";
 
 const SingleUser = ({ params }) => {
   const [userData, setUserData] = React.useState({});
@@ -29,29 +31,22 @@ const SingleUser = ({ params }) => {
 
   const mapLexileToDays = () => {
     let curr = userLexile[0]?.lexile;
-    // set the initial values to be the oldest record
+    // set the initial values to be the oldest (curr) record
     const days = getDaysInMonth(new Date()).map(() => curr);
-
     for (let i = 0; i < days.length; i++) {
-      // check if the loop index is within the user lexile length
+      // check if i is within the user lexile length
       if (i < userLexile.length) {
-        // change the current value to the next latest data
+        // change the current value to the next latest lexile data
         curr = userLexile[i];
       }
-
       // check if the current value exists
       if (curr) {
         // get the day as index
         const dayIdx = new Date(curr.date_added).getDate();
-
-        // -1 to place in the appropriate day
+        // -1 to place in the "today" data
         days[dayIdx - 1] = curr.lexile;
-
-        // check if dayIdx is within the user lexile length
-        if (dayIdx < userLexile.length) {
-          // also place the value in the "tomorrow data" because there is possibility of no entry there
-          days[dayIdx] = curr.lexile;
-        }
+        // to place in the "tomorrow" data for possibility of no entry
+        days[dayIdx] = curr.lexile;
       }
     }
     return days;
@@ -66,35 +61,71 @@ const SingleUser = ({ params }) => {
         backgroundColor: "#542ACA",
         borderColor: "#542ACA",
         borderWidth: 1,
-        tension: 0.4,
-        fill: "origin",
+        tension: 0,
       },
     ],
+  };
+
+  const mapBooksReadToDays = () => {
+    let counts = getDaysInMonth(new Date()).map((_, i) => {
+      return {
+        x: i + 1,
+        y: undefined,
+      };
+    });
+
+    for (let i = 0; i < counts.length; i++) {
+      const curr = userReads[i];
+      if (curr) {
+        const dayIdx = new Date(curr.date_read).getDate();
+        const data = { x: dayIdx, y: curr.lexile };
+        counts[dayIdx - 1] = data;
+      }
+    }
+
+    return counts;
   };
 
   const booksChartData = {
-    labels: userReads.map((r) => new Date(r.date_read).getDate()),
     datasets: [
       {
-        label: `Books Read | ${monthMap[new Date().getMonth()]}`,
-        data: userReads.map((r) => r.lexile),
-        backgroundColor: "#4BFCE1",
-        borderColor: "#4BFCE1",
+        label: `Lexiles of Books Read | ${monthMap[new Date().getMonth()]}`,
+        data: mapBooksReadToDays(),
         borderWidth: 1,
         tension: 0.4,
-        fill: "origin",
+        backgroundColor: "#4BFCE1",
+        borderColor: "#4BFCE1",
       },
     ],
   };
 
+  const mapQuizScoresToDays = () => {
+    let counts = getDaysInMonth(new Date()).map((_, i) => {
+      return {
+        x: i + 1,
+        y: undefined,
+      };
+    });
+
+    for (let i = 0; i < counts.length; i++) {
+      const curr = userReads[i];
+      if (curr) {
+        const dayIdx = new Date(curr.date_read).getDate();
+        const data = { x: dayIdx, y: curr.lexile };
+        counts[dayIdx - 1] = data;
+      }
+    }
+
+    return counts;
+  };
+
   const gamesChartData = {
-    labels: [],
     datasets: [
       {
         label: `Quizzes Answered | ${monthMap[new Date().getMonth()]}`,
-        data: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-        backgroundColor: "#FAEAFF",
-        borderColor: "#FAEAFF",
+        data: mapQuizScoresToDays(),
+        backgroundColor: "#D498FF",
+        borderColor: "#D498FF",
         borderWidth: 1,
         tension: 0.4,
         fill: "origin",
@@ -131,21 +162,6 @@ const SingleUser = ({ params }) => {
     }
   }, [url, user, setUserLexile, userId]);
 
-  const getUserQuizzesAnswered = React.useCallback(async () => {
-    try {
-      const { data } = await axios.get(`${url}/admin_answered_questions`, {
-        params: { userId },
-        headers: { Authorization: user.token },
-      });
-
-      if (data) {
-        setUserQuizzes(data);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }, [url, user, setUserQuizzes, userId]);
-
   const getUserBooksRead = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/admin_read_story`, {
@@ -160,6 +176,21 @@ const SingleUser = ({ params }) => {
       console.log(error);
     }
   }, [url, user, setUserReads, userId]);
+
+  const getUserQuizzesAnswered = React.useCallback(async () => {
+    try {
+      const { data } = await axios.get(`${url}/admin_answered_questions`, {
+        params: { userId },
+        headers: { Authorization: user.token },
+      });
+
+      if (data) {
+        setUserQuizzes(data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, [url, user, setUserQuizzes, userId]);
 
   React.useEffect(() => {
     if (user) {
@@ -188,43 +219,64 @@ const SingleUser = ({ params }) => {
   return (
     <div className="w-full min-h-screen bg-accntColor cstm-flex-col justify-start p-5 gap-2">
       <AdminPageHeader subHeader="User" mainHeader="Dashboard" />
-      <Link href="/controller/users" className="cstm-bg-hover text-prmColor mr-auto">
-        <BsArrowLeft />
-      </Link>
-      <div className="cstm-flex-col w-full p-5 bg-white rounded-2xl t:w-8/12">
-        <Line
-          data={lexileChartData}
-          options={{
-            responsive: true,
-            aspectRatio: 1,
-          }}
-          redraw={true}
-          updateMode="reset"
-        />
-      </div>
 
-      <div className="cstm-flex-col w-full p-5 bg-white rounded-2xl t:w-8/12">
-        <Line
-          data={booksChartData}
-          options={{
-            responsive: true,
-            aspectRatio: 1,
-          }}
-          redraw={true}
-          updateMode="reset"
-        />
-      </div>
+      <div className="cstm-flex-col gap-5 w-full cstm-w-limit ">
+        <Link href="/controller/users" className="cstm-bg-hover text-prmColor mr-auto">
+          <BsArrowLeft />
+        </Link>
+        <div className="cstm-flex-col gap-5 w-full t:cstm-flex-row">
+          <div className="cstm-flex-col bg-white rounded-2xl p-5 w-full">
+            <div className="cstm-flex-row gap-2 w-full justify-start">
+              <div
+                style={{ backgroundImage: userData.image ? `url("${userData.image}")` : null }}
+                className="w-12 h-12 rounded-full bg-prmColor bg-opacity-10"
+              />
+              <div className="cstm-flex-col items-start">
+                <p className="capitalize font-bold text-black text-base">
+                  {userData.name} {userData.surname}
+                </p>
+                <p className="font-light text-xs">{userData.email}</p>
+              </div>
+              <Link className="cstm-bg-hover ml-auto" href={`mailto:${userData.email}`}>
+                <AiOutlineMail className=" scale-125 text-prmColor" />
+              </Link>
+            </div>
+          </div>
 
-      <div className="cstm-flex-col w-full p-5 bg-white rounded-2xl t:w-8/12">
-        <Line
-          data={gamesChartData}
-          options={{
-            responsive: true,
-            aspectRatio: 1,
-          }}
-          redraw={true}
-          updateMode="reset"
-        />
+          <div className="cstm-flex-col bg-white rounded-2xl p-5 w-full t:w-4/12">
+            <p className="font-bold text-prmColor text-xl">{userData?.lexile}</p>
+            <p className="text-sm">Lexile Level</p>
+          </div>
+        </div>
+
+        <div className="cstm-flex-col gap-5 w-full min-h-screen ">
+          <div className="cstm-flex-col w-full h-auto min-h-[30rem] p-5 bg-white rounded-2xl">
+            <Line
+              data={lexileChartData}
+              options={{
+                maintainAspectRatio: false,
+              }}
+            />
+          </div>
+
+          <div className="cstm-flex-col w-full h-auto min-h-[30rem] p-5 bg-white rounded-2xl">
+            <Scatter
+              data={booksChartData}
+              options={{
+                maintainAspectRatio: false,
+              }}
+            />
+          </div>
+
+          <div className="cstm-flex-col w-full h-auto min-h-[30rem] p-5 bg-white rounded-2xl">
+            <Scatter
+              data={gamesChartData}
+              options={{
+                maintainAspectRatio: false,
+              }}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

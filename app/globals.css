@@ -24,7 +24,13 @@
   }
 
   .cstm-bg-hover {
-    @apply hover:bg-black hover:bg-opacity-10 transition-all p-2 rounded-full cursor-pointer;
+    @apply hover:bg-black hover:bg-opacity-5 transition-all p-2.5 rounded-full cursor-pointer;
+  }
+}
+
+@layer utilities {
+  .cstm-w-limit {
+    @apply l-s:w-[70%] l-s:ml-auto l-l:w-[80%];
   }
 }
 

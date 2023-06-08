@@ -96,11 +96,7 @@ const FindRewards = (props) => {
         />
       </div>
 
-      <div
-        className="w-full cstm-flex-col gap-2
-              l-s:w-[70%] l-s:ml-auto
-              l-l:w-[80%]"
-      >
+      <div className="w-full cstm-flex-col gap-2">
         <RewardsFilter
           handleSearchFilter={handleSearchFilter}
           handleDateRangeFilter={handleDateRangeFilter}

@@ -122,8 +122,7 @@ const EditTest = ({ params }) => {
 
       <form
         onSubmit={(e) => editTest(e)}
-        className="w-full cstm-flex-col l-s:w-[70%] l-s:ml-auto border-collapse gap-5
-                l-l:w-[80%]"
+        className="w-full cstm-flex-col cstm-w-limit border-collapse gap-5"
       >
         <Link
           type="button"
