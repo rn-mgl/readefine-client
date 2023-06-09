@@ -12,7 +12,7 @@ const Sending = () => {
         priority
       />
       <p className="animate-fadeIn">
-        It may take a minute or two. We are currently sending an email for your verification.
+        It may take a minute or two. We are currently sending the email you requested.
       </p>
       <p className="font-light text-sm animate-fadeIn">
         You can close this tab if you have received your email.

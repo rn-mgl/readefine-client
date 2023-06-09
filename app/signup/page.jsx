@@ -58,14 +58,7 @@ const Signup = () => {
 
   return (
     <div className="w-full h-screen bg-prmColor p-5 cstm-flex-col font-poppins overflow-hidden">
-      <p
-        className=" font-extrabold text-2xl text-accntColor
-                    m-l:text-3xl
-                    t:text-4xl
-                    l-s:text-5xl"
-      >
-        Sign Up
-      </p>
+      <p className=" font-extrabold text-2xl text-accntColor">Sign Up</p>
       <br />
       <form
         className="w-full rounded-md bg-scndColor bg-opacity-20 backdrop-blur-md border-[1px] border-scndColor border-opacity-40 p-5 cstm-flex-col gap-5 relative z-10 shadow-lg

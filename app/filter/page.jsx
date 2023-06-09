@@ -49,14 +49,7 @@ const AdminLogin = () => {
 
   return (
     <div className="w-full h-screen bg-prmColor p-5 cstm-flex-col font-poppins overflow-hidden">
-      <p
-        className=" font-extrabold text-2xl text-accntColor
-                    m-l:text-3xl
-                    t:text-4xl
-                    l-s:text-5xl"
-      >
-        Log In
-      </p>
+      <p className=" font-extrabold text-2xl text-accntColor">Log In</p>
       <br />
       <form
         className="w-full rounded-md bg-accntColor bg-opacity-20 backdrop-blur-md border-[1px] border-accntColor border-opacity-40 p-5 cstm-flex-col gap-5 relative z-10 shadow-lg

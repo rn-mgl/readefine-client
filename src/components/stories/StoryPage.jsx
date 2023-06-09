@@ -4,6 +4,7 @@ import FileViewer from "../global/FileViewer";
 const StoryPage = (props) => {
   const active = props.index === props.activePage;
   const content = props.page?.content;
+  const hasTitle = props.page?.header;
   let position = "translate-x-full opacity-0";
 
   if (active) {
@@ -19,7 +20,7 @@ const StoryPage = (props) => {
 
   return (
     <div className={`cstm-flex-col gap-5 p-2 transition-all absolute ${position} w-full`}>
-      <p className="text-black font-semibold">
+      <p className={`${hasTitle ? "opacity-100" : "opacity-50"} text-black font-semibold`}>
         {props.page?.header ? props.page?.header : props.title}
       </p>
 
