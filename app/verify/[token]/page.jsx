@@ -8,11 +8,10 @@ import axios from "axios";
 import { useGlobalContext } from "@/src/context";
 import { usePathname } from "next/navigation";
 
-const Verify = () => {
+const Verify = ({ params }) => {
   const [status, setStatus] = React.useState("verifying");
   const { url } = useGlobalContext();
-  const path = usePathname();
-  const token = path.split("/")[2];
+  const token = decodeURI(params?.token).split(" ")[1];
 
   const verifyUser = React.useCallback(async () => {
     try {

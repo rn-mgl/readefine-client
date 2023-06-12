@@ -3,10 +3,12 @@ import React from "react";
 import AdminPageHeader from "@/src/src/admin/global/PageHeader";
 import UsersFilter from "@/src/src/admin/users/UsersFilter";
 import axios from "axios";
+import CryptoJS from "crypto-js";
 import { useGlobalContext } from "@/src/context";
 import { localizeDate, inputDate } from "@/src/src/functions/localDate";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
+import { decrypt, encrypt } from "@/src/src/functions/security";
 
 const AdminUsers = () => {
   const [users, setUsers] = React.useState([]);
@@ -126,7 +128,7 @@ const AdminUsers = () => {
         cstm-w-limit border-collapse"
       >
         <thead className="w-full ">
-          <tr className="p-2 cstm-flex-row justify-start gap-10 text-center text-prmColor drop-shadow-md">
+          <tr className="p-2 cstm-flex-row justify-start gap-10 text-center text-prmColor">
             <th>Image</th>
             <th>Email</th>
             <th>Last Name</th>

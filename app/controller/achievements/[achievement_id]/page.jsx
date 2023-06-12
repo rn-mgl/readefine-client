@@ -76,7 +76,7 @@ const SingleAchievement = ({ params }) => {
 
         <div className="p-5 rounded-2xl bg-white cstm-flex-col w-full justify-start h-fit items-start gap-5 t:w-10/12 l-l:w-8/12">
           <div className="cstm-flex-row gap-2">
-            <p className="px-2 py-1 font-bold text-white rounded-md bg-gradient-to-r from-prmColor to-scndColor">
+            <p className="px-2 py-1 font-bold text-white rounded-md bg-gradient-to-br from-prmColor to-scndColor">
               Title
             </p>
             <p>{achievement.achievement_name}</p>
@@ -85,7 +85,7 @@ const SingleAchievement = ({ params }) => {
           <div className="cstm-separator" />
 
           <div className="cstm-flex-row gap-2">
-            <p className="px-2 py-1 font-bold text-white rounded-md bg-gradient-to-r from-prmColor to-scndColor">
+            <p className="px-2 py-1 font-bold text-white rounded-md bg-gradient-to-br from-prmColor to-scndColor">
               Type
             </p>
             <p>{typeConversion[achievement.achievement_type]}</p>
@@ -94,7 +94,7 @@ const SingleAchievement = ({ params }) => {
           <div className="cstm-separator" />
 
           <div className="cstm-flex-row gap-2">
-            <p className="px-2 py-1 font-bold text-white rounded-md bg-gradient-to-r from-prmColor to-scndColor">
+            <p className="px-2 py-1 font-bold text-white rounded-md bg-gradient-to-br from-prmColor to-scndColor">
               Specifics
             </p>
             <p>{specificsConversion[achievement.specifics]}</p>
@@ -103,7 +103,7 @@ const SingleAchievement = ({ params }) => {
           <div className="cstm-separator" />
 
           <div className="cstm-flex-row gap-2">
-            <p className="px-2 py-1 font-bold text-white rounded-md bg-gradient-to-r from-prmColor to-scndColor">
+            <p className="px-2 py-1 font-bold text-white rounded-md bg-gradient-to-br from-prmColor to-scndColor">
               Goal
             </p>
             <p>{achievement.goal}</p>
@@ -112,7 +112,7 @@ const SingleAchievement = ({ params }) => {
           <div className="cstm-separator" />
 
           <div className="cstm-flex-row gap-2 items-start">
-            <p className="px-2 py-1 font-bold text-white rounded-md bg-gradient-to-r from-prmColor to-scndColor">
+            <p className="px-2 py-1 font-bold text-white rounded-md bg-gradient-to-br from-prmColor to-scndColor">
               Task
             </p>
             <p className="text-justify">{achievement.task}</p>
@@ -120,7 +120,7 @@ const SingleAchievement = ({ params }) => {
 
           <div className="cstm-separator" />
           <div className="cstm-flex-col gap-2 items-start w-fit">
-            <p className="px-2 py-1 font-bold text-white rounded-md bg-gradient-to-r from-prmColor to-scndColor">
+            <p className="px-2 py-1 font-bold text-white rounded-md bg-gradient-to-br from-prmColor to-scndColor">
               Reward
             </p>
             <div className="drop-shadow-md animate-float">

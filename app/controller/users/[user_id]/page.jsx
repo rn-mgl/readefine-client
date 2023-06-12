@@ -13,6 +13,7 @@ import { useGlobalContext } from "@/src/context";
 import { BsArrowLeft } from "react-icons/bs";
 import Image from "next/image";
 import { AiOutlineMail } from "react-icons/ai";
+import { decrypt } from "@/src/src/functions/security";
 
 const SingleUser = ({ params }) => {
   const [userData, setUserData] = React.useState({});

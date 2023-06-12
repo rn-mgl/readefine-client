@@ -7,7 +7,7 @@ import readingCharacter from "../../../public/ReadingCharacter.svg";
 const Offers = () => {
   return (
     <section
-      className="min-h-screen w-full bg-gradient-to-b from-scndColor to-prmColor p-5 font-poppins text-prmColor text-center cstm-flex-col gap-5 justify-start overflow-x-hidden
+      className="min-h-screen w-full bg-prmColor p-5 font-poppins text-white text-center cstm-flex-col gap-5 justify-start overflow-x-hidden
                 t:p-10 t:gap-10
                 l-s:justify-center"
     >
@@ -23,17 +23,21 @@ const Offers = () => {
 
       <div
         className="cstm-flex-col gap-5 w-full
-                  l-s:gap-10"
+                  l-s:gap-5 l-s:cstm-flex-row"
       >
-        <OfferCards to="#" label="read stories" image={readingCharacter} imagePos="right-0" />
         <OfferCards
           to="#"
-          label="take tests"
-          image={penAndPaper}
-          imagePos="left-0"
-          flexOrientation="l-s:flex-row-reverse"
+          label="read stories"
+          image={readingCharacter}
+          imagePos="right-0 l-s:left-0"
         />
-        <OfferCards to="#" label="brain teasers" image={brainTeaser} imagePos="right-0" />
+        <OfferCards to="#" label="take tests" image={penAndPaper} imagePos="left-0 l-s:left-0" />
+        <OfferCards
+          to="#"
+          label="brain teasers"
+          image={brainTeaser}
+          imagePos="right-0 l-s:left-0"
+        />
       </div>
     </section>
   );

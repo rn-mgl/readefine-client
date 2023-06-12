@@ -7,8 +7,11 @@ import intersectSL from "../../public/IntersectSL.svg";
 import InputComp from "../../src/components/input/InputComp";
 import ButtonComp from "../../src/components/input/ButtonComp";
 import { CiLock, CiUser, CiUnlock } from "react-icons/ci";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
+import axios from "axios";
+import { useGlobalContext } from "@/src/context";
+import { useRouter } from "next/navigation";
 
 const Login = () => {
   const [loginData, setLoginData] = React.useState({
@@ -16,6 +19,10 @@ const Login = () => {
     candidatePassword: "",
   });
   const [visiblePassword, setVisiblePassword] = React.useState(false);
+  const { data: session } = useSession();
+
+  const { url } = useGlobalContext();
+  const router = useRouter();
 
   const handleVisiblePassword = () => {
     setVisiblePassword((prev) => !prev);
@@ -36,10 +43,28 @@ const Login = () => {
     await signIn("client-credentials", {
       candidateIdentifier: loginData.candidateIdentifier,
       candidatePassword: loginData.candidatePassword,
-      callbackUrl: "/",
-      redirect: true,
+      redirect: false,
     });
+
+    try {
+      const { data } = await axios.post(`${url}/auth_client/client_login`, { loginData });
+      if (data) {
+        if (data.primary.isVerified) {
+          router.push("/archives");
+        } else {
+          router.push(`/verify/${data.primary.token}`);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  React.useEffect(() => {
+    if (session?.user?.name?.token) {
+      router.push("/archives");
+    }
+  }, [session]);
 
   return (
     <div className="w-full h-screen bg-accntColor p-5 cstm-flex-col font-poppins overflow-hidden">

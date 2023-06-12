@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import AdminLink from "../nav/AdminLink";
+import ClientLink from "../nav/ClientLink";
 
 import { BiMenu, BiTask, BiLogOut } from "react-icons/bi";
 import { BsPenFill, BsPatchQuestionFill } from "react-icons/bs";
@@ -12,13 +12,11 @@ import { GiAchievement } from "react-icons/gi";
 import { usePathname } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 
-const AdminNav = () => {
-  const { data: session } = useSession();
+const ClientNav = () => {
   const [isOpen, setIsOpen] = React.useState(false);
+  const { data: session } = useSession();
 
   const user = session?.user?.name;
-
-  const path = usePathname();
 
   const logOut = () => {
     signOut({ callbackUrl: "/", redirect: true });
@@ -28,10 +26,12 @@ const AdminNav = () => {
     setIsOpen((prev) => !prev);
   };
 
+  const path = usePathname();
+
   return (
     <>
-      <div className="cstm-bg-hover absolute top-4 left-4">
-        <BiMenu className="scale-150 cursor-pointer l-s:hidden" onClick={toggleOpenNav} />
+      <div className="absolute cstm-bg-hover top-4 left-4 l-s:hidden">
+        <BiMenu className="scale-150 cursor-pointer" onClick={toggleOpenNav} />
       </div>
 
       <div
@@ -42,78 +42,76 @@ const AdminNav = () => {
             l-l:w-[20%]`}
       >
         <div className="cstm-bg-hover absolute top-4 left-4 l-s:hidden">
-          <IoCloseSharp className="scale-150 cursor-pointer" onClick={toggleOpenNav} />
+          <IoCloseSharp
+            className="scale-150 cursor-pointer text-prmColor"
+            onClick={toggleOpenNav}
+          />
         </div>
 
         <Link
-          href="/controller"
-          className="select-none font-poppins font-extrabold text-lg whitespace-nowrap text-prmColor
+          href="/archives"
+          className="text-prmColor select-none font-poppins font-extrabold text-lg whitespace-nowrap
                 m-l:text-xl"
         >
-          Readefine <span className="font-extralight text-black"> | admin</span>
+          Readefine
         </Link>
 
         <div className="cstm-separator" />
 
-        <AdminLink
-          to="/controller"
+        <ClientLink
+          to="/archives"
+          toggleOpenNav={toggleOpenNav}
+          isActive={path === "/archives"}
           icon={<AiFillHome />}
-          label="Dashboard"
-          isActive={path === "/controller"}
-          toggleOpenNav={toggleOpenNav}
+          label="Home"
         />
 
-        <AdminLink
-          to="/controller/users"
-          icon={<HiUser />}
-          label="Users"
-          isActive={path.includes("/controller/users")}
+        <ClientLink
+          to="/archives/stories"
           toggleOpenNav={toggleOpenNav}
-        />
-
-        <AdminLink
-          to="/controller/stories"
+          isActive={path.includes("/archives/stories")}
           icon={<AiFillBook />}
           label="Stories"
-          isActive={path.includes("/controller/stories")}
-          toggleOpenNav={toggleOpenNav}
         />
 
-        <AdminLink
-          to="/controller/tests"
+        <ClientLink
+          to="/archives/tests"
+          toggleOpenNav={toggleOpenNav}
+          isActive={path.includes("/archives/tests")}
           icon={<BsPenFill />}
           label="Tests"
-          isActive={path.includes("/controller/tests")}
-          toggleOpenNav={toggleOpenNav}
         />
 
-        <AdminLink
-          to="/controller/rewards"
+        <ClientLink
+          to="/archives/rewards"
+          toggleOpenNav={toggleOpenNav}
+          isActive={path.includes("/archives/rewards")}
           icon={<GiAchievement />}
           label="Rewards"
-          isActive={path.includes("/controller/rewards")}
-          toggleOpenNav={toggleOpenNav}
         />
 
-        <AdminLink
-          to="/controller/achievements"
+        <ClientLink
+          to="/archives/achievements"
+          toggleOpenNav={toggleOpenNav}
+          isActive={path.includes("/archives/achievements")}
           icon={<BiTask />}
-          label="Achievements & Tasks"
-          isActive={path.includes("/controller/achievements")}
-          toggleOpenNav={toggleOpenNav}
+          label="Achievements"
         />
 
-        <AdminLink
-          to="/controller/riddles"
+        <ClientLink
+          to="/archives/riddles"
+          toggleOpenNav={toggleOpenNav}
+          isActive={path.includes("/archives/riddles")}
           icon={<BsPatchQuestionFill />}
           label="Riddles"
-          isActive={path.includes("/controller/riddles")}
-          toggleOpenNav={toggleOpenNav}
         />
 
         <div className="cstm-flex-row gap-2 w-full justify-start mt-auto">
-          <div className="w-10 h-10 rounded-full bg-prmColor bg-opacity-30" />
-          <Link href={`/a`} className="cstm-flex-col font-poppins items-start">
+          <div className="w-10 h-10 rounded-full  bg-gradient-to-br from-prmColor  to-scndColor bg-opacity-30" />
+          <Link
+            href={`/archives/${user?.userId}`}
+            className="cstm-flex-col font-poppins items-start"
+          >
             <p className="text-xs">Welcome</p>
             <p className="font-bold text-prmColor">
               {user?.name} {user?.surname}
@@ -130,4 +128,4 @@ const AdminNav = () => {
   );
 };
 
-export default AdminNav;
+export default ClientNav;
