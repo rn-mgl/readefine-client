@@ -55,8 +55,8 @@ const Definition = () => {
       </div>
 
       <div
-        className="w-10/12 absolute bottom-5 left-2/4 -translate-x-2/4 cstm-flex-col
-                  t:w-96"
+        className="w-10/12 absolute bottom-10 left-2/4 -translate-x-2/4 cstm-flex-col
+                  t:w-80"
       >
         <Image src={bookLadder} alt="lexile" className="animate-float drop-shadow-lg" priority />
       </div>

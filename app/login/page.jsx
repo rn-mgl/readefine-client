@@ -52,7 +52,7 @@ const Login = () => {
         if (data.primary.isVerified) {
           router.push("/archives");
         } else {
-          router.push(`/verify/${data.primary.token}`);
+          router.push(`/verify/${data.primary.token.split(" ")[1]}`);
         }
       }
     } catch (error) {

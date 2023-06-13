@@ -11,7 +11,7 @@ import { usePathname } from "next/navigation";
 const Verify = ({ params }) => {
   const [status, setStatus] = React.useState("verifying");
   const { url } = useGlobalContext();
-  const token = decodeURI(params?.token).split(" ")[1];
+  const token = params?.token;
 
   const verifyUser = React.useCallback(async () => {
     try {

@@ -5,7 +5,6 @@ import DashboardCards from "../../src/admin/dashboard/DashboardCards";
 import DashboardCardImage1 from "../../public/DashboardCardImage1.svg";
 import DashboardCardImage2 from "../../public/DashboardCardImage2.svg";
 import DashboardCardImage3 from "../../public/DashboardCardImage3.svg";
-import DashboardCardImage4 from "../../public/DashboardCardImage4.svg";
 import DashboardCardImage5 from "../../public/DashboardCardImage5.svg";
 import DashboardCardImage6 from "../../public/DashboardCardImage6.svg";
 import DashboardCardImage7 from "../../public/DashboardCardImage7.svg";

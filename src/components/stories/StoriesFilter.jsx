@@ -1,9 +1,9 @@
 import React from "react";
 import { IoAddOutline } from "react-icons/io5";
 import Link from "next/link";
-import SearchFilter from "../../components/filter/SearchFilter";
-import SortFilter from "../../components/filter/SortFilter";
-import RangeFilter from "../../components/filter/RangeFilter";
+import SearchFilter from "../filter/SearchFilter";
+import SortFilter from "../filter/SortFilter";
+import RangeFilter from "../filter/RangeFilter";
 
 const StoriesFilter = (props) => {
   return (

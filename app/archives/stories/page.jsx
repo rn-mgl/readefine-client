@@ -1,7 +1,128 @@
+"use client";
+import { useGlobalContext } from "@/src/context";
+import axios from "axios";
+import { useSession } from "next-auth/react";
 import React from "react";
+import { inputDate } from "@/src/src/functions/localDate";
+import StoriesFilter from "@/src/src/components/stories/StoriesFilter";
+import StoriesCards from "@/src/src/components/stories/StoriesCards";
+import ClientPageHeader from "@/src/src/client/global/PageHeader";
 
 const ClientStories = () => {
-  return <div>ClientStories</div>;
+  const [stories, setStories] = React.useState([]);
+  const [searchFilter, setSearchFilter] = React.useState({ toSearch: "title", searchKey: "" });
+  const [lexileRangeFilter, setLexileRangeFilter] = React.useState({ from: 0, to: 1250 });
+  const [sortFilter, setSortFilter] = React.useState({ toSort: "title", sortMode: "ASC" });
+  const [dateRangeFilter, setDateRangeFilter] = React.useState({
+    from: "",
+    to: inputDate(new Date().toLocaleDateString()),
+  });
+
+  const handleSearchFilter = ({ name, value }) => {
+    setSearchFilter((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
+  };
+
+  const handleDateRangeFilter = ({ name, value }) => {
+    setDateRangeFilter((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
+  };
+
+  const handleLexileRangeFilter = ({ name, value }) => {
+    setLexileRangeFilter((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
+  };
+
+  const handleSortFilter = ({ name, value }) => {
+    setSortFilter((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
+  };
+
+  const { data: session } = useSession();
+  const { url } = useGlobalContext();
+  const user = session?.user?.name;
+
+  const getStories = React.useCallback(async () => {
+    try {
+      const { data } = await axios.get(`${url}/story`, {
+        headers: { Authorization: user.token },
+        params: {
+          searchFilter,
+          lexileRangeFilter,
+          sortFilter,
+          dateRangeFilter,
+        },
+      });
+      if (data) {
+        setStories(data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, [url, user, setStories]);
+
+  const storiesCards = stories.map((story) => {
+    const testId = story?.test_id ? story?.test_id : story.story_id;
+    return (
+      <React.Fragment key={story.story_id}>
+        <StoriesCards
+          image={story.book_cover ? story.book_cover : DashboardCardImage3}
+          title={story.title}
+          author={story.author}
+          lexile={story.lexile}
+          genre={story.genre}
+          visit={`/controller/stories/${story.story_id}`}
+          test={`/controller/tests/${testId}`}
+        />
+      </React.Fragment>
+    );
+  });
+
+  React.useEffect(() => {
+    if (user) {
+      getStories();
+    }
+  }, [user, getStories]);
+
+  return (
+    <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
+      <ClientPageHeader mainHeader="Readefine" subHeader="Stories" />
+      <StoriesFilter
+        handleSearchFilter={handleSearchFilter}
+        handleDateRangeFilter={handleDateRangeFilter}
+        handleLexileRangeFilter={handleLexileRangeFilter}
+        handleSortFilter={handleSortFilter}
+        searchFilter={searchFilter}
+        lexileRangeFilter={lexileRangeFilter}
+        sortFilter={sortFilter}
+        dateRangeFilter={dateRangeFilter}
+      />
+      <div className="w-full cstm-w-limit">
+        <div
+          className="cstm-flex-col gap-5 justify-start w-full transition-all 
+                  t:cstm-flex-row t:flex-wrap"
+        >
+          {storiesCards}
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default ClientStories;
