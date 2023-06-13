@@ -73,3 +73,49 @@ th:not(:first-of-type) {
 input[type="password"]::-ms-reveal {
   display: none;
 }
+
+.react-datepicker {
+  background: white;
+  font-family: var(--font-poppins);
+  font-size: x-small;
+}
+
+.react-datepicker__header {
+  padding: 1rem;
+  background-color: #552acb80;
+}
+.react-datepicker__day-name,
+.react-datepicker__current-month {
+  color: white;
+}
+
+.react-datepicker__navigation {
+  top: 1rem;
+}
+
+.react-datepicker__navigation:hover {
+  box-shadow: none;
+  border-color: white;
+  color: white;
+}
+
+.react-datepicker__navigation-icon::before {
+  border-color: white;
+}
+.react-datepicker__day--default,
+.react-datepicker__day--selected,
+.react-datepicker__day--in-range,
+.react-datepicker__day--selected:hover,
+.react-datepicker__day--in-selecting-range,
+.react-datepicker__day--selecting-range-start,
+.react-datepicker__day--selecting-range-end,
+.react-datepicker__day--in-selecting-range:hover,
+.react-datepicker__day--in-range:hover,
+.react-datepicker__day--in-range {
+  background-color: #552acb80;
+  color: white;
+}
+
+.react-datepicker__day--outside-month {
+  opacity: 0.5;
+}

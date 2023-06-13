@@ -24,7 +24,8 @@ const SearchFilter = (props) => {
         onChange={(e) => props.handleSearchFilter(e.target)}
         value={props.searchFilter.searchKey}
         name="searchKey"
-        className="p-1 px-2  bg-white font-poppins rounded-r-md border-neutral-200 border-2 border-l-0 text-sm
+        placeholder={`Search ${props.searchFilter.toSearch}...`}
+        className="p-1 px-2  bg-white font-poppins rounded-r-md border-neutral-200 border-2 border-l-0 text-sm placeholder:capitalize
               focus:outline-none "
       />
       <div className="absolute right-4 p-1 bg-white">

@@ -2,23 +2,24 @@
 import ArchivesCards from "@/src/src/client/archives/ArchivesCards";
 import { useSession } from "next-auth/react";
 import React from "react";
-import DashboardCards from "../../src/admin/dashboard/DashboardCards";
 import DashboardCardImage1 from "../../public/DashboardCardImage1.svg";
 import DashboardCardImage2 from "../../public/DashboardCardImage2.svg";
 import DashboardCardImage3 from "../../public/DashboardCardImage3.svg";
 import DashboardCardImage5 from "../../public/DashboardCardImage5.svg";
 import DashboardCardImage6 from "../../public/DashboardCardImage6.svg";
-import DashboardCardImage7 from "../../public/DashboardCardImage7.svg";
 import ClientPageHeader from "@/src/src/client/global/PageHeader";
 import { useGlobalContext } from "@/src/context";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const Archives = () => {
   const [countsData, setCountsData] = React.useState({});
+
   const { data: session } = useSession({ required: true });
   const user = session?.user?.name;
 
   const { url } = useGlobalContext();
+  const router = useRouter();
 
   const getCounts = React.useCallback(async () => {
     try {
@@ -31,6 +32,9 @@ const Archives = () => {
       }
     } catch (error) {
       console.log(error);
+      if (error?.response.statusText === "Unauthorized") {
+        router.push("/login");
+      }
     }
   }, [url, user, setCountsData]);
 
@@ -43,6 +47,7 @@ const Archives = () => {
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <ClientPageHeader mainHeader="Readefine" subHeader="Home" />
+
       <div
         className="cstm-flex-col gap-5 justify-start w-full transition-all
         t:cstm-flex-row t:flex-wrap

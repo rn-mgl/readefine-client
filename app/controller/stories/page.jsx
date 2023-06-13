@@ -5,7 +5,9 @@ import StoriesCards from "@/src/src/components/stories/StoriesCards";
 import DashboardCardImage3 from "../../../public/DashboardCardImage3.svg";
 import StoriesFilter from "@/src/src/components/stories/StoriesFilter";
 import axios from "axios";
+import Link from "next/link";
 
+import { IoAddOutline } from "react-icons/io5";
 import { useSession } from "next-auth/react";
 import { inputDate } from "@/src/src/functions/localDate";
 import { useGlobalContext } from "@/src/context";
@@ -107,17 +109,21 @@ const AdminStories = () => {
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <AdminPageHeader subHeader="Readefine" mainHeader="Stories" />
-      <StoriesFilter
-        handleSearchFilter={handleSearchFilter}
-        handleDateRangeFilter={handleDateRangeFilter}
-        handleLexileRangeFilter={handleLexileRangeFilter}
-        handleSortFilter={handleSortFilter}
-        searchFilter={searchFilter}
-        lexileRangeFilter={lexileRangeFilter}
-        sortFilter={sortFilter}
-        dateRangeFilter={dateRangeFilter}
-      />
-      <div className="w-full cstm-w-limit">
+
+      <div className="w-full cstm-w-limit cstm-flex-col gap-2">
+        <StoriesFilter
+          handleSearchFilter={handleSearchFilter}
+          handleDateRangeFilter={handleDateRangeFilter}
+          handleLexileRangeFilter={handleLexileRangeFilter}
+          handleSortFilter={handleSortFilter}
+          searchFilter={searchFilter}
+          lexileRangeFilter={lexileRangeFilter}
+          sortFilter={sortFilter}
+          dateRangeFilter={dateRangeFilter}
+        />
+        <Link href="/controller/stories/add" className="cstm-bg-hover mr-auto p-2 w-fit">
+          <IoAddOutline className="text-prmColor cursor-pointer scale-150" />
+        </Link>
         <div
           className="cstm-flex-col gap-5 justify-start w-full transition-all 
                   t:cstm-flex-row t:flex-wrap"

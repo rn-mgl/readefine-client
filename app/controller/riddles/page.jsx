@@ -4,7 +4,9 @@ import AdminPageHeader from "@/src/src/admin/global/PageHeader";
 import RiddlesFilter from "@/src/src/admin/riddles/RiddlesFilter";
 import axios from "axios";
 import DeleteRiddle from "@/src/src/admin/riddles/DeleteRiddle";
+import Link from "next/link";
 
+import { IoAddOutline } from "react-icons/io5";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { inputDate, localizeDate } from "@/src/src/functions/localDate";
@@ -238,15 +240,19 @@ const AdminRiddles = () => {
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-2 justify-start">
       <AdminPageHeader subHeader="Readefine" mainHeader="Riddles" />
-
-      <RiddlesFilter
-        handleSearchFilter={handleSearchFilter}
-        handleDateRangeFilter={handleDateRangeFilter}
-        handleSortFilter={handleSortFilter}
-        searchFilter={searchFilter}
-        sortFilter={sortFilter}
-        dateRangeFilter={dateRangeFilter}
-      />
+      <div className="cstm-flex-col gap-2 w-full cstm-w-limit">
+        <RiddlesFilter
+          handleSearchFilter={handleSearchFilter}
+          handleDateRangeFilter={handleDateRangeFilter}
+          handleSortFilter={handleSortFilter}
+          searchFilter={searchFilter}
+          sortFilter={sortFilter}
+          dateRangeFilter={dateRangeFilter}
+        />
+        <Link href="/controller/riddles/add" className="cstm-bg-hover mr-auto p-2">
+          <IoAddOutline className="text-prmColor cursor-pointer scale-150" />
+        </Link>
+      </div>
 
       {canDeleteRiddle ? (
         <DeleteRiddle

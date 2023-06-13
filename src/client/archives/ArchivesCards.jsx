@@ -14,6 +14,7 @@ const ArchivesCards = (props) => {
       <div className="w-fit overflow-hidden rounded-2xl">
         <Image
           src={props.image}
+          width={320}
           alt="temp"
           className="rounded-2xl group-hover:scale-110 transition-all duration-300"
           priority

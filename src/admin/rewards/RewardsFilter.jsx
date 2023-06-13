@@ -4,15 +4,9 @@ import SearchFilter from "../../components/filter/SearchFilter";
 import SortFilter from "../../components/filter/SortFilter";
 import RangeFilter from "../../components/filter/RangeFilter";
 
-import Link from "next/link";
-import { IoAddOutline } from "react-icons/io5";
-
 const RewardsFilter = (props) => {
   return (
     <div className="cstm-flex-row gap-2 justify-start relative w-full overflow-x-auto py-2 cstm-scrollbar">
-      <Link href="/controller/rewards/add" className="cstm-bg-hover">
-        <IoAddOutline className="text-prmColor cursor-pointer scale-150" />
-      </Link>
       <SearchFilter
         handleSearchFilter={props.handleSearchFilter}
         searchFilter={props.searchFilter}

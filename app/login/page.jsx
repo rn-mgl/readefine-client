@@ -60,12 +60,6 @@ const Login = () => {
     }
   };
 
-  React.useEffect(() => {
-    if (session?.user?.name?.token) {
-      router.push("/archives");
-    }
-  }, [session]);
-
   return (
     <div className="w-full h-screen bg-accntColor p-5 cstm-flex-col font-poppins overflow-hidden">
       <p className=" font-extrabold text-2xl text-prmColor">Log In</p>

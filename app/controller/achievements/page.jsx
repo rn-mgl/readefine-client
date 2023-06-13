@@ -3,7 +3,9 @@ import React from "react";
 import AdminPageHeader from "../../../src/admin/global/PageHeader";
 import AchievementsFilter from "@/src/src/admin/achievements/AchievementsFilter";
 import axios from "axios";
+import Link from "next/link";
 
+import { IoAddOutline } from "react-icons/io5";
 import { specificsConversion, typeConversion } from "@/src/src/functions/typeConversion";
 import { inputDate } from "@/src/src/functions/localDate";
 import { useSession } from "next-auth/react";
@@ -113,7 +115,7 @@ const AdminAchievements = () => {
       <AdminPageHeader subHeader="Readefine" mainHeader="Achievements & Tasks" />
 
       <div
-        className="w-full     
+        className="w-full     cstm-flex-col gap-2
         cstm-w-limit"
       >
         <AchievementsFilter
@@ -126,6 +128,10 @@ const AdminAchievements = () => {
           sortFilter={sortFilter}
           dateRangeFilter={dateRangeFilter}
         />
+
+        <Link href="/controller/stories/add" className="cstm-bg-hover mr-auto p-2 w-fit">
+          <IoAddOutline className="text-prmColor cursor-pointer scale-150" />
+        </Link>
 
         <div className="w-full cstm-flex-col gap-5 t:items-start t:cstm-flex-row">
           {achievementCards}

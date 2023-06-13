@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
 import AdminPageHeader from "../../../src/admin/global/PageHeader";
-import TestsCards from "@/src/src/admin/tests/TestsCards";
-import TestsFilter from "@/src/src/admin/tests/TestsFilter";
+import TestsCards from "@/src/src/components/tests/TestsCards";
+import TestsFilter from "@/src/src/components/tests/TestsFilter";
 import axios from "axios";
 import { inputDate } from "@/src/src/functions/localDate";
 import { useSession } from "next-auth/react";

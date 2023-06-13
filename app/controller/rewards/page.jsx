@@ -3,7 +3,9 @@ import React from "react";
 import AdminPageHeader from "../../../src/admin/global/PageHeader";
 import RewardsFilter from "@/src/src/admin/rewards/RewardsFilter";
 import RewardsCards from "@/src/src/admin/rewards/RewardsCards";
+import Link from "next/link";
 
+import { IoAddOutline } from "react-icons/io5";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
@@ -94,7 +96,7 @@ const AdminRewards = () => {
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <AdminPageHeader subHeader="Readefine" mainHeader="Rewards" />
 
-      <div className="w-full cstm-w-limit">
+      <div className="w-full cstm-w-limit cstm-flex-col gap-2">
         <RewardsFilter
           handleSearchFilter={handleSearchFilter}
           handleDateRangeFilter={handleDateRangeFilter}
@@ -103,6 +105,9 @@ const AdminRewards = () => {
           sortFilter={sortFilter}
           dateRangeFilter={dateRangeFilter}
         />
+        <Link href="/controller/stories/add" className="cstm-bg-hover mr-auto p-2 w-fit">
+          <IoAddOutline className="text-prmColor cursor-pointer scale-150" />
+        </Link>
         <div
           className="cstm-flex-col gap-5 justify-start w-full transition-all 
                   t:cstm-flex-row t:flex-wrap"

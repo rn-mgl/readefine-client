@@ -1,4 +1,5 @@
 import React from "react";
+import { BsArrowDown, BsArrowUp } from "react-icons/bs";
 
 const SortFilter = (props) => {
   const mappedOptions = props.labelValue.map((data) => {
@@ -10,7 +11,7 @@ const SortFilter = (props) => {
   });
 
   return (
-    <div className="p-2 bg-white font-poppins rounded-md shadow-md whitespace-nowrap">
+    <div className="p-2 bg-white font-poppins rounded-md shadow-md whitespace-nowrap cstm-flex-row">
       <select
         onChange={(e) => props.handleSortFilter(e.target)}
         value={props.sortFilter.toSort}
@@ -26,9 +27,18 @@ const SortFilter = (props) => {
         className="p-1 px-2  bg-white font-poppins rounded-r-md border-neutral-200 border-2 border-l-0 text-sm
               focus:outline-none "
       >
-        <option value="ASC">Ascending</option>
-        <option value="DESC">Descending</option>
+        <option className="cstm-flex-row gap-2" value="ASC">
+          Ascending
+        </option>
+        <option className="cstm-flex-row gap-2" value="DESC">
+          Descending
+        </option>
       </select>
+      <BsArrowUp
+        className={`${
+          props.sortFilter.sortMode === "ASC" ? "rotate-0" : "rotate-180"
+        } transition-all mx-1`}
+      />
     </div>
   );
 };
