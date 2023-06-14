@@ -47,8 +47,6 @@ const AddAchievement = () => {
     });
   };
 
-  console.log(achievement);
-
   const addAchievement = async (e) => {
     e.preventDefault();
     try {
