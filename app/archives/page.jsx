@@ -11,15 +11,21 @@ import ClientPageHeader from "@/src/src/client/global/PageHeader";
 import { useGlobalContext } from "@/src/context";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import Loading from "@/src/src/components/global/Loading";
 
 const Archives = () => {
   const [countsData, setCountsData] = React.useState({});
+  const [loading, setLoading] = React.useState(false);
 
   const { data: session } = useSession({ required: true });
   const user = session?.user?.name;
 
   const { url } = useGlobalContext();
   const router = useRouter();
+
+  const handleLoading = () => {
+    setLoading(true);
+  };
 
   const getCounts = React.useCallback(async () => {
     try {
@@ -44,6 +50,10 @@ const Archives = () => {
     }
   }, [user, getCounts]);
 
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <ClientPageHeader mainHeader="Readefine" subHeader="Home" />
@@ -59,6 +69,7 @@ const Archives = () => {
           count={countsData?.readCount}
           to="/archives/stories"
           image={DashboardCardImage1}
+          handleLoading={handleLoading}
         />
         <ArchivesCards
           label="Take Tests"
@@ -66,6 +77,7 @@ const Archives = () => {
           count={countsData?.testCount}
           to="/archives/tests"
           image={DashboardCardImage2}
+          handleLoading={handleLoading}
         />
         <ArchivesCards
           label="See Rewards"
@@ -73,6 +85,7 @@ const Archives = () => {
           count={countsData?.rewardCount}
           to="/archives/rewards"
           image={DashboardCardImage3}
+          handleLoading={handleLoading}
         />
         <ArchivesCards
           label="See Achievements"
@@ -80,6 +93,7 @@ const Archives = () => {
           count={countsData?.achievementCount}
           to="/archives/achievements"
           image={DashboardCardImage5}
+          handleLoading={handleLoading}
         />
         <ArchivesCards
           label="Answer Riddles"
@@ -87,6 +101,7 @@ const Archives = () => {
           count={countsData?.riddleCount}
           to="/archives/riddles"
           image={DashboardCardImage6}
+          handleLoading={handleLoading}
         />
       </div>
     </div>

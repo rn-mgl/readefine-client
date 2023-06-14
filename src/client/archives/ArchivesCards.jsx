@@ -7,6 +7,7 @@ const ArchivesCards = (props) => {
   return (
     <Link
       href={props.to}
+      onClick={props.handleLoading}
       className="bg-white p-5 rounded-2xl cstm-flex-col gap-4 group hover:shadow-md
             l-s:w-[18.5rem]
             l-l:w-fit"

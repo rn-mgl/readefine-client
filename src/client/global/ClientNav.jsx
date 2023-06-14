@@ -108,12 +108,9 @@ const ClientNav = () => {
 
         <div className="cstm-flex-row gap-2 w-full justify-start mt-auto">
           <div className="w-10 h-10 rounded-full  bg-gradient-to-br from-prmColor  to-scndColor bg-opacity-30" />
-          <Link
-            href={`/archives/${user?.userId}`}
-            className="cstm-flex-col font-poppins items-start"
-          >
+          <Link href={`/archives/${user?.userId}`} className="font-poppins text-left">
             <p className="text-xs">Welcome</p>
-            <p className="font-bold text-prmColor">
+            <p className="font-bold text-prmColor whitespace-nowrap truncate">
               {user?.name} {user?.surname}
             </p>
           </Link>

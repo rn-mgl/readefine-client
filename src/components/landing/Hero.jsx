@@ -27,8 +27,8 @@ const Hero = () => {
                   l-s:text-xl l-s:w-10/12
                   l-l:w-7/12"
       >
-        Readefine, an approach to enhance the reading comprehension skills of elementary students in
-        the contemporary world.
+        <span className="font-bold">Readefine</span> : Gamification Approach to Engage Elementary
+        Students and Enhance their Reading Comprehension Skills in the English Language
       </p>
       <div
         className="w-full cstm-flex-col gap-4

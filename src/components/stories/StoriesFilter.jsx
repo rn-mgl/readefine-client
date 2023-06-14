@@ -6,7 +6,7 @@ import RangeFilter from "../filter/RangeFilter";
 
 const StoriesFilter = (props) => {
   return (
-    <div className="cstm-flex-row gap-2 justify-start relative w-full overflow-x-auto p-2 cstm-scrollbar ">
+    <div className="cstm-flex-row gap-2 justify-start relative w-full overflow-x-auto p-2 cstm-scrollbar cstm-w-limit">
       <SearchFilter
         searchFilter={props.searchFilter}
         handleSearchFilter={props.handleSearchFilter}

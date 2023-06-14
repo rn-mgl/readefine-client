@@ -12,6 +12,7 @@ import Link from "next/link";
 import axios from "axios";
 import { useGlobalContext } from "@/src/context";
 import { useRouter } from "next/navigation";
+import Loading from "@/src/src/components/global/Loading";
 
 const Login = () => {
   const [loginData, setLoginData] = React.useState({
@@ -19,7 +20,7 @@ const Login = () => {
     candidatePassword: "",
   });
   const [visiblePassword, setVisiblePassword] = React.useState(false);
-  const { data: session } = useSession();
+  const [loading, setLoading] = React.useState(false);
 
   const { url } = useGlobalContext();
   const router = useRouter();
@@ -40,6 +41,8 @@ const Login = () => {
   const loginUser = async (e) => {
     e.preventDefault();
 
+    setLoading(true);
+
     await signIn("client-credentials", {
       candidateIdentifier: loginData.candidateIdentifier,
       candidatePassword: loginData.candidatePassword,
@@ -56,9 +59,14 @@ const Login = () => {
         }
       }
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
   };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className="w-full h-screen bg-accntColor p-5 cstm-flex-col font-poppins overflow-hidden">
