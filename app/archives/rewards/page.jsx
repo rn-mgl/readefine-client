@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import AdminPageHeader from "../../../src/admin/global/PageHeader";
-import RewardsCards from "@/src/src/admin/rewards/RewardsCards";
+import RewardsCards from "@/src/src/components/rewards/RewardsCards";
 import axios from "axios";
 import ClientRewardsFilter from "@/src/src/client/rewards/ClientRewardsFilter";
 

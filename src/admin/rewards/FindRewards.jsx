@@ -88,7 +88,7 @@ const FindRewards = (props) => {
   }, [user, getRewards]);
 
   return (
-    <div className="p-5 backdrop-blur-md bg-black bg-opacity-20 fixed top-0 left-0 w-full min-h-screen cstm-flex-col gap-2 justify-start z-20">
+    <div className="p-5 backdrop-blur-md bg-black bg-opacity-20 fixed top-0 left-0 w-full min-h-screen cstm-flex-col gap-2 justify-start  z-20">
       <div className="ml-auto cstm-flex-col w-fit z-20 cstm-bg-hover">
         <IoClose
           className="text-prmColor scale-150 cursor-pointer"
@@ -96,7 +96,7 @@ const FindRewards = (props) => {
         />
       </div>
 
-      <div className="w-full cstm-flex-col gap-2">
+      <div className="w-full cstm-flex-col gap-2 cstm-w-limit">
         <RewardsFilter
           handleSearchFilter={handleSearchFilter}
           handleDateRangeFilter={handleDateRangeFilter}

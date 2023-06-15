@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const StoriesCards = (props) => {
   return (
-    <div className="bg-white p-5 rounded-2xl cstm-flex-col gap-4 w-fit">
+    <div className="bg-white p-5 rounded-2xl cstm-flex-col gap-4 w-fit shadow-solid">
       <div className="w-full h-fit cstm-flex-col overflow-clip  bg-white">
         <Image
           src={props.image}
@@ -35,9 +35,9 @@ const StoriesCards = (props) => {
       <div className="cstm-flex-col w-full gap-2">
         <Link
           href={props.visit}
-          className="w-full text-center font-poppins text-sm font-normal bg-prmColor text-accntColor rounded-full p-2"
+          className="w-full text-center font-poppins text-sm font-normal bg-prmColor text-accntColor rounded-full p-2 "
         >
-          Visit
+          Read
         </Link>
         <Link
           href={props.test}

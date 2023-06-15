@@ -129,7 +129,7 @@ const AdminAchievements = () => {
           dateRangeFilter={dateRangeFilter}
         />
 
-        <Link href="/controller/stories/add" className="cstm-bg-hover mr-auto p-2 w-fit">
+        <Link href="/controller/achievements/add" className="cstm-bg-hover mr-auto p-2 w-fit">
           <IoAddOutline className="text-prmColor cursor-pointer scale-150" />
         </Link>
 

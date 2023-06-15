@@ -4,8 +4,8 @@ import Link from "next/link";
 
 const TestsCards = (props) => {
   return (
-    <div className="bg-white p-5 rounded-2xl cstm-flex-col gap-4 w-fit">
-      <div className="w-full h-fit cstm-flex-col overflow-clip  bg-white">
+    <div className="bg-white p-5 rounded-2xl cstm-flex-col gap-4 w-fit shadow-solid">
+      <div className="w-full h-fit cstm-flex-col overflow-clip  bg-white ">
         <Image
           src={props.image}
           alt="temp"
@@ -42,10 +42,9 @@ const TestsCards = (props) => {
 
       <Link
         href={props.to}
-        className="w-full text-center font-poppins text-sm font-normal bg-prmColor text-accntColor rounded-full p-2
-                t:text-base"
+        className="w-full text-center font-poppins text-sm font-normal bg-prmColor text-accntColor rounded-full p-2"
       >
-        Visit
+        Answer
       </Link>
     </div>
   );

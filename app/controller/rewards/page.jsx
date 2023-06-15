@@ -2,7 +2,7 @@
 import React from "react";
 import AdminPageHeader from "../../../src/admin/global/PageHeader";
 import RewardsFilter from "@/src/src/admin/rewards/RewardsFilter";
-import RewardsCards from "@/src/src/admin/rewards/RewardsCards";
+import RewardsCards from "@/src/src/components/rewards/RewardsCards";
 import Link from "next/link";
 
 import { IoAddOutline } from "react-icons/io5";
@@ -105,7 +105,7 @@ const AdminRewards = () => {
           sortFilter={sortFilter}
           dateRangeFilter={dateRangeFilter}
         />
-        <Link href="/controller/stories/add" className="cstm-bg-hover mr-auto p-2 w-fit">
+        <Link href="/controller/rewards/add" className="cstm-bg-hover mr-auto p-2 w-fit">
           <IoAddOutline className="text-prmColor cursor-pointer scale-150" />
         </Link>
         <div

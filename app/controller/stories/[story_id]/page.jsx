@@ -92,7 +92,7 @@ const SingleStory = ({ params }) => {
   }, [getPages, user]);
 
   return (
-    <div className="p-5 cstm-flex-col bg-accntColor w-full min-h-screen justify-start gap-5">
+    <div className="p-5 cstm-flex-col bg-accntColor w-full min-h-screen justify-start gap-2">
       <AdminPageHeader subHeader="Stories" mainHeader={story.title} />
 
       {canDeleteStory ? (

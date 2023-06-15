@@ -50,7 +50,7 @@ const AddRiddle = () => {
         onSubmit={(e) => addRiddle(e)}
         className="w-full cstm-flex-col cstm-w-limit border-collapse"
       >
-        <div className="table-fixed p-5 rounded-2xl cstm-flex-col overflow-auto w-full h-screen justify-start items-start bg-white text-sm gap-2 shadow-md cstm-scrollbar">
+        <div className="table-fixed p-5 rounded-2xl cstm-flex-col overflow-auto w-full h-[75vh] justify-start items-start bg-white text-sm gap-2 shadow-md cstm-scrollbar">
           <div className="cstm-flex-row w-full">
             <textarea
               name="answer"

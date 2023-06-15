@@ -17,10 +17,10 @@ const AchievementsCards = (props) => {
         <Image
           src={props.image}
           alt="temp"
-          width={240}
+          width={250}
           height={200}
           priority
-          className="rounded-2xl"
+          className="rounded-2xl p-5 bg-accntColor"
         />
       </div>
       <div className="cstm-flex-row w-full">

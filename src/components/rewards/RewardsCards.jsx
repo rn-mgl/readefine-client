@@ -4,13 +4,13 @@ import Link from "next/link";
 
 const RewardsCards = (props) => {
   return (
-    <div className="bg-white p-5 rounded-2xl cstm-flex-col gap-4 w-fit">
+    <div className="bg-white p-5 rounded-2xl cstm-flex-col gap-4 w-fit shadow-solid">
       <div className="w-full h-fit cstm-flex-col overflow-clip bg-accntColor p-2 rounded-2xl">
         <Image
           src={props.image}
           alt="temp"
           className="rounded-2xl drop-shadow-md"
-          width={250}
+          width={230}
           height={200}
           priority
         />
@@ -25,10 +25,9 @@ const RewardsCards = (props) => {
 
       <Link
         href={props.to}
-        className="w-full text-center font-poppins text-sm font-normal bg-prmColor text-accntColor rounded-full p-2
-                t:text-base"
+        className="w-full text-center font-poppins text-sm font-normal bg-prmColor text-accntColor rounded-full p-2"
       >
-        Visit
+        See
       </Link>
     </div>
   );

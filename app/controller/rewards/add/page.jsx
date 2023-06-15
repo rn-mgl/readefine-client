@@ -11,6 +11,7 @@ import { useSession } from "next-auth/react";
 import { wordCount } from "@/src/src/functions/wordCount";
 import { useGlobalContext } from "@/src/context";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const AddReward = () => {
   const [reward, setReward] = React.useState({
@@ -24,6 +25,7 @@ const AddReward = () => {
   const { data: session } = useSession();
   const user = session?.user?.name;
   const { url } = useGlobalContext();
+  const router = useRouter();
 
   const words = wordCount(reward.description);
 
@@ -54,7 +56,7 @@ const AddReward = () => {
           { headers: { Authorization: user.token } }
         );
         if (data) {
-          console.log(data);
+          router.push("/controller/rewards");
         }
       } catch (error) {
         console.log(error);

@@ -3,21 +3,18 @@ import React from "react";
 
 const FindCards = (props) => {
   return (
-    <div
-      className="bg-white shadow-md p-5 rounded-2xl cstm-flex-col gap-4 w-fit
-                t:cstm-flex-row t:w-full"
-    >
+    <div className="bg-white shadow-md p-5 rounded-2xl cstm-flex-col gap-4 w-fit justify-start">
       <Image
         src={props.image}
         alt="temp"
-        className="rounded-2xl t:w-28"
+        className="rounded-2xl bg-accntColor p-5"
         width={200}
         height={200}
         priority
       />
 
       <div
-        className="cstm-flex-row gap-1 font-poppins w-full 
+        className="cstm-flex-row font-poppins w-full 
                     t:cstm-flex-col t:text-center"
       >
         <p className="font-bold text-black mr-auto t:mr-0">{props.title}</p>

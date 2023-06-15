@@ -50,6 +50,7 @@ const SingleReward = ({ params }) => {
         <DeleteReward
           confirmation={reward?.reward_name}
           handleCanDeleteReward={handleCanDeleteReward}
+          rewardId={rewardId}
         />
       ) : null}
 

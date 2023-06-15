@@ -44,6 +44,10 @@ module.exports = {
         fadeIn: "fadeIn 1s ease-in-out",
         slideDown: "slideDown 1s ease-in-out",
       },
+      boxShadow: {
+        solid: "0px 5px rgba(0,0,0,0.3)",
+        solidActive: "inset 0px 5px rgba(0,0,0,0.3)",
+      },
     },
   },
   plugins: [require("tailwind-scrollbar")],

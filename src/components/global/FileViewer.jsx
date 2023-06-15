@@ -6,8 +6,8 @@ const FileViewer = (props) => {
     <Image
       src={props.src}
       alt="viewer"
-      width={300}
-      height={300}
+      width={350}
+      height={350}
       className={`${props.width} rounded-2xl`}
       draggable={false}
       priority

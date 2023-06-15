@@ -8,7 +8,7 @@ const ArchivesCards = (props) => {
     <Link
       href={props.to}
       onClick={props.handleLoading}
-      className="bg-white p-5 rounded-2xl cstm-flex-col gap-4 group hover:shadow-md
+      className="bg-white p-5 rounded-2xl cstm-flex-col gap-4 group transition-all shadow-solid active:shadow-solidActive
             l-s:w-[18.5rem]
             l-l:w-fit"
     >
@@ -24,7 +24,7 @@ const ArchivesCards = (props) => {
 
       <div className="w-full cstm-flex-col gap-1 font-poppins">
         <p className="text-center font-bold text-prmColor group whitespace-nowrap">{props.label}</p>
-        <p className="text-xs font-medium opacity-50">
+        <p className="text-xs font-medium opacity-50 group-hover:opacity-100 transition-all">
           {props.subLabel} {props.count}
         </p>
       </div>

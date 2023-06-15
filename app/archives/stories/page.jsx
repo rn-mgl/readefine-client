@@ -75,7 +75,7 @@ const ClientStories = () => {
     } catch (error) {
       console.log(error);
     }
-  }, [url, user, setStories]);
+  }, [url, user, setStories, searchFilter, sortFilter, dateRangeFilter, lexileRangeFilter]);
 
   const storiesCards = stories.map((story) => {
     const testId = story?.test_id ? story?.test_id : story.story_id;
@@ -103,17 +103,18 @@ const ClientStories = () => {
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <ClientPageHeader mainHeader="Readefine" subHeader="Stories" />
-      <StoriesFilter
-        handleSearchFilter={handleSearchFilter}
-        handleDateRangeFilter={handleDateRangeFilter}
-        handleLexileRangeFilter={handleLexileRangeFilter}
-        handleSortFilter={handleSortFilter}
-        searchFilter={searchFilter}
-        lexileRangeFilter={lexileRangeFilter}
-        sortFilter={sortFilter}
-        dateRangeFilter={dateRangeFilter}
-      />
-      <div className="w-full cstm-w-limit">
+
+      <div className="w-full cstm-w-limit cstm-flex-col gap-5">
+        <StoriesFilter
+          handleSearchFilter={handleSearchFilter}
+          handleDateRangeFilter={handleDateRangeFilter}
+          handleLexileRangeFilter={handleLexileRangeFilter}
+          handleSortFilter={handleSortFilter}
+          searchFilter={searchFilter}
+          lexileRangeFilter={lexileRangeFilter}
+          sortFilter={sortFilter}
+          dateRangeFilter={dateRangeFilter}
+        />
         <div
           className="cstm-flex-col gap-5 justify-start w-full transition-all 
                   t:cstm-flex-row t:flex-wrap"
