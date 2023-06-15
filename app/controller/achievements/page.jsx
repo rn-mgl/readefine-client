@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import AdminPageHeader from "../../../src/admin/global/PageHeader";
-import AchievementsFilter from "@/src/src/admin/achievements/AchievementsFilter";
+import AchievementsFilter from "@/src/src/components/achievements/AchievementsFilter";
 import axios from "axios";
 import Link from "next/link";
 

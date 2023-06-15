@@ -1,7 +1,8 @@
 "use client";
 import React from "react";
-import AdminPageHeader from "../../../src/admin/global/PageHeader";
-import AchievementsFilter from "@/src/src/admin/achievements/AchievementsFilter";
+import AchievementsFilter from "@/src/src/components/achievements/AchievementsFilter";
+import AchievementsCards from "@/src/src/admin/achievements/AchievementsCards";
+import ClientPageHeader from "@/src/src/client/global/PageHeader";
 import axios from "axios";
 import Link from "next/link";
 
@@ -10,7 +11,6 @@ import { specificsConversion, typeConversion } from "@/src/src/functions/typeCon
 import { inputDate } from "@/src/src/functions/localDate";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
-import AchievementsCards from "@/src/src/admin/achievements/AchievementsCards";
 
 const ClientAchievements = () => {
   const [achievements, setAchievements] = React.useState([]);
@@ -112,12 +112,9 @@ const ClientAchievements = () => {
 
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
-      <AdminPageHeader subHeader="Readefine" mainHeader="Achievements & Tasks" />
+      <ClientPageHeader mainHeader="Readefine" subHeader="Achievements" />
 
-      <div
-        className="w-full     cstm-flex-col gap-2
-        cstm-w-limit"
-      >
+      <div className="w-full cstm-flex-col gap-2 cstm-w-limit">
         <AchievementsFilter
           handleSearchFilter={handleSearchFilter}
           handleDateRangeFilter={handleDateRangeFilter}

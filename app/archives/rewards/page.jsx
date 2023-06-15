@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import AdminPageHeader from "../../../src/admin/global/PageHeader";
+import ClientPageHeader from "@/src/src/client/global/PageHeader";
 import RewardsCards from "@/src/src/components/rewards/RewardsCards";
 import axios from "axios";
 import ClientRewardsFilter from "@/src/src/client/rewards/ClientRewardsFilter";
@@ -99,7 +99,7 @@ const ClientRewards = () => {
 
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
-      <AdminPageHeader subHeader="Readefine" mainHeader="Rewards" />
+      <ClientPageHeader mainHeader="Readefine" subHeader="Rewards" />
 
       <div className="w-full cstm-w-limit cstm-flex-col gap-2">
         <ClientRewardsFilter

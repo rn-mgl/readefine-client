@@ -1,8 +1,8 @@
 import React from "react";
 
-import SearchFilter from "../../components/filter/SearchFilter";
-import SortFilter from "../../components/filter/SortFilter";
-import RangeFilter from "../../components/filter/RangeFilter";
+import SearchFilter from "../filter/SearchFilter";
+import SortFilter from "../filter/SortFilter";
+import RangeFilter from "../filter/RangeFilter";
 
 const AchievementsFilter = (props) => {
   return (
