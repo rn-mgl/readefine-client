@@ -7,7 +7,7 @@ import { BiMenu, BiTask, BiLogOut } from "react-icons/bi";
 import { BsPenFill, BsPatchQuestionFill } from "react-icons/bs";
 import { IoCloseSharp } from "react-icons/io5";
 import { AiFillHome, AiFillBook } from "react-icons/ai";
-import { HiUser } from "react-icons/hi2";
+import { TbGoGame } from "react-icons/tb";
 import { GiAchievement } from "react-icons/gi";
 import { usePathname } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
@@ -99,11 +99,11 @@ const ClientNav = () => {
         />
 
         <ClientLink
-          to="/archives/riddles"
+          to="/archives/minigames"
           toggleOpenNav={toggleOpenNav}
           isActive={path.includes("/archives/riddles")}
-          icon={<BsPatchQuestionFill />}
-          label="Riddles"
+          icon={<TbGoGame />}
+          label="Minigames"
         />
 
         <div className="cstm-flex-row gap-2 w-full justify-start mt-auto">
