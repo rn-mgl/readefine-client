@@ -36,15 +36,6 @@ const AchievementsFilter = (props) => {
         toLabel="Goal To"
         toRange={props.goalRangeFilter.to}
       />
-
-      <RangeFilter
-        fromLabel="Date From"
-        handleRangeFilter={props.handleDateRangeFilter}
-        fromRange={props.dateRangeFilter.from}
-        type="date"
-        toLabel="Date To"
-        toRange={props.dateRangeFilter.to}
-      />
     </div>
   );
 };

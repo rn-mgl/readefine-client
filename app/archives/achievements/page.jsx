@@ -1,12 +1,10 @@
 "use client";
 import React from "react";
 import AchievementsFilter from "@/src/src/components/achievements/AchievementsFilter";
-import AchievementsCards from "@/src/src/admin/achievements/AchievementsCards";
 import ClientPageHeader from "@/src/src/client/global/PageHeader";
 import axios from "axios";
-import Link from "next/link";
+import AchievementPanel from "@/src/src/client/achievements/AchievementPanel";
 
-import { IoAddOutline } from "react-icons/io5";
 import { specificsConversion, typeConversion } from "@/src/src/functions/typeConversion";
 import { inputDate } from "@/src/src/functions/localDate";
 import { useSession } from "next-auth/react";
@@ -68,14 +66,11 @@ const ClientAchievements = () => {
     });
   };
 
-  const achievementCards = achievements.map((a) => {
+  const achievementPanels = achievements.map((a) => {
     return (
       <React.Fragment key={a.achievement_id}>
-        <AchievementsCards
-          image={a.reward}
+        <AchievementPanel
           title={a.achievement_name}
-          type={typeConversion[a.achievement_type]}
-          specifics={specificsConversion[a.specifics]}
           task={a.task}
           goal={a.goal}
           to={`/controller/achievements/${a.achievement_id}`}
@@ -126,12 +121,8 @@ const ClientAchievements = () => {
           dateRangeFilter={dateRangeFilter}
         />
 
-        <Link href="/controller/achievements/add" className="cstm-bg-hover mr-auto p-2 w-fit">
-          <IoAddOutline className="text-prmColor cursor-pointer scale-150" />
-        </Link>
-
-        <div className="w-full cstm-flex-col gap-5 t:items-start t:cstm-flex-row">
-          {achievementCards}
+        <div className="w-full overflow-y-auto cstm-scrollbar cstm-flex-col p-2 gap-5 justify-start t:items-start t:cstm-flex-row t:p-5 bg-white rounded-md min-h-[75vh]">
+          {achievementPanels}
         </div>
       </div>
     </div>
