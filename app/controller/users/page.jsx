@@ -3,7 +3,6 @@ import React from "react";
 import AdminPageHeader from "@/src/src/admin/global/PageHeader";
 import UsersFilter from "@/src/src/admin/users/UsersFilter";
 import axios from "axios";
-import CryptoJS from "crypto-js";
 import { useGlobalContext } from "@/src/context";
 import { localizeDate, inputDate } from "@/src/src/functions/localDate";
 import { useSession } from "next-auth/react";
