@@ -10,7 +10,6 @@ const FileViewer = (props) => {
       height={350}
       className={`${props.width} rounded-2xl`}
       draggable={false}
-      priority
     />
   ) : null;
 };

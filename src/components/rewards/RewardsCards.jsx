@@ -12,7 +12,6 @@ const RewardsCards = (props) => {
           className="rounded-2xl drop-shadow-md"
           width={230}
           height={200}
-          priority
         />
       </div>
 

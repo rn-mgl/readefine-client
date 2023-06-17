@@ -1,5 +1,5 @@
 import React from "react";
-import Logo from "../../../src/components/global/Logo";
+import Logo from "../../src/components/global/Logo";
 
 export const metadata = {
   title: "Readefine | Forgot Password",

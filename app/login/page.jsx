@@ -6,13 +6,13 @@ import intersectST from "../../public/IntersectST.svg";
 import intersectSL from "../../public/IntersectSL.svg";
 import InputComp from "../../src/components/input/InputComp";
 import ButtonComp from "../../src/components/input/ButtonComp";
-import { CiLock, CiUser, CiUnlock } from "react-icons/ci";
-import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 import axios from "axios";
+
+import { CiLock, CiUser, CiUnlock } from "react-icons/ci";
+import { signIn } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { useRouter } from "next/navigation";
-import Loading from "@/src/src/components/global/Loading";
 
 const Login = () => {
   const [loginData, setLoginData] = React.useState({
@@ -20,7 +20,6 @@ const Login = () => {
     candidatePassword: "",
   });
   const [visiblePassword, setVisiblePassword] = React.useState(false);
-  const [loading, setLoading] = React.useState(false);
 
   const { url } = useGlobalContext();
   const router = useRouter();
@@ -41,8 +40,6 @@ const Login = () => {
   const loginUser = async (e) => {
     e.preventDefault();
 
-    setLoading(true);
-
     await signIn("client-credentials", {
       candidateIdentifier: loginData.candidateIdentifier,
       candidatePassword: loginData.candidatePassword,
@@ -59,14 +56,9 @@ const Login = () => {
         }
       }
     } catch (error) {
-      setLoading(false);
       console.log(error);
     }
   };
-
-  if (loading) {
-    return <Loading />;
-  }
 
   return (
     <div className="w-full h-screen bg-accntColor p-5 cstm-flex-col font-poppins overflow-hidden">
@@ -119,19 +111,16 @@ const Login = () => {
         src={intersectSM}
         alt="intersect"
         className="w-full bottom-0 left-0 absolute rotate-180 t:hidden"
-        priority
       />
       <Image
         src={intersectST}
         alt="intersect"
         className="hidden w-full bottom-0 rotate-180 left-0 absolute t:block l-s:hidden"
-        priority
       />
       <Image
         src={intersectSL}
         alt="intersect"
         className="hidden w-full bottom-0 rotate-180 left-0 absolute l-s:block"
-        priority
       />
     </div>
   );

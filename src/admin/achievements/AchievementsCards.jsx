@@ -19,7 +19,6 @@ const AchievementsCards = (props) => {
           alt="temp"
           width={250}
           height={200}
-          priority
           className="rounded-2xl p-5 bg-accntColor"
         />
       </div>

@@ -90,7 +90,7 @@ const ClientRewards = () => {
       console.log(error);
     }
   }, [url, user, setRewards, searchFilter, sortFilter, dateRangeFilter]);
-  console.log(showFilter);
+
   React.useEffect(() => {
     if (user) {
       getRewards();

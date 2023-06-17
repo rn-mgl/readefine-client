@@ -144,19 +144,16 @@ const Signup = () => {
         src={intersectAM}
         alt="intersect"
         className="w-full bottom-0 left-0 absolute t:hidden"
-        priority
       />
       <Image
         src={intersectAT}
         alt="intersect"
         className="hidden w-full bottom-0 left-0 absolute t:block l-s:hidden"
-        priority
       />
       <Image
         src={intersectAL}
         alt="intersect"
         className="hidden w-full bottom-0 left-0 absolute l-s:block"
-        priority
       />
     </div>
   );

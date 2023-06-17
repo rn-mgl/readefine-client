@@ -6,14 +6,7 @@ const StoriesCards = (props) => {
   return (
     <div className="bg-white p-5 rounded-2xl cstm-flex-col gap-4 w-fit shadow-solid">
       <div className="w-full h-fit cstm-flex-col overflow-clip  bg-white">
-        <Image
-          src={props.image}
-          alt="temp"
-          width={240}
-          height={200}
-          priority
-          className="rounded-2xl"
-        />
+        <Image src={props.image} alt="temp" width={240} height={200} className="rounded-2xl" />
       </div>
 
       <div className="cstm-flex-row w-full">

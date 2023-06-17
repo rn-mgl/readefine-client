@@ -17,19 +17,16 @@ const Definition = () => {
           src={intersectSM}
           alt="intersect"
           className="w-full top-0 left-0 absolute t:hidden"
-          priority
         />
         <Image
           src={intersectST}
           alt="intersect"
           className="hidden w-full top-0 left-0 absolute t:block l-s:hidden"
-          priority
         />
         <Image
           src={intersectSL}
           alt="intersect"
           className="hidden w-full top-0 left-0 absolute l-s:block"
-          priority
         />
 
         <p
@@ -58,7 +55,7 @@ const Definition = () => {
         className="w-10/12 absolute bottom-10 left-2/4 -translate-x-2/4 cstm-flex-col
                   t:w-80"
       >
-        <Image src={bookLadder} alt="lexile" className="animate-float drop-shadow-lg" priority />
+        <Image src={bookLadder} alt="lexile" className="animate-float drop-shadow-lg" />
       </div>
     </section>
   );

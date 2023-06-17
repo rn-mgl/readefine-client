@@ -12,7 +12,6 @@ import { useGlobalContext } from "@/src/context";
 import { useRouter } from "next/navigation";
 
 import * as fileFns from "../../../../src/functions/fileFns";
-import Loading from "@/src/src/components/global/Loading";
 
 const AddStory = () => {
   const [pages, setPages] = React.useState([
@@ -32,7 +31,6 @@ const AddStory = () => {
     file: { src: null, name: null },
     rawFile: null,
   });
-  const [loading, setLoading] = React.useState(false);
   const { data: session } = useSession({ required: true });
 
   const user = session?.user?.name;
@@ -78,8 +76,6 @@ const AddStory = () => {
   const publishBook = async (e) => {
     e.preventDefault();
 
-    setLoading(true);
-
     let bookCover = null;
 
     if (storyFilter.rawFile) {
@@ -123,10 +119,6 @@ const AddStory = () => {
       </React.Fragment>
     );
   });
-
-  if (loading) {
-    return <Loading />;
-  }
 
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">

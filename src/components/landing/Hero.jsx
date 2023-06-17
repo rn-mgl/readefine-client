@@ -53,7 +53,6 @@ const Hero = () => {
       <Image
         src={book}
         alt="book"
-        priority
         className="animate-float drop-shadow-lg w-10/12
                   t:w-96"
       />

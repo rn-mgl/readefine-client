@@ -14,7 +14,6 @@ const DashboardCards = (props) => {
           src={props.image}
           alt="temp"
           className="rounded-2xl group-hover:scale-110 transition-all duration-300"
-          priority
         />
       </Link>
 
@@ -47,6 +46,7 @@ const DashboardCards = (props) => {
         >
           Current count: {props.count}
         </p>
+
         <Link
           href={props.to}
           className="text-center font-poppins text-sm font-normal bg-prmColor text-accntColor rounded-full w-28 p-2 hover:shadow-md 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import Logo from "../../src/components/global/Logo";
 
 export const metadata = {
@@ -12,7 +12,6 @@ const RootLayout = ({ children }) => {
       <div className="text-prmColor">
         <Logo />
       </div>
-
       {children}
     </main>
   );

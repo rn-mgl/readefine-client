@@ -10,9 +10,8 @@ const VerifyingImage = () => {
         src={Settings}
         alt="verifying"
         className="w-8/12 animate-float drop-shadow-md t:w-6/12 animate-fadeIn"
-        priority
       />
-      <Image src={Smartphone} alt="verifying" className="drop-shadow-md t:w-11/12" priority />
+      <Image src={Smartphone} alt="verifying" className="drop-shadow-md t:w-11/12" />
       <p className="text-prmColor font-bold text-base animate-fadeIn">Verifying...</p>
     </div>
   );

@@ -7,7 +7,6 @@ const ArchivesCards = (props) => {
   return (
     <Link
       href={props.to}
-      onClick={props.handleLoading}
       className="bg-white p-5 rounded-2xl cstm-flex-col gap-4 group transition-all shadow-solid active:shadow-solidActive
             l-s:w-[18.5rem]
             l-l:w-fit"
@@ -18,7 +17,6 @@ const ArchivesCards = (props) => {
           width={320}
           alt="temp"
           className="rounded-2xl group-hover:scale-110 transition-all duration-300"
-          priority
         />
       </div>
 
