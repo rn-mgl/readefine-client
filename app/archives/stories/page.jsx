@@ -2,7 +2,7 @@
 import { useGlobalContext } from "@/src/context";
 import axios from "axios";
 import { useSession } from "next-auth/react";
-import React from "react";
+import React, { Suspense } from "react";
 import { inputDate } from "@/src/src/functions/localDate";
 import StoriesFilter from "@/src/src/components/stories/StoriesFilter";
 import StoriesCards from "@/src/src/components/stories/StoriesCards";
@@ -87,8 +87,8 @@ const ClientStories = () => {
           author={story.author}
           lexile={story.lexile}
           genre={story.genre}
-          visit={`/controller/stories/${story.story_id}`}
-          test={`/controller/tests/${testId}`}
+          visit={`/archives/stories/${story.story_id}`}
+          test={`/archives/tests/${testId}`}
         />
       </React.Fragment>
     );
@@ -119,7 +119,7 @@ const ClientStories = () => {
           className="cstm-flex-col gap-5 justify-start w-full transition-all 
                   t:cstm-flex-row t:flex-wrap"
         >
-          {storiesCards}
+          <Suspense fallback={<p>Loading...</p>}> {storiesCards}</Suspense>
         </div>
       </div>
     </div>

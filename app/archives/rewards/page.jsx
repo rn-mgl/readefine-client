@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { Suspense } from "react";
 import ClientPageHeader from "@/src/src/client/global/PageHeader";
 import RewardsCards from "@/src/src/components/rewards/RewardsCards";
 import axios from "axios";
@@ -116,7 +116,7 @@ const ClientRewards = () => {
           className="cstm-flex-col gap-5 justify-start w-full transition-all 
                   t:cstm-flex-row t:flex-wrap"
         >
-          {rewardsCards}
+          <Suspense fallback={<p>Loading...</p>}> {rewardsCards}</Suspense>
         </div>
       </div>
     </div>

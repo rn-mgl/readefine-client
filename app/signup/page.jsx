@@ -12,6 +12,7 @@ import { CiLock, CiUser, CiMail, CiUnlock } from "react-icons/ci";
 import { useGlobalContext } from "../../context";
 import { useRouter } from "next/navigation";
 import SelectComp from "../../src/components/input/SelectComp";
+import Loading from "@/src/src/components/global/Loading";
 
 const Signup = () => {
   const [userData, setUserData] = React.useState({
@@ -23,6 +24,7 @@ const Signup = () => {
     gradeLevel: 1,
   });
   const [visiblePassword, setVisiblePassword] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
 
   const { url } = useGlobalContext();
 
@@ -43,6 +45,7 @@ const Signup = () => {
 
   const signUp = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const { data } = await axios.post(`${url}/auth_client/client_signup`, {
         userData,
@@ -52,9 +55,14 @@ const Signup = () => {
         router.push("/sending");
       }
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
   };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className="w-full h-screen bg-prmColor p-5 cstm-flex-col font-poppins overflow-hidden">

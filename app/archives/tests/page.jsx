@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { Suspense } from "react";
 import AdminPageHeader from "../../../src/admin/global/PageHeader";
 import TestsCards from "@/src/src/components/tests/TestsCards";
 import TestsFilter from "@/src/src/components/tests/TestsFilter";
@@ -115,7 +115,7 @@ const ClientTests = () => {
           className="cstm-flex-col gap-5 justify-start w-full transition-all 
                   t:cstm-flex-row t:flex-wrap"
         >
-          {testCards}
+          <Suspense fallback={<p>Loading...</p>}> {testCards}</Suspense>
         </div>
       </div>
     </div>

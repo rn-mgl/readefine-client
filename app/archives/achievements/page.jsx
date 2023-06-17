@@ -1,14 +1,14 @@
 "use client";
-import React from "react";
+import React, { Suspense } from "react";
 import AchievementsFilter from "@/src/src/components/achievements/AchievementsFilter";
 import ClientPageHeader from "@/src/src/client/global/PageHeader";
 import axios from "axios";
 import AchievementPanel from "@/src/src/client/achievements/AchievementPanel";
 
-import { specificsConversion, typeConversion } from "@/src/src/functions/typeConversion";
 import { inputDate } from "@/src/src/functions/localDate";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
+import dynamic from "next/dynamic";
 
 const ClientAchievements = () => {
   const [achievements, setAchievements] = React.useState([]);
@@ -122,7 +122,7 @@ const ClientAchievements = () => {
         />
 
         <div className="w-full overflow-y-auto cstm-scrollbar cstm-flex-col p-2 gap-5 justify-start t:items-start t:cstm-flex-row t:p-5 bg-white rounded-md min-h-[75vh]">
-          {achievementPanels}
+          <Suspense fallback={<p>Loading...</p>}> {achievementPanels}</Suspense>
         </div>
       </div>
     </div>
