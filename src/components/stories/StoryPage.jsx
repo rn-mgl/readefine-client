@@ -20,13 +20,23 @@ const StoryPage = (props) => {
 
   return (
     <div className={`cstm-flex-col gap-5 p-2 transition-all absolute ${position} w-full`}>
-      <p className={`${hasTitle ? "opacity-100" : "opacity-50"} text-black font-semibold`}>
+      <p
+        style={{ fontSize: `${props.fontSize}px`, lineHeight: `${props.fontSize + 8}px` }}
+        className={`${hasTitle ? "opacity-100" : "opacity-50"} text-black font-semibold`}
+      >
         {props.page?.header ? props.page?.header : props.title}
       </p>
 
       <FileViewer src={props.page?.image} width={content ? "w-full t:w-96" : "w-fit"} />
 
-      {content ? <p className="text-sm whitespace-pre-wrap w-full indent-10">{content}</p> : null}
+      {content ? (
+        <p
+          style={{ fontSize: `${props.fontSize}px`, lineHeight: `${props.fontSize + 8}px` }}
+          className="text-sm whitespace-pre-wrap w-full indent-10"
+        >
+          {content}
+        </p>
+      ) : null}
     </div>
   );
 };

@@ -12,12 +12,14 @@ import { useGlobalContext } from "@/src/context";
 import { BsArrowLeft } from "react-icons/bs";
 import Link from "next/link";
 import DeleteStory from "@/src/src/admin/stories/DeleteStory";
+import Customizations from "@/src/src/components/stories/Customizations";
 
 const SingleStory = ({ params }) => {
   const [story, setStory] = React.useState({});
   const [pages, setPages] = React.useState([]);
   const [activePage, setActivePage] = React.useState(1);
   const [canDeleteStory, setCanDeleteStory] = React.useState(false);
+  const [fontSize, setFontSize] = React.useState(16);
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -35,6 +37,10 @@ const SingleStory = ({ params }) => {
     setCanDeleteStory((prev) => !prev);
   };
 
+  const handleFontSize = ({ value }) => {
+    setFontSize((prev) => (value < 16 ? 16 : value > 100 ? 100 : parseInt(value)));
+  };
+
   const storyPages = pages?.map((page, index) => {
     return (
       <div
@@ -47,6 +53,7 @@ const SingleStory = ({ params }) => {
           page={page}
           index={index + 1}
           maxPage={pages.length}
+          fontSize={fontSize}
         />
       </div>
     );
@@ -94,7 +101,6 @@ const SingleStory = ({ params }) => {
   return (
     <div className="p-5 cstm-flex-col bg-accntColor w-full min-h-screen justify-start gap-2">
       <AdminPageHeader subHeader="Stories" mainHeader={story.title} />
-
       {canDeleteStory ? (
         <DeleteStory
           confirmation={story?.title}
@@ -102,7 +108,6 @@ const SingleStory = ({ params }) => {
           storyId={story?.story_id}
         />
       ) : null}
-
       <div className="w-full cstm-w-limit cstm-flex-row">
         <Link href="/controller/stories" className="w-fit cstm-bg-hover mr-auto">
           <BsArrowLeft className=" text-prmColor" />
@@ -116,8 +121,8 @@ const SingleStory = ({ params }) => {
           <AiFillDelete className="text-prmColor cursor-pointer" onClick={handleCanDeleteStory} />
         </div>
       </div>
-
-      <div className="w-full gap-5 max-h-screen h-[80vh] bg-white rounded-2xl p-5 relative overflow-x-hidden overflow-y-auto cstm-w-limit">
+      <Customizations fontSize={fontSize} handleFontSize={handleFontSize} />
+      <div className="w-full gap-5 max-h-screen h-[75vh] bg-white rounded-2xl p-5 relative overflow-x-hidden overflow-y-auto cstm-w-limit">
         <div
           className="cstm-bg-hover absolute bottom-3 
                       l-s:bottom-2/4 l-s:-translate-y-2/4 z-20"

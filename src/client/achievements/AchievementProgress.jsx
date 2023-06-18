@@ -2,7 +2,6 @@ import React from "react";
 
 const AchievementProgress = (props) => {
   const percentage = Math.floor(props.current / props.goal) * 100;
-  const colorWidth = `w-[${percentage}%]`;
   return (
     <div className="relative w-full cstm-flex-col items-start transition-all mb-1 t:w-72">
       <p
@@ -13,7 +12,8 @@ const AchievementProgress = (props) => {
         {percentage}%
       </p>
       <div
-        className={`${colorWidth}  bg-prmColor h-5 rounded-md absolute z-10 text-xs transition-all`}
+        style={{ width: `${percentage}%` }}
+        className="bg-prmColor h-5 rounded-md absolute z-10 text-xs transition-all"
       />
       <div className="bg-neutral-300 w-full h-5 rounded-md absolute z-0 " />
     </div>
