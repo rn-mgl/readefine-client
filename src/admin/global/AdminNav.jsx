@@ -104,10 +104,10 @@ const AdminNav = () => {
         />
 
         <AdminLink
-          to="/controller/riddles"
+          to="/controller/minigames"
           icon={<BsPatchQuestionFill />}
-          label="Riddles"
-          isActive={path.includes("/controller/riddles")}
+          label="Minigames"
+          isActive={path.includes("/controller/minigames")}
           toggleOpenNav={toggleOpenNav}
         />
 

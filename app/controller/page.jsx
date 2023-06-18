@@ -14,6 +14,7 @@ import { useGlobalContext } from "../../context";
 
 const AdminDashboard = () => {
   const [counts, setCounts] = React.useState({});
+  const [updates, setUpdates] = React.useState({});
 
   const { data: session } = useSession({ required: true });
 
@@ -22,23 +23,44 @@ const AdminDashboard = () => {
   const { url } = useGlobalContext();
 
   const getCounts = React.useCallback(async () => {
-    if (user) {
-      try {
-        const { data } = await axios.get(`${url}/admin_dashboard`, {
-          headers: { Authorization: user.token },
-        });
-        if (data) {
-          setCounts(data);
-        }
-      } catch (error) {
-        console.log(error);
+    try {
+      const { data } = await axios.get(`${url}/admin_dashboard`, {
+        params: { query: "counts" },
+        headers: { Authorization: user.token },
+      });
+      if (data) {
+        setCounts(data);
       }
+    } catch (error) {
+      console.log(error);
+    }
+  }, [user, url, setCounts]);
+
+  const getUpdates = React.useCallback(async () => {
+    try {
+      const { data } = await axios.get(`${url}/admin_dashboard`, {
+        params: { query: "updates" },
+        headers: { Authorization: user.token },
+      });
+      if (data) {
+        setUpdates(data);
+      }
+    } catch (error) {
+      console.log(error);
     }
   }, [user, url, setCounts]);
 
   React.useEffect(() => {
-    getCounts();
-  }, [getCounts]);
+    if (user) {
+      getCounts();
+    }
+  }, [getCounts, user]);
+
+  React.useEffect(() => {
+    if (user) {
+      getUpdates();
+    }
+  }, [getUpdates, user]);
 
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
@@ -51,44 +73,44 @@ const AdminDashboard = () => {
         <DashboardCards
           image={DashboardCardImage1}
           label="Users"
-          subLabel="new member: name"
+          subLabel={`New Member: ${updates.userName}`}
           count={counts.userCount}
           to="/controller/users"
         />
         <DashboardCards
           image={DashboardCardImage3}
           label="Stories"
-          subLabel="new story: title"
+          subLabel={`New Story: ${updates.storyTitle}`}
           count={counts.storyCount}
           to="/controller/stories"
         />
         <DashboardCards
           image={DashboardCardImage2}
           label="Tests"
-          subLabel="updated by: name"
+          subLabel={`New Test: ${updates.testTitle}`}
           count={counts.testCount}
           to="/controller/tests"
         />
         <DashboardCards
           image={DashboardCardImage6}
           label="Rewards"
-          subLabel="updated by: name"
+          subLabel={`New Reward: ${updates.rewardName}`}
           count={counts.rewardCount}
           to="/controller/rewards"
         />
         <DashboardCards
           image={DashboardCardImage5}
           label="Achievements & Tasks"
-          subLabel="updated by: name"
+          subLabel={`New Achievement: ${updates.achievementName}`}
           count={counts.achievementCount}
           to="/controller/achievements"
         />
         <DashboardCards
           image={DashboardCardImage7}
-          label="Riddles"
-          subLabel="updated by: name"
-          count={counts.riddleCount}
-          to="/controller/riddles"
+          label="Minigames"
+          subLabel="Extras"
+          count={1}
+          to="/controller/minigames"
         />
       </div>
     </div>
