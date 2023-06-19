@@ -13,6 +13,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import ScorePopup from "@/src/src/components/tests/ScorePopup";
 import DeleteTest from "@/src/src/admin/tests/DeleteTest";
+import { shuffleQuestions } from "@/src/src/functions/testFns";
 
 const SingleTest = ({ params }) => {
   const [test, setTest] = React.useState({});
@@ -53,15 +54,6 @@ const SingleTest = ({ params }) => {
     setCanDeleteTest((prev) => !prev);
   };
 
-  const shuffleQuestions = (arr) => {
-    for (let i = arr.length - 1; i > 0; i--) {
-      let j = Math.floor(Math.random() * (i + 1)); // random index
-      let temp = arr[i];
-      arr[i] = arr[j];
-      arr[j] = temp;
-    }
-  };
-
   const computeScore = () => {
     let score = 0;
     let visited = [];
@@ -95,7 +87,7 @@ const SingleTest = ({ params }) => {
         className="p-5 bg-white rounded-md w-full cstm-flex-col gap-5 items-start t:w-10/12 l-l:w-8/12"
         key={q.question_id}
       >
-        <TestQuestion question={q.question} />
+        <p className="font-bold">{q.question}</p>
         <div className="cstm-separator" />
         <div className="cstm-flex-col gap-3 w-full t:cstm-flex-row t:flex-wrap">
           <TestChoices

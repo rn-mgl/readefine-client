@@ -4,7 +4,7 @@ import InputComp from "../input/InputComp";
 const Customizations = (props) => {
   return (
     <div className="w-full bg-white rounded-2xl p-5 cstm-w-limit cstm-flex-row">
-      <div className="cstm-flex-col gap-2 t:mr-auto">
+      <div className="cstm-flex-col gap-2">
         <p className="text-sm">Font Size</p>
         <div className="cstm-flex-row gap-2">
           <input

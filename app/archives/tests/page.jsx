@@ -67,7 +67,7 @@ const ClientTests = () => {
           title={t.title}
           author={t.author}
           lexile={t.lexile}
-          to={`/controller/tests/${t.test_id}`}
+          to={`/archives/tests/${t.test_id}`}
         />
       </React.Fragment>
     );
