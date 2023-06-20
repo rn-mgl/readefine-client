@@ -13,7 +13,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import ScorePopup from "@/src/src/components/tests/ScorePopup";
 import DeleteTest from "@/src/src/admin/tests/DeleteTest";
-import { shuffleQuestions } from "@/src/src/functions/testFns";
+import { computeScore, shuffleQuestions } from "@/src/src/functions/testFns";
 
 const SingleTest = ({ params }) => {
   const [test, setTest] = React.useState({});
@@ -22,16 +22,16 @@ const SingleTest = ({ params }) => {
   const [canDeleteTest, setCanDeleteTest] = React.useState(false);
   const [isFinished, setIsFinished] = React.useState(false);
   const [selectedChoices, setSelectedChoices] = React.useState({
-    choice1: { answer: "", question_id: -1 },
-    choice2: { answer: "", question_id: -1 },
-    choice3: { answer: "", question_id: -1 },
-    choice4: { answer: "", question_id: -1 },
-    choice5: { answer: "", question_id: -1 },
-    choice6: { answer: "", question_id: -1 },
-    choice7: { answer: "", question_id: -1 },
-    choice8: { answer: "", question_id: -1 },
-    choice9: { answer: "", question_id: -1 },
-    choice10: { answer: "", question_id: -1 },
+    choice1: { answer: "", questionId: -1 },
+    choice2: { answer: "", questionId: -1 },
+    choice3: { answer: "", questionId: -1 },
+    choice4: { answer: "", questionId: -1 },
+    choice5: { answer: "", questionId: -1 },
+    choice6: { answer: "", questionId: -1 },
+    choice7: { answer: "", questionId: -1 },
+    choice8: { answer: "", questionId: -1 },
+    choice9: { answer: "", questionId: -1 },
+    choice10: { answer: "", questionId: -1 },
   });
 
   const { url } = useGlobalContext();
@@ -52,29 +52,6 @@ const SingleTest = ({ params }) => {
 
   const handleCanDeleteTest = () => {
     setCanDeleteTest((prev) => !prev);
-  };
-
-  const computeScore = () => {
-    let score = 0;
-    let visited = [];
-
-    for (let i = 0; i < 10; i++) {
-      const q = questions[i];
-      for (let j = 1; j <= 10; j++) {
-        const choiceIdx = "choice" + j;
-        const currChoice = selectedChoices[choiceIdx];
-        if (currChoice.question_id === q.question_id && !visited.includes(q.question_id)) {
-          if (q.answer === currChoice.answer) {
-            score++;
-            visited.push(q.question_id);
-          }
-          break;
-        }
-      }
-    }
-
-    setScore(score);
-    setIsFinished(true);
   };
 
   const testId = params?.test_id;
@@ -210,7 +187,7 @@ const SingleTest = ({ params }) => {
         {mappedQuestions}
 
         <button
-          onClick={computeScore}
+          onClick={computeScore(setScore, setIsFinished, questions, selectedChoices)}
           className="p-2 bg-prmColor text-scndColor rounded-full w-full mt-5 t:w-fit t:px-10 shadow-[0_4px_rgba(55,48,163,1)]"
         >
           Submit Answers

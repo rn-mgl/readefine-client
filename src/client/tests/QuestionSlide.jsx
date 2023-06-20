@@ -40,6 +40,7 @@ const QuestionSlide = (props) => {
           name={"choice" + (props.index + 1)}
           selectedChoices={props.selectedChoices}
           handleSelectedChoices={props.handleSelectedChoices}
+          questionId={props.questionId}
         />
         <TestChoices
           bgColor="bg-indigo-700"

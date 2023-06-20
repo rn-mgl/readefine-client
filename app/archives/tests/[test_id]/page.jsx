@@ -5,17 +5,20 @@ import ClientPageHeader from "@/src/src/client/global/PageHeader";
 import QuestionSlide from "@/src/src/client/tests/QuestionSlide";
 
 import { useSession } from "next-auth/react";
-import { shuffleQuestions } from "@/src/src/functions/testFns";
+import { computeScore, shuffleQuestions } from "@/src/src/functions/testFns";
 import { useGlobalContext } from "@/src/context";
 import { AiFillCaretRight, AiFillCaretLeft } from "react-icons/ai";
 import Link from "next/link";
 import { BsArrowLeft } from "react-icons/bs";
 import { Nuosu_SIL } from "next/font/google";
+import ScorePopup from "@/src/src/components/tests/ScorePopup";
 
 const SingleTest = ({ params }) => {
   const [testData, setTestData] = React.useState({});
   const [questions, setQuestions] = React.useState([]);
   const [activePage, setActivePage] = React.useState(0);
+  const [isFinished, setIsFinished] = React.useState(false);
+  const [score, setScore] = React.useState(0);
   const [selectedChoices, setSelectedChoices] = React.useState({
     choice1: { answer: "", questionId: -1 },
     choice2: { answer: "", questionId: -1 },
@@ -47,8 +50,27 @@ const SingleTest = ({ params }) => {
     setActivePage((prev) => (prev + 1 > 9 ? 9 : prev + 1));
   };
 
+  const clearChoices = () => {
+    setSelectedChoices({
+      choice1: { answer: "", questionId: -1 },
+      choice2: { answer: "", questionId: -1 },
+      choice3: { answer: "", questionId: -1 },
+      choice4: { answer: "", questionId: -1 },
+      choice5: { answer: "", questionId: -1 },
+      choice6: { answer: "", questionId: -1 },
+      choice7: { answer: "", questionId: -1 },
+      choice8: { answer: "", questionId: -1 },
+      choice9: { answer: "", questionId: -1 },
+      choice10: { answer: "", questionId: -1 },
+    });
+  };
+
   const handleDecrement = () => {
     setActivePage((prev) => (prev - 1 < 0 ? 0 : prev - 1));
+  };
+
+  const handleIsFinished = () => {
+    setIsFinished((prev) => !prev);
   };
 
   const questionSlides = questions.map((q, index) => {
@@ -74,18 +96,36 @@ const SingleTest = ({ params }) => {
   const submitAnswers = async () => {
     let answeredAll = false;
 
+    // check if all are answered
     for (let i = 1; i <= 10; i++) {
       answeredAll = selectedChoices[`choice${i}`].answer !== "";
     }
 
     if (!answeredAll) {
+      // add message
       return;
     }
 
+    const currScore = computeScore(setScore, setIsFinished, questions, selectedChoices);
+
+    // check if legible for growth
+    if (user?.lexile - 50 > testData.lexile) {
+      // add message
+      return;
+    }
+
+    // check if passed
+    if (currScore < 7) {
+      // add message
+      clearChoices();
+      return;
+    }
+
+    // add record to db
     try {
       const { data } = await axios.post(
         `${url}/taken_test/${testId}`,
-        { selectedChoices },
+        { selectedChoices, score: currScore },
         { headers: { Authorization: user?.token } }
       );
       if (data) {
@@ -140,7 +180,7 @@ const SingleTest = ({ params }) => {
   return (
     <div className="p-5 w-full min-h-screen bg-accntColor cstm-flex-col gap-2 justify-start overflow-x-hidden">
       <ClientPageHeader mainHeader={testData?.title} subHeader="Test" />
-
+      {isFinished ? <ScorePopup score={score} handleIsFinished={handleIsFinished} /> : null}
       <div className="cstm-flex-row items-start gap-2 w-full cstm-w-limit relative h-[65vh] l-l:h-[70vh]">
         <Link href="/archives/tests" className="cstm-bg-hover mr-auto">
           <BsArrowLeft className="text-prmColor" />

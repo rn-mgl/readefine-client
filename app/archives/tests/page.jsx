@@ -1,7 +1,6 @@
 "use client";
 import React, { Suspense } from "react";
-import AdminPageHeader from "../../../src/admin/global/PageHeader";
-import TestsCards from "@/src/src/components/tests/TestsCards";
+import TestsCards from "@/src/src/client/tests/TestsCards";
 import TestsFilter from "@/src/src/components/tests/TestsFilter";
 import axios from "axios";
 import { inputDate } from "@/src/src/functions/localDate";
@@ -67,7 +66,9 @@ const ClientTests = () => {
           title={t.title}
           author={t.author}
           lexile={t.lexile}
+          score={t.score}
           to={`/archives/tests/${t.test_id}`}
+          isTaken={t.is_taken}
         />
       </React.Fragment>
     );

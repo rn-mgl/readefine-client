@@ -7,3 +7,35 @@ export const shuffleQuestions = (arr) => {
   }
   return arr;
 };
+
+export const computeScore = (setScore, setIsFinished, questions, selectedChoices) => {
+  let score = 0;
+  let visited = [];
+
+  for (let i = 0; i < 10; i++) {
+    const q = questions[i];
+
+    for (let j = 1; j <= 10; j++) {
+      const choiceIdx = `choice${j}`;
+      const currChoice = selectedChoices[choiceIdx];
+
+      if (currChoice.questionId === q.question_id && !visited.includes(q.question_id)) {
+        if (q.answer === currChoice.answer) {
+          score++;
+          visited.push(q.question_id);
+        }
+        break;
+      }
+    }
+  }
+
+  if (setScore) {
+    setScore(score);
+  }
+
+  if (setIsFinished) {
+    setIsFinished(true);
+  }
+
+  return score;
+};
