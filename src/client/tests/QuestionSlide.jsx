@@ -1,5 +1,5 @@
 import React from "react";
-import TestChoices from "../../components/tests/TestChoices";
+import TestChoices from "../../client/tests/TestChoices";
 
 const QuestionSlide = (props) => {
   const active = props.index === props.activePage;
@@ -15,12 +15,13 @@ const QuestionSlide = (props) => {
 
   return (
     <div
-      className={`${position} transition-all bg-white p-5 rounded-md cstm-flex-col gap-5 absolute top-10 w-full h-full
+      className={`${position} transition-all bg-white p-5 rounded-md cstm-flex-col gap-5 absolute top-10 w-full h-full 
                 t:cstm-flex-row t:flex-wrap `}
     >
-      <p className="font-bold text-justify my-auto t:text-lg">{props.question}</p>
+      <p className="mb-auto absolute top-5 left-5 font-bold text-prmColor">{props.index + 1}.</p>
+      <p className="font-bold text-justify mt-auto t:text-lg mx-auto">{props.question}</p>
 
-      <div className="cstm-flex-col gap-3 w-full t:cstm-flex-row t:flex-wrap">
+      <div className="cstm-flex-col gap-3 w-full t:cstm-flex-row mt-auto">
         <TestChoices
           bgColor="bg-indigo-300"
           shadow="shadow-[0_4px_rgba(129,140,248,1)]"
@@ -39,7 +40,6 @@ const QuestionSlide = (props) => {
           name={"choice" + (props.index + 1)}
           selectedChoices={props.selectedChoices}
           handleSelectedChoices={props.handleSelectedChoices}
-          questionId={props.questionId}
         />
         <TestChoices
           bgColor="bg-indigo-700"

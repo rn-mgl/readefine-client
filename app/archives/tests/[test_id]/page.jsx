@@ -10,22 +10,23 @@ import { useGlobalContext } from "@/src/context";
 import { AiFillCaretRight, AiFillCaretLeft } from "react-icons/ai";
 import Link from "next/link";
 import { BsArrowLeft } from "react-icons/bs";
+import { Nuosu_SIL } from "next/font/google";
 
 const SingleTest = ({ params }) => {
   const [testData, setTestData] = React.useState({});
   const [questions, setQuestions] = React.useState([]);
   const [activePage, setActivePage] = React.useState(0);
   const [selectedChoices, setSelectedChoices] = React.useState({
-    choice1: { answer: "", question_id: -1 },
-    choice2: { answer: "", question_id: -1 },
-    choice3: { answer: "", question_id: -1 },
-    choice4: { answer: "", question_id: -1 },
-    choice5: { answer: "", question_id: -1 },
-    choice6: { answer: "", question_id: -1 },
-    choice7: { answer: "", question_id: -1 },
-    choice8: { answer: "", question_id: -1 },
-    choice9: { answer: "", question_id: -1 },
-    choice10: { answer: "", question_id: -1 },
+    choice1: { answer: "", questionId: -1 },
+    choice2: { answer: "", questionId: -1 },
+    choice3: { answer: "", questionId: -1 },
+    choice4: { answer: "", questionId: -1 },
+    choice5: { answer: "", questionId: -1 },
+    choice6: { answer: "", questionId: -1 },
+    choice7: { answer: "", questionId: -1 },
+    choice8: { answer: "", questionId: -1 },
+    choice9: { answer: "", questionId: -1 },
+    choice10: { answer: "", questionId: -1 },
   });
 
   const { url } = useGlobalContext();
@@ -37,7 +38,7 @@ const SingleTest = ({ params }) => {
     setSelectedChoices((prev) => {
       return {
         ...prev,
-        [name]: { answer: value, question_id: id },
+        [name]: { answer: value, questionId: id },
       };
     });
   };
@@ -69,6 +70,31 @@ const SingleTest = ({ params }) => {
       </React.Fragment>
     );
   });
+
+  const submitAnswers = async () => {
+    let answeredAll = false;
+
+    for (let i = 1; i <= 10; i++) {
+      answeredAll = selectedChoices[`choice${i}`].answer !== "";
+    }
+
+    if (!answeredAll) {
+      return;
+    }
+
+    try {
+      const { data } = await axios.post(
+        `${url}/taken_test/${testId}`,
+        { selectedChoices },
+        { headers: { Authorization: user?.token } }
+      );
+      if (data) {
+        console.log(data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const getTestData = React.useCallback(async () => {
     try {
@@ -112,31 +138,44 @@ const SingleTest = ({ params }) => {
   }, [user, getQuestions]);
 
   return (
-    <div className="p-5 w-full min-h-screen bg-accntColor cstm-flex-col gap-2 justify-start overflow-hidden">
+    <div className="p-5 w-full min-h-screen bg-accntColor cstm-flex-col gap-2 justify-start overflow-x-hidden">
       <ClientPageHeader mainHeader={testData?.title} subHeader="Test" />
 
-      <div
-        className="cstm-flex-row items-start gap-2 w-full cstm-w-limit relative h-[75vh]
-                  t:h-[50vh]"
-      >
+      <div className="cstm-flex-row items-start gap-2 w-full cstm-w-limit relative h-[65vh] l-l:h-[70vh]">
         <Link href="/archives/tests" className="cstm-bg-hover mr-auto">
           <BsArrowLeft className="text-prmColor" />
         </Link>
         {questionSlides}
-        <div className="cstm-flex-row absolute -bottom-20 w-full t:-bottom-24">
+      </div>
+
+      <div className="cstm-flex-col w-full mt-auto cstm-w-limit gap-5 t:gap-2">
+        {activePage === 9 ? (
           <button
-            onClick={handleDecrement}
-            className="bg-prmColor p-2 w-16 rounded-md cstm-flex-col font-medium text-white shadow-solid shadow-indigo-950"
+            onClick={submitAnswers}
+            className="bg-prmColor w-full ml-auto p-2  rounded-full cstm-flex-col font-medium text-scndColor shadow-solid shadow-indigo-950
+                      t:w-fit t:px-10 t:mx-auto "
           >
-            <AiFillCaretLeft />
+            Submit
           </button>
-          <p className="mx-auto">{activePage + 1}</p>
-          <button
-            onClick={handleIncrement}
-            className="bg-prmColor p-2 w-16 rounded-md cstm-flex-col font-medium text-white shadow-solid shadow-indigo-950"
-          >
-            <AiFillCaretRight />
-          </button>
+        ) : null}
+        <div className="cstm-flex-row w-full">
+          {activePage > 0 ? (
+            <button
+              onClick={handleDecrement}
+              className="bg-prmColor mr-auto p-2 w-16 rounded-md cstm-flex-col font-medium text-white shadow-solid shadow-indigo-950"
+            >
+              <AiFillCaretLeft />
+            </button>
+          ) : null}
+
+          {activePage < 9 ? (
+            <button
+              onClick={handleIncrement}
+              className="bg-prmColor ml-auto p-2 w-16 rounded-md cstm-flex-col font-medium text-white shadow-solid shadow-indigo-950"
+            >
+              <AiFillCaretRight />
+            </button>
+          ) : null}
         </div>
       </div>
     </div>

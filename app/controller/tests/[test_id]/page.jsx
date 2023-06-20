@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import AdminPageHeader from "@/src/src/admin/global/PageHeader";
-import TestChoices from "@/src/src/components/tests/TestChoices";
+import TestChoices from "@/src/src/admin/tests/TestChoices";
 import TestQuestion from "@/src/src/components/tests/TestQuestion";
 import axios from "axios";
 import Link from "next/link";
