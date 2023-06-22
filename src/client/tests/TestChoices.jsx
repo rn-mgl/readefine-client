@@ -15,7 +15,7 @@ const TestChoices = (props) => {
         clicked ? props.shadowActive : props.shadow
       }`}
     >
-      <span className="mr-auto t:mr-0">{props.choice}</span>
+      {props.choice}
       <RiRecordCircleFill
         className={`${clicked ? "flex t:top-2 t:right-2" : "hidden"} text-white t:absolute`}
       />

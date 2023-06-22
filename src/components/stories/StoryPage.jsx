@@ -11,18 +11,17 @@ const StoryPage = (props) => {
     position = "translate-x-0";
   }
 
-  if (
-    props.index === props.activePage - 1 ||
-    (props.activePage === 0 && props.index === props.maxPage - 1)
-  ) {
+  if (props.index === props.activePage - 1) {
     position = "-translate-x-full opacity-0";
   }
 
   return (
-    <div className={`cstm-flex-col gap-5 p-2 transition-all absolute ${position} w-full`}>
+    <div className={`cstm-flex-col gap-5 p-10 transition-all absolute ${position} w-full`}>
       <p
         style={{ fontSize: `${props.fontSize}px`, lineHeight: `${props.fontSize + 8}px` }}
-        className={`${hasTitle ? "opacity-100" : "opacity-50"} text-black font-semibold`}
+        className={`${
+          hasTitle ? "opacity-100" : "opacity-50"
+        } text-black font-semibold text-center`}
       >
         {props.page?.header ? props.page?.header : props.title}
       </p>
@@ -32,7 +31,7 @@ const StoryPage = (props) => {
       {content ? (
         <p
           style={{ fontSize: `${props.fontSize}px`, lineHeight: `${props.fontSize + 8}px` }}
-          className="text-sm whitespace-pre-wrap w-full indent-10"
+          className="text-sm whitespace-pre-wrap w-full indent-10 text-justify"
         >
           {content}
         </p>

@@ -100,6 +100,12 @@ const ClientStories = () => {
     }
   }, [user, getStories]);
 
+  React.useEffect(() => {
+    if (user) {
+      setLexileRangeFilter({ from: user?.lexile - 50, to: user?.lexile + 100 });
+    }
+  }, [user, setLexileRangeFilter]);
+
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <ClientPageHeader mainHeader="Readefine" subHeader="Stories" />

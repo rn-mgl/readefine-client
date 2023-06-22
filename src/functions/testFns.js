@@ -19,7 +19,7 @@ export const computeScore = (setScore, setIsFinished, questions, selectedChoices
       const choiceIdx = `choice${j}`;
       const currChoice = selectedChoices[choiceIdx];
 
-      if (currChoice.questionId === q.question_id && !visited.includes(q.question_id)) {
+      if (currChoice?.questionId === q?.question_id && !visited.includes(q.question_id)) {
         if (q.answer === currChoice.answer) {
           score++;
           visited.push(q.question_id);

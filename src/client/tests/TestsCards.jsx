@@ -4,24 +4,19 @@ import Link from "next/link";
 
 const TestsCards = (props) => {
   return (
-    <div className="bg-white p-5 rounded-2xl cstm-flex-col gap-4 w-fit shadow-solid">
-      <div className="w-full h-fit cstm-flex-col overflow-clip  bg-white ">
-        <Image src={props.image} alt="temp" width={240} height={200} className="rounded-2xl" />
+    <div className="bg-white p-5 rounded-2xl cstm-flex-col gap-4 w-fit shadow-solid max-h-[28rem]">
+      <div className="w-full h-fit cstm-flex-col overflow-clip  bg-white rounded-2xl justify-start">
+        <Image src={props.image} alt="temp" width={240} height={200} className="w-fit" />
       </div>
       <div className="cstm-flex-row w-full">
         <div className="cstm-flex-col gap-1 font-poppins mr-auto items-start">
           <p
-            className="font-bold text-black
+            className="font-bold text-black whitespace-pre-wrap w-44
                       t:text-base"
           >
             {props.title ? props.title : "Title"}
           </p>
-          <p
-            className="opacity-50 text-sm
-                     t:text-base"
-          >
-            {props.author ? props.author : "author"}
-          </p>
+          <p className="opacity-50 text-sm">{props.author ? props.author : "author"}</p>
         </div>
         <div className="cstm-flex-col gap-1 font-poppins mb-auto">
           <p

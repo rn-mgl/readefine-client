@@ -34,6 +34,8 @@ const SingleTest = ({ params }) => {
     choice10: { answer: "", questionId: -1 },
   });
 
+  console.log(selectedChoices);
+
   const { url } = useGlobalContext();
   const { data: session } = useSession({ required: true });
 
@@ -41,7 +43,7 @@ const SingleTest = ({ params }) => {
     setSelectedChoices((prev) => {
       return {
         ...prev,
-        [name]: { answer: value, question_id: id },
+        [name]: { answer: value, questionId: id },
       };
     });
   };
@@ -187,7 +189,7 @@ const SingleTest = ({ params }) => {
         {mappedQuestions}
 
         <button
-          onClick={computeScore(setScore, setIsFinished, questions, selectedChoices)}
+          onClick={() => computeScore(setScore, setIsFinished, questions, selectedChoices)}
           className="p-2 bg-prmColor text-scndColor rounded-full w-full mt-5 t:w-fit t:px-10 shadow-[0_4px_rgba(55,48,163,1)]"
         >
           Submit Answers
