@@ -97,10 +97,10 @@ const ClientTests = () => {
   }, [url, user, setTests, searchFilter, lexileRangeFilter, sortFilter, dateRangeFilter]);
 
   React.useEffect(() => {
-    if (user) {
+    if (user?.lexile) {
       setLexileRangeFilter({ from: user?.lexile - 50, to: user?.lexile + 100 });
     }
-  }, [user, setLexileRangeFilter]);
+  }, [user?.lexile, setLexileRangeFilter]);
 
   React.useEffect(() => {
     if (user) {
