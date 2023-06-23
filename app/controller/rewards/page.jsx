@@ -4,14 +4,14 @@ import AdminPageHeader from "../../../src/admin/global/PageHeader";
 import AdminRewardsFilter from "@/src/src/admin/rewards/AdminRewardsFilter";
 import RewardsCards from "@/src/src/components/rewards/RewardsCards";
 import Link from "next/link";
+import axios from "axios";
+import Message from "@/src/src/components/global/Message";
 
 import { IoAddOutline } from "react-icons/io5";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
-
 import { inputDate } from "@/src/src/functions/localDate";
-import axios from "axios";
 import { typeConversion } from "@/src/src/functions/typeConversion";
 
 const AdminRewards = () => {
@@ -21,6 +21,7 @@ const AdminRewards = () => {
     searchKey: "",
   });
   const [sortFilter, setSortFilter] = React.useState({ toSort: "reward_name", sortMode: "ASC" });
+  const [message, setMessage] = React.useState({ msg: "", active: false });
   const [dateRangeFilter, setDateRangeFilter] = React.useState({
     from: "",
     to: inputDate(new Date().toLocaleDateString()),
@@ -83,6 +84,7 @@ const AdminRewards = () => {
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg });
     }
   }, [url, user, setRewards, searchFilter, sortFilter, dateRangeFilter]);
 
@@ -95,7 +97,7 @@ const AdminRewards = () => {
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <AdminPageHeader subHeader="Readefine" mainHeader="Rewards" />
-
+      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
       <div className="w-full cstm-w-limit cstm-flex-col gap-2">
         <AdminRewardsFilter
           handleSearchFilter={handleSearchFilter}

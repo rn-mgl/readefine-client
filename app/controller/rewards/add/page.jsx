@@ -3,14 +3,14 @@ import React from "react";
 import AdminPageHeader from "@/src/src/admin/global/PageHeader";
 import FilePreview from "@/src/src/components/global/FilePreview";
 import AddRewardFilter from "@/src/src/admin/rewards/AddRewardFilter";
-
+import Message from "@/src/src/components/global/Message";
 import * as fileFns from "../../../../src/functions/fileFns";
-import { BiImage } from "react-icons/bi";
+import axios from "axios";
 
+import { BiImage } from "react-icons/bi";
 import { useSession } from "next-auth/react";
 import { wordCount } from "@/src/src/functions/wordCount";
 import { useGlobalContext } from "@/src/context";
-import axios from "axios";
 import { useRouter } from "next/navigation";
 
 const AddReward = () => {
@@ -21,6 +21,7 @@ const AddReward = () => {
     rawFile: null,
     description: "",
   });
+  const [message, setMessage] = React.useState({ msg: "", active: false });
 
   const { data: session } = useSession();
   const user = session?.user?.name;
@@ -60,6 +61,7 @@ const AddReward = () => {
         }
       } catch (error) {
         console.log(error);
+        setMessage({ active: true, msg: error?.response?.data?.msg });
       }
     }
   };
@@ -67,7 +69,7 @@ const AddReward = () => {
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col justify-start">
       <AdminPageHeader subHeader="Rewards" mainHeader="Add Reward" />
-
+      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
       <form
         onSubmit={(e) => addReward(e)}
         className="w-full cstm-flex-col cstm-w-limit border-collapse gap-2"

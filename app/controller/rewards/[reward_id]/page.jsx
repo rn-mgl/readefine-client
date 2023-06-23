@@ -4,16 +4,18 @@ import AdminPageHeader from "@/src/src/admin/global/PageHeader";
 import FileViewer from "@/src/src/components/global/FileViewer";
 import axios from "axios";
 import Link from "next/link";
+import DeleteReward from "@/src/src/admin/rewards/DeleteReward";
+import Message from "@/src/src/components/global/Message";
 
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { BsArrowLeft } from "react-icons/bs";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
-import DeleteReward from "@/src/src/admin/rewards/DeleteReward";
 
 const SingleReward = ({ params }) => {
   const [reward, setReward] = React.useState({});
   const [canDeleteReward, setCanDeleteReward] = React.useState(false);
+  const [message, setMessage] = React.useState({ msg: "", active: false });
 
   const { data: session } = useSession();
   const user = session?.user?.name;
@@ -34,6 +36,7 @@ const SingleReward = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg });
     }
   }, [setReward, url, user]);
 
@@ -46,6 +49,7 @@ const SingleReward = ({ params }) => {
   return (
     <div className="w-full min-h-screen bg-accntColor p-5 cstm-flex-col gap-2 justify-start">
       <AdminPageHeader subHeader="Reward" mainHeader={reward?.reward_name} />
+      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
       {canDeleteReward ? (
         <DeleteReward
           confirmation={reward?.reward_name}

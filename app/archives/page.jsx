@@ -7,12 +7,12 @@ import DashboardCardImage3 from "../../public/DashboardCardImage3.svg";
 import DashboardCardImage5 from "../../public/DashboardCardImage5.svg";
 import DashboardCardImage6 from "../../public/DashboardCardImage6.svg";
 import ClientPageHeader from "@/src/src/client/global/PageHeader";
+import Message from "@/src/src/components/global/Message";
 import axios from "axios";
 
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { useRouter } from "next/navigation";
-import Message from "@/src/src/components/global/Message";
 
 const Archives = () => {
   const [countsData, setCountsData] = React.useState({});
@@ -21,7 +21,6 @@ const Archives = () => {
   const user = session?.user?.name;
 
   const { url } = useGlobalContext();
-  const router = useRouter();
 
   const getCounts = React.useCallback(async () => {
     try {

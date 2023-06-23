@@ -2,13 +2,16 @@
 import React from "react";
 import AdminPageHeader from "@/src/src/admin/global/PageHeader";
 import AddAchievementFilter from "@/src/src/admin/achievements/AddAchievementFilter";
-import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
 import FindRewards from "@/src/src/admin/rewards/FindRewards";
 import axios from "axios";
-import { useGlobalContext } from "@/src/context";
 import Link from "next/link";
+import Message from "@/src/src/components/global/Message";
+
+import { useGlobalContext } from "@/src/context";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 import { BsArrowLeft } from "react-icons/bs";
+
 const AddAchievement = () => {
   const [achievement, setAchievement] = React.useState({
     name: "",
@@ -18,9 +21,12 @@ const AddAchievement = () => {
     goal: 0,
     reward: { name: "", id: "" },
   });
+  const [message, setMessage] = React.useState({ msg: "", active: false });
   const [canSelectReward, setCanSelectReward] = React.useState(false);
+
   const { data: session } = useSession({ required: true });
   const { url } = useGlobalContext();
+
   const user = session?.user?.name;
   const router = useRouter();
 
@@ -61,12 +67,14 @@ const AddAchievement = () => {
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg });
     }
   };
 
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-2 justify-start">
       <AdminPageHeader subHeader="Achievements" mainHeader="Add Achievement" />
+      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
       {canSelectReward ? (
         <FindRewards selectReward={selectReward} handleCanSelectReward={handleCanSelectReward} />
       ) : null}

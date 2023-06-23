@@ -3,7 +3,9 @@ import React from "react";
 import axios from "axios";
 import AdminPageHeader from "@/src/src/admin/global/PageHeader";
 import Link from "next/link";
+import Message from "@/src/src/components/global/Message";
 
+// chart.js is needed to view the react charts
 import { Chart as ChartJS } from "chart.js/auto";
 import { defaults } from "chart.js";
 import { Line, Scatter } from "react-chartjs-2";
@@ -11,14 +13,13 @@ import { getDaysInMonth, localizeDate, monthMap } from "@/src/src/functions/loca
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { BsArrowLeft } from "react-icons/bs";
-import Image from "next/image";
 import { AiOutlineMail } from "react-icons/ai";
-import { decrypt } from "@/src/src/functions/security";
 
 const SingleUser = ({ params }) => {
   const [userData, setUserData] = React.useState({});
   const [userLexile, setUserLexile] = React.useState([]);
   const [userReads, setUserReads] = React.useState([]);
+  const [message, setMessage] = React.useState({ msg: "", active: false });
   const [userQuizzes, setUserQuizzes] = React.useState([]);
 
   const { data: session } = useSession({ required: true });
@@ -145,6 +146,7 @@ const SingleUser = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg });
     }
   }, [url, user, setUserData]);
 
@@ -160,6 +162,7 @@ const SingleUser = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg });
     }
   }, [url, user, setUserLexile, userId]);
 
@@ -175,6 +178,7 @@ const SingleUser = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg });
     }
   }, [url, user, setUserReads, userId]);
 
@@ -190,6 +194,7 @@ const SingleUser = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg });
     }
   }, [url, user, setUserQuizzes, userId]);
 
@@ -220,7 +225,7 @@ const SingleUser = ({ params }) => {
   return (
     <div className="w-full min-h-screen bg-accntColor cstm-flex-col justify-start p-5 gap-2">
       <AdminPageHeader subHeader="User" mainHeader="Dashboard" />
-
+      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
       <div className="cstm-flex-col gap-5 w-full cstm-w-limit ">
         <Link href="/controller/users" className="cstm-bg-hover text-prmColor mr-auto">
           <BsArrowLeft />

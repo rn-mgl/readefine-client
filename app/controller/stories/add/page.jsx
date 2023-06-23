@@ -5,13 +5,13 @@ import AdminPageHeader from "@/src/src/admin/global/PageHeader";
 import AddStoryPage from "@/src/src/admin/stories/AddStoryPage";
 import axios from "axios";
 import FilePreview from "@/src/src/components/global/FilePreview";
-import { IoAddOutline } from "react-icons/io5";
+import Message from "@/src/src/components/global/Message";
+import * as fileFns from "../../../../src/functions/fileFns";
 
+import { IoAddOutline } from "react-icons/io5";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { useRouter } from "next/navigation";
-
-import * as fileFns from "../../../../src/functions/fileFns";
 
 const AddStory = () => {
   const [pages, setPages] = React.useState([
@@ -23,6 +23,7 @@ const AddStory = () => {
       rawFile: null,
     },
   ]);
+  const [message, setMessage] = React.useState({ msg: "", active: false });
   const [storyFilter, setStoryFilter] = React.useState({
     title: "",
     author: "",
@@ -104,6 +105,7 @@ const AddStory = () => {
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg });
     }
   };
 
@@ -123,7 +125,7 @@ const AddStory = () => {
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <AdminPageHeader subHeader="Stories" mainHeader="Add Story" />
-
+      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
       <form
         action=""
         className="w-full cstm-flex-col gap-2 cstm-w-limit border-collapse"

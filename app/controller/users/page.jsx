@@ -3,17 +3,19 @@ import React from "react";
 import AdminPageHeader from "@/src/src/admin/global/PageHeader";
 import UsersFilter from "@/src/src/admin/users/UsersFilter";
 import axios from "axios";
+import Link from "next/link";
+import Message from "@/src/src/components/global/Message";
+
 import { useGlobalContext } from "@/src/context";
 import { localizeDate, inputDate } from "@/src/src/functions/localDate";
 import { useSession } from "next-auth/react";
-import Link from "next/link";
-import { decrypt, encrypt } from "@/src/src/functions/security";
 
 const AdminUsers = () => {
   const [users, setUsers] = React.useState([]);
   const [searchFilter, setSearchFilter] = React.useState({ toSearch: "name", searchKey: "" });
   const [sortFilter, setSortFilter] = React.useState({ toSort: "name", sortMode: "ASC" });
   const [lexileRangeFilter, setLexileRangeFilter] = React.useState({ from: 0, to: 1250 });
+  const [message, setMessage] = React.useState({ msg: "", active: false });
   const [dateRangeFilter, setDateRangeFilter] = React.useState({
     from: "",
     to: inputDate(new Date().toLocaleDateString()),
@@ -87,7 +89,7 @@ const AdminUsers = () => {
     );
   });
 
-  const fetchUsers = React.useCallback(async () => {
+  const getUsers = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/admin_user`, {
         headers: { Authorization: user.token },
@@ -96,6 +98,7 @@ const AdminUsers = () => {
 
       if (data) {
         setUsers(data);
+        setMessage({ active: true, msg: error?.response?.data?.msg });
       }
     } catch (error) {
       console.log(error);
@@ -104,13 +107,14 @@ const AdminUsers = () => {
 
   React.useEffect(() => {
     if (user) {
-      fetchUsers();
+      getUsers();
     }
-  }, [fetchUsers, user]);
+  }, [getUsers, user]);
 
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <AdminPageHeader subHeader="Readefine" mainHeader="Users" />
+      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
       <UsersFilter
         handleSearchFilter={handleSearchFilter}
         handleSortFilter={handleSortFilter}

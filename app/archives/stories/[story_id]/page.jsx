@@ -5,6 +5,7 @@ import axios from "axios";
 import Link from "next/link";
 import Customizations from "@/src/src/components/stories/Customizations";
 import ClientPageHeader from "@/src/src/client/global/PageHeader";
+import Message from "@/src/src/components/global/Message";
 
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import { useSession } from "next-auth/react";
@@ -16,6 +17,7 @@ const SingleStory = ({ params }) => {
   const [pages, setPages] = React.useState([]);
   const [activePage, setActivePage] = React.useState(1);
   const [fontSize, setFontSize] = React.useState(16);
+  const [message, setMessage] = React.useState({ msg: "", active: false });
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -63,6 +65,7 @@ const SingleStory = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg });
     }
   }, [url, user, setPages, storyId]);
 
@@ -76,6 +79,7 @@ const SingleStory = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg });
     }
   }, [url, user, setStory, storyId]);
 
@@ -94,6 +98,7 @@ const SingleStory = ({ params }) => {
   return (
     <div className="p-5 cstm-flex-col bg-accntColor w-full min-h-screen justify-start gap-2">
       <ClientPageHeader subHeader="Stories" mainHeader={story.title} />
+      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
       <div className="w-full cstm-w-limit cstm-flex-row">
         <Link href="/archives/stories" className="w-fit cstm-bg-hover mr-auto">
           <BsArrowLeft className=" text-prmColor" />

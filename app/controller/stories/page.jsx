@@ -6,6 +6,7 @@ import DashboardCardImage3 from "../../../public/DashboardCardImage3.svg";
 import StoriesFilter from "@/src/src/admin/stories/StoriesFilter";
 import axios from "axios";
 import Link from "next/link";
+import Message from "@/src/src/components/global/Message";
 
 import { IoAddOutline } from "react-icons/io5";
 import { useSession } from "next-auth/react";
@@ -17,6 +18,7 @@ const AdminStories = () => {
   const [searchFilter, setSearchFilter] = React.useState({ toSearch: "title", searchKey: "" });
   const [lexileRangeFilter, setLexileRangeFilter] = React.useState({ from: 0, to: 1250 });
   const [sortFilter, setSortFilter] = React.useState({ toSort: "title", sortMode: "ASC" });
+  const [message, setMessage] = React.useState({ msg: "", active: false });
   const [dateRangeFilter, setDateRangeFilter] = React.useState({
     from: "",
     to: inputDate(new Date().toLocaleDateString()),
@@ -80,6 +82,7 @@ const AdminStories = () => {
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg });
     }
   }, [url, user, setStories, searchFilter, lexileRangeFilter, sortFilter, dateRangeFilter]);
 
@@ -109,7 +112,7 @@ const AdminStories = () => {
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <AdminPageHeader subHeader="Readefine" mainHeader="Stories" />
-
+      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
       <div className="w-full cstm-w-limit cstm-flex-col gap-2">
         <StoriesFilter
           handleSearchFilter={handleSearchFilter}

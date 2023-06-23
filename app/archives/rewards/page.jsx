@@ -4,6 +4,7 @@ import ClientPageHeader from "@/src/src/client/global/PageHeader";
 import RewardsCards from "@/src/src/components/rewards/RewardsCards";
 import axios from "axios";
 import RewardsFilter from "@/src/src/client/rewards/RewardsFilter";
+import Message from "@/src/src/components/global/Message";
 
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
@@ -17,6 +18,7 @@ const ClientRewards = () => {
     searchKey: "",
   });
   const [sortFilter, setSortFilter] = React.useState({ toSort: "reward_name", sortMode: "ASC" });
+  const [message, setMessage] = React.useState({ msg: "", active: false });
   const [showFilter, setShowFilter] = React.useState({ toShow: "" });
   const [dateRangeFilter, setDateRangeFilter] = React.useState({
     from: "",
@@ -88,6 +90,7 @@ const ClientRewards = () => {
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg });
     }
   }, [url, user, setRewards, searchFilter, sortFilter, dateRangeFilter]);
 
@@ -100,7 +103,7 @@ const ClientRewards = () => {
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <ClientPageHeader mainHeader="Readefine" subHeader="Rewards" />
-
+      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
       <div className="w-full cstm-w-limit cstm-flex-col gap-2">
         <RewardsFilter
           handleSearchFilter={handleSearchFilter}

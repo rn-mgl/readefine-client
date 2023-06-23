@@ -4,11 +4,11 @@ import AchievementsFilter from "@/src/src/components/achievements/AchievementsFi
 import ClientPageHeader from "@/src/src/client/global/PageHeader";
 import axios from "axios";
 import AchievementPanel from "@/src/src/client/achievements/AchievementPanel";
+import Message from "@/src/src/components/global/Message";
 
 import { inputDate } from "@/src/src/functions/localDate";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
-import dynamic from "next/dynamic";
 
 const ClientAchievements = () => {
   const [achievements, setAchievements] = React.useState([]);
@@ -17,6 +17,7 @@ const ClientAchievements = () => {
     searchKey: "",
   });
   const [goalRangeFilter, setGoalRangeFilter] = React.useState({ from: 0, to: 1250 });
+  const [message, setMessage] = React.useState({ msg: "", active: false });
   const [sortFilter, setSortFilter] = React.useState({
     toSort: "achievement_name",
     sortMode: "ASC",
@@ -96,6 +97,7 @@ const ClientAchievements = () => {
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg });
     }
   }, [url, user, setAchievements, searchFilter, goalRangeFilter, sortFilter, dateRangeFilter]);
 
@@ -108,7 +110,7 @@ const ClientAchievements = () => {
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <ClientPageHeader mainHeader="Readefine" subHeader="Achievements" />
-
+      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
       <div className="w-full cstm-flex-col gap-2 cstm-w-limit">
         <AchievementsFilter
           handleSearchFilter={handleSearchFilter}

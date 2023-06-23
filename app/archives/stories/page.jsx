@@ -1,18 +1,22 @@
 "use client";
-import { useGlobalContext } from "@/src/context";
+
 import axios from "axios";
-import { useSession } from "next-auth/react";
-import React, { Suspense } from "react";
-import { inputDate } from "@/src/src/functions/localDate";
 import StoriesFilter from "@/src/src/client/stories/StoriesFilter";
 import StoriesCards from "@/src/src/components/stories/StoriesCards";
 import ClientPageHeader from "@/src/src/client/global/PageHeader";
+import Message from "@/src/src/components/global/Message";
+
+import { useGlobalContext } from "@/src/context";
+import { useSession } from "next-auth/react";
+import { inputDate } from "@/src/src/functions/localDate";
+import React, { Suspense } from "react";
 
 const ClientStories = () => {
   const [stories, setStories] = React.useState([]);
   const [searchFilter, setSearchFilter] = React.useState({ toSearch: "title", searchKey: "" });
   const [lexileRangeFilter, setLexileRangeFilter] = React.useState({ from: 0, to: 1250 });
   const [sortFilter, setSortFilter] = React.useState({ toSort: "title", sortMode: "ASC" });
+  const [message, setMessage] = React.useState({ msg: "", active: false });
   const [dateRangeFilter, setDateRangeFilter] = React.useState({
     from: "",
     to: inputDate(new Date().toLocaleDateString()),
@@ -74,6 +78,7 @@ const ClientStories = () => {
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg });
     }
   }, [url, user, setStories, searchFilter, sortFilter, dateRangeFilter, lexileRangeFilter]);
 
@@ -109,7 +114,7 @@ const ClientStories = () => {
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <ClientPageHeader mainHeader="Readefine" subHeader="Stories" />
-
+      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
       <div className="w-full cstm-w-limit cstm-flex-col gap-5">
         <StoriesFilter
           handleSearchFilter={handleSearchFilter}

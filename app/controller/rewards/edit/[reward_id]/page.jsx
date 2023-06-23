@@ -4,8 +4,9 @@ import AdminPageHeader from "@/src/src/admin/global/PageHeader";
 import FilePreview from "@/src/src/components/global/FilePreview";
 import axios from "axios";
 import EditRewardFilter from "@/src/src/admin/rewards/EditRewardFilter";
-
+import Message from "@/src/src/components/global/Message";
 import * as fileFns from "../../../../../src/functions/fileFns";
+
 import { BiImage } from "react-icons/bi";
 import { wordCount } from "@/src/src/functions/wordCount";
 import { useSession } from "next-auth/react";
@@ -14,6 +15,7 @@ import { useRouter } from "next/navigation";
 
 const EditReward = ({ params }) => {
   const [reward, setReward] = React.useState({});
+  const [message, setMessage] = React.useState({ msg: "", active: false });
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -63,6 +65,7 @@ const EditReward = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg });
     }
   };
 
@@ -76,6 +79,7 @@ const EditReward = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg });
     }
   }, [setReward, url, user]);
 
@@ -88,7 +92,7 @@ const EditReward = ({ params }) => {
   return (
     <div className="w-full min-h-screen bg-accntColor p-5 cstm-flex-col gap-2 justify-start">
       <AdminPageHeader subHeader={reward?.reward_name} mainHeader="Edit Reward" />
-
+      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
       <form onSubmit={(e) => editReward(e)} className="w-full cstm-flex-col border-collapse gap-2">
         <EditRewardFilter handleReward={handleReward} reward={reward} />
         <div

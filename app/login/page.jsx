@@ -6,15 +6,16 @@ import intersectST from "../../public/IntersectST.svg";
 import intersectSL from "../../public/IntersectSL.svg";
 import InputComp from "../../src/components/input/InputComp";
 import ButtonComp from "../../src/components/input/ButtonComp";
-import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
-import { CiUser } from "react-icons/ci";
-import { signIn, useSession } from "next-auth/react";
-import Link from "next/link";
-import axios from "axios";
-import { useGlobalContext } from "@/src/context";
-import { useRouter } from "next/navigation";
 import Loading from "@/src/src/components/global/Loading";
 import Message from "@/src/src/components/global/Message";
+import Link from "next/link";
+import axios from "axios";
+
+import { useGlobalContext } from "@/src/context";
+import { useRouter } from "next/navigation";
+import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
+import { CiUser } from "react-icons/ci";
+import { signIn } from "next-auth/react";
 
 const Login = () => {
   const [loginData, setLoginData] = React.useState({
@@ -62,9 +63,9 @@ const Login = () => {
         }
       }
     } catch (error) {
+      console.log(error);
       setLoading(false);
       setMessage({ active: true, msg: error?.response?.data?.msg });
-      console.log(error);
     }
   };
 

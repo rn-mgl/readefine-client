@@ -5,6 +5,7 @@ import RiddlesFilter from "@/src/src/admin/riddles/RiddlesFilter";
 import axios from "axios";
 import DeleteRiddle from "@/src/src/admin/riddles/DeleteRiddle";
 import Link from "next/link";
+import Message from "@/src/src/components/global/Message";
 
 import { IoAddOutline } from "react-icons/io5";
 import { useSession } from "next-auth/react";
@@ -21,6 +22,7 @@ const AdminRiddles = () => {
   const [riddleToDelete, setRiddleToDelete] = React.useState({ id: -1, answer: "" });
   const [searchFilter, setSearchFilter] = React.useState({ toSearch: "riddle", searchKey: "" });
   const [sortFilter, setSortFilter] = React.useState({ toSort: "riddle", sortMode: "ASC" });
+  const [message, setMessage] = React.useState({ msg: "", active: false });
   const [dateRangeFilter, setDateRangeFilter] = React.useState({
     from: "",
     to: inputDate(new Date().toLocaleDateString()),
@@ -209,6 +211,7 @@ const AdminRiddles = () => {
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg });
     }
   };
 
@@ -228,6 +231,7 @@ const AdminRiddles = () => {
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg });
     }
   }, [setRiddles, url, user, searchFilter, sortFilter, dateRangeFilter]);
 
@@ -240,6 +244,7 @@ const AdminRiddles = () => {
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-2 justify-start">
       <AdminPageHeader subHeader="Readefine" mainHeader="Riddles" />
+      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
       <div className="cstm-flex-col gap-2 w-full cstm-w-limit">
         <RiddlesFilter
           handleSearchFilter={handleSearchFilter}

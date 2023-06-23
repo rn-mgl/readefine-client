@@ -3,15 +3,15 @@ import axios from "axios";
 import React from "react";
 import ClientPageHeader from "@/src/src/client/global/PageHeader";
 import QuestionSlide from "@/src/src/client/tests/QuestionSlide";
+import Link from "next/link";
+import ScorePopup from "@/src/src/components/tests/ScorePopup";
+import Message from "@/src/src/components/global/Message";
 
 import { useSession } from "next-auth/react";
 import { computeScore, shuffleQuestions } from "@/src/src/functions/testFns";
 import { useGlobalContext } from "@/src/context";
 import { AiFillCaretRight, AiFillCaretLeft } from "react-icons/ai";
-import Link from "next/link";
 import { BsArrowLeft } from "react-icons/bs";
-import { Nuosu_SIL } from "next/font/google";
-import ScorePopup from "@/src/src/components/tests/ScorePopup";
 
 const SingleTest = ({ params }) => {
   const [testData, setTestData] = React.useState({});
@@ -19,6 +19,7 @@ const SingleTest = ({ params }) => {
   const [activePage, setActivePage] = React.useState(0);
   const [isFinished, setIsFinished] = React.useState(false);
   const [score, setScore] = React.useState(0);
+  const [message, setMessage] = React.useState({ msg: "", active: false });
   const [selectedChoices, setSelectedChoices] = React.useState({
     choice1: { answer: "", questionId: -1 },
     choice2: { answer: "", questionId: -1 },
@@ -133,6 +134,7 @@ const SingleTest = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg });
     }
   };
 
@@ -147,6 +149,7 @@ const SingleTest = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg });
     }
   }, [url, user, testId]);
 
@@ -162,6 +165,7 @@ const SingleTest = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg });
     }
   }, [user, url, testId]);
 
@@ -180,6 +184,7 @@ const SingleTest = ({ params }) => {
   return (
     <div className="p-5 w-full min-h-screen bg-accntColor cstm-flex-col gap-2 justify-start overflow-x-hidden">
       <ClientPageHeader mainHeader={testData?.title} subHeader="Test" />
+      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
       {isFinished ? <ScorePopup score={score} handleIsFinished={handleIsFinished} /> : null}
       <div className="cstm-flex-row items-start gap-2 w-full cstm-w-limit relative h-[65vh] l-l:h-[70vh]">
         <Link href="/archives/tests" className="cstm-bg-hover mr-auto">

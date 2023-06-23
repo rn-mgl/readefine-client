@@ -1,18 +1,21 @@
 "use client";
 import React, { Suspense } from "react";
-import TestsCards from "@/src/src/client/tests/TestsCards";
-import TestsFilter from "@/src/src/client/tests/TestsFilter";
-import axios from "axios";
 import { inputDate } from "@/src/src/functions/localDate";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
+
+import TestsCards from "@/src/src/client/tests/TestsCards";
+import TestsFilter from "@/src/src/client/tests/TestsFilter";
+import axios from "axios";
 import ClientPageHeader from "@/src/src/client/global/PageHeader";
+import Message from "@/src/src/components/global/Message";
 
 const ClientTests = () => {
   const [tests, setTests] = React.useState([]);
   const [searchFilter, setSearchFilter] = React.useState({ toSearch: "title", searchKey: "" });
   const [lexileRangeFilter, setLexileRangeFilter] = React.useState({ from: 0, to: 1250 });
   const [sortFilter, setSortFilter] = React.useState({ toSort: "title", sortMode: "ASC" });
+  const [message, setMessage] = React.useState({ msg: "", active: false });
   const [dateRangeFilter, setDateRangeFilter] = React.useState({
     from: "",
     to: inputDate(new Date().toLocaleDateString()),
@@ -89,6 +92,7 @@ const ClientTests = () => {
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg });
     }
   }, [url, user, setTests, searchFilter, lexileRangeFilter, sortFilter, dateRangeFilter]);
 
@@ -107,6 +111,7 @@ const ClientTests = () => {
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <ClientPageHeader subHeader="Tests" mainHeader="Readefine" />
+      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
       <TestsFilter
         handleSearchFilter={handleSearchFilter}
         handleDateRangeFilter={handleDateRangeFilter}

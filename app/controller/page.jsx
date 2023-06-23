@@ -8,13 +8,16 @@ import DashboardCardImage3 from "../../public/DashboardCardImage3.svg";
 import DashboardCardImage5 from "../../public/DashboardCardImage5.svg";
 import DashboardCardImage6 from "../../public/DashboardCardImage6.svg";
 import DashboardCardImage7 from "../../public/DashboardCardImage7.svg";
-import { useSession } from "next-auth/react";
 import axios from "axios";
+import Message from "@/src/src/components/global/Message";
+
 import { useGlobalContext } from "../../context";
+import { useSession } from "next-auth/react";
 
 const AdminDashboard = () => {
   const [counts, setCounts] = React.useState({});
   const [updates, setUpdates] = React.useState({});
+  const [message, setMessage] = React.useState({ msg: "", active: false });
 
   const { data: session } = useSession({ required: true });
 
@@ -33,6 +36,7 @@ const AdminDashboard = () => {
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg });
     }
   }, [user, url, setCounts]);
 
@@ -47,6 +51,7 @@ const AdminDashboard = () => {
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg });
     }
   }, [user, url, setCounts]);
 
@@ -65,6 +70,7 @@ const AdminDashboard = () => {
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <AdminPageHeader subHeader="Counts" mainHeader="Main Dashboard" />
+      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
       <div
         className="cstm-flex-col gap-5 justify-start w-full transition-all
         t:cstm-flex-row t:flex-wrap

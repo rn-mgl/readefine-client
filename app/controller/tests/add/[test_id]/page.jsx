@@ -2,16 +2,18 @@
 import React from "react";
 import AdminPageHeader from "@/src/src/admin/global/PageHeader";
 import AddTestPage from "@/src/src/admin/tests/AddTestPage";
+import ActionLabel from "@/src/src/components/global/ActionLabel";
+import axios from "axios";
+import Message from "@/src/src/components/global/Message";
 
 import { IoAddOutline } from "react-icons/io5";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
-import ActionLabel from "@/src/src/components/global/ActionLabel";
-import axios from "axios";
 
 const AddTest = ({ params }) => {
   const { data: session } = useSession({ required: true });
+  const [message, setMessage] = React.useState({ msg: "", active: false });
   const [pages, setPages] = React.useState([
     {
       testNumber: 1,
@@ -82,6 +84,7 @@ const AddTest = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg });
     }
   };
 
@@ -101,7 +104,7 @@ const AddTest = ({ params }) => {
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <AdminPageHeader subHeader="Tests" mainHeader="Add Test" />
-
+      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
       <form
         onSubmit={(e) => createTest(e)}
         className="w-full cstm-flex-col cstm-w-limit border-collapse gap-5"

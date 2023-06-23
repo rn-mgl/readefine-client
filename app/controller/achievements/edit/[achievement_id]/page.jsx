@@ -5,6 +5,7 @@ import FindRewards from "@/src/src/admin/rewards/FindRewards";
 import Link from "next/link";
 import axios from "axios";
 import EditAchievementFilter from "@/src/src/admin/achievements/EditAchievementFilter";
+import Message from "@/src/src/components/global/Message";
 
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
@@ -21,8 +22,11 @@ const EditAchievement = ({ params }) => {
     reward: { name: "", id: "" },
   });
   const [canSelectReward, setCanSelectReward] = React.useState(false);
+  const [message, setMessage] = React.useState({ msg: "", active: false });
+
   const { data: session } = useSession({ required: true });
   const { url } = useGlobalContext();
+
   const user = session?.user?.name;
   const router = useRouter();
   const achivementId = params?.achievement_id;
@@ -64,6 +68,7 @@ const EditAchievement = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg });
     }
   };
 
@@ -78,6 +83,7 @@ const EditAchievement = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg });
     }
   }, [user, url, setAchievement]);
 
@@ -90,10 +96,10 @@ const EditAchievement = ({ params }) => {
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-2 justify-start">
       <AdminPageHeader subHeader="Achievements" mainHeader="Edit Achievement" />
+      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
       {canSelectReward ? (
         <FindRewards selectReward={selectReward} handleCanSelectReward={handleCanSelectReward} />
       ) : null}
-
       <form
         onSubmit={(e) => editAchievement(e)}
         className="w-full cstm-flex-col cstm-w-limit border-collapse gap-2"

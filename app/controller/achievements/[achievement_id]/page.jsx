@@ -5,17 +5,19 @@ import axios from "axios";
 import AdminPageHeader from "@/src/src/admin/global/PageHeader";
 import Link from "next/link";
 import FileViewer from "@/src/src/components/global/FileViewer";
+import DeleteAchievement from "@/src/src/admin/achievements/DeleteAchievement";
+import Message from "@/src/src/components/global/Message";
 
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { BsArrowLeft } from "react-icons/bs";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { specificsConversion, typeConversion } from "@/src/src/functions/typeConversion";
-import DeleteAchievement from "@/src/src/admin/achievements/DeleteAchievement";
 
 const SingleAchievement = ({ params }) => {
   const [achievement, setAchievement] = React.useState({});
   const [canDeleteAchievement, setCanDeleteAchievement] = React.useState(false);
+  const [message, setMessage] = React.useState({ msg: "", active: false });
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -38,6 +40,7 @@ const SingleAchievement = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg });
     }
   }, [user, url, setAchievement]);
 
@@ -50,6 +53,7 @@ const SingleAchievement = ({ params }) => {
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col justify-start gap-2">
       <AdminPageHeader subHeader="Achievement" mainHeader={achievement.achievement_name} />
+      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
       {canDeleteAchievement ? (
         <DeleteAchievement
           confirmation={achievement.achievement_name}

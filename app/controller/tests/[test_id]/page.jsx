@@ -2,17 +2,17 @@
 import React from "react";
 import AdminPageHeader from "@/src/src/admin/global/PageHeader";
 import TestChoices from "@/src/src/admin/tests/TestChoices";
-import TestQuestion from "@/src/src/components/tests/TestQuestion";
 import axios from "axios";
 import Link from "next/link";
+import Message from "@/src/src/components/global/Message";
+import ScorePopup from "@/src/src/components/tests/ScorePopup";
+import DeleteTest from "@/src/src/admin/tests/DeleteTest";
 
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { BsArrowLeft } from "react-icons/bs";
 import { useGlobalContext } from "@/src/context";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import ScorePopup from "@/src/src/components/tests/ScorePopup";
-import DeleteTest from "@/src/src/admin/tests/DeleteTest";
 import { computeScore, shuffleQuestions } from "@/src/src/functions/testFns";
 
 const SingleTest = ({ params }) => {
@@ -21,6 +21,7 @@ const SingleTest = ({ params }) => {
   const [score, setScore] = React.useState(0);
   const [canDeleteTest, setCanDeleteTest] = React.useState(false);
   const [isFinished, setIsFinished] = React.useState(false);
+  const [message, setMessage] = React.useState({ msg: "", active: false });
   const [selectedChoices, setSelectedChoices] = React.useState({
     choice1: { answer: "", questionId: -1 },
     choice2: { answer: "", questionId: -1 },
@@ -126,6 +127,7 @@ const SingleTest = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg });
     }
   }, [url, user, testId, setSelectedChoices, setQuestions]);
 
@@ -141,8 +143,8 @@ const SingleTest = ({ params }) => {
         router.push(`/controller/tests/add/${testId}`);
       }
     } catch (error) {
-      router.push(`/controller/tests/add/${testId}`);
       console.log(error);
+      router.push(`/controller/tests/add/${testId}`);
     }
   }, [url, user, testId]);
 
@@ -161,6 +163,7 @@ const SingleTest = ({ params }) => {
   return (
     <div className="p-5 w-full min-h-screen bg-accntColor cstm-flex-col gap-2">
       <AdminPageHeader subHeader="Tests" mainHeader={test?.title} />
+      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
       {isFinished ? <ScorePopup score={score} handleIsFinished={handleIsFinished} /> : null}
       {canDeleteTest ? (
         <DeleteTest

@@ -4,16 +4,18 @@ import AdminPageHeader from "../../../src/admin/global/PageHeader";
 import AchievementsFilter from "@/src/src/components/achievements/AchievementsFilter";
 import axios from "axios";
 import Link from "next/link";
+import AchievementsCards from "@/src/src/admin/achievements/AchievementsCards";
+import Message from "@/src/src/components/global/Message";
 
 import { IoAddOutline } from "react-icons/io5";
 import { specificsConversion, typeConversion } from "@/src/src/functions/typeConversion";
 import { inputDate } from "@/src/src/functions/localDate";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
-import AchievementsCards from "@/src/src/admin/achievements/AchievementsCards";
 
 const AdminAchievements = () => {
   const [achievements, setAchievements] = React.useState([]);
+  const [message, setMessage] = React.useState({ msg: "", active: false });
   const [searchFilter, setSearchFilter] = React.useState({
     toSearch: "achievement_name",
     searchKey: "",
@@ -101,6 +103,7 @@ const AdminAchievements = () => {
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg });
     }
   }, [url, user, setAchievements, searchFilter, goalRangeFilter, sortFilter, dateRangeFilter]);
 
@@ -113,9 +116,9 @@ const AdminAchievements = () => {
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <AdminPageHeader subHeader="Readefine" mainHeader="Achievements & Tasks" />
-
+      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
       <div
-        className="w-full     cstm-flex-col gap-2
+        className="w-full cstm-flex-col gap-2
         cstm-w-limit"
       >
         <AchievementsFilter

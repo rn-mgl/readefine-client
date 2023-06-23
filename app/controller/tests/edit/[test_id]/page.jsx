@@ -4,6 +4,7 @@ import AdminPageHeader from "@/src/src/admin/global/PageHeader";
 import EditTestPage from "@/src/src/admin/tests/EditTestPage";
 import ActionLabel from "@/src/src/components/global/ActionLabel";
 import Link from "next/link";
+import Message from "@/src/src/components/global/Message";
 
 import { BsArrowLeft } from "react-icons/bs";
 import { useRouter } from "next/navigation";
@@ -14,6 +15,7 @@ import axios from "axios";
 const EditTest = ({ params }) => {
   const [test, setTest] = React.useState({});
   const [questions, setQuestions] = React.useState([]);
+  const [message, setMessage] = React.useState({ msg: "", active: false });
 
   const { data: session } = useSession({ required: true });
   const { url } = useGlobalContext();
@@ -63,6 +65,7 @@ const EditTest = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg });
     }
   };
 
@@ -85,6 +88,7 @@ const EditTest = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg });
     }
   }, [url, user, testId, setQuestions]);
 
@@ -101,6 +105,7 @@ const EditTest = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg });
     }
   }, [url, user, testId]);
 
@@ -119,7 +124,7 @@ const EditTest = ({ params }) => {
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-2 justify-start">
       <AdminPageHeader subHeader={test?.title} mainHeader="Edit Test" />
-
+      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
       <form
         onSubmit={(e) => editTest(e)}
         className="w-full cstm-flex-col cstm-w-limit border-collapse gap-5"

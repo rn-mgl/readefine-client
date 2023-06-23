@@ -3,6 +3,11 @@ import React from "react";
 import AdminPageHeader from "@/src/src/admin/global/PageHeader";
 import axios from "axios";
 import FilePreview from "@/src/src/components/global/FilePreview";
+import Message from "@/src/src/components/global/Message";
+import * as fileFns from "../../../../../src/functions/fileFns";
+import EditStoryPage from "@/src/src/admin/stories/EditStoryPage";
+import EditStoryFilter from "@/src/src/admin/stories/EditStoryFilter";
+import Link from "next/link";
 
 import { IoAddOutline } from "react-icons/io5";
 import { BsArrowLeft } from "react-icons/bs";
@@ -10,15 +15,11 @@ import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { useRouter } from "next/navigation";
 
-import * as fileFns from "../../../../../src/functions/fileFns";
-import EditStoryPage from "@/src/src/admin/stories/EditStoryPage";
-import EditStoryFilter from "@/src/src/admin/stories/EditStoryFilter";
-import Link from "next/link";
-
 const EditStory = ({ params }) => {
   const [story, setStory] = React.useState({});
   const [pages, setPages] = React.useState([]);
   const { data: session } = useSession({ required: true });
+  const [message, setMessage] = React.useState({ msg: "", active: false });
 
   const user = session?.user?.name;
   const router = useRouter();
@@ -114,6 +115,7 @@ const EditStory = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg });
     }
   };
 
@@ -128,6 +130,7 @@ const EditStory = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg });
     }
   }, [url, user, setPages, params]);
 
@@ -141,6 +144,7 @@ const EditStory = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg });
     }
   }, [url, user, setStory, params]);
 
@@ -159,7 +163,7 @@ const EditStory = ({ params }) => {
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-2 justify-start">
       <AdminPageHeader subHeader="Stories" mainHeader="Edit Story" />
-
+      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
       <form
         className="w-full cstm-flex-col gap-2 cstm-w-limit border-collapse"
         onSubmit={(e) => editBook(e)}
