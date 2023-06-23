@@ -8,7 +8,8 @@ import InputComp from "../../src/components/input/InputComp";
 import ButtonComp from "../../src/components/input/ButtonComp";
 
 import axios from "axios";
-import { CiLock, CiUser, CiMail, CiUnlock } from "react-icons/ci";
+import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
+import { CiUser, CiMail } from "react-icons/ci";
 import { useGlobalContext } from "../../context";
 import { useRouter } from "next/navigation";
 import SelectComp from "../../src/components/input/SelectComp";
@@ -119,9 +120,9 @@ const Signup = () => {
           spellCheck={false}
           icon={
             visiblePassword ? (
-              <CiUnlock onClick={handleVisiblePassword} />
+              <AiOutlineEye onClick={handleVisiblePassword} />
             ) : (
-              <CiLock onClick={handleVisiblePassword} />
+              <AiOutlineEyeInvisible onClick={handleVisiblePassword} />
             )
           }
           value={userData.password}

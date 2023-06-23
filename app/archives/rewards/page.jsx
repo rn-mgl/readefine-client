@@ -3,7 +3,7 @@ import React, { Suspense } from "react";
 import ClientPageHeader from "@/src/src/client/global/PageHeader";
 import RewardsCards from "@/src/src/components/rewards/RewardsCards";
 import axios from "axios";
-import ClientRewardsFilter from "@/src/src/client/rewards/ClientRewardsFilter";
+import RewardsFilter from "@/src/src/client/rewards/RewardsFilter";
 
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
@@ -102,7 +102,7 @@ const ClientRewards = () => {
       <ClientPageHeader mainHeader="Readefine" subHeader="Rewards" />
 
       <div className="w-full cstm-w-limit cstm-flex-col gap-2">
-        <ClientRewardsFilter
+        <RewardsFilter
           handleSearchFilter={handleSearchFilter}
           handleDateRangeFilter={handleDateRangeFilter}
           handleSortFilter={handleSortFilter}

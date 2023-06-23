@@ -1,7 +1,7 @@
 "use client";
 import React, { Suspense } from "react";
 import TestsCards from "@/src/src/client/tests/TestsCards";
-import TestsFilter from "@/src/src/components/tests/TestsFilter";
+import TestsFilter from "@/src/src/client/tests/TestsFilter";
 import axios from "axios";
 import { inputDate } from "@/src/src/functions/localDate";
 import { useSession } from "next-auth/react";
@@ -94,15 +94,15 @@ const ClientTests = () => {
 
   React.useEffect(() => {
     if (user) {
-      getTests();
-    }
-  }, [user, getTests]);
-
-  React.useEffect(() => {
-    if (user) {
       setLexileRangeFilter({ from: user?.lexile - 50, to: user?.lexile + 100 });
     }
   }, [user, setLexileRangeFilter]);
+
+  React.useEffect(() => {
+    if (user) {
+      getTests();
+    }
+  }, [user, getTests]);
 
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">

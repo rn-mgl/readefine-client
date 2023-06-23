@@ -1,31 +1,28 @@
 import React from "react";
+import SortFilter from "../../components/filter/SortFilter";
+import SearchFilter from "../../components/filter/SearchFilter";
+import RangeFilter from "../../components/filter/RangeFilter";
 
-import SearchFilter from "../filter/SearchFilter";
-import SortFilter from "../filter/SortFilter";
-import RangeFilter from "../filter/RangeFilter";
-
-const StoriesFilter = (props) => {
+const TestsFilter = (props) => {
   return (
-    <div className="cstm-flex-row gap-2 justify-start relative w-full overflow-x-auto p-2 cstm-scrollbar">
+    <div className="cstm-flex-row gap-2 justify-start relative w-full overflow-x-auto p-2 cstm-scrollbar cstm-w-limit">
       <SearchFilter
-        searchFilter={props.searchFilter}
         handleSearchFilter={props.handleSearchFilter}
+        searchFilter={props.searchFilter}
         labelValue={[
           { label: "Title", value: "title" },
           { label: "Author", value: "author" },
-          { label: "Genre", value: "genre" },
-          { label: "Lexile", value: "lexile" },
+          { label: "Lexile", value: "lexile_level" },
         ]}
       />
 
       <SortFilter
-        sortFilter={props.sortFilter}
         handleSortFilter={props.handleSortFilter}
+        sortFilter={props.sortFilter}
         labelValue={[
           { label: "Title", value: "title" },
           { label: "Author", value: "author" },
-          { label: "Genre", value: "genre" },
-          { label: "Lexile", value: "lexile" },
+          { label: "Lexile", value: "lexile_level" },
         ]}
       />
 
@@ -50,4 +47,4 @@ const StoriesFilter = (props) => {
   );
 };
 
-export default StoriesFilter;
+export default TestsFilter;

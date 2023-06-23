@@ -1,5 +1,5 @@
 import React from "react";
-import RewardsFilter from "./RewardsFilter";
+import AdminRewardsFilter from "./AdminRewardsFilter";
 import axios from "axios";
 
 import { IoClose } from "react-icons/io5";
@@ -97,7 +97,7 @@ const FindRewards = (props) => {
       </div>
 
       <div className="w-full cstm-flex-col gap-2 cstm-w-limit">
-        <RewardsFilter
+        <AdminRewardsFilter
           handleSearchFilter={handleSearchFilter}
           handleDateRangeFilter={handleDateRangeFilter}
           handleSortFilter={handleSortFilter}

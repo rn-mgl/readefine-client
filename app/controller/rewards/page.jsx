@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import AdminPageHeader from "../../../src/admin/global/PageHeader";
-import RewardsFilter from "@/src/src/admin/rewards/RewardsFilter";
+import AdminRewardsFilter from "@/src/src/admin/rewards/AdminRewardsFilter";
 import RewardsCards from "@/src/src/components/rewards/RewardsCards";
 import Link from "next/link";
 
@@ -97,7 +97,7 @@ const AdminRewards = () => {
       <AdminPageHeader subHeader="Readefine" mainHeader="Rewards" />
 
       <div className="w-full cstm-w-limit cstm-flex-col gap-2">
-        <RewardsFilter
+        <AdminRewardsFilter
           handleSearchFilter={handleSearchFilter}
           handleDateRangeFilter={handleDateRangeFilter}
           handleSortFilter={handleSortFilter}

@@ -1,5 +1,5 @@
-import React, { Suspense } from "react";
-import Logo from "../../src/components/global/Logo";
+import React from "react";
+import LandingLogo from "@/src/src/components/global/LandingLogo";
 
 export const metadata = {
   title: "Readefine | Log In",
@@ -10,7 +10,7 @@ const RootLayout = ({ children }) => {
   return (
     <main>
       <div className="text-prmColor">
-        <Logo />
+        <LandingLogo />
       </div>
       {children}
     </main>

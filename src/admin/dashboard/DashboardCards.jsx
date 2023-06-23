@@ -27,7 +27,9 @@ const DashboardCards = (props) => {
         >
           {props.label}
         </p>
-        <p className="opacity-50 text-xs capitalize whitespace-pre-wrap">{props.subLabel}</p>
+        <p className="opacity-50 text-xs capitalize whitespace-pre-wrap text-center">
+          {props.subLabel}
+        </p>
       </div>
 
       <div

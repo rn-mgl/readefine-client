@@ -3,6 +3,7 @@ import React from "react";
 import SearchFilter from "../../components/filter/SearchFilter";
 import SortFilter from "../../components/filter/SortFilter";
 import RangeFilter from "../../components/filter/RangeFilter";
+import SelectFilter from "../../components/filter/SelectFilter";
 
 const RewardsFilter = (props) => {
   return (
@@ -26,13 +27,14 @@ const RewardsFilter = (props) => {
         ]}
       />
 
-      <RangeFilter
-        fromLabel="Date From"
-        handleRangeFilter={props.handleDateRangeFilter}
-        fromRange={props.dateRangeFilter.from}
-        type="date"
-        toLabel="Date To"
-        toRange={props.dateRangeFilter.to}
+      <SelectFilter
+        onChange={props.handleShowFilter}
+        name="toShow"
+        labelValue={[
+          { label: "All", value: "all" },
+          { label: "Received", value: "received" },
+        ]}
+        label="Show"
       />
     </div>
   );

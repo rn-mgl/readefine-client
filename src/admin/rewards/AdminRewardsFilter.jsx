@@ -3,9 +3,8 @@ import React from "react";
 import SearchFilter from "../../components/filter/SearchFilter";
 import SortFilter from "../../components/filter/SortFilter";
 import RangeFilter from "../../components/filter/RangeFilter";
-import SelectFilter from "../../components/filter/SelectFilter";
 
-const ClientRewardsFilter = (props) => {
+const AdminRewardsFilter = (props) => {
   return (
     <div className="cstm-flex-row gap-2 justify-start relative w-full overflow-x-auto py-2 cstm-scrollbar">
       <SearchFilter
@@ -35,18 +34,8 @@ const ClientRewardsFilter = (props) => {
         toLabel="Date To"
         toRange={props.dateRangeFilter.to}
       />
-
-      <SelectFilter
-        onChange={props.handleShowFilter}
-        name="toShow"
-        labelValue={[
-          { label: "All", value: "all" },
-          { label: "Received", value: "received" },
-        ]}
-        label="Show"
-      />
     </div>
   );
 };
 
-export default ClientRewardsFilter;
+export default AdminRewardsFilter;

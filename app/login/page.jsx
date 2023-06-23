@@ -6,13 +6,15 @@ import intersectST from "../../public/IntersectST.svg";
 import intersectSL from "../../public/IntersectSL.svg";
 import InputComp from "../../src/components/input/InputComp";
 import ButtonComp from "../../src/components/input/ButtonComp";
-import { CiLock, CiUser, CiUnlock } from "react-icons/ci";
+import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
+import { CiUser } from "react-icons/ci";
 import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 import axios from "axios";
 import { useGlobalContext } from "@/src/context";
 import { useRouter } from "next/navigation";
 import Loading from "@/src/src/components/global/Loading";
+import Message from "@/src/src/components/global/Message";
 
 const Login = () => {
   const [loginData, setLoginData] = React.useState({
@@ -20,6 +22,7 @@ const Login = () => {
     candidatePassword: "",
   });
   const [visiblePassword, setVisiblePassword] = React.useState(false);
+  const [message, setMessage] = React.useState({ msg: "", active: false });
   const [loading, setLoading] = React.useState(false);
 
   const { url } = useGlobalContext();
@@ -60,6 +63,7 @@ const Login = () => {
       }
     } catch (error) {
       setLoading(false);
+      setMessage({ active: true, msg: error?.response?.data?.msg });
       console.log(error);
     }
   };
@@ -70,6 +74,7 @@ const Login = () => {
 
   return (
     <div className="w-full h-screen bg-accntColor p-5 cstm-flex-col font-poppins overflow-hidden">
+      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
       <p className=" font-extrabold text-2xl text-prmColor">Log In</p>
       <br />
       <form
@@ -95,9 +100,9 @@ const Login = () => {
           spellCheck={false}
           icon={
             visiblePassword ? (
-              <CiUnlock onClick={handleVisiblePassword} />
+              <AiOutlineEye onClick={handleVisiblePassword} />
             ) : (
-              <CiLock onClick={handleVisiblePassword} />
+              <AiOutlineEyeInvisible onClick={handleVisiblePassword} />
             )
           }
           onChange={(e) => handleLoginData(e.target)}

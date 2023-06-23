@@ -4,7 +4,7 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import React, { Suspense } from "react";
 import { inputDate } from "@/src/src/functions/localDate";
-import StoriesFilter from "@/src/src/components/stories/StoriesFilter";
+import StoriesFilter from "@/src/src/client/stories/StoriesFilter";
 import StoriesCards from "@/src/src/components/stories/StoriesCards";
 import ClientPageHeader from "@/src/src/client/global/PageHeader";
 
@@ -96,15 +96,15 @@ const ClientStories = () => {
 
   React.useEffect(() => {
     if (user) {
-      getStories();
-    }
-  }, [user, getStories]);
-
-  React.useEffect(() => {
-    if (user) {
       setLexileRangeFilter({ from: user?.lexile - 50, to: user?.lexile + 100 });
     }
   }, [user, setLexileRangeFilter]);
+
+  React.useEffect(() => {
+    if (user) {
+      getStories();
+    }
+  }, [user, getStories]);
 
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">

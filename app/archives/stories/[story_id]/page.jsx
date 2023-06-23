@@ -23,11 +23,11 @@ const SingleStory = ({ params }) => {
   const storyId = params?.story_id;
 
   const handleIncrement = () => {
-    setActivePage((prev) => (prev + 1 > pages.length ? 0 : prev + 1));
+    setActivePage((prev) => (prev + 1 > pages.length ? pages.length : prev + 1));
   };
 
   const handleDecrement = () => {
-    setActivePage((prev) => (prev - 1 < 0 ? pages.length : prev - 1));
+    setActivePage((prev) => (prev - 1 < 1 ? 1 : prev - 1));
   };
 
   const handleFontSize = ({ value }) => {
@@ -100,32 +100,30 @@ const SingleStory = ({ params }) => {
         </Link>
       </div>
       <Customizations fontSize={fontSize} handleFontSize={handleFontSize} />
-      <div className="w-full gap-5 max-h-screen h-[75vh] bg-white rounded-2xl p-5 relative overflow-x-hidden overflow-y-auto cstm-w-limit">
-        <div
-          className="cstm-bg-hover absolute bottom-3 
-                      l-s:bottom-2/4 l-s:-translate-y-2/4 z-20"
-        >
-          <BiChevronLeft
-            className="scale-150 text-black  cursor-pointer t:scale-[2]"
-            onClick={handleDecrement}
-            onKeyDown={(e) => handleDecrement(e)}
-          />
+      <div className="w-full  gap-5 h-[55vh] t:h-[60vh] bg-white rounded-2xl p-5  cstm-w-limit">
+        <div className="cstm-scrollbar w-full relative overflow-x-hidden overflow-y-auto h-full">
+          {storyPages}
         </div>
 
-        {storyPages}
+        <div className="fixed bottom-0 left-2/4 -translate-x-2/4 backdrop-blur-md cstm-flex-row p-2 px-5 z-20 w-full cstm-w-limit l-s:right-0 l-s:-translate-x-0">
+          <div className="cstm-bg-hover">
+            <BiChevronLeft
+              className="scale-150 text-black  cursor-pointer t:scale-[2]"
+              onClick={handleDecrement}
+              onKeyDown={(e) => handleDecrement(e)}
+            />
+          </div>
 
-        <div
-          className="cstm-bg-hover absolute bottom-3 right-5
-                      l-s:bottom-2/4 l-s:-translate-y-2/4 z-20"
-        >
-          <BiChevronRight
-            className="scale-150 text-black  cursor-pointer t:scale-[2]"
-            onClick={handleIncrement}
-            onKeyDown={(e) => handleIncrement(e)}
-          />
+          <p className="text-sm mx-auto">{activePage}</p>
+
+          <div className="cstm-bg-hover">
+            <BiChevronRight
+              className="scale-150 text-black  cursor-pointer t:scale-[2]"
+              onClick={handleIncrement}
+              onKeyDown={(e) => handleIncrement(e)}
+            />
+          </div>
         </div>
-
-        <p className="absolute bottom-1 left-2/4 -translate-x-2/4 text-sm">{activePage}</p>
       </div>
     </div>
   );

@@ -12,10 +12,11 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { useRouter } from "next/navigation";
+import Message from "@/src/src/components/global/Message";
 
 const Archives = () => {
   const [countsData, setCountsData] = React.useState({});
-
+  const [message, setMessage] = React.useState({ msg: "", active: false });
   const { data: session } = useSession({ required: true });
   const user = session?.user?.name;
 
@@ -33,9 +34,7 @@ const Archives = () => {
       }
     } catch (error) {
       console.log(error);
-      if (error?.response.statusText === "Unauthorized") {
-        router.push("/login");
-      }
+      setMessage({ active: true, msg: error?.response?.data?.msg });
     }
   }, [url, user, setCountsData]);
 
@@ -48,7 +47,7 @@ const Archives = () => {
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <ClientPageHeader mainHeader="Readefine" subHeader="Home" />
-
+      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
       <div
         className="cstm-flex-col gap-5 justify-start w-full transition-all
         t:cstm-flex-row t:flex-wrap
