@@ -6,10 +6,8 @@ import intersectST from "../../public/IntersectST.svg";
 import intersectSL from "../../public/IntersectSL.svg";
 import InputComp from "../../src/components/input/InputComp";
 import ButtonComp from "../../src/components/input/ButtonComp";
-import axios from "axios";
-import { useRouter, useSearchParams } from "next/navigation";
+
 import { CiLock, CiUser, CiUnlock } from "react-icons/ci";
-import { useGlobalContext } from "../../context";
 import { signIn } from "next-auth/react";
 
 const AdminLogin = () => {
@@ -18,10 +16,6 @@ const AdminLogin = () => {
     candidatePassword: "",
   });
   const [visiblePassword, setVisiblePassword] = React.useState(false);
-
-  const { url } = useGlobalContext();
-
-  const router = useRouter();
 
   const handleVisiblePassword = () => {
     setVisiblePassword((prev) => !prev);

@@ -4,12 +4,14 @@ import VerifiedImage from "@/src/src/components/verify/VerifiedImage";
 import VerifyingImage from "@/src/src/components/verify/VerifyingImage";
 import React from "react";
 import axios from "axios";
+import Message from "@/src/src/components/global/Message";
 
 import { useGlobalContext } from "@/src/context";
-import { usePathname } from "next/navigation";
 
 const Verify = ({ params }) => {
   const [status, setStatus] = React.useState("verifying");
+  const [message, setMessage] = React.useState({ msg: "", active: false });
+
   const { url } = useGlobalContext();
   const token = params?.token;
 
@@ -24,6 +26,7 @@ const Verify = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg });
     }
   });
 
@@ -33,6 +36,7 @@ const Verify = ({ params }) => {
 
   return (
     <div className="cstm-flex-col w-full min-h-screen bg-accntColor">
+      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
       {status === "verifying" ? (
         <VerifyingImage />
       ) : status === "verified" ? (

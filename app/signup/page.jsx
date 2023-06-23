@@ -6,14 +6,15 @@ import intersectAT from "../../public/IntersectAT.svg";
 import intersectAL from "../../public/IntersectAL.svg";
 import InputComp from "../../src/components/input/InputComp";
 import ButtonComp from "../../src/components/input/ButtonComp";
-
+import SelectComp from "../../src/components/input/SelectComp";
+import Loading from "@/src/src/components/global/Loading";
 import axios from "axios";
+import Message from "@/src/src/components/global/Message";
+
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { CiUser, CiMail } from "react-icons/ci";
 import { useGlobalContext } from "../../context";
 import { useRouter } from "next/navigation";
-import SelectComp from "../../src/components/input/SelectComp";
-import Loading from "@/src/src/components/global/Loading";
 
 const Signup = () => {
   const [userData, setUserData] = React.useState({
@@ -26,6 +27,7 @@ const Signup = () => {
   });
   const [visiblePassword, setVisiblePassword] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
+  const [message, setMessage] = React.useState({ msg: "", active: false });
 
   const { url } = useGlobalContext();
 
@@ -56,8 +58,9 @@ const Signup = () => {
         router.push("/sending");
       }
     } catch (error) {
-      setLoading(false);
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg });
+      setLoading(false);
     }
   };
 
@@ -67,6 +70,7 @@ const Signup = () => {
 
   return (
     <div className="w-full h-screen bg-prmColor p-5 cstm-flex-col font-poppins overflow-hidden">
+      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
       <p className=" font-extrabold text-2xl text-accntColor">Sign Up</p>
       <br />
       <form

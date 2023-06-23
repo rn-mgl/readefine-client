@@ -6,9 +6,10 @@ import intersectSL from "../../../public/IntersectSL.svg";
 import Image from "next/image";
 import InputComp from "@/src/src/components/input/InputComp";
 import ButtonComp from "@/src/src/components/input/ButtonComp";
-import Link from "next/link";
-import { CiLock, CiUnlock } from "react-icons/ci";
+import Message from "@/src/src/components/global/Message";
 import axios from "axios";
+
+import { CiLock, CiUnlock } from "react-icons/ci";
 import { useGlobalContext } from "@/src/context";
 import { useRouter } from "next/navigation";
 
@@ -18,6 +19,7 @@ const PasswordReset = ({ params }) => {
     newPassword: false,
     retypedPassword: false,
   });
+  const [message, setMessage] = React.useState({ msg: "", active: false });
 
   const { url } = useGlobalContext();
   const router = useRouter();
@@ -54,11 +56,14 @@ const PasswordReset = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg });
     }
   };
 
   return (
     <div className="p-5 cstm-flex-col w-full min-h-screen bg-gradient-to-b bg-accntColor ">
+      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+
       <p className=" font-extrabold text-2xl text-prmColor">Enter New Password</p>
 
       <br />

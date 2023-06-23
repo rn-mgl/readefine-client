@@ -2,14 +2,17 @@
 import React from "react";
 import InputComp from "@/src/src/components/input/InputComp";
 import ButtonComp from "@/src/src/components/input/ButtonComp";
+import axios from "axios";
+import Message from "@/src/src/components/global/Message";
+
 import { AiOutlineMail } from "react-icons/ai";
 import { CiUser } from "react-icons/ci";
-import axios from "axios";
 import { useGlobalContext } from "@/src/context";
 import { useRouter } from "next/navigation";
 
 const ForgotPassword = () => {
   const [keys, setKeys] = React.useState({ candidateEmail: "", candidateUsername: "" });
+  const [message, setMessage] = React.useState({ msg: "", active: false });
 
   const { url } = useGlobalContext();
   const router = useRouter();
@@ -36,11 +39,13 @@ const ForgotPassword = () => {
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg });
     }
   };
 
   return (
     <div className="w-full min-h-screen p-5 cstm-flex-col bg-gradient-to-b from-prmColor via-prmColor to-scndColor">
+      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
       <p className=" font-extrabold text-2xl text-accntColor relative z-10">Reset Password</p>
       <br />
       <form
