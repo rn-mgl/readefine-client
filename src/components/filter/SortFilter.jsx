@@ -1,5 +1,5 @@
 import React from "react";
-import { BsArrowDown, BsArrowUp } from "react-icons/bs";
+import { BsArrowUp } from "react-icons/bs";
 
 const SortFilter = (props) => {
   const mappedOptions = props.labelValue.map((data) => {
@@ -10,16 +10,25 @@ const SortFilter = (props) => {
     );
   });
 
+  const firstOption = mappedOptions[0]?.props?.children;
+
   return (
     <div className="p-2 bg-white font-poppins rounded-md shadow-md whitespace-nowrap cstm-flex-row">
-      <select
-        onChange={(e) => props.handleSortFilter(e.target)}
-        value={props.sortFilter.toSort}
-        name="toSort"
-        className="bg-neutral-50 p-1 px-2 rounded-l-md outline-none border-neutral-200 border-2 text-sm"
-      >
-        {mappedOptions}
-      </select>
+      {mappedOptions.length < 2 ? (
+        <div className="bg-neutral-50 p-1 px-2 rounded-l-md outline-none border-neutral-200 border-2 text-sm">
+          <p>{firstOption}</p>
+        </div>
+      ) : (
+        <select
+          onChange={(e) => props.handleSortFilter(e.target)}
+          value={props.sortFilter.toSort}
+          name="toSort"
+          className="bg-neutral-50 p-1 px-2 rounded-l-md outline-none border-neutral-200 border-2 text-sm"
+        >
+          {mappedOptions}
+        </select>
+      )}
+
       <select
         onChange={(e) => props.handleSortFilter(e.target)}
         value={props.sortFilter.sortMode}

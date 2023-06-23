@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import AdminPageHeader from "../../../src/admin/global/PageHeader";
-import AchievementsFilter from "@/src/src/components/achievements/AchievementsFilter";
+import AchievementsFilter from "@/src/src/admin/achievements/AchievementsFilter";
 import axios from "axios";
 import Link from "next/link";
 import AchievementsCards from "@/src/src/admin/achievements/AchievementsCards";
@@ -20,6 +20,7 @@ const AdminAchievements = () => {
     toSearch: "achievement_name",
     searchKey: "",
   });
+
   const [goalRangeFilter, setGoalRangeFilter] = React.useState({ from: 0, to: 1250 });
   const [sortFilter, setSortFilter] = React.useState({
     toSort: "achievement_name",
@@ -60,6 +61,8 @@ const AdminAchievements = () => {
       };
     });
   };
+
+  console.log(dateRangeFilter);
 
   const handleSortFilter = ({ name, value }) => {
     setSortFilter((prev) => {

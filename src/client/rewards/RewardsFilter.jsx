@@ -4,6 +4,7 @@ import SearchFilter from "../../components/filter/SearchFilter";
 import SortFilter from "../../components/filter/SortFilter";
 import RangeFilter from "../../components/filter/RangeFilter";
 import SelectFilter from "../../components/filter/SelectFilter";
+import InputFilter from "../../components/filter/InputFilter";
 
 const RewardsFilter = (props) => {
   return (
@@ -11,24 +12,18 @@ const RewardsFilter = (props) => {
       <SearchFilter
         handleSearchFilter={props.handleSearchFilter}
         searchFilter={props.searchFilter}
-        labelValue={[
-          { label: "Name", value: "reward_name" },
-          { label: "Type", value: "reward_type" },
-        ]}
+        labelValue={[{ label: "Name", value: "reward_name" }]}
       />
 
       <SortFilter
         handleSortFilter={props.handleSortFilter}
         sortFilter={props.sortFilter}
-        labelValue={[
-          { label: "Name", value: "reward_name" },
-          { label: "Date", value: "date_added" },
-          { label: "Type", value: "reward_type" },
-        ]}
+        labelValue={[{ label: "Name", value: "reward_name" }]}
       />
 
       <SelectFilter
         onChange={props.handleShowFilter}
+        selectValue={props.showFilter.toShow}
         name="toShow"
         labelValue={[
           { label: "All", value: "all" },

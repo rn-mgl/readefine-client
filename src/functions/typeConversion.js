@@ -1,3 +1,5 @@
+//for achievement type
+
 export const typeConversion = {
   user_session: "Sessions",
   read_story: "Read Stories",
@@ -6,6 +8,8 @@ export const typeConversion = {
   answered_riddles: "Answered Riddles",
   user: "Lexile Growth",
 };
+
+//for achievement specifics
 
 export const specificsConversion = {
   days_online: "Sessions",

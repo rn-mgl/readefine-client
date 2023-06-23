@@ -1,6 +1,6 @@
 "use client";
 import React, { Suspense } from "react";
-import AchievementsFilter from "@/src/src/components/achievements/AchievementsFilter";
+import AchievementsFilter from "@/src/src/client/achievements/AchievementsFilter";
 import ClientPageHeader from "@/src/src/client/global/PageHeader";
 import axios from "axios";
 import AchievementPanel from "@/src/src/client/achievements/AchievementPanel";

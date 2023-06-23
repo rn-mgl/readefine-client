@@ -2,7 +2,7 @@
 import React from "react";
 import AdminPageHeader from "../../../src/admin/global/PageHeader";
 import AdminRewardsFilter from "@/src/src/admin/rewards/AdminRewardsFilter";
-import RewardsCards from "@/src/src/components/rewards/RewardsCards";
+import RewardsCards from "@/src/src/admin/rewards/RewardsCards";
 import Link from "next/link";
 import axios from "axios";
 import Message from "@/src/src/components/global/Message";
@@ -65,7 +65,7 @@ const AdminRewards = () => {
         <RewardsCards
           image={reward.reward}
           title={reward.reward_name}
-          type={typeConversion[reward.reward_type]}
+          type={reward.reward_type}
           to={`/controller/rewards/${reward.reward_id}`}
         />
       </React.Fragment>

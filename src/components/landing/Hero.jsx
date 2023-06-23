@@ -5,7 +5,7 @@ import Image from "next/image";
 const Hero = () => {
   return (
     <section
-      className="min-h-screen w-full bg-prmColor  px-5 text-center cstm-flex-col font-poppins text-accntColor gap-4 
+      className="min-h-screen w-full bg-prmColor px-5 text-center cstm-flex-col font-poppins text-accntColor gap-4 pt-20
                 m-m:px-5
                 t:px-10 t:pt-20
                 l-s:gap-4"
@@ -18,17 +18,17 @@ const Hero = () => {
                     l-s:text-5xl
                     l-l:text-6xl"
       >
-        Reading made fun.
+        Level Up Your Reading Journey!
       </p>
       <p
-        className="text-sm
+        className="text-sm text-center
                   m-l:text-base
                   t:text-lg
                   l-s:text-xl l-s:w-10/12
                   l-l:w-7/12"
       >
-        <span className="font-bold">Readefine</span> : Gamification Approach to Engage Elementary
-        Students and Enhance their Reading Comprehension Skills in the English Language
+        <span className="font-bold">Readefine</span> : Gamification Approach to Engage and Enhance
+        Elementary Student's Reading Comprehension Skills in the English Language
       </p>
       <div
         className="w-full cstm-flex-col gap-4
@@ -53,7 +53,7 @@ const Hero = () => {
       <Image
         src={book}
         alt="book"
-        className="animate-float drop-shadow-lg w-10/12
+        className="animate-float drop-shadow-lg w-9/12
                   t:w-96"
       />
     </section>

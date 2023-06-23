@@ -88,12 +88,15 @@ const EditReward = ({ params }) => {
       getReward();
     }
   }, [getReward, user]);
-
+  console.log(reward);
   return (
     <div className="w-full min-h-screen bg-accntColor p-5 cstm-flex-col gap-2 justify-start">
       <AdminPageHeader subHeader={reward?.reward_name} mainHeader="Edit Reward" />
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
-      <form onSubmit={(e) => editReward(e)} className="w-full cstm-flex-col border-collapse gap-2">
+      <form
+        onSubmit={(e) => editReward(e)}
+        className="w-full cstm-flex-col border-collapse gap-2 cstm-w-limit"
+      >
         <EditRewardFilter handleReward={handleReward} reward={reward} />
         <div
           className="cstm-flex-col gap-5 w-full

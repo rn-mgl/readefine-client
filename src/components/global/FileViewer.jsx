@@ -8,7 +8,7 @@ const FileViewer = (props) => {
       alt="viewer"
       width={350}
       height={350}
-      className={`${props.width} rounded-2xl border-black border-[1px]`}
+      className={`${props.width} rounded-2xl`}
       draggable={false}
     />
   ) : null;

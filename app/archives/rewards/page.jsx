@@ -1,7 +1,7 @@
 "use client";
 import React, { Suspense } from "react";
 import ClientPageHeader from "@/src/src/client/global/PageHeader";
-import RewardsCards from "@/src/src/components/rewards/RewardsCards";
+import RewardsCards from "@/src/src/client/rewards/RewardsCards";
 import axios from "axios";
 import RewardsFilter from "@/src/src/client/rewards/RewardsFilter";
 import Message from "@/src/src/components/global/Message";
@@ -9,7 +9,6 @@ import Message from "@/src/src/components/global/Message";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { inputDate } from "@/src/src/functions/localDate";
-import { typeConversion } from "@/src/src/functions/typeConversion";
 
 const ClientRewards = () => {
   const [rewards, setRewards] = React.useState([]);
@@ -19,11 +18,7 @@ const ClientRewards = () => {
   });
   const [sortFilter, setSortFilter] = React.useState({ toSort: "reward_name", sortMode: "ASC" });
   const [message, setMessage] = React.useState({ msg: "", active: false });
-  const [showFilter, setShowFilter] = React.useState({ toShow: "" });
-  const [dateRangeFilter, setDateRangeFilter] = React.useState({
-    from: "",
-    to: inputDate(new Date().toLocaleDateString()),
-  });
+  const [showFilter, setShowFilter] = React.useState({ toShow: "received" });
   const { data: session } = useSession({ required: true });
 
   const user = session?.user?.name;
@@ -31,15 +26,6 @@ const ClientRewards = () => {
 
   const handleSearchFilter = ({ name, value }) => {
     setSearchFilter((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
-  };
-
-  const handleDateRangeFilter = ({ name, value }) => {
-    setDateRangeFilter((prev) => {
       return {
         ...prev,
         [name]: value,
@@ -71,7 +57,8 @@ const ClientRewards = () => {
         <RewardsCards
           image={reward.reward}
           title={reward.reward_name}
-          type={typeConversion[reward.reward_type]}
+          type={reward.reward_type}
+          isReceived={reward.is_received}
           to={`/controller/rewards/${reward.reward_id}`}
         />
       </React.Fragment>
@@ -80,8 +67,8 @@ const ClientRewards = () => {
 
   const getRewards = React.useCallback(async () => {
     try {
-      const { data } = await axios.get(`${url}/reward`, {
-        params: { searchFilter, sortFilter, dateRangeFilter },
+      const { data } = await axios.get(`${url}/user_achievement`, {
+        params: { searchFilter, sortFilter, showFilter },
         headers: { Authorization: user.token },
       });
 
@@ -92,7 +79,7 @@ const ClientRewards = () => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg });
     }
-  }, [url, user, setRewards, searchFilter, sortFilter, dateRangeFilter]);
+  }, [url, user, setRewards, searchFilter, sortFilter, showFilter]);
 
   React.useEffect(() => {
     if (user) {
@@ -107,11 +94,10 @@ const ClientRewards = () => {
       <div className="w-full cstm-w-limit cstm-flex-col gap-2">
         <RewardsFilter
           handleSearchFilter={handleSearchFilter}
-          handleDateRangeFilter={handleDateRangeFilter}
           handleSortFilter={handleSortFilter}
           searchFilter={searchFilter}
           sortFilter={sortFilter}
-          dateRangeFilter={dateRangeFilter}
+          showFilter={showFilter}
           handleShowFilter={handleShowFilter}
         />
 
