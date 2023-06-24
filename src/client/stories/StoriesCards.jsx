@@ -1,10 +1,28 @@
 import Image from "next/image";
 import React from "react";
-import Link from "next/link";
 import { BsFillBookmarkCheckFill } from "react-icons/bs";
 import ActionLabel from "../../components/global/ActionLabel";
+import Link from "next/link";
 
 const StoriesCards = (props) => {
+  const buttonIfLower = props.isLower ? (
+    <button
+      onClick={() => {
+        props.handleShowLexileMessage();
+        props.handleSelectedBook(props.testId);
+      }}
+      className="w-full text-center font-poppins text-sm font-normal bg-scndColor text-prmColor rounded-full p-2"
+    >
+      Answer
+    </button>
+  ) : (
+    <Link
+      href={props.test}
+      className="w-full text-center font-poppins text-sm font-normal bg-scndColor text-prmColor rounded-full p-2"
+    >
+      Answer
+    </Link>
+  );
   return (
     <div className="bg-white p-5 rounded-2xl cstm-flex-col gap-4 t:w-72 shadow-solid max-h-[30rem] relative">
       {props.isRead ? (
@@ -41,12 +59,11 @@ const StoriesCards = (props) => {
         >
           Read
         </Link>
-        <Link
-          href={props.test}
-          className="w-full text-center font-poppins text-sm font-normal bg-scndColor text-prmColor rounded-full p-2"
-        >
-          Test
-        </Link>
+        {props.isTaken ? (
+          <p className="text-sm italic">You already took this test</p>
+        ) : (
+          buttonIfLower
+        )}
       </div>
     </div>
   );

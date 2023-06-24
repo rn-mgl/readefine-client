@@ -15,6 +15,7 @@ const ClientTests = () => {
   const [tests, setTests] = React.useState([]);
   const [message, setMessage] = React.useState({ msg: "", active: false });
   const [showLexileMessage, setShowLexileMessage] = React.useState(false);
+  const [userLexile, setUserLexile] = React.useState(-1);
   const [selectedBook, setSelectedBook] = React.useState(-1);
   const [searchFilter, setSearchFilter] = React.useState({ toSearch: "title", searchKey: "" });
   const [lexileRangeFilter, setLexileRangeFilter] = React.useState({ from: 0, to: 1250 });
@@ -84,7 +85,7 @@ const ClientTests = () => {
           to={`/archives/tests/${t.test_id}`}
           testId={t.test_id}
           isTaken={t.is_taken}
-          isLower={user?.lexile - 100 > t.lexile}
+          isLower={userLexile.lexile - 100 > t.lexile}
           showLexileMessage={showLexileMessage}
           handleShowLexileMessage={handleShowLexileMessage}
           handleSelectedBook={handleSelectedBook}
@@ -92,6 +93,7 @@ const ClientTests = () => {
       </React.Fragment>
     );
   });
+
   const getTests = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/test`, {
@@ -112,11 +114,19 @@ const ClientTests = () => {
     }
   }, [url, user, setTests, searchFilter, lexileRangeFilter, sortFilter, dateRangeFilter]);
 
-  React.useEffect(() => {
-    if (user?.lexile) {
-      setLexileRangeFilter({ from: user?.lexile - 100, to: user?.lexile + 50 });
+  const getUserLexile = React.useCallback(async () => {
+    try {
+      const { data } = await axios.get(`${url}/user_lexile`, {
+        headers: { Authorization: user?.token },
+      });
+      if (data) {
+        setUserLexile(data);
+        setLexileRangeFilter({ from: data.lexile - 100, to: data.lexile + 50 });
+      }
+    } catch (error) {
+      console.log(error);
     }
-  }, [user?.lexile, setLexileRangeFilter]);
+  }, [setUserLexile, url, user]);
 
   React.useEffect(() => {
     if (user) {
@@ -124,13 +134,19 @@ const ClientTests = () => {
     }
   }, [user, getTests]);
 
+  React.useEffect(() => {
+    if (user) {
+      getUserLexile();
+    }
+  }, [user, getUserLexile]);
+
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <ClientPageHeader subHeader="Tests" mainHeader="Readefine" />
 
       {showLexileMessage ? (
         <LowLexileTestMessage
-          userLexile={user?.lexile}
+          userLexile={userLexile.lexile}
           testLink={`/archives/tests/${selectedBook}`}
           handleShowLexileMessage={handleShowLexileMessage}
         />

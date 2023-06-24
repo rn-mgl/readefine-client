@@ -5,14 +5,18 @@ import StoriesFilter from "@/src/src/client/stories/StoriesFilter";
 import StoriesCards from "@/src/src/client/stories/StoriesCards";
 import ClientPageHeader from "@/src/src/client/global/PageHeader";
 import Message from "@/src/src/components/global/Message";
+import React, { Suspense } from "react";
+import LowLexileTestMessage from "@/src/src/client/tests/LowLexileTestMessage";
 
 import { useGlobalContext } from "@/src/context";
 import { useSession } from "next-auth/react";
 import { inputDate } from "@/src/src/functions/localDate";
-import React, { Suspense } from "react";
 
 const ClientStories = () => {
   const [stories, setStories] = React.useState([]);
+  const [userLexile, setUserLexile] = React.useState(-1);
+  const [showLexileMessage, setShowLexileMessage] = React.useState(false);
+  const [selectedBook, setSelectedBook] = React.useState(-1);
   const [searchFilter, setSearchFilter] = React.useState({ toSearch: "title", searchKey: "" });
   const [lexileRangeFilter, setLexileRangeFilter] = React.useState({ from: 0, to: 1250 });
   const [sortFilter, setSortFilter] = React.useState({ toSort: "title", sortMode: "ASC" });
@@ -58,9 +62,41 @@ const ClientStories = () => {
     });
   };
 
+  const handleShowLexileMessage = () => {
+    setShowLexileMessage((prev) => !prev);
+  };
+
+  const handleSelectedBook = (id) => {
+    setSelectedBook(id);
+  };
+
   const { data: session } = useSession();
   const { url } = useGlobalContext();
   const user = session?.user?.name;
+
+  const storiesCards = stories.map((story) => {
+    const testId = story?.test_id ? story?.test_id : story.story_id;
+    return (
+      <React.Fragment key={story.story_id}>
+        <StoriesCards
+          image={story.book_cover ? story.book_cover : DashboardCardImage3}
+          isRead={story.is_read}
+          isTaken={story.is_taken}
+          isLower={userLexile.lexile - 100 > story.lexile}
+          title={story.title}
+          author={story.author}
+          lexile={story.lexile}
+          genre={story.genre}
+          testId={story.test_id}
+          visit={`/archives/stories/${story.story_id}`}
+          test={`/archives/tests/${testId}`}
+          showLexileMessage={showLexileMessage}
+          handleShowLexileMessage={handleShowLexileMessage}
+          handleSelectedBook={handleSelectedBook}
+        />
+      </React.Fragment>
+    );
+  });
 
   const getStories = React.useCallback(async () => {
     try {
@@ -82,29 +118,19 @@ const ClientStories = () => {
     }
   }, [url, user, setStories, searchFilter, sortFilter, dateRangeFilter, lexileRangeFilter]);
 
-  const storiesCards = stories.map((story) => {
-    const testId = story?.test_id ? story?.test_id : story.story_id;
-    return (
-      <React.Fragment key={story.story_id}>
-        <StoriesCards
-          image={story.book_cover ? story.book_cover : DashboardCardImage3}
-          isRead={story.is_read}
-          title={story.title}
-          author={story.author}
-          lexile={story.lexile}
-          genre={story.genre}
-          visit={`/archives/stories/${story.story_id}`}
-          test={`/archives/tests/${testId}`}
-        />
-      </React.Fragment>
-    );
-  });
-
-  React.useEffect(() => {
-    if (user?.lexile) {
-      setLexileRangeFilter({ from: user?.lexile - 100, to: user?.lexile + 50 });
+  const getUserLexile = React.useCallback(async () => {
+    try {
+      const { data } = await axios.get(`${url}/user_lexile`, {
+        headers: { Authorization: user?.token },
+      });
+      if (data) {
+        setUserLexile(data);
+        setLexileRangeFilter({ from: data.lexile - 100, to: data.lexile + 50 });
+      }
+    } catch (error) {
+      console.log(error);
     }
-  }, [user?.lexile, setLexileRangeFilter]);
+  }, [setUserLexile, url, user]);
 
   React.useEffect(() => {
     if (user) {
@@ -112,10 +138,24 @@ const ClientStories = () => {
     }
   }, [user, getStories]);
 
+  React.useEffect(() => {
+    if (user) {
+      getUserLexile();
+    }
+  }, [user, getUserLexile]);
+
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <ClientPageHeader mainHeader="Readefine" subHeader="Stories" />
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+
+      {showLexileMessage ? (
+        <LowLexileTestMessage
+          userLexile={userLexile.lexile}
+          testLink={`/archives/tests/${selectedBook}`}
+          handleShowLexileMessage={handleShowLexileMessage}
+        />
+      ) : null}
       <div className="w-full cstm-w-limit cstm-flex-col gap-5">
         <StoriesFilter
           handleSearchFilter={handleSearchFilter}
