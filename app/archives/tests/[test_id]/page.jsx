@@ -103,7 +103,7 @@ const SingleTest = ({ params }) => {
     }
 
     if (!answeredAll) {
-      // add message
+      setMessage({ active: true, msg: "Please answer all items." });
       return;
     }
 
@@ -111,13 +111,16 @@ const SingleTest = ({ params }) => {
 
     // check if legible for growth
     if (user?.lexile - 50 > testData.lexile) {
-      // add message
+      setMessage({
+        active: true,
+        msg: "Your lexile will not change for answering tests lower than your given level.",
+      });
       return;
     }
 
     // check if passed
     if (currScore < 7) {
-      // add message
+      setIsFinished(true);
       clearChoices();
       return;
     }

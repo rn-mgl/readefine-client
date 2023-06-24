@@ -6,9 +6,13 @@ import intersectST from "../../public/IntersectST.svg";
 import intersectSL from "../../public/IntersectSL.svg";
 import InputComp from "../../src/components/input/InputComp";
 import ButtonComp from "../../src/components/input/ButtonComp";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 import { CiLock, CiUser, CiUnlock } from "react-icons/ci";
 import { signIn } from "next-auth/react";
+import { useGlobalContext } from "@/src/context";
+import Loading from "@/src/src/components/global/Loading";
 
 const AdminLogin = () => {
   const [loginData, setLoginData] = React.useState({
@@ -16,6 +20,10 @@ const AdminLogin = () => {
     candidatePassword: "",
   });
   const [visiblePassword, setVisiblePassword] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
+
+  const { url } = useGlobalContext();
+  const router = useRouter();
 
   const handleVisiblePassword = () => {
     setVisiblePassword((prev) => !prev);
@@ -32,14 +40,28 @@ const AdminLogin = () => {
 
   const loginAdmin = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     await signIn("admin-credentials", {
       candidateIdentifier: loginData.candidateIdentifier,
       candidatePassword: loginData.candidatePassword,
       redirect: true,
       callbackUrl: "/controller",
     });
+
+    try {
+      const { data } = await axios.post(`${url}/auth_admin/admin_login`, { loginData });
+      if (data) {
+        router.push("/controller");
+      }
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+    }
   };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className="w-full h-screen bg-prmColor p-5 cstm-flex-col font-poppins overflow-hidden">

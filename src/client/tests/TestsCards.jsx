@@ -3,6 +3,25 @@ import React from "react";
 import Link from "next/link";
 
 const TestsCards = (props) => {
+  const buttonIfLower = props.isLower ? (
+    <button
+      onClick={() => {
+        props.handleShowLexileMessage();
+        props.handleSelectedBook(props.testId);
+      }}
+      className="w-full text-center font-poppins text-sm font-normal bg-prmColor text-accntColor rounded-full p-2"
+    >
+      Answer
+    </button>
+  ) : (
+    <Link
+      href={props.to}
+      className="w-full text-center font-poppins text-sm font-normal bg-prmColor text-accntColor rounded-full p-2"
+    >
+      Answer
+    </Link>
+  );
+
   return (
     <div className="bg-white p-5 rounded-2xl cstm-flex-col gap-4  t:w-72 shadow-solid max-h-[28rem]">
       <div className="w-full h-fit cstm-flex-col overflow-clip  bg-white rounded-2xl justify-start">
@@ -32,12 +51,7 @@ const TestsCards = (props) => {
           <span className="font-bold">Score: {props.score}</span> / 10
         </p>
       ) : (
-        <Link
-          href={props.to}
-          className="w-full text-center font-poppins text-sm font-normal bg-prmColor text-accntColor rounded-full p-2"
-        >
-          Answer
-        </Link>
+        buttonIfLower
       )}
     </div>
   );

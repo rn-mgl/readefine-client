@@ -11,22 +11,29 @@ import { HiUser } from "react-icons/hi2";
 import { GiAchievement } from "react-icons/gi";
 import { usePathname } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
+import Loading from "../../components/global/Loading";
 
 const AdminNav = () => {
   const { data: session } = useSession();
   const [isOpen, setIsOpen] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
 
   const user = session?.user?.name;
 
   const path = usePathname();
 
   const logOut = () => {
+    setLoading(true);
     signOut({ callbackUrl: "/", redirect: true });
   };
 
   const toggleOpenNav = () => {
     setIsOpen((prev) => !prev);
   };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <>

@@ -2,6 +2,7 @@
 import React from "react";
 import Link from "next/link";
 import ClientLink from "../nav/ClientLink";
+import Loading from "../../components/global/Loading";
 
 import { BiMenu, BiTask, BiLogOut } from "react-icons/bi";
 import { BsPenFill, BsPatchQuestionFill } from "react-icons/bs";
@@ -14,11 +15,13 @@ import { signOut, useSession } from "next-auth/react";
 
 const ClientNav = () => {
   const [isOpen, setIsOpen] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
   const { data: session } = useSession();
 
   const user = session?.user?.name;
 
   const logOut = () => {
+    setLoading(true);
     signOut({ callbackUrl: "/", redirect: true });
   };
 
@@ -27,6 +30,10 @@ const ClientNav = () => {
   };
 
   const path = usePathname();
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <>

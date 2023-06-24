@@ -9,13 +9,16 @@ import TestsFilter from "@/src/src/client/tests/TestsFilter";
 import axios from "axios";
 import ClientPageHeader from "@/src/src/client/global/PageHeader";
 import Message from "@/src/src/components/global/Message";
+import LowLexileTestMessage from "@/src/src/client/tests/LowLexileTestMessage";
 
 const ClientTests = () => {
   const [tests, setTests] = React.useState([]);
+  const [message, setMessage] = React.useState({ msg: "", active: false });
+  const [showLexileMessage, setShowLexileMessage] = React.useState(false);
+  const [selectedBook, setSelectedBook] = React.useState(-1);
   const [searchFilter, setSearchFilter] = React.useState({ toSearch: "title", searchKey: "" });
   const [lexileRangeFilter, setLexileRangeFilter] = React.useState({ from: 0, to: 1250 });
   const [sortFilter, setSortFilter] = React.useState({ toSort: "title", sortMode: "ASC" });
-  const [message, setMessage] = React.useState({ msg: "", active: false });
   const [dateRangeFilter, setDateRangeFilter] = React.useState({
     from: "",
     to: inputDate(new Date().toLocaleDateString()),
@@ -61,6 +64,14 @@ const ClientTests = () => {
     });
   };
 
+  const handleShowLexileMessage = () => {
+    setShowLexileMessage((prev) => !prev);
+  };
+
+  const handleSelectedBook = (id) => {
+    setSelectedBook(id);
+  };
+
   const testCards = tests.map((t) => {
     return (
       <React.Fragment key={t.test_id}>
@@ -71,7 +82,12 @@ const ClientTests = () => {
           lexile={t.lexile}
           score={t.score}
           to={`/archives/tests/${t.test_id}`}
+          testId={t.test_id}
           isTaken={t.is_taken}
+          isLower={user?.lexile - 50 > t.lexile}
+          showLexileMessage={showLexileMessage}
+          handleShowLexileMessage={handleShowLexileMessage}
+          handleSelectedBook={handleSelectedBook}
         />
       </React.Fragment>
     );
@@ -111,7 +127,17 @@ const ClientTests = () => {
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <ClientPageHeader subHeader="Tests" mainHeader="Readefine" />
+
+      {showLexileMessage ? (
+        <LowLexileTestMessage
+          userLexile={user?.lexile}
+          testLink={`/archives/tests/${selectedBook}`}
+          handleShowLexileMessage={handleShowLexileMessage}
+        />
+      ) : null}
+
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+
       <TestsFilter
         handleSearchFilter={handleSearchFilter}
         handleDateRangeFilter={handleDateRangeFilter}
@@ -122,6 +148,7 @@ const ClientTests = () => {
         sortFilter={sortFilter}
         dateRangeFilter={dateRangeFilter}
       />
+
       <div className="w-full cstm-w-limit">
         <div
           className="cstm-flex-col gap-5 justify-start w-full transition-all 
