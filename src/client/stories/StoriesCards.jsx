@@ -6,9 +6,9 @@ import ActionLabel from "../../components/global/ActionLabel";
 
 const StoriesCards = (props) => {
   return (
-    <div className="bg-white p-5 rounded-2xl cstm-flex-col gap-4 t:w-72 shadow-solid max-h-[30rem]">
+    <div className="bg-white p-5 rounded-2xl cstm-flex-col gap-4 t:w-72 shadow-solid max-h-[30rem] relative">
       {props.isRead ? (
-        <div className="ml-auto cstm-flex-row group relative">
+        <div className="group absolute top-2 right-5">
           <ActionLabel label="Finished Reading" />
           <BsFillBookmarkCheckFill className="text-prmColor absolute scale-150 top-3 right-0 drop-shadow-md shadow-prmColor" />
         </div>

@@ -12,6 +12,7 @@ import { computeScore, shuffleQuestions } from "@/src/src/functions/testFns";
 import { useGlobalContext } from "@/src/context";
 import { AiFillCaretRight, AiFillCaretLeft } from "react-icons/ai";
 import { BsArrowLeft } from "react-icons/bs";
+import { useRouter } from "next/navigation";
 
 const SingleTest = ({ params }) => {
   const [testData, setTestData] = React.useState({});
@@ -37,6 +38,7 @@ const SingleTest = ({ params }) => {
   const { data: session } = useSession();
   const testId = params?.test_id;
   const user = session?.user?.name;
+  const router = useRouter();
 
   const handleSelectedChoices = (id, { name, value }) => {
     setSelectedChoices((prev) => {
@@ -96,6 +98,7 @@ const SingleTest = ({ params }) => {
 
   const submitAnswers = async () => {
     let answeredAll = false;
+    const legibleForGrowth = testData.lexile > user?.lexile - 100;
 
     // check if all are answered
     for (let i = 1; i <= 10; i++) {
@@ -110,12 +113,11 @@ const SingleTest = ({ params }) => {
     const currScore = computeScore(setScore, setIsFinished, questions, selectedChoices);
 
     // check if legible for growth
-    if (user?.lexile - 50 > testData.lexile) {
+    if (!legibleForGrowth) {
       setMessage({
         active: true,
-        msg: "Your lexile will not change for answering tests lower than your given level.",
+        msg: "Your test will be recorded but not graded.",
       });
-      return;
     }
 
     // check if passed
@@ -129,11 +131,11 @@ const SingleTest = ({ params }) => {
     try {
       const { data } = await axios.post(
         `${url}/taken_test/${testId}`,
-        { selectedChoices, score: currScore },
+        { selectedChoices, score: currScore, legibleForGrowth, lexile: user?.lexile },
         { headers: { Authorization: user?.token } }
       );
       if (data) {
-        console.log(data);
+        // router.push("/archives/tests");
       }
     } catch (error) {
       console.log(error);
@@ -146,7 +148,6 @@ const SingleTest = ({ params }) => {
       const { data } = await axios.get(`${url}/test/${testId}`, {
         headers: { Authorization: user?.token },
       });
-
       if (data) {
         setTestData(data);
       }

@@ -1,6 +1,8 @@
 import Image from "next/image";
 import React from "react";
 import Link from "next/link";
+import { IoCheckmarkDoneCircle } from "react-icons/io5";
+import ActionLabel from "../../components/global/ActionLabel";
 
 const TestsCards = (props) => {
   const buttonIfLower = props.isLower ? (
@@ -23,7 +25,13 @@ const TestsCards = (props) => {
   );
 
   return (
-    <div className="bg-white p-5 rounded-2xl cstm-flex-col gap-4  t:w-72 shadow-solid max-h-[28rem]">
+    <div className="bg-white p-5 rounded-2xl cstm-flex-col gap-4  t:w-72 shadow-solid max-h-[28rem] relative">
+      {props.isTaken ? (
+        <div className="group absolute top-4 right-4">
+          <ActionLabel label="Test Taken" />
+          <IoCheckmarkDoneCircle className="text-prmColor scale-150" />
+        </div>
+      ) : null}
       <div className="w-full h-fit cstm-flex-col overflow-clip  bg-white rounded-2xl justify-start">
         <Image src={props.image} alt="temp" width={240} height={200} className="w-fit" />
       </div>

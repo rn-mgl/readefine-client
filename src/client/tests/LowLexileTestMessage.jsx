@@ -17,7 +17,7 @@ const LowLexileTestMessage = (props) => {
           <p>
             Your Lexile Level will <b className="text-prmColor">not change</b> for answering tests{" "}
             <b className="text-prmColor">lower</b> than your minimum level,{" "}
-            <b className="text-prmColor">{props.userLexile - 50}L</b>.
+            <b className="text-prmColor">{props.userLexile - 100}L</b>.
           </p>
 
           <p>

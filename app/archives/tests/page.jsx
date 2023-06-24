@@ -84,7 +84,7 @@ const ClientTests = () => {
           to={`/archives/tests/${t.test_id}`}
           testId={t.test_id}
           isTaken={t.is_taken}
-          isLower={user?.lexile - 50 > t.lexile}
+          isLower={user?.lexile - 100 > t.lexile}
           showLexileMessage={showLexileMessage}
           handleShowLexileMessage={handleShowLexileMessage}
           handleSelectedBook={handleSelectedBook}
@@ -114,7 +114,7 @@ const ClientTests = () => {
 
   React.useEffect(() => {
     if (user?.lexile) {
-      setLexileRangeFilter({ from: user?.lexile - 50, to: user?.lexile + 100 });
+      setLexileRangeFilter({ from: user?.lexile - 100, to: user?.lexile + 50 });
     }
   }, [user?.lexile, setLexileRangeFilter]);
 

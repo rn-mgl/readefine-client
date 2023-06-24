@@ -102,7 +102,7 @@ const ClientStories = () => {
 
   React.useEffect(() => {
     if (user?.lexile) {
-      setLexileRangeFilter({ from: user?.lexile - 50, to: user?.lexile + 100 });
+      setLexileRangeFilter({ from: user?.lexile - 100, to: user?.lexile + 50 });
     }
   }, [user?.lexile, setLexileRangeFilter]);
 

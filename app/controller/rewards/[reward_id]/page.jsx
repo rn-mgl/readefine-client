@@ -82,7 +82,7 @@ const SingleReward = ({ params }) => {
                 <FileViewer src={reward?.reward} />
               </div>
             </div>
-            <p className="text-sm font-bold text-prmColor">{reward?.reward_type}</p>
+            <p className="text-sm font-bold text-prmColor capitalize">{reward?.reward_type}</p>
             <div className="cstm-separator" />
             <p className="text-sm text-center">{reward?.description}</p>
           </div>
