@@ -9,6 +9,7 @@ import Message from "@/src/src/components/global/Message";
 import { inputDate } from "@/src/src/functions/localDate";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
+import { typeConversion } from "@/src/src/functions/typeConversion";
 
 const ClientAchievements = () => {
   const [achievements, setAchievements] = React.useState([]);
@@ -74,6 +75,7 @@ const ClientAchievements = () => {
           title={a.achievement_name}
           task={a.task}
           goal={a.goal}
+          type={typeConversion[a.achievement_type]}
           to={`/controller/achievements/${a.achievement_id}`}
         />
       </React.Fragment>

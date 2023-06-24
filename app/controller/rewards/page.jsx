@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import AdminPageHeader from "../../../src/admin/global/PageHeader";
-import AdminRewardsFilter from "@/src/src/admin/rewards/AdminRewardsFilter";
+import RewardsFilter from "@/src/src/admin/rewards/RewardsFilter";
 import RewardsCards from "@/src/src/admin/rewards/RewardsCards";
 import Link from "next/link";
 import axios from "axios";
@@ -99,7 +99,7 @@ const AdminRewards = () => {
       <AdminPageHeader subHeader="Readefine" mainHeader="Rewards" />
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
       <div className="w-full cstm-w-limit cstm-flex-col gap-2">
-        <AdminRewardsFilter
+        <RewardsFilter
           handleSearchFilter={handleSearchFilter}
           handleDateRangeFilter={handleDateRangeFilter}
           handleSortFilter={handleSortFilter}

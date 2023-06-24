@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import AdminPageHeader from "../../../src/admin/global/PageHeader";
-import StoriesCards from "@/src/src/components/stories/StoriesCards";
+import StoriesCards from "@/src/src/admin/stories/StoriesCards";
 import DashboardCardImage3 from "../../../public/DashboardCardImage3.svg";
 import StoriesFilter from "@/src/src/admin/stories/StoriesFilter";
 import axios from "axios";

@@ -2,7 +2,7 @@
 
 import axios from "axios";
 import StoriesFilter from "@/src/src/client/stories/StoriesFilter";
-import StoriesCards from "@/src/src/components/stories/StoriesCards";
+import StoriesCards from "@/src/src/client/stories/StoriesCards";
 import ClientPageHeader from "@/src/src/client/global/PageHeader";
 import Message from "@/src/src/components/global/Message";
 
@@ -88,6 +88,7 @@ const ClientStories = () => {
       <React.Fragment key={story.story_id}>
         <StoriesCards
           image={story.book_cover ? story.book_cover : DashboardCardImage3}
+          isRead={story.is_read}
           title={story.title}
           author={story.author}
           lexile={story.lexile}

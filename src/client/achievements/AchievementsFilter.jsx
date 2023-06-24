@@ -21,9 +21,7 @@ const AchievementsFilter = (props) => {
         handleSortFilter={props.handleSortFilter}
         labelValue={[
           { label: "Name", value: "achievement_name" },
-          { label: "Type", value: "achievement_type" },
           { label: "Goal", value: "goal" },
-          { label: "Date", value: "date_added" },
         ]}
       />
 

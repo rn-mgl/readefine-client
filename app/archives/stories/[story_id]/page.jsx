@@ -83,6 +83,22 @@ const SingleStory = ({ params }) => {
     }
   }, [url, user, setStory, storyId]);
 
+  const readStory = async () => {
+    try {
+      const { data } = await axios.post(
+        `${url}/read_story`,
+        { storyId },
+        { headers: { Authorization: user?.token } }
+      );
+      if (data) {
+        console.log(data);
+      }
+    } catch (error) {
+      console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg });
+    }
+  };
+
   React.useEffect(() => {
     if (user) {
       getStory();
@@ -115,7 +131,6 @@ const SingleStory = ({ params }) => {
             <BiChevronLeft
               className="scale-150 text-black  cursor-pointer t:scale-[2]"
               onClick={handleDecrement}
-              onKeyDown={(e) => handleDecrement(e)}
             />
           </div>
 
@@ -124,8 +139,10 @@ const SingleStory = ({ params }) => {
           <div className="cstm-bg-hover">
             <BiChevronRight
               className="scale-150 text-black  cursor-pointer t:scale-[2]"
-              onClick={handleIncrement}
-              onKeyDown={(e) => handleIncrement(e)}
+              onClick={() => {
+                handleIncrement();
+                activePage === pages.length - 1 && readStory();
+              }}
             />
           </div>
         </div>

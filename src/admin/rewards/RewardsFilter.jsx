@@ -4,7 +4,7 @@ import SearchFilter from "../../components/filter/SearchFilter";
 import SortFilter from "../../components/filter/SortFilter";
 import RangeFilter from "../../components/filter/RangeFilter";
 
-const AdminRewardsFilter = (props) => {
+const RewardsFilter = (props) => {
   return (
     <div className="cstm-flex-row gap-2 justify-start relative w-full overflow-x-auto py-2 cstm-scrollbar">
       <SearchFilter
@@ -38,4 +38,4 @@ const AdminRewardsFilter = (props) => {
   );
 };
 
-export default AdminRewardsFilter;
+export default RewardsFilter;

@@ -1,13 +1,13 @@
 import React from "react";
-import AdminRewardsFilter from "./AdminRewardsFilter";
+import RewardsFilter from "./RewardsFilter";
 import axios from "axios";
+import FindRewardCards from "./FindRewardCards";
 
 import { IoClose } from "react-icons/io5";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { typeConversion } from "../../functions/typeConversion";
 import { inputDate } from "../../functions/localDate";
-import FindCards from "./FindCards";
 
 const FindRewards = (props) => {
   const [rewards, setRewards] = React.useState([]);
@@ -55,7 +55,7 @@ const FindRewards = (props) => {
   const rewardsCards = rewards.map((reward) => {
     return (
       <React.Fragment key={reward.reward_id}>
-        <FindCards
+        <FindRewardCards
           image={reward.reward}
           title={reward.reward_name}
           type={typeConversion[reward.reward_type]}
@@ -97,7 +97,7 @@ const FindRewards = (props) => {
       </div>
 
       <div className="w-full cstm-flex-col gap-2 cstm-w-limit">
-        <AdminRewardsFilter
+        <RewardsFilter
           handleSearchFilter={handleSearchFilter}
           handleDateRangeFilter={handleDateRangeFilter}
           handleSortFilter={handleSortFilter}

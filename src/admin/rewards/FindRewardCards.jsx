@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 
-const FindCards = (props) => {
+const FindRewardCards = (props) => {
   return (
     <div className="bg-white shadow-md p-5 rounded-2xl cstm-flex-col gap-4 w-fit justify-start">
       <Image
@@ -34,4 +34,4 @@ const FindCards = (props) => {
   );
 };
 
-export default FindCards;
+export default FindRewardCards;

@@ -9,6 +9,7 @@ const RewardsCards = (props) => {
         <Image
           src={props.image}
           alt="temp"
+          draggable={false}
           className={`${
             props.isReceived
               ? "saturate-100 brightness-100 contrast-100"

@@ -81,10 +81,10 @@ const Archives = () => {
           image={DashboardCardImage5}
         />
         <ArchivesCards
-          label="Answer Riddles"
-          subLabel="Riddles Answered: "
+          label="Play Minigames"
+          subLabel="Available Games:"
           count={countsData?.riddleCount}
-          to="/archives/riddles"
+          to="/archives/minigames"
           image={DashboardCardImage6}
         />
       </div>

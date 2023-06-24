@@ -14,7 +14,7 @@ const AddAchievementFilter = (props) => {
         label="Type"
         labelValue={[
           { label: "Sessions", value: "user_session" },
-          { label: "Lexile", value: "user" },
+          { label: "Lexile", value: "user_lexile" },
           { label: "Read Stories", value: "read_story" },
           { label: "Answered Dangles", value: "answered_dangle" },
           { label: "Answered Deciphers", value: "answered_decipher" },

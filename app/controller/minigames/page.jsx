@@ -2,7 +2,6 @@ import React from "react";
 import AdminPageHeader from "@/src/src/admin/global/PageHeader";
 import DashboardCardImage2 from "../../../public/DashboardCardImage2.svg";
 import DashboardCardImage3 from "../../../public/DashboardCardImage3.svg";
-import DashboardCardImage5 from "../../../public/DashboardCardImage5.svg";
 import DashboardCardImage6 from "../../../public/DashboardCardImage6.svg";
 import MinigamesCards from "@/src/src/components/minigames/MinigamesCards";
 
@@ -29,11 +28,6 @@ const Minigames = () => {
           image={DashboardCardImage6}
           label="Decipher"
           to="/controller/minigames/decipher"
-        />
-        <MinigamesCards
-          image={DashboardCardImage5}
-          label="Matcher"
-          to="/controller/minigames/matcher"
         />
       </div>
     </div>

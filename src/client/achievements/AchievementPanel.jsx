@@ -1,5 +1,6 @@
 import React from "react";
 import AchievementProgress from "./AchievementProgress";
+import { BsDot } from "react-icons/bs";
 
 const AchievementPanel = (props) => {
   return (
@@ -8,7 +9,10 @@ const AchievementPanel = (props) => {
                 t:cstm-flex-row t:p-5"
     >
       <div className="cstm-flex-col gap-2 t:items-start t:text-left w-full">
-        <p className="font-bold text-prmColor">{props.title}</p>
+        <p className="font-bold text-prmColor cstm-flex-row gap-1">
+          {props.title} <BsDot className="text-black" />
+          <span className="font-light">{props.type}</span>
+        </p>
         <p className="text-sm">{props.task}</p>
       </div>
 

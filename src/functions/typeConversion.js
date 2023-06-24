@@ -6,7 +6,7 @@ export const typeConversion = {
   answered_dangle: "Answered Dangles",
   answered_decipher: "Answered Deciphers",
   answered_riddles: "Answered Riddles",
-  user: "Lexile Growth",
+  user_lexile: "Lexile Growth",
 };
 
 //for achievement specifics
