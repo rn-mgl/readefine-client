@@ -90,9 +90,6 @@ const SingleStory = ({ params }) => {
         { storyId },
         { headers: { Authorization: user?.token } }
       );
-      if (data) {
-        console.log(data);
-      }
     } catch (error) {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg });

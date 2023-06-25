@@ -67,7 +67,7 @@ const ClientRewards = () => {
 
   const getRewards = React.useCallback(async () => {
     try {
-      const { data } = await axios.get(`${url}/user_achievement`, {
+      const { data } = await axios.get(`${url}/reward`, {
         params: { searchFilter, sortFilter, showFilter },
         headers: { Authorization: user.token },
       });

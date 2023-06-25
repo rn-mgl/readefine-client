@@ -1,4 +1,5 @@
 import React from "react";
+import { IoCloseCircleOutline } from "react-icons/io5";
 
 const Message = (props) => {
   const messageInfo = props.message.msg
@@ -13,9 +14,18 @@ const Message = (props) => {
     <div
       className={`${
         props.message.active ? "translate-y-0" : "-translate-y-[100rem]"
-      } fixed top-3 w-11/12 rounded-md bg-black text-scndColor shadow-md z-50 p-2 text-sm text-center transition-all animate-slideDown duration-100 t:w-6/12 l-s:w-5/12 l-l:w-4/12`}
+      } fixed top-3 w-11/12 rounded-md border-[1px] border-scndColor bg-cyan-100 text-black font-medium shadow-md  shadow-cyan-200 z-50 p-5 text-sm text-center transition-all animate-slideDown duration-100 t:w-6/12 
+        l-s:w-5/12 l-s:bottom-5 l-s:top-auto l-s:right-5 text-clip
+        l-l:w-4/12`}
     >
       {messageInfo}
+
+      <div className="cstm-bg-hover absolute top-3 right-0">
+        <IoCloseCircleOutline
+          onClick={() => props.setMessage({ msg: "", active: false })}
+          className="text-prmColor scale-125 "
+        />
+      </div>
     </div>
   );
 };
