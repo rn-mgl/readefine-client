@@ -16,6 +16,7 @@ import { useRouter } from "next/navigation";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { CiUser } from "react-icons/ci";
 import { signIn } from "next-auth/react";
+import TextToSpeech from "@/src/src/components/global/TextToSpeech";
 
 const Login = () => {
   const [loginData, setLoginData] = React.useState({
@@ -75,6 +76,7 @@ const Login = () => {
 
   return (
     <div className="w-full h-screen bg-accntColor p-5 cstm-flex-col font-poppins overflow-hidden">
+      <TextToSpeech />
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
       <p className=" font-extrabold text-2xl text-prmColor">Log In</p>
       <br />

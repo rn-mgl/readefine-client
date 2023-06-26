@@ -10,13 +10,15 @@ import Message from "@/src/src/components/global/Message";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
-import { BsArrowLeft } from "react-icons/bs";
+import { BsArrowLeft, BsFilter } from "react-icons/bs";
+import ActionLabel from "@/src/src/components/global/ActionLabel";
 
 const SingleStory = ({ params }) => {
   const [story, setStory] = React.useState({});
   const [pages, setPages] = React.useState([]);
   const [activePage, setActivePage] = React.useState(1);
   const [fontSize, setFontSize] = React.useState(16);
+  const [customizationsVisible, setCustomizationsVisible] = React.useState(false);
   const [message, setMessage] = React.useState({ msg: "", active: false });
 
   const { data: session } = useSession();
@@ -34,6 +36,10 @@ const SingleStory = ({ params }) => {
 
   const handleFontSize = ({ value }) => {
     setFontSize(() => (value < 16 ? 16 : value > 100 ? 100 : parseInt(value)));
+  };
+
+  const handleCustomizationsVisible = () => {
+    setCustomizationsVisible((prev) => !prev);
   };
 
   const storyPages = pages?.map((page, index) => {
@@ -112,12 +118,27 @@ const SingleStory = ({ params }) => {
     <div className="p-5 cstm-flex-col bg-accntColor w-full min-h-screen justify-start gap-2">
       <ClientPageHeader subHeader="Stories" mainHeader={story.title} />
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
-      <div className="w-full cstm-w-limit cstm-flex-row">
-        <Link href="/archives/stories" className="w-fit cstm-bg-hover mr-auto">
-          <BsArrowLeft className=" text-prmColor" />
-        </Link>
+      <div className="cstm-flex-row w-full">
+        <div className="w-full cstm-w-limit cstm-flex-row mr-auto">
+          <Link href="/archives/stories" className="w-fit cstm-bg-hover mr-auto">
+            <BsArrowLeft className=" text-prmColor" />
+          </Link>
+        </div>
+
+        <button onClick={handleCustomizationsVisible} className="cstm-bg-hover relative group">
+          <ActionLabel label="Customize" />
+          <BsFilter className="text-prmColor scale-150" />
+        </button>
       </div>
-      <Customizations fontSize={fontSize} handleFontSize={handleFontSize} />
+
+      <Customizations
+        utterance={pages[activePage - 1]?.content}
+        fontSize={fontSize}
+        customizationsVisible={customizationsVisible}
+        handleFontSize={handleFontSize}
+        handleCustomizationsVisible={handleCustomizationsVisible}
+      />
+
       <div className="w-full  gap-5 h-[55vh] t:h-[60vh] bg-white rounded-2xl p-5  cstm-w-limit">
         <div className="cstm-scrollbar w-full relative overflow-x-hidden overflow-y-auto h-full">
           {storyPages}
