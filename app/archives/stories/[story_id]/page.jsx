@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import StoryPage from "@/src/src/components/stories/StoryPage";
+import StorySinglePage from "@/src/src/components/stories/StorySinglePage";
 import axios from "axios";
 import Link from "next/link";
 import Customizations from "@/src/src/components/stories/Customizations";
@@ -12,12 +12,14 @@ import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { BsArrowLeft, BsFilter } from "react-icons/bs";
 import ActionLabel from "@/src/src/components/global/ActionLabel";
+import StoryDoublePage from "@/src/src/components/stories/StoryDoublePage";
 
 const SingleStory = ({ params }) => {
   const [story, setStory] = React.useState({});
   const [pages, setPages] = React.useState([]);
   const [activePage, setActivePage] = React.useState(1);
   const [fontSize, setFontSize] = React.useState(16);
+  const [viewType, setViewType] = React.useState("single");
   const [customizationsVisible, setCustomizationsVisible] = React.useState(false);
   const [message, setMessage] = React.useState({ msg: "", active: false });
 
@@ -27,11 +29,13 @@ const SingleStory = ({ params }) => {
   const storyId = params?.story_id;
 
   const handleIncrement = () => {
-    setActivePage((prev) => (prev + 1 > pages.length ? pages.length : prev + 1));
+    const increment = viewType === "single" ? 1 : 2;
+    setActivePage((prev) => (prev + increment > pages.length ? pages.length : prev + increment));
   };
 
   const handleDecrement = () => {
-    setActivePage((prev) => (prev - 1 < 1 ? 1 : prev - 1));
+    const decrement = viewType === "single" ? 1 : 2;
+    setActivePage((prev) => (prev - decrement < 1 ? 1 : prev - decrement));
   };
 
   const handleFontSize = ({ value }) => {
@@ -42,20 +46,34 @@ const SingleStory = ({ params }) => {
     setCustomizationsVisible((prev) => !prev);
   };
 
-  const storyPages = pages?.map((page, index) => {
+  const handleViewType = (type) => {
+    setViewType(type);
+  };
+
+  const storyPages = pages?.map((page, index, arr) => {
     return (
       <div
         className="absolute left-2/4 -translate-x-2/4 w-full z-10 justify-start "
         key={page.content_id}
       >
-        <StoryPage
-          title={story?.title}
-          activePage={activePage}
-          page={page}
-          index={index + 1}
-          maxPage={pages.length}
-          fontSize={fontSize}
-        />
+        {viewType === "single" ? (
+          <StorySinglePage
+            title={story?.title}
+            activePage={activePage}
+            page={page}
+            index={index + 1}
+            fontSize={fontSize}
+          />
+        ) : (
+          <StoryDoublePage
+            title={story?.title}
+            activePage={activePage}
+            leftPage={page}
+            rightPage={arr[index + 1]}
+            index={index + 1}
+            fontSize={fontSize}
+          />
+        )}
       </div>
     );
   });
@@ -118,15 +136,15 @@ const SingleStory = ({ params }) => {
     <div className="p-5 cstm-flex-col bg-accntColor w-full min-h-screen justify-start gap-2">
       <ClientPageHeader subHeader="Stories" mainHeader={story.title} />
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
-      <div className="cstm-flex-row w-full">
-        <div className="w-full cstm-w-limit cstm-flex-row mr-auto">
+      <div className="cstm-flex-row w-full cstm-w-limit">
+        <div className="w-full  cstm-flex-row mr-auto">
           <Link href="/archives/stories" className="w-fit cstm-bg-hover mr-auto">
             <BsArrowLeft className=" text-prmColor" />
           </Link>
         </div>
 
         <button onClick={handleCustomizationsVisible} className="cstm-bg-hover relative group">
-          <ActionLabel label="Customize" />
+          <ActionLabel label="Filter" />
           <BsFilter className="text-prmColor scale-150" />
         </button>
       </div>
@@ -135,11 +153,13 @@ const SingleStory = ({ params }) => {
         utterance={pages[activePage - 1]?.content}
         fontSize={fontSize}
         customizationsVisible={customizationsVisible}
+        viewType={viewType}
         handleFontSize={handleFontSize}
         handleCustomizationsVisible={handleCustomizationsVisible}
+        handleViewType={handleViewType}
       />
 
-      <div className="w-full  gap-5 h-[55vh] t:h-[60vh] bg-white rounded-2xl p-5  cstm-w-limit">
+      <div className="w-full  gap-5 h-[55vh] t:h-[60vh] bg-white rounded-2xl p-5 cstm-w-limit">
         <div className="cstm-scrollbar w-full relative overflow-x-hidden overflow-y-auto h-full">
           {storyPages}
         </div>

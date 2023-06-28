@@ -24,11 +24,6 @@ const TextToSpeech = (props) => {
       synth.cancel();
     }
 
-    const SSU = new SpeechSynthesisUtterance();
-
-    SSU.addEventListener("start", () => setStatus("playing"));
-    SSU.addEventListener("end", () => setStatus("init"));
-
     const primaryVoices = {
       aria: voices[110],
       ana: voices[111],
@@ -40,6 +35,11 @@ const TextToSpeech = (props) => {
       roger: voices[117],
       steffan: voices[118],
     };
+
+    const SSU = new SpeechSynthesisUtterance();
+
+    SSU.addEventListener("start", () => setStatus("playing"));
+    SSU.addEventListener("end", () => setStatus("init"));
 
     SSU.voice = primaryVoices.michelle;
     SSU.text = utterance;
@@ -79,84 +79,78 @@ const TextToSpeech = (props) => {
   }, [setUtterance, props.utterance]);
 
   return (
-    <div className="cstm-flex-col w-full t:cstm-flex-row t:w-fit t:mr-auto">
-      <div className="cstm-flex-col gap-5 w-full t:gap-2">
-        <p className="text-xs text-center p-2">change first before playing to apply changes</p>
-        <div className="cstm-separator t:hidden" />
-        <div className="cstm-flex-col gap-5 w-full t:cstm-flex-row t:gap-2">
+    <div className="cstm-flex-col w-full gap-5 t:cstm-flex-row t:w-fit t:gap-2">
+      <div className="cstm-flex-row gap-2 w-full">
+        {status === "init" ? (
+          <button className="relative cstm-bg-hover group" onClick={playVoice}>
+            <ActionLabel label="Play" />
+            <BsFillPlayFill className="text-prmColor scale-125" />
+          </button>
+        ) : status === "playing" ? (
+          <button className="relative cstm-bg-hover group" onClick={pause}>
+            <ActionLabel label="Pause" />
+            <BsFillPauseFill className="text-prmColor scale-125" />
+          </button>
+        ) : status === "paused" ? (
+          <button className="relative cstm-bg-hover group" onClick={resume}>
+            <ActionLabel label="Resume" />
+            <BsFillPlayFill className="text-prmColor scale-125" />
+          </button>
+        ) : (
+          <button className="relative cstm-bg-hover group" onClick={playVoice}>
+            <ActionLabel label="Play" />
+            <BsFillPlayFill className="text-prmColor scale-125" />
+          </button>
+        )}
+
+        <button className="relative cstm-bg-hover group" onClick={cancel}>
+          <ActionLabel label="Stop" />
+          <BsFillStopFill className="text-prmColor scale-125" />
+        </button>
+
+        <div className="relative group p-2">
+          <ActionLabel label="Speed" />
           <div className="cstm-flex-row gap-2">
-            {status === "init" ? (
-              <button className="relative cstm-bg-hover group" onClick={playVoice}>
-                <ActionLabel label="Play" />
-                <BsFillPlayFill className="text-prmColor scale-125" />
-              </button>
-            ) : status === "playing" ? (
-              <button className="relative cstm-bg-hover group" onClick={pause}>
-                <ActionLabel label="Pause" />
-                <BsFillPauseFill className="text-prmColor scale-125" />
-              </button>
-            ) : status === "paused" ? (
-              <button className="relative cstm-bg-hover group" onClick={resume}>
-                <ActionLabel label="Resume" />
-                <BsFillPlayFill className="text-prmColor scale-125" />
-              </button>
-            ) : (
-              <button className="relative cstm-bg-hover group" onClick={playVoice}>
-                <ActionLabel label="Play" />
-                <BsFillPlayFill className="text-prmColor scale-125" />
-              </button>
-            )}
-
-            <button className="relative cstm-bg-hover group" onClick={cancel}>
-              <ActionLabel label="Stop" />
-              <BsFillStopFill className="text-prmColor scale-125" />
-            </button>
-
-            <div className="relative group p-2">
-              <ActionLabel label="Speed" />
-              <div className="cstm-flex-row gap-2">
-                <RiSpeedFill className="text-prmColor" />
-                <select
-                  value={rate}
-                  onChange={(e) => handleRate(e.target)}
-                  className="text-xs p-2 py-1 rounded-md focus:outline-prmColor underline underline-offset-2 cursor-pointer"
-                >
-                  <option value={0.25}>0.25x</option>
-                  <option value={0.5}>0.50x</option>
-                  <option value={0.75}>0.75x</option>
-                  <option value={1.0}>1.00x</option>
-                  <option value={1.25}>1.25x</option>
-                  <option value={1.5}>1.50x</option>
-                  <option value={1.75}>1.75x</option>
-                  <option value={2.0}>2.00x</option>
-                </select>
-              </div>
-            </div>
+            <RiSpeedFill className="text-prmColor" />
+            <select
+              value={rate}
+              onChange={(e) => handleRate(e.target)}
+              className="text-xs p-2 py-1 rounded-md focus:outline-prmColor underline underline-offset-2 cursor-pointer"
+            >
+              <option value={0.25}>0.25x</option>
+              <option value={0.5}>0.50x</option>
+              <option value={0.75}>0.75x</option>
+              <option value={1.0}>1.00x</option>
+              <option value={1.25}>1.25x</option>
+              <option value={1.5}>1.50x</option>
+              <option value={1.75}>1.75x</option>
+              <option value={2.0}>2.00x</option>
+            </select>
           </div>
+        </div>
+      </div>
 
-          <div className="cstm-separator t:hidden" />
+      <div className="cstm-separator t:hidden" />
 
-          <div className="cstm-flex-col gap-2">
-            <div className="cstm-flex-row gap-2 relative group">
-              <ActionLabel label="Volume" />
-              <BsVolumeUpFill className="text-prmColor" />
-              <input
-                type="range"
-                onChange={(e) => handleVolume(e.target)}
-                value={volume}
-                className="cursor-pointer"
-                min={0}
-                max={1}
-                step={0.1}
-              />
-              <input
-                type="number"
-                value={volume}
-                className="w-12 focus:outline-prmColor p-1 px-2 text-xs text-center underline underline-offset-2"
-                onChange={(e) => handleVolume(e.target)}
-              />
-            </div>
-          </div>
+      <div className="cstm-flex-col gap-2">
+        <div className="cstm-flex-row gap-2 relative group">
+          <ActionLabel label="Volume" />
+          <BsVolumeUpFill className="text-prmColor" />
+          <input
+            type="range"
+            onChange={(e) => handleVolume(e.target)}
+            value={volume}
+            className="cursor-pointer"
+            min={0}
+            max={1}
+            step={0.1}
+          />
+          <input
+            type="number"
+            value={volume}
+            className="w-12 focus:outline-prmColor p-1 px-2 text-xs text-center underline underline-offset-2"
+            onChange={(e) => handleVolume(e.target)}
+          />
         </div>
       </div>
     </div>

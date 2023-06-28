@@ -1,7 +1,7 @@
 import React from "react";
 import FileViewer from "../global/FileViewer";
 
-const StoryPage = (props) => {
+const StorySinglePage = (props) => {
   const active = props.index === props.activePage;
   const content = props.page?.content;
   const hasTitle = props.page?.header;
@@ -16,7 +16,7 @@ const StoryPage = (props) => {
   }
 
   return (
-    <div className={`cstm-flex-col gap-5 p-10 transition-all absolute ${position} w-full`}>
+    <div className={`cstm-flex-col gap-5 p-5 t:p-10 transition-all absolute ${position} w-full`}>
       <p
         style={{ fontSize: `${props.fontSize}px`, lineHeight: `${props.fontSize + 8}px` }}
         className={`${
@@ -40,4 +40,4 @@ const StoryPage = (props) => {
   );
 };
 
-export default StoryPage;
+export default StorySinglePage;
