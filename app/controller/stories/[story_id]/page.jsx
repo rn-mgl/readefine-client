@@ -54,6 +54,11 @@ const SingleStory = ({ params }) => {
     setCustomizationsVisible((prev) => !prev);
   };
 
+  const handleActivePage = ({ value }) => {
+    const newPage = parseInt(value);
+    setActivePage(newPage < 1 ? 1 : newPage > pages.length ? pages.length : newPage);
+  };
+
   const handleViewType = (type) => {
     setViewType(type);
   };
@@ -196,7 +201,14 @@ const SingleStory = ({ params }) => {
             />
           </button>
 
-          <p className="text-sm mx-auto">{activePage}</p>
+          <input
+            onChange={(e) => handleActivePage(e.target)}
+            type="number"
+            value={activePage}
+            min={1}
+            max={pages.length}
+            className="text-sm mx-auto text-center w-16 rounded-md px-2 py-1 focus:outline-prmColor"
+          />
 
           <button
             disabled={activePage === pages.length}

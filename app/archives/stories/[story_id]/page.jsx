@@ -42,6 +42,11 @@ const SingleStory = ({ params }) => {
     setFontSize(() => (value < 16 ? 16 : value > 100 ? 100 : parseInt(value)));
   };
 
+  const handleActivePage = ({ value }) => {
+    const newPage = parseInt(value);
+    setActivePage(newPage < 1 ? 1 : newPage > pages.length ? pages.length : newPage);
+  };
+
   const handleCustomizationsVisible = () => {
     setCustomizationsVisible((prev) => !prev);
   };
@@ -106,6 +111,8 @@ const SingleStory = ({ params }) => {
       setMessage({ active: true, msg: error?.response?.data?.msg });
     }
   }, [url, user, setStory, storyId]);
+
+  console.log(activePage);
 
   const readStory = async () => {
     try {
@@ -172,7 +179,14 @@ const SingleStory = ({ params }) => {
             />
           </div>
 
-          <p className="text-sm mx-auto">{activePage}</p>
+          <input
+            onChange={(e) => handleActivePage(e.target)}
+            type="number"
+            value={activePage}
+            min={1}
+            max={pages.length}
+            className="text-sm mx-auto text-center w-16 rounded-md px-2 py-1 focus:outline-prmColor"
+          />
 
           <div className="cstm-bg-hover">
             <BiChevronRight

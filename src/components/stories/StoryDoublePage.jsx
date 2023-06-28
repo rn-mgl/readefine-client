@@ -8,7 +8,6 @@ const StoryDoublePage = (props) => {
   const leftContent = leftPage?.content;
   const hasLeftTitle = leftPage?.header;
   const rightContent = rightPage?.content;
-  const hasRightTitle = rightPage?.header;
 
   let position = "translate-x-full opacity-0";
 
@@ -59,11 +58,9 @@ const StoryDoublePage = (props) => {
           <>
             <p
               style={{ fontSize: `${props.fontSize}px`, lineHeight: `${props.fontSize + 8}px` }}
-              className={`${
-                hasRightTitle ? "opacity-100" : "opacity-50"
-              } text-black font-semibold text-center`}
+              className="text-black font-semibold text-center opacity-50"
             >
-              {hasRightTitle ? hasRightTitle : props.title}
+              {props.title}
             </p>
 
             <FileViewer
