@@ -16,7 +16,7 @@ const ScorePopup = (props) => {
       {passed ? <Confetti width={window.innerWidth} height={window.innerHeight} /> : null}
       <div className="w-full h-full relative">
         <div
-          className={`w-full h-2/6 p-5 pb-12 cstm-flex-col ${background} absolute animate-slideDown top-0 right-0 shadow-md cstm-w-limit`}
+          className={`w-full h-3/6 p-5 pb-12 cstm-flex-col ${background} absolute gap-2 animate-slideDown top-0 right-0 shadow-md cstm-w-limit`}
         >
           <div className="p-2 hover:bg-black hover:bg-opacity-10 rounded-full w-fit ml-auto ">
             <IoClose

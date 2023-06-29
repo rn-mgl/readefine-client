@@ -35,8 +35,6 @@ const SingleTest = ({ params }) => {
     choice10: { answer: "", questionId: -1 },
   });
 
-  console.log(selectedChoices);
-
   const { url } = useGlobalContext();
   const { data: session } = useSession({ required: true });
 

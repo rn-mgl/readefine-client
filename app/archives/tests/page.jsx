@@ -126,7 +126,7 @@ const ClientTests = () => {
     } catch (error) {
       console.log(error);
     }
-  }, [setUserLexile, url, user]);
+  }, [setUserLexile, setLexileRangeFilter, url, user]);
 
   React.useEffect(() => {
     if (user) {

@@ -13,12 +13,16 @@ import { useGlobalContext } from "@/src/context";
 import { AiFillCaretRight, AiFillCaretLeft } from "react-icons/ai";
 import { BsArrowLeft } from "react-icons/bs";
 import { useRouter } from "next/navigation";
+import TestResult from "@/src/src/client/tests/TestResult";
 
 const SingleTest = ({ params }) => {
   const [testData, setTestData] = React.useState({});
   const [questions, setQuestions] = React.useState([]);
   const [activePage, setActivePage] = React.useState(0);
+  const [userLexile, setUserLexile] = React.useState(-1);
   const [isFinished, setIsFinished] = React.useState(false);
+  const [canToggleSeeResult, setCanToggleSeeResult] = React.useState(false); // see button
+  const [canSeeResult, setCanSeeResult] = React.useState(false); // see result
   const [score, setScore] = React.useState(0);
   const [message, setMessage] = React.useState({ msg: "", active: false });
   const [selectedChoices, setSelectedChoices] = React.useState({
@@ -76,6 +80,10 @@ const SingleTest = ({ params }) => {
     setIsFinished((prev) => !prev);
   };
 
+  const handleCanSeeResult = () => {
+    setCanSeeResult((prev) => !prev);
+  };
+
   const questionSlides = questions.map((q, index) => {
     return (
       <React.Fragment key={q.question_id}>
@@ -98,17 +106,17 @@ const SingleTest = ({ params }) => {
 
   const submitAnswers = async () => {
     let answeredAll = false;
-    const legibleForGrowth = testData.lexile > user?.lexile - 100;
+    const legibleForGrowth = testData.lexile > userLexile.lexile - 100;
 
     // check if all are answered
-    for (let i = 1; i <= 10; i++) {
-      answeredAll = selectedChoices[`choice${i}`].answer !== "";
-    }
+    // for (let i = 1; i <= 10; i++) {
+    //   answeredAll = selectedChoices[`choice${i}`].answer !== "";
+    // }
 
-    if (!answeredAll) {
-      setMessage({ active: true, msg: "Please answer all items." });
-      return;
-    }
+    // if (!answeredAll) {
+    //   setMessage({ active: true, msg: "Please answer all items." });
+    //   return;
+    // }
 
     const currScore = computeScore(setScore, setIsFinished, questions, selectedChoices);
 
@@ -123,24 +131,26 @@ const SingleTest = ({ params }) => {
     // check if passed
     if (currScore < 7) {
       setIsFinished(true);
-      clearChoices();
+      setCanToggleSeeResult(true);
       return;
     }
-
+    setIsFinished(true);
+    setCanToggleSeeResult(true);
     // add record to db
-    try {
-      const { data } = await axios.post(
-        `${url}/taken_test/${testId}`,
-        { selectedChoices, score: currScore, legibleForGrowth, lexile: user?.lexile },
-        { headers: { Authorization: user?.token } }
-      );
-      if (data) {
-        // router.push("/archives/tests");
-      }
-    } catch (error) {
-      console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg });
-    }
+    // try {
+    //   const { data } = await axios.post(
+    //     `${url}/taken_test/${testId}`,
+    //     { selectedChoices, score: currScore, legibleForGrowth, lexile: userLexile?.lexile },
+    //     { headers: { Authorization: user?.token } }
+    //   );
+    //   if (data) {
+    //     setIsFinished(true);
+    //     // router.push("/archives/tests");
+    //   }
+    // } catch (error) {
+    //   console.log(error);
+    //   setMessage({ active: true, msg: error?.response?.data?.msg });
+    // }
   };
 
   const getTestData = React.useCallback(async () => {
@@ -173,6 +183,20 @@ const SingleTest = ({ params }) => {
     }
   }, [user, url, testId]);
 
+  const getUserLexile = React.useCallback(async () => {
+    try {
+      const { data } = await axios.get(`${url}/user_lexile`, {
+        headers: { Authorization: user?.token },
+      });
+
+      if (data) {
+        setUserLexile(data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, [setUserLexile, url, user]);
+
   React.useEffect(() => {
     if (user) {
       getTestData();
@@ -185,15 +209,42 @@ const SingleTest = ({ params }) => {
     }
   }, [user, getQuestions]);
 
+  React.useEffect(() => {
+    if (user) {
+      getUserLexile();
+    }
+  }, [user, getUserLexile]);
+
   return (
     <div className="p-5 w-full min-h-screen bg-accntColor cstm-flex-col gap-2 justify-start overflow-x-hidden">
       <ClientPageHeader mainHeader={testData?.title} subHeader="Test" />
+
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+
       {isFinished ? <ScorePopup score={score} handleIsFinished={handleIsFinished} /> : null}
-      <div className="cstm-flex-row items-start gap-2 w-full cstm-w-limit relative h-[65vh] l-l:h-[70vh]">
+
+      {canSeeResult ? (
+        <TestResult
+          selectedChoices={selectedChoices}
+          questions={questions}
+          handleCanSeeResult={handleCanSeeResult}
+        />
+      ) : null}
+
+      <div className="cstm-flex-row items-start gap-2 w-full cstm-w-limit relative h-[60vh] t:h-[65vh] l-l:h-[70vh]">
         <Link href="/archives/tests" className="cstm-bg-hover mr-auto">
           <BsArrowLeft className="text-prmColor" />
         </Link>
+
+        {canToggleSeeResult ? (
+          <button
+            onClick={handleCanSeeResult}
+            className="bg-prmColor p-2 w-fit px-10 rounded-full text-sm text-white"
+          >
+            See Mistakes
+          </button>
+        ) : null}
+
         {questionSlides}
       </div>
 
@@ -207,6 +258,7 @@ const SingleTest = ({ params }) => {
             Submit
           </button>
         ) : null}
+
         <div className="cstm-flex-row w-full">
           {activePage > 0 ? (
             <button
