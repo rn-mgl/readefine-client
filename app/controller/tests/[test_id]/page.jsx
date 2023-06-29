@@ -14,6 +14,7 @@ import { useGlobalContext } from "@/src/context";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { computeScore, shuffleQuestions } from "@/src/src/functions/testFns";
+import TestResult from "@/src/src/client/tests/TestResult";
 
 const SingleTest = ({ params }) => {
   const [test, setTest] = React.useState({});
@@ -21,6 +22,8 @@ const SingleTest = ({ params }) => {
   const [score, setScore] = React.useState(0);
   const [canDeleteTest, setCanDeleteTest] = React.useState(false);
   const [isFinished, setIsFinished] = React.useState(false);
+  const [canToggleSeeResult, setCanToggleSeeResult] = React.useState(false); // see button
+  const [canSeeResult, setCanSeeResult] = React.useState(false); // see result
   const [message, setMessage] = React.useState({ msg: "", active: false });
   const [selectedChoices, setSelectedChoices] = React.useState({
     choice1: { answer: "", questionId: -1 },
@@ -53,6 +56,14 @@ const SingleTest = ({ params }) => {
 
   const handleCanDeleteTest = () => {
     setCanDeleteTest((prev) => !prev);
+  };
+
+  const handleCanSeeResult = () => {
+    setCanSeeResult((prev) => !prev);
+  };
+
+  const handleCanSeeToggleResult = () => {
+    setCanToggleSeeResult((prev) => !prev);
   };
 
   const testId = params?.test_id;
@@ -161,8 +172,11 @@ const SingleTest = ({ params }) => {
   return (
     <div className="p-5 w-full min-h-screen bg-accntColor cstm-flex-col gap-2">
       <AdminPageHeader subHeader="Tests" mainHeader={test?.title} />
+
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+
       {isFinished ? <ScorePopup score={score} handleIsFinished={handleIsFinished} /> : null}
+
       {canDeleteTest ? (
         <DeleteTest
           handleCanDeleteTest={handleCanDeleteTest}
@@ -170,10 +184,20 @@ const SingleTest = ({ params }) => {
           testId={params.test_id}
         />
       ) : null}
+
+      {canSeeResult ? (
+        <TestResult
+          selectedChoices={selectedChoices}
+          questions={questions}
+          handleCanSeeResult={handleCanSeeResult}
+        />
+      ) : null}
+
       <div className="cstm-flex-col gap-2 w-full cstm-w-limit">
         <p className="text-sm text-center">
           <b>note:</b> admin submissions are <b>not</b> recorded
         </p>
+
         <div className="cstm-flex-row w-full t:w-10/12 l-l:w-8/12">
           <Link href="/controller/tests" className="w-fit cstm-bg-hover mr-auto">
             <BsArrowLeft className=" text-prmColor" />
@@ -187,14 +211,31 @@ const SingleTest = ({ params }) => {
             <AiFillDelete className="text-prmColor cursor-pointer" onClick={handleCanDeleteTest} />
           </div>
         </div>
+
         {mappedQuestions}
 
-        <button
-          onClick={() => computeScore(setScore, setIsFinished, questions, selectedChoices)}
-          className="p-2 bg-prmColor text-scndColor rounded-full w-full mt-5 t:w-fit t:px-10 shadow-[0_4px_rgba(55,48,163,1)]"
-        >
-          Submit Answers
-        </button>
+        <div className="cstm-flex-col w-full gap-2 t:cstm-flex-row t:w-10/12 l-l:w-8/12">
+          <button
+            onClick={() => {
+              computeScore(setScore, setIsFinished, questions, selectedChoices);
+              handleCanSeeToggleResult();
+            }}
+            className={`p-2 bg-prmColor text-scndColor text-sm rounded-full w-full mt-5 t:mt-0 t:w-fit t:px-10 t:${
+              canToggleSeeResult ? "mr-auto" : "mr-0"
+            } shadow-[0_4px_rgba(55,48,163,1)]`}
+          >
+            Submit Answers
+          </button>
+
+          {canToggleSeeResult ? (
+            <button
+              onClick={handleCanSeeResult}
+              className="bg-scndColor p-2 w-full t:w-fit t:px-10 t:ml-auto rounded-full text-sm text-prmColor shadow-solid shadow-cyan-800"
+            >
+              See Mistakes
+            </button>
+          ) : null}
+        </div>
       </div>
     </div>
   );

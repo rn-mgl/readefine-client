@@ -6,9 +6,7 @@ const TestChoices = (props) => {
 
   return (
     <button
-      onClick={(e) =>
-        props.handleSelectedChoices(props.questionId, e.target, console.log(e.target))
-      }
+      onClick={(e) => props.handleSelectedChoices(props.questionId, e.target)}
       value={props.choice}
       name={props.name}
       type="button"

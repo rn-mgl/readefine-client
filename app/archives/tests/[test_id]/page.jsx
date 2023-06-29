@@ -109,14 +109,14 @@ const SingleTest = ({ params }) => {
     const legibleForGrowth = testData.lexile > userLexile.lexile - 100;
 
     // check if all are answered
-    // for (let i = 1; i <= 10; i++) {
-    //   answeredAll = selectedChoices[`choice${i}`].answer !== "";
-    // }
+    for (let i = 1; i <= 10; i++) {
+      answeredAll = selectedChoices[`choice${i}`].answer !== "";
+    }
 
-    // if (!answeredAll) {
-    //   setMessage({ active: true, msg: "Please answer all items." });
-    //   return;
-    // }
+    if (!answeredAll) {
+      setMessage({ active: true, msg: "Please answer all items." });
+      return;
+    }
 
     const currScore = computeScore(setScore, setIsFinished, questions, selectedChoices);
 
@@ -137,20 +137,20 @@ const SingleTest = ({ params }) => {
     setIsFinished(true);
     setCanToggleSeeResult(true);
     // add record to db
-    // try {
-    //   const { data } = await axios.post(
-    //     `${url}/taken_test/${testId}`,
-    //     { selectedChoices, score: currScore, legibleForGrowth, lexile: userLexile?.lexile },
-    //     { headers: { Authorization: user?.token } }
-    //   );
-    //   if (data) {
-    //     setIsFinished(true);
-    //     // router.push("/archives/tests");
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    //   setMessage({ active: true, msg: error?.response?.data?.msg });
-    // }
+    try {
+      const { data } = await axios.post(
+        `${url}/taken_test/${testId}`,
+        { selectedChoices, score: currScore, legibleForGrowth, lexile: userLexile?.lexile },
+        { headers: { Authorization: user?.token } }
+      );
+      if (data) {
+        setIsFinished(true);
+        // router.push("/archives/tests");
+      }
+    } catch (error) {
+      console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg });
+    }
   };
 
   const getTestData = React.useCallback(async () => {
