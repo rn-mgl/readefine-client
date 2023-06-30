@@ -35,6 +35,11 @@ module.exports = {
           "80%": { transform: "translateY(10%)" },
           "100%": { transform: "translateY(0%)" },
         },
+
+        dangle: {
+          "0%": { transform: "translateY(-20%)" },
+          "100%": { transform: "translateY(20%)" },
+        },
       },
       fontFamily: {
         poppins: ["var(--font-poppins)"],
@@ -43,6 +48,7 @@ module.exports = {
         float: "float 8s ease-in-out infinite alternate",
         fadeIn: "fadeIn 1s ease-in-out",
         slideDown: "slideDown 1s ease-in-out",
+        dangle: "dangle 2s ease-in-out infinite alternate",
       },
       boxShadow: {
         solid: "0px 5px rgba(0,0,0,0.3)",
