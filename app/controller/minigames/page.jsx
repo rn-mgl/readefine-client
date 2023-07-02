@@ -15,12 +15,12 @@ const Minigames = () => {
         cstm-w-limit"
       >
         <MinigamesCards
-          image={DashboardCardImage3}
+          image={DashboardCardImage2}
           label="Riddles"
           to="/controller/minigames/riddles"
         />
         <MinigamesCards
-          image={DashboardCardImage2}
+          image={DashboardCardImage3}
           label="Dangle"
           to="/controller/minigames/dangle"
         />

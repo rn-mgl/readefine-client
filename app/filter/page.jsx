@@ -7,12 +7,13 @@ import intersectSL from "../../public/IntersectSL.svg";
 import InputComp from "../../src/components/input/InputComp";
 import ButtonComp from "../../src/components/input/ButtonComp";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+import Loading from "@/src/src/components/global/Loading";
 
-import { CiLock, CiUser, CiUnlock } from "react-icons/ci";
+import { useRouter } from "next/navigation";
+import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
+import { CiUser } from "react-icons/ci";
 import { signIn } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
-import Loading from "@/src/src/components/global/Loading";
 
 const AdminLogin = () => {
   const [loginData, setLoginData] = React.useState({
@@ -90,9 +91,9 @@ const AdminLogin = () => {
           spellCheck={false}
           icon={
             visiblePassword ? (
-              <CiUnlock onClick={handleVisiblePassword} />
+              <AiOutlineEye onClick={handleVisiblePassword} />
             ) : (
-              <CiLock onClick={handleVisiblePassword} />
+              <AiOutlineEyeInvisible onClick={handleVisiblePassword} />
             )
           }
           onChange={(e) => handleLoginData(e.target)}
