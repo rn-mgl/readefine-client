@@ -24,8 +24,6 @@ const StoriesCards = (props) => {
     </Link>
   );
 
-  console.log(props.image);
-
   return (
     <div className="bg-white p-5 rounded-2xl cstm-flex-col gap-4 t:w-72 shadow-solid max-h-[30rem] relative">
       {props.isRead ? (

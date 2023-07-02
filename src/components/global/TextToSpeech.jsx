@@ -15,6 +15,7 @@ const TextToSpeech = (props) => {
   const [status, setStatus] = React.useState("init");
   const [volume, setVolume] = React.useState(1);
   const [rate, setRate] = React.useState(1);
+  const [SSU, setSSU] = React.useState(undefined);
 
   const playVoice = () => {
     const synth = speechSynthesis;
@@ -36,17 +37,17 @@ const TextToSpeech = (props) => {
       steffan: voices[118],
     };
 
-    const SSU = new SpeechSynthesisUtterance();
+    if (SSU) {
+      SSU.addEventListener("start", () => setStatus("playing"));
+      SSU.addEventListener("end", () => setStatus("init"));
 
-    SSU.addEventListener("start", () => setStatus("playing"));
-    SSU.addEventListener("end", () => setStatus("init"));
+      SSU.voice = primaryVoices.michelle;
+      SSU.text = utterance;
+      SSU.rate = rate;
+      SSU.volume = volume;
 
-    SSU.voice = primaryVoices.michelle;
-    SSU.text = utterance;
-    SSU.rate = rate;
-    SSU.volume = volume;
-
-    synth.speak(SSU);
+      synth.speak(SSU);
+    }
   };
 
   const pause = () => {
@@ -77,6 +78,12 @@ const TextToSpeech = (props) => {
       setUtterance(props.utterance);
     }
   }, [setUtterance, props.utterance]);
+
+  React.useEffect(() => {
+    if (speechSynthesis && SpeechSynthesisUtterance) {
+      setSSU(new SpeechSynthesisUtterance());
+    }
+  }, [setSSU]);
 
   return (
     <div className="cstm-flex-col w-full gap-5 t:cstm-flex-row t:w-fit t:gap-2">
