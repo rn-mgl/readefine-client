@@ -112,8 +112,6 @@ const SingleStory = ({ params }) => {
     }
   }, [url, user, setStory, storyId]);
 
-  console.log(activePage);
-
   const readStory = async () => {
     try {
       const { data } = await axios.post(

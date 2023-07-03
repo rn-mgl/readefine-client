@@ -45,8 +45,7 @@ const AdminLogin = () => {
     await signIn("admin-credentials", {
       candidateIdentifier: loginData.candidateIdentifier,
       candidatePassword: loginData.candidatePassword,
-      redirect: true,
-      callbackUrl: "/controller",
+      redirect: false,
     });
 
     try {

@@ -63,6 +63,8 @@ const Keyboard = (props) => {
     (event) => {
       if (event.key === "Backspace") {
         props.deleteCharacter();
+      } else if (event.key === "Enter") {
+        props.submitGuess();
       } else {
         line1.forEach((key) => {
           if (event.key.toLowerCase() === key.toLowerCase()) {

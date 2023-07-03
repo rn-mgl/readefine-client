@@ -58,6 +58,31 @@ const Dangle = () => {
 
   const submitGuess = () => {
     const arrayedRandomWord = randomWord.word.toUpperCase().split("");
+
+    if (arrayedRandomWord.length !== guess.letters.length) {
+      const newLives = [...lives];
+      newLives.pop();
+      setLives(newLives);
+      return false;
+    }
+
+    if (!arrayedRandomWord || !guess.letters) {
+      const newLives = [...lives];
+      newLives.pop();
+      setLives(newLives);
+      return false;
+    }
+
+    for (let i = 0; i < arrayedRandomWord.length; i++) {
+      if (arrayedRandomWord[i] !== guess.letters[i]) {
+        const newLives = [...lives];
+        newLives.pop();
+        setLives(newLives);
+        return false;
+      }
+    }
+    console.log(true);
+    return true;
   };
 
   const remainingLives = lives.map((l, i) => {
