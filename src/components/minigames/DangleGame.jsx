@@ -1,9 +1,11 @@
 import React from "react";
-import { BsFillPauseFill } from "react-icons/bs";
+
 import Keyboard from "./Keyboard";
 import DangleInput from "./DangleInput";
 import Dangling from "./Dangling";
 import DangleEntries from "./DangleEntries";
+
+import { BsFillPauseFill } from "react-icons/bs";
 
 const DangleGame = (props) => {
   const dangles = props.correctWord?.map((c, i) => {

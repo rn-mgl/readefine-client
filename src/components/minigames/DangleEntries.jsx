@@ -1,7 +1,6 @@
 import React from "react";
 
 const DangleEntries = (props) => {
-  console.log(props);
   const correctWord = props.correctWord;
   const entries = props.entryGuesses.map((entry, i) => {
     return (
