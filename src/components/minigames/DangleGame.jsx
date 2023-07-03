@@ -3,15 +3,19 @@ import { BsFillPauseFill } from "react-icons/bs";
 import Keyboard from "./Keyboard";
 import DangleInput from "./DangleInput";
 import Dangling from "./Dangling";
+import DangleEntries from "./DangleEntries";
 
 const DangleGame = (props) => {
-  const dangles = props.randomWord?.word?.split("").map((c, i) => {
+  const dangles = props.correctWord?.map((c, i) => {
+    const latestEntry = props.entryGuesses?.at(-1);
+    const isGuessed = latestEntry && latestEntry[i] === c;
     return (
       <React.Fragment key={i}>
-        <Dangling character={c} isPlaying={props.isPlaying} />
+        <Dangling character={c} isGuessed={isGuessed} />
       </React.Fragment>
     );
   });
+
   return (
     <div className="w-full h-[95vh] cstm-w-limit cstm-flex-col relative">
       <button
@@ -34,6 +38,10 @@ const DangleGame = (props) => {
       </div>
 
       <DangleInput guess={props.guess} />
+
+      {props.entryGuesses ? (
+        <DangleEntries correctWord={props.correctWord} entryGuesses={props.entryGuesses} />
+      ) : null}
 
       <Keyboard
         submitGuess={props.submitGuess}

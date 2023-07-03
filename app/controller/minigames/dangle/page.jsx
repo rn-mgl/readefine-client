@@ -10,30 +10,31 @@ import { useGlobalContext } from "@/src/context";
 import { AiFillHeart } from "react-icons/ai";
 
 const Dangle = () => {
-  const [randomWord, setRandomWord] = React.useState({ word: "dangle" });
+  const [wordData, setWordData] = React.useState({});
+  const [correctWord, setCorrectWord] = React.useState([{}]);
   const [guess, setGuess] = React.useState({ letters: [], letterPos: 0 });
+  const [entryGuesses, setEntryGuesses] = React.useState([]);
+  const [lives, setLives] = React.useState({ status: [1, 1, 1, 1, 1], activePos: 4 });
+  const [gameOver, setGameOver] = React.useState({ over: false, status: "" });
   const [isPlaying, setIsPlaying] = React.useState(false);
-  const [lives, setLives] = React.useState([1, 1, 1, 1, 1]);
 
-  const { data: session } = useSession();
+  const { data: session } = useSession({ required: true });
   const { url } = useGlobalContext();
   const user = session?.user?.name;
 
   const handleIsPlaying = () => {
     setIsPlaying((prev) => {
       if (prev) {
-        setRandomWord({ word: "dangle" });
+        setCorrectWord([{}]);
       }
       return !prev;
     });
   };
 
   const handleInput = (key) => {
-    if (guess.letterPos >= randomWord.word.length) return;
+    if (guess.letterPos >= correctWord.length) return;
     const newLetters = [...guess.letters];
-
     newLetters[guess.letterPos] = key;
-
     setGuess((prev) => {
       return {
         letters: newLetters,
@@ -44,10 +45,8 @@ const Dangle = () => {
 
   const deleteCharacter = () => {
     if (guess.letterPos - 1 < 0) return;
-
     const newLetters = [...guess.letters];
     newLetters[guess.letterPos - 1] = null;
-
     setGuess((prev) => {
       return {
         letters: newLetters,
@@ -56,54 +55,78 @@ const Dangle = () => {
     });
   };
 
-  const submitGuess = () => {
-    const arrayedRandomWord = randomWord.word.toUpperCase().split("");
-
-    if (arrayedRandomWord.length !== guess.letters.length) {
-      const newLives = [...lives];
-      newLives.pop();
-      setLives(newLives);
-      return false;
-    }
-
-    if (!arrayedRandomWord || !guess.letters) {
-      const newLives = [...lives];
-      newLives.pop();
-      setLives(newLives);
-      return false;
-    }
-
-    for (let i = 0; i < arrayedRandomWord.length; i++) {
-      if (arrayedRandomWord[i] !== guess.letters[i]) {
-        const newLives = [...lives];
-        newLives.pop();
-        setLives(newLives);
-        return false;
-      }
-    }
-    console.log(true);
-    return true;
+  const addToGuessEntry = () => {
+    const newEntryGuesses = [...entryGuesses];
+    newEntryGuesses.push(guess.letters);
+    setEntryGuesses(newEntryGuesses);
   };
 
-  const remainingLives = lives.map((l, i) => {
-    return <AiFillHeart key={i} className="text-prmColor t:scale-125" />;
+  const removeHeart = () => {
+    if (lives.activePos - 1 <= 0) {
+      setGameOver({ over: true, status: "lose" });
+    }
+    const newLives = [...lives.status];
+    newLives[lives.activePos] = 0;
+    setLives((prev) => {
+      return {
+        status: newLives,
+        activePos: prev.activePos - 1 < 0 ? 0 : prev.activePos - 1,
+      };
+    });
+  };
+
+  const submitGuess = () => {
+    let corrects = 0;
+
+    for (let i = 0; i < correctWord.length; i++) {
+      const guessCandidate = guess.letters[i];
+      const toGuess = correctWord[i];
+
+      if (toGuess === guessCandidate) {
+        corrects += 1;
+        if (corrects >= correctWord.length) {
+          addToGuessEntry();
+          setGameOver({ over: true, status: "win" });
+          return;
+        }
+      }
+      if (i >= correctWord.length - 1) {
+        addToGuessEntry();
+      }
+    }
+
+    if (corrects !== correctWord.length) {
+      removeHeart();
+    }
+  };
+
+  const remainingLives = lives.status.map((alive, i) => {
+    return (
+      <AiFillHeart
+        key={i}
+        className={` ${alive ? "text-prmColor" : "text-neutral-400 animate-shake"} t:scale-125`}
+      />
+    );
   });
 
   const getRandomWord = async () => {
-    if (user?.token) {
-      try {
-        const { data } = await axios.get(`${url}/admin_words/random`, {
-          headers: { Authorization: user?.token },
-        });
-        if (data) {
-          const wordLen = data.word.split("").length;
-          setGuess({ letters: Array(wordLen).fill(null), letterPos: 0 });
-          setLives(Array(wordLen).fill(1));
-          setRandomWord(data);
-        }
-      } catch (error) {
-        console.log(error);
+    try {
+      const { data } = await axios.get(`${url}/admin_words/random`, {
+        headers: { Authorization: user?.token },
+      });
+      if (data) {
+        const word = data.word?.toUpperCase();
+        const wordSplit = word.split("");
+        const wordLen = wordSplit.length;
+
+        setWordData(data);
+        setCorrectWord(wordSplit);
+        setGuess({ letters: Array(wordLen).fill(""), letterPos: 0 });
+        setEntryGuesses([]);
+        setLives({ status: Array(wordLen).fill(1), activePos: wordLen - 1 });
       }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -111,11 +134,12 @@ const Dangle = () => {
     <div className="w-full min-h-screen bg-accntColor p-4 cstm-flex-col justify-start">
       {isPlaying ? (
         <DangleGame
-          handleIsPlaying={handleIsPlaying}
-          randomWord={randomWord}
+          correctWord={correctWord}
           remainingLives={remainingLives}
           isPlaying={isPlaying}
           guess={guess}
+          entryGuesses={entryGuesses}
+          handleIsPlaying={handleIsPlaying}
           handleInput={handleInput}
           deleteCharacter={deleteCharacter}
           submitGuess={submitGuess}

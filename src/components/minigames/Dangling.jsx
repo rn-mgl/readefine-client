@@ -21,7 +21,7 @@ const Dangling = (props) => {
                   m-l:text-base m-l:w-10 m-l:h-10
                   t:w-16 t:h-16 t:text-xl"
       >
-        {props.isPlaying ? (props.isSeen ? props.character : null) : props.character}
+        {props.isGuessed ? props.character : null}
       </div>
     </div>
   );

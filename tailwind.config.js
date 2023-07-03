@@ -40,6 +40,15 @@ module.exports = {
           "0%": { transform: "translateY(-20%)" },
           "100%": { transform: "translateY(20%)" },
         },
+
+        shake: {
+          "0%": { transform: "translateX(-10%)" },
+          "20%": { transform: "translateX(10%)" },
+          "40%": { transform: "translateY(-10%)" },
+          "60%": { transform: "translateX(10%)" },
+          "80%": { transform: "translateY(-10%)" },
+          "100%": { transform: "translateY(10%)" },
+        },
       },
       fontFamily: {
         poppins: ["var(--font-poppins)"],
@@ -49,6 +58,7 @@ module.exports = {
         fadeIn: "fadeIn 1s ease-in-out",
         slideDown: "slideDown 1s ease-in-out",
         dangle: "dangle 2s ease-in-out infinite alternate",
+        shake: "shake 200ms ease-in-out",
       },
       boxShadow: {
         solid: "0px 5px rgba(0,0,0,0.3)",
