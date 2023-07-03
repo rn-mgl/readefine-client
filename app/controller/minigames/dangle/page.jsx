@@ -8,13 +8,20 @@ import DangleGame from "@/src/src/components/minigames/DangleGame";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { AiFillHeart } from "react-icons/ai";
+import DangleHint from "@/src/src/components/minigames/DangleHint";
+import Confetti from "react-confetti";
 
 const Dangle = () => {
   const [wordData, setWordData] = React.useState({});
   const [correctWord, setCorrectWord] = React.useState([{}]);
+
   const [guess, setGuess] = React.useState({ letters: [], letterPos: 0 });
   const [entryGuesses, setEntryGuesses] = React.useState([]);
+
+  const [canSeeHint, setCanSeeHint] = React.useState(false);
+  const [disabledLetters, setDisabledLetters] = React.useState([]);
   const [lives, setLives] = React.useState({ status: [1, 1, 1, 1, 1], activePos: 4 });
+
   const [gameOver, setGameOver] = React.useState({ over: false, status: "" });
   const [isPlaying, setIsPlaying] = React.useState(false);
 
@@ -26,9 +33,19 @@ const Dangle = () => {
     setIsPlaying((prev) => {
       if (prev) {
         setCorrectWord([{}]);
+        setWordData({});
+        setEntryGuesses([]);
+        setCanSeeHint(false);
+        setDisabledLetters([]);
+        setLives({ status: [1, 1, 1, 1, 1], activePos: 4 });
+        setGameOver({ over: false, status: "" });
       }
       return !prev;
     });
+  };
+
+  const handleCanSeeHint = () => {
+    setCanSeeHint((prev) => !prev);
   };
 
   const handleInput = (key) => {
@@ -41,6 +58,14 @@ const Dangle = () => {
         letterPos: prev.letterPos + 1,
       };
     });
+  };
+
+  const handleGameOver = async () => {
+    try {
+      const { data } = await axios.post(`${url}/admin_answered_dangle`);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const deleteCharacter = () => {
@@ -62,7 +87,7 @@ const Dangle = () => {
   };
 
   const removeHeart = () => {
-    if (lives.activePos - 1 <= 0) {
+    if (lives.activePos <= 0) {
       setGameOver({ over: true, status: "lose" });
     }
     const newLives = [...lives.status];
@@ -98,6 +123,8 @@ const Dangle = () => {
     if (corrects !== correctWord.length) {
       removeHeart();
     }
+
+    setGuess({ letters: Array(correctWord.length).fill(""), letterPos: 0 });
   };
 
   const remainingLives = lives.status.map((alive, i) => {
@@ -132,17 +159,24 @@ const Dangle = () => {
 
   return (
     <div className="w-full min-h-screen bg-accntColor p-4 cstm-flex-col justify-start">
+      {canSeeHint ? <DangleHint handleCanSeeHint={handleCanSeeHint} wordData={wordData} /> : null}
+      {gameOver.over && gameOver.status === "win" ? (
+        <Confetti width={window.innerWidth} height={window.innerHeight} />
+      ) : null}
+
       {isPlaying ? (
         <DangleGame
           correctWord={correctWord}
           remainingLives={remainingLives}
           isPlaying={isPlaying}
+          gameOver={gameOver}
           guess={guess}
           entryGuesses={entryGuesses}
           handleIsPlaying={handleIsPlaying}
           handleInput={handleInput}
           deleteCharacter={deleteCharacter}
           submitGuess={submitGuess}
+          handleCanSeeHint={handleCanSeeHint}
         />
       ) : (
         <InitDangle

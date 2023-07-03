@@ -15,13 +15,17 @@ const Dangling = (props) => {
       }}
       className="cstm-flex-col animate-dangle"
     >
-      <div className="w-[.5px] h-[50vh] bg-black" />
+      <div className={`${props.isPlaying ? "h-[40vh]" : "h-[50vh]"} w-[.5px] bg-black`} />
       <div
         className="p-2 w-8 h-8 rounded-md bg-black text-white cstm-flex-col text-sm 
                   m-l:text-base m-l:w-10 m-l:h-10
-                  t:w-16 t:h-16 t:text-xl"
+                  t:w-12 t:h-12 t:text-lg"
       >
-        {props.isGuessed ? props.character : null}
+        {props.isPlaying
+          ? props.isGuessed || props.gameOver?.over
+            ? props.character
+            : null
+          : props.character}
       </div>
     </div>
   );
