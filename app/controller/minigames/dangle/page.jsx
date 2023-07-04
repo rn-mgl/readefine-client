@@ -157,6 +157,45 @@ const Dangle = () => {
     }
   };
 
+  const handleKeyboard = React.useCallback(
+    (event) => {
+      if (gameOver) return;
+
+      if (event.key === "Backspace") {
+        props.deleteCharacter();
+      } else if (event.key === "Enter") {
+        props.submitGuess();
+      } else {
+        line1.forEach((key) => {
+          if (event.key.toLowerCase() === key.toLowerCase()) {
+            props.handleInput(key);
+          }
+        });
+
+        line2.forEach((key) => {
+          if (event.key.toLowerCase() === key.toLowerCase()) {
+            props.handleInput(key);
+          }
+        });
+
+        line3.forEach((key) => {
+          if (event.key.toLowerCase() === key.toLowerCase()) {
+            props.handleInput(key);
+          }
+        });
+      }
+    },
+    [props.deleteCharacter, props.handleInput, gameOver]
+  );
+
+  React.useEffect(() => {
+    document.addEventListener("keydown", handleKeyboard);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyboard);
+    };
+  }, [handleKeyboard]);
+
   return (
     <div className="w-full min-h-screen bg-accntColor p-4 cstm-flex-col justify-start">
       {canSeeHint ? <DangleHint handleCanSeeHint={handleCanSeeHint} wordData={wordData} /> : null}
