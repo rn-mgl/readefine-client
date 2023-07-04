@@ -31,7 +31,7 @@ const InitDangle = (props) => {
           props.getRandomWord();
           props.handleIsPlaying();
         }}
-        className="bg-prmColor shadow-solid shadow-indigo-950 p-2 rounded-full text-scndColor font-bold w-full mt-auto
+        className="bg-prmColor shadow-solid shadow-indigo-900 p-2 rounded-full text-scndColor font-bold w-full mt-auto
         t:w-40"
       >
         Play

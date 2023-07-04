@@ -10,9 +10,11 @@ import { useGlobalContext } from "@/src/context";
 import { AiFillHeart } from "react-icons/ai";
 import DangleHint from "@/src/src/components/minigames/DangleHint";
 import Confetti from "react-confetti";
+import DangleGameover from "@/src/src/components/minigames/DangleGameover";
 
 const Dangle = () => {
   const [wordData, setWordData] = React.useState({});
+  const [definitionData, setDefinitionData] = React.useState([]);
   const [correctWord, setCorrectWord] = React.useState([{}]);
 
   const [guess, setGuess] = React.useState({ letters: [], letterPos: 0 });
@@ -142,65 +144,42 @@ const Dangle = () => {
         headers: { Authorization: user?.token },
       });
       if (data) {
-        const word = data.word?.toUpperCase();
+        const word = data.wordData?.word?.toUpperCase();
         const wordSplit = word.split("");
         const wordLen = wordSplit.length;
 
-        setWordData(data);
+        setIsPlaying(true);
+        setEntryGuesses([]);
+        setWordData(data.wordData);
+        setDefinitionData(data.definitionData);
         setCorrectWord(wordSplit);
         setGuess({ letters: Array(wordLen).fill(""), letterPos: 0 });
-        setEntryGuesses([]);
         setLives({ status: Array(wordLen).fill(1), activePos: wordLen - 1 });
+        setGameOver({ over: false, status: "" });
       }
     } catch (error) {
       console.log(error);
     }
   };
 
-  const handleKeyboard = React.useCallback(
-    (event) => {
-      if (gameOver) return;
-
-      if (event.key === "Backspace") {
-        props.deleteCharacter();
-      } else if (event.key === "Enter") {
-        props.submitGuess();
-      } else {
-        line1.forEach((key) => {
-          if (event.key.toLowerCase() === key.toLowerCase()) {
-            props.handleInput(key);
-          }
-        });
-
-        line2.forEach((key) => {
-          if (event.key.toLowerCase() === key.toLowerCase()) {
-            props.handleInput(key);
-          }
-        });
-
-        line3.forEach((key) => {
-          if (event.key.toLowerCase() === key.toLowerCase()) {
-            props.handleInput(key);
-          }
-        });
-      }
-    },
-    [props.deleteCharacter, props.handleInput, gameOver]
-  );
-
-  React.useEffect(() => {
-    document.addEventListener("keydown", handleKeyboard);
-
-    return () => {
-      document.removeEventListener("keydown", handleKeyboard);
-    };
-  }, [handleKeyboard]);
-
   return (
     <div className="w-full min-h-screen bg-accntColor p-4 cstm-flex-col justify-start">
-      {canSeeHint ? <DangleHint handleCanSeeHint={handleCanSeeHint} wordData={wordData} /> : null}
-      {gameOver.over && gameOver.status === "win" ? (
-        <Confetti width={window.innerWidth} height={window.innerHeight} />
+      {canSeeHint ? (
+        <DangleHint
+          handleCanSeeHint={handleCanSeeHint}
+          wordData={wordData}
+          correctWord={correctWord}
+          definitionData={definitionData}
+        />
+      ) : null}
+
+      {gameOver.over ? (
+        <DangleGameover
+          handleIsPlaying={handleIsPlaying}
+          correctWord={correctWord}
+          gameOver={gameOver}
+          getRandomWord={getRandomWord}
+        />
       ) : null}
 
       {isPlaying ? (

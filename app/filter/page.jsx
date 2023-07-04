@@ -14,6 +14,7 @@ import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { CiUser } from "react-icons/ci";
 import { signIn } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
+import Message from "@/src/src/components/global/Message";
 
 const AdminLogin = () => {
   const [loginData, setLoginData] = React.useState({
@@ -22,6 +23,7 @@ const AdminLogin = () => {
   });
   const [visiblePassword, setVisiblePassword] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
+  const [message, setMessage] = React.useState({ msg: "", active: false });
 
   const { url } = useGlobalContext();
   const router = useRouter();
@@ -54,8 +56,9 @@ const AdminLogin = () => {
         router.push("/controller");
       }
     } catch (error) {
-      setLoading(false);
       console.log(error);
+      setLoading(false);
+      setMessage({ active: true, msg: error?.response?.data?.msg });
     }
   };
 
@@ -65,6 +68,7 @@ const AdminLogin = () => {
 
   return (
     <div className="w-full h-screen bg-prmColor p-5 cstm-flex-col font-poppins overflow-hidden">
+      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
       <p className=" font-extrabold text-2xl text-accntColor">Log In</p>
       <br />
       <form

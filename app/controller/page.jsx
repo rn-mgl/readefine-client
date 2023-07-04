@@ -115,7 +115,7 @@ const AdminDashboard = () => {
           image={DashboardCardImage7}
           label="Minigames"
           subLabel="Extras"
-          count={1}
+          count={3}
           to="/controller/minigames"
         />
       </div>

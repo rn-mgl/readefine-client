@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { AiOutlineEnter } from "react-icons/ai";
 import { BsBackspaceFill } from "react-icons/bs";
@@ -64,6 +65,45 @@ const Keyboard = (props) => {
       </button>
     );
   });
+
+  const handleKeyboard = React.useCallback(
+    (event) => {
+      if (gameOver) return;
+
+      if (event.key === "Backspace") {
+        props.deleteCharacter();
+      } else if (event.key === "Enter") {
+        props.submitGuess();
+      } else {
+        line1.forEach((key) => {
+          if (event.key.toLowerCase() === key.toLowerCase()) {
+            props.handleInput(key);
+          }
+        });
+
+        line2.forEach((key) => {
+          if (event.key.toLowerCase() === key.toLowerCase()) {
+            props.handleInput(key);
+          }
+        });
+
+        line3.forEach((key) => {
+          if (event.key.toLowerCase() === key.toLowerCase()) {
+            props.handleInput(key);
+          }
+        });
+      }
+    },
+    [props.deleteCharacter, props.handleInput, gameOver]
+  );
+
+  React.useEffect(() => {
+    document.addEventListener("keydown", handleKeyboard);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyboard);
+    };
+  }, [handleKeyboard]);
 
   return (
     <div className="cstm-flex-col gap-3 w-full h-fit mt-10 t:mt-5 l-l:mt-10">
