@@ -46,7 +46,7 @@ const Populate = () => {
 
   return (
     <div>
-      <button onClick={getAll}>get</button>
+      <button onClick={getWord}>get</button>
     </div>
   );
 };

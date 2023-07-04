@@ -9,13 +9,13 @@ import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { AiFillHeart } from "react-icons/ai";
 import DangleHint from "@/src/src/components/minigames/DangleHint";
-import Confetti from "react-confetti";
 import DangleGameover from "@/src/src/components/minigames/DangleGameover";
 
 const Dangle = () => {
   const [wordData, setWordData] = React.useState({});
   const [definitionData, setDefinitionData] = React.useState([]);
   const [correctWord, setCorrectWord] = React.useState([{}]);
+  const [timer, setTimer] = React.useState(0);
 
   const [guess, setGuess] = React.useState({ letters: [], letterPos: 0 });
   const [entryGuesses, setEntryGuesses] = React.useState([]);
@@ -41,6 +41,7 @@ const Dangle = () => {
         setDisabledLetters([]);
         setLives({ status: [1, 1, 1, 1, 1], activePos: 4 });
         setGameOver({ over: false, status: "" });
+        setTimer(0);
       }
       return !prev;
     });
@@ -139,28 +140,43 @@ const Dangle = () => {
   });
 
   const getRandomWord = async () => {
-    try {
-      const { data } = await axios.get(`${url}/admin_words/random`, {
-        headers: { Authorization: user?.token },
-      });
-      if (data) {
-        const word = data.wordData?.word?.toUpperCase();
-        const wordSplit = word.split("");
-        const wordLen = wordSplit.length;
+    if (user?.token) {
+      try {
+        const { data } = await axios.get(`${url}/admin_words/random`, {
+          headers: { Authorization: user?.token },
+        });
+        if (data) {
+          const word = data.wordData?.word?.toUpperCase();
+          const wordSplit = word.split("");
+          const wordLen = wordSplit.length;
 
-        setIsPlaying(true);
-        setEntryGuesses([]);
-        setWordData(data.wordData);
-        setDefinitionData(data.definitionData);
-        setCorrectWord(wordSplit);
-        setGuess({ letters: Array(wordLen).fill(""), letterPos: 0 });
-        setLives({ status: Array(wordLen).fill(1), activePos: wordLen - 1 });
-        setGameOver({ over: false, status: "" });
+          setIsPlaying(true);
+          setEntryGuesses([]);
+          setWordData(data.wordData);
+          setDefinitionData(data.definitionData);
+          setCorrectWord(wordSplit);
+          setGuess({ letters: Array(wordLen).fill(""), letterPos: 0 });
+          setLives({ status: Array(wordLen).fill(1), activePos: wordLen - 1 });
+          setGameOver({ over: false, status: "" });
+          setTimer(0);
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
     }
   };
+
+  React.useEffect(() => {
+    if (isPlaying) {
+      const timerInterval = setInterval(() => {
+        setTimer((prev) => prev + 1);
+      }, 1000);
+
+      return () => {
+        clearInterval(timerInterval);
+      };
+    }
+  }, [setTimer, isPlaying]);
 
   return (
     <div className="w-full min-h-screen bg-accntColor p-4 cstm-flex-col justify-start">
@@ -189,6 +205,7 @@ const Dangle = () => {
           isPlaying={isPlaying}
           gameOver={gameOver}
           guess={guess}
+          timer={timer}
           entryGuesses={entryGuesses}
           handleIsPlaying={handleIsPlaying}
           handleInput={handleInput}

@@ -37,6 +37,9 @@ const DangleGame = (props) => {
         {props.remainingLives}
 
         <div className="cstm-flex-col mt-4">
+          <div className="p-2 rounded-full border-2 border-prmColor w-8 h-8 cstm-flex-col">
+            <p className="text-prmColor text-xs">{props.timer}</p>
+          </div>
           <button onClick={props.handleCanSeeHint} className="cstm-bg-hover relative group">
             <ActionLabel label="Hint" />
             <BsFillLightbulbFill />
