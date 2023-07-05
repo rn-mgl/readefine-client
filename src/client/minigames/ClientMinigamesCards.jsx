@@ -2,10 +2,10 @@ import Image from "next/image";
 import React from "react";
 import Link from "next/link";
 
-const MinigamesCards = (props) => {
+const ClientMinigamesCards = (props) => {
   return (
     <div
-      className="bg-white p-5 rounded-2xl cstm-flex-col gap-4 group hover:shadow-md
+      className="bg-white p-5 rounded-2xl cstm-flex-col gap-2 group shadow-solid group
                 l-s:w-[18.5rem]
                 l-l:w-fit"
     >
@@ -23,15 +23,17 @@ const MinigamesCards = (props) => {
       >
         {props.label}
       </p>
+      <p className="text-xs group-hover:opacity-100 opacity-50">
+        {props.subLabel} {props.count}
+      </p>
       <Link
         href={props.to}
-        className="text-center font-poppins text-sm font-normal bg-prmColor text-accntColor rounded-full w-28 p-2 hover:shadow-md 
-                t:text-base"
+        className="text-center font-poppins text-sm font-normal bg-prmColor text-accntColor rounded-full w-28 p-2 hover:shadow-md"
       >
-        Visit
+        Play
       </Link>
     </div>
   );
 };
 
-export default MinigamesCards;
+export default ClientMinigamesCards;

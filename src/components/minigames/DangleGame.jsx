@@ -1,12 +1,11 @@
 import React from "react";
-
 import Keyboard from "./Keyboard";
 import DangleInput from "./DangleInput";
 import Dangling from "./Dangling";
-
-import { BsArrowLeft, BsFillLightbulbFill } from "react-icons/bs";
 import ActionLabel from "../global/ActionLabel";
 import DangleEntries from "./DangleEntries";
+
+import { BsArrowLeft, BsFillLightbulbFill } from "react-icons/bs";
 
 const DangleGame = (props) => {
   const dangles = props.correctWord?.map((c, i) => {
@@ -40,6 +39,7 @@ const DangleGame = (props) => {
           <div className="p-2 rounded-full border-2 border-prmColor w-8 h-8 cstm-flex-col">
             <p className="text-prmColor text-xs">{props.timer}</p>
           </div>
+
           <button onClick={props.handleCanSeeHint} className="cstm-bg-hover relative group">
             <ActionLabel label="Hint" />
             <BsFillLightbulbFill />

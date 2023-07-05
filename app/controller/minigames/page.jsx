@@ -3,7 +3,7 @@ import AdminPageHeader from "@/src/src/admin/global/PageHeader";
 import DashboardCardImage2 from "../../../public/DashboardCardImage2.svg";
 import DashboardCardImage3 from "../../../public/DashboardCardImage3.svg";
 import DashboardCardImage6 from "../../../public/DashboardCardImage6.svg";
-import MinigamesCards from "@/src/src/components/minigames/MinigamesCards";
+import AdminMinigamesCards from "@/src/src/admin/minigames/AdminMinigamesCards";
 
 const Minigames = () => {
   return (
@@ -14,17 +14,17 @@ const Minigames = () => {
         t:cstm-flex-row t:flex-wrap
         cstm-w-limit"
       >
-        <MinigamesCards
+        <AdminMinigamesCards
           image={DashboardCardImage2}
           label="Riddles"
           to="/controller/minigames/riddles"
         />
-        <MinigamesCards
+        <AdminMinigamesCards
           image={DashboardCardImage3}
           label="Dangle"
           to="/controller/minigames/dangle"
         />
-        <MinigamesCards
+        <AdminMinigamesCards
           image={DashboardCardImage6}
           label="Decipher"
           to="/controller/minigames/decipher"

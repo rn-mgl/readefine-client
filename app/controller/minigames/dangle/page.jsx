@@ -4,26 +4,22 @@ import axios from "axios";
 import React from "react";
 import InitDangle from "@/src/src/components/minigames/InitDangle";
 import DangleGame from "@/src/src/components/minigames/DangleGame";
+import DangleHint from "@/src/src/components/minigames/DangleHint";
+import DangleGameover from "@/src/src/components/minigames/DangleGameover";
 
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { AiFillHeart } from "react-icons/ai";
-import DangleHint from "@/src/src/components/minigames/DangleHint";
-import DangleGameover from "@/src/src/components/minigames/DangleGameover";
 
 const Dangle = () => {
   const [wordData, setWordData] = React.useState({});
   const [definitionData, setDefinitionData] = React.useState([]);
   const [correctWord, setCorrectWord] = React.useState([{}]);
   const [timer, setTimer] = React.useState(0);
-
   const [guess, setGuess] = React.useState({ letters: [], letterPos: 0 });
   const [entryGuesses, setEntryGuesses] = React.useState([]);
-
   const [canSeeHint, setCanSeeHint] = React.useState(false);
-  const [disabledLetters, setDisabledLetters] = React.useState([]);
   const [lives, setLives] = React.useState({ status: [1, 1, 1, 1, 1], activePos: 4 });
-
   const [gameOver, setGameOver] = React.useState({ over: false, status: "" });
   const [isPlaying, setIsPlaying] = React.useState(false);
 
@@ -38,7 +34,6 @@ const Dangle = () => {
         setWordData({});
         setEntryGuesses([]);
         setCanSeeHint(false);
-        setDisabledLetters([]);
         setLives({ status: [1, 1, 1, 1, 1], activePos: 4 });
         setGameOver({ over: false, status: "" });
         setTimer(0);
@@ -61,14 +56,6 @@ const Dangle = () => {
         letterPos: prev.letterPos + 1,
       };
     });
-  };
-
-  const handleGameOver = async () => {
-    try {
-      const { data } = await axios.post(`${url}/admin_answered_dangle`);
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   const deleteCharacter = () => {
@@ -167,7 +154,7 @@ const Dangle = () => {
   };
 
   React.useEffect(() => {
-    if (isPlaying) {
+    if (!gameOver.over) {
       const timerInterval = setInterval(() => {
         setTimer((prev) => prev + 1);
       }, 1000);
@@ -176,7 +163,7 @@ const Dangle = () => {
         clearInterval(timerInterval);
       };
     }
-  }, [setTimer, isPlaying]);
+  }, [setTimer, gameOver]);
 
   return (
     <div className="w-full min-h-screen bg-accntColor p-4 cstm-flex-col justify-start">
@@ -194,6 +181,7 @@ const Dangle = () => {
           handleIsPlaying={handleIsPlaying}
           correctWord={correctWord}
           gameOver={gameOver}
+          timer={timer}
           getRandomWord={getRandomWord}
         />
       ) : null}
@@ -215,6 +203,7 @@ const Dangle = () => {
         />
       ) : (
         <InitDangle
+          to={`/controller/minigames`}
           isPlaying={isPlaying}
           getRandomWord={getRandomWord}
           handleIsPlaying={handleIsPlaying}

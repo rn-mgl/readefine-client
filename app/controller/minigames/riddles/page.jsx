@@ -273,7 +273,7 @@ const AdminRiddles = () => {
                 t:gap-5 cstm-w-limit border-collapse"
       >
         <thead className="w-full ">
-          <tr className="p-2 cstm-flex-row justify-start gap-10 text-center text-prmColor w-full hidden t:flex">
+          <tr className="p-2 cstm-flex-row justify-start gap-5 text-center text-prmColor w-full hidden t:flex">
             <th className="w-[50%]">Riddle Statement</th>
             <th className="w-[20%]">Answer</th>
             <th className="w-[20%]">Date Added</th>

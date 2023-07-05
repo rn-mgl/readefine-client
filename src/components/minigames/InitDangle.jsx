@@ -14,7 +14,7 @@ const InitDangle = (props) => {
 
   return (
     <div className="w-full h-[95vh] cstm-w-limit cstm-flex-col relative">
-      <Link href="/controller/minigames" className="cstm-bg-hover ml-auto absolute top-0 right-0">
+      <Link href={props.to} className="cstm-bg-hover ml-auto absolute top-0 right-0">
         <BsArrowLeft className="text-black scale-100 m-l:scale-125" />
       </Link>
 

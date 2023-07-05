@@ -12,7 +12,6 @@ import axios from "axios";
 
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
-import { useRouter } from "next/navigation";
 
 const Archives = () => {
   const [countsData, setCountsData] = React.useState({});
@@ -83,7 +82,7 @@ const Archives = () => {
         <ArchivesCards
           label="Play Minigames"
           subLabel="Available Games:"
-          count={countsData?.riddleCount}
+          count={3}
           to="/archives/minigames"
           image={DashboardCardImage6}
         />

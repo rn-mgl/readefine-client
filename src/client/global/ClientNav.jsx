@@ -108,14 +108,17 @@ const ClientNav = () => {
         <ClientLink
           to="/archives/minigames"
           toggleOpenNav={toggleOpenNav}
-          isActive={path.includes("/archives/riddles")}
+          isActive={path.includes("/archives/minigames")}
           icon={<TbGoGame />}
           label="Minigames"
         />
 
         <div className="cstm-flex-row gap-2 w-full justify-start mt-auto">
           <div className="w-10 h-10 rounded-full  bg-gradient-to-br from-prmColor  to-scndColor bg-opacity-30" />
-          <Link href={`/archives/reader/${user?.userId}`} className="font-poppins text-left">
+          <Link
+            href={`/archives/reader/${user?.userId}`}
+            className="font-poppins text-left hover:bg-black hover:bg-opacity-10 p-2 rounded-md transition-all"
+          >
             <p className="text-xs">Welcome</p>
             <p className="font-bold text-prmColor whitespace-nowrap truncate">
               {user?.name} {user?.surname}

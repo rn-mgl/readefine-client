@@ -4,6 +4,7 @@ import Confetti from "react-confetti";
 const DangleGameover = (props) => {
   const didWin = props.gameOver.status === "win";
   const message = didWin ? "You Won!" : "You Lost";
+
   const correctWord = props.correctWord?.map((c, i) => {
     return (
       <div className="font-bold cstm-flex-col w-5" key={i}>
@@ -12,13 +13,23 @@ const DangleGameover = (props) => {
       </div>
     );
   });
+
   return (
     <div className="fixed w-full h-screen backdrop-blur-md z-10 top-0 text-white animate-fadeIn">
       {didWin ? (
         <Confetti width={window.innerWidth} height={window.innerHeight} className="z-50" />
       ) : null}
-      <div className="h-3/6 bg-prmColor w-full p-5 cstm-flex-col gap-5 t:gap-10 cstm-w-limit">
-        <p className="font-extrabold text-xl t:text-2xl">{message}</p>
+
+      <div className="h-3/6 bg-prmColor w-full p-5 cstm-flex-col gap-5 t:gap-10 cstm-w-limit translate-y-full">
+        <div className="cstm-flex-col gap-2 w-full">
+          <p className="font-extrabold text-xl t:text-2xl">{message}</p>
+
+          {didWin ? (
+            <p className="font-light text-sm">
+              Time taken: <span className="font-bold">{props.timer} </span> seconds
+            </p>
+          ) : null}
+        </div>
 
         <div className="cstm-flex-col gap-2">
           <p className="text-sm font-light">The word to guess is:</p>
@@ -33,6 +44,7 @@ const DangleGameover = (props) => {
           >
             Play Again
           </button>
+
           <button
             onClick={props.handleIsPlaying}
             className="font-bold bg-white bg-opacity-20 rounded-full p-2 text-sm w-full border-2 border-white shadow-solid shadow-indigo-500
