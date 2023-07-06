@@ -8,6 +8,8 @@ import { useSession } from "next-auth/react";
 import { wordCount } from "@/src/src/functions/wordCount";
 import { useGlobalContext } from "@/src/context";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { BsArrowLeft } from "react-icons/bs";
 
 const AddRiddle = () => {
   const [riddleData, setRiddleData] = React.useState({ riddle: "", answer: "" });
@@ -30,6 +32,7 @@ const AddRiddle = () => {
   const addRiddle = async (e) => {
     e.preventDefault();
     const { riddle, answer } = riddleData;
+
     try {
       const { data } = await axios.post(
         `${url}/admin_riddles`,
@@ -37,7 +40,8 @@ const AddRiddle = () => {
         { headers: { Authorization: user.token } }
       );
       if (data) {
-        router.push("/controller/riddles");
+        setMessage({ active: true, msg: `Successfully added ${answer}.` });
+        setRiddleData({ riddle: "", answer: "" });
       }
     } catch (error) {
       console.log(error);
@@ -46,14 +50,21 @@ const AddRiddle = () => {
   };
 
   return (
-    <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
+    <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-2 justify-start">
       <AdminPageHeader subHeader="Riddles" mainHeader="Add Riddle" />
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
       <form
         onSubmit={(e) => addRiddle(e)}
-        className="w-full cstm-flex-col cstm-w-limit border-collapse"
+        className="w-full cstm-flex-col cstm-w-limit border-collapse gap-2"
       >
-        <div className="table-fixed p-5 rounded-2xl cstm-flex-col overflow-auto w-full h-[75vh] justify-start items-start bg-white text-sm gap-2 shadow-md cstm-scrollbar">
+        <Link
+          href="/controller/minigames/riddles"
+          className="cstm-bg-hover mr-auto text-prmColor"
+          type="button"
+        >
+          <BsArrowLeft />
+        </Link>
+        <div className="table-fixed p-5 rounded-2xl cstm-flex-col overflow-auto w-full h-[70vh] justify-start items-start bg-white text-sm gap-2 shadow-md cstm-scrollbar">
           <div className="cstm-flex-row w-full">
             <textarea
               name="answer"

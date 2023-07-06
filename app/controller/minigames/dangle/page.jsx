@@ -2,10 +2,10 @@
 
 import axios from "axios";
 import React from "react";
-import InitDangle from "@/src/src/components/minigames/InitDangle";
-import DangleGame from "@/src/src/components/minigames/DangleGame";
-import DangleHint from "@/src/src/components/minigames/DangleHint";
-import DangleGameover from "@/src/src/components/minigames/DangleGameover";
+import InitDangle from "@/src/src/components/minigames/dangle/InitDangle";
+import DangleGame from "@/src/src/components/minigames/dangle/DangleGame";
+import DangleHint from "@/src/src/components/minigames/dangle/DangleHint";
+import DangleGameover from "@/src/src/components/minigames/dangle/DangleGameover";
 
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
@@ -129,7 +129,7 @@ const Dangle = () => {
   const getRandomWord = async () => {
     if (user?.token) {
       try {
-        const { data } = await axios.get(`${url}/admin_words/random`, {
+        const { data } = await axios.get(`${url}/admin_words/random_word`, {
           headers: { Authorization: user?.token },
         });
         if (data) {

@@ -37,7 +37,7 @@ const AdminNav = () => {
 
   return (
     <>
-      <div className="cstm-bg-hover absolute top-4 left-4">
+      <div className="cstm-bg-hover absolute top-4 left-4 z-50">
         <BiMenu className="scale-150 cursor-pointer l-s:hidden" onClick={toggleOpenNav} />
       </div>
 

@@ -1,8 +1,8 @@
 import React from "react";
-import Keyboard from "./Keyboard";
+import Keyboard from "../Keyboard";
 import DangleInput from "./DangleInput";
 import Dangling from "./Dangling";
-import ActionLabel from "../global/ActionLabel";
+import ActionLabel from "../../global/ActionLabel";
 import DangleEntries from "./DangleEntries";
 
 import { BsArrowLeft, BsFillLightbulbFill } from "react-icons/bs";

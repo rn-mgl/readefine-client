@@ -1,10 +1,13 @@
 "use client";
-import { useGlobalContext } from "@/src/context";
-import axios from "axios";
-import { useSession } from "next-auth/react";
-import React from "react";
 
-const ClientRiddles = () => {
+import React from "react";
+import InitRiddle from "@/src/src/components/minigames/riddles/InitRiddle";
+import axios from "axios";
+
+import { useGlobalContext } from "@/src/context";
+import { useSession } from "next-auth/react";
+
+const PlayRiddles = () => {
   const [riddle, setRiddle] = React.useState({});
 
   const { data: session } = useSession();
@@ -13,7 +16,7 @@ const ClientRiddles = () => {
 
   const getRiddle = React.useCallback(async () => {
     try {
-      const { data } = await axios.get(`${url}/riddles`, {
+      const { data } = await axios.get(`${url}/admin_riddles/random_riddle`, {
         headers: { Authorization: user?.token },
       });
       if (data) {
@@ -32,7 +35,13 @@ const ClientRiddles = () => {
 
   console.log(riddle);
 
-  return <div>ClientRiddles</div>;
+  return (
+    <div className="w-full min-h-screen h-screen bg-accntColor p-2 cstm-flex-col justify-start">
+      <div className="cstm-flex-col cstm-w-limit w-full h-full justify-start">
+        <InitRiddle />
+      </div>
+    </div>
+  );
 };
 
-export default ClientRiddles;
+export default PlayRiddles;

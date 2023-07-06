@@ -38,7 +38,6 @@ const DashboardCards = (props) => {
       >
         <p
           className="font-bold text-prmColor
-                    t:text-base
                     l-l:mr-auto"
         >
           Current count: {props.count}
@@ -46,8 +45,7 @@ const DashboardCards = (props) => {
 
         <Link
           href={props.to}
-          className="text-center font-poppins text-sm font-normal bg-prmColor text-accntColor rounded-full w-28 p-2 hover:shadow-md 
-                t:text-base"
+          className="text-center font-poppins text-sm font-normal bg-prmColor text-accntColor rounded-full w-28 p-2 hover:shadow-md "
         >
           Visit
         </Link>

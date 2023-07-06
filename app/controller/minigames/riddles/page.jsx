@@ -14,6 +14,7 @@ import { inputDate, localizeDate } from "@/src/src/functions/localDate";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { IoClose } from "react-icons/io5";
 import { BiCheck } from "react-icons/bi";
+import { BsArrowLeft } from "react-icons/bs";
 
 const AdminRiddles = () => {
   const [riddles, setRiddles] = React.useState([]);
@@ -254,9 +255,21 @@ const AdminRiddles = () => {
           sortFilter={sortFilter}
           dateRangeFilter={dateRangeFilter}
         />
-        <Link href="/controller/riddles/add" className="cstm-bg-hover mr-auto p-2">
-          <IoAddOutline className="text-prmColor cursor-pointer scale-150" />
-        </Link>
+        <div className="cstm-flex-row w-full gap-2">
+          <Link href="/controller/minigames" className="cstm-bg-hover">
+            <BsArrowLeft className="text-prmColor scale-100 m-l:scale-125" />
+          </Link>
+          <Link href="/controller/minigames/riddles/add" className="cstm-bg-hover mr-auto p-2">
+            <IoAddOutline className="text-prmColor cursor-pointer scale-150" />
+          </Link>
+
+          <Link
+            href="/controller/minigames/riddles/play"
+            className="bg-prmColor rounded-full p-2 text-sm w-fit px-10 text-white"
+          >
+            Play
+          </Link>
+        </div>
       </div>
 
       {canDeleteRiddle ? (
@@ -269,7 +282,7 @@ const AdminRiddles = () => {
       ) : null}
 
       <table
-        className="table-fixed p-4 rounded-md cstm-flex-col overflow-auto w-full h-[80vh] justify-start items-start bg-white text-sm 
+        className="table-fixed p-4 rounded-md cstm-flex-col overflow-auto w-full h-[70vh] justify-start items-start bg-white text-sm 
                 t:gap-5 cstm-w-limit border-collapse"
       >
         <thead className="w-full ">
