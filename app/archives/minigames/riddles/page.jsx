@@ -95,6 +95,8 @@ const ClientRiddles = () => {
     const guessString = guess.letters.join("");
     const correctWordString = correctWord.join("");
 
+    addToGuessEntry();
+
     if (guessString === correctWordString) {
       setGameOver({ over: true, status: "win" });
       return;
@@ -102,7 +104,6 @@ const ClientRiddles = () => {
       removeHeart();
     }
     setGuess({ letters: Array(correctWord.length).fill(""), letterPos: 0 });
-    addToGuessEntry();
   };
 
   const handleGameOver = React.useCallback(async () => {
