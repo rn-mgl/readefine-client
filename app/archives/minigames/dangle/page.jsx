@@ -5,7 +5,7 @@ import React from "react";
 import InitDangle from "@/src/src/components/minigames/dangle/InitDangle";
 import DangleGame from "@/src/src/components/minigames/dangle/DangleGame";
 import DangleHint from "@/src/src/components/minigames/dangle/DangleHint";
-import DangleGameover from "@/src/src/components/minigames/dangle/DangleGameover";
+import Gameover from "@/src/src/components/minigames/Gameover";
 
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
@@ -130,7 +130,7 @@ const Dangle = () => {
   };
 
   const handleGameOver = React.useCallback(async () => {
-    const answer = guess.letters.join("");
+    const answer = entryGuesses.at(-1).join("");
 
     try {
       const { data } = await axios.post(
@@ -210,12 +210,13 @@ const Dangle = () => {
       ) : null}
 
       {gameOver.over ? (
-        <DangleGameover
+        <Gameover
           handleIsPlaying={handleIsPlaying}
           correctWord={correctWord}
           gameOver={gameOver}
           timer={timer}
-          getRandomWord={getRandomWord}
+          label="The word to guess is:"
+          playAgain={getRandomWord}
         />
       ) : null}
 

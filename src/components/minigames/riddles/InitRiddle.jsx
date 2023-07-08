@@ -2,7 +2,7 @@ import Link from "next/link";
 import React from "react";
 import { BsArrowLeft, BsPatchQuestionFill } from "react-icons/bs";
 
-const InitRiddle = () => {
+const InitRiddle = (props) => {
   const letters = "RIDDLES".split("").map((r, i) => {
     return (
       <div style={{ animationDelay: `${i / 5}s` }} key={i} className="animate-float ">
@@ -17,8 +17,8 @@ const InitRiddle = () => {
   });
 
   return (
-    <div className="w-full cstm-flex-col relative h-full gap-5 overflow-hidden animate-fadeIn">
-      <Link href="/controller/minigames/riddles" className="cstm-bg-hover absolute top-2 right-2">
+    <div className="w-full cstm-flex-col relative h-[95vh] gap-5 overflow-hidden animate-fadeIn">
+      <Link href={props.to} className="cstm-bg-hover absolute top-0 right-2">
         <BsArrowLeft className="scale-125" />
       </Link>
 
@@ -32,7 +32,13 @@ const InitRiddle = () => {
 
       <div className="cstm-flex-row gap-0.5 animate-fadeIn w-full">{letters}</div>
 
-      <button className="animate-fadeIn bg-prmColor w-fit px-10 font-bold text-scndColor rounded-full p-2 shadow-solid shadow-indigo-900 t:w-40">
+      <button
+        onClick={() => {
+          props.handleIsPlaying();
+          props.getRiddle();
+        }}
+        className="animate-fadeIn bg-prmColor w-fit px-10 font-bold text-scndColor rounded-full p-2 shadow-solid shadow-indigo-900 t:w-40"
+      >
         Play
       </button>
     </div>
