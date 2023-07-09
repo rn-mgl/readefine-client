@@ -17,7 +17,7 @@ const InitRiddle = (props) => {
   });
 
   return (
-    <div className="w-full cstm-flex-col relative h-[95vh] gap-5 overflow-hidden animate-fadeIn">
+    <div className="w-full cstm-flex-col relative h-[95vh] gap-5 overflow-hidden animate-fadeIn cstm-w-limit">
       <Link href={props.to} className="cstm-bg-hover absolute top-0 right-2">
         <BsArrowLeft className="scale-125" />
       </Link>

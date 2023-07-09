@@ -148,28 +148,27 @@ const PlayRiddles = () => {
           handleIsPlaying={handleIsPlaying}
         />
       ) : null}
-      <div className="cstm-flex-col cstm-w-limit w-full h-full justify-start">
-        {isPlaying ? (
-          <RiddleGame
-            riddleData={riddleData}
-            guess={guess}
-            remainingLives={remainingLives}
-            entryGuesses={entryGuesses}
-            timer={timer}
-            setEntryGuesses={setEntryGuesses}
-            handleIsPlaying={handleIsPlaying}
-            deleteCharacter={deleteCharacter}
-            handleInput={handleInput}
-            submitGuess={submitGuess}
-          />
-        ) : (
-          <InitRiddle
-            to="/controller/minigames"
-            getRiddle={getRiddle}
-            handleIsPlaying={handleIsPlaying}
-          />
-        )}
-      </div>
+
+      {isPlaying ? (
+        <RiddleGame
+          riddleData={riddleData}
+          guess={guess}
+          remainingLives={remainingLives}
+          entryGuesses={entryGuesses}
+          timer={timer}
+          setEntryGuesses={setEntryGuesses}
+          handleIsPlaying={handleIsPlaying}
+          deleteCharacter={deleteCharacter}
+          handleInput={handleInput}
+          submitGuess={submitGuess}
+        />
+      ) : (
+        <InitRiddle
+          to="/controller/minigames/riddles"
+          getRiddle={getRiddle}
+          handleIsPlaying={handleIsPlaying}
+        />
+      )}
     </div>
   );
 };
