@@ -37,7 +37,7 @@ const ClientNav = () => {
 
   return (
     <>
-      <div className="absolute cstm-bg-hover top-4 left-4 l-s:hidden">
+      <div className="absolute cstm-bg-hover z-10 top-4 left-4 l-s:hidden">
         <BiMenu className="scale-150 cursor-pointer" onClick={toggleOpenNav} />
       </div>
 
@@ -114,15 +114,17 @@ const ClientNav = () => {
         />
 
         <div className="cstm-flex-row gap-2 w-full justify-start mt-auto">
-          <div className="w-10 h-10 rounded-full  bg-gradient-to-br from-prmColor  to-scndColor bg-opacity-30" />
           <Link
             href={`/archives/reader/${user?.userId}`}
-            className="font-poppins text-left hover:bg-black hover:bg-opacity-10 p-2 rounded-md transition-all"
+            className="font-poppins text-left hover:bg-neutral-100 p-2 rounded-md justify-start transition-all cstm-flex-row gap-2 w-full"
           >
-            <p className="text-xs">Welcome</p>
-            <p className="font-bold text-prmColor whitespace-nowrap truncate">
-              {user?.name} {user?.surname}
-            </p>
+            <div className="w-10 h-10 rounded-full  bg-gradient-to-br from-prmColor  to-scndColor bg-opacity-30" />
+            <div className="cstm-flex-col items-start">
+              <p className="text-xs">Welcome</p>
+              <p className="font-bold text-prmColor whitespace-nowrap truncate">
+                {user?.name} {user?.surname}
+              </p>
+            </div>
           </Link>
           <div className="ml-auto cstm-bg-hover">
             <div onClick={logOut}>

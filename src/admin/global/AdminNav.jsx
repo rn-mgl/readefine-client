@@ -2,6 +2,7 @@
 import React from "react";
 import Link from "next/link";
 import AdminLink from "../nav/AdminLink";
+import Loading from "../../components/global/Loading";
 
 import { BiMenu, BiTask, BiLogOut } from "react-icons/bi";
 import { BsPenFill, BsPatchQuestionFill } from "react-icons/bs";
@@ -11,13 +12,16 @@ import { HiUser } from "react-icons/hi2";
 import { GiAchievement } from "react-icons/gi";
 import { usePathname } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
-import Loading from "../../components/global/Loading";
+import { useGlobalContext } from "@/src/context";
+import axios from "axios";
 
 const AdminNav = () => {
-  const { data: session } = useSession();
+  const [adminData, setAdminData] = React.useState({});
   const [isOpen, setIsOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
 
+  const { data: session } = useSession();
+  const { url } = useGlobalContext();
   const user = session?.user?.name;
 
   const path = usePathname();
@@ -31,13 +35,33 @@ const AdminNav = () => {
     setIsOpen((prev) => !prev);
   };
 
+  const getAdminData = React.useCallback(async () => {
+    try {
+      const { data } = await axios.get(`${url}/admin/${user?.admin_id}`, {
+        headers: { Authorization: user?.token },
+      });
+
+      if (data) {
+        setAdminData(data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, [url, user, user?.admin_id, setAdminData]);
+
+  React.useEffect(() => {
+    if (user) {
+      getAdminData();
+    }
+  }, [user, getAdminData]);
+
   if (loading) {
     return <Loading />;
   }
 
   return (
     <>
-      <div className="cstm-bg-hover absolute top-4 left-4 z-50">
+      <div className="cstm-bg-hover absolute top-4 left-4 z-10">
         <BiMenu className="scale-150 cursor-pointer l-s:hidden" onClick={toggleOpenNav} />
       </div>
 
@@ -119,12 +143,21 @@ const AdminNav = () => {
         />
 
         <div className="cstm-flex-row gap-2 w-full justify-start mt-auto">
-          <div className="w-10 h-10 rounded-full bg-prmColor bg-opacity-30" />
-          <Link href={`/a`} className="cstm-flex-col font-poppins items-start">
-            <p className="text-xs">Welcome</p>
-            <p className="font-bold text-prmColor">
-              {user?.name} {user?.surname}
-            </p>
+          <Link
+            href={`/controller/overview/${user?.admin_id}`}
+            onClick={toggleOpenNav}
+            className="cstm-flex-row hover:bg-neutral-100 p-2 w-full rounded-md font-poppins justify-start gap-2"
+          >
+            <div
+              style={{ backgroundImage: adminData?.image ? `url(${adminData?.image})` : null }}
+              className="w-12 h-12 rounded-full bg-prmColor bg-opacity-30 bg-cover bg-center"
+            />
+            <div className="cstm-flex-col items-start">
+              <p className="text-xs">Welcome</p>
+              <p className="font-bold text-prmColor truncate">
+                {user?.name} {user?.surname}
+              </p>
+            </div>
           </Link>
           <div className="ml-auto cstm-bg-hover">
             <div onClick={logOut}>
