@@ -200,6 +200,7 @@ const Dangle = () => {
   return (
     <div className="w-full min-h-screen bg-accntColor p-4 cstm-flex-col justify-start">
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+
       {canSeeHint ? (
         <DangleHint
           handleCanSeeHint={handleCanSeeHint}
