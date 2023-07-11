@@ -45,7 +45,7 @@ const TextShuffleAnimation = (props) => {
     return () => {
       clearInterval(intervalId);
     };
-  }, [props.title]);
+  }, [props.title, targetText]);
 
   const displayText = animationText.split().map((letters) => {
     return letters.split("").map((l, j) => {

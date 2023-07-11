@@ -4,9 +4,9 @@ import { AiOutlineEnter } from "react-icons/ai";
 import { BsBackspaceFill } from "react-icons/bs";
 
 const Keyboard = (props) => {
-  const line1 = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"];
-  const line2 = ["A", "S", "D", "F", "G", "H", "J", "K", "L"];
-  const line3 = ["Z", "X", "C", "V", "B", "N", "M"];
+  const line1 = React.useMemo(() => ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"], []);
+  const line2 = React.useMemo(() => ["A", "S", "D", "F", "G", "H", "J", "K", "L"], []);
+  const line3 = React.useMemo(() => ["Z", "X", "C", "V", "B", "N", "M"], []);
   const gameOver = props.gameOver?.over;
 
   const qwertyMap = line1.map((c) => {
@@ -94,7 +94,7 @@ const Keyboard = (props) => {
         });
       }
     },
-    [props.deleteCharacter, props.handleInput, gameOver]
+    [gameOver, line1, line2, line3, props]
   );
 
   React.useEffect(() => {

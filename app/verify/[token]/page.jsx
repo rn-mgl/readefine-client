@@ -28,7 +28,7 @@ const Verify = ({ params }) => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg });
     }
-  });
+  }, [url, token, setStatus]);
 
   React.useEffect(() => {
     verifyUser();

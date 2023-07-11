@@ -29,7 +29,7 @@ const EditAchievement = ({ params }) => {
 
   const user = session?.user?.name;
   const router = useRouter();
-  const achivementId = params?.achievement_id;
+  const achievementId = params?.achievement_id;
 
   const handleCanSelectReward = () => {
     setCanSelectReward((prev) => !prev);
@@ -74,7 +74,7 @@ const EditAchievement = ({ params }) => {
 
   const getAchievement = React.useCallback(async () => {
     try {
-      const { data } = await axios.get(`${url}/admin_achievement/${achivementId}`, {
+      const { data } = await axios.get(`${url}/admin_achievement/${achievementId}`, {
         headers: { Authorization: user.token },
       });
 
@@ -85,7 +85,7 @@ const EditAchievement = ({ params }) => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg });
     }
-  }, [user, url, setAchievement]);
+  }, [user, url, setAchievement, achievementId]);
 
   React.useEffect(() => {
     if (user) {

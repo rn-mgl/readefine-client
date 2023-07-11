@@ -47,7 +47,7 @@ const AdminNav = () => {
     } catch (error) {
       console.log(error);
     }
-  }, [url, user, user?.admin_id, setAdminData]);
+  }, [url, user, setAdminData]);
 
   React.useEffect(() => {
     if (user) {

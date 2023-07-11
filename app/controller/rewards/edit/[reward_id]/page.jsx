@@ -81,7 +81,7 @@ const EditReward = ({ params }) => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg });
     }
-  }, [setReward, url, user]);
+  }, [setReward, url, user, rewardId]);
 
   React.useEffect(() => {
     if (user) {

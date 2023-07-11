@@ -107,7 +107,7 @@ const EditTest = ({ params }) => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg });
     }
-  }, [url, user, testId]);
+  }, [url, user, testId, router]);
 
   React.useEffect(() => {
     if (user) {

@@ -42,7 +42,7 @@ const SingleAchievement = ({ params }) => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg });
     }
-  }, [user, url, setAchievement]);
+  }, [user, url, setAchievement, achievementId]);
 
   React.useEffect(() => {
     if (user) {

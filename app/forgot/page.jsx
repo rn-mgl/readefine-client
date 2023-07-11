@@ -56,8 +56,8 @@ const ForgotPassword = () => {
         onSubmit={(e) => sendResetEmail(e)}
       >
         <p className="text-xs text-white">
-          Enter your user account's verified email address and we will send you a password reset
-          link.
+          Enter your user account&apos;s verified email address and we will send you a password
+          reset link.
         </p>
         <InputComp
           id="candidateEmail"

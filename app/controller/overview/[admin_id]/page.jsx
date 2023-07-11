@@ -14,7 +14,7 @@ import ActivityCard from "@/src/src/admin/overview/ActivityCard";
 import MainOverview from "@/src/src/admin/overview/MainOverview";
 import ActivityText from "@/src/src/admin/overview/ActivityText";
 
-const Overview = ({ params }) => {
+const Overview = () => {
   const [adminData, setAdminData] = React.useState({});
   const [adminActivities, setAdminActivities] = React.useState({});
   const [canEditMain, setCanEditMain] = React.useState(false);
@@ -22,7 +22,6 @@ const Overview = ({ params }) => {
   const { data: session } = useSession();
   const { url } = useGlobalContext();
   const user = session?.user?.name;
-  const adminId = params?.admin_id;
 
   const storyActivity = adminActivities?.storyData?.map((d, i) => {
     return (
@@ -108,7 +107,7 @@ const Overview = ({ params }) => {
 
   const getAdminData = React.useCallback(async () => {
     try {
-      const { data } = await axios.get(`${url}/admin/${adminId}`, {
+      const { data } = await axios.get(`${url}/admin/${user?.adminId}`, {
         headers: { Authorization: user?.token },
       });
 
@@ -118,11 +117,11 @@ const Overview = ({ params }) => {
     } catch (error) {
       console.log(error);
     }
-  }, [url, user, adminId, setAdminData]);
+  }, [url, user, setAdminData]);
 
   const getAdminActivies = React.useCallback(async () => {
     try {
-      const { data } = await axios.get(`${url}/admin_activities/${adminId}`, {
+      const { data } = await axios.get(`${url}/admin_activities/${user?.adminId}`, {
         headers: { Authorization: user?.token },
       });
 
@@ -132,7 +131,7 @@ const Overview = ({ params }) => {
     } catch (error) {
       console.log(error);
     }
-  }, [url, user, adminId, setAdminActivities]);
+  }, [url, user, setAdminActivities]);
 
   React.useEffect(() => {
     if (user) {
@@ -155,7 +154,7 @@ const Overview = ({ params }) => {
       {canEditMain ? (
         <EditMain
           getAdminData={getAdminData}
-          adminId={adminId}
+          adminId={user?.adminId}
           handleCanEditMain={handleCanEditMain}
         />
       ) : null}

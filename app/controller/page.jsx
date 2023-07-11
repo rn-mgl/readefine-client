@@ -53,7 +53,7 @@ const AdminDashboard = () => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg });
     }
-  }, [user, url, setCounts]);
+  }, [user, url, setUpdates]);
 
   React.useEffect(() => {
     if (user) {

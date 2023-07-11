@@ -138,7 +138,7 @@ const SingleTest = ({ params }) => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg });
     }
-  }, [url, user, testId, setSelectedChoices, setQuestions]);
+  }, [url, user, testId, setQuestions]);
 
   const getTest = React.useCallback(async () => {
     try {
@@ -155,7 +155,7 @@ const SingleTest = ({ params }) => {
       console.log(error);
       router.push(`/controller/tests/add/${testId}`);
     }
-  }, [url, user, testId]);
+  }, [url, user, testId, router]);
 
   React.useEffect(() => {
     if (user) {

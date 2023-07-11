@@ -149,7 +149,7 @@ const Dangle = () => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg });
     }
-  }, [gameOver]);
+  }, [entryGuesses, timer, url, user?.token, wordData.word_id]);
 
   const getRandomWord = async () => {
     if (user?.token) {
@@ -195,7 +195,7 @@ const Dangle = () => {
     if (gameOver.over) {
       handleGameOver();
     }
-  }, [gameOver]);
+  }, [gameOver, handleGameOver]);
 
   return (
     <div className="w-full min-h-screen bg-accntColor p-4 cstm-flex-col justify-start">

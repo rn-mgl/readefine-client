@@ -197,7 +197,7 @@ const Decipher = () => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg });
     }
-  }, [gameOver]);
+  }, [guess, timer, url, user?.token, wordData.word_id]);
 
   React.useEffect(() => {
     if (!gameOver.over) {

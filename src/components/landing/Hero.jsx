@@ -28,7 +28,7 @@ const Hero = () => {
                   l-l:w-7/12"
       >
         <span className="font-bold">Readefine</span> : Gamification Approach to Engage and Enhance
-        Elementary Student's Reading Comprehension Skills in the English Language
+        Elementary Student&apos;s Reading Comprehension Skills in the English Language
       </p>
       <div
         className="w-full cstm-flex-col gap-4

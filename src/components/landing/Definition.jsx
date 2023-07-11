@@ -46,8 +46,8 @@ const Definition = () => {
                   l-s:text-xl l-s:w-10/12
                   l-l:w-7/12"
         >
-          A Lexile is an individual's reading comprehension level. You will have materials based on
-          your Lexile level to provide efficient growth and sufficient challenges.
+          A Lexile is an individual&apos;s reading comprehension level. You will have materials
+          based on your Lexile level to provide efficient growth and sufficient challenges.
         </p>
       </div>
 

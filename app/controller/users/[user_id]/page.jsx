@@ -148,7 +148,7 @@ const SingleUser = ({ params }) => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg });
     }
-  }, [url, user, setUserData]);
+  }, [url, user, setUserData, userId]);
 
   const getUserLexile = React.useCallback(async () => {
     try {

@@ -126,7 +126,7 @@ const ClientRiddles = () => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg });
     }
-  }, [gameOver]);
+  }, [entryGuesses, riddleData?.riddle_id, timer, url, user?.token]);
 
   const getRiddle = async () => {
     try {
