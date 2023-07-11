@@ -181,7 +181,7 @@ const ClientRiddles = () => {
           handleIsPlaying={handleIsPlaying}
         />
       ) : null}
-      <div className="cstm-flex-col cstm-w-limit w-full h-full justify-start">
+      <div className="cstm-flex-col w-full h-full justify-start">
         {isPlaying ? (
           <RiddleGame
             riddleData={riddleData}

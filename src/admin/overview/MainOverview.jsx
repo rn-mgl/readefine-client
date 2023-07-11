@@ -17,7 +17,7 @@ const MainOverview = (props) => {
         </div>
 
         <div className="cstm-flex-col gap-1 my-auto">
-          <div className="font-bold text-prmColor cstm-flex-row gap-2">
+          <div className="font-bold text-prmColor cstm-flex-row gap-2 text-sm">
             <p>
               {props.adminData.name} {props.adminData.surname}
             </p>
@@ -25,7 +25,7 @@ const MainOverview = (props) => {
             <p className="font-medium text-black">{props.adminData.username}</p>
           </div>
 
-          <p className="font-light text-sm"> {props.adminData.email}</p>
+          <p className="font-light text-xs"> {props.adminData.email}</p>
         </div>
 
         <button
