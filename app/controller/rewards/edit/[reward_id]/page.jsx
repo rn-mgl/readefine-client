@@ -50,7 +50,12 @@ const EditReward = ({ params }) => {
     let imageSrc = null;
 
     if (rawFile) {
-      imageSrc = await fileFns.uploadFile(url, rawFile, user.token, axios);
+      imageSrc = await fileFns.uploadFile(
+        `${url}/readefine_admin_file`,
+        rawFile,
+        user.token,
+        axios
+      );
     }
 
     try {

@@ -51,7 +51,9 @@ const Reader = () => {
     <div className="w-full p-5 cstm-flex-col bg-accntColor min-h-screen overflow-y-auto cstm-scrollbar justify-start gap-5">
       <ClientPageHeader mainHeader="Readefine" subHeader="Profile" />
 
-      {canEditMain ? <EditMain handleCanEditMain={handleCanEditMain} /> : null}
+      {canEditMain ? (
+        <EditMain getUserData={getUserData} handleCanEditMain={handleCanEditMain} />
+      ) : null}
 
       {canEditGradeLevel ? (
         <EditGradeLevel handleCanEditGradeLevel={handleCanEditGradeLevel} />

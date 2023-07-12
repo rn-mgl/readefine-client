@@ -80,7 +80,12 @@ const AddStory = () => {
     let bookCover = null;
 
     if (storyFilter.rawFile) {
-      bookCover = await fileFns.uploadFile(url, storyFilter.rawFile, user.token, axios);
+      bookCover = await fileFns.uploadFile(
+        `${url}/readefine_admin_file`,
+        storyFilter.rawFile,
+        user.token,
+        axios
+      );
       storyFilter.file = { src: bookCover, name: "" };
     }
 
@@ -88,7 +93,12 @@ const AddStory = () => {
       const page = pages[i];
       let pageImage = null;
       if (page.rawFile) {
-        pageImage = await fileFns.uploadFile(url, page.rawFile, user.token, axios);
+        pageImage = await fileFns.uploadFile(
+          `${url}/readefine_admin_file`,
+          page.rawFile,
+          user.token,
+          axios
+        );
         page.file = { src: pageImage, name: "" };
       }
     }

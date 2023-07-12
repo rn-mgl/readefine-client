@@ -130,7 +130,7 @@ export const uploadFile = async (url, files, token, axios) => {
   formData.append("file", file);
 
   try {
-    const { data } = await axios.post(`${url}/readefine_admin_file/admin_file`, formData, {
+    const { data } = await axios.post(url, formData, {
       headers: { Authorization: token },
       "Content-Type": "multipart/form-data",
     });

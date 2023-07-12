@@ -3,6 +3,7 @@ import React from "react";
 import Link from "next/link";
 import AdminLink from "../nav/AdminLink";
 import Loading from "../../components/global/Loading";
+import axios from "axios";
 
 import { BiMenu, BiTask, BiLogOut } from "react-icons/bi";
 import { BsPenFill, BsPatchQuestionFill } from "react-icons/bs";
@@ -13,7 +14,6 @@ import { GiAchievement } from "react-icons/gi";
 import { usePathname } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
-import axios from "axios";
 
 const AdminNav = () => {
   const [adminData, setAdminData] = React.useState({});
@@ -37,7 +37,7 @@ const AdminNav = () => {
 
   const getAdminData = React.useCallback(async () => {
     try {
-      const { data } = await axios.get(`${url}/admin/${user?.admin_id}`, {
+      const { data } = await axios.get(`${url}/admin/${user?.adminId}`, {
         headers: { Authorization: user?.token },
       });
 

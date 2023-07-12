@@ -13,7 +13,7 @@ import FilePreview from "../../components/global/FilePreview";
 import ActionLabel from "../../components/global/ActionLabel";
 import InputComp from "../../components/input/InputComp";
 import { CiUser } from "react-icons/ci";
-import EditInput from "./EditInput";
+import EditInput from "../../components/profile/EditInput";
 
 const EditMain = (props) => {
   const [adminData, setAdminData] = React.useState({});
@@ -46,7 +46,12 @@ const EditMain = (props) => {
     const { name, surname, username } = adminData;
 
     if (adminData?.rawFile) {
-      image = await fileFns.uploadFile(url, adminData?.rawFile, user?.token, axios);
+      image = await fileFns.uploadFile(
+        `${url}/readefine_admin_file`,
+        adminData?.rawFile,
+        user?.token,
+        axios
+      );
     }
 
     try {
@@ -104,7 +109,7 @@ const EditMain = (props) => {
             ) : adminData?.image ? (
               <FileViewer src={adminData.image} clearUpload={clearUpload} />
             ) : (
-              <div className="w-full h-40 bg-prmColor bg-opacity-20 rounded-2xl whitespace-pre-wrap cstm-flex-col">
+              <div className="w-full h-40 bg-scndColor bg-opacity-20 rounded-2xl whitespace-pre-wrap cstm-flex-col">
                 <p className="text-sm text-prmColor font-medium">
                   You do not have a profile picture
                 </p>
@@ -169,7 +174,7 @@ const EditMain = (props) => {
             onClick={editMain}
             className="w-full rounded-full bg-prmColor p-2 text-scndColor font-bold t:w-40"
           >
-            Update
+            Save Changes
           </button>
         </div>
       </div>

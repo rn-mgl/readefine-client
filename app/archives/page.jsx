@@ -1,6 +1,6 @@
 "use client";
-import ArchivesCards from "@/src/src/client/archives/ArchivesCards";
 import React from "react";
+import ArchivesCards from "@/src/src/client/archives/ArchivesCards";
 import DashboardCardImage1 from "../../public/DashboardCardImage1.svg";
 import DashboardCardImage2 from "../../public/DashboardCardImage2.svg";
 import DashboardCardImage3 from "../../public/DashboardCardImage3.svg";

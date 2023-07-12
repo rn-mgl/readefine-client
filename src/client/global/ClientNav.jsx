@@ -12,12 +12,16 @@ import { TbGoGame } from "react-icons/tb";
 import { GiAchievement } from "react-icons/gi";
 import { usePathname } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
+import { useGlobalContext } from "@/src/context";
+import axios from "axios";
 
 const ClientNav = () => {
+  const [userData, setUserData] = React.useState({});
   const [isOpen, setIsOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
-  const { data: session } = useSession();
 
+  const { data: session } = useSession();
+  const { url } = useGlobalContext();
   const user = session?.user?.name;
 
   const logOut = () => {
@@ -30,6 +34,26 @@ const ClientNav = () => {
   };
 
   const path = usePathname();
+
+  const getUserData = React.useCallback(async () => {
+    try {
+      const { data } = await axios.get(`${url}/user/${user?.userId}`, {
+        headers: { Authorization: user?.token },
+      });
+
+      if (data) {
+        setUserData(data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, [url, user, setUserData]);
+
+  React.useEffect(() => {
+    if (user) {
+      getUserData();
+    }
+  }, [user, getUserData]);
 
   if (loading) {
     return <Loading />;
@@ -118,7 +142,10 @@ const ClientNav = () => {
             href={`/archives/reader/${user?.userId}`}
             className="font-poppins text-left hover:bg-neutral-100 p-2 rounded-md justify-start transition-all cstm-flex-row gap-2 w-full"
           >
-            <div className="w-10 h-10 rounded-full  bg-gradient-to-br from-prmColor  to-scndColor bg-opacity-30" />
+            <div
+              style={{ backgroundImage: userData?.image ? `url(${userData?.image})` : null }}
+              className="w-10 h-10 rounded-full  bg-gradient-to-br from-prmColor  to-scndColor bg-opacity-30 bg-cover bg-center"
+            />
             <div className="cstm-flex-col items-start">
               <p className="text-xs">Welcome</p>
               <p className="font-bold text-prmColor whitespace-nowrap truncate">
