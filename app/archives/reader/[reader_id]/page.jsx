@@ -5,10 +5,10 @@ import ClientPageHeader from "@/src/src/client/global/PageHeader";
 import MainProfile from "@/src/src/client/reader/MainProfile";
 import axios from "axios";
 import EditMain from "@/src/src/client/reader/EditMain";
-import EditGradeLevel from "@/src/src/client/reader/EditGradeLevel";
 
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
+import EditGradeLevel from "@/src/src/client/reader/EditGradeLevel";
 
 const Reader = () => {
   const [userData, setUserData] = React.useState({});
@@ -51,12 +51,17 @@ const Reader = () => {
     <div className="w-full p-5 cstm-flex-col bg-accntColor min-h-screen overflow-y-auto cstm-scrollbar justify-start gap-5">
       <ClientPageHeader mainHeader="Readefine" subHeader="Profile" />
 
-      {canEditMain ? (
-        <EditMain getUserData={getUserData} handleCanEditMain={handleCanEditMain} />
+      {canEditGradeLevel ? (
+        <EditGradeLevel
+          handleCanEditGradeLevel={handleCanEditGradeLevel}
+          gradeLevel={userData?.grade_level}
+          getUserData={getUserData}
+          lexile={userData?.lexile}
+        />
       ) : null}
 
-      {canEditGradeLevel ? (
-        <EditGradeLevel handleCanEditGradeLevel={handleCanEditGradeLevel} />
+      {canEditMain ? (
+        <EditMain getUserData={getUserData} handleCanEditMain={handleCanEditMain} />
       ) : null}
 
       <div className="cstm-w-limit cstm-flex-col gap-5 w-full">

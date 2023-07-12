@@ -1,7 +1,6 @@
 import React, { Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { BsArrowRight } from "react-icons/bs";
 
 const ArchivesCards = (props) => {
   return (

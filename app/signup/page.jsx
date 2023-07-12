@@ -23,7 +23,7 @@ const Signup = () => {
     email: "",
     username: "",
     password: "",
-    gradeLevel: 1,
+    gradeLevel: 4,
   });
   const [visiblePassword, setVisiblePassword] = React.useState(false);
   const [loading, setLoading] = React.useState(false);

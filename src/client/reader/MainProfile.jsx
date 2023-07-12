@@ -1,4 +1,5 @@
 import React from "react";
+
 import { BsDot } from "react-icons/bs";
 import { AiFillEdit } from "react-icons/ai";
 
@@ -33,7 +34,7 @@ const MainProfile = (props) => {
           <AiFillEdit className="text-prmColor" />
         </button>
       </div>
-      <div className="cstm-flex-col gap-5 w-full t:w-6/12 t:h-72 l-l:cstm-flex-row ">
+      <div className="cstm-flex-col gap-5 w-full t:w-6/12 t:h-72 l-l:cstm-flex-row justify-start">
         <div className="w-full h-full  bg-white rounded-2xl p-5 shadow-solid cstm-flex-col gap-2 relative">
           <p>Grade Level</p>
           <p className="text-4xl text-prmColor font-bold">{props.userData?.grade_level}</p>

@@ -140,6 +140,7 @@ const ClientNav = () => {
         <div className="cstm-flex-row gap-2 w-full justify-start mt-auto">
           <Link
             href={`/archives/reader/${user?.userId}`}
+            onClick={toggleOpenNav}
             className="font-poppins text-left hover:bg-neutral-100 p-2 rounded-md justify-start transition-all cstm-flex-row gap-2 w-full"
           >
             <div
