@@ -78,6 +78,7 @@ const SingleUser = ({ params }) => {
 
     for (let i = 0; i < counts.length; i++) {
       const curr = userReads[i];
+
       if (curr) {
         const dayIdx = new Date(curr.date_read).getDate();
         const data = { x: dayIdx, y: curr.lexile };
@@ -235,7 +236,7 @@ const SingleUser = ({ params }) => {
             <div className="cstm-flex-row gap-2 w-full justify-start">
               <div
                 style={{ backgroundImage: userData.image ? `url("${userData.image}")` : null }}
-                className="w-12 h-12 rounded-full bg-prmColor bg-opacity-10"
+                className="w-12 h-12 rounded-full bg-prmColor bg-opacity-10 bg-cover bg-center"
               />
               <div className="cstm-flex-col items-start">
                 <p className="capitalize font-bold text-black text-base">

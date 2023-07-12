@@ -71,12 +71,12 @@ const AdminUsers = () => {
         <td>
           {email[0]} <br /> <span className="font-light text-xs">@{email[1]}</span>
         </td>
-        <td>{user.surname}</td>
-        <td>{user.name}</td>
-        <td>{user.username}</td>
-        <td>{user.lexile}L</td>
-        <td>{user.grade_level}</td>
-        <td>{localizeDate(user.date_joined)}</td>
+        <td className="break-words whitespace-pre-wrap">{user.surname}</td>
+        <td className="break-words whitespace-pre-wrap">{user.name}</td>
+        <td className="break-words whitespace-pre-wrap">{user.username}</td>
+        <td className="break-words whitespace-pre-wrap">{user.lexile}L</td>
+        <td className="break-words whitespace-pre-wrap">{user.grade_level}</td>
+        <td className="break-words whitespace-pre-wrap">{localizeDate(user.date_joined)}</td>
         <td className="cstm-flex-col">
           <Link
             href={`/controller/users/${user.user_id}`}

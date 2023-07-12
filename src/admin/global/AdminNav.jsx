@@ -159,11 +159,10 @@ const AdminNav = () => {
               </p>
             </div>
           </Link>
-          <div className="ml-auto cstm-bg-hover">
-            <div onClick={logOut}>
-              <BiLogOut />
-            </div>
-          </div>
+
+          <button className="ml-auto cstm-bg-hover" onClick={logOut}>
+            <BiLogOut />
+          </button>
         </div>
       </div>
     </>

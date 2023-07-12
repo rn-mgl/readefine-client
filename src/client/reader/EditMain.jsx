@@ -119,7 +119,7 @@ const EditMain = (props) => {
               <label className="cstm-bg-hover cursor-pointer w-fit group relative mr-auto">
                 <input
                   accept="image/*"
-                  type="image"
+                  type="file"
                   className="hidden peer"
                   formNoValidate
                   name="file"
