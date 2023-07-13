@@ -24,8 +24,14 @@ const ClientNav = () => {
   const { url } = useGlobalContext();
   const user = session?.user?.name;
 
-  const logOut = () => {
+  const logOut = async () => {
     setLoading(true);
+
+    try {
+      const { data } = await axios.post(`${url}/session`, { type: "out", id: user?.userId });
+    } catch (error) {
+      console.log(error);
+    }
     signOut({ callbackUrl: "/", redirect: true });
   };
 

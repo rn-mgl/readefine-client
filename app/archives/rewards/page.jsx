@@ -59,7 +59,7 @@ const ClientRewards = () => {
           title={reward.reward_name}
           type={reward.reward_type}
           isReceived={reward.is_received}
-          to={`/controller/rewards/${reward.reward_id}`}
+          to={`/archives/rewards/${reward.reward_id}`}
         />
       </React.Fragment>
     );

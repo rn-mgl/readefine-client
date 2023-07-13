@@ -2,7 +2,8 @@ import React from "react";
 
 const AnswersText = (props) => {
   return (
-    <div className="cstm-flex-col gap-5 w-full bg-scndColor p-5 rounded-2xl items-start text-left bg-opacity-20 text-sm">
+    <div className="cstm-flex-col gap-5 w-full bg-accntColor p-5 rounded-2xl items-start text-left text-sm">
+      <p className="text-xs font-semibold">{props.dateAnswered}</p>
       {props.question ? (
         <>
           <p>

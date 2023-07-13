@@ -25,7 +25,7 @@ const StoriesCards = (props) => {
   );
 
   return (
-    <div className="bg-white p-5 rounded-2xl cstm-flex-col gap-4 t:w-72 shadow-solid max-h-[30rem] relative">
+    <div className="bg-white p-5 rounded-2xl cstm-flex-col h-[30rem] gap-4 t:w-72 shadow-solid max-h-[30rem] relative border-2 border-accntColor">
       {props.isRead ? (
         <div className="group absolute top-2 right-5">
           <ActionLabel label="Finished Reading" />
@@ -39,23 +39,20 @@ const StoriesCards = (props) => {
 
       <div className="cstm-flex-row w-full">
         <div className="cstm-flex-col gap-1 font-poppins mr-auto items-start">
-          <p
-            className="font-bold text-black overflow-x-auto w-44
-                      t:text-base"
-          >
+          <p className="font-bold text-black overflow-x-auto w-44 text-left text-sm">
             {props.title ? props.title : "Title"}
           </p>
-          <p className="opacity-50 text-sm">{props.author ? props.author : "author"}</p>
+          <p className="opacity-50 text-xs">{props.author ? props.author : "author"}</p>
         </div>
         <div className="cstm-flex-col gap-1 font-poppins items-end">
           <p className="font-bold text-prmColor t:text-base">{props.lexile}L</p>
-          <p className="opacity-50 text-sm">{props.genre ? props.genre : "Genre"}</p>
+          <p className="opacity-50 text-xs">{props.genre ? props.genre : "Genre"}</p>
         </div>
       </div>
 
       <div className="cstm-flex-col w-full gap-2">
         <Link
-          href={props.visit}
+          href={props.read}
           className="w-full text-center font-poppins text-sm font-normal bg-prmColor text-accntColor rounded-full p-2 "
         >
           Read

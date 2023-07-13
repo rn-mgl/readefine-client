@@ -1,7 +1,28 @@
+const months = {
+  1: "January",
+  2: "February",
+  3: "March",
+  4: "April",
+  5: "May",
+  6: "June",
+  7: "July",
+  8: "August",
+  9: "September",
+  10: "October",
+  11: "November",
+  12: "December",
+};
+
 export const localizeDate = (date) => {
   const localDate = new Date(date).toLocaleDateString();
+  const dateSplit = localDate.split("/");
+  const month = dateSplit[0];
+  const day = dateSplit[1];
+  const year = dateSplit[2];
 
-  return localDate;
+  const stringedDate = `${months[month]} ${day}, ${year}`;
+
+  return stringedDate;
 };
 
 export const inputDate = (date) => {

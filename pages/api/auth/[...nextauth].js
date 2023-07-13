@@ -44,6 +44,12 @@ export const authOptions = {
 
         if (data) {
           const user = { name: data.primary };
+
+          const { data: sessionData } = await axios.post(`http://192.168.1.121:9000/session`, {
+            type: "in",
+            id: data.primary.userId,
+          });
+
           return user;
         } else {
           return null;

@@ -88,7 +88,7 @@ const ClientStories = () => {
           lexile={story.lexile}
           genre={story.genre}
           testId={story.test_id}
-          visit={`/archives/stories/${story.story_id}`}
+          read={`/archives/stories/${story.story_id}`}
           test={`/archives/tests/${testId}`}
           showLexileMessage={showLexileMessage}
           handleShowLexileMessage={handleShowLexileMessage}
