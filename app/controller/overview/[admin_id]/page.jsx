@@ -35,19 +35,31 @@ const Overview = () => {
     let text = "";
 
     if (d.content && d.header && d.image) {
-      text = `a content, header, and image on the story ${d.title} at page ${d.page}`;
+      text = `a content, header, and image`;
     } else if (d.content && d.header) {
-      text = `a content and header on the story ${d.title} at page ${d.page}`;
+      text = `a content and header`;
     } else if (d.content) {
-      text = `a content on the story ${d.title} at page ${d.page}`;
+      text = `a content`;
     } else if (d.header) {
-      text = `a header on the story ${d.title} at page ${d.page}`;
+      text = `a header`;
     } else if (d.image) {
-      text = `an image on the story ${d.title} at page ${d.page}`;
+      text = `an image`;
     }
     return (
       <React.Fragment key={i}>
-        <ActivityText addedData={text} dateAdded={localizeDate(d.date_added)} />
+        <div className="cstm-flex-col items-start gap-2 w-full text-sm bg-accntColor p-5 rounded-2xl relative">
+          <p className="text-xs font-semibold">{localizeDate(d.date_added)}</p>
+          <div className="cstm-flex-row gap-2 justify-start">
+            <div>
+              <BsDot className="scale-[2]" />
+            </div>
+
+            <p>
+              You added <span className="text-prmColor font-bold">{text}</span> on the story{" "}
+              <span className="text-prmColor font-bold">{d.title}</span>.
+            </p>
+          </div>
+        </div>
       </React.Fragment>
     );
   });
@@ -60,13 +72,44 @@ const Overview = () => {
     );
   });
 
-  const testAnswer = adminActivities?.testAnswerData?.map((d, i) => {
+  console.log(adminActivities);
+
+  const testQuestionsActivity = adminActivities?.testQuestionData?.map((q, i) => {
     return (
       <React.Fragment key={i}>
-        <ActivityText
-          addedData={`${d.answer} as an answer on to ${d.question}`}
-          dateAdded={localizeDate(d.date_added)}
-        />
+        <div className="cstm-flex-col items-start gap-2 w-full text-sm bg-accntColor p-5 rounded-2xl relative">
+          <p className="text-xs font-semibold">{localizeDate(q.date_added)}</p>
+          <div className="cstm-flex-row gap-2 justify-start">
+            <div>
+              <BsDot className="scale-[2]" />
+            </div>
+
+            <p>
+              You added the question <span className="text-prmColor font-bold">{q.question}</span>{" "}
+              on the test <span className="text-prmColor font-bold">{q.title}</span>.
+            </p>
+          </div>
+        </div>
+      </React.Fragment>
+    );
+  });
+
+  const testAnswer = adminActivities?.testAnswerData?.map((a, i) => {
+    return (
+      <React.Fragment key={i}>
+        <div className="cstm-flex-col items-start gap-2 w-full text-sm bg-accntColor p-5 rounded-2xl relative">
+          <p className="text-xs font-semibold">{localizeDate(a.date_added)}</p>
+          <div className="cstm-flex-row gap-2 justify-start">
+            <div>
+              <BsDot className="scale-[2]" />
+            </div>
+
+            <p>
+              You added the answer <span className="text-prmColor font-bold">{a.answer}</span> on
+              the question <span className="text-prmColor font-bold">{a.question}</span>.
+            </p>
+          </div>
+        </div>
       </React.Fragment>
     );
   });
@@ -79,24 +122,42 @@ const Overview = () => {
     );
   });
 
-  const rewardActivity = adminActivities?.rewardData?.map((d, i) => {
+  const rewardActivity = adminActivities?.rewardData?.map((r, i) => {
     return (
       <React.Fragment key={i}>
-        <ActivityText
-          addedData={`${d.reward_name} for the achievement ${d.achievement_name}`}
-          dateAdded={localizeDate(d.date_added)}
-        />
+        <div className="cstm-flex-col items-start gap-2 w-full text-sm bg-accntColor p-5 rounded-2xl relative">
+          <p className="text-xs font-semibold">{localizeDate(r.date_added)}</p>
+          <div className="cstm-flex-row gap-2 justify-start">
+            <div>
+              <BsDot className="scale-[2]" />
+            </div>
+
+            <p>
+              You added <span className="text-prmColor font-bold">{r.reward_name}</span> for the
+              achievement <span className="text-prmColor font-bold">{r.achievement_name}</span>.
+            </p>
+          </div>
+        </div>
       </React.Fragment>
     );
   });
 
-  const riddlesActivity = adminActivities?.riddlesData?.map((d, i) => {
+  const riddlesActivity = adminActivities?.riddlesData?.map((r, i) => {
     return (
       <React.Fragment key={i}>
-        <ActivityText
-          addedData={`${d.riddle} with the answer ${d.answer}`}
-          dateAdded={localizeDate(d.date_added)}
-        />
+        <div className="cstm-flex-col items-start gap-2 w-full text-sm bg-accntColor p-5 rounded-2xl relative">
+          <p className="text-xs font-semibold">{localizeDate(r.date_added)}</p>
+          <div className="cstm-flex-row gap-2 justify-start">
+            <div>
+              <BsDot className="scale-[2]" />
+            </div>
+
+            <p>
+              You added the <span className="text-prmColor font-bold">{r.riddle}</span> with the
+              answer <span className="text-prmColor font-bold">{r.answer}</span>.
+            </p>
+          </div>
+        </div>
       </React.Fragment>
     );
   });
@@ -145,8 +206,6 @@ const Overview = () => {
     }
   }, [user, getAdminActivies]);
 
-  console.log(adminActivities);
-
   return (
     <div className="w-full min-h-screen bg-accntColor p-5 cstm-flex-col justify-start cstm-scrollbar gap-5">
       <AdminPageHeader mainHeader="Overview" subHeader="Readefine" />
@@ -173,7 +232,7 @@ const Overview = () => {
         <div className="cstm-flex-col justify-start gap-5 w-full t:cstm-flex-row">
           <ActivityCard label="Test" activity={testActivity} />
 
-          <ActivityCard label="Test Questions" activity={achievementActivity} />
+          <ActivityCard label="Test Questions" activity={testQuestionsActivity} />
         </div>
 
         <div className="cstm-flex-col justify-start gap-5 w-full t:cstm-flex-row">

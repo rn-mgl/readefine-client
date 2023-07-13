@@ -151,10 +151,10 @@ const ClientNav = () => {
           >
             <div
               style={{ backgroundImage: userData?.image ? `url(${userData?.image})` : null }}
-              className="w-10 h-10 rounded-full  bg-gradient-to-br from-prmColor  to-scndColor bg-opacity-30 bg-cover bg-center"
+              className="w-12 h-12 rounded-full  bg-gradient-to-br from-prmColor to-scndColor bg-opacity-30 bg-cover bg-center"
             />
             <div className="cstm-flex-col items-start">
-              <p className="text-xs">Welcome</p>
+              <p className="text-sm font-semibold">{userData?.lexile}L</p>
               <p className="font-bold text-prmColor whitespace-nowrap truncate">
                 {user?.name} {user?.surname}
               </p>

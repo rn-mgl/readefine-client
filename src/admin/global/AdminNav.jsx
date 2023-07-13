@@ -144,7 +144,7 @@ const AdminNav = () => {
 
         <div className="cstm-flex-row gap-2 w-full justify-start mt-auto">
           <Link
-            href={`/controller/overview/${user?.admin_id}`}
+            href={`/controller/overview/${user?.adminId}`}
             onClick={toggleOpenNav}
             className="cstm-flex-row hover:bg-neutral-100 p-2 w-full rounded-md font-poppins justify-start gap-2"
           >

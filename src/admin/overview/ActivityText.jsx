@@ -3,7 +3,7 @@ import { BsDot } from "react-icons/bs";
 
 const ActivityText = (props) => {
   return (
-    <div className="cstm-flex-col items-start gap-2 w-full text-sm bg-scndColor bg-opacity-10 p-5 rounded-md relative">
+    <div className="cstm-flex-col items-start gap-2 w-full text-sm bg-accntColor p-5 rounded-2xl relative">
       <p className="text-xs font-semibold">{props.dateAdded}</p>
       <div className="cstm-flex-row gap-2 justify-start">
         <div>
