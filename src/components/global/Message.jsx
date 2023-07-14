@@ -20,12 +20,12 @@ const Message = (props) => {
     >
       {messageInfo}
 
-      <div className="cstm-bg-hover absolute top-3 right-0">
-        <IoCloseCircleOutline
-          onClick={() => props.setMessage({ msg: "", active: false })}
-          className="text-prmColor scale-125 "
-        />
-      </div>
+      <button
+        onClick={() => props.setMessage({ msg: "", active: false })}
+        className="cstm-bg-hover absolute top-3 right-0"
+      >
+        <IoCloseCircleOutline className="text-prmColor scale-125 " />
+      </button>
     </div>
   );
 };

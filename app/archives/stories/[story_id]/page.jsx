@@ -170,12 +170,9 @@ const SingleStory = ({ params }) => {
         </div>
 
         <div className="fixed bottom-0 left-2/4 -translate-x-2/4 backdrop-blur-md cstm-flex-row p-2 px-5 z-20 w-full cstm-w-limit l-s:right-0 l-s:-translate-x-0">
-          <div className="cstm-bg-hover">
-            <BiChevronLeft
-              className="scale-150 text-black  cursor-pointer t:scale-[2]"
-              onClick={handleDecrement}
-            />
-          </div>
+          <button onClick={handleDecrement} className="cstm-bg-hover">
+            <BiChevronLeft className="scale-150 text-black  cursor-pointer t:scale-[2]" />
+          </button>
 
           <input
             onChange={(e) => handleActivePage(e.target)}
@@ -186,15 +183,15 @@ const SingleStory = ({ params }) => {
             className="text-sm mx-auto text-center w-16 rounded-md px-2 py-1 focus:outline-prmColor"
           />
 
-          <div className="cstm-bg-hover">
-            <BiChevronRight
-              className="scale-150 text-black  cursor-pointer t:scale-[2]"
-              onClick={() => {
-                handleIncrement();
-                activePage === pages.length - 1 && readStory();
-              }}
-            />
-          </div>
+          <button
+            onClick={() => {
+              handleIncrement();
+              activePage === pages.length - 1 && readStory();
+            }}
+            className="cstm-bg-hover"
+          >
+            <BiChevronRight className="scale-150 text-black  cursor-pointer t:scale-[2]" />
+          </button>
         </div>
       </div>
     </div>

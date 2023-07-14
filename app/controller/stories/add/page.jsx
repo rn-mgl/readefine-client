@@ -159,9 +159,9 @@ const AddStory = () => {
         {allPages}
 
         <div className="cstm-flex-row w-full ">
-          <div className="cstm-bg-hover mr-auto">
-            <IoAddOutline onClick={addPage} className="cursor-pointer text-prmColor scale-150" />
-          </div>
+          <button onClick={addPage} className="cstm-bg-hover mr-auto">
+            <IoAddOutline className="cursor-pointer text-prmColor scale-150" />
+          </button>
           <button
             type="submit"
             className="w-fit text-center font-poppins ml-auto text-sm font-normal bg-prmColor text-accntColor rounded-full p-2 px-4

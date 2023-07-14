@@ -112,10 +112,10 @@ const AddTest = ({ params }) => {
         {testPages}
 
         <div className="cstm-flex-row w-full">
-          <div className="cstm-bg-hover mr-auto relative group">
+          <button onClick={addPage} className="cstm-bg-hover mr-auto relative group">
             <ActionLabel label="Add Page" />
-            <IoAddOutline onClick={addPage} className="cursor-pointer text-prmColor scale-150" />
-          </div>
+            <IoAddOutline className="cursor-pointer text-prmColor scale-150" />
+          </button>
           <button
             type="submit"
             className="w-fit text-center font-poppins ml-auto text-sm font-normal bg-prmColor text-accntColor rounded-full p-2 px-4"

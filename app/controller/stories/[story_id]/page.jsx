@@ -155,9 +155,9 @@ const SingleStory = ({ params }) => {
           <AiFillEdit className=" text-prmColor cursor-pointer" />
         </Link>
 
-        <div className="cstm-bg-hover">
-          <AiFillDelete className="text-prmColor cursor-pointer" onClick={handleCanDeleteStory} />
-        </div>
+        <button onClick={handleCanDeleteStory} className="cstm-bg-hover">
+          <AiFillDelete className="text-prmColor cursor-pointer" />
+        </button>
       </div>
 
       <button

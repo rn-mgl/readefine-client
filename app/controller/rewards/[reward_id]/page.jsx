@@ -69,12 +69,9 @@ const SingleReward = ({ params }) => {
               <AiFillEdit className=" text-prmColor cursor-pointer" />
             </Link>
 
-            <div className="cstm-bg-hover">
-              <AiFillDelete
-                className="text-prmColor cursor-pointer"
-                onClick={handleCanDeleteReward}
-              />
-            </div>
+            <button className="cstm-bg-hover" onClick={handleCanDeleteReward}>
+              <AiFillDelete className="text-prmColor cursor-pointer" />
+            </button>
           </div>
           <div className="p-5 rounded-2xl gap-5 cstm-flex-col overflow-auto w-full h-[80vh] justify-start bg-white text-sm shadow-md cstm-scrollbar">
             <div className="w-full h-full cstm-flex-col bg-accntColor rounded-2xl p-5">

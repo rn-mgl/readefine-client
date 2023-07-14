@@ -41,9 +41,9 @@ const DeleteRiddle = (props) => {
 
   return (
     <div className="w-full min-h-screen backdrop-blur-md fixed z-30 top-0 left-0 p-5 cstm-flex-col justify-start">
-      <div className="cstm-bg-hover ml-auto">
-        <IoClose onClick={props.handleCanDeleteRiddle} className="text-prmColor scale-150 " />
-      </div>
+      <button onClick={props.handleCanDeleteRiddle} className="cstm-bg-hover ml-auto">
+        <IoClose className="text-prmColor scale-150 " />
+      </button>
 
       <div className="cstm-flex-col w-full cstm-w-limit border-collapse h-screen">
         <form

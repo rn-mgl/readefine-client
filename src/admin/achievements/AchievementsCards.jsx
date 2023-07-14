@@ -44,12 +44,11 @@ const AchievementsCards = (props) => {
           >
             {props.goal}
           </p>
-          <div className="cstm-bg-hover">
+          <button onClick={handleSetActive} className="cstm-bg-hover">
             <BiChevronDown
               className={`${isActive ? "rotate-180" : "rotate-0"} transition-all scale-150`}
-              onClick={handleSetActive}
             />
-          </div>
+          </button>
         </div>
       </div>
 

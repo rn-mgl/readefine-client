@@ -207,9 +207,9 @@ const SingleTest = ({ params }) => {
             <AiFillEdit className=" text-prmColor cursor-pointer" />
           </Link>
 
-          <div className="cstm-bg-hover">
-            <AiFillDelete className="text-prmColor cursor-pointer" onClick={handleCanDeleteTest} />
-          </div>
+          <button onClick={handleCanDeleteTest} className="cstm-bg-hover">
+            <AiFillDelete className="text-prmColor cursor-pointer" />
+          </button>
         </div>
 
         {mappedQuestions}

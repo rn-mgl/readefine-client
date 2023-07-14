@@ -61,74 +61,71 @@ const SingleAchievement = ({ params }) => {
           achievementId={achievementId}
         />
       ) : null}
-      <div className="cstm-flex-col cstm-w-limit w-full gap-2">
-        <div className="cstm-flex-row text-prmColor w-full t:w-10/12 l-l:w-8/12">
-          <div className="cstm-bg-hover mr-auto">
-            <Link href="/controller/achievements">
-              <BsArrowLeft />
-            </Link>
-          </div>
-          <div className="cstm-bg-hover">
-            <Link href={`/controller/achievements/edit/${achievementId}`}>
-              <AiFillEdit />
-            </Link>
-          </div>
-          <div className="cstm-bg-hover">
-            <AiFillDelete onClick={handleCanDeleteAchievement} />
+      <div className="cstm-flex-col cstm-w-limit w-full gap-5">
+        <div className="cstm-flex-row text-prmColor w-full">
+          <Link href="/controller/achievements" className="cstm-bg-hover mr-auto">
+            <BsArrowLeft />
+          </Link>
+
+          <Link href={`/controller/achievements/edit/${achievementId}`} className="cstm-bg-hover">
+            <AiFillEdit />
+          </Link>
+
+          <button onClick={handleCanDeleteAchievement} className="cstm-bg-hover">
+            <AiFillDelete />
+          </button>
+        </div>
+
+        <div className="w-full cstm-flex-col">
+          <div className="w-full p-5 bg-white rounded-2xl cstm-flex-col gap-2 min-h-[12rem]">
+            <p className="font-bold text-prmColor text-sm">Task</p>
+            <p className="text-sm text-justify">{achievement?.task}</p>
           </div>
         </div>
 
-        <div className="p-5 rounded-2xl bg-white cstm-flex-col w-full justify-start h-fit items-start gap-5 t:w-10/12 l-l:w-8/12">
-          <div className="cstm-flex-row gap-2">
-            <p className="px-2 py-1 font-bold text-white rounded-md bg-gradient-to-br from-prmColor to-scndColor">
-              Title
-            </p>
-            <p>{achievement.achievement_name}</p>
+        <div className="cstm-flex-col t:cstm-flex-row w-full gap-5">
+          <div className="w-full cstm-flex-col">
+            <div className="w-full p-5 bg-white rounded-2xl cstm-flex-col gap-2 min-h-[12rem]">
+              <p className="text-sm">Achievement Type</p>
+              <p className="text-justify font-bold text-prmColor text-2xl">
+                {typeConversion[achievement?.achievement_type]}
+              </p>
+            </div>
           </div>
 
-          <div className="cstm-separator" />
-
-          <div className="cstm-flex-row gap-2">
-            <p className="px-2 py-1 font-bold text-white rounded-md bg-gradient-to-br from-prmColor to-scndColor">
-              Type
-            </p>
-            <p>{typeConversion[achievement.achievement_type]}</p>
+          <div className="w-full cstm-flex-col">
+            <div className="w-full p-5 bg-white rounded-2xl cstm-flex-col gap-2 min-h-[12rem]">
+              <p className="text-sm">Task Specifics</p>
+              <p className="text-justify font-bold text-prmColor text-2xl">
+                {specificsConversion[achievement?.specifics]}
+              </p>
+            </div>
           </div>
 
-          <div className="cstm-separator" />
+          <div className="w-full cstm-flex-col">
+            <div className="w-full p-5 bg-white rounded-2xl cstm-flex-col gap-5 min-h-[12rem]">
+              <p className="text-sm">Goal</p>
+              <p className="text-justify font-bold text-prmColor text-2xl">{achievement?.goal}</p>
+            </div>
+          </div>
+        </div>
 
-          <div className="cstm-flex-row gap-2">
-            <p className="px-2 py-1 font-bold text-white rounded-md bg-gradient-to-br from-prmColor to-scndColor">
-              Specifics
-            </p>
-            <p>{specificsConversion[achievement.specifics]}</p>
+        <div className="cstm-flex-col w-full gap-5">
+          <div className="w-full cstm-flex-col h-full">
+            <div className="w-full p-5 bg-white rounded-2xl cstm-flex-col gap-2 h-full">
+              <p className="text-sm">Reward Name</p>
+              <p className="text-justify font-bold text-prmColor text-2xl">
+                {achievement?.reward_name}
+              </p>
+            </div>
           </div>
 
-          <div className="cstm-separator" />
-
-          <div className="cstm-flex-row gap-2">
-            <p className="px-2 py-1 font-bold text-white rounded-md bg-gradient-to-br from-prmColor to-scndColor">
-              Goal
-            </p>
-            <p>{achievement.goal}</p>
-          </div>
-
-          <div className="cstm-separator" />
-
-          <div className="cstm-flex-row gap-2 items-start">
-            <p className="px-2 py-1 font-bold text-white rounded-md bg-gradient-to-br from-prmColor to-scndColor">
-              Task
-            </p>
-            <p className="text-justify">{achievement.task}</p>
-          </div>
-
-          <div className="cstm-separator" />
-          <div className="cstm-flex-col gap-2 items-start w-fit">
-            <p className="px-2 py-1 font-bold text-white rounded-md bg-gradient-to-br from-prmColor to-scndColor">
-              Reward
-            </p>
-            <div className="drop-shadow-md animate-float">
-              <FileViewer src={achievement.reward} />
+          <div className="w-full cstm-flex-col">
+            <div className="w-full p-5 bg-white rounded-2xl cstm-flex-col gap-2 min-h-[12rem]">
+              <p className="text-sm text-prmColor font-bold">Reward</p>
+              <div className="animate-float drop-shadow-lg">
+                <FileViewer src={achievement?.reward} />
+              </div>
             </div>
           </div>
         </div>

@@ -67,9 +67,12 @@ const ClientNav = () => {
 
   return (
     <>
-      <div className="absolute cstm-bg-hover z-10 top-4 left-4 l-s:hidden">
-        <BiMenu className="scale-150 cursor-pointer" onClick={toggleOpenNav} />
-      </div>
+      <button
+        onClick={toggleOpenNav}
+        className="absolute cstm-bg-hover z-10 top-4 left-4 l-s:hidden"
+      >
+        <BiMenu className="scale-150 cursor-pointer" />
+      </button>
 
       <div
         className={`${
@@ -78,12 +81,9 @@ const ClientNav = () => {
             l-s:translate-x-0 l-s:left-0 l-s:top-0 l-s:w-[30%]
             l-l:w-[20%]`}
       >
-        <div className="cstm-bg-hover absolute top-4 left-4 l-s:hidden">
-          <IoCloseSharp
-            className="scale-150 cursor-pointer text-prmColor"
-            onClick={toggleOpenNav}
-          />
-        </div>
+        <button onClick={toggleOpenNav} className="cstm-bg-hover absolute top-4 left-4 l-s:hidden">
+          <IoCloseSharp className="scale-150 cursor-pointer text-prmColor" />
+        </button>
 
         <Link
           href="/archives"

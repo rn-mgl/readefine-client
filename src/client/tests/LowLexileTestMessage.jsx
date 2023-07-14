@@ -7,9 +7,12 @@ const LowLexileTestMessage = (props) => {
     <div className="w-full h-screen backdrop-blur-md fixed top-0 left-0 z-10 p-5">
       <div className="cstm-flex-col w-full h-full cstm-w-limit">
         <div className="bg-white rounded-2xl shadow-md w-full h-fit p-5 cstm-flex-col gap-5 text-justify text-sm relative t:w-6/12 l-s:w-5/12">
-          <div className="cstm-bg-hover ml-auto absolute top-3 right-3">
-            <IoClose onClick={props.handleShowLexileMessage} className="scale-110" />
-          </div>
+          <button
+            onClick={props.handleShowLexileMessage}
+            className="cstm-bg-hover ml-auto absolute top-3 right-3"
+          >
+            <IoClose className="scale-110" />
+          </button>
           <p className="text-prmColor font-bold underline underline-offset-2 text-base">
             Important
           </p>

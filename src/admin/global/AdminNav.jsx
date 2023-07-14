@@ -61,9 +61,9 @@ const AdminNav = () => {
 
   return (
     <>
-      <div className="cstm-bg-hover absolute top-4 left-4 z-10">
-        <BiMenu className="scale-150 cursor-pointer l-s:hidden" onClick={toggleOpenNav} />
-      </div>
+      <button onClick={toggleOpenNav} className="cstm-bg-hover absolute top-4 left-4 z-10">
+        <BiMenu className="scale-150 cursor-pointer l-s:hidden" />
+      </button>
 
       <div
         className={`${
@@ -72,9 +72,9 @@ const AdminNav = () => {
             l-s:translate-x-0 l-s:left-0 l-s:top-0 l-s:w-[30%]
             l-l:w-[20%]`}
       >
-        <div className="cstm-bg-hover absolute top-4 left-4 l-s:hidden">
-          <IoCloseSharp className="scale-150 cursor-pointer" onClick={toggleOpenNav} />
-        </div>
+        <button onClick={toggleOpenNav} className="cstm-bg-hover absolute top-4 left-4 l-s:hidden">
+          <IoCloseSharp className="scale-150 cursor-pointer" />
+        </button>
 
         <Link
           href="/controller"
