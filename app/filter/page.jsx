@@ -94,9 +94,9 @@ const AdminLogin = () => {
           spellCheck={false}
           icon={
             visiblePassword ? (
-              <AiOutlineEye onClick={handleVisiblePassword} />
-            ) : (
               <AiOutlineEyeInvisible onClick={handleVisiblePassword} />
+            ) : (
+              <AiOutlineEye onClick={handleVisiblePassword} />
             )
           }
           onChange={(e) => handleLoginData(e.target)}

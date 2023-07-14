@@ -16,11 +16,16 @@ import { useRouter } from "next/navigation";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { CiUser } from "react-icons/ci";
 import { signIn } from "next-auth/react";
+import ReceiveAchievement from "@/src/src/client/achievements/ReceiveAchievement";
 
 const Login = () => {
   const [loginData, setLoginData] = React.useState({
     candidateIdentifier: "",
     candidatePassword: "",
+  });
+  const [accomplishedAchievement, setAccomplishedAchievement] = React.useState({
+    accomplished: false,
+    data: {},
   });
   const [visiblePassword, setVisiblePassword] = React.useState(false);
   const [message, setMessage] = React.useState({ msg: "", active: false });
@@ -42,24 +47,53 @@ const Login = () => {
     });
   };
 
+  const handleAccomplishedAchievement = () => {
+    setAccomplishedAchievement({
+      accomplished: false,
+      data: {},
+    });
+  };
+
   const loginUser = async (e) => {
     e.preventDefault();
 
     setLoading(true);
-
+    // middleware login for session
     await signIn("client-credentials", {
       candidateIdentifier: loginData.candidateIdentifier,
       candidatePassword: loginData.candidatePassword,
       redirect: false,
     });
 
+    // for redirecting and backend request
     try {
       const { data } = await axios.post(`${url}/auth_client/client_login`, { loginData });
       if (data) {
-        if (data.primary.isVerified) {
-          router.push("/archives");
-        } else {
-          router.push(`/verify/${data.primary.token.split(" ")[1]}`);
+        const { primary } = data;
+
+        // check for login achievements
+        try {
+          const { data: achievementData } = await axios.get(
+            `${url}/user_achievement/${primary.userId}`,
+            { headers: { Authorization: primary.token }, params: { type: "session" } }
+          );
+
+          // show reward
+          if (achievementData) {
+            setLoading(false);
+            setAccomplishedAchievement({ accomplished: true, data: achievementData });
+          } else {
+            // redirect depending on status
+            if (primary.isVerified) {
+              router.push("/archives");
+            } else {
+              router.push(`/verify/${primary.token.split(" ")[1]}`);
+            }
+          }
+        } catch (error) {
+          console.log(error);
+          setLoading(false);
+          setMessage({ active: true, msg: error?.response?.data?.msg });
         }
       }
     } catch (error) {
@@ -75,6 +109,16 @@ const Login = () => {
 
   return (
     <div className="w-full h-screen bg-accntColor p-5 cstm-flex-col font-poppins overflow-hidden">
+      {accomplishedAchievement.accomplished ? (
+        <ReceiveAchievement
+          reward={accomplishedAchievement?.data.reward}
+          achievementName={accomplishedAchievement?.data.achievement_name}
+          task={accomplishedAchievement?.data.task}
+          description={accomplishedAchievement?.data.description}
+          url={`/archives`}
+          handleAccomplishedAchievement={handleAccomplishedAchievement}
+        />
+      ) : null}
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
       <p className=" font-extrabold text-2xl text-prmColor">Log In</p>
       <br />
@@ -101,9 +145,9 @@ const Login = () => {
           spellCheck={false}
           icon={
             visiblePassword ? (
-              <AiOutlineEye onClick={handleVisiblePassword} />
-            ) : (
               <AiOutlineEyeInvisible onClick={handleVisiblePassword} />
+            ) : (
+              <AiOutlineEye onClick={handleVisiblePassword} />
             )
           }
           onChange={(e) => handleLoginData(e.target)}

@@ -12,6 +12,8 @@ import { wordCount } from "@/src/src/functions/wordCount";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { useRouter } from "next/navigation";
+import FileViewer from "@/src/src/components/global/FileViewer";
+import { IoClose } from "react-icons/io5";
 
 const EditReward = ({ params }) => {
   const [reward, setReward] = React.useState({});
@@ -47,7 +49,7 @@ const EditReward = ({ params }) => {
     e.preventDefault();
     const { reward_name, reward_type, description, rawFile } = reward;
 
-    let imageSrc = null;
+    let imageSrc = reward?.reward;
 
     if (rawFile) {
       imageSrc = await fileFns.uploadFile(
@@ -59,7 +61,7 @@ const EditReward = ({ params }) => {
     }
 
     try {
-      const newReward = imageSrc ? imageSrc : reward.reward;
+      const newReward = imageSrc;
       const { data } = await axios.patch(
         `${url}/admin_reward/${rewardId}`,
         { reward_name, reward_type, reward: newReward, description },
@@ -93,7 +95,7 @@ const EditReward = ({ params }) => {
       getReward();
     }
   }, [getReward, user]);
-  console.log(reward);
+
   return (
     <div className="w-full min-h-screen bg-accntColor p-5 cstm-flex-col gap-2 justify-start">
       <AdminPageHeader subHeader={reward?.reward_name} mainHeader="Edit Reward" />
@@ -139,13 +141,17 @@ const EditReward = ({ params }) => {
 
           <div className="table-fixed p-5 rounded-2xl cstm-flex-col overflow-auto w-full h-[70vh] justify-start items-start bg-white text-sm gap-2 shadow-md cstm-scrollbar">
             <div className="w-full h-full cstm-flex-col bg-accntColor rounded-2xl">
-              {reward.reward || reward.file?.src ? (
+              {reward.reward ? (
+                <div className="w-full cstm-flex-col gap-5">
+                  <FileViewer src={reward.reward} clearFiles={clearUploadedReward} />
+                  <button onClick={clearUploadedReward} className="cstm-bg-hover">
+                    <IoClose className="scale-150 text-prmColor" />
+                  </button>
+                </div>
+              ) : reward.reward || reward.file?.src ? (
                 <FilePreview
                   src={reward.reward ? reward.reward : reward.file.src}
-                  clearFiles={() => {
-                    fileFns.clearFiles(setReward);
-                    clearUploadedReward();
-                  }}
+                  clearFiles={() => fileFns.clearFiles(setReward)}
                 />
               ) : null}
             </div>

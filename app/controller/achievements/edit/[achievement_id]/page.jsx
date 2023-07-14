@@ -58,13 +58,13 @@ const EditAchievement = ({ params }) => {
     e.preventDefault();
     try {
       const { data } = await axios.patch(
-        `${url}/admin_achievement/${achivementId}`,
+        `${url}/admin_achievement/${achievementId}`,
         { achievement },
         { headers: { Authorization: user.token } }
       );
 
       if (data) {
-        router.push(`/controller/achievements/${achivementId}`);
+        router.push(`/controller/achievements/${achievementId}`);
       }
     } catch (error) {
       console.log(error);

@@ -112,3 +112,70 @@ input[type="range"]::-moz-range-thumb {
   height: 1rem;
   width: 1rem;
 }
+
+@keyframes rotate {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+.cstm-light-rays {
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(#542aca7d, #4bfce17d);
+  overflow: hidden;
+  --a: #542aca7d;
+  --b: #4bfce17d;
+  --c: #542aca7d;
+  --d: #4bfce17d;
+}
+
+.cstm-light-rays:before,
+.cstm-light-rays:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -100vmax;
+  width: 200vmax;
+  height: 200vmax;
+  opacity: 0.5;
+}
+
+div:before {
+  background: conic-gradient(
+    var(--a),
+    var(--b),
+    var(--c),
+    var(--d),
+    var(--a),
+    var(--d),
+    var(--a),
+    var(--d),
+    var(--b),
+    var(--c),
+    var(--d),
+    var(--a),
+    var(--b)
+  );
+  animation: rotate 4s infinite;
+}
+div:after {
+  background: conic-gradient(
+    var(--c),
+    transparent,
+    var(--c),
+    var(--a),
+    transparent,
+    var(--b),
+    var(--c),
+    transparent,
+    var(--c),
+    var(--a)
+  );
+  animation: rotate 2s 4s infinite reverse;
+}

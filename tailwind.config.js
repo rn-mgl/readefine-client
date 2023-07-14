@@ -54,6 +54,12 @@ module.exports = {
           "0%": { transform: "translateX(-20%)" },
           "100%": { transform: "translateX(20%)" },
         },
+
+        lightRays: {
+          "0%": { transform: "rotate(0deg)", height: "100vh" },
+          "50%": { transform: "rotate(180deg)", width: "100vww" },
+          "100%": { transform: "rotate(360deg)", height: "100vh" },
+        },
       },
       fontFamily: {
         poppins: ["var(--font-poppins)"],
@@ -65,6 +71,7 @@ module.exports = {
         dangle: "dangle 2s ease-in-out infinite alternate",
         shake: "shake 200ms ease-in-out",
         flowingBg: "flowingBg 5s ease-in-out infinite alternate",
+        lightRays: "lightRays 5s ease-in-out infinite alternate",
       },
       boxShadow: {
         solid: "0px 5px rgba(0,0,0,0.3)",

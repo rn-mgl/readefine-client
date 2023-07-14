@@ -88,7 +88,7 @@ const FindRewards = (props) => {
   }, [user, getRewards]);
 
   return (
-    <div className="p-5 backdrop-blur-md bg-black bg-opacity-20 fixed top-0 left-0 w-full min-h-screen cstm-flex-col gap-2 justify-start  z-20">
+    <div className="p-5 h-full overflow-y-auto cstm-scrollbar backdrop-blur-md bg-black bg-opacity-20 fixed top-0 left-0 w-full min-h-screen cstm-flex-col gap-2 justify-start  z-20">
       <button
         onClick={props.handleCanSelectReward}
         className="ml-auto cstm-flex-col w-fit z-20 cstm-bg-hover"

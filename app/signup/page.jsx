@@ -124,9 +124,9 @@ const Signup = () => {
           spellCheck={false}
           icon={
             visiblePassword ? (
-              <AiOutlineEye onClick={handleVisiblePassword} />
-            ) : (
               <AiOutlineEyeInvisible onClick={handleVisiblePassword} />
+            ) : (
+              <AiOutlineEye onClick={handleVisiblePassword} />
             )
           }
           value={userData.password}

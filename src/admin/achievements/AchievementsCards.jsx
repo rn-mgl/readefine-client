@@ -12,38 +12,17 @@ const AchievementsCards = (props) => {
   };
 
   return (
-    <div className="bg-white p-5 rounded-2xl cstm-flex-col gap-4 w-fit transition-all">
-      <div className="w-full h-fit cstm-flex-col overflow-clip bg-white">
-        <Image
-          src={props.image}
-          alt="temp"
-          width={250}
-          height={200}
-          className="rounded-2xl p-5 bg-accntColor"
-        />
+    <div className="bg-white p-5 rounded-2xl cstm-flex-col gap-4 min-h-[26rem] w-80 transition-all justify-start">
+      <div className="w-full cstm-flex-col overflow-clip bg-accntColor h-full p-5 rounded-2xl">
+        <Image src={props.image} alt="temp" width={250} height={250} className="h-full" />
       </div>
-      <div className="cstm-flex-row w-full">
-        <div className="cstm-flex-col gap-1 font-poppins mr-auto items-start">
-          <p
-            className="font-bold text-black
-                      t:text-base"
-          >
-            {props.title}
-          </p>
-          <p
-            className="opacity-50 text-sm
-                     t:text-base"
-          >
-            {props.type}
-          </p>
+      <div className="cstm-flex-col w-full">
+        <div className="cstm-flex-row font-poppins mr-auto items-start w-full">
+          <p className="font-bold text-black mr-auto w-8/12 text-left">{props.title}</p>
+          <p className="font-bold text-prmColor w-4/12 text-right">{props.goal}</p>
         </div>
-        <div className="cstm-flex-col gap-1 font-poppins items-end mb-auto">
-          <p
-            className="font-bold text-prmColor  
-                    t:text-base"
-          >
-            {props.goal}
-          </p>
+        <div className="cstm-flex-row w-full font-poppins">
+          <p className="font-bold text-prmColor mr-auto text-sm">{props.type}</p>
           <button onClick={handleSetActive} className="cstm-bg-hover">
             <BiChevronDown
               className={`${isActive ? "rotate-180" : "rotate-0"} transition-all scale-150`}
@@ -61,8 +40,7 @@ const AchievementsCards = (props) => {
 
       <Link
         href={props.to}
-        className="w-full text-center font-poppins text-sm font-normal bg-prmColor text-accntColor rounded-full p-2
-                t:text-base"
+        className="w-full text-center font-poppins text-sm font-normal bg-prmColor text-accntColor rounded-full p-2 mt-auto"
       >
         Visit
       </Link>

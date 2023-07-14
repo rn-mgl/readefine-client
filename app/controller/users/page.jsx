@@ -98,10 +98,10 @@ const AdminUsers = () => {
 
       if (data) {
         setUsers(data);
-        setMessage({ active: true, msg: error?.response?.data?.msg });
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg });
     }
   }, [setUsers, url, user, searchFilter, sortFilter, dateRangeFilter, lexileRangeFilter]);
 
@@ -127,7 +127,7 @@ const AdminUsers = () => {
       />
 
       <table
-        className="table-fixed p-4 rounded-md cstm-flex-col overflow-auto w-full h-screen justify-start items-start bg-white text-sm gap-5 
+        className="table-fixed p-4 h-[75vh] cstm-scrollbar rounded-md cstm-flex-col overflow-auto w-full justify-start items-start bg-white text-sm gap-5 
         cstm-w-limit border-collapse"
       >
         <thead className="w-full ">

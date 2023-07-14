@@ -8,7 +8,6 @@ import Message from "@/src/src/components/global/Message";
 
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
-import { inputDate } from "@/src/src/functions/localDate";
 
 const ClientRewards = () => {
   const [rewards, setRewards] = React.useState([]);
@@ -58,12 +57,14 @@ const ClientRewards = () => {
           image={reward.reward}
           title={reward.reward_name}
           type={reward.reward_type}
-          isReceived={reward.is_received}
+          isReceived={showFilter.toShow === "all" ? reward.is_received : true}
           to={`/archives/rewards/${reward.reward_id}`}
         />
       </React.Fragment>
     );
   });
+
+  console.log(rewards);
 
   const getRewards = React.useCallback(async () => {
     try {
@@ -102,7 +103,7 @@ const ClientRewards = () => {
         />
 
         <div
-          className="cstm-flex-col gap-5 justify-start w-full transition-all 
+          className="cstm-flex-col gap-5 justify-start w-full transition-all
                   t:cstm-flex-row t:flex-wrap"
         >
           <Suspense fallback={<p>Loading...</p>}> {rewardsCards}</Suspense>
