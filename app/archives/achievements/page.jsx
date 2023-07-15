@@ -6,7 +6,6 @@ import axios from "axios";
 import AchievementPanel from "@/src/src/client/achievements/AchievementPanel";
 import Message from "@/src/src/components/global/Message";
 
-import { inputDate } from "@/src/src/functions/localDate";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { typeConversion } from "@/src/src/functions/typeConversion";
@@ -23,10 +22,6 @@ const ClientAchievements = () => {
     toSort: "achievement_name",
     sortMode: "ASC",
   });
-  const [dateRangeFilter, setDateRangeFilter] = React.useState({
-    from: "",
-    to: inputDate(new Date().toLocaleDateString()),
-  });
   const { data: session } = useSession({ required: true });
 
   const user = session?.user?.name;
@@ -34,15 +29,6 @@ const ClientAchievements = () => {
 
   const handleSearchFilter = ({ name, value }) => {
     setSearchFilter((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
-  };
-
-  const handleDateRangeFilter = ({ name, value }) => {
-    setDateRangeFilter((prev) => {
       return {
         ...prev,
         [name]: value,
@@ -90,7 +76,6 @@ const ClientAchievements = () => {
           searchFilter,
           goalRangeFilter,
           sortFilter,
-          dateRangeFilter,
         },
       });
 
@@ -101,7 +86,7 @@ const ClientAchievements = () => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg });
     }
-  }, [url, user, setAchievements, searchFilter, goalRangeFilter, sortFilter, dateRangeFilter]);
+  }, [url, user, setAchievements, searchFilter, goalRangeFilter, sortFilter]);
 
   React.useEffect(() => {
     if (user) {
@@ -116,16 +101,14 @@ const ClientAchievements = () => {
       <div className="w-full cstm-flex-col gap-2 cstm-w-limit">
         <AchievementsFilter
           handleSearchFilter={handleSearchFilter}
-          handleDateRangeFilter={handleDateRangeFilter}
           handleGoalRangeFilter={handleGoalRangeFilter}
           handleSortFilter={handleSortFilter}
           searchFilter={searchFilter}
           goalRangeFilter={goalRangeFilter}
           sortFilter={sortFilter}
-          dateRangeFilter={dateRangeFilter}
         />
 
-        <div className="w-full overflow-y-auto cstm-scrollbar cstm-flex-col p-2 gap-5 justify-start t:items-start t:cstm-flex-row t:p-5 bg-white rounded-md min-h-[75vh]">
+        <div className="w-full overflow-y-auto cstm-scrollbar cstm-flex-col gap-5 justify-start t:items-start p-5 bg-white rounded-2xl min-h-[75vh]">
           <Suspense fallback={<p>Loading...</p>}> {achievementPanels}</Suspense>
         </div>
       </div>

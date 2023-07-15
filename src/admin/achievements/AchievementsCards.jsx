@@ -12,7 +12,7 @@ const AchievementsCards = (props) => {
   };
 
   return (
-    <div className="bg-white p-5 rounded-2xl cstm-flex-col gap-4 min-h-[26rem] w-80 transition-all justify-start">
+    <div className="bg-white p-5 rounded-2xl cstm-flex-col gap-4 min-h-[26rem] w-72 transition-all justify-start">
       <div className="w-full cstm-flex-col overflow-clip bg-accntColor h-full p-5 rounded-2xl">
         <Image src={props.image} alt="temp" width={250} height={250} className="h-full" />
       </div>

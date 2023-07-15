@@ -12,7 +12,7 @@ export const typeConversion = {
 //for achievement task specifics
 
 export const specificsConversion = {
-  days_online: "Sessions",
+  days_online: "Days Online",
   lexile_growth: "Lexile Growth",
   read_count: "Total Books",
   play_count: "Total Games",
