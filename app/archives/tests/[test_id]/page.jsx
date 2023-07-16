@@ -14,6 +14,7 @@ import { AiFillCaretRight, AiFillCaretLeft } from "react-icons/ai";
 import { BsArrowLeft } from "react-icons/bs";
 import { useRouter } from "next/navigation";
 import TestResult from "@/src/src/client/tests/TestResult";
+import ReceiveAchievement from "@/src/src/client/achievements/ReceiveAchievement";
 
 const SingleTest = ({ params }) => {
   const [testData, setTestData] = React.useState({});
@@ -21,7 +22,8 @@ const SingleTest = ({ params }) => {
   const [activePage, setActivePage] = React.useState(0);
   const [userLexile, setUserLexile] = React.useState(-1);
   const [isFinished, setIsFinished] = React.useState(false);
-  const [canToggleSeeResult, setCanToggleSeeResult] = React.useState(false); // see button
+  const [hasSubmitted, setHasSubmitted] = React.useState(false);
+  const [canToggleSeeResult, setCanToggleSeeResult] = React.useState(false); // see button to toggle see result
   const [canSeeResult, setCanSeeResult] = React.useState(false); // see result
   const [score, setScore] = React.useState(0);
   const [message, setMessage] = React.useState({ msg: "", active: false });
@@ -36,6 +38,10 @@ const SingleTest = ({ params }) => {
     choice8: { answer: "", questionId: -1 },
     choice9: { answer: "", questionId: -1 },
     choice10: { answer: "", questionId: -1 },
+  });
+  const [accomplishedAchievement, setAccomplishedAchievement] = React.useState({
+    accomplished: false,
+    achievements: [],
   });
 
   const { url } = useGlobalContext();
@@ -84,6 +90,17 @@ const SingleTest = ({ params }) => {
     setCanSeeResult((prev) => !prev);
   };
 
+  const handleHasSubmitted = () => {
+    setHasSubmitted((prev) => !prev);
+  };
+
+  const handleAccomplishedAchievement = () => {
+    setAccomplishedAchievement({
+      accomplished: false,
+      data: {},
+    });
+  };
+
   const questionSlides = questions.map((q, index) => {
     return (
       <React.Fragment key={q.question_id}>
@@ -104,6 +121,7 @@ const SingleTest = ({ params }) => {
     );
   });
 
+  // submit test answers and do checkings
   const submitAnswers = async () => {
     let answeredAll = false;
     const legibleForGrowth = testData.lexile > userLexile.lexile - 100;
@@ -113,11 +131,13 @@ const SingleTest = ({ params }) => {
       answeredAll = selectedChoices[`choice${i}`].answer !== "";
     }
 
+    // do not submit if not all are answered
     if (!answeredAll) {
       setMessage({ active: true, msg: "Please answer all items." });
       return;
     }
 
+    // get score
     const currScore = computeScore(setScore, setIsFinished, questions, selectedChoices);
 
     // check if legible for growth
@@ -128,24 +148,44 @@ const SingleTest = ({ params }) => {
       });
     }
 
-    // check if passed
+    // check if passed, do not record if not
     if (currScore < 7) {
       setIsFinished(true);
       setCanToggleSeeResult(true);
       return;
     }
-    setIsFinished(true);
-    setCanToggleSeeResult(true);
+
     // add record to db
     try {
+      // record test and answers
       const { data } = await axios.post(
-        `${url}/taken_test/${testId}`,
-        { selectedChoices, score: currScore, legibleForGrowth, lexile: userLexile?.lexile },
+        `${url}/taken_test`,
+        { selectedChoices, testId, score: currScore, legibleForGrowth, lexile: userLexile?.lexile },
         { headers: { Authorization: user?.token } }
       );
+
       if (data) {
+        // update lexile achievement points and return if achievement is met
+        const { data: achievementData } = await axios.patch(
+          `${url}/user_achievement`,
+          {
+            type: "user_lexile",
+            specifics: "lexile_growth",
+            userId: user?.userId,
+            toAdd: data?.toAdd,
+          },
+          { headers: { Authorization: user?.token } }
+        );
+
+        // if there are achievements
+        if (achievementData.length) {
+          setAccomplishedAchievement({ accomplished: true, achievements: achievementData });
+        }
+
+        // can see result after record
         setIsFinished(true);
-        // router.push("/archives/tests");
+        setHasSubmitted(true);
+        setCanToggleSeeResult(true);
       }
     } catch (error) {
       console.log(error);
@@ -174,8 +214,7 @@ const SingleTest = ({ params }) => {
         headers: { Authorization: user?.token },
       });
       if (data) {
-        shuffleQuestions(data);
-        setQuestions(data);
+        setQuestions(shuffleQuestions(data));
       }
     } catch (error) {
       console.log(error);
@@ -216,8 +255,15 @@ const SingleTest = ({ params }) => {
   }, [user, getUserLexile]);
 
   return (
-    <div className="p-5 w-full min-h-screen bg-accntColor cstm-flex-col gap-2 justify-start overflow-x-hidden">
+    <div className="p-5 w-full min-h-screen bg-accntColor cstm-flex-col gap-5 justify-start overflow-x-hidden">
       <ClientPageHeader mainHeader={testData?.title} subHeader="Test" />
+
+      {accomplishedAchievement.accomplished ? (
+        <ReceiveAchievement
+          achievements={accomplishedAchievement.achievements}
+          handleAccomplishedAchievement={handleAccomplishedAchievement}
+        />
+      ) : null}
 
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
 
@@ -231,34 +277,40 @@ const SingleTest = ({ params }) => {
         />
       ) : null}
 
-      <div className="cstm-flex-row items-start gap-2 w-full cstm-w-limit relative h-[60vh] t:h-[65vh] l-l:h-[70vh]">
-        <Link href="/archives/tests" className="cstm-bg-hover mr-auto">
-          <BsArrowLeft className="text-prmColor" />
-        </Link>
+      <div className="cstm-w-limit cstm-flex-col gap-5 w-full">
+        <div className="cstm-flex-row w-full">
+          <Link href="/archives/tests" className="cstm-bg-hover mr-auto">
+            <BsArrowLeft className="text-prmColor" />
+          </Link>
 
-        {canToggleSeeResult ? (
-          <button
-            onClick={handleCanSeeResult}
-            className="bg-prmColor p-2 w-fit px-10 rounded-full text-sm text-white"
-          >
-            See Mistakes
-          </button>
-        ) : null}
+          {canToggleSeeResult ? (
+            <button
+              onClick={handleCanSeeResult}
+              className="bg-prmColor p-2 w-fit px-10 rounded-full text-sm text-white"
+            >
+              See Mistakes
+            </button>
+          ) : null}
 
-        {questionSlides}
+          {activePage === 9 && !hasSubmitted ? (
+            <button
+              onClick={submitAnswers}
+              className="bg-prmColor w-fit ml-auto p-2 px-10  text-sm rounded-full cstm-flex-col font-medium text-scndColor shadow-solid shadow-indigo-950"
+            >
+              Submit
+            </button>
+          ) : null}
+        </div>
+        <p className="text-xs">
+          <span className="font-bold text-prmColor">note:</span> Changing tabs will reset your test.
+        </p>
+
+        <div className="cstm-flex-row items-start w-full relative h-[60vh] t:h-[65vh]">
+          {questionSlides}
+        </div>
       </div>
 
       <div className="cstm-flex-col w-full mt-auto cstm-w-limit gap-5 t:gap-2">
-        {activePage === 9 ? (
-          <button
-            onClick={submitAnswers}
-            className="bg-prmColor w-full ml-auto p-2  rounded-full cstm-flex-col font-medium text-scndColor shadow-solid shadow-indigo-950
-                      t:w-fit t:px-10 t:mx-auto "
-          >
-            Submit
-          </button>
-        ) : null}
-
         <div className="cstm-flex-row w-full">
           {activePage > 0 ? (
             <button

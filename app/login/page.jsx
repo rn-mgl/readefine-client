@@ -76,6 +76,12 @@ const Login = () => {
       if (data) {
         const { primary } = data;
 
+        // add session in db
+        const { data: sessionData } = await axios.post(`http://192.168.1.121:9000/session`, {
+          type: "in",
+          id: primary.userId,
+        });
+
         // update session achievement points and return if achievement is met
         const { data: achievementData } = await axios.patch(
           `${url}/user_achievement`,

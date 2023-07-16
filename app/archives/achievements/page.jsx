@@ -60,6 +60,7 @@ const ClientAchievements = () => {
         <AchievementPanel
           title={a.achievement_name}
           task={a.task}
+          points={a.points}
           goal={a.goal}
           type={typeConversion[a.achievement_type]}
           to={`/controller/achievements/${a.achievement_id}`}
@@ -70,7 +71,7 @@ const ClientAchievements = () => {
 
   const getAchievement = React.useCallback(async () => {
     try {
-      const { data } = await axios.get(`${url}/achievement`, {
+      const { data } = await axios.get(`${url}/user_achievement`, {
         headers: { Authorization: user.token },
         params: {
           searchFilter,
