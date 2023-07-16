@@ -10,13 +10,17 @@ import axios from "axios";
 import ClientPageHeader from "@/src/src/client/global/PageHeader";
 import Message from "@/src/src/components/global/Message";
 import LowLexileTestMessage from "@/src/src/client/tests/LowLexileTestMessage";
+import TestRecord from "@/src/src/client/tests/TestRecord";
 
 const ClientTests = () => {
   const [tests, setTests] = React.useState([]);
   const [message, setMessage] = React.useState({ msg: "", active: false });
   const [showLexileMessage, setShowLexileMessage] = React.useState(false);
+
   const [userLexile, setUserLexile] = React.useState(-1);
   const [selectedBook, setSelectedBook] = React.useState(-1);
+  const [seeTestRecord, setSeeTestRecord] = React.useState(null);
+
   const [searchFilter, setSearchFilter] = React.useState({ toSearch: "title", searchKey: "" });
   const [lexileRangeFilter, setLexileRangeFilter] = React.useState({ from: 0, to: 1250 });
   const [sortFilter, setSortFilter] = React.useState({ toSort: "title", sortMode: "ASC" });
@@ -73,6 +77,10 @@ const ClientTests = () => {
     setSelectedBook(id);
   };
 
+  const handleSeeTestRecord = (id) => {
+    setSeeTestRecord((prev) => (prev === id ? null : id));
+  };
+
   const testCards = tests.map((t) => {
     return (
       <React.Fragment key={t.test_id}>
@@ -89,6 +97,7 @@ const ClientTests = () => {
           showLexileMessage={showLexileMessage}
           handleShowLexileMessage={handleShowLexileMessage}
           handleSelectedBook={handleSelectedBook}
+          handleSeeTestRecord={handleSeeTestRecord}
         />
       </React.Fragment>
     );
@@ -143,6 +152,10 @@ const ClientTests = () => {
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <ClientPageHeader subHeader="Tests" mainHeader="Readefine" />
+
+      {seeTestRecord ? (
+        <TestRecord testId={seeTestRecord} handleSeeTestRecord={handleSeeTestRecord} />
+      ) : null}
 
       {showLexileMessage ? (
         <LowLexileTestMessage

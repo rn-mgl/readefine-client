@@ -23,8 +23,6 @@ const SingleTest = ({ params }) => {
   const [userLexile, setUserLexile] = React.useState(-1);
   const [isFinished, setIsFinished] = React.useState(false);
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
-  const [canToggleSeeResult, setCanToggleSeeResult] = React.useState(false); // see button to toggle see result
-  const [canSeeResult, setCanSeeResult] = React.useState(false); // see result
   const [score, setScore] = React.useState(0);
   const [message, setMessage] = React.useState({ msg: "", active: false });
   const [selectedChoices, setSelectedChoices] = React.useState({
@@ -84,10 +82,6 @@ const SingleTest = ({ params }) => {
 
   const handleIsFinished = () => {
     setIsFinished((prev) => !prev);
-  };
-
-  const handleCanSeeResult = () => {
-    setCanSeeResult((prev) => !prev);
   };
 
   const handleHasSubmitted = () => {
@@ -151,7 +145,6 @@ const SingleTest = ({ params }) => {
     // check if passed, do not record if not
     if (currScore < 7) {
       setIsFinished(true);
-      setCanToggleSeeResult(true);
       return;
     }
 
@@ -185,7 +178,6 @@ const SingleTest = ({ params }) => {
         // can see result after record
         setIsFinished(true);
         setHasSubmitted(true);
-        setCanToggleSeeResult(true);
       }
     } catch (error) {
       console.log(error);
@@ -267,14 +259,8 @@ const SingleTest = ({ params }) => {
 
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
 
-      {isFinished ? <ScorePopup score={score} handleIsFinished={handleIsFinished} /> : null}
-
-      {canSeeResult ? (
-        <TestResult
-          selectedChoices={selectedChoices}
-          questions={questions}
-          handleCanSeeResult={handleCanSeeResult}
-        />
+      {isFinished ? (
+        <ScorePopup url="/archives/tests" score={score} handleIsFinished={handleIsFinished} />
       ) : null}
 
       <div className="cstm-w-limit cstm-flex-col gap-5 w-full">
@@ -282,15 +268,6 @@ const SingleTest = ({ params }) => {
           <Link href="/archives/tests" className="cstm-bg-hover mr-auto">
             <BsArrowLeft className="text-prmColor" />
           </Link>
-
-          {canToggleSeeResult ? (
-            <button
-              onClick={handleCanSeeResult}
-              className="bg-prmColor p-2 w-fit px-10 rounded-full text-sm text-white"
-            >
-              See Mistakes
-            </button>
-          ) : null}
 
           {activePage === 9 && !hasSubmitted ? (
             <button

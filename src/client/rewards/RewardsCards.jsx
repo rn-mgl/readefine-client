@@ -6,13 +6,13 @@ import question from "../../../public/Question.svg";
 const RewardsCards = (props) => {
   const rewardImage = props.isReceived ? props.image : question;
   return (
-    <div className="bg-white p-5 rounded-2xl cstm-flex-col gap-4 w-72 min-h-[27rem] shadow-solid">
-      <div className="w-full h-fit cstm-flex-col overflow-clip bg-accntColor p-2 rounded-2xl">
+    <div className="bg-white p-5 rounded-2xl cstm-flex-col gap-4 min-w-[18rem] w-72 shadow-solid max-h-[28rem] relative border-2 border-accntColor">
+      <div className="w-full h-fit cstm-flex-col overflow-clip bg-accntColor p-2 rounded-2xl justify-start">
         <Image
           src={rewardImage}
           alt="temp"
           draggable={false}
-          className="rounded-2xl drop-shadow-md"
+          className="drop-shadow-md w-fit"
           width={250}
           height={250}
         />

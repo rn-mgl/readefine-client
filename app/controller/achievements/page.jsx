@@ -62,8 +62,6 @@ const AdminAchievements = () => {
     });
   };
 
-  console.log(dateRangeFilter);
-
   const handleSortFilter = ({ name, value }) => {
     setSortFilter((prev) => {
       return {

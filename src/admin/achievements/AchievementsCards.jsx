@@ -16,14 +16,14 @@ const AchievementsCards = (props) => {
       <div className="w-full cstm-flex-col overflow-clip bg-accntColor h-full p-5 rounded-2xl">
         <Image src={props.image} alt="temp" width={250} height={250} className="h-full" />
       </div>
-      <div className="cstm-flex-col w-full">
+      <div className="cstm-flex-col gap-1 w-full">
         <div className="cstm-flex-row font-poppins mr-auto items-start w-full">
           <p className="font-bold text-black mr-auto w-8/12 text-left">{props.title}</p>
           <p className="font-bold text-prmColor w-4/12 text-right">{props.goal}</p>
         </div>
         <div className="cstm-flex-row w-full font-poppins">
           <p className="font-bold text-prmColor mr-auto text-sm">{props.type}</p>
-          <button onClick={handleSetActive} className="cstm-bg-hover">
+          <button onClick={handleSetActive} className="shadow-none hover:shadow-none">
             <BiChevronDown
               className={`${isActive ? "rotate-180" : "rotate-0"} transition-all scale-150`}
             />
