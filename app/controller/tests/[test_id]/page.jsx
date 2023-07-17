@@ -15,15 +15,20 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { computeScore, shuffleQuestions } from "@/src/src/functions/testFns";
 import TestResult from "@/src/src/client/tests/TestResult";
+import { decipher } from "@/src/src/functions/security";
 
 const SingleTest = ({ params }) => {
   const [test, setTest] = React.useState({});
   const [questions, setQuestions] = React.useState([]);
   const [score, setScore] = React.useState(0);
+
   const [canDeleteTest, setCanDeleteTest] = React.useState(false);
+
   const [isFinished, setIsFinished] = React.useState(false);
   const [canToggleSeeResult, setCanToggleSeeResult] = React.useState(false); // see button
   const [canSeeResult, setCanSeeResult] = React.useState(false); // see result
+  const [hasSubmitted, setHasSubmitted] = React.useState(false);
+
   const [message, setMessage] = React.useState({ msg: "", active: false });
   const [selectedChoices, setSelectedChoices] = React.useState({
     choice1: { answer: "", questionId: -1 },
@@ -38,8 +43,11 @@ const SingleTest = ({ params }) => {
     choice10: { answer: "", questionId: -1 },
   });
 
+  const decodedTestId = decipher(params?.test_id);
   const { url } = useGlobalContext();
   const { data: session } = useSession({ required: true });
+  const user = session?.user?.name;
+  const router = useRouter();
 
   const handleSelectedChoices = (id, { name, value }) => {
     setSelectedChoices((prev) => {
@@ -66,9 +74,9 @@ const SingleTest = ({ params }) => {
     setCanToggleSeeResult((prev) => !prev);
   };
 
-  const testId = params?.test_id;
-  const user = session?.user?.name;
-  const router = useRouter();
+  const handleHasSubmitted = () => {
+    setHasSubmitted((prev) => !prev);
+  };
 
   const mappedQuestions = questions.map((q, i) => {
     return (
@@ -127,9 +135,10 @@ const SingleTest = ({ params }) => {
   const getQuestions = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/admin_test_question`, {
-        params: { testId },
+        params: { testId: decodedTestId },
         headers: { Authorization: user?.token },
       });
+
       if (data) {
         shuffleQuestions(data);
         setQuestions(data);
@@ -138,24 +147,24 @@ const SingleTest = ({ params }) => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg });
     }
-  }, [url, user, testId, setQuestions]);
+  }, [url, user, decodedTestId, setQuestions]);
 
   const getTest = React.useCallback(async () => {
     try {
-      const { data } = await axios.get(`${url}/admin_test/${testId}`, {
+      const { data } = await axios.get(`${url}/admin_test/${decodedTestId}`, {
         headers: { Authorization: user?.token },
       });
 
       if (data) {
         setTest(data);
       } else {
-        router.push(`/controller/tests/add/${testId}`);
+        router.push(`/controller/tests/add/${params?.test_id}`);
       }
     } catch (error) {
       console.log(error);
-      router.push(`/controller/tests/add/${testId}`);
+      router.push(`/controller/tests/add/${params?.test_id}`);
     }
-  }, [url, user, testId, router]);
+  }, [url, user, decodedTestId, router, params?.test_id]);
 
   React.useEffect(() => {
     if (user) {
@@ -181,7 +190,7 @@ const SingleTest = ({ params }) => {
         <DeleteTest
           handleCanDeleteTest={handleCanDeleteTest}
           confirmation={test?.title}
-          testId={params.test_id}
+          testId={decodedTestId}
         />
       ) : null}
 
@@ -216,10 +225,7 @@ const SingleTest = ({ params }) => {
 
         <div className="cstm-flex-col w-full gap-2 t:cstm-flex-row t:w-10/12 l-l:w-8/12">
           <button
-            onClick={() => {
-              computeScore(setScore, setIsFinished, questions, selectedChoices);
-              handleCanSeeToggleResult();
-            }}
+            onClick={() => computeScore(setScore, setIsFinished, questions, selectedChoices)}
             className={`p-2 bg-prmColor text-scndColor text-sm rounded-full w-full mt-5 t:mt-0 t:w-fit t:px-10 t:${
               canToggleSeeResult ? "mr-auto" : "mr-0"
             } shadow-[0_4px_rgba(55,48,163,1)]`}
@@ -227,14 +233,12 @@ const SingleTest = ({ params }) => {
             Submit Answers
           </button>
 
-          {canToggleSeeResult ? (
-            <button
-              onClick={handleCanSeeResult}
-              className="bg-scndColor p-2 w-full t:w-fit t:px-10 t:ml-auto rounded-full text-sm text-prmColor shadow-solid shadow-cyan-800"
-            >
-              See Mistakes
-            </button>
-          ) : null}
+          <button
+            onClick={handleCanSeeResult}
+            className="bg-scndColor p-2 w-full t:w-fit t:px-10 t:ml-auto rounded-full text-sm text-prmColor shadow-solid shadow-cyan-800"
+          >
+            See Mistakes
+          </button>
         </div>
       </div>
     </div>

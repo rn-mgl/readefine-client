@@ -14,6 +14,7 @@ import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { BsArrowLeft } from "react-icons/bs";
 import { AiOutlineMail } from "react-icons/ai";
+import { decipher } from "@/src/src/functions/security";
 
 const SingleUser = ({ params }) => {
   const [userData, setUserData] = React.useState({});
@@ -24,7 +25,7 @@ const SingleUser = ({ params }) => {
 
   const { data: session } = useSession({ required: true });
   const { url } = useGlobalContext();
-  const userId = params?.user_id;
+  const decodedUserId = decipher(params?.user_id);
   const user = session?.user?.name;
 
   defaults.font.family = "Poppins";
@@ -138,7 +139,7 @@ const SingleUser = ({ params }) => {
 
   const getUserData = React.useCallback(async () => {
     try {
-      const { data } = await axios.get(`${url}/admin_user/${userId}`, {
+      const { data } = await axios.get(`${url}/admin_user/${decodedUserId}`, {
         headers: { Authorization: user.token },
       });
 
@@ -149,12 +150,12 @@ const SingleUser = ({ params }) => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg });
     }
-  }, [url, user, setUserData, userId]);
+  }, [url, user, setUserData, decodedUserId]);
 
   const getUserLexile = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/admin_user_lexile`, {
-        params: { userId },
+        params: { userId: decodedUserId },
         headers: { Authorization: user.token },
       });
 
@@ -165,12 +166,12 @@ const SingleUser = ({ params }) => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg });
     }
-  }, [url, user, setUserLexile, userId]);
+  }, [url, user, setUserLexile, decodedUserId]);
 
   const getUserBooksRead = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/admin_read_story`, {
-        params: { userId },
+        params: { userId: decodedUserId },
         headers: { Authorization: user.token },
       });
 
@@ -181,12 +182,12 @@ const SingleUser = ({ params }) => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg });
     }
-  }, [url, user, setUserReads, userId]);
+  }, [url, user, setUserReads, decodedUserId]);
 
   const getUserQuizzesAnswered = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/admin_answered_questions`, {
-        params: { userId },
+        params: { userId: decodedUserId },
         headers: { Authorization: user.token },
       });
 
@@ -197,7 +198,7 @@ const SingleUser = ({ params }) => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg });
     }
-  }, [url, user, setUserQuizzes, userId]);
+  }, [url, user, setUserQuizzes, decodedUserId]);
 
   React.useEffect(() => {
     if (user) {

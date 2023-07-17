@@ -1,13 +1,10 @@
 "use client";
 
-import React, { Suspense } from "react";
+import React from "react";
 import ClientPageHeader from "@/src/src/client/global/PageHeader";
 import MainProfile from "@/src/src/client/reader/MainProfile";
 import axios from "axios";
 import EditMain from "@/src/src/client/reader/EditMain";
-
-import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/src/context";
 import EditGradeLevel from "@/src/src/client/reader/EditGradeLevel";
 import AnswersText from "@/src/src/client/reader/AnswersText";
 import ActivityCard from "@/src/src/client/reader/ActivityCard";
@@ -15,16 +12,25 @@ import StoriesCards from "@/src/src/client/stories/StoriesCards";
 import TestsCards from "@/src/src/client/tests/TestsCards";
 import LowLexileTestMessage from "@/src/src/client/tests/LowLexileTestMessage";
 import RewardsCards from "@/src/src/client/rewards/RewardsCards";
+
+import { useSession } from "next-auth/react";
+import { useGlobalContext } from "@/src/context";
 import { localizeDate } from "@/src/src/functions/localDate";
-import { decipher } from "@/src/src/functions/security";
+import { cipher, decipher } from "@/src/src/functions/security";
+import TestRecord from "@/src/src/client/tests/TestRecord";
+import ChangePassword from "@/src/src/client/reader/ChangePassword";
 
 const Reader = ({ params }) => {
   const [userData, setUserData] = React.useState({});
   const [userActivities, setUserActivities] = React.useState({});
+
   const [canEditMain, setCanEditMain] = React.useState(false);
   const [canEditGradeLevel, setCanEditGradeLevel] = React.useState(false);
+  const [canChangePassword, setCanChangePassword] = React.useState(false);
+
   const [showLexileMessage, setShowLexileMessage] = React.useState(false);
   const [selectedBook, setSelectedBook] = React.useState(-1);
+  const [seeTestRecord, setSeeTestRecord] = React.useState(null);
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -45,6 +51,14 @@ const Reader = ({ params }) => {
 
   const handleSelectedBook = (id) => {
     setSelectedBook(id);
+  };
+
+  const handleSeeTestRecord = (id) => {
+    setSeeTestRecord((prev) => (prev === id ? null : id));
+  };
+
+  const handleCanChangePassword = () => {
+    setCanChangePassword((prev) => !prev);
   };
 
   const getUserData = React.useCallback(async () => {
@@ -128,7 +142,9 @@ const Reader = ({ params }) => {
   });
 
   const storiesRead = userActivities?.readStoryData?.map((story) => {
+    const cipheredStoryId = cipher(story.story_id);
     const testId = story?.test_id ? story?.test_id : story.story_id;
+    const cipheredTestId = cipher(testId);
     return (
       <React.Fragment key={story.story_id}>
         <StoriesCards
@@ -141,8 +157,8 @@ const Reader = ({ params }) => {
           lexile={story.lexile}
           genre={story.genre}
           testId={story.test_id}
-          read={`/archives/stories/${story.story_id}`}
-          test={`/archives/tests/${testId}`}
+          read={`/archives/stories/${cipheredStoryId}`}
+          test={`/archives/tests/${cipheredTestId}`}
           showLexileMessage={showLexileMessage}
           handleShowLexileMessage={handleShowLexileMessage}
           handleSelectedBook={handleSelectedBook}
@@ -152,6 +168,7 @@ const Reader = ({ params }) => {
   });
 
   const testsTaken = userActivities?.takenTestData?.map((t) => {
+    const cipheredTestId = cipher(t.test_id);
     return (
       <React.Fragment key={t.test_id}>
         <TestsCards
@@ -160,13 +177,14 @@ const Reader = ({ params }) => {
           author={t.author}
           lexile={t.lexile}
           score={t.score}
-          to={`/archives/tests/${t.test_id}`}
+          to={`/archives/tests/${cipheredTestId}`}
           testId={t.test_id}
           isTaken={t.is_taken}
           isLower={userData.lexile - 100 > t.lexile}
           showLexileMessage={showLexileMessage}
           handleShowLexileMessage={handleShowLexileMessage}
           handleSelectedBook={handleSelectedBook}
+          handleSeeTestRecord={handleSeeTestRecord}
         />
       </React.Fragment>
     );
@@ -221,6 +239,10 @@ const Reader = ({ params }) => {
         />
       ) : null}
 
+      {seeTestRecord ? (
+        <TestRecord testId={seeTestRecord} handleSeeTestRecord={handleSeeTestRecord} />
+      ) : null}
+
       {canEditGradeLevel ? (
         <EditGradeLevel
           handleCanEditGradeLevel={handleCanEditGradeLevel}
@@ -234,10 +256,15 @@ const Reader = ({ params }) => {
         <EditMain getUserData={getUserData} handleCanEditMain={handleCanEditMain} />
       ) : null}
 
+      {canChangePassword ? (
+        <ChangePassword handleCanChangePassword={handleCanChangePassword} />
+      ) : null}
+
       <div className="cstm-w-limit cstm-flex-col gap-5 w-full">
         <MainProfile
           handleCanEditGradeLevel={handleCanEditGradeLevel}
           handleCanEditMain={handleCanEditMain}
+          handleCanChangePassword={handleCanChangePassword}
           userData={userData}
         />
 

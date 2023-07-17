@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const StoriesCards = (props) => {
   return (
-    <div className="bg-white p-5 rounded-2xl cstm-flex-col gap-4 t:w-72 shadow-solid max-h-[30rem]">
+    <div className="bg-white p-5 rounded-2xl cstm-flex-col gap-4 t:w-72 shadow-solid max-h-[30rem] h-[30rem]">
       <div className="w-full h-fit cstm-flex-col overflow-clip  bg-white rounded-2xl justify-start">
         <Image src={props.image} alt="temp" width={240} height={200} className="w-fit" />
       </div>
@@ -25,7 +25,7 @@ const StoriesCards = (props) => {
         </div>
       </div>
 
-      <div className="cstm-flex-col w-full gap-2">
+      <div className="cstm-flex-col w-full gap-2 mt-auto">
         <Link
           href={props.visit}
           className="w-full text-center font-poppins text-sm font-normal bg-prmColor text-accntColor rounded-full p-2 "

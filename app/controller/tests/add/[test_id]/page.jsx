@@ -10,9 +10,9 @@ import { IoAddOutline } from "react-icons/io5";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
+import { decipher } from "@/src/src/functions/security";
 
 const AddTest = ({ params }) => {
-  const { data: session } = useSession({ required: true });
   const [message, setMessage] = React.useState({ msg: "", active: false });
   const [pages, setPages] = React.useState([
     {
@@ -26,9 +26,10 @@ const AddTest = ({ params }) => {
     },
   ]);
 
-  const router = useRouter();
-  const { test_id } = params;
+  const { data: session } = useSession({ required: true });
   const { url } = useGlobalContext();
+  const decodedTestId = decipher(params?.test_id);
+  const router = useRouter();
   const user = session?.user?.name;
 
   const handlePages = (number, { name, value }) => {
@@ -48,7 +49,12 @@ const AddTest = ({ params }) => {
   const addPage = () => {
     const pageLen = pages ? pages.length + 1 : 1;
     const answer = `answer${pageLen}`;
-    if (pageLen > 10) return;
+
+    if (pageLen > 10) {
+      setMessage({ active: true, msg: "You can only put 10 questions." });
+      return;
+    }
+
     setPages((prev) => {
       const newPage = {
         testNumber: pageLen,
@@ -70,12 +76,15 @@ const AddTest = ({ params }) => {
   const createTest = async (e) => {
     e.preventDefault();
 
-    if (pages.length < 10) return;
+    if (pages.length < 10) {
+      setMessage({ active: true, msg: "Enter 10 questions before posting." });
+      return;
+    }
 
     try {
       const { data } = await axios.post(
         `${url}/admin_test`,
-        { story_id: test_id, pages },
+        { storyId: decodedTestId, pages },
         { headers: { Authorization: user.token } }
       );
 
@@ -92,9 +101,9 @@ const AddTest = ({ params }) => {
     return (
       <React.Fragment key={page.testNumber}>
         <AddTestPage
-          handlePages={handlePages}
           testNumber={page.testNumber}
           page={page}
+          handlePages={handlePages}
           deletePage={() => deletePage(page.testNumber)}
         />
       </React.Fragment>
@@ -104,7 +113,9 @@ const AddTest = ({ params }) => {
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <AdminPageHeader subHeader="Tests" mainHeader="Add Test" />
+
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+
       <form
         onSubmit={(e) => createTest(e)}
         className="w-full cstm-flex-col cstm-w-limit border-collapse gap-5"
@@ -112,10 +123,12 @@ const AddTest = ({ params }) => {
         {testPages}
 
         <div className="cstm-flex-row w-full">
-          <button onClick={addPage} className="cstm-bg-hover mr-auto relative group">
+          <button type="button" onClick={addPage} className="cstm-bg-hover mr-auto relative group">
             <ActionLabel label="Add Page" />
+
             <IoAddOutline className="cursor-pointer text-prmColor scale-150" />
           </button>
+
           <button
             type="submit"
             className="w-fit text-center font-poppins ml-auto text-sm font-normal bg-prmColor text-accntColor rounded-full p-2 px-4"

@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { inputDate } from "@/src/src/functions/localDate";
-import { typeConversion } from "@/src/src/functions/typeConversion";
+import { cipher } from "@/src/src/functions/security";
 
 const AdminRewards = () => {
   const [rewards, setRewards] = React.useState([]);
@@ -60,13 +60,14 @@ const AdminRewards = () => {
   };
 
   const rewardsCards = rewards.map((reward) => {
+    const cipheredRewardId = cipher(reward.reward_id);
     return (
       <React.Fragment key={reward.reward_id}>
         <RewardsCards
           image={reward.reward}
           title={reward.reward_name}
           type={reward.reward_type}
-          to={`/controller/rewards/${reward.reward_id}`}
+          to={`/controller/rewards/${cipheredRewardId}`}
         />
       </React.Fragment>
     );
@@ -97,7 +98,9 @@ const AdminRewards = () => {
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <AdminPageHeader subHeader="Readefine" mainHeader="Rewards" />
+
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+
       <div className="w-full cstm-w-limit cstm-flex-col gap-2">
         <RewardsFilter
           handleSearchFilter={handleSearchFilter}
@@ -107,9 +110,11 @@ const AdminRewards = () => {
           sortFilter={sortFilter}
           dateRangeFilter={dateRangeFilter}
         />
+
         <Link href="/controller/rewards/add" className="cstm-bg-hover mr-auto p-2 w-fit">
           <IoAddOutline className="text-prmColor cursor-pointer scale-150" />
         </Link>
+
         <div
           className="cstm-flex-col gap-5 justify-start w-full transition-all 
                   t:cstm-flex-row t:flex-wrap"

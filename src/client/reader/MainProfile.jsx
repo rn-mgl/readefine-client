@@ -15,17 +15,27 @@ const MainProfile = (props) => {
             className="w-20 h-20 rounded-full bg-cover bg-center bg-gradient-to-br from-scndColor to-prmColor border-4 border-white absolute bottom-0 translate-y-10"
           />
         </div>
-        <div className="cstm-flex-col my-auto w-fit">
+
+        <div className="cstm-flex-col mt-auto w-fit">
           <div className="cstm-flex-row text-sm gap-2 t:text-base">
             <p className="text-prmColor font-bold ">
               {props.userData.name} {props.userData.surname}
             </p>
+
             <BsDot />
+
             <p>{props.userData?.username}</p>
           </div>
 
           <p className="text-xs t:text-sm">{props.userData?.email}</p>
         </div>
+
+        <button
+          onClick={props.handleCanChangePassword}
+          className="mt-auto hover:shadow-none text-sm text-prmColor hover:underline underline-offset-2"
+        >
+          change password
+        </button>
 
         <button
           onClick={props.handleCanEditMain}
@@ -34,9 +44,11 @@ const MainProfile = (props) => {
           <AiFillEdit className="text-prmColor" />
         </button>
       </div>
+
       <div className="cstm-flex-col gap-5 w-full t:w-6/12 t:h-72 l-l:cstm-flex-row justify-start">
         <div className="w-full h-full  bg-white rounded-2xl p-5 shadow-solid cstm-flex-col gap-2 relative">
           <p>Grade Level</p>
+
           <p className="text-4xl text-prmColor font-bold">{props.userData?.grade_level}</p>
 
           <button
@@ -49,7 +61,8 @@ const MainProfile = (props) => {
 
         <div className="w-full h-full bg-white rounded-2xl p-5 shadow-solid cstm-flex-col gap-2">
           <p>Lexile Level</p>
-          <p className="text-4xl text-prmColor font-bold">{props.userData?.lexile}</p>
+
+          <p className="text-4xl text-prmColor font-bold">{props.userData?.lexile}L</p>
         </div>
       </div>
     </div>

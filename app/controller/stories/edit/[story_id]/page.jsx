@@ -14,16 +14,18 @@ import { BsArrowLeft } from "react-icons/bs";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { useRouter } from "next/navigation";
+import { decipher } from "@/src/src/functions/security";
 
 const EditStory = ({ params }) => {
   const [story, setStory] = React.useState({});
   const [pages, setPages] = React.useState([]);
-  const { data: session } = useSession({ required: true });
   const [message, setMessage] = React.useState({ msg: "", active: false });
 
-  const user = session?.user?.name;
-  const router = useRouter();
+  const { data: session } = useSession({ required: true });
   const { url } = useGlobalContext();
+  const user = session?.user?.name;
+  const decodedStoryId = decipher(params?.story_id);
+  const router = useRouter();
 
   const handlePage = (page, { name, value }) => {
     setPages((prev) =>
@@ -115,7 +117,7 @@ const EditStory = ({ params }) => {
 
     try {
       const { data } = await axios.patch(
-        `${url}/admin_story/${params.story_id}`,
+        `${url}/admin_story/${decodedStoryId}`,
         { pages, story },
         { headers: { Authorization: user.token } }
       );
@@ -132,7 +134,7 @@ const EditStory = ({ params }) => {
   const getPages = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/admin_story_content`, {
-        params: { story_id: params.story_id },
+        params: { storyId: decodedStoryId },
         headers: { Authorization: user.token },
       });
       if (data) {
@@ -142,11 +144,11 @@ const EditStory = ({ params }) => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg });
     }
-  }, [url, user, setPages, params]);
+  }, [url, user, setPages, decodedStoryId]);
 
   const getStory = React.useCallback(async () => {
     try {
-      const { data } = await axios.get(`${url}/admin_story/${params.story_id}`, {
+      const { data } = await axios.get(`${url}/admin_story/${decodedStoryId}`, {
         headers: { Authorization: user.token },
       });
       if (data) {
@@ -156,7 +158,7 @@ const EditStory = ({ params }) => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg });
     }
-  }, [url, user, setStory, params]);
+  }, [url, user, setStory, decodedStoryId]);
 
   React.useEffect(() => {
     if (user) {

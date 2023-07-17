@@ -12,6 +12,7 @@ import { IoAddOutline } from "react-icons/io5";
 import { useSession } from "next-auth/react";
 import { inputDate } from "@/src/src/functions/localDate";
 import { useGlobalContext } from "@/src/context";
+import { cipher } from "@/src/src/functions/security";
 
 const AdminStories = () => {
   const [stories, setStories] = React.useState([]);
@@ -87,7 +88,13 @@ const AdminStories = () => {
   }, [url, user, setStories, searchFilter, lexileRangeFilter, sortFilter, dateRangeFilter]);
 
   const storiesCards = stories.map((story) => {
-    const testId = story?.test_id ? story?.test_id : story.story_id;
+    const cipheredStoryId = cipher(story.story_id);
+    const testId = story?.test_id ? story?.test_id : story.story_id; // temporarily use story_id if no test to cater the condition in suddenly checking test with no content
+    const cipheredTestId = cipher(testId);
+    const testLink = story?.has_test
+      ? `/controller/tests/${cipheredTestId}`
+      : `/controller/tests/add/${cipheredTestId}`;
+
     return (
       <React.Fragment key={story.story_id}>
         <StoriesCards
@@ -96,8 +103,8 @@ const AdminStories = () => {
           author={story.author}
           lexile={story.lexile}
           genre={story.genre}
-          visit={`/controller/stories/${story.story_id}`}
-          test={`/controller/tests/${testId}`}
+          visit={`/controller/stories/${cipheredStoryId}`}
+          test={testLink}
         />
       </React.Fragment>
     );

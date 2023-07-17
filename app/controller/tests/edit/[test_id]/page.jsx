@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import axios from "axios";
+import { decipher } from "@/src/src/functions/security";
 
 const EditTest = ({ params }) => {
   const [test, setTest] = React.useState({});
@@ -22,7 +23,7 @@ const EditTest = ({ params }) => {
 
   const user = session?.user?.name;
   const router = useRouter();
-  const testId = params?.test_id;
+  const decodedTestId = decipher(params?.test_id);
 
   const handleQuestions = (questionId, { name, value }) => {
     setQuestions((prev) =>
@@ -56,12 +57,13 @@ const EditTest = ({ params }) => {
 
     try {
       const { data } = await axios.patch(
-        `${url}/admin_test/${testId}`,
+        `${url}/admin_test/${decodedTestId}`,
         { questions },
         { headers: { Authorization: user.token } }
       );
+
       if (data) {
-        router.push(`/controller/tests/${testId}`);
+        router.push(`/controller/tests/${params?.test_id}`);
       }
     } catch (error) {
       console.log(error);
@@ -72,7 +74,7 @@ const EditTest = ({ params }) => {
   const getQuestions = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/admin_test_question`, {
-        params: { testId },
+        params: { testId: decodedTestId },
         headers: { Authorization: user?.token },
       });
       if (data) {
@@ -90,24 +92,24 @@ const EditTest = ({ params }) => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg });
     }
-  }, [url, user, testId, setQuestions]);
+  }, [url, user, decodedTestId, setQuestions]);
 
   const getTest = React.useCallback(async () => {
     try {
-      const { data } = await axios.get(`${url}/admin_test/${testId}`, {
+      const { data } = await axios.get(`${url}/admin_test/${decodedTestId}`, {
         headers: { Authorization: user?.token },
       });
 
       if (data) {
         setTest(data);
       } else {
-        router.push(`/controller/tests/add/${testId}`);
+        router.push(`/controller/tests/add/${decodedTestId}`);
       }
     } catch (error) {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg });
     }
-  }, [url, user, testId, router]);
+  }, [url, user, decodedTestId, router]);
 
   React.useEffect(() => {
     if (user) {
@@ -131,7 +133,7 @@ const EditTest = ({ params }) => {
       >
         <Link
           type="button"
-          href={`/controller/tests/${testId}`}
+          href={`/controller/tests/${params?.test_id}`}
           className="w-fit cstm-bg-hover mr-auto"
         >
           <BsArrowLeft className=" text-prmColor" />

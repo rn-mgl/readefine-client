@@ -11,6 +11,7 @@ import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { BsArrowLeft } from "react-icons/bs";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
+import { decipher } from "@/src/src/functions/security";
 
 const SingleReward = ({ params }) => {
   const [reward, setReward] = React.useState({});
@@ -19,7 +20,7 @@ const SingleReward = ({ params }) => {
 
   const { data: session } = useSession();
   const user = session?.user?.name;
-  const rewardId = params?.reward_id;
+  const decodedRewardId = decipher(params?.reward_id);
   const { url } = useGlobalContext();
 
   const handleCanDeleteReward = () => {
@@ -28,7 +29,7 @@ const SingleReward = ({ params }) => {
 
   const getReward = React.useCallback(async () => {
     try {
-      const { data } = await axios.get(`${url}/admin_reward/${rewardId}`, {
+      const { data } = await axios.get(`${url}/admin_reward/${decodedRewardId}`, {
         headers: { Authorization: user.token },
       });
       if (data) {
@@ -38,7 +39,7 @@ const SingleReward = ({ params }) => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg });
     }
-  }, [setReward, url, user, rewardId]);
+  }, [setReward, url, user, decodedRewardId]);
 
   React.useEffect(() => {
     if (user) {
@@ -49,12 +50,14 @@ const SingleReward = ({ params }) => {
   return (
     <div className="w-full min-h-screen bg-accntColor p-5 cstm-flex-col gap-2 justify-start">
       <AdminPageHeader subHeader="Reward" mainHeader={reward?.reward_name} />
+
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+
       {canDeleteReward ? (
         <DeleteReward
           confirmation={reward?.reward_name}
           handleCanDeleteReward={handleCanDeleteReward}
-          rewardId={rewardId}
+          rewardId={decodedRewardId}
         />
       ) : null}
 
@@ -65,7 +68,7 @@ const SingleReward = ({ params }) => {
               <BsArrowLeft className=" text-prmColor" />
             </Link>
 
-            <Link href={`/controller/rewards/edit/${rewardId}`} className="cstm-bg-hover">
+            <Link href={`/controller/rewards/edit/${params?.reward_id}`} className="cstm-bg-hover">
               <AiFillEdit className=" text-prmColor cursor-pointer" />
             </Link>
 

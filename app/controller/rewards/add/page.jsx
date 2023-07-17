@@ -141,8 +141,7 @@ const AddReward = () => {
 
           <button
             type="submit"
-            className="w-fit text-center font-poppins text-sm font-normal bg-prmColor text-accntColor rounded-full p-2 px-4
-                t:text-base"
+            className="w-fit text-center font-poppins text-sm font-normal bg-prmColor text-accntColor rounded-full p-2 px-4"
           >
             Add Reward
           </button>

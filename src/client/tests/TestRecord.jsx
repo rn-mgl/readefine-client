@@ -6,7 +6,6 @@ import { useGlobalContext } from "@/src/context";
 import { useSession } from "next-auth/react";
 import { IoClose } from "react-icons/io5";
 import { BsCheck } from "react-icons/bs";
-import ActionLabel from "../../components/global/ActionLabel";
 
 const TestRecord = (props) => {
   const [testData, setTestData] = React.useState([]);
@@ -47,7 +46,9 @@ const TestRecord = (props) => {
                 {q.choice ? q.choice : "No Answer"}
               </p>
             </div>
+
             <div className="cstm-separator t:hidden" />
+
             <div className="cstm-flex-col w-full gap-2 text-center t:w-full bg-prmColor p-2 rounded-md h-full">
               <p className="font-bold text-scndColor">Answer</p>
               <p className="text-white">{q.answer}</p>
@@ -78,8 +79,6 @@ const TestRecord = (props) => {
       getTestData();
     }
   }, [user, getTestData]);
-
-  console.log(testData);
 
   return (
     <div className="fixed w-full top-0 left-0 h-full backdrop-blur-md z-30 p-5 cstm-flex-col justify-start overflow-y-auto cstm-scrollbar">

@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { BsArrowLeft } from "react-icons/bs";
+import { decipher } from "@/src/src/functions/security";
 
 const EditAchievement = ({ params }) => {
   const [achievement, setAchievement] = React.useState({
@@ -26,10 +27,9 @@ const EditAchievement = ({ params }) => {
 
   const { data: session } = useSession({ required: true });
   const { url } = useGlobalContext();
-
   const user = session?.user?.name;
   const router = useRouter();
-  const achievementId = params?.achievement_id;
+  const decodedAchievementId = decipher(params?.achievement_id);
 
   const handleCanSelectReward = () => {
     setCanSelectReward((prev) => !prev);
@@ -58,13 +58,13 @@ const EditAchievement = ({ params }) => {
     e.preventDefault();
     try {
       const { data } = await axios.patch(
-        `${url}/admin_achievement/${achievementId}`,
+        `${url}/admin_achievement/${decodedAchievementId}`,
         { achievement },
         { headers: { Authorization: user.token } }
       );
 
       if (data) {
-        router.push(`/controller/achievements/${achievementId}`);
+        router.push(`/controller/achievements/${params?.achievement_id}`);
       }
     } catch (error) {
       console.log(error);
@@ -74,7 +74,7 @@ const EditAchievement = ({ params }) => {
 
   const getAchievement = React.useCallback(async () => {
     try {
-      const { data } = await axios.get(`${url}/admin_achievement/${achievementId}`, {
+      const { data } = await axios.get(`${url}/admin_achievement/${decodedAchievementId}`, {
         headers: { Authorization: user.token },
       });
 
@@ -85,7 +85,7 @@ const EditAchievement = ({ params }) => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg });
     }
-  }, [user, url, setAchievement, achievementId]);
+  }, [user, url, setAchievement, decodedAchievementId]);
 
   React.useEffect(() => {
     if (user) {
@@ -96,10 +96,13 @@ const EditAchievement = ({ params }) => {
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-2 justify-start">
       <AdminPageHeader subHeader="Achievements" mainHeader="Edit Achievement" />
+
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+
       {canSelectReward ? (
         <FindRewards selectReward={selectReward} handleCanSelectReward={handleCanSelectReward} />
       ) : null}
+
       <form
         onSubmit={(e) => editAchievement(e)}
         className="w-full cstm-flex-col cstm-w-limit border-collapse gap-2"

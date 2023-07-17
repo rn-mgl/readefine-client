@@ -9,6 +9,7 @@ import Message from "@/src/src/components/global/Message";
 import { inputDate } from "@/src/src/functions/localDate";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
+import { cipher } from "@/src/src/functions/security";
 
 const AdminTests = () => {
   const [tests, setTests] = React.useState([]);
@@ -63,6 +64,7 @@ const AdminTests = () => {
   const user = session?.user?.name;
 
   const testCards = tests.map((t) => {
+    const cipheredTestId = cipher(t.test_id);
     return (
       <React.Fragment key={t.test_id}>
         <TestsCards
@@ -70,7 +72,7 @@ const AdminTests = () => {
           title={t.title}
           author={t.author}
           lexile={t.lexile}
-          to={`/controller/tests/${t.test_id}`}
+          to={`/controller/tests/${cipheredTestId}`}
         />
       </React.Fragment>
     );

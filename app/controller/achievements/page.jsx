@@ -12,6 +12,7 @@ import { specificsConversion, typeConversion } from "@/src/src/functions/typeCon
 import { inputDate } from "@/src/src/functions/localDate";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
+import { cipher } from "@/src/src/functions/security";
 
 const AdminAchievements = () => {
   const [achievements, setAchievements] = React.useState([]);
@@ -20,7 +21,6 @@ const AdminAchievements = () => {
     toSearch: "achievement_name",
     searchKey: "",
   });
-
   const [goalRangeFilter, setGoalRangeFilter] = React.useState({ from: 0, to: 1250 });
   const [sortFilter, setSortFilter] = React.useState({
     toSort: "achievement_name",
@@ -72,6 +72,7 @@ const AdminAchievements = () => {
   };
 
   const achievementCards = achievements.map((a) => {
+    const cipheredAchievementId = cipher(a.achievement_id);
     return (
       <React.Fragment key={a.achievement_id}>
         <AchievementsCards
@@ -81,7 +82,7 @@ const AdminAchievements = () => {
           specifics={specificsConversion[a.specifics]}
           task={a.task}
           goal={a.goal}
-          to={`/controller/achievements/${a.achievement_id}`}
+          to={`/controller/achievements/${cipheredAchievementId}`}
         />
       </React.Fragment>
     );
@@ -117,7 +118,9 @@ const AdminAchievements = () => {
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <AdminPageHeader subHeader="Readefine" mainHeader="Achievements & Tasks" />
+
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+
       <div
         className="w-full cstm-flex-col gap-2
         cstm-w-limit"
@@ -137,7 +140,7 @@ const AdminAchievements = () => {
           <IoAddOutline className="text-prmColor cursor-pointer scale-150" />
         </Link>
 
-        <div className="w-full cstm-flex-col gap-5 t:items-start t:cstm-flex-row">
+        <div className="w-full cstm-flex-col flex-wrap gap-5 t:items-start t:cstm-flex-row">
           {achievementCards}
         </div>
       </div>

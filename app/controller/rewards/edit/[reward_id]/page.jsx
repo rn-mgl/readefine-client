@@ -14,6 +14,7 @@ import { useGlobalContext } from "@/src/context";
 import { useRouter } from "next/navigation";
 import FileViewer from "@/src/src/components/global/FileViewer";
 import { IoClose } from "react-icons/io5";
+import { decipher } from "@/src/src/functions/security";
 
 const EditReward = ({ params }) => {
   const [reward, setReward] = React.useState({});
@@ -23,7 +24,7 @@ const EditReward = ({ params }) => {
   const { url } = useGlobalContext();
 
   const user = session?.user?.name;
-  const rewardId = params?.reward_id;
+  const decodedRewardId = decipher(params?.reward_id);
   const words = wordCount(reward.description);
   const router = useRouter();
 
@@ -63,12 +64,12 @@ const EditReward = ({ params }) => {
     try {
       const newReward = imageSrc;
       const { data } = await axios.patch(
-        `${url}/admin_reward/${rewardId}`,
+        `${url}/admin_reward/${decodedRewardId}`,
         { reward_name, reward_type, reward: newReward, description },
         { headers: { Authorization: user.token } }
       );
       if (data) {
-        router.push(`/controller/rewards/${rewardId}`);
+        router.push(`/controller/rewards/${params?.reward_id}`);
       }
     } catch (error) {
       console.log(error);
@@ -78,7 +79,7 @@ const EditReward = ({ params }) => {
 
   const getReward = React.useCallback(async () => {
     try {
-      const { data } = await axios.get(`${url}/admin_reward/${rewardId}`, {
+      const { data } = await axios.get(`${url}/admin_reward/${decodedRewardId}`, {
         headers: { Authorization: user.token },
       });
       if (data) {
@@ -88,7 +89,7 @@ const EditReward = ({ params }) => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg });
     }
-  }, [setReward, url, user, rewardId]);
+  }, [setReward, url, user, decodedRewardId]);
 
   React.useEffect(() => {
     if (user) {

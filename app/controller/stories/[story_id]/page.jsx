@@ -15,6 +15,7 @@ import { useGlobalContext } from "@/src/context";
 import { BsArrowLeft, BsFilter } from "react-icons/bs";
 import ActionLabel from "@/src/src/components/global/ActionLabel";
 import StoryDoublePage from "@/src/src/components/stories/StoryDoublePage";
+import { cipher, decipher } from "@/src/src/functions/security";
 
 const SingleStory = ({ params }) => {
   const [story, setStory] = React.useState({});
@@ -28,6 +29,7 @@ const SingleStory = ({ params }) => {
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
+  const decodedStoryId = decipher(params?.story_id);
   const user = session?.user?.name;
   const leftUtterance = pages[activePage - 1]?.content;
   const rightUtterance = pages[activePage]?.content;
@@ -94,7 +96,7 @@ const SingleStory = ({ params }) => {
   const getPages = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/admin_story_content`, {
-        params: { story_id: params.story_id },
+        params: { storyId: decodedStoryId },
         headers: { Authorization: user.token },
       });
       if (data) {
@@ -104,11 +106,11 @@ const SingleStory = ({ params }) => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg });
     }
-  }, [url, user, setPages, params]);
+  }, [url, user, setPages, decodedStoryId]);
 
   const getStory = React.useCallback(async () => {
     try {
-      const { data } = await axios.get(`${url}/admin_story/${params.story_id}`, {
+      const { data } = await axios.get(`${url}/admin_story/${decodedStoryId}`, {
         headers: { Authorization: user.token },
       });
       if (data) {
@@ -118,7 +120,7 @@ const SingleStory = ({ params }) => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg });
     }
-  }, [url, user, setStory, params]);
+  }, [url, user, setStory, decodedStoryId]);
 
   React.useEffect(() => {
     if (user) {
@@ -151,24 +153,21 @@ const SingleStory = ({ params }) => {
           <BsArrowLeft className=" text-prmColor" />
         </Link>
 
-        <Link href={`/controller/stories/edit/${params.story_id}`} className="cstm-bg-hover">
+        <Link href={`/controller/stories/edit/${params?.story_id}`} className="cstm-bg-hover">
           <AiFillEdit className=" text-prmColor cursor-pointer" />
         </Link>
 
         <button onClick={handleCanDeleteStory} className="cstm-bg-hover">
           <AiFillDelete className="text-prmColor cursor-pointer" />
         </button>
+
+        <button onClick={handleCustomizationsVisible} className="cstm-bg-hover relative group">
+          <ActionLabel label="Filter" />
+          <BsFilter className="text-prmColor scale-150" />
+        </button>
       </div>
 
-      <button
-        onClick={handleCustomizationsVisible}
-        className="cstm-bg-hover relative group ml-auto"
-      >
-        <ActionLabel label="Filter" />
-        <BsFilter className="text-prmColor scale-150" />
-      </button>
-
-      {customizationsVisible ? null : (
+      {customizationsVisible ? (
         <Customizations
           // check if both pages for utterances exist, else only left
           utterance={
@@ -185,9 +184,13 @@ const SingleStory = ({ params }) => {
           handleCustomizationsVisible={handleCustomizationsVisible}
           handleViewType={handleViewType}
         />
-      )}
+      ) : null}
 
-      <div className="w-full gap-5 h-[65vh] bg-white rounded-2xl p-5 relative overflow-x-hidden overflow-y-auto cstm-w-limit  cstm-scrollbar">
+      <div
+        className={`${
+          customizationsVisible ? "h-[65vh]" : "h-[70vh] t:h-[75vh]"
+        }  w-full gap-5  bg-white rounded-2xl p-5 relative overflow-x-hidden overflow-y-auto cstm-w-limit  cstm-scrollbar`}
+      >
         <div className="cstm-scrollbar w-full relative overflow-x-hidden overflow-y-auto h-full">
           {storyPages}
         </div>

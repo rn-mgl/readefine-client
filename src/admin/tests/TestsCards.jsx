@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const TestsCards = (props) => {
   return (
-    <div className="bg-white p-5 rounded-2xl cstm-flex-col gap-4  t:w-72 shadow-solid max-h-[28rem]">
+    <div className="bg-white p-5 rounded-2xl cstm-flex-col gap-4  t:w-72 shadow-solid  max-h-[28rem] h-[28rem]">
       <div className="w-full h-fit cstm-flex-col overflow-clip  bg-white rounded-2xl justify-start">
         <Image src={props.image} alt="temp" width={240} height={200} className="w-fit" />
       </div>
@@ -30,7 +30,7 @@ const TestsCards = (props) => {
 
       <Link
         href={props.to}
-        className="w-full text-center font-poppins text-sm font-normal bg-prmColor text-accntColor rounded-full p-2"
+        className="w-full text-center font-poppins text-sm font-normal bg-prmColor text-accntColor rounded-full p-2 mt-auto"
       >
         Answer
       </Link>

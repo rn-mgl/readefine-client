@@ -11,16 +11,13 @@ const DeleteTest = (props) => {
   const [confirmation, setConfirmation] = React.useState("");
 
   const { data: session } = useSession();
-
+  const { url } = useGlobalContext();
+  const router = useRouter();
   const user = session?.user?.name;
 
   const handleConfirmation = ({ value }) => {
     setConfirmation(value);
   };
-
-  const { url } = useGlobalContext();
-
-  const router = useRouter();
 
   const deleteTest = async (e) => {
     e.preventDefault();
@@ -82,8 +79,7 @@ const DeleteTest = (props) => {
 
           <button
             type="submit"
-            className="w-full text-center font-poppins text-sm font-normal bg-prmColor text-accntColor rounded-full p-2
-                          t:text-base"
+            className="w-full text-center font-poppins text-sm font-normal bg-prmColor text-accntColor rounded-full p-2 t:w-fit t:px-10"
           >
             Confirm Deletion
           </button>

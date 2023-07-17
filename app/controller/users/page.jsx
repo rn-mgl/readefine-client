@@ -9,6 +9,7 @@ import Message from "@/src/src/components/global/Message";
 import { useGlobalContext } from "@/src/context";
 import { localizeDate, inputDate } from "@/src/src/functions/localDate";
 import { useSession } from "next-auth/react";
+import { cipher } from "@/src/src/functions/security";
 
 const AdminUsers = () => {
   const [users, setUsers] = React.useState([]);
@@ -63,6 +64,7 @@ const AdminUsers = () => {
 
   const userRow = users.map((user) => {
     const email = user.email.split("@");
+    const cipheredUserId = cipher(user.user_id);
     return (
       <tr key={user.user_id} className="p-2 cstm-flex-row justify-start gap-10 text-center ">
         <td className="cstm-flex-col">
@@ -79,7 +81,7 @@ const AdminUsers = () => {
         <td className="break-words whitespace-pre-wrap">{localizeDate(user.date_joined)}</td>
         <td className="cstm-flex-col">
           <Link
-            href={`/controller/users/${user.user_id}`}
+            href={`/controller/users/${cipheredUserId}`}
             className="bg-prmColor rounded-full p-2 text-white w-full"
           >
             Visit

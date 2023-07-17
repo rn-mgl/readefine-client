@@ -1,11 +1,12 @@
 import React from "react";
+import { BsCheck } from "react-icons/bs";
 import { IoClose } from "react-icons/io5";
 
 const TestResult = (props) => {
   const mappedQuestions = props.questions?.map((q, i) => {
     const choice = props.selectedChoices[`choice${i + 1}`].answer;
     const isCorrect = choice === q.answer;
-    return isCorrect ? null : (
+    return (
       <div
         className="p-5 bg-white rounded-md w-full cstm-flex-col gap-5 items-start t:w-10/12 l-l:w-8/12 shadow-md"
         key={q.question_id}
@@ -13,23 +14,30 @@ const TestResult = (props) => {
         <p className="font-bold">{q.question}</p>
         <div className="cstm-separator" />
         <div className="cstm-flex-col gap-3 w-full t:cstm-flex-row t:flex-wrap">
-          {isCorrect ? (
-            <p className="font-bold text-prmColor">Correct Answer</p>
-          ) : (
-            <div className="w-full h-full cstm-flex-col gap-5 t:cstm-flex-row">
-              <div className="cstm-flex-col w-full gap-2 text-center t:w-full bg-accntColor rounded-md p-2 h-full">
-                <p className="font-bold text-prmColor">Your Answer</p>
-                <p className={`${choice ? "opacity-100" : "opacity-50"}`}>
-                  {choice ? choice : "No Answer"}
-                </p>
-              </div>
-              <div className="cstm-separator t:hidden" />
-              <div className="cstm-flex-col w-full gap-2 text-center t:w-full bg-prmColor p-2 rounded-md h-full">
-                <p className="font-bold text-scndColor">Answer</p>
-                <p className="text-white">{q.answer}</p>
-              </div>
+          <div className="w-full h-full cstm-flex-col gap-5 t:cstm-flex-row">
+            <div className="cstm-flex-col w-full gap-2 text-center t:w-full bg-accntColor rounded-md p-2 h-full">
+              <p className="font-bold text-prmColor cstm-flex-row gap-2">
+                Your Answer
+                {isCorrect ? (
+                  <div className="cstm-flex-col rounded-full bg-prmColor ">
+                    <BsCheck className="text-scndColor" />
+                  </div>
+                ) : (
+                  <div className="cstm-flex-col rounded-full bg-scndColor">
+                    <IoClose className="text-prmColor" />
+                  </div>
+                )}
+              </p>
+              <p className={`${choice ? "opacity-100" : "opacity-50"}`}>
+                {choice ? choice : "No Answer"}
+              </p>
             </div>
-          )}
+            <div className="cstm-separator t:hidden" />
+            <div className="cstm-flex-col w-full gap-2 text-center t:w-full bg-prmColor p-2 rounded-md h-full">
+              <p className="font-bold text-scndColor">Answer</p>
+              <p className="text-white">{q.answer}</p>
+            </div>
+          </div>
         </div>
       </div>
     );

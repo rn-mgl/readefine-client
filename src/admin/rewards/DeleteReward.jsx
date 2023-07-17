@@ -83,8 +83,7 @@ const DeleteReward = (props) => {
 
           <button
             type="submit"
-            className="w-full text-center font-poppins text-sm font-normal bg-prmColor text-accntColor rounded-full p-2
-                          t:text-base"
+            className="w-full text-center font-poppins text-sm font-normal bg-prmColor text-accntColor rounded-full p-2 t:w-fit t:px-10"
           >
             Confirm Deletion
           </button>

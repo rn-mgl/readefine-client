@@ -30,10 +30,14 @@ const ClientNav = () => {
 
     try {
       const { data } = await axios.post(`${url}/session`, { type: "out", id: user?.userId });
+
+      if (data) {
+        signOut({ callbackUrl: "/", redirect: true });
+      }
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
-    signOut({ callbackUrl: "/", redirect: true });
   };
 
   const toggleOpenNav = () => {
