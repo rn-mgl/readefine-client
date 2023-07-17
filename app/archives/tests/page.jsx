@@ -11,6 +11,7 @@ import ClientPageHeader from "@/src/src/client/global/PageHeader";
 import Message from "@/src/src/components/global/Message";
 import LowLexileTestMessage from "@/src/src/client/tests/LowLexileTestMessage";
 import TestRecord from "@/src/src/client/tests/TestRecord";
+import { cipher } from "@/src/src/functions/security";
 
 const ClientTests = () => {
   const [tests, setTests] = React.useState([]);
@@ -82,6 +83,7 @@ const ClientTests = () => {
   };
 
   const testCards = tests.map((t) => {
+    const cipheredTestId = cipher(t.test_id);
     return (
       <React.Fragment key={t.test_id}>
         <TestsCards
@@ -90,7 +92,7 @@ const ClientTests = () => {
           author={t.author}
           lexile={t.lexile}
           score={t.score}
-          to={`/archives/tests/${t.test_id}`}
+          to={`/archives/tests/${cipheredTestId}`}
           testId={t.test_id}
           isTaken={t.is_taken}
           isLower={userLexile.lexile - 100 > t.lexile}
@@ -160,7 +162,7 @@ const ClientTests = () => {
       {showLexileMessage ? (
         <LowLexileTestMessage
           userLexile={userLexile.lexile}
-          testLink={`/archives/tests/${selectedBook}`}
+          testLink={`/archives/tests/${cipher(selectedBook)}`}
           handleShowLexileMessage={handleShowLexileMessage}
         />
       ) : null}

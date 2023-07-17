@@ -14,6 +14,7 @@ import { usePathname } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import axios from "axios";
+import { cipher } from "../../functions/security";
 
 const ClientNav = () => {
   const [userData, setUserData] = React.useState({});
@@ -69,7 +70,7 @@ const ClientNav = () => {
     <>
       <button
         onClick={toggleOpenNav}
-        className="absolute cstm-bg-hover z-10 top-4 left-4 l-s:hidden"
+        className="absolute cstm-bg-hover z-20 top-4 left-4 l-s:hidden"
       >
         <BiMenu className="scale-150 cursor-pointer" />
       </button>
@@ -145,7 +146,7 @@ const ClientNav = () => {
 
         <div className="cstm-flex-row gap-2 w-full justify-start mt-auto">
           <Link
-            href={`/archives/reader/${user?.userId}`}
+            href={`/archives/reader/${cipher(user?.userId)}`}
             onClick={toggleOpenNav}
             className="font-poppins text-left hover:bg-neutral-100 p-2 rounded-md justify-start transition-all cstm-flex-row gap-2 w-full"
           >

@@ -16,8 +16,9 @@ import TestsCards from "@/src/src/client/tests/TestsCards";
 import LowLexileTestMessage from "@/src/src/client/tests/LowLexileTestMessage";
 import RewardsCards from "@/src/src/client/rewards/RewardsCards";
 import { localizeDate } from "@/src/src/functions/localDate";
+import { decipher } from "@/src/src/functions/security";
 
-const Reader = () => {
+const Reader = ({ params }) => {
   const [userData, setUserData] = React.useState({});
   const [userActivities, setUserActivities] = React.useState({});
   const [canEditMain, setCanEditMain] = React.useState(false);
@@ -28,6 +29,7 @@ const Reader = () => {
   const { data: session } = useSession();
   const { url } = useGlobalContext();
   const user = session?.user?.name;
+  const decipheredId = decipher(params?.reader_id);
 
   function handleCanEditMain() {
     setCanEditMain((prev) => !prev);
@@ -47,7 +49,7 @@ const Reader = () => {
 
   const getUserData = React.useCallback(async () => {
     try {
-      const { data } = await axios.get(`${url}/user/${user?.userId}`, {
+      const { data } = await axios.get(`${url}/user/${decipheredId}`, {
         headers: { Authorization: user?.token },
       });
 
@@ -57,11 +59,11 @@ const Reader = () => {
     } catch (error) {
       console.log(error);
     }
-  }, [url, user, setUserData]);
+  }, [url, user, setUserData, decipheredId]);
 
   const getUserActivities = React.useCallback(async () => {
     try {
-      const { data } = await axios.get(`${url}/activities/${user?.userId}`, {
+      const { data } = await axios.get(`${url}/activities/${decipheredId}`, {
         headers: { Authorization: user?.token },
       });
 
@@ -71,7 +73,7 @@ const Reader = () => {
     } catch (error) {
       console.log(error);
     }
-  }, [url, user, setUserActivities]);
+  }, [url, user, setUserActivities, decipheredId]);
 
   const answeredQuestions = userActivities?.questionsData?.map((q) => {
     return (

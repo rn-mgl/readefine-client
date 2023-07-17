@@ -11,6 +11,7 @@ import LowLexileTestMessage from "@/src/src/client/tests/LowLexileTestMessage";
 import { useGlobalContext } from "@/src/context";
 import { useSession } from "next-auth/react";
 import { inputDate } from "@/src/src/functions/localDate";
+import { cipher } from "@/src/src/functions/security";
 
 const ClientStories = () => {
   const [stories, setStories] = React.useState([]);
@@ -75,7 +76,9 @@ const ClientStories = () => {
   const user = session?.user?.name;
 
   const storiesCards = stories.map((story) => {
+    const cipheredStoryId = cipher(story.story_id);
     const testId = story?.test_id ? story?.test_id : story.story_id;
+    const cipheredTestId = cipher(testId);
     return (
       <React.Fragment key={story.story_id}>
         <StoriesCards
@@ -88,8 +91,8 @@ const ClientStories = () => {
           lexile={story.lexile}
           genre={story.genre}
           testId={story.test_id}
-          read={`/archives/stories/${story.story_id}`}
-          test={`/archives/tests/${testId}`}
+          read={`/archives/stories/${cipheredStoryId}`}
+          test={`/archives/tests/${cipheredTestId}`}
           showLexileMessage={showLexileMessage}
           handleShowLexileMessage={handleShowLexileMessage}
           handleSelectedBook={handleSelectedBook}

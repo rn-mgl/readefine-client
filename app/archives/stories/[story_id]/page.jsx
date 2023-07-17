@@ -13,6 +13,7 @@ import { useGlobalContext } from "@/src/context";
 import { BsArrowLeft, BsFilter } from "react-icons/bs";
 import ActionLabel from "@/src/src/components/global/ActionLabel";
 import StoryDoublePage from "@/src/src/components/stories/StoryDoublePage";
+import { decipher } from "@/src/src/functions/security";
 
 const SingleStory = ({ params }) => {
   const [story, setStory] = React.useState({});
@@ -26,7 +27,7 @@ const SingleStory = ({ params }) => {
   const { data: session } = useSession();
   const { url } = useGlobalContext();
   const user = session?.user?.name;
-  const storyId = params?.story_id;
+  const decodedStoryId = decipher(params?.story_id);
 
   const handleIncrement = () => {
     const increment = viewType === "single" ? 1 : 2;
@@ -86,7 +87,7 @@ const SingleStory = ({ params }) => {
   const getPages = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/story_content`, {
-        params: { storyId },
+        params: { storyId: decodedStoryId },
         headers: { Authorization: user.token },
       });
       if (data) {
@@ -96,11 +97,11 @@ const SingleStory = ({ params }) => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg });
     }
-  }, [url, user, setPages, storyId]);
+  }, [url, user, setPages, decodedStoryId]);
 
   const getStory = React.useCallback(async () => {
     try {
-      const { data } = await axios.get(`${url}/story/${storyId}`, {
+      const { data } = await axios.get(`${url}/story/${decodedStoryId}`, {
         headers: { Authorization: user.token },
       });
       if (data) {
@@ -110,13 +111,13 @@ const SingleStory = ({ params }) => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg });
     }
-  }, [url, user, setStory, storyId]);
+  }, [url, user, setStory, decodedStoryId]);
 
   const readStory = async () => {
     try {
       const { data } = await axios.post(
         `${url}/read_story`,
-        { storyId },
+        { storyId: decodedStoryId },
         { headers: { Authorization: user?.token } }
       );
     } catch (error) {
@@ -154,17 +155,22 @@ const SingleStory = ({ params }) => {
         </button>
       </div>
 
-      <Customizations
-        utterance={pages[activePage - 1]?.content}
-        fontSize={fontSize}
-        customizationsVisible={customizationsVisible}
-        viewType={viewType}
-        handleFontSize={handleFontSize}
-        handleCustomizationsVisible={handleCustomizationsVisible}
-        handleViewType={handleViewType}
-      />
+      {customizationsVisible ? (
+        <Customizations
+          utterance={pages[activePage - 1]?.content}
+          fontSize={fontSize}
+          viewType={viewType}
+          handleFontSize={handleFontSize}
+          handleCustomizationsVisible={handleCustomizationsVisible}
+          handleViewType={handleViewType}
+        />
+      ) : null}
 
-      <div className="w-full  gap-5 h-[55vh] t:h-[60vh] bg-white rounded-2xl p-5 cstm-w-limit">
+      <div
+        className={`${
+          customizationsVisible ? "h-[55vh] t:h-[60vh]" : "h-[70vh] t:h-[75vh]"
+        } w-full gap-5  bg-white rounded-2xl p-5 cstm-w-limit transition-all`}
+      >
         <div className="cstm-scrollbar w-full relative overflow-x-hidden overflow-y-auto h-full">
           {storyPages}
         </div>

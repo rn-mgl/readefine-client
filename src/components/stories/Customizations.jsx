@@ -9,16 +9,10 @@ const Customizations = (props) => {
 
   return (
     <div
-      className={`${
-        props.customizationsVisible ? "h-20 overflow-hidden " : "h-fit"
-      } transition-all w-full bg-white rounded-2xl p-5 cstm-w-limit cstm-flex-col justify-start
-      t:cstm-flex-row`}
+      className="h-fit transition-all w-full bg-white rounded-2xl p-5 cstm-w-limit cstm-flex-col justify-start
+      t:cstm-flex-row"
     >
-      <div
-        className={`${
-          props.customizationsVisible ? "-translate-x-[200%]" : "translate-x-0"
-        } cstm-flex-col w-full gap-2 transition-all`}
-      >
+      <div className="cstm-flex-col w-full gap-2">
         <p className="text-xs text-center p-2">change first before playing to apply changes</p>
 
         <div className="cstm-separator" />

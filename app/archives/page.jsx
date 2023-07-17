@@ -68,7 +68,7 @@ const Archives = () => {
         <ArchivesCards
           label="See Rewards"
           subLabel="Rewards Received: "
-          count={countsData?.rewardCount}
+          count={countsData?.achievementCount}
           to="/archives/rewards"
           image={DashboardCardImage3}
         />

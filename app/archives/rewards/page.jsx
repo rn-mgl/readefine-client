@@ -8,6 +8,8 @@ import Message from "@/src/src/components/global/Message";
 
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
+import { cipher } from "@/src/src/functions/security";
+import ReceiveAchievement from "@/src/src/client/achievements/ReceiveAchievement";
 
 const ClientRewards = () => {
   const [rewards, setRewards] = React.useState([]);
@@ -51,6 +53,8 @@ const ClientRewards = () => {
   };
 
   const rewardsCards = rewards.map((reward) => {
+    const cipheredKey = cipher(reward.reward_id);
+
     return (
       <React.Fragment key={reward.reward_id}>
         <RewardsCards
@@ -58,13 +62,11 @@ const ClientRewards = () => {
           title={reward.reward_name}
           type={reward.reward_type}
           isReceived={showFilter.toShow === "all" ? reward.is_received : true}
-          to={`/archives/rewards/${reward.reward_id}`}
+          to={`/archives/rewards/${cipheredKey}`}
         />
       </React.Fragment>
     );
   });
-
-  console.log(rewards);
 
   const getRewards = React.useCallback(async () => {
     try {

@@ -15,6 +15,7 @@ import { BsArrowLeft } from "react-icons/bs";
 import { useRouter } from "next/navigation";
 import TestResult from "@/src/src/client/tests/TestResult";
 import ReceiveAchievement from "@/src/src/client/achievements/ReceiveAchievement";
+import { decipher } from "@/src/src/functions/security";
 
 const SingleTest = ({ params }) => {
   const [testData, setTestData] = React.useState({});
@@ -44,7 +45,7 @@ const SingleTest = ({ params }) => {
 
   const { url } = useGlobalContext();
   const { data: session } = useSession();
-  const testId = params?.test_id;
+  const decodedTestId = decipher(params?.test_id);
   const user = session?.user?.name;
   const router = useRouter();
 
@@ -82,10 +83,6 @@ const SingleTest = ({ params }) => {
 
   const handleIsFinished = () => {
     setIsFinished((prev) => !prev);
-  };
-
-  const handleHasSubmitted = () => {
-    setHasSubmitted((prev) => !prev);
   };
 
   const handleAccomplishedAchievement = () => {
@@ -153,7 +150,13 @@ const SingleTest = ({ params }) => {
       // record test and answers
       const { data } = await axios.post(
         `${url}/taken_test`,
-        { selectedChoices, testId, score: currScore, legibleForGrowth, lexile: userLexile?.lexile },
+        {
+          selectedChoices,
+          testId: decodedTestId,
+          score: currScore,
+          legibleForGrowth,
+          lexile: userLexile?.lexile,
+        },
         { headers: { Authorization: user?.token } }
       );
 
@@ -187,7 +190,7 @@ const SingleTest = ({ params }) => {
 
   const getTestData = React.useCallback(async () => {
     try {
-      const { data } = await axios.get(`${url}/test/${testId}`, {
+      const { data } = await axios.get(`${url}/test/${decodedTestId}`, {
         headers: { Authorization: user?.token },
       });
       if (data) {
@@ -197,12 +200,12 @@ const SingleTest = ({ params }) => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg });
     }
-  }, [url, user, testId]);
+  }, [url, user, decodedTestId]);
 
   const getQuestions = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/test_question`, {
-        params: { testId },
+        params: { testId: decodedTestId },
         headers: { Authorization: user?.token },
       });
       if (data) {
@@ -212,7 +215,7 @@ const SingleTest = ({ params }) => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg });
     }
-  }, [user, url, testId]);
+  }, [user, url, decodedTestId]);
 
   const getUserLexile = React.useCallback(async () => {
     try {

@@ -32,10 +32,10 @@ const ScorePopup = (props) => {
     <div className="fixed top-0 left-0 w-full h-screen backdrop-blur-md z-20">
       {passed ? <Confetti width={window.innerWidth} height={window.innerHeight} /> : null}
       <div className="w-full h-full relative">
-        {buttonAction}
         <div
           className={`w-full h-3/6 p-5 pb-12 cstm-flex-col ${background} absolute gap-2 animate-slideDown top-0 right-0 shadow-md cstm-w-limit`}
         >
+          {buttonAction}
           <div className="my-auto text-white text-center cstm-flex-col gap-2">
             <p className="text-sm font-extralight">you got</p>
             <p className="text-6xl font-bold">{score}</p>
