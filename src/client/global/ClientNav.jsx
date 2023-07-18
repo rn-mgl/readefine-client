@@ -29,7 +29,11 @@ const ClientNav = () => {
     setLoading(true);
 
     try {
-      const { data } = await axios.post(`${url}/session`, { type: "out", id: user?.userId });
+      const { data } = await axios.post(
+        `${url}/session`,
+        { type: "out", id: user?.userId },
+        { headers: { Authorization: user?.token } }
+      );
 
       if (data) {
         signOut({ callbackUrl: "/", redirect: true });

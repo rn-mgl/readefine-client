@@ -97,7 +97,7 @@ const EditMain = (props) => {
 
       <div className="cstm-w-limit cstm-flex-col gap-5 w-full h-auto justify-start">
         <div className="cstm-flex-col gap-5 justify-start w-full t:w-10/12 l-l:w-8/12">
-          <div className="cstm-flex-col p-5 bg-white w-full rounded-2xl shadow-solid shadow-scndColor gap-2">
+          <div className="cstm-flex-col p-5 bg-white w-full rounded-2xl shadow-solid gap-2">
             {userData?.file?.src ? (
               <FilePreview
                 src={userData?.file?.src}
@@ -137,7 +137,7 @@ const EditMain = (props) => {
             </div>
           </div>
 
-          <div className="w-full rounded-2xl p-5 bg-white shadow-solid shadow-scndColor cstm-flex-col gap-5">
+          <div className="w-full rounded-2xl p-5 bg-white shadow-solid  cstm-flex-col gap-5">
             <EditInput
               type="text"
               label="Name"
@@ -172,7 +172,7 @@ const EditMain = (props) => {
 
         <button
           onClick={editMain}
-          className="w-full rounded-full bg-prmColor p-2 text-scndColor font-bold t:w-40 shadow-solid shadow-indigo-900"
+          className="w-full rounded-full bg-prmColor p-2 text-sm text-scndColor font-bold t:w-40 shadow-solid shadow-indigo-900"
         >
           Save Changes
         </button>

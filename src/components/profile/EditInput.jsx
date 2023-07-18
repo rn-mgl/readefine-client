@@ -4,7 +4,7 @@ const EditInput = (props) => {
   return (
     <div className="w-full cstm-flex-col gap-2 relative">
       <p className="text-sm text-prmColor font-bold mr-auto">{props.label}</p>
-      <div className="absolute right-0 bottom-0 text-lg transition-all rounded-md bg-accntColor p-2">
+      <div className="absolute right-0 bottom-0 text-lg transition-all rounded-md bg-accntColor text-prmColor p-2">
         {props.icon}
       </div>
       <input

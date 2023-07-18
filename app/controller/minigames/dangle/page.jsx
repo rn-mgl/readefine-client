@@ -27,6 +27,10 @@ const Dangle = () => {
   const { url } = useGlobalContext();
   const user = session?.user?.name;
 
+  const handleCanSeeHint = () => {
+    setCanSeeHint((prev) => !prev);
+  };
+
   const handleIsPlaying = () => {
     setIsPlaying((prev) => {
       if (prev) {
@@ -40,10 +44,6 @@ const Dangle = () => {
       }
       return !prev;
     });
-  };
-
-  const handleCanSeeHint = () => {
-    setCanSeeHint((prev) => !prev);
   };
 
   const handleInput = (key) => {
@@ -137,6 +137,7 @@ const Dangle = () => {
           const wordSplit = word.split("");
           const wordLen = wordSplit.length;
 
+          setCanSeeHint(false);
           setIsPlaying(true);
           setEntryGuesses([]);
           setWordData(data.wordData);
