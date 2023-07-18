@@ -14,6 +14,7 @@ import { GiAchievement } from "react-icons/gi";
 import { usePathname } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
+import { cipher } from "../../functions/security";
 
 const AdminNav = () => {
   const [adminData, setAdminData] = React.useState({});
@@ -144,7 +145,7 @@ const AdminNav = () => {
 
         <div className="cstm-flex-row gap-2 w-full justify-start mt-auto">
           <Link
-            href={`/controller/overview/${user?.adminId}`}
+            href={`/controller/overview/${cipher(user?.adminId)}`}
             onClick={toggleOpenNav}
             className="cstm-flex-row hover:bg-neutral-100 p-2 w-full rounded-md font-poppins justify-start gap-2"
           >

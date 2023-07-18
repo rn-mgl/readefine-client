@@ -4,18 +4,19 @@ import axios from "axios";
 import React from "react";
 import EditMain from "@/src/src/admin/overview/EditMain";
 
-import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/src/context";
 import AdminPageHeader from "@/src/src/admin/global/PageHeader";
-import { BsDot } from "react-icons/bs";
-import { AiFillEdit } from "react-icons/ai";
-import { localizeDate } from "@/src/src/functions/localDate";
 import ActivityCard from "@/src/src/admin/overview/ActivityCard";
 import MainOverview from "@/src/src/admin/overview/MainOverview";
 import ActivityText from "@/src/src/admin/overview/ActivityText";
 import ChangePassword from "@/src/src/admin/overview/ChangePassword";
 
-const Overview = () => {
+import { BsDot } from "react-icons/bs";
+import { decipher } from "@/src/src/functions/security";
+import { useSession } from "next-auth/react";
+import { useGlobalContext } from "@/src/context";
+import { localizeDate } from "@/src/src/functions/localDate";
+
+const Overview = ({ params }) => {
   const [adminData, setAdminData] = React.useState({});
   const [adminActivities, setAdminActivities] = React.useState({});
   const [canEditMain, setCanEditMain] = React.useState(false);
@@ -24,6 +25,7 @@ const Overview = () => {
   const { data: session } = useSession();
   const { url } = useGlobalContext();
   const user = session?.user?.name;
+  const decipheredId = decipher(params?.admin_id);
 
   const handleCanEditMain = () => {
     setCanEditMain((prev) => !prev);
@@ -172,7 +174,7 @@ const Overview = () => {
 
   const getAdminData = React.useCallback(async () => {
     try {
-      const { data } = await axios.get(`${url}/admin/${user?.adminId}`, {
+      const { data } = await axios.get(`${url}/admin/${decipheredId}`, {
         headers: { Authorization: user?.token },
       });
 
@@ -182,11 +184,11 @@ const Overview = () => {
     } catch (error) {
       console.log(error);
     }
-  }, [url, user, setAdminData]);
+  }, [url, user, setAdminData, decipheredId]);
 
   const getAdminActivies = React.useCallback(async () => {
     try {
-      const { data } = await axios.get(`${url}/admin_activities/${user?.adminId}`, {
+      const { data } = await axios.get(`${url}/admin_activities/${decipheredId}`, {
         headers: { Authorization: user?.token },
       });
 
@@ -196,7 +198,7 @@ const Overview = () => {
     } catch (error) {
       console.log(error);
     }
-  }, [url, user, setAdminActivities]);
+  }, [url, user, setAdminActivities, decipheredId]);
 
   React.useEffect(() => {
     if (user) {
