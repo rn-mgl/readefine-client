@@ -2,11 +2,16 @@
 
 export const typeConversion = {
   user_session: "Sessions",
-  read_story: "Read Stories",
-  answered_dangle: "Answered Dangles",
-  answered_decipher: "Answered Deciphers",
-  answered_riddles: "Answered Riddles",
   user_lexile: "Lexile",
+  read_story: "Read Stories",
+  test_score: "Test Score",
+  answered_tests: "Answered Tests",
+  dangle_plays: "Dangle Plays",
+  decipher_plays: "Decipher Plays",
+  riddle_plays: "Riddle Plays",
+  dangle_wins: "Dangle Wins",
+  decipher_wins: "Decipher Wins",
+  riddle_wins: "Riddle Wins",
 };
 
 //for achievement task specifics
@@ -14,7 +19,7 @@ export const typeConversion = {
 export const specificsConversion = {
   days_online: "Days Online",
   lexile_growth: "Lexile Growth",
-  read_count: "Total Books",
-  play_count: "Total Games",
+  book_count: "Total Books",
+  play_count: "Total Plays",
   score_count: "Total Scores",
 };

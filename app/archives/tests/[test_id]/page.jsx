@@ -162,20 +162,35 @@ const SingleTest = ({ params }) => {
 
       if (data) {
         // update lexile achievement points and return if achievement is met
-        const { data: achievementData } = await axios.patch(
+        const { data: lexileAhievementData } = await axios.patch(
           `${url}/user_achievement`,
           {
             type: "user_lexile",
             specifics: "lexile_growth",
-            userId: user?.userId,
             toAdd: data?.toAdd,
           },
           { headers: { Authorization: user?.token } }
         );
 
         // if there are achievements
-        if (achievementData.length) {
-          setAccomplishedAchievement({ accomplished: true, achievements: achievementData });
+        if (lexileAhievementData.length) {
+          setAccomplishedAchievement({ accomplished: true, achievements: lexileAhievementData });
+        }
+
+        // update test achievement points and return if achievement is met
+        const { data: testAchievementData } = await axios.patch(
+          `${url}/user_achievement`,
+          {
+            type: "answered_tests",
+            specifics: "book_count",
+            toAdd: 1,
+          },
+          { headers: { Authorization: user?.token } }
+        );
+
+        // if there are achievements
+        if (testAchievementData.length) {
+          setAccomplishedAchievement({ accomplished: true, achievements: testAchievementData });
         }
 
         // can see result after record

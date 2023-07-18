@@ -191,9 +191,7 @@ const SingleStory = ({ params }) => {
           customizationsVisible ? "h-[65vh]" : "h-[70vh] t:h-[75vh]"
         }  w-full gap-5  bg-white rounded-2xl p-5 relative overflow-x-hidden overflow-y-auto cstm-w-limit  cstm-scrollbar`}
       >
-        <div className="cstm-scrollbar w-full relative overflow-x-hidden overflow-y-auto h-full">
-          {storyPages}
-        </div>
+        <div className="w-full relative overflow-x-hidden h-full cstm-scrollbar">{storyPages}</div>
 
         <div className="fixed bottom-0 left-2/4 -translate-x-2/4 backdrop-blur-md cstm-flex-row p-2 px-5 z-20 w-full cstm-w-limit l-s:right-0 l-s:-translate-x-0">
           <button disabled={activePage === 1} className="cstm-bg-hover disabled:opacity-50">

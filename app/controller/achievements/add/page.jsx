@@ -35,7 +35,6 @@ const AddAchievement = () => {
   };
 
   const selectReward = (name, id) => {
-    console.log(name, id);
     setAchievement((prev) => {
       return {
         ...prev,

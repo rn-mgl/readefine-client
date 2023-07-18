@@ -14,6 +14,7 @@ import { BsArrowLeft, BsFilter } from "react-icons/bs";
 import ActionLabel from "@/src/src/components/global/ActionLabel";
 import StoryDoublePage from "@/src/src/components/stories/StoryDoublePage";
 import { decipher } from "@/src/src/functions/security";
+import ReceiveAchievement from "@/src/src/client/achievements/ReceiveAchievement";
 
 const SingleStory = ({ params }) => {
   const [story, setStory] = React.useState({});
@@ -23,6 +24,10 @@ const SingleStory = ({ params }) => {
   const [viewType, setViewType] = React.useState("single");
   const [customizationsVisible, setCustomizationsVisible] = React.useState(false);
   const [message, setMessage] = React.useState({ msg: "", active: false });
+  const [accomplishedAchievement, setAccomplishedAchievement] = React.useState({
+    accomplished: false,
+    achievements: [],
+  });
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -54,6 +59,13 @@ const SingleStory = ({ params }) => {
 
   const handleViewType = (type) => {
     setViewType(type);
+  };
+
+  const handleAccomplishedAchievement = () => {
+    setAccomplishedAchievement({
+      accomplished: false,
+      data: {},
+    });
   };
 
   const storyPages = pages?.map((page, index, arr) => {
@@ -120,6 +132,25 @@ const SingleStory = ({ params }) => {
         { storyId: decodedStoryId },
         { headers: { Authorization: user?.token } }
       );
+
+      // only add achievement points if the book is just now read
+      if (data.insertId) {
+        // update read achievement points and return if achievement is met
+        const { data: achievementData } = await axios.patch(
+          `${url}/user_achievement`,
+          {
+            type: "read_story",
+            specifics: "book_count",
+            toAdd: 1,
+          },
+          { headers: { Authorization: user?.token } }
+        );
+
+        // if there are achievements
+        if (achievementData.length) {
+          setAccomplishedAchievement({ accomplished: true, achievements: achievementData });
+        }
+      }
     } catch (error) {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg });
@@ -141,7 +172,16 @@ const SingleStory = ({ params }) => {
   return (
     <div className="p-5 cstm-flex-col bg-accntColor w-full min-h-screen justify-start gap-2">
       <ClientPageHeader subHeader="Stories" mainHeader={story.title} />
+
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+
+      {accomplishedAchievement.accomplished ? (
+        <ReceiveAchievement
+          achievements={accomplishedAchievement.achievements}
+          handleAccomplishedAchievement={handleAccomplishedAchievement}
+        />
+      ) : null}
+
       <div className="cstm-flex-row w-full cstm-w-limit">
         <div className="w-full  cstm-flex-row mr-auto">
           <Link href="/archives/stories" className="w-fit cstm-bg-hover mr-auto">

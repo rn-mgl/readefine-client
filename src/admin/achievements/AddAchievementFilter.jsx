@@ -16,14 +16,14 @@ const AddAchievementFilter = (props) => {
           { label: "Sessions", value: "user_session" },
           { label: "Lexile", value: "user_lexile" },
           { label: "Read Stories", value: "read_story" },
-          { label: "Answered Tests", value: "answered_questions" },
-          { label: "Test Score", value: "answered_questions" },
-          { label: "Dangle Plays", value: "answered_dangle" },
-          { label: "Decipher Plays", value: "answered_decipher" },
-          { label: "Riddle Plays", value: "answered_riddles" },
-          { label: "Dangle Wins", value: "answered_dangle" },
-          { label: "Decipher Wins", value: "answered_decipher" },
-          { label: "Riddle Wins", value: "answered_riddles" },
+          { label: "Answered Tests", value: "answered_tests" },
+          { label: "Test Score", value: "test_score" },
+          { label: "Dangle Plays", value: "dangle_plays" },
+          { label: "Decipher Plays", value: "decipher_plays" },
+          { label: "Riddle Plays", value: "riddle_plays" },
+          { label: "Dangle Wins", value: "dangle_wins" },
+          { label: "Decipher Wins", value: "decipher_wins" },
+          { label: "Riddle Wins", value: "riddle_wins" },
         ]}
       />
 
@@ -35,7 +35,7 @@ const AddAchievementFilter = (props) => {
         labelValue={[
           { label: "Days Online", value: "days_online" },
           { label: "Lexile Growth", value: "lexile_growth" },
-          { label: "Total Books", value: "read_count" },
+          { label: "Total Books", value: "book_count" },
           { label: "Total Plays", value: "play_count" },
           { label: "Total Scores", value: "score_count" },
         ]}
