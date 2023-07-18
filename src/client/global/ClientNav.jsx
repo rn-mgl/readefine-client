@@ -165,7 +165,7 @@ const ClientNav = () => {
             <div className="cstm-flex-col items-start">
               <p className="text-sm font-semibold">{userData?.lexile}L</p>
               <p className="font-bold text-prmColor whitespace-nowrap truncate">
-                {user?.name} {user?.surname}
+                {userData?.name} {userData?.surname}
               </p>
             </div>
           </Link>

@@ -12,7 +12,7 @@ const Hero = () => {
       id="hero"
     >
       <p
-        className=" font-extrabold text-2xl
+        className=" font-extrabold text-2xl text-scndColor
                     m-l:text-3xl
                     t:text-4xl
                     l-s:text-5xl

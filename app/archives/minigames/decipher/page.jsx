@@ -248,7 +248,7 @@ const Decipher = () => {
         <InitDecipher
           getWord={getWord}
           handleIsPlaying={handleIsPlaying}
-          to="/controller/minigames"
+          to="/archives/minigames"
         />
       )}
     </div>

@@ -36,7 +36,7 @@ const Definition = () => {
                     l-s:text-5xl
                     l-l:text-6xl"
         >
-          lexile-based <br /> reading materials
+          Lexile-based <br /> reading materials
         </p>
         <br />
         <p
