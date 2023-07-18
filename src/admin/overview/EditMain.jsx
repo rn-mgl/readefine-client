@@ -57,7 +57,7 @@ const EditMain = (props) => {
     try {
       const { data } = await axios.patch(
         `${url}/admin/${props.adminId}`,
-        { image, name, surname, username },
+        { image, name, surname, username, type: "main" },
         { headers: { Authorization: user?.token } }
       );
 
@@ -172,7 +172,7 @@ const EditMain = (props) => {
 
           <button
             onClick={editMain}
-            className="w-full rounded-full bg-prmColor p-2 text-scndColor font-bold t:w-40"
+            className="w-full rounded-full bg-prmColor p-2 text-scndColor font-bold t:w-fit t:px-10 text-sm"
           >
             Save Changes
           </button>

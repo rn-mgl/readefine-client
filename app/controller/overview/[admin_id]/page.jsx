@@ -13,15 +13,25 @@ import { localizeDate } from "@/src/src/functions/localDate";
 import ActivityCard from "@/src/src/admin/overview/ActivityCard";
 import MainOverview from "@/src/src/admin/overview/MainOverview";
 import ActivityText from "@/src/src/admin/overview/ActivityText";
+import ChangePassword from "@/src/src/admin/overview/ChangePassword";
 
 const Overview = () => {
   const [adminData, setAdminData] = React.useState({});
   const [adminActivities, setAdminActivities] = React.useState({});
   const [canEditMain, setCanEditMain] = React.useState(false);
+  const [canChangePassword, setCanChangePassword] = React.useState(false);
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
   const user = session?.user?.name;
+
+  const handleCanEditMain = () => {
+    setCanEditMain((prev) => !prev);
+  };
+
+  const handleCanChangePassword = () => {
+    setCanChangePassword((prev) => !prev);
+  };
 
   const storyActivity = adminActivities?.storyData?.map((d, i) => {
     return (
@@ -71,8 +81,6 @@ const Overview = () => {
       </React.Fragment>
     );
   });
-
-  console.log(adminActivities);
 
   const testQuestionsActivity = adminActivities?.testQuestionData?.map((q, i) => {
     return (
@@ -162,10 +170,6 @@ const Overview = () => {
     );
   });
 
-  const handleCanEditMain = () => {
-    setCanEditMain((prev) => !prev);
-  };
-
   const getAdminData = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/admin/${user?.adminId}`, {
@@ -218,8 +222,16 @@ const Overview = () => {
         />
       ) : null}
 
+      {canChangePassword ? (
+        <ChangePassword handleCanChangePassword={handleCanChangePassword} />
+      ) : null}
+
       <div className="cstm-flex-col cstm-scrollbar cstm-w-limit w-full gap-5">
-        <MainOverview adminData={adminData} handleCanEditMain={handleCanEditMain} />
+        <MainOverview
+          adminData={adminData}
+          handleCanEditMain={handleCanEditMain}
+          handleCanChangePassword={handleCanChangePassword}
+        />
 
         <p className="text-2xl font-extrabold t:mr-auto">Your Activities</p>
 

@@ -6,7 +6,7 @@ import { AiFillEdit } from "react-icons/ai";
 const MainOverview = (props) => {
   return (
     <div className="cstm-flex-col justify-start gap-5 w-full t:cstm-flex-row">
-      <div className="bg-white w-full rounded-2xl h-60 p-5 cstm-flex-col justify-start relative t:w-6/12 t:mr-auto t:h-72">
+      <div className="bg-white w-full rounded-2xl h-72 p-5 cstm-flex-col justify-start relative t:w-6/12 t:mr-auto t:h-72">
         <div className="relative w-full h-[40%] rounded-2xl cstm-flex-col bg-gradient-to-r from-prmColor to-scndColor">
           <div
             style={{
@@ -16,7 +16,7 @@ const MainOverview = (props) => {
           />
         </div>
 
-        <div className="cstm-flex-col gap-1 my-auto">
+        <div className="cstm-flex-col gap-1 mt-auto">
           <div className="font-bold text-prmColor cstm-flex-row gap-2 text-sm">
             <p>
               {props.adminData.name} {props.adminData.surname}
@@ -33,6 +33,13 @@ const MainOverview = (props) => {
           className="cstm-bg-hover absolute right-2 bottom-2"
         >
           <AiFillEdit className="text-prmColor" />
+        </button>
+
+        <button
+          onClick={props.handleCanChangePassword}
+          className="mt-auto hover:shadow-none text-sm text-prmColor hover:underline underline-offset-2"
+        >
+          change password
         </button>
       </div>
 
