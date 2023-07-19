@@ -1,6 +1,6 @@
 import React from "react";
-import Smartphone from "../../../public/Smartphone.svg";
-import Settings from "../../../public/Settings.svg";
+import Smartphone from "../../../public/verify/Smartphone.svg";
+import Settings from "../../../public/verify/Settings.svg";
 import Image from "next/image";
 
 const VerifyingImage = () => {

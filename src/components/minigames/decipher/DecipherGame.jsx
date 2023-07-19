@@ -1,6 +1,5 @@
 import React from "react";
 import { BsArrowLeft } from "react-icons/bs";
-import { GrPowerReset } from "react-icons/gr";
 import DecipherLetterBlock from "./DecipherLetterBlock";
 
 const DecipherGame = (props) => {

@@ -1,5 +1,5 @@
 import ButtonLink from "../link/ButtonLink";
-import book from "../../../public/landing book.png";
+import book from "../../../public/landing/hero/landing book.png";
 import Image from "next/image";
 
 const Hero = () => {

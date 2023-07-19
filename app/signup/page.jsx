@@ -1,14 +1,16 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import intersectAM from "../../public/IntersectAM.svg";
-import intersectAT from "../../public/IntersectAT.svg";
-import intersectAL from "../../public/IntersectAL.svg";
+import axios from "axios";
+
+import intersectAM from "../../public/signup/IntersectAM.svg";
+import intersectAT from "../../public/signup/IntersectAT.svg";
+import intersectAL from "../../public/signup/IntersectAL.svg";
+
 import InputComp from "../../src/components/input/InputComp";
 import ButtonComp from "../../src/components/input/ButtonComp";
 import SelectComp from "../../src/components/input/SelectComp";
 import Loading from "@/src/src/components/global/Loading";
-import axios from "axios";
 import Message from "@/src/src/components/global/Message";
 
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";

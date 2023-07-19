@@ -1,11 +1,11 @@
 "use client";
 import React from "react";
 import ArchivesCards from "@/src/src/client/archives/ArchivesCards";
-import DashboardCardImage1 from "../../public/DashboardCardImage1.svg";
-import DashboardCardImage2 from "../../public/DashboardCardImage2.svg";
-import DashboardCardImage3 from "../../public/DashboardCardImage3.svg";
-import DashboardCardImage5 from "../../public/DashboardCardImage5.svg";
-import DashboardCardImage6 from "../../public/DashboardCardImage6.svg";
+import DashboardCardImage1 from "../../public/dashboard/DashboardCardImage1.svg";
+import DashboardCardImage2 from "../../public/dashboard/DashboardCardImage2.svg";
+import DashboardCardImage3 from "../../public/dashboard/DashboardCardImage3.svg";
+import DashboardCardImage5 from "../../public/dashboard/DashboardCardImage5.svg";
+import DashboardCardImage6 from "../../public/dashboard/DashboardCardImage6.svg";
 import ClientPageHeader from "@/src/src/client/global/PageHeader";
 import Message from "@/src/src/components/global/Message";
 import axios from "axios";

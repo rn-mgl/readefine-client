@@ -1,5 +1,5 @@
 import React from "react";
-import Rejected from "../../../public/Rejected.svg";
+import Rejected from "../../../public/verify/Rejected.svg";
 import Image from "next/image";
 
 const UnverifiedImage = () => {

@@ -1,11 +1,11 @@
 import React from "react";
-import readLaptop from "../../../public/read stories laptop.png";
-import readLaptop2 from "../../../public/read stories laptop 2.png";
-import testLaptop from "../../../public/test laptop.png";
-import testLaptop2 from "../../../public/test laptop 2.png";
-import dangleLaptop from "../../../public/dangle laptop.png";
-import decipherLaptop from "../../../public/decipher laptop.png";
-import riddleLaptop from "../../../public/riddle laptop.png";
+import readLaptop from "../../../public/landing/offers/read stories laptop.png";
+import readLaptop2 from "../../../public/landing/offers/read stories laptop 2.png";
+import testLaptop from "../../../public/landing/offers/test laptop.png";
+import testLaptop2 from "../../../public/landing/offers/test laptop 2.png";
+import dangleLaptop from "../../../public/landing/offers/dangle laptop.png";
+import decipherLaptop from "../../../public/landing/offers/decipher laptop.png";
+import riddleLaptop from "../../../public/landing/offers/riddle laptop.png";
 import Image from "next/image";
 
 const Offers = () => {

@@ -1,11 +1,13 @@
 "use client";
 import Link from "next/link";
 import React from "react";
-import TextShuffleAnimation from "../../global/TextShuffleAnimation";
-import decipherBgUp from "../../../../public/DecipherBGUp.svg";
-import decipherBgDown from "../../../../public/DecipherBGDown.svg";
-import { BsArrowLeft } from "react-icons/bs";
 import Image from "next/image";
+import TextShuffleAnimation from "../../global/TextShuffleAnimation";
+
+import decipherBgUp from "../../../../public/decipher/DecipherBGUp.svg";
+import decipherBgDown from "../../../../public/decipher/DecipherBGDown.svg";
+
+import { BsArrowLeft } from "react-icons/bs";
 
 const InitDecipher = (props) => {
   return (

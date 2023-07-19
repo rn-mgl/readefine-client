@@ -4,7 +4,7 @@ const ButtonComp = (props) => {
   return (
     <button
       type={props.type}
-      className={`text-center rounded-full font-poppins text-sm font-extrabold ${props.fontColor} ${props.bgColor} ${props.css} p-2 px-4`}
+      className={`text-center rounded-full font-poppins text-sm font-bold ${props.fontColor} ${props.bgColor} ${props.css} p-2 px-4`}
     >
       {props.label}
     </button>

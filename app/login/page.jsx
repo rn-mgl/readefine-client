@@ -1,23 +1,21 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
 import Link from "next/link";
-
 import axios from "axios";
 
 import Loading from "@/src/src/components/global/Loading";
 import Message from "@/src/src/components/global/Message";
 import ReceiveAchievement from "@/src/src/client/achievements/ReceiveAchievement";
-import { useGlobalContext } from "@/src/context";
-
-import intersectSM from "../../public/IntersectSM.svg";
-import intersectST from "../../public/IntersectST.svg";
-import intersectSL from "../../public/IntersectSL.svg";
+import intersectSM from "../../public/landing/definition/IntersectSM.svg";
+import intersectST from "../../public/landing/definition/IntersectST.svg";
+import intersectSL from "../../public/landing/definition/IntersectSL.svg";
 import InputComp from "../../src/components/input/InputComp";
 import ButtonComp from "../../src/components/input/ButtonComp";
 
+import { useGlobalContext } from "@/src/context";
+import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { CiUser } from "react-icons/ci";
 

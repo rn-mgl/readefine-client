@@ -1,12 +1,14 @@
 "use client";
 import React from "react";
+import axios from "axios";
+
 import InitDecipher from "@/src/src/components/minigames/decipher/InitDecipher";
 import DecipherGame from "@/src/src/components/minigames/decipher/DecipherGame";
+import Gameover from "@/src/src/components/minigames/Gameover";
+
+import { AiFillHeart } from "react-icons/ai";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
-import axios from "axios";
-import { AiFillHeart } from "react-icons/ai";
-import Gameover from "@/src/src/components/minigames/Gameover";
 
 const Decipher = () => {
   const [wordData, setWordData] = React.useState({});

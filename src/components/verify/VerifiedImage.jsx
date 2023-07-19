@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
-import FistBump from "../../../public/FistBump.svg";
-import Protected from "../../../public/Protected.svg";
+import FistBump from "../../../public/verify/FistBump.svg";
+import Protected from "../../../public/verify/Protected.svg";
 import Link from "next/link";
 import { BsArrowRight } from "react-icons/bs";
 

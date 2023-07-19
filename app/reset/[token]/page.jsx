@@ -1,17 +1,19 @@
 "use client";
 import React from "react";
-import intersectSM from "../../../public/IntersectSM.svg";
-import intersectST from "../../../public/IntersectST.svg";
-import intersectSL from "../../../public/IntersectSL.svg";
+import axios from "axios";
+
+import intersectSM from "../../../public/landing/definition/IntersectSM.svg";
+import intersectST from "../../../public/landing/definition/IntersectST.svg";
+import intersectSL from "../../../public/landing/definition/IntersectSL.svg";
+
 import Image from "next/image";
 import InputComp from "@/src/src/components/input/InputComp";
 import ButtonComp from "@/src/src/components/input/ButtonComp";
 import Message from "@/src/src/components/global/Message";
-import axios from "axios";
 
-import { CiLock, CiUnlock } from "react-icons/ci";
 import { useGlobalContext } from "@/src/context";
 import { useRouter } from "next/navigation";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 const PasswordReset = ({ params }) => {
   const [password, setPassword] = React.useState({ newPassword: "", retypedPassword: "" });
@@ -81,9 +83,9 @@ const PasswordReset = ({ params }) => {
           spellCheck={false}
           icon={
             visiblePassword.newPassword ? (
-              <CiUnlock onClick={() => handleVisiblePassword("newPassword")} />
+              <AiOutlineEyeInvisible onClick={() => handleVisiblePassword("newPassword")} />
             ) : (
-              <CiLock onClick={() => handleVisiblePassword("newPassword")} />
+              <AiOutlineEye onClick={() => handleVisiblePassword("newPassword")} />
             )
           }
           onChange={(e) => handleNewPassword(e.target)}
@@ -96,9 +98,9 @@ const PasswordReset = ({ params }) => {
           spellCheck={false}
           icon={
             visiblePassword.retypedPassword ? (
-              <CiUnlock onClick={() => handleVisiblePassword("retypedPassword")} />
+              <AiOutlineEyeInvisible onClick={() => handleVisiblePassword("retypedPassword")} />
             ) : (
-              <CiLock onClick={() => handleVisiblePassword("retypedPassword")} />
+              <AiOutlineEye onClick={() => handleVisiblePassword("retypedPassword")} />
             )
           }
           onChange={(e) => handleNewPassword(e.target)}

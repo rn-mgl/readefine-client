@@ -1,7 +1,6 @@
 import Definition from "../src/components/landing/Definition";
 import Hero from "../src/components/landing/Hero";
 import Offers from "../src/components/landing/Offers";
-import Logo from "../src/components/global/Logo";
 import Purpose from "../src/components/landing/Purpose";
 import LandingLogo from "../src/components/global/LandingLogo";
 

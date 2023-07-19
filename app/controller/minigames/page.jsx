@@ -1,8 +1,8 @@
 import React from "react";
 import AdminPageHeader from "@/src/src/admin/global/PageHeader";
-import DashboardCardImage2 from "../../../public/DashboardCardImage2.svg";
-import DashboardCardImage3 from "../../../public/DashboardCardImage3.svg";
-import DashboardCardImage6 from "../../../public/DashboardCardImage6.svg";
+import DashboardCardImage2 from "../../../public/dashboard/DashboardCardImage2.svg";
+import DashboardCardImage3 from "../../../public/dashboard/DashboardCardImage3.svg";
+import DashboardCardImage6 from "../../../public/dashboard/DashboardCardImage6.svg";
 import AdminMinigamesCards from "@/src/src/admin/minigames/AdminMinigamesCards";
 
 const Minigames = () => {

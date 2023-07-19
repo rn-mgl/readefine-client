@@ -1,5 +1,5 @@
 import React from "react";
-import Mail from "../../public/Mail.svg";
+import Mail from "../../public/sending/Mail.svg";
 import Image from "next/image";
 
 const Sending = () => {

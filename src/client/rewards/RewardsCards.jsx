@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import Link from "next/link";
-import question from "../../../public/Question.svg";
+import question from "../../../public/reward/Question.svg";
 
 const RewardsCards = (props) => {
   const rewardImage = props.isReceived ? props.image : question;

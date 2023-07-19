@@ -1,11 +1,14 @@
 "use client";
 import React from "react";
-import DashboardCardImage2 from "../../../public/DashboardCardImage2.svg";
-import DashboardCardImage3 from "../../../public/DashboardCardImage3.svg";
-import DashboardCardImage6 from "../../../public/DashboardCardImage6.svg";
+import axios from "axios";
+
+import DashboardCardImage2 from "../../../public/dashboard/DashboardCardImage2.svg";
+import DashboardCardImage3 from "../../../public/dashboard/DashboardCardImage3.svg";
+import DashboardCardImage6 from "../../../public/dashboard/DashboardCardImage6.svg";
+
 import ClientMinigamesCards from "@/src/src/client/minigames/ClientMinigamesCards";
 import ClientPageHeader from "@/src/src/client/global/PageHeader";
-import axios from "axios";
+
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 
