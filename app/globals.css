@@ -20,7 +20,7 @@
   }
 
   .cstm-scrollbar {
-    @apply scrollbar-thin scrollbar-thumb-scndColor scrollbar-track-transparent;
+    @apply scrollbar-thin scrollbar-thumb-scndColor scrollbar-track-transparent scroll-m-0;
   }
 
   .cstm-bg-hover {

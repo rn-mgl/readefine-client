@@ -6,8 +6,8 @@ const DashboardCards = (props) => {
   return (
     <div
       className="bg-white p-5 rounded-2xl cstm-flex-col gap-4 group hover:shadow-md
-                l-s:w-[18.5rem]
-                l-l:w-fit"
+                  t:w-80
+                  l-l:w-[22rem]"
     >
       <Link href={props.to} className="w-fit overflow-hidden rounded-2xl">
         <Image

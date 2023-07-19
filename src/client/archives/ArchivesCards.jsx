@@ -7,15 +7,15 @@ const ArchivesCards = (props) => {
     <Link
       href={props.to}
       className="bg-white p-5 rounded-2xl cstm-flex-col gap-4 group transition-all shadow-solid active:shadow-solidActive
-            l-s:w-[18.5rem]
-            l-l:w-fit"
+            t:w-80
+            l-l:w-[22rem]"
     >
-      <div className="w-fit overflow-hidden rounded-2xl">
+      <div className="w-full overflow-hidden rounded-2xl">
         <Image
           src={props.image}
-          width={320}
+          width={350}
           alt="temp"
-          className="rounded-2xl group-hover:scale-110 transition-all duration-300"
+          className="rounded-2xl group-hover:scale-110 transition-all duration-300 w-full"
         />
       </div>
 

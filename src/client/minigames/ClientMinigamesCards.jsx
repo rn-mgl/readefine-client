@@ -6,14 +6,14 @@ const ClientMinigamesCards = (props) => {
   return (
     <div
       className="bg-white p-5 rounded-2xl cstm-flex-col gap-2 group shadow-solid group
-                l-s:w-[18.5rem]
-                l-l:w-fit"
+                  t:w-80
+                  l-l:w-[22rem]"
     >
-      <Link href={props.to} className="w-fit overflow-hidden rounded-2xl">
+      <Link href={props.to} className="w-full overflow-hidden rounded-2xl">
         <Image
           src={props.image}
           alt="temp"
-          className="rounded-2xl group-hover:scale-110 transition-all duration-300"
+          className="rounded-2xl group-hover:scale-110 transition-all duration-300 w-full"
         />
       </Link>
 

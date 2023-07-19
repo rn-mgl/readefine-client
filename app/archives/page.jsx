@@ -47,7 +47,7 @@ const Archives = () => {
       <ClientPageHeader mainHeader="Readefine" subHeader="Home" />
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
       <div
-        className="cstm-flex-col gap-5 justify-start w-full transition-all
+        className="cstm-flex-col gap-5 w-full transition-all
         t:cstm-flex-row t:flex-wrap
         cstm-w-limit"
       >
