@@ -73,7 +73,7 @@ const Login = () => {
       const { data } = await axios.post(`${url}/auth_client/client_login`, { loginData });
 
       // if successfully logged in
-      if (data) {
+      if (data.primary) {
         const { primary } = data;
 
         // add session in db
@@ -137,9 +137,8 @@ const Login = () => {
 
       <form
         className="w-full rounded-md bg-prmColor bg-opacity-20 backdrop-blur-md border-[1px] border-prmColor border-opacity-40 p-5 cstm-flex-col gap-5 relative z-10 shadow-lg
-                  t:w-8/12
-                  l-s:w-6/12
-                  l-l:w-4/12"
+                  t:w-96
+                  l-s:w-[26rem]"
         onSubmit={(e) => loginUser(e)}
       >
         <InputComp

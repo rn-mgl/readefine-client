@@ -152,26 +152,35 @@ const ClientNav = () => {
           label="Minigames"
         />
 
-        <div className="cstm-flex-row gap-2 w-full justify-start mt-auto">
+        <div className="cstm-flex-col gap-2 w-full justify-start mt-auto">
           <Link
             href={`/archives/reader/${cipher(user?.userId)}`}
             onClick={toggleOpenNav}
-            className="font-poppins text-left hover:bg-neutral-100 p-2 rounded-md justify-start transition-all cstm-flex-row gap-2 w-full"
+            className="font-poppins text-left hover:bg-neutral-100 p-2 rounded-md 
+                justify-start transition-all cstm-flex-row gap-2 w-full overflow-x-auto scrollbar-none"
           >
             <div
               style={{ backgroundImage: userData?.image ? `url(${userData?.image})` : null }}
-              className="w-12 h-12 rounded-full  bg-gradient-to-br from-prmColor to-scndColor bg-opacity-30 bg-cover bg-center"
+              className="w-12 min-w-[3rem] h-12 min-h-[3rem] rounded-full  
+                    bg-gradient-to-br from-prmColor to-scndColor bg-opacity-30 bg-cover bg-center"
             />
-            <div className="cstm-flex-col items-start">
+            <div className="cstm-flex-col items-start w-full">
               <p className="text-sm font-semibold">{userData?.lexile}L</p>
-              <p className="font-bold text-prmColor whitespace-nowrap truncate">
+              <p className="font-bold text-prmColor whitespace-nowrap">
                 {userData?.name} {userData?.surname}
               </p>
             </div>
           </Link>
 
-          <button className="ml-auto cstm-bg-hover" onClick={logOut}>
-            <BiLogOut />
+          <div className="cstm-separator" />
+
+          <button
+            className="text-left hover:bg-neutral-100 hover:shadow-none p-2 rounded-md
+                justify-start transition-all cstm-flex-row gap-5 w-full overflow-x-hidden"
+            onClick={logOut}
+          >
+            <BiLogOut className="opacity-50" />
+            <p className="mr-auto text-sm opacity-50">Log Out</p>
           </button>
         </div>
       </div>

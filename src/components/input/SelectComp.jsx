@@ -12,10 +12,8 @@ const SelectComp = (props) => {
   return (
     <select
       className="focus:rounded-full focus:px-4 focus:l-s:px-6 rounded-md px-2 l-s:px-3
-  shadow-md bg-accntColor p-2 w-full text-sm font-normal transition-all
-  m-l:text-base
-  text-prmColor 
-   focus:outline-none focus:border-none"
+                shadow-md bg-accntColor p-2 w-full text-sm font-normal transition-all
+                text-prmColor focus:outline-none focus:border-none"
       name="gradeLevel"
       value={props.value}
       onChange={(e) => props.onChange(e.target)}

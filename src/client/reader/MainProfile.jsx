@@ -16,9 +16,9 @@ const MainProfile = (props) => {
           />
         </div>
 
-        <div className="cstm-flex-col mt-auto w-fit">
-          <div className="cstm-flex-row text-sm gap-2 t:text-base">
-            <p className="text-prmColor font-bold ">
+        <div className="cstm-flex-col mt-auto w-full">
+          <div className="cstm-flex-row text-sm gap-2 t:text-base w-full ">
+            <p className="text-prmColor font-bold overflow-x-auto whitespace-nowrap">
               {props.userData.name} {props.userData.surname}
             </p>
 

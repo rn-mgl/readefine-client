@@ -191,6 +191,7 @@ const Reader = ({ params }) => {
   });
 
   const achievementsAndRewards = userActivities?.achievementData?.map((reward) => {
+    const cipheredRewardId = cipher(reward.reward_id);
     return (
       <React.Fragment key={reward.reward_id}>
         <RewardsCards
@@ -198,7 +199,7 @@ const Reader = ({ params }) => {
           title={reward.reward_name}
           type={reward.reward_type}
           isReceived={reward.is_received}
-          to={`/archives/rewards/${reward.reward_id}`}
+          to={`/archives/rewards/${cipheredRewardId}`}
         />
       </React.Fragment>
     );

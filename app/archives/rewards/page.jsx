@@ -53,7 +53,7 @@ const ClientRewards = () => {
   };
 
   const rewardsCards = rewards.map((reward) => {
-    const cipheredKey = cipher(reward.reward_id);
+    const cipheredId = cipher(reward.reward_id);
 
     return (
       <React.Fragment key={reward.reward_id}>
@@ -62,7 +62,7 @@ const ClientRewards = () => {
           title={reward.reward_name}
           type={reward.reward_type}
           isReceived={showFilter.toShow === "all" ? reward.is_received : true}
-          to={`/archives/rewards/${cipheredKey}`}
+          to={`/archives/rewards/${cipheredId}`}
         />
       </React.Fragment>
     );

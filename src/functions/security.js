@@ -36,7 +36,7 @@ export const cipher = (primaryKey) => {
   const randomId = nanoid();
 
   // Apply the substitution cipher
-  const cipherText = Array.from(primaryKeyStr, (char) => CIPHER_KEY[char] || char).join("");
+  const cipherText = Array.from(primaryKeyStr, (char) => CIPHER_KEY[char]).join("");
 
   return randomId + "_" + cipherText;
 };
@@ -46,7 +46,7 @@ export const decipher = (encodedText) => {
   // Reverse the substitution cipher
   const key = encodedText.split("_")[1];
 
-  const primaryKeyStr = Array.from(key, (char) => DECIPHER_KEY[char] || char).join("");
+  const primaryKeyStr = Array.from(key, (char) => DECIPHER_KEY[char]).join("");
 
   return parseInt(primaryKeyStr);
 };

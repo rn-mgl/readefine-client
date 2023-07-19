@@ -20,8 +20,7 @@ const InputComp = (props) => {
         className="focus:rounded-full focus:px-3 focus:l-s:px-5 rounded-md px-2 l-s:px-3
                    shadow-md bg-accntColor p-2 w-full text-sm font-normal transition-all
                     placeholder:text-prmColor placeholder:text-opacity-50
-                    focus:outline-none focus:border-none
-                    m-l:text-base"
+                    focus:outline-none focus:border-none"
       />
     </div>
   );
