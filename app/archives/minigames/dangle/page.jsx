@@ -114,10 +114,9 @@ const Dangle = () => {
           return;
         }
       }
-      if (i >= correctWord.length - 1) {
-        addToGuessEntry();
-      }
     }
+
+    addToGuessEntry();
 
     if (corrects !== correctWord.length) {
       removeHeart();

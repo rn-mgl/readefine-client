@@ -4,46 +4,57 @@ import React from "react";
 import InitRiddle from "@/src/src/components/minigames/riddles/InitRiddle";
 import axios from "axios";
 import RiddleGame from "@/src/src/components/minigames/riddles/RiddleGame";
+import Gameover from "@/src/src/components/minigames/Gameover";
+import RiddleTutorial from "@/src/src/components/minigames/riddles/RiddleTutorial";
 
 import { useGlobalContext } from "@/src/context";
 import { useSession } from "next-auth/react";
 import { AiFillHeart } from "react-icons/ai";
-import Gameover from "@/src/src/components/minigames/Gameover";
-import RiddleTutorial from "@/src/src/components/minigames/riddles/RiddleTutorial";
 
 const PlayRiddles = () => {
   const [riddleData, setRiddleData] = React.useState({});
   const [correctWord, setCorrectWord] = React.useState([]);
+  const [canSeeTutorial, setCanSeeTutorial] = React.useState(false);
+
   const [guess, setGuess] = React.useState({ letters: [], letterPos: 0 });
   const [lives, setLives] = React.useState({ status: [1, 1, 1, 1, 1], activePos: 4 });
   const [timer, setTimer] = React.useState(0);
-  const [isPlaying, setIsPlaying] = React.useState(false);
   const [entryGuesses, setEntryGuesses] = React.useState([]);
+
+  const [isPlaying, setIsPlaying] = React.useState(false);
   const [gameOver, setGameOver] = React.useState({ over: false, status: "" });
-  const [canSeeTutorial, setCanSeeTutorial] = React.useState(false);
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
   const user = session?.user?.name;
 
+  // toggle can see tutorial
   const handleCanSeeTutorial = () => {
     setCanSeeTutorial((prev) => !prev);
   };
 
+  // reset game stats
+  const resetGameStats = () => {
+    setRiddleData({});
+    setCorrectWord([]);
+    setGuess({ letters: [], letterPos: 0 });
+    setLives({ status: [1, 1, 1, 1, 1], activePos: 4 });
+    setTimer(0);
+    setEntryGuesses([]);
+    setGameOver({ over: false, status: "" });
+  };
+
+  // toggle is playing, if playing reset, else main menu
   const handleIsPlaying = () => {
     setIsPlaying((prev) => {
       if (prev) {
-        setRiddleData({});
-        setCorrectWord([]);
-        setGuess({ letters: [], letterPos: 0 });
-        setLives({ status: [1, 1, 1, 1, 1], activePos: 4 });
-        setTimer(0);
-        setEntryGuesses([]);
-        setGameOver({ over: false, status: "" });
+        resetGameStats();
       }
       return !prev;
     });
   };
+
+  // handle input from virtual keyb
   const handleInput = (key) => {
     if (guess.letterPos >= correctWord.length) return;
     const newLetters = [...guess.letters];
@@ -56,6 +67,7 @@ const PlayRiddles = () => {
     });
   };
 
+  // handle delete character
   const deleteCharacter = () => {
     if (guess.letterPos - 1 < 0) return;
     const newLetters = [...guess.letters];
@@ -68,14 +80,18 @@ const PlayRiddles = () => {
     });
   };
 
+  // add to guesses
   const addToGuessEntry = () => {
     setEntryGuesses(guess.letters);
   };
 
+  // remove heart
   const removeHeart = () => {
+    // game over if lives are empty
     if (lives.activePos <= 0) {
       setGameOver({ over: true, status: "lose" });
     }
+
     const newLives = [...lives.status];
     newLives[lives.activePos] = 0;
     setLives((prev) => {
@@ -86,9 +102,13 @@ const PlayRiddles = () => {
     });
   };
 
+  // submit guess
   const submitGuess = () => {
     const guessString = guess.letters.join("");
     const correctWordString = correctWord.join("");
+
+    // return if guess length is not equal to correct one
+    if (guessString.length !== correctWordString.length) return;
 
     if (guessString === correctWordString) {
       setGameOver({ over: true, status: "win" });
@@ -99,6 +119,7 @@ const PlayRiddles = () => {
     addToGuessEntry();
   };
 
+  // get riddle data and fill in game data
   const getRiddle = async () => {
     try {
       const { data } = await axios.get(`${url}/admin_riddles/random_riddle`, {
@@ -121,6 +142,7 @@ const PlayRiddles = () => {
     }
   };
 
+  // map lives
   const remainingLives = lives.status.map((alive, i) => {
     return (
       <AiFillHeart

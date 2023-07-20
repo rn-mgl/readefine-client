@@ -5,46 +5,61 @@ import axios from "axios";
 import InitDecipher from "@/src/src/components/minigames/decipher/InitDecipher";
 import DecipherGame from "@/src/src/components/minigames/decipher/DecipherGame";
 import Gameover from "@/src/src/components/minigames/Gameover";
+import DecipherTutorial from "@/src/src/components/minigames/decipher/DecipherTutorial";
 
 import { AiFillHeart } from "react-icons/ai";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
-import DecipherTutorial from "@/src/src/components/minigames/decipher/DecipherTutorial";
 
 const Decipher = () => {
   const [wordData, setWordData] = React.useState({});
   const [correctWord, setCorrectWord] = React.useState([]);
+  const [canSeeTutorial, setCanSeeTutorial] = React.useState(false);
+
   const [cipheredWord, setCipheredWord] = React.useState([]);
   const [guess, setGuess] = React.useState([]);
-  const [isPlaying, setIsPlaying] = React.useState(false);
   const [lives, setLives] = React.useState({ status: [1, 1, 1], activePos: 2 });
+
   const [gameOver, setGameOver] = React.useState({ over: false, status: "" });
+  const [isPlaying, setIsPlaying] = React.useState(false);
   const [timer, setTimer] = React.useState(0);
-  const [canSeeTutorial, setCanSeeTutorial] = React.useState(false);
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
   const user = session?.user?.name;
 
+  // toggle can see tutorial
   const handleCanSeeTutorial = () => {
     setCanSeeTutorial((prev) => !prev);
   };
 
+  // reset to starting position the letters
+  const resetGuesses = () => {
+    setGuess(cipheredWord);
+  };
+
+  // reset stats
+  const resetGameStats = () => {
+    setCipheredWord([]);
+    setGuess([]);
+    setWordData({});
+    setCorrectWord([]);
+    setGameOver({ over: false, status: "" });
+    setLives({ status: [1, 1, 1], activePos: 2 });
+    setTimer(0);
+  };
+
+  // toggle is playing
   const handleIsPlaying = () => {
     setIsPlaying((prev) => {
       if (prev) {
-        setCipheredWord([]);
-        setGuess([]);
-        setWordData({});
-        setCorrectWord([]);
-        setGameOver({ over: false, status: "" });
-        setLives({ status: [1, 1, 1], activePos: 2 });
-        setTimer(0);
+        resetGameStats();
       }
       return !prev;
     });
   };
 
+  // increment letter position
   const incrementLetter = (index) => {
     const currChar = guess[index].letter;
     let newChar = String.fromCharCode(currChar.charCodeAt(0) + 1);
@@ -59,6 +74,7 @@ const Decipher = () => {
     setGuess(newGuess);
   };
 
+  // decrement letter position
   const decrementLetter = (index) => {
     const currChar = guess[index].letter;
     let newChar = String.fromCharCode(currChar.charCodeAt(0) - 1);
@@ -73,11 +89,9 @@ const Decipher = () => {
     setGuess(newGuess);
   };
 
-  const resetGuesses = () => {
-    setGuess(cipheredWord);
-  };
-
+  // remove heart
   const removeHeart = () => {
+    // game over if no more hearts
     if (lives.activePos <= 0) {
       setGameOver({ over: true, status: "lose" });
     }
@@ -91,6 +105,7 @@ const Decipher = () => {
     });
   };
 
+  // submit guess
   const submitGuess = () => {
     let guessString = "";
     const correctWordString = correctWord.join("");
@@ -106,26 +121,38 @@ const Decipher = () => {
     }
   };
 
+  // shuffle text positions
   const cipher = (text) => {
+    // new text array
     const cipheredText = [];
 
     for (let i = 0; i < text.length; i++) {
+      // curr char
       const char = text[i];
+
+      // up or down skips
       const shiftDirection = Math.random() < 0.5 ? -1 : 1;
+
+      // number of skips
       const shiftAmount = Math.floor(Math.random() * 25) + 1;
 
+      // new char and skips
       let newChar = char;
       let skips = 0;
 
+      // traverse current letter until shift amount is reached
       for (let j = 0; j < shiftAmount; j++) {
+        // move letter value up or down depending on shift direction
         if (shiftDirection === 1) {
           newChar = String.fromCharCode(newChar.charCodeAt(0) + 1);
         } else {
           newChar = String.fromCharCode(newChar.charCodeAt(0) - 1);
         }
 
+        // increment skips per loop
         skips++;
 
+        // if alphabet is not in A to Z, manually change to A or Z depending of shift direction
         if (!newChar.match(/[a-z]/i)) {
           if (shiftDirection === 1) {
             newChar = "A";
@@ -135,6 +162,7 @@ const Decipher = () => {
         }
       }
 
+      // add the ciphered character set to the ciphered text array
       cipheredText.push({
         letter: newChar,
         skips: skips,
@@ -144,6 +172,7 @@ const Decipher = () => {
     return cipheredText;
   };
 
+  // get word data and set game stats
   const getWord = async () => {
     if (user?.token) {
       try {
@@ -170,6 +199,7 @@ const Decipher = () => {
     }
   };
 
+  // map remaining lives
   const remainingLives = lives.status.map((alive, i) => {
     return (
       <AiFillHeart
