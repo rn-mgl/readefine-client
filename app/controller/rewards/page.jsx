@@ -8,7 +8,6 @@ import axios from "axios";
 import Message from "@/src/src/components/global/Message";
 
 import { IoAddOutline } from "react-icons/io5";
-import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { inputDate } from "@/src/src/functions/localDate";
@@ -16,22 +15,23 @@ import { cipher } from "@/src/src/functions/security";
 
 const AdminRewards = () => {
   const [rewards, setRewards] = React.useState([]);
+  const [message, setMessage] = React.useState({ msg: "", active: false });
+
+  const [sortFilter, setSortFilter] = React.useState({ toSort: "reward_name", sortMode: "ASC" });
   const [searchFilter, setSearchFilter] = React.useState({
     toSearch: "reward_name",
     searchKey: "",
   });
-  const [sortFilter, setSortFilter] = React.useState({ toSort: "reward_name", sortMode: "ASC" });
-  const [message, setMessage] = React.useState({ msg: "", active: false });
   const [dateRangeFilter, setDateRangeFilter] = React.useState({
     from: "",
     to: inputDate(new Date().toLocaleDateString()),
   });
-  const { data: session } = useSession({ required: true });
 
+  const { data: session } = useSession({ required: true });
   const user = session?.user?.name;
   const { url } = useGlobalContext();
-  const router = useRouter();
 
+  // handle onchange on search filter
   const handleSearchFilter = ({ name, value }) => {
     setSearchFilter((prev) => {
       return {
@@ -41,6 +41,7 @@ const AdminRewards = () => {
     });
   };
 
+  // handle onchange on date range filter
   const handleDateRangeFilter = ({ name, value }) => {
     setDateRangeFilter((prev) => {
       return {
@@ -50,6 +51,7 @@ const AdminRewards = () => {
     });
   };
 
+  // handle onchange on sort filter
   const handleSortFilter = ({ name, value }) => {
     setSortFilter((prev) => {
       return {
@@ -59,20 +61,7 @@ const AdminRewards = () => {
     });
   };
 
-  const rewardsCards = rewards.map((reward) => {
-    const cipheredRewardId = cipher(reward.reward_id);
-    return (
-      <React.Fragment key={reward.reward_id}>
-        <RewardsCards
-          image={reward.reward}
-          title={reward.reward_name}
-          type={reward.reward_type}
-          to={`/controller/rewards/${cipheredRewardId}`}
-        />
-      </React.Fragment>
-    );
-  });
-
+  // get rewards
   const getRewards = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/admin_reward`, {
@@ -88,6 +77,21 @@ const AdminRewards = () => {
       setMessage({ active: true, msg: error?.response?.data?.msg });
     }
   }, [url, user, setRewards, searchFilter, sortFilter, dateRangeFilter]);
+
+  // map rewards
+  const rewardsCards = rewards.map((reward) => {
+    const cipheredRewardId = cipher(reward.reward_id);
+    return (
+      <React.Fragment key={reward.reward_id}>
+        <RewardsCards
+          image={reward.reward}
+          title={reward.reward_name}
+          type={reward.reward_type}
+          to={`/controller/rewards/${cipheredRewardId}`}
+        />
+      </React.Fragment>
+    );
+  });
 
   React.useEffect(() => {
     if (user) {

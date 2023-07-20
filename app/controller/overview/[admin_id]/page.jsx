@@ -9,12 +9,16 @@ import ActivityCard from "@/src/src/admin/overview/ActivityCard";
 import MainOverview from "@/src/src/admin/overview/MainOverview";
 import ActivityText from "@/src/src/admin/overview/ActivityText";
 import ChangePassword from "@/src/src/admin/overview/ChangePassword";
+import ComplementActivityText from "@/src/src/admin/overview/ComplementActivityText";
 
-import { BsDot } from "react-icons/bs";
 import { decipher } from "@/src/src/functions/security";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { localizeDate } from "@/src/src/functions/localDate";
+import { GiBrain, GiNotebook, GiSpellBook } from "react-icons/gi";
+import { ImCheckmark } from "react-icons/im";
+import { AiFillTrophy } from "react-icons/ai";
+import { RxActivityLog } from "react-icons/rx";
 
 const Overview = ({ params }) => {
   const [adminData, setAdminData] = React.useState({});
@@ -27,151 +31,17 @@ const Overview = ({ params }) => {
   const user = session?.user?.name;
   const decipheredId = decipher(params?.admin_id);
 
+  // toggle can edit main data
   const handleCanEditMain = () => {
     setCanEditMain((prev) => !prev);
   };
 
+  // toggle can change password
   const handleCanChangePassword = () => {
     setCanChangePassword((prev) => !prev);
   };
 
-  const storyActivity = adminActivities?.storyData?.map((d, i) => {
-    return (
-      <React.Fragment key={i}>
-        <ActivityText addedData={d.title} dateAdded={localizeDate(d.date_added)} />
-      </React.Fragment>
-    );
-  });
-
-  const storyContentActivity = adminActivities?.storyContentData?.map((d, i) => {
-    let text = "";
-
-    if (d.content && d.header && d.image) {
-      text = `a content, header, and image`;
-    } else if (d.content && d.header) {
-      text = `a content and header`;
-    } else if (d.content) {
-      text = `a content`;
-    } else if (d.header) {
-      text = `a header`;
-    } else if (d.image) {
-      text = `an image`;
-    }
-    return (
-      <React.Fragment key={i}>
-        <div className="cstm-flex-col items-start gap-2 w-full text-sm bg-accntColor p-5 rounded-2xl relative">
-          <p className="text-xs font-semibold">{localizeDate(d.date_added)}</p>
-          <div className="cstm-flex-row gap-2 justify-start">
-            <div>
-              <BsDot className="scale-[2]" />
-            </div>
-
-            <p>
-              You added <span className="text-prmColor font-bold">{text}</span> on the story{" "}
-              <span className="text-prmColor font-bold">{d.title}</span>.
-            </p>
-          </div>
-        </div>
-      </React.Fragment>
-    );
-  });
-
-  const testActivity = adminActivities?.testData?.map((d, i) => {
-    return (
-      <React.Fragment key={i}>
-        <ActivityText addedData={d.title} dateAdded={localizeDate(d.date_added)} />
-      </React.Fragment>
-    );
-  });
-
-  const testQuestionsActivity = adminActivities?.testQuestionData?.map((q, i) => {
-    return (
-      <React.Fragment key={i}>
-        <div className="cstm-flex-col items-start gap-2 w-full text-sm bg-accntColor p-5 rounded-2xl relative">
-          <p className="text-xs font-semibold">{localizeDate(q.date_added)}</p>
-          <div className="cstm-flex-row gap-2 justify-start">
-            <div>
-              <BsDot className="scale-[2]" />
-            </div>
-
-            <p>
-              You added the question <span className="text-prmColor font-bold">{q.question}</span>{" "}
-              on the test <span className="text-prmColor font-bold">{q.title}</span>.
-            </p>
-          </div>
-        </div>
-      </React.Fragment>
-    );
-  });
-
-  const testAnswer = adminActivities?.testAnswerData?.map((a, i) => {
-    return (
-      <React.Fragment key={i}>
-        <div className="cstm-flex-col items-start gap-2 w-full text-sm bg-accntColor p-5 rounded-2xl relative">
-          <p className="text-xs font-semibold">{localizeDate(a.date_added)}</p>
-          <div className="cstm-flex-row gap-2 justify-start">
-            <div>
-              <BsDot className="scale-[2]" />
-            </div>
-
-            <p>
-              You added the answer <span className="text-prmColor font-bold">{a.answer}</span> on
-              the question <span className="text-prmColor font-bold">{a.question}</span>.
-            </p>
-          </div>
-        </div>
-      </React.Fragment>
-    );
-  });
-
-  const achievementActivity = adminActivities?.achievementData?.map((d, i) => {
-    return (
-      <React.Fragment key={i}>
-        <ActivityText addedData={d.achievement_name} dateAdded={localizeDate(d.date_added)} />
-      </React.Fragment>
-    );
-  });
-
-  const rewardActivity = adminActivities?.rewardData?.map((r, i) => {
-    return (
-      <React.Fragment key={i}>
-        <div className="cstm-flex-col items-start gap-2 w-full text-sm bg-accntColor p-5 rounded-2xl relative">
-          <p className="text-xs font-semibold">{localizeDate(r.date_added)}</p>
-          <div className="cstm-flex-row gap-2 justify-start">
-            <div>
-              <BsDot className="scale-[2]" />
-            </div>
-
-            <p>
-              You added <span className="text-prmColor font-bold">{r.reward_name}</span> for the
-              achievement <span className="text-prmColor font-bold">{r.achievement_name}</span>.
-            </p>
-          </div>
-        </div>
-      </React.Fragment>
-    );
-  });
-
-  const riddlesActivity = adminActivities?.riddlesData?.map((r, i) => {
-    return (
-      <React.Fragment key={i}>
-        <div className="cstm-flex-col items-start gap-2 w-full text-sm bg-accntColor p-5 rounded-2xl relative">
-          <p className="text-xs font-semibold">{localizeDate(r.date_added)}</p>
-          <div className="cstm-flex-row gap-2 justify-start">
-            <div>
-              <BsDot className="scale-[2]" />
-            </div>
-
-            <p>
-              You added the <span className="text-prmColor font-bold">{r.riddle}</span> with the
-              answer <span className="text-prmColor font-bold">{r.answer}</span>.
-            </p>
-          </div>
-        </div>
-      </React.Fragment>
-    );
-  });
-
+  // get admin data
   const getAdminData = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/admin/${decipheredId}`, {
@@ -186,6 +56,7 @@ const Overview = ({ params }) => {
     }
   }, [url, user, setAdminData, decipheredId]);
 
+  // get admin activities
   const getAdminActivies = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/admin_activities/${decipheredId}`, {
@@ -199,6 +70,144 @@ const Overview = ({ params }) => {
       console.log(error);
     }
   }, [url, user, setAdminActivities, decipheredId]);
+
+  // map story activity
+  const storyActivity = adminActivities?.storyData?.map((d, i) => {
+    return (
+      <React.Fragment key={i}>
+        <ActivityText
+          addedData={d.title}
+          dateAdded={localizeDate(d.date_added)}
+          userImage={adminData?.image}
+        />
+      </React.Fragment>
+    );
+  });
+
+  // map story content
+  const storyContentActivity = adminActivities?.storyContentData?.map((d, i) => {
+    let text = "";
+
+    // check the types of content the admin added
+    if (d.content && d.header && d.image) {
+      text = `content, header, and image`;
+    } else if (d.content && d.header) {
+      text = `content and header`;
+    } else if (d.content) {
+      text = `content`;
+    } else if (d.header) {
+      text = `header`;
+    } else if (d.image) {
+      text = `image`;
+    }
+    return (
+      <React.Fragment key={i}>
+        <ComplementActivityText
+          date={localizeDate(d.date_added)}
+          youAddedLabel={`You added ${text === "image" ? "an" : "a"}`}
+          addedContent={text}
+          complementaryLabel="On the story"
+          complementaryContent={`${d.title} at page ${d.page}`}
+          userImage={adminData?.image}
+          complementaryIcon={<GiSpellBook className="scale-150" />}
+        />
+      </React.Fragment>
+    );
+  });
+
+  // map test activity
+  const testActivity = adminActivities?.testData?.map((d, i) => {
+    return (
+      <React.Fragment key={i}>
+        <ActivityText
+          addedData={d.title}
+          dateAdded={localizeDate(d.date_added)}
+          userImage={adminData?.image}
+        />
+      </React.Fragment>
+    );
+  });
+
+  // map test questions
+  const testQuestionsActivity = adminActivities?.testQuestionData?.map((q, i) => {
+    return (
+      <React.Fragment key={i}>
+        <ComplementActivityText
+          date={localizeDate(q.date_added)}
+          youAddedLabel="You added the question"
+          addedContent={q.question}
+          complementaryLabel="On the test"
+          complementaryContent={q.title}
+          userImage={adminData?.image}
+          complementaryIcon={<GiNotebook className="scale-150" />}
+        />
+      </React.Fragment>
+    );
+  });
+
+  // map test answer
+  const testAnswer = adminActivities?.testAnswerData?.map((a, i) => {
+    return (
+      <React.Fragment key={i}>
+        <ComplementActivityText
+          date={localizeDate(a.date_added)}
+          youAddedLabel="You added the answer"
+          addedContent={a.answer}
+          complementaryLabel="On the question"
+          complementaryContent={a.question}
+          userImage={adminData?.image}
+          complementaryIcon={<ImCheckmark className="scale-150" />}
+        />
+      </React.Fragment>
+    );
+  });
+
+  // map achievement activity
+  const achievementActivity = adminActivities?.achievementData?.map((d, i) => {
+    return (
+      <React.Fragment key={i}>
+        <ActivityText
+          addedData={d.achievement_name}
+          dateAdded={localizeDate(d.date_added)}
+          userImage={adminData?.image}
+        />
+      </React.Fragment>
+    );
+  });
+
+  // map reward activity
+  const rewardActivity = adminActivities?.rewardData?.map((r, i) => {
+    return (
+      <React.Fragment key={i}>
+        <ComplementActivityText
+          date={localizeDate(r.date_added)}
+          youAddedLabel="You added the reward"
+          addedContent={r.reward_name}
+          complementaryLabel="For the achievement"
+          complementaryContent={r.achievement_name}
+          userImage={adminData?.image}
+          complementaryIcon={<AiFillTrophy className="scale-150" />}
+        />
+      </React.Fragment>
+    );
+  });
+
+  // map riddles activity
+  const riddlesActivity = adminActivities?.riddlesData?.map((r, i) => {
+    return (
+      <React.Fragment key={i}>
+        <ComplementActivityText
+          date={localizeDate(r.date_added)}
+          youAddedLabel="You added the riddle"
+          addedContent={r.riddle}
+          complementaryLabel="With the answer"
+          complementaryContent={r.answer}
+          userImage={adminData?.image}
+          complementaryIcon={<GiBrain className="scale-150" />}
+        />
+      </React.Fragment>
+    );
+  });
 
   React.useEffect(() => {
     if (user) {
@@ -235,27 +244,23 @@ const Overview = ({ params }) => {
           handleCanChangePassword={handleCanChangePassword}
         />
 
-        <p className="text-2xl font-extrabold t:mr-auto">Your Activities</p>
+        <div className="text-xl font-extrabold t:mr-auto cstm-flex-row gap-5">
+          <RxActivityLog /> Activity Log <RxActivityLog className="-scale-x-100" />
+        </div>
 
-        <div className="cstm-flex-col justify-start gap-5 w-full t:cstm-flex-row">
+        <div className="cstm-flex-col justify-start gap-5 t:gap-10 w-full">
           <ActivityCard label="Story" activity={storyActivity} />
 
           <ActivityCard label="Story Content" activity={storyContentActivity} />
-        </div>
 
-        <div className="cstm-flex-col justify-start gap-5 w-full t:cstm-flex-row">
           <ActivityCard label="Test" activity={testActivity} />
 
           <ActivityCard label="Test Questions" activity={testQuestionsActivity} />
-        </div>
 
-        <div className="cstm-flex-col justify-start gap-5 w-full t:cstm-flex-row">
           <ActivityCard label="Test Answers" activity={testAnswer} />
 
           <ActivityCard label="Achievements" activity={achievementActivity} />
-        </div>
 
-        <div className="cstm-flex-col justify-start gap-5 w-full t:cstm-flex-row">
           <ActivityCard label="Rewards" activity={rewardActivity} />
 
           <ActivityCard label="Riddles" activity={riddlesActivity} />

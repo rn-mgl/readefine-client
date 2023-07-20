@@ -12,6 +12,7 @@ import { useSession } from "next-auth/react";
 import { wordCount } from "@/src/src/functions/wordCount";
 import { useGlobalContext } from "@/src/context";
 import { useRouter } from "next/navigation";
+import Loading from "@/src/src/components/global/Loading";
 
 const AddReward = () => {
   const [reward, setReward] = React.useState({
@@ -22,14 +23,17 @@ const AddReward = () => {
     description: "",
   });
   const [message, setMessage] = React.useState({ msg: "", active: false });
+  const [loading, setLoading] = React.useState(false);
 
   const { data: session } = useSession();
-  const user = session?.user?.name;
   const { url } = useGlobalContext();
+  const user = session?.user?.name;
   const router = useRouter();
 
+  // handle word count
   const words = wordCount(reward.description);
 
+  // handle onchange on reward
   const handleReward = ({ name, value }) => {
     setReward((prev) => {
       return {
@@ -39,12 +43,15 @@ const AddReward = () => {
     });
   };
 
+  // add reward
   const addReward = async (e) => {
     e.preventDefault();
-    const { name, type, description, rawFile } = reward;
+    setLoading(true);
 
+    const { name, type, description, rawFile } = reward;
     let imageSrc = null;
 
+    // check for reward image
     if (rawFile) {
       imageSrc = await fileFns.uploadFile(
         `${url}/readefine_admin_file`,
@@ -54,6 +61,7 @@ const AddReward = () => {
       );
     }
 
+    // upload only if there is image
     if (imageSrc) {
       try {
         const { data } = await axios.post(
@@ -61,30 +69,42 @@ const AddReward = () => {
           { name, type, reward: imageSrc, description },
           { headers: { Authorization: user.token } }
         );
+
+        // if added, move to main reward page
         if (data) {
           router.push("/controller/rewards");
         }
       } catch (error) {
         console.log(error);
+        setLoading(false);
         setMessage({ active: true, msg: error?.response?.data?.msg });
       }
     }
   };
 
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col justify-start">
       <AdminPageHeader subHeader="Rewards" mainHeader="Add Reward" />
+
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+
       <form
         onSubmit={(e) => addReward(e)}
         className="w-full cstm-flex-col cstm-w-limit border-collapse gap-2"
       >
+        {/* reward data */}
         <AddRewardFilter handleReward={handleReward} reward={reward} />
+
         <div
           className="cstm-flex-col gap-5 w-full
                       l-s:cstm-flex-row"
         >
           <div className="table-fixed p-5 rounded-2xl cstm-flex-col overflow-auto w-full h-[70vh] justify-start items-start bg-white text-sm gap-2 shadow-md cstm-scrollbar">
+            {/* reward name */}
             <div className="cstm-flex-row w-full">
               <textarea
                 name="name"
@@ -95,10 +115,12 @@ const AddReward = () => {
                 onChange={(e) => handleReward(e.target)}
                 value={reward.name}
                 className="resize-none p-2 focus:outline-none font-bold text-prmColor mr-auto placeholder:opacity-50"
-              ></textarea>
+              />
             </div>
 
             <div className="cstm-separator" />
+
+            {/* reward description */}
             <div className="w-full h-full cstm-flex-col">
               <textarea
                 name="description"
@@ -109,13 +131,14 @@ const AddReward = () => {
                 onChange={(e) => handleReward(e.target)}
                 value={reward.description}
                 className="resize-none p-2 focus:outline-none w-full h-full mr-auto placeholder:opacity-50"
-              ></textarea>
+              />
               <p className="ml-auto whitespace-nowrap">words: {words}</p>
             </div>
           </div>
 
           <div className="table-fixed p-5 rounded-2xl cstm-flex-col overflow-auto w-full h-[70vh] justify-start items-start bg-white text-sm gap-2 shadow-md cstm-scrollbar">
             <div className="w-full h-full cstm-flex-col bg-accntColor rounded-2xl">
+              {/* show if there is image selected */}
               {reward.file.src ? (
                 <FilePreview
                   src={reward.file.src}
@@ -127,6 +150,7 @@ const AddReward = () => {
         </div>
 
         <div className="pt-4 cstm-flex-row w-full">
+          {/* select image */}
           <label className="mr-auto cstm-bg-hover" htmlFor="file">
             <input
               accept="image/*"
@@ -136,6 +160,7 @@ const AddReward = () => {
               id="file"
               onChange={(e) => fileFns.selectedFileViewer(e, setReward)}
             />
+
             <BiImage className="scale-150 text-prmColor peer-checked" />
           </label>
 

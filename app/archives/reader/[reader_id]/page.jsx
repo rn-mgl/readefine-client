@@ -12,13 +12,16 @@ import StoriesCards from "@/src/src/client/stories/StoriesCards";
 import TestsCards from "@/src/src/client/tests/TestsCards";
 import LowLexileTestMessage from "@/src/src/client/tests/LowLexileTestMessage";
 import RewardsCards from "@/src/src/client/rewards/RewardsCards";
+import TestRecord from "@/src/src/client/tests/TestRecord";
+import ChangePassword from "@/src/src/client/reader/ChangePassword";
 
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { localizeDate } from "@/src/src/functions/localDate";
 import { cipher, decipher } from "@/src/src/functions/security";
-import TestRecord from "@/src/src/client/tests/TestRecord";
-import ChangePassword from "@/src/src/client/reader/ChangePassword";
+import { BsFillPenFill, BsFillSquareFill } from "react-icons/bs";
+import { TbPlusMinus } from "react-icons/tb";
+import { FaBrain } from "react-icons/fa";
 
 const Reader = ({ params }) => {
   const [userData, setUserData] = React.useState({});
@@ -97,6 +100,8 @@ const Reader = ({ params }) => {
           myAnswer={q.my_answer}
           correctAnswer={q.correct_answer}
           dateAnswered={localizeDate(q.date_answered)}
+          userImage={userData?.image}
+          complementaryIcon={<BsFillPenFill className="scale-150" />}
         />
       </React.Fragment>
     );
@@ -110,6 +115,8 @@ const Reader = ({ params }) => {
           myAnswer={q.answer}
           correctAnswer={q.word.toUpperCase()}
           dateAnswered={localizeDate(q.date_answered)}
+          userImage={userData?.image}
+          complementaryIcon={<BsFillSquareFill className="scale-150" />}
         />
       </React.Fragment>
     );
@@ -123,6 +130,8 @@ const Reader = ({ params }) => {
           myAnswer={q.answer}
           correctAnswer={q.word.toUpperCase()}
           dateAnswered={localizeDate(q.date_answered)}
+          userImage={userData?.image}
+          complementaryIcon={<TbPlusMinus className="scale-150" />}
         />
       </React.Fragment>
     );
@@ -136,6 +145,8 @@ const Reader = ({ params }) => {
           myAnswer={q.my_answer}
           correctAnswer={q.correct_answer.toUpperCase()}
           dateAnswered={localizeDate(q.date_answered)}
+          userImage={userData?.image}
+          complementaryIcon={<FaBrain className="scale-150" />}
         />
       </React.Fragment>
     );
@@ -207,8 +218,15 @@ const Reader = ({ params }) => {
 
   const loggedSessions = userActivities?.sessionsData?.map((s) => {
     return (
-      <div className="p-5 rounded-2xl bg-accntColor text-left text-sm w-full" key={s.session_id}>
-        <p>
+      <div
+        className="p-5 rounded-2xl bg-accntColor text-left text-sm w-full cstm-flex-row gap-2"
+        key={s.session_id}
+      >
+        <div
+          style={{ backgroundImage: userData?.image ? `url(${userData?.image})` : null }}
+          className="w-10 h-10 min-w-[2.5rem] min-h-[2.5rem] bg-center bg-cover rounded-full bg-prmColor bg-opacity-20"
+        />
+        <p className="w-full">
           You <span className="font-semibold">{s.type === "in" ? "logged in" : "logged out"}</span>{" "}
           on <span className="font-semibold">{localizeDate(s.date_logged)}</span>.
         </p>
@@ -270,7 +288,7 @@ const Reader = ({ params }) => {
         />
 
         <div className="cstm-flex-col gap-5 w-full text-center bg-white p-5 rounded-2xl">
-          <p className="text-2xl font-extrabold t:mr-auto text-prmColor">Stories Read</p>
+          <p className="text-xl font-extrabold t:mr-auto text-prmColor">Stories Read</p>
 
           <div className="cstm-flex-row gap-5 w-full overflow-x-auto cstm-scrollbar justify-start p-5">
             {storiesRead}
@@ -278,7 +296,7 @@ const Reader = ({ params }) => {
         </div>
 
         <div className="cstm-flex-col gap-5 w-full text-center bg-white p-5 rounded-2xl ">
-          <p className="text-2xl font-extrabold t:mr-auto text-prmColor">Tests Taken</p>
+          <p className="text-xl font-extrabold t:mr-auto text-prmColor">Tests Taken</p>
 
           <div className="cstm-flex-row gap-5 w-full overflow-x-auto cstm-scrollbar justify-start p-5">
             {testsTaken}
@@ -286,7 +304,7 @@ const Reader = ({ params }) => {
         </div>
 
         <div className="cstm-flex-col gap-5 w-full text-center bg-white p-5 rounded-2xl">
-          <p className="text-2xl font-extrabold t:mr-auto text-prmColor">Achievements & Rewards</p>
+          <p className="text-xl font-extrabold t:mr-auto text-prmColor">Achievements & Rewards</p>
 
           <div className="cstm-flex-row gap-5 w-full overflow-x-auto cstm-scrollbar justify-start p-5">
             {achievementsAndRewards}
@@ -294,15 +312,13 @@ const Reader = ({ params }) => {
         </div>
 
         <div className="cstm-flex-col gap-5 w-full text-center bg-white p-5 rounded-2xl">
-          <p className="text-2xl font-extrabold t:mr-auto text-prmColor">Your Answers</p>
+          <p className="text-xl font-extrabold t:mr-auto text-prmColor">Your Answers</p>
 
-          <div className="cstm-flex-col gap-5 w-full t:cstm-flex-row">
+          <div className="cstm-flex-col gap-5 w-full">
             <ActivityCard label="Test Questions" activity={answeredQuestions} />
 
             <ActivityCard label="Dangle" activity={answeredDangle} />
-          </div>
 
-          <div className="cstm-flex-col gap-5 w-full t:cstm-flex-row">
             <ActivityCard label="Decipher" activity={answeredDecipher} />
 
             <ActivityCard label="Riddles" activity={answeredRiddles} />

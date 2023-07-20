@@ -19,14 +19,16 @@ const SingleReward = ({ params }) => {
   const [message, setMessage] = React.useState({ msg: "", active: false });
 
   const { data: session } = useSession();
+  const { url } = useGlobalContext();
   const user = session?.user?.name;
   const decodedRewardId = decipher(params?.reward_id);
-  const { url } = useGlobalContext();
 
+  // toggle can delete reward
   const handleCanDeleteReward = () => {
     setCanDeleteReward((prev) => !prev);
   };
 
+  // get reward data
   const getReward = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/admin_reward/${decodedRewardId}`, {
@@ -63,6 +65,7 @@ const SingleReward = ({ params }) => {
 
       <div className="w-full cstm-w-limit cstm-flex-col">
         <div className="cstm-flex-col gap-2 w-full l-s:w-10/12 l-l:w-8/12">
+          {/* admin actions */}
           <div className="w-full cstm-flex-row">
             <Link href="/controller/rewards" className="cstm-bg-hover mr-auto">
               <BsArrowLeft className=" text-prmColor" />
@@ -76,14 +79,19 @@ const SingleReward = ({ params }) => {
               <AiFillDelete className="text-prmColor cursor-pointer" />
             </button>
           </div>
+
+          {/* reward */}
           <div className="p-5 rounded-2xl gap-5 cstm-flex-col overflow-auto w-full h-[80vh] justify-start bg-white text-sm shadow-md cstm-scrollbar">
             <div className="w-full h-full cstm-flex-col bg-accntColor rounded-2xl p-5">
               <div className="w-fit animate-float drop-shadow-md">
                 <FileViewer src={reward?.reward} />
               </div>
             </div>
+
             <p className="text-sm font-bold text-prmColor capitalize">{reward?.reward_type}</p>
+
             <div className="cstm-separator" />
+
             <p className="text-sm text-center">{reward?.description}</p>
           </div>
         </div>
