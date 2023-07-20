@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import Dangling from "./Dangling";
-import { BsArrowLeft } from "react-icons/bs";
+import { BsArrowLeft, BsQuestionCircle } from "react-icons/bs";
 
 const InitDangle = (props) => {
   const dangles = "dangle".split("").map((c, i) => {
@@ -14,9 +14,15 @@ const InitDangle = (props) => {
 
   return (
     <div className="w-full h-[95vh] cstm-w-limit cstm-flex-col relative">
-      <Link href={props.to} className="cstm-bg-hover ml-auto absolute top-0 right-0">
-        <BsArrowLeft className="text-black scale-100 m-l:scale-125" />
-      </Link>
+      <div className="absolute top-0 right-0 cstm-flex-col gap-2 z-10">
+        <Link href={props.to} className="cstm-bg-hover ">
+          <BsArrowLeft className="scale-125" />
+        </Link>
+
+        <button onClick={props.handleCanSeeTutorial} className="cstm-bg-hover">
+          <BsQuestionCircle className="scale-125" />
+        </button>
+      </div>
 
       <div
         className={`${

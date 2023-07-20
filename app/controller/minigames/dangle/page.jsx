@@ -10,6 +10,7 @@ import Gameover from "@/src/src/components/minigames/Gameover";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { AiFillHeart } from "react-icons/ai";
+import DangleTutorial from "@/src/src/components/minigames/dangle/DangleTutorial";
 
 const Dangle = () => {
   const [wordData, setWordData] = React.useState({});
@@ -22,6 +23,7 @@ const Dangle = () => {
   const [lives, setLives] = React.useState({ status: [1, 1, 1, 1, 1], activePos: 4 });
   const [gameOver, setGameOver] = React.useState({ over: false, status: "" });
   const [isPlaying, setIsPlaying] = React.useState(false);
+  const [canSeeTutorial, setCanSeeTutorial] = React.useState(false);
 
   const { data: session } = useSession({ required: true });
   const { url } = useGlobalContext();
@@ -29,6 +31,10 @@ const Dangle = () => {
 
   const handleCanSeeHint = () => {
     setCanSeeHint((prev) => !prev);
+  };
+
+  const handleCanSeeTutorial = () => {
+    setCanSeeTutorial((prev) => !prev);
   };
 
   const handleIsPlaying = () => {
@@ -177,6 +183,8 @@ const Dangle = () => {
         />
       ) : null}
 
+      {canSeeTutorial ? <DangleTutorial handleCanSeeTutorial={handleCanSeeTutorial} /> : null}
+
       {gameOver.over ? (
         <Gameover
           handleIsPlaying={handleIsPlaying}
@@ -209,6 +217,7 @@ const Dangle = () => {
           isPlaying={isPlaying}
           getRandomWord={getRandomWord}
           handleIsPlaying={handleIsPlaying}
+          handleCanSeeTutorial={handleCanSeeTutorial}
         />
       )}
     </div>

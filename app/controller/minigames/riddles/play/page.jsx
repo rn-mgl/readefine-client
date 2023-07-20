@@ -9,6 +9,7 @@ import { useGlobalContext } from "@/src/context";
 import { useSession } from "next-auth/react";
 import { AiFillHeart } from "react-icons/ai";
 import Gameover from "@/src/src/components/minigames/Gameover";
+import RiddleTutorial from "@/src/src/components/minigames/riddles/RiddleTutorial";
 
 const PlayRiddles = () => {
   const [riddleData, setRiddleData] = React.useState({});
@@ -19,19 +20,15 @@ const PlayRiddles = () => {
   const [isPlaying, setIsPlaying] = React.useState(false);
   const [entryGuesses, setEntryGuesses] = React.useState([]);
   const [gameOver, setGameOver] = React.useState({ over: false, status: "" });
+  const [canSeeTutorial, setCanSeeTutorial] = React.useState(false);
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
   const user = session?.user?.name;
 
-  const remainingLives = lives.status.map((alive, i) => {
-    return (
-      <AiFillHeart
-        key={i}
-        className={` ${alive ? "text-prmColor" : "text-neutral-400 animate-shake"} t:scale-125`}
-      />
-    );
-  });
+  const handleCanSeeTutorial = () => {
+    setCanSeeTutorial((prev) => !prev);
+  };
 
   const handleIsPlaying = () => {
     setIsPlaying((prev) => {
@@ -124,6 +121,15 @@ const PlayRiddles = () => {
     }
   };
 
+  const remainingLives = lives.status.map((alive, i) => {
+    return (
+      <AiFillHeart
+        key={i}
+        className={` ${alive ? "text-prmColor" : "text-neutral-400 animate-shake"} t:scale-125`}
+      />
+    );
+  });
+
   React.useEffect(() => {
     if (!gameOver.over) {
       const interval = setInterval(() => {
@@ -149,6 +155,8 @@ const PlayRiddles = () => {
         />
       ) : null}
 
+      {canSeeTutorial ? <RiddleTutorial handleCanSeeTutorial={handleCanSeeTutorial} /> : null}
+
       {isPlaying ? (
         <RiddleGame
           riddleData={riddleData}
@@ -167,6 +175,7 @@ const PlayRiddles = () => {
           to="/controller/minigames/riddles"
           getRiddle={getRiddle}
           handleIsPlaying={handleIsPlaying}
+          handleCanSeeTutorial={handleCanSeeTutorial}
         />
       )}
     </div>

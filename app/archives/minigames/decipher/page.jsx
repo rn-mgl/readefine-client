@@ -10,6 +10,7 @@ import DecipherGame from "@/src/src/components/minigames/decipher/DecipherGame";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { AiFillHeart } from "react-icons/ai";
+import DecipherTutorial from "@/src/src/components/minigames/decipher/DecipherTutorial";
 
 const Decipher = () => {
   const [wordData, setWordData] = React.useState({});
@@ -21,19 +22,15 @@ const Decipher = () => {
   const [gameOver, setGameOver] = React.useState({ over: false, status: "" });
   const [timer, setTimer] = React.useState(0);
   const [message, setMessage] = React.useState({ msg: "", active: false });
+  const [canSeeTutorial, setCanSeeTutorial] = React.useState(false);
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
   const user = session?.user?.name;
 
-  const remainingLives = lives.status.map((alive, i) => {
-    return (
-      <AiFillHeart
-        key={i}
-        className={` ${alive ? "text-prmColor" : "text-neutral-400 animate-shake"} t:scale-125`}
-      />
-    );
-  });
+  const handleCanSeeTutorial = () => {
+    setCanSeeTutorial((prev) => !prev);
+  };
 
   const handleIsPlaying = () => {
     setIsPlaying((prev) => {
@@ -201,6 +198,15 @@ const Decipher = () => {
     }
   }, [guess, timer, url, user?.token, wordData.word_id]);
 
+  const remainingLives = lives.status.map((alive, i) => {
+    return (
+      <AiFillHeart
+        key={i}
+        className={` ${alive ? "text-prmColor" : "text-neutral-400 animate-shake"} t:scale-125`}
+      />
+    );
+  });
+
   React.useEffect(() => {
     if (!gameOver.over) {
       const timerInterval = setInterval(() => {
@@ -222,6 +228,8 @@ const Decipher = () => {
   return (
     <div className="bg-accntColor p-4 cstm-flex-col justify-start w-full min-h-screen">
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+
+      {canSeeTutorial ? <DecipherTutorial handleCanSeeTutorial={handleCanSeeTutorial} /> : null}
 
       {gameOver.over ? (
         <Gameover
@@ -248,9 +256,10 @@ const Decipher = () => {
         />
       ) : (
         <InitDecipher
+          to="/archives/minigames"
           getWord={getWord}
           handleIsPlaying={handleIsPlaying}
-          to="/archives/minigames"
+          handleCanSeeTutorial={handleCanSeeTutorial}
         />
       )}
     </div>

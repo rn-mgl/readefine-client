@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import { BsArrowLeft, BsPatchQuestionFill } from "react-icons/bs";
+import { BsArrowLeft, BsPatchQuestionFill, BsQuestionCircle } from "react-icons/bs";
 
 const InitRiddle = (props) => {
   const letters = "RIDDLES".split("").map((r, i) => {
@@ -18,9 +18,15 @@ const InitRiddle = (props) => {
 
   return (
     <div className="w-full cstm-flex-col relative h-[95vh] gap-5 overflow-hidden animate-fadeIn cstm-w-limit">
-      <Link href={props.to} className="cstm-bg-hover absolute top-0 right-2">
-        <BsArrowLeft className="scale-125" />
-      </Link>
+      <div className="absolute top-0 right-0 cstm-flex-col gap-2">
+        <Link href={props.to} className="cstm-bg-hover ">
+          <BsArrowLeft className="scale-125" />
+        </Link>
+
+        <button onClick={props.handleCanSeeTutorial} className="cstm-bg-hover">
+          <BsQuestionCircle className="scale-125" />
+        </button>
+      </div>
 
       <div className="m-s:hidden t:flex absolute t:left-20 t:top-20 animate-[spin_10s_linear_infinite]">
         <BsPatchQuestionFill className="scale-[30] opacity-10" />

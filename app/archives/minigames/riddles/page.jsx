@@ -10,6 +10,7 @@ import { useSession } from "next-auth/react";
 import { AiFillHeart } from "react-icons/ai";
 import Gameover from "@/src/src/components/minigames/Gameover";
 import Message from "@/src/src/components/global/Message";
+import RiddleTutorial from "@/src/src/components/minigames/riddles/RiddleTutorial";
 
 const ClientRiddles = () => {
   const [riddleData, setRiddleData] = React.useState({});
@@ -21,19 +22,15 @@ const ClientRiddles = () => {
   const [entryGuesses, setEntryGuesses] = React.useState([]);
   const [gameOver, setGameOver] = React.useState({ over: false, status: "" });
   const [message, setMessage] = React.useState({ msg: "", active: false });
+  const [canSeeTutorial, setCanSeeTutorial] = React.useState(false);
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
   const user = session?.user?.name;
 
-  const remainingLives = lives.status.map((alive, i) => {
-    return (
-      <AiFillHeart
-        key={i}
-        className={` ${alive ? "text-prmColor" : "text-neutral-400 animate-shake"} t:scale-125`}
-      />
-    );
-  });
+  const handleCanSeeTutorial = () => {
+    setCanSeeTutorial((prev) => !prev);
+  };
 
   const handleIsPlaying = () => {
     setIsPlaying((prev) => {
@@ -150,6 +147,15 @@ const ClientRiddles = () => {
     }
   };
 
+  const remainingLives = lives.status.map((alive, i) => {
+    return (
+      <AiFillHeart
+        key={i}
+        className={` ${alive ? "text-prmColor" : "text-neutral-400 animate-shake"} t:scale-125`}
+      />
+    );
+  });
+
   React.useEffect(() => {
     if (!gameOver.over) {
       const interval = setInterval(() => {
@@ -171,6 +177,9 @@ const ClientRiddles = () => {
   return (
     <div className="w-full min-h-screen bg-accntColor p-4 cstm-flex-col justify-start">
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+
+      {canSeeTutorial ? <RiddleTutorial handleCanSeeTutorial={handleCanSeeTutorial} /> : null}
+
       {gameOver.over ? (
         <Gameover
           gameOver={gameOver}
@@ -181,6 +190,7 @@ const ClientRiddles = () => {
           handleIsPlaying={handleIsPlaying}
         />
       ) : null}
+
       <div className="cstm-flex-col w-full h-full justify-start">
         {isPlaying ? (
           <RiddleGame
@@ -200,6 +210,7 @@ const ClientRiddles = () => {
             to="/archives/minigames"
             getRiddle={getRiddle}
             handleIsPlaying={handleIsPlaying}
+            handleCanSeeTutorial={handleCanSeeTutorial}
           />
         )}
       </div>

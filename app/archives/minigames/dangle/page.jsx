@@ -11,6 +11,7 @@ import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { AiFillHeart } from "react-icons/ai";
 import Message from "@/src/src/components/global/Message";
+import DangleTutorial from "@/src/src/components/minigames/dangle/DangleTutorial";
 
 const Dangle = () => {
   const [wordData, setWordData] = React.useState({});
@@ -24,19 +25,15 @@ const Dangle = () => {
   const [gameOver, setGameOver] = React.useState({ over: false, status: "" });
   const [isPlaying, setIsPlaying] = React.useState(false);
   const [message, setMessage] = React.useState({ msg: "", active: false });
+  const [canSeeTutorial, setCanSeeTutorial] = React.useState(false);
 
   const { data: session } = useSession({ required: true });
   const { url } = useGlobalContext();
   const user = session?.user?.name;
 
-  const remainingLives = lives.status.map((alive, i) => {
-    return (
-      <AiFillHeart
-        key={i}
-        className={` ${alive ? "text-prmColor" : "text-neutral-400 animate-shake"} t:scale-125`}
-      />
-    );
-  });
+  const handleCanSeeTutorial = () => {
+    setCanSeeTutorial((prev) => !prev);
+  };
 
   const handleCanSeeHint = () => {
     setCanSeeHint((prev) => !prev);
@@ -180,6 +177,15 @@ const Dangle = () => {
     }
   };
 
+  const remainingLives = lives.status.map((alive, i) => {
+    return (
+      <AiFillHeart
+        key={i}
+        className={` ${alive ? "text-prmColor" : "text-neutral-400 animate-shake"} t:scale-125`}
+      />
+    );
+  });
+
   React.useEffect(() => {
     if (!gameOver.over) {
       const timerInterval = setInterval(() => {
@@ -201,6 +207,8 @@ const Dangle = () => {
   return (
     <div className="w-full min-h-screen bg-accntColor p-4 cstm-flex-col justify-start">
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+
+      {canSeeTutorial ? <DangleTutorial handleCanSeeTutorial={handleCanSeeTutorial} /> : null}
 
       {canSeeHint ? (
         <DangleHint
@@ -243,6 +251,7 @@ const Dangle = () => {
           isPlaying={isPlaying}
           getRandomWord={getRandomWord}
           handleIsPlaying={handleIsPlaying}
+          handleCanSeeTutorial={handleCanSeeTutorial}
         />
       )}
     </div>

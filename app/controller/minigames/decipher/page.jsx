@@ -9,6 +9,7 @@ import Gameover from "@/src/src/components/minigames/Gameover";
 import { AiFillHeart } from "react-icons/ai";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
+import DecipherTutorial from "@/src/src/components/minigames/decipher/DecipherTutorial";
 
 const Decipher = () => {
   const [wordData, setWordData] = React.useState({});
@@ -19,19 +20,15 @@ const Decipher = () => {
   const [lives, setLives] = React.useState({ status: [1, 1, 1], activePos: 2 });
   const [gameOver, setGameOver] = React.useState({ over: false, status: "" });
   const [timer, setTimer] = React.useState(0);
+  const [canSeeTutorial, setCanSeeTutorial] = React.useState(false);
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
   const user = session?.user?.name;
 
-  const remainingLives = lives.status.map((alive, i) => {
-    return (
-      <AiFillHeart
-        key={i}
-        className={` ${alive ? "text-prmColor" : "text-neutral-400 animate-shake"} t:scale-125`}
-      />
-    );
-  });
+  const handleCanSeeTutorial = () => {
+    setCanSeeTutorial((prev) => !prev);
+  };
 
   const handleIsPlaying = () => {
     setIsPlaying((prev) => {
@@ -173,6 +170,15 @@ const Decipher = () => {
     }
   };
 
+  const remainingLives = lives.status.map((alive, i) => {
+    return (
+      <AiFillHeart
+        key={i}
+        className={` ${alive ? "text-prmColor" : "text-neutral-400 animate-shake"} t:scale-125`}
+      />
+    );
+  });
+
   React.useEffect(() => {
     if (!gameOver.over) {
       const timerInterval = setInterval(() => {
@@ -198,6 +204,8 @@ const Decipher = () => {
         />
       ) : null}
 
+      {canSeeTutorial ? <DecipherTutorial handleCanSeeTutorial={handleCanSeeTutorial} /> : null}
+
       {isPlaying ? (
         <DecipherGame
           cipheredWord={cipheredWord}
@@ -214,6 +222,7 @@ const Decipher = () => {
         <InitDecipher
           getWord={getWord}
           handleIsPlaying={handleIsPlaying}
+          handleCanSeeTutorial={handleCanSeeTutorial}
           to="/controller/minigames"
         />
       )}
