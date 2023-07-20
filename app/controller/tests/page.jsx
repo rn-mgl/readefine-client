@@ -13,10 +13,12 @@ import { cipher } from "@/src/src/functions/security";
 
 const AdminTests = () => {
   const [tests, setTests] = React.useState([]);
+  const [message, setMessage] = React.useState({ msg: "", active: false });
+
+  // filters
   const [searchFilter, setSearchFilter] = React.useState({ toSearch: "title", searchKey: "" });
   const [lexileRangeFilter, setLexileRangeFilter] = React.useState({ from: 0, to: 1250 });
   const [sortFilter, setSortFilter] = React.useState({ toSort: "title", sortMode: "ASC" });
-  const [message, setMessage] = React.useState({ msg: "", active: false });
   const [dateRangeFilter, setDateRangeFilter] = React.useState({
     from: "",
     to: inputDate(new Date().toLocaleDateString()),
@@ -24,7 +26,9 @@ const AdminTests = () => {
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
+  const user = session?.user?.name;
 
+  // handle onchange search filter
   const handleSearchFilter = ({ name, value }) => {
     setSearchFilter((prev) => {
       return {
@@ -34,6 +38,7 @@ const AdminTests = () => {
     });
   };
 
+  // handle date range filter
   const handleDateRangeFilter = ({ name, value }) => {
     setDateRangeFilter((prev) => {
       return {
@@ -43,6 +48,7 @@ const AdminTests = () => {
     });
   };
 
+  // handle lexile range filter
   const handleLexileRangeFilter = ({ name, value }) => {
     setLexileRangeFilter((prev) => {
       return {
@@ -52,6 +58,7 @@ const AdminTests = () => {
     });
   };
 
+  // handle sort filter
   const handleSortFilter = ({ name, value }) => {
     setSortFilter((prev) => {
       return {
@@ -61,23 +68,7 @@ const AdminTests = () => {
     });
   };
 
-  const user = session?.user?.name;
-
-  const testCards = tests.map((t) => {
-    const cipheredTestId = cipher(t.test_id);
-    return (
-      <React.Fragment key={t.test_id}>
-        <TestsCards
-          image={t.book_cover}
-          title={t.title}
-          author={t.author}
-          lexile={t.lexile}
-          to={`/controller/tests/${cipheredTestId}`}
-        />
-      </React.Fragment>
-    );
-  });
-
+  // get tests
   const getTests = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/admin_test`, {
@@ -99,6 +90,22 @@ const AdminTests = () => {
     }
   }, [url, user, setTests, searchFilter, lexileRangeFilter, sortFilter, dateRangeFilter]);
 
+  // map test cards
+  const testCards = tests.map((t) => {
+    const cipheredTestId = cipher(t.test_id);
+    return (
+      <React.Fragment key={t.test_id}>
+        <TestsCards
+          image={t.book_cover}
+          title={t.title}
+          author={t.author}
+          lexile={t.lexile}
+          to={`/controller/tests/${cipheredTestId}`}
+        />
+      </React.Fragment>
+    );
+  });
+
   React.useEffect(() => {
     if (user) {
       getTests();
@@ -108,7 +115,11 @@ const AdminTests = () => {
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <AdminPageHeader subHeader="Readefine" mainHeader="Tests" />
+
+      {/* show if has message pop up */}
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+
+      {/* test filter */}
       <TestsFilter
         handleSearchFilter={handleSearchFilter}
         handleDateRangeFilter={handleDateRangeFilter}
@@ -119,6 +130,8 @@ const AdminTests = () => {
         sortFilter={sortFilter}
         dateRangeFilter={dateRangeFilter}
       />
+
+      {/* all tests */}
       <div className="w-full cstm-w-limit">
         <div
           className="cstm-flex-col gap-5 justify-start w-full transition-all 

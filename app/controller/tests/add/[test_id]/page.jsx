@@ -32,6 +32,7 @@ const AddTest = ({ params }) => {
   const router = useRouter();
   const user = session?.user?.name;
 
+  // handle onchange on page
   const handlePages = (number, { name, value }) => {
     setPages((prev) =>
       prev.map((t) => {
@@ -46,6 +47,7 @@ const AddTest = ({ params }) => {
     );
   };
 
+  // add page function
   const addPage = () => {
     const pageLen = pages ? pages.length + 1 : 1;
     const answer = `answer${pageLen}`;
@@ -65,17 +67,22 @@ const AddTest = ({ params }) => {
         choice4: "choice 4",
         [answer]: null,
       };
+      // if alread has page
       if (prev) {
         return [...prev, newPage];
-      } else {
+      }
+      // if there are no pages
+      else {
         return [newPage];
       }
     });
   };
 
+  // create test
   const createTest = async (e) => {
     e.preventDefault();
 
+    // check if there are 10 questions
     if (pages.length < 10) {
       setMessage({ active: true, msg: "Enter 10 questions before posting." });
       return;
@@ -88,6 +95,7 @@ const AddTest = ({ params }) => {
         { headers: { Authorization: user.token } }
       );
 
+      // move to main test page after making test
       if (data) {
         router.push("/controller/tests");
       }
@@ -97,6 +105,7 @@ const AddTest = ({ params }) => {
     }
   };
 
+  // map test pages
   const testPages = pages?.map((page) => {
     return (
       <React.Fragment key={page.testNumber}>

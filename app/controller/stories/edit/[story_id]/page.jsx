@@ -15,11 +15,13 @@ import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { useRouter } from "next/navigation";
 import { decipher } from "@/src/src/functions/security";
+import Loading from "@/src/src/components/global/Loading";
 
 const EditStory = ({ params }) => {
   const [story, setStory] = React.useState({});
   const [pages, setPages] = React.useState([]);
   const [message, setMessage] = React.useState({ msg: "", active: false });
+  const [loading, setLoading] = React.useState(false);
 
   const { data: session } = useSession({ required: true });
   const { url } = useGlobalContext();
@@ -27,6 +29,7 @@ const EditStory = ({ params }) => {
   const decodedStoryId = decipher(params?.story_id);
   const router = useRouter();
 
+  // handle onchange function on pages
   const handlePage = (page, { name, value }) => {
     setPages((prev) =>
       prev.map((p) => {
@@ -41,6 +44,7 @@ const EditStory = ({ params }) => {
     );
   };
 
+  // handle story data
   const handleStory = ({ name, value }) => {
     setStory((prev) => {
       return {
@@ -51,6 +55,7 @@ const EditStory = ({ params }) => {
     });
   };
 
+  // add page function
   const addPage = () => {
     setPages((prev) => {
       const newPage = {
@@ -64,6 +69,7 @@ const EditStory = ({ params }) => {
     });
   };
 
+  // remove book cover
   const clearBookCover = () => {
     setStory((prev) => {
       return {
@@ -73,24 +79,15 @@ const EditStory = ({ params }) => {
     });
   };
 
-  const allPages = pages.map((page) => {
-    return (
-      <React.Fragment key={page.page}>
-        <EditStoryPage
-          page={page}
-          handlePage={handlePage}
-          setPages={setPages}
-          maxPages={pages.length}
-        />
-      </React.Fragment>
-    );
-  });
-
+  // edit book
   const editBook = async (e) => {
     e.preventDefault();
 
+    setLoading(true);
+
     let bookCover = null;
 
+    // check for book cover
     if (story.rawFile) {
       bookCover = await fileFns.uploadFile(
         `${url}/readefine_admin_file`,
@@ -101,6 +98,7 @@ const EditStory = ({ params }) => {
       story.file = { src: bookCover, name: "" };
     }
 
+    // check for each pages for images
     for (let i = 0; i < pages.length; i++) {
       const page = pages[i];
       let pageImage = null;
@@ -122,15 +120,18 @@ const EditStory = ({ params }) => {
         { headers: { Authorization: user.token } }
       );
 
+      // if edited, move to stories page
       if (data) {
         router.push("/controller/stories");
       }
     } catch (error) {
       console.log(error);
+      setLoading(false);
       setMessage({ active: true, msg: error?.response?.data?.msg });
     }
   };
 
+  // get pages
   const getPages = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/admin_story_content`, {
@@ -146,6 +147,7 @@ const EditStory = ({ params }) => {
     }
   }, [url, user, setPages, decodedStoryId]);
 
+  // get story
   const getStory = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/admin_story/${decodedStoryId}`, {
@@ -160,6 +162,20 @@ const EditStory = ({ params }) => {
     }
   }, [url, user, setStory, decodedStoryId]);
 
+  // map pages
+  const allPages = pages.map((page) => {
+    return (
+      <React.Fragment key={page.page}>
+        <EditStoryPage
+          page={page}
+          handlePage={handlePage}
+          setPages={setPages}
+          maxPages={pages.length}
+        />
+      </React.Fragment>
+    );
+  });
+
   React.useEffect(() => {
     if (user) {
       getStory();
@@ -172,10 +188,16 @@ const EditStory = ({ params }) => {
     }
   }, [getPages, user]);
 
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-2 justify-start">
       <AdminPageHeader subHeader="Stories" mainHeader="Edit Story" />
+
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+
       <form
         className="w-full cstm-flex-col gap-2 cstm-w-limit border-collapse"
         onSubmit={(e) => editBook(e)}
@@ -183,6 +205,7 @@ const EditStory = ({ params }) => {
         <Link type="button" href="/controller/stories" className="w-fit cstm-bg-hover mr-auto">
           <BsArrowLeft className=" text-prmColor" />
         </Link>
+
         <EditStoryFilter
           addPage={addPage}
           handleStory={handleStory}
@@ -190,6 +213,7 @@ const EditStory = ({ params }) => {
           setStory={setStory}
           selectedFileViewer={fileFns.selectedFileViewer}
         />
+
         {story.book_cover || story.file?.src ? (
           <FilePreview
             src={story.book_cover ? story.book_cover : story.file?.src}
@@ -208,6 +232,7 @@ const EditStory = ({ params }) => {
           <button onClick={addPage} className="cstm-bg-hover mr-auto">
             <IoAddOutline className="cursor-pointer text-prmColor scale-150" />
           </button>
+
           <button
             type="submit"
             className="w-fit text-center font-poppins ml-auto text-sm font-normal bg-scndColor text-prmColor rounded-full p-2 px-4

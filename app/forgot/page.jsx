@@ -17,6 +17,7 @@ const ForgotPassword = () => {
   const { url } = useGlobalContext();
   const router = useRouter();
 
+  // handle onchange function on email and username
   const handleKeys = ({ name, value }) => {
     setKeys((prev) => {
       return {
@@ -26,6 +27,7 @@ const ForgotPassword = () => {
     });
   };
 
+  // send email
   const sendResetEmail = async (e) => {
     e.preventDefault();
     const { candidateEmail, candidateUsername } = keys;
@@ -34,6 +36,8 @@ const ForgotPassword = () => {
         candidateEmail,
         candidateUsername,
       });
+
+      // if sent, move to sending page
       if (data) {
         router.push("/sending");
       }
@@ -46,8 +50,11 @@ const ForgotPassword = () => {
   return (
     <div className="w-full min-h-screen p-5 cstm-flex-col bg-gradient-to-b from-prmColor via-prmColor to-scndColor">
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+
       <p className=" font-extrabold text-2xl text-accntColor relative z-10">Reset Password</p>
+
       <br />
+
       <form
         className="w-full rounded-md bg-white bg-opacity-20 backdrop-blur-md border-[1px] border-white border-opacity-40 p-5 cstm-flex-col gap-5 relative z-10 shadow-lg
                     t:w-96
@@ -58,6 +65,8 @@ const ForgotPassword = () => {
           Enter your user account&apos;s verified email address and we will send you a password
           reset link.
         </p>
+
+        {/* email */}
         <InputComp
           id="candidateEmail"
           placeholder="Email"
@@ -67,6 +76,8 @@ const ForgotPassword = () => {
           onChange={(e) => handleKeys(e.target)}
           value={keys.email}
         />
+
+        {/* username */}
         <InputComp
           id="candidateUsername"
           placeholder="Username"
@@ -76,6 +87,8 @@ const ForgotPassword = () => {
           onChange={(e) => handleKeys(e.target)}
           value={keys.username}
         />
+
+        {/* submit form */}
         <ButtonComp
           type="submit"
           fontColor="text-prmColor"

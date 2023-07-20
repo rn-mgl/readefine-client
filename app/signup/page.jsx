@@ -35,6 +35,7 @@ const Signup = () => {
 
   const router = useRouter();
 
+  // handle onchange functions in input
   const handleUserData = ({ name, value }) => {
     setUserData((prev) => {
       return {
@@ -44,10 +45,12 @@ const Signup = () => {
     });
   };
 
+  // toggle if password can be seen or not
   const handleVisiblePassword = () => {
     setVisiblePassword((prev) => !prev);
   };
 
+  // register the user
   const signUp = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -56,6 +59,7 @@ const Signup = () => {
         userData,
       });
 
+      // send to the sending page iif successfully registered
       if (data) {
         router.push("/sending");
       }
@@ -66,13 +70,16 @@ const Signup = () => {
     }
   };
 
+  // render loading
   if (loading) {
     return <Loading />;
   }
 
   return (
     <div className="w-full h-screen bg-prmColor p-5 cstm-flex-col font-poppins overflow-hidden">
+      {/* show message pop up */}
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+
       <p className=" font-extrabold text-2xl text-accntColor">Sign Up</p>
       <br />
       <form
@@ -81,6 +88,7 @@ const Signup = () => {
                     l-s:w-[26rem]"
         onSubmit={signUp}
       >
+        {/* name */}
         <InputComp
           id="name"
           placeholder="Name"
@@ -90,6 +98,8 @@ const Signup = () => {
           value={userData.name}
           onChange={(e) => handleUserData(e.target)}
         />
+
+        {/* surname */}
         <InputComp
           id="surname"
           type="text"
@@ -99,6 +109,8 @@ const Signup = () => {
           value={userData.surname}
           onChange={(e) => handleUserData(e.target)}
         />
+
+        {/* email */}
         <InputComp
           id="email"
           placeholder="E Mail"
@@ -108,6 +120,8 @@ const Signup = () => {
           value={userData.email}
           onChange={(e) => handleUserData(e.target)}
         />
+
+        {/* username */}
         <InputComp
           id="username"
           placeholder="Username"
@@ -118,6 +132,7 @@ const Signup = () => {
           onChange={(e) => handleUserData(e.target)}
         />
 
+        {/* password*/}
         <InputComp
           id="password"
           placeholder="Password"
@@ -133,6 +148,8 @@ const Signup = () => {
           value={userData.password}
           onChange={(e) => handleUserData(e.target)}
         />
+
+        {/* select grade */}
         <SelectComp
           value={userData.gradeLevel}
           onChange={handleUserData}
@@ -142,6 +159,8 @@ const Signup = () => {
             { label: "Grade 6", value: 6 },
           ]}
         />
+
+        {/* submit form */}
         <ButtonComp
           type="submit"
           fontColor="text-prmColor"
@@ -151,16 +170,21 @@ const Signup = () => {
         />
       </form>
 
+      {/* render on mobile view*/}
       <Image
         src={intersectAM}
         alt="intersect"
         className="w-full bottom-0 left-0 absolute t:hidden"
       />
+
+      {/* render on tablet */}
       <Image
         src={intersectAT}
         alt="intersect"
         className="hidden w-full bottom-0 left-0 absolute t:block l-s:hidden"
       />
+
+      {/* render on laptop */}
       <Image
         src={intersectAL}
         alt="intersect"

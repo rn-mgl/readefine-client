@@ -7,6 +7,7 @@ import Link from "next/link";
 import Message from "@/src/src/components/global/Message";
 import ScorePopup from "@/src/src/components/tests/ScorePopup";
 import DeleteTest from "@/src/src/admin/tests/DeleteTest";
+import TestResult from "@/src/src/client/tests/TestResult";
 
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { BsArrowLeft } from "react-icons/bs";
@@ -14,22 +15,19 @@ import { useGlobalContext } from "@/src/context";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { computeScore, shuffleQuestions } from "@/src/src/functions/testFns";
-import TestResult from "@/src/src/client/tests/TestResult";
 import { decipher } from "@/src/src/functions/security";
 
 const SingleTest = ({ params }) => {
   const [test, setTest] = React.useState({});
   const [questions, setQuestions] = React.useState([]);
+  const [message, setMessage] = React.useState({ msg: "", active: false });
+
+  const [isFinished, setIsFinished] = React.useState(false);
   const [score, setScore] = React.useState(0);
 
   const [canDeleteTest, setCanDeleteTest] = React.useState(false);
-
-  const [isFinished, setIsFinished] = React.useState(false);
-  const [canToggleSeeResult, setCanToggleSeeResult] = React.useState(false); // see button
   const [canSeeResult, setCanSeeResult] = React.useState(false); // see result
-  const [hasSubmitted, setHasSubmitted] = React.useState(false);
 
-  const [message, setMessage] = React.useState({ msg: "", active: false });
   const [selectedChoices, setSelectedChoices] = React.useState({
     choice1: { answer: "", questionId: -1 },
     choice2: { answer: "", questionId: -1 },
@@ -43,12 +41,28 @@ const SingleTest = ({ params }) => {
     choice10: { answer: "", questionId: -1 },
   });
 
-  const decodedTestId = decipher(params?.test_id);
   const { url } = useGlobalContext();
   const { data: session } = useSession({ required: true });
+  const decodedTestId = decipher(params?.test_id);
   const user = session?.user?.name;
   const router = useRouter();
 
+  // toggle is finished
+  const handleIsFinished = () => {
+    setIsFinished((prev) => !prev);
+  };
+
+  // toggle can delete
+  const handleCanDeleteTest = () => {
+    setCanDeleteTest((prev) => !prev);
+  };
+
+  // toggle can see result
+  const handleCanSeeResult = () => {
+    setCanSeeResult((prev) => !prev);
+  };
+
+  // handle onchange selected choices
   const handleSelectedChoices = (id, { name, value }) => {
     setSelectedChoices((prev) => {
       return {
@@ -58,26 +72,44 @@ const SingleTest = ({ params }) => {
     });
   };
 
-  const handleIsFinished = () => {
-    setIsFinished((prev) => !prev);
-  };
+  // get questions
+  const getQuestions = React.useCallback(async () => {
+    try {
+      const { data } = await axios.get(`${url}/admin_test_question`, {
+        params: { testId: decodedTestId },
+        headers: { Authorization: user?.token },
+      });
 
-  const handleCanDeleteTest = () => {
-    setCanDeleteTest((prev) => !prev);
-  };
+      if (data) {
+        shuffleQuestions(data);
+        setQuestions(data);
+      }
+    } catch (error) {
+      console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg });
+    }
+  }, [url, user, decodedTestId, setQuestions]);
 
-  const handleCanSeeResult = () => {
-    setCanSeeResult((prev) => !prev);
-  };
+  // get test
+  const getTest = React.useCallback(async () => {
+    try {
+      const { data } = await axios.get(`${url}/admin_test/${decodedTestId}`, {
+        headers: { Authorization: user?.token },
+      });
 
-  const handleCanSeeToggleResult = () => {
-    setCanToggleSeeResult((prev) => !prev);
-  };
+      // if no test, move to add test page
+      if (data) {
+        setTest(data);
+      } else {
+        router.push(`/controller/tests/add/${params?.test_id}`);
+      }
+    } catch (error) {
+      console.log(error);
+      router.push(`/controller/tests/add/${params?.test_id}`);
+    }
+  }, [url, user, decodedTestId, router, params?.test_id]);
 
-  const handleHasSubmitted = () => {
-    setHasSubmitted((prev) => !prev);
-  };
-
+  // map questions
   const mappedQuestions = questions.map((q, i) => {
     return (
       <div
@@ -97,6 +129,7 @@ const SingleTest = ({ params }) => {
             handleSelectedChoices={handleSelectedChoices}
             questionId={q.question_id}
           />
+
           <TestChoices
             bgColor="bg-indigo-500"
             shadow="shadow-[0_4px_rgba(79,70,229,1)]"
@@ -107,6 +140,7 @@ const SingleTest = ({ params }) => {
             handleSelectedChoices={handleSelectedChoices}
             questionId={q.question_id}
           />
+
           <TestChoices
             bgColor="bg-indigo-700"
             shadow="shadow-[0_4px_rgba(55,48,163,1)]"
@@ -117,6 +151,7 @@ const SingleTest = ({ params }) => {
             handleSelectedChoices={handleSelectedChoices}
             questionId={q.question_id}
           />
+
           <TestChoices
             bgColor="bg-indigo-900"
             shadow="shadow-[0_4px_rgba(25,22,75,1)]"
@@ -131,40 +166,6 @@ const SingleTest = ({ params }) => {
       </div>
     );
   });
-
-  const getQuestions = React.useCallback(async () => {
-    try {
-      const { data } = await axios.get(`${url}/admin_test_question`, {
-        params: { testId: decodedTestId },
-        headers: { Authorization: user?.token },
-      });
-
-      if (data) {
-        shuffleQuestions(data);
-        setQuestions(data);
-      }
-    } catch (error) {
-      console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg });
-    }
-  }, [url, user, decodedTestId, setQuestions]);
-
-  const getTest = React.useCallback(async () => {
-    try {
-      const { data } = await axios.get(`${url}/admin_test/${decodedTestId}`, {
-        headers: { Authorization: user?.token },
-      });
-
-      if (data) {
-        setTest(data);
-      } else {
-        router.push(`/controller/tests/add/${params?.test_id}`);
-      }
-    } catch (error) {
-      console.log(error);
-      router.push(`/controller/tests/add/${params?.test_id}`);
-    }
-  }, [url, user, decodedTestId, router, params?.test_id]);
 
   React.useEffect(() => {
     if (user) {
@@ -226,16 +227,16 @@ const SingleTest = ({ params }) => {
         <div className="cstm-flex-col w-full gap-2 t:cstm-flex-row t:w-10/12 l-l:w-8/12">
           <button
             onClick={() => computeScore(setScore, setIsFinished, questions, selectedChoices)}
-            className={`p-2 bg-prmColor text-scndColor text-sm rounded-full w-full mt-5 t:mt-0 t:w-fit t:px-10 t:${
-              canToggleSeeResult ? "mr-auto" : "mr-0"
-            } shadow-[0_4px_rgba(55,48,163,1)]`}
+            className={`p-2 bg-prmColor text-scndColor text-sm rounded-full w-full mt-5 t:mt-0 
+                      t:w-fit t:px-10 t:mr-auto shadow-solid shadow-indigo-900`}
           >
             Submit Answers
           </button>
 
           <button
             onClick={handleCanSeeResult}
-            className="bg-scndColor p-2 w-full t:w-fit t:px-10 t:ml-auto rounded-full text-sm text-prmColor shadow-solid shadow-cyan-800"
+            className="bg-scndColor p-2 w-full t:w-fit t:px-10 t:ml-auto rounded-full 
+                    text-sm text-prmColor shadow-solid shadow-cyan-600"
           >
             See Mistakes
           </button>

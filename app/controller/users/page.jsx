@@ -13,19 +13,22 @@ import { cipher } from "@/src/src/functions/security";
 
 const AdminUsers = () => {
   const [users, setUsers] = React.useState([]);
+  const [message, setMessage] = React.useState({ msg: "", active: false });
+
+  // search filters
   const [searchFilter, setSearchFilter] = React.useState({ toSearch: "name", searchKey: "" });
   const [sortFilter, setSortFilter] = React.useState({ toSort: "name", sortMode: "ASC" });
   const [lexileRangeFilter, setLexileRangeFilter] = React.useState({ from: 0, to: 1250 });
-  const [message, setMessage] = React.useState({ msg: "", active: false });
   const [dateRangeFilter, setDateRangeFilter] = React.useState({
     from: "",
     to: inputDate(new Date().toLocaleDateString()),
   });
-  const { data: session } = useSession({ required: true });
 
+  const { data: session } = useSession({ required: true });
   const { url } = useGlobalContext();
   const user = session?.user?.name;
 
+  // handle onchange on search filter
   const handleSearchFilter = ({ name, value }) => {
     setSearchFilter((prev) => {
       return {
@@ -35,6 +38,7 @@ const AdminUsers = () => {
     });
   };
 
+  // handle onchange on sort filter
   const handleSortFilter = ({ name, value }) => {
     setSortFilter((prev) => {
       return {
@@ -44,6 +48,7 @@ const AdminUsers = () => {
     });
   };
 
+  // handle onchange on date range filter
   const handleDateRangeFilter = ({ name, value }) => {
     setDateRangeFilter((prev) => {
       return {
@@ -53,6 +58,7 @@ const AdminUsers = () => {
     });
   };
 
+  // handle onchange on lexile range filter
   const handleLexileRangeFilter = ({ name, value }) => {
     setLexileRangeFilter((prev) => {
       return {
@@ -62,6 +68,7 @@ const AdminUsers = () => {
     });
   };
 
+  // map user row
   const userRow = users.map((user) => {
     const email = user.email.split("@");
     const cipheredUserId = cipher(user.user_id);
@@ -91,6 +98,7 @@ const AdminUsers = () => {
     );
   });
 
+  // get users
   const getUsers = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/admin_user`, {
@@ -116,7 +124,10 @@ const AdminUsers = () => {
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <AdminPageHeader subHeader="Readefine" mainHeader="Users" />
+
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+
+      {/* filters */}
       <UsersFilter
         handleSearchFilter={handleSearchFilter}
         handleSortFilter={handleSortFilter}
@@ -128,6 +139,7 @@ const AdminUsers = () => {
         searchFilter={searchFilter}
       />
 
+      {/* users container */}
       <table
         className="table-fixed p-4 h-[75vh] cstm-scrollbar rounded-md cstm-flex-col overflow-auto w-full justify-start items-start bg-white text-sm gap-5 
         cstm-w-limit border-collapse"

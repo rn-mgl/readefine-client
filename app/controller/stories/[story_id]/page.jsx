@@ -1,5 +1,7 @@
 "use client";
 import React from "react";
+import ActionLabel from "@/src/src/components/global/ActionLabel";
+import StoryDoublePage from "@/src/src/components/stories/StoryDoublePage";
 import AdminPageHeader from "@/src/src/admin/global/PageHeader";
 import StorySinglePage from "@/src/src/components/stories/StorySinglePage";
 import axios from "axios";
@@ -13,58 +15,101 @@ import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { BsArrowLeft, BsFilter } from "react-icons/bs";
-import ActionLabel from "@/src/src/components/global/ActionLabel";
-import StoryDoublePage from "@/src/src/components/stories/StoryDoublePage";
-import { cipher, decipher } from "@/src/src/functions/security";
+
+import { decipher } from "@/src/src/functions/security";
 
 const SingleStory = ({ params }) => {
   const [story, setStory] = React.useState({});
   const [pages, setPages] = React.useState([]);
+  const [message, setMessage] = React.useState({ msg: "", active: false });
+
   const [activePage, setActivePage] = React.useState(1);
   const [fontSize, setFontSize] = React.useState(16);
+
   const [viewType, setViewType] = React.useState("single");
   const [customizationsVisible, setCustomizationsVisible] = React.useState(false);
+
   const [canDeleteStory, setCanDeleteStory] = React.useState(false);
-  const [message, setMessage] = React.useState({ msg: "", active: false });
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
   const decodedStoryId = decipher(params?.story_id);
   const user = session?.user?.name;
+
+  // text to speech content
   const leftUtterance = pages[activePage - 1]?.content;
   const rightUtterance = pages[activePage]?.content;
 
+  // handle to next page
   const handleIncrement = () => {
     const increment = viewType === "single" ? 1 : 2;
     setActivePage((prev) => (prev + increment > pages.length ? pages.length : prev + increment));
   };
 
+  // handle tp prev page
   const handleDecrement = () => {
     const decrement = viewType === "single" ? 1 : 2;
     setActivePage((prev) => (prev - decrement < 1 ? 1 : prev - decrement));
   };
 
+  // toggle can delete story
   const handleCanDeleteStory = () => {
     setCanDeleteStory((prev) => !prev);
   };
 
+  // handle change font style
   const handleFontSize = ({ value }) => {
     setFontSize(() => (value < 16 ? 16 : value > 100 ? 100 : parseInt(value)));
   };
 
+  // toggle can see filter aka customizations
   const handleCustomizationsVisible = () => {
     setCustomizationsVisible((prev) => !prev);
   };
 
+  // handle the active page
   const handleActivePage = ({ value }) => {
     const newPage = parseInt(value);
     setActivePage(newPage < 1 ? 1 : newPage > pages.length ? pages.length : newPage);
   };
 
+  // change view type, single or double
   const handleViewType = (type) => {
     setViewType(type);
   };
 
+  // get pages
+  const getPages = React.useCallback(async () => {
+    try {
+      const { data } = await axios.get(`${url}/admin_story_content`, {
+        params: { storyId: decodedStoryId },
+        headers: { Authorization: user.token },
+      });
+      if (data) {
+        setPages(data);
+      }
+    } catch (error) {
+      console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg });
+    }
+  }, [url, user, setPages, decodedStoryId]);
+
+  // get story
+  const getStory = React.useCallback(async () => {
+    try {
+      const { data } = await axios.get(`${url}/admin_story/${decodedStoryId}`, {
+        headers: { Authorization: user.token },
+      });
+      if (data) {
+        setStory(data);
+      }
+    } catch (error) {
+      console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg });
+    }
+  }, [url, user, setStory, decodedStoryId]);
+
+  // map story pages
   const storyPages = pages?.map((page, index, arr) => {
     return (
       <div
@@ -93,35 +138,6 @@ const SingleStory = ({ params }) => {
     );
   });
 
-  const getPages = React.useCallback(async () => {
-    try {
-      const { data } = await axios.get(`${url}/admin_story_content`, {
-        params: { storyId: decodedStoryId },
-        headers: { Authorization: user.token },
-      });
-      if (data) {
-        setPages(data);
-      }
-    } catch (error) {
-      console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg });
-    }
-  }, [url, user, setPages, decodedStoryId]);
-
-  const getStory = React.useCallback(async () => {
-    try {
-      const { data } = await axios.get(`${url}/admin_story/${decodedStoryId}`, {
-        headers: { Authorization: user.token },
-      });
-      if (data) {
-        setStory(data);
-      }
-    } catch (error) {
-      console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg });
-    }
-  }, [url, user, setStory, decodedStoryId]);
-
   React.useEffect(() => {
     if (user) {
       getStory();
@@ -148,6 +164,7 @@ const SingleStory = ({ params }) => {
         />
       ) : null}
 
+      {/* admin actions */}
       <div className="w-full cstm-w-limit cstm-flex-row">
         <Link href="/controller/stories" className="w-fit cstm-bg-hover mr-auto">
           <BsArrowLeft className=" text-prmColor" />
@@ -167,6 +184,7 @@ const SingleStory = ({ params }) => {
         </button>
       </div>
 
+      {/* filter aka customizations  */}
       {customizationsVisible ? (
         <Customizations
           // check if both pages for utterances exist, else only left
@@ -186,6 +204,7 @@ const SingleStory = ({ params }) => {
         />
       ) : null}
 
+      {/* pages */}
       <div
         className={`${
           customizationsVisible ? "h-[65vh]" : "h-[70vh] t:h-[75vh]"

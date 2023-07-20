@@ -1,16 +1,16 @@
 "use client";
 import React from "react";
+import Link from "next/link";
+import axios from "axios";
+
 import AdminPageHeader from "@/src/src/admin/global/PageHeader";
 import EditTestPage from "@/src/src/admin/tests/EditTestPage";
-import ActionLabel from "@/src/src/components/global/ActionLabel";
-import Link from "next/link";
 import Message from "@/src/src/components/global/Message";
 
 import { BsArrowLeft } from "react-icons/bs";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
-import axios from "axios";
 import { decipher } from "@/src/src/functions/security";
 
 const EditTest = ({ params }) => {
@@ -20,11 +20,11 @@ const EditTest = ({ params }) => {
 
   const { data: session } = useSession({ required: true });
   const { url } = useGlobalContext();
-
   const user = session?.user?.name;
   const router = useRouter();
   const decodedTestId = decipher(params?.test_id);
 
+  // handle onchange on questions
   const handleQuestions = (questionId, { name, value }) => {
     setQuestions((prev) =>
       prev.map((q) => {
@@ -39,19 +39,7 @@ const EditTest = ({ params }) => {
     );
   };
 
-  const testQuestions = questions.map((q, idx) => {
-    return (
-      <React.Fragment key={q?.question_id}>
-        <EditTestPage
-          handleQuestions={handleQuestions}
-          questionId={q?.question_id}
-          question={q}
-          testNumber={idx + 1}
-        />
-      </React.Fragment>
-    );
-  });
-
+  //handle edit test
   const editTest = async (e) => {
     e.preventDefault();
 
@@ -71,12 +59,14 @@ const EditTest = ({ params }) => {
     }
   };
 
+  // get questions
   const getQuestions = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/admin_test_question`, {
         params: { testId: decodedTestId },
         headers: { Authorization: user?.token },
       });
+
       if (data) {
         const newQuestions = data.map((d) => {
           const answerKey = `answer${d.question_id}`;
@@ -94,6 +84,7 @@ const EditTest = ({ params }) => {
     }
   }, [url, user, decodedTestId, setQuestions]);
 
+  // get test
   const getTest = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/admin_test/${decodedTestId}`, {
@@ -111,6 +102,20 @@ const EditTest = ({ params }) => {
     }
   }, [url, user, decodedTestId, router]);
 
+  // map questions
+  const testQuestions = questions.map((q, idx) => {
+    return (
+      <React.Fragment key={q?.question_id}>
+        <EditTestPage
+          handleQuestions={handleQuestions}
+          questionId={q?.question_id}
+          question={q}
+          testNumber={idx + 1}
+        />
+      </React.Fragment>
+    );
+  });
+
   React.useEffect(() => {
     if (user) {
       getTest();
@@ -126,7 +131,9 @@ const EditTest = ({ params }) => {
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-2 justify-start">
       <AdminPageHeader subHeader={test?.title} mainHeader="Edit Test" />
+
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+
       <form
         onSubmit={(e) => editTest(e)}
         className="w-full cstm-flex-col cstm-w-limit border-collapse gap-5"
@@ -138,6 +145,7 @@ const EditTest = ({ params }) => {
         >
           <BsArrowLeft className=" text-prmColor" />
         </Link>
+
         {testQuestions}
 
         <button

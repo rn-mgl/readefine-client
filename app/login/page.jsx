@@ -36,10 +36,12 @@ const Login = () => {
   const { url } = useGlobalContext();
   const router = useRouter();
 
+  // toggle if password can be seen
   const handleVisiblePassword = () => {
     setVisiblePassword((prev) => !prev);
   };
 
+  // handle onchange function on login input
   const handleLoginData = ({ name, value }) => {
     setLoginData((prev) => {
       return {
@@ -49,6 +51,7 @@ const Login = () => {
     });
   };
 
+  // reset accomplished achievement to close popup
   const handleAccomplishedAchievement = () => {
     setAccomplishedAchievement({
       accomplished: false,
@@ -56,17 +59,20 @@ const Login = () => {
     });
   };
 
+  // log in user
   const loginUser = async (e) => {
     e.preventDefault();
 
     setLoading(true);
 
+    // log in for middleware
     await signIn("client-credentials", {
       candidateIdentifier: loginData.candidateIdentifier,
       candidatePassword: loginData.candidatePassword,
       redirect: false,
     });
 
+    // log in for checking achievements
     try {
       const { data } = await axios.post(`${url}/auth_client/client_login`, { loginData });
 
@@ -119,6 +125,7 @@ const Login = () => {
 
   return (
     <div className="w-full h-screen bg-accntColor p-5 cstm-flex-col font-poppins overflow-hidden">
+      {/* if achievement is received */}
       {accomplishedAchievement.accomplished ? (
         <ReceiveAchievement
           achievements={accomplishedAchievement.achievements}
@@ -127,6 +134,7 @@ const Login = () => {
         />
       ) : null}
 
+      {/* if message has popped up */}
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
 
       <p className=" font-extrabold text-2xl text-prmColor">Log In</p>
@@ -139,6 +147,7 @@ const Login = () => {
                   l-s:w-[26rem]"
         onSubmit={(e) => loginUser(e)}
       >
+        {/* username or email*/}
         <InputComp
           id="candidateIdentifier"
           placeholder="Username or Email"
@@ -149,6 +158,7 @@ const Login = () => {
           value={loginData.candidateIdentifier}
         />
 
+        {/* password */}
         <InputComp
           id="candidatePassword"
           placeholder="Password"
@@ -165,10 +175,12 @@ const Login = () => {
           value={loginData.candidatePassword}
         />
 
+        {/* link if password is forgotten */}
         <Link className="text-xs text-white underline underline-offset-2" href="/forgot">
           Forgot Password?
         </Link>
 
+        {/* submit form */}
         <ButtonComp
           type="submit"
           fontColor="text-accntColor"
@@ -178,18 +190,21 @@ const Login = () => {
         />
       </form>
 
+      {/* render on phone */}
       <Image
         src={intersectSM}
         alt="intersect"
         className="w-full bottom-0 left-0 absolute rotate-180 t:hidden"
       />
 
+      {/* render on tablet */}
       <Image
         src={intersectST}
         alt="intersect"
         className="hidden w-full bottom-0 rotate-180 left-0 absolute t:block l-s:hidden"
       />
 
+      {/* render on laptop */}
       <Image
         src={intersectSL}
         alt="intersect"

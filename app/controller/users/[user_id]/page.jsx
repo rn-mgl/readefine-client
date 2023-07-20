@@ -22,6 +22,7 @@ const SingleUser = ({ params }) => {
   const [userReads, setUserReads] = React.useState([]);
   const [message, setMessage] = React.useState({ msg: "", active: false });
   const [userQuizzes, setUserQuizzes] = React.useState([]);
+  const [quizVariable, setQuizVariable] = React.useState("lexile");
 
   const { data: session } = useSession({ required: true });
   const { url } = useGlobalContext();
@@ -32,6 +33,12 @@ const SingleUser = ({ params }) => {
   defaults.font.size = 12;
   defaults.font.style = "italic";
 
+  // toggle if quiz y axis graph is lexile or score
+  const handleQuizVariable = ({ value }) => {
+    setQuizVariable(value);
+  };
+
+  // map lexile level to the days it changed and remain the same on the days it did not change
   const mapLexileToDays = () => {
     let curr = userLexile[0]?.lexile;
     // set the initial values to be the oldest (curr) record
@@ -55,6 +62,7 @@ const SingleUser = ({ params }) => {
     return days;
   };
 
+  // place data to lexile line chart
   const lexileChartData = {
     labels: getDaysInMonth(new Date()),
     datasets: [
@@ -69,6 +77,7 @@ const SingleUser = ({ params }) => {
     ],
   };
 
+  // map read books to the dates it has been read
   const mapBooksReadToDays = () => {
     let counts = getDaysInMonth(new Date()).map((_, i) => {
       return {
@@ -90,6 +99,7 @@ const SingleUser = ({ params }) => {
     return counts;
   };
 
+  // place data to book scatter chart
   const booksChartData = {
     datasets: [
       {
@@ -103,6 +113,7 @@ const SingleUser = ({ params }) => {
     ],
   };
 
+  // map taken tests to the days in has been taken
   const mapQuizScoresToDays = () => {
     let counts = getDaysInMonth(new Date()).map((_, i) => {
       return {
@@ -112,10 +123,10 @@ const SingleUser = ({ params }) => {
     });
 
     for (let i = 0; i < counts.length; i++) {
-      const curr = userReads[i];
+      const curr = userQuizzes[i];
       if (curr) {
-        const dayIdx = new Date(curr.date_read).getDate();
-        const data = { x: dayIdx, y: curr.lexile };
+        const dayIdx = new Date(curr.date_taken).getDate();
+        const data = { x: dayIdx, y: curr[quizVariable] };
         counts[dayIdx - 1] = data;
       }
     }
@@ -123,6 +134,7 @@ const SingleUser = ({ params }) => {
     return counts;
   };
 
+  // place data to answered tests scatter chart
   const gamesChartData = {
     datasets: [
       {
@@ -137,6 +149,7 @@ const SingleUser = ({ params }) => {
     ],
   };
 
+  // get user data
   const getUserData = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/admin_user/${decodedUserId}`, {
@@ -152,6 +165,7 @@ const SingleUser = ({ params }) => {
     }
   }, [url, user, setUserData, decodedUserId]);
 
+  // get user lexile for graph
   const getUserLexile = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/admin_user_lexile`, {
@@ -168,6 +182,7 @@ const SingleUser = ({ params }) => {
     }
   }, [url, user, setUserLexile, decodedUserId]);
 
+  // get books read for graph
   const getUserBooksRead = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/admin_read_story`, {
@@ -184,9 +199,10 @@ const SingleUser = ({ params }) => {
     }
   }, [url, user, setUserReads, decodedUserId]);
 
+  // get quizzes for graph
   const getUserQuizzesAnswered = React.useCallback(async () => {
     try {
-      const { data } = await axios.get(`${url}/admin_answered_questions`, {
+      const { data } = await axios.get(`${url}/admin_taken_test`, {
         params: { userId: decodedUserId },
         headers: { Authorization: user.token },
       });
@@ -227,37 +243,51 @@ const SingleUser = ({ params }) => {
   return (
     <div className="w-full min-h-screen bg-accntColor cstm-flex-col justify-start p-5 gap-2">
       <AdminPageHeader subHeader="User" mainHeader="Dashboard" />
+
+      {/* show if has message pop up */}
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+
       <div className="cstm-flex-col gap-5 w-full cstm-w-limit ">
         <Link href="/controller/users" className="cstm-bg-hover text-prmColor mr-auto">
           <BsArrowLeft />
         </Link>
+
         <div className="cstm-flex-col gap-5 w-full t:cstm-flex-row">
+          {/* user data */}
           <div className="cstm-flex-col bg-white rounded-2xl p-5 w-full">
             <div className="cstm-flex-row gap-2 w-full justify-start">
+              {/* user image */}
               <div
                 style={{ backgroundImage: userData.image ? `url("${userData.image}")` : null }}
-                className="w-12 h-12 rounded-full bg-prmColor bg-opacity-10 bg-cover bg-center"
+                className="w-12 h-12 min-w-[3rem] min-h-[3rem] rounded-full bg-prmColor bg-opacity-10 bg-cover bg-center"
               />
-              <div className="cstm-flex-col items-start">
-                <p className="capitalize font-bold text-black text-base">
+
+              <div className="cstm-flex-col items-start overflow-x-auto scrollbar-none">
+                {/* user name and surname */}
+                <p className="capitalize font-bold text-black text-base whitespace-nowrap ">
                   {userData.name} {userData.surname}
                 </p>
+                {/* user email */}
                 <p className="font-light text-xs">{userData.email}</p>
               </div>
+
+              {/* send email button */}
               <Link className="cstm-bg-hover ml-auto" href={`mailto:${userData.email}`}>
                 <AiOutlineMail className=" scale-125 text-prmColor" />
               </Link>
             </div>
           </div>
 
+          {/* user lexile level*/}
           <div className="cstm-flex-col bg-white rounded-2xl p-5 w-full t:w-4/12">
             <p className="font-bold text-prmColor text-xl">{userData?.lexile}</p>
+
             <p className="text-sm">Lexile Level</p>
           </div>
         </div>
 
         <div className="cstm-flex-col gap-5 w-full min-h-screen ">
+          {/* graph for lexile */}
           <div className="cstm-flex-col w-full h-auto min-h-[30rem] p-5 bg-white rounded-2xl">
             <Line
               data={lexileChartData}
@@ -267,6 +297,7 @@ const SingleUser = ({ params }) => {
             />
           </div>
 
+          {/* graph for books read */}
           <div className="cstm-flex-col w-full h-auto min-h-[30rem] p-5 bg-white rounded-2xl">
             <Scatter
               data={booksChartData}
@@ -276,13 +307,57 @@ const SingleUser = ({ params }) => {
             />
           </div>
 
-          <div className="cstm-flex-col w-full h-auto min-h-[30rem] p-5 bg-white rounded-2xl">
-            <Scatter
-              data={gamesChartData}
-              options={{
-                maintainAspectRatio: false,
-              }}
-            />
+          {/* graph for quizzes taken */}
+          <div className="cstm-flex-col p-5 w-full bg-white rounded-2xl gap-5">
+            {/* button to change if y axis is lexile or score */}
+            <div className="cstm-flex-row text-sm gap-5 w-full">
+              <label htmlFor="lexile" className="mr-auto t:mr-0 cursor-pointer">
+                <input
+                  type="radio"
+                  value="lexile"
+                  checked={quizVariable === "lexile"}
+                  name="lexile"
+                  id="lexile"
+                  className="hidden peer"
+                  onChange={(e) => handleQuizVariable(e.target)}
+                />
+
+                <div
+                  className="p-2 peer-checked:bg-prmColor peer-checked:text-white w-16 cstm-flex-col
+                        bg-accntColor rounded-md font-bold"
+                >
+                  Lexile
+                </div>
+              </label>
+
+              <label htmlFor="score" className="t:mr-auto cursor-pointer">
+                <input
+                  type="radio"
+                  value="score"
+                  checked={quizVariable === "score"}
+                  name="score"
+                  id="score"
+                  className="hidden peer"
+                  onChange={(e) => handleQuizVariable(e.target)}
+                />
+
+                <div
+                  className="p-2 peer-checked:bg-prmColor peer-checked:text-white w-16 cstm-flex-col
+                        bg-accntColor rounded-md font-bold"
+                >
+                  Score
+                </div>
+              </label>
+            </div>
+
+            <div className="cstm-flex-col justify-start w-full h-auto min-h-[30rem]">
+              <Scatter
+                data={gamesChartData}
+                options={{
+                  maintainAspectRatio: false,
+                }}
+              />
+            </div>
           </div>
         </div>
       </div>

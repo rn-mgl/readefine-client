@@ -15,10 +15,12 @@ const Verify = ({ params }) => {
   const { url } = useGlobalContext();
   const token = params?.token;
 
+  // verify user
   const verifyUser = React.useCallback(async () => {
     try {
       const { data } = await axios.patch(`${url}/auth_client/client_verify`, { token });
 
+      // check if properly verified using the correct token
       if (data) {
         setStatus("verified");
       } else {
@@ -37,6 +39,9 @@ const Verify = ({ params }) => {
   return (
     <div className="cstm-flex-col w-full min-h-screen bg-accntColor">
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+
+      {/* render image depending on verification status */}
+
       {status === "verifying" ? (
         <VerifyingImage />
       ) : status === "verified" ? (

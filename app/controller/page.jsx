@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import axios from "axios";
 import AdminPageHeader from "../../src/admin/global/PageHeader";
 import DashboardCards from "../../src/admin/dashboard/DashboardCards";
 import DashboardCardImage1 from "../../public/dashboard/DashboardCardImage1.svg";
@@ -8,7 +9,6 @@ import DashboardCardImage3 from "../../public/dashboard/DashboardCardImage3.svg"
 import DashboardCardImage5 from "../../public/dashboard/DashboardCardImage5.svg";
 import DashboardCardImage6 from "../../public/dashboard/DashboardCardImage6.svg";
 import DashboardCardImage7 from "../../public/dashboard/DashboardCardImage7.svg";
-import axios from "axios";
 import Message from "@/src/src/components/global/Message";
 
 import { useGlobalContext } from "../../context";
@@ -25,6 +25,7 @@ const AdminDashboard = () => {
 
   const { url } = useGlobalContext();
 
+  // get dashboard counts
   const getCounts = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/admin_dashboard`, {
@@ -40,6 +41,7 @@ const AdminDashboard = () => {
     }
   }, [user, url, setCounts]);
 
+  // get dashboard updates
   const getUpdates = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/admin_dashboard`, {
@@ -70,12 +72,15 @@ const AdminDashboard = () => {
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <AdminPageHeader subHeader="Counts" mainHeader="Main Dashboard" />
+
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+
       <div
         className="cstm-flex-col gap-5 justify-start w-full transition-all
         t:cstm-flex-row t:flex-wrap
         cstm-w-limit"
       >
+        {/* users card */}
         <DashboardCards
           image={DashboardCardImage1}
           label="Users"
@@ -83,6 +88,8 @@ const AdminDashboard = () => {
           count={counts.userCount}
           to="/controller/users"
         />
+
+        {/* stories card */}
         <DashboardCards
           image={DashboardCardImage3}
           label="Stories"
@@ -90,6 +97,8 @@ const AdminDashboard = () => {
           count={counts.storyCount}
           to="/controller/stories"
         />
+
+        {/* tests card */}
         <DashboardCards
           image={DashboardCardImage2}
           label="Tests"
@@ -97,6 +106,8 @@ const AdminDashboard = () => {
           count={counts.testCount}
           to="/controller/tests"
         />
+
+        {/* rewards card */}
         <DashboardCards
           image={DashboardCardImage6}
           label="Rewards"
@@ -104,6 +115,8 @@ const AdminDashboard = () => {
           count={counts.rewardCount}
           to="/controller/rewards"
         />
+
+        {/* achievements and task card */}
         <DashboardCards
           image={DashboardCardImage5}
           label="Achievements & Tasks"
@@ -111,6 +124,8 @@ const AdminDashboard = () => {
           count={counts.achievementCount}
           to="/controller/achievements"
         />
+
+        {/* minigames card */}
         <DashboardCards
           image={DashboardCardImage7}
           label="Minigames"

@@ -27,6 +27,7 @@ const PasswordReset = ({ params }) => {
   const router = useRouter();
   const token = params?.token;
 
+  // handle onchange function on newpassword
   const handleNewPassword = ({ name, value }) => {
     setPassword((prev) => {
       return {
@@ -36,15 +37,17 @@ const PasswordReset = ({ params }) => {
     });
   };
 
-  const handleVisiblePassword = (pname) => {
+  // toggle if password can be seen
+  const handleVisiblePassword = (name) => {
     setVisiblePassword((prev) => {
       return {
         ...prev,
-        [pname]: !prev[pname],
+        [name]: !prev[name],
       };
     });
   };
 
+  // change password
   const changePassword = async (e) => {
     e.preventDefault();
     const { newPassword, retypedPassword } = password;
@@ -53,6 +56,8 @@ const PasswordReset = ({ params }) => {
         newPassword,
         retypedPassword,
       });
+
+      // if changed successfully, move to log in
       if (data) {
         router.push("/login");
       }
@@ -76,6 +81,7 @@ const PasswordReset = ({ params }) => {
                     l-s:w-[26rem]"
         onSubmit={(e) => changePassword(e)}
       >
+        {/* new password */}
         <InputComp
           id="newPassword"
           placeholder="Password"
@@ -91,6 +97,8 @@ const PasswordReset = ({ params }) => {
           onChange={(e) => handleNewPassword(e.target)}
           value={password.newPassword}
         />
+
+        {/* retype password */}
         <InputComp
           id="retypedPassword"
           placeholder="Password"
@@ -107,6 +115,7 @@ const PasswordReset = ({ params }) => {
           value={password.retypedPassword}
         />
 
+        {/* submit form */}
         <ButtonComp
           type="submit"
           fontColor="text-accntColor"
@@ -116,16 +125,21 @@ const PasswordReset = ({ params }) => {
         />
       </form>
 
+      {/* render on mobile */}
       <Image
         src={intersectSM}
         alt="intersect"
         className="w-full bottom-0 left-0 absolute rotate-180 t:hidden"
       />
+
+      {/* render on tablet */}
       <Image
         src={intersectST}
         alt="intersect"
         className="hidden w-full bottom-0 rotate-180 left-0 absolute t:block l-s:hidden"
       />
+
+      {/* render on laptop */}
       <Image
         src={intersectSL}
         alt="intersect"

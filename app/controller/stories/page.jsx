@@ -13,23 +13,26 @@ import { useSession } from "next-auth/react";
 import { inputDate } from "@/src/src/functions/localDate";
 import { useGlobalContext } from "@/src/context";
 import { cipher } from "@/src/src/functions/security";
+import ActionLabel from "@/src/src/components/global/ActionLabel";
 
 const AdminStories = () => {
   const [stories, setStories] = React.useState([]);
+  const [message, setMessage] = React.useState({ msg: "", active: false });
+
+  // filters
   const [searchFilter, setSearchFilter] = React.useState({ toSearch: "title", searchKey: "" });
   const [lexileRangeFilter, setLexileRangeFilter] = React.useState({ from: 0, to: 1250 });
   const [sortFilter, setSortFilter] = React.useState({ toSort: "title", sortMode: "ASC" });
-  const [message, setMessage] = React.useState({ msg: "", active: false });
   const [dateRangeFilter, setDateRangeFilter] = React.useState({
     from: "",
     to: inputDate(new Date().toLocaleDateString()),
   });
+
   const { data: session } = useSession();
-
   const { url } = useGlobalContext();
-
   const user = session?.user?.name;
 
+  // handle onchange on search filter
   const handleSearchFilter = ({ name, value }) => {
     setSearchFilter((prev) => {
       return {
@@ -39,6 +42,7 @@ const AdminStories = () => {
     });
   };
 
+  // handle onchange on date range filter
   const handleDateRangeFilter = ({ name, value }) => {
     setDateRangeFilter((prev) => {
       return {
@@ -48,6 +52,7 @@ const AdminStories = () => {
     });
   };
 
+  // handle onchange on lexile range filter
   const handleLexileRangeFilter = ({ name, value }) => {
     setLexileRangeFilter((prev) => {
       return {
@@ -57,6 +62,7 @@ const AdminStories = () => {
     });
   };
 
+  // handle onchange on sort filter
   const handleSortFilter = ({ name, value }) => {
     setSortFilter((prev) => {
       return {
@@ -66,6 +72,7 @@ const AdminStories = () => {
     });
   };
 
+  // get all stories
   const getAllStories = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/admin_story/`, {
@@ -87,10 +94,14 @@ const AdminStories = () => {
     }
   }, [url, user, setStories, searchFilter, lexileRangeFilter, sortFilter, dateRangeFilter]);
 
+  // map stories
   const storiesCards = stories.map((story) => {
+    // temporarily use story_id if no test to cater the condition in suddenly checking test with no content
+    const testId = story?.test_id ? story?.test_id : story.story_id;
     const cipheredStoryId = cipher(story.story_id);
-    const testId = story?.test_id ? story?.test_id : story.story_id; // temporarily use story_id if no test to cater the condition in suddenly checking test with no content
     const cipheredTestId = cipher(testId);
+
+    // if story has no test, redirect to add
     const testLink = story?.has_test
       ? `/controller/tests/${cipheredTestId}`
       : `/controller/tests/add/${cipheredTestId}`;
@@ -119,7 +130,9 @@ const AdminStories = () => {
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <AdminPageHeader subHeader="Readefine" mainHeader="Stories" />
+
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+
       <div className="w-full cstm-w-limit cstm-flex-col gap-2">
         <StoriesFilter
           handleSearchFilter={handleSearchFilter}
@@ -131,9 +144,14 @@ const AdminStories = () => {
           sortFilter={sortFilter}
           dateRangeFilter={dateRangeFilter}
         />
-        <Link href="/controller/stories/add" className="cstm-bg-hover mr-auto p-2 w-fit">
-          <IoAddOutline className="text-prmColor cursor-pointer scale-150" />
-        </Link>
+
+        <div className="relative group cstm-flex-col mr-auto">
+          <ActionLabel label="Add Story" />
+          <Link href="/controller/stories/add" className="cstm-bg-hover p-2 w-fit">
+            <IoAddOutline className="text-prmColor cursor-pointer scale-150" />
+          </Link>
+        </div>
+
         <div
           className="cstm-flex-col gap-5 justify-start w-full transition-all 
                   t:cstm-flex-row t:flex-wrap"

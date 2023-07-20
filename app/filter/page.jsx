@@ -29,10 +29,12 @@ const AdminLogin = () => {
   const { url } = useGlobalContext();
   const router = useRouter();
 
+  // toggle if password can be seen
   const handleVisiblePassword = () => {
     setVisiblePassword((prev) => !prev);
   };
 
+  // handle onchange functions on login
   const handleLoginData = ({ name, value }) => {
     setLoginData((prev) => {
       return {
@@ -42,15 +44,19 @@ const AdminLogin = () => {
     });
   };
 
+  // login admin
   const loginAdmin = async (e) => {
     e.preventDefault();
     setLoading(true);
+
+    // login on middleware
     await signIn("admin-credentials", {
       candidateIdentifier: loginData.candidateIdentifier,
       candidatePassword: loginData.candidatePassword,
       redirect: false,
     });
 
+    // log in for loading and directory
     try {
       const { data } = await axios.post(`${url}/auth_admin/admin_login`, { loginData });
       if (data) {
@@ -63,6 +69,7 @@ const AdminLogin = () => {
     }
   };
 
+  // return if loading
   if (loading) {
     return <Loading />;
   }
@@ -70,14 +77,18 @@ const AdminLogin = () => {
   return (
     <div className="w-full h-screen bg-prmColor p-5 cstm-flex-col font-poppins overflow-hidden">
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+
       <p className=" font-extrabold text-2xl text-accntColor">Log In</p>
+
       <br />
+
       <form
         className="w-full rounded-md bg-accntColor bg-opacity-20 backdrop-blur-md border-[1px] border-accntColor border-opacity-40 p-5 cstm-flex-col gap-5 relative z-10 shadow-lg
                   t:w-96
                   l-s:w-[26rem"
         onSubmit={(e) => loginAdmin(e)}
       >
+        {/* username or email */}
         <InputComp
           id="candidateIdentifier"
           placeholder="Username or Email"
@@ -87,6 +98,8 @@ const AdminLogin = () => {
           onChange={(e) => handleLoginData(e.target)}
           value={loginData.candidateIdentifier}
         />
+
+        {/* password */}
         <InputComp
           id="candidatePassword"
           placeholder="Password"
@@ -102,6 +115,8 @@ const AdminLogin = () => {
           onChange={(e) => handleLoginData(e.target)}
           value={loginData.candidatePassword}
         />
+
+        {/* submit form */}
         <ButtonComp
           type="submit"
           fontColor="text-accntColor"
@@ -111,16 +126,21 @@ const AdminLogin = () => {
         />
       </form>
 
+      {/* render on phone */}
       <Image
         src={intersectSM}
         alt="intersect"
         className="w-full bottom-0 left-0 absolute rotate-180 t:hidden"
       />
+
+      {/* render on tablet */}
       <Image
         src={intersectST}
         alt="intersect"
         className="hidden w-full bottom-0 rotate-180 left-0 absolute t:block l-s:hidden"
       />
+
+      {/* render on laptop */}
       <Image
         src={intersectSL}
         alt="intersect"

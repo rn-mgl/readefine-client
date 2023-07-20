@@ -16,7 +16,7 @@ const TestResult = (props) => {
         <div className="cstm-flex-col gap-3 w-full t:cstm-flex-row t:flex-wrap">
           <div className="w-full h-full cstm-flex-col gap-5 t:cstm-flex-row">
             <div className="cstm-flex-col w-full gap-2 text-center t:w-full bg-accntColor rounded-md p-2 h-full">
-              <p className="font-bold text-prmColor cstm-flex-row gap-2">
+              <div className="font-bold text-prmColor cstm-flex-row gap-2">
                 Your Answer
                 {isCorrect ? (
                   <div className="cstm-flex-col rounded-full bg-prmColor ">
@@ -27,7 +27,7 @@ const TestResult = (props) => {
                     <IoClose className="text-prmColor" />
                   </div>
                 )}
-              </p>
+              </div>
               <p className={`${choice ? "opacity-100" : "opacity-50"}`}>
                 {choice ? choice : "No Answer"}
               </p>
