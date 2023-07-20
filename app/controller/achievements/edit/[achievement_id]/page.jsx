@@ -31,10 +31,12 @@ const EditAchievement = ({ params }) => {
   const router = useRouter();
   const decodedAchievementId = decipher(params?.achievement_id);
 
+  // toggle can select reward
   const handleCanSelectReward = () => {
     setCanSelectReward((prev) => !prev);
   };
 
+  // select reward
   const selectReward = (name, id) => {
     setAchievement((prev) => {
       return {
@@ -45,6 +47,7 @@ const EditAchievement = ({ params }) => {
     });
   };
 
+  // handle achievement onchange
   const handleAchievement = ({ name, value }) => {
     setAchievement((prev) => {
       return {
@@ -54,6 +57,7 @@ const EditAchievement = ({ params }) => {
     });
   };
 
+  // edit achievement
   const editAchievement = async (e) => {
     e.preventDefault();
     try {
@@ -63,6 +67,7 @@ const EditAchievement = ({ params }) => {
         { headers: { Authorization: user.token } }
       );
 
+      // move to view page after editing
       if (data) {
         router.push(`/controller/achievements/${params?.achievement_id}`);
       }
@@ -72,6 +77,7 @@ const EditAchievement = ({ params }) => {
     }
   };
 
+  // get achievement data
   const getAchievement = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/admin_achievement/${decodedAchievementId}`, {
@@ -116,6 +122,7 @@ const EditAchievement = ({ params }) => {
           handleAchievement={handleAchievement}
           handleCanSelectReward={handleCanSelectReward}
         />
+
         <div className="table-fixed p-5 rounded-2xl cstm-flex-col overflow-auto w-full h-[70vh] justify-start items-start bg-white text-sm gap-2 shadow-md cstm-scrollbar">
           <div className="cstm-flex-row w-full">
             <textarea
@@ -127,10 +134,11 @@ const EditAchievement = ({ params }) => {
               className="resize-none p-2 focus:outline-none font-bold text-prmColor mr-auto placeholder:opacity-50"
               value={achievement.achievement_name}
               onChange={(e) => handleAchievement(e.target)}
-            ></textarea>
+            />
           </div>
 
           <div className="cstm-separator" />
+
           <div className="w-full h-full cstm-flex-col">
             <textarea
               name="task"
@@ -141,9 +149,10 @@ const EditAchievement = ({ params }) => {
               className="resize-none p-2 focus:outline-none w-full h-full mr-auto placeholder:opacity-50"
               value={achievement.task}
               onChange={(e) => handleAchievement(e.target)}
-            ></textarea>
+            />
           </div>
         </div>
+
         <div className="pt-4 cstm-flex-row w-full">
           <button
             type="submit"

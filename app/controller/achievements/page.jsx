@@ -17,6 +17,7 @@ import { cipher } from "@/src/src/functions/security";
 const AdminAchievements = () => {
   const [achievements, setAchievements] = React.useState([]);
   const [message, setMessage] = React.useState({ msg: "", active: false });
+
   const [searchFilter, setSearchFilter] = React.useState({
     toSearch: "achievement_name",
     searchKey: "",
@@ -30,11 +31,12 @@ const AdminAchievements = () => {
     from: "",
     to: inputDate(new Date().toLocaleDateString()),
   });
-  const { data: session } = useSession({ required: true });
 
+  const { data: session } = useSession({ required: true });
   const user = session?.user?.name;
   const { url } = useGlobalContext();
 
+  // handle onchange on search filter
   const handleSearchFilter = ({ name, value }) => {
     setSearchFilter((prev) => {
       return {
@@ -44,6 +46,7 @@ const AdminAchievements = () => {
     });
   };
 
+  // handle onchange on date range filter
   const handleDateRangeFilter = ({ name, value }) => {
     setDateRangeFilter((prev) => {
       return {
@@ -53,6 +56,7 @@ const AdminAchievements = () => {
     });
   };
 
+  // handle onchange on goal range filter
   const handleGoalRangeFilter = ({ name, value }) => {
     setGoalRangeFilter((prev) => {
       return {
@@ -62,6 +66,7 @@ const AdminAchievements = () => {
     });
   };
 
+  // handle onchange on sort filter
   const handleSortFilter = ({ name, value }) => {
     setSortFilter((prev) => {
       return {
@@ -71,23 +76,7 @@ const AdminAchievements = () => {
     });
   };
 
-  const achievementCards = achievements.map((a) => {
-    const cipheredAchievementId = cipher(a.achievement_id);
-    return (
-      <React.Fragment key={a.achievement_id}>
-        <AchievementsCards
-          image={a.reward}
-          title={a.achievement_name}
-          type={typeConversion[a.achievement_type]}
-          specifics={specificsConversion[a.specifics]}
-          task={a.task}
-          goal={a.goal}
-          to={`/controller/achievements/${cipheredAchievementId}`}
-        />
-      </React.Fragment>
-    );
-  });
-
+  // get achievement data
   const getAchievement = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/admin_achievement`, {
@@ -108,6 +97,24 @@ const AdminAchievements = () => {
       setMessage({ active: true, msg: error?.response?.data?.msg });
     }
   }, [url, user, setAchievements, searchFilter, goalRangeFilter, sortFilter, dateRangeFilter]);
+
+  // map achievement cards
+  const achievementCards = achievements.map((a) => {
+    const cipheredAchievementId = cipher(a.achievement_id);
+    return (
+      <React.Fragment key={a.achievement_id}>
+        <AchievementsCards
+          image={a.reward}
+          title={a.achievement_name}
+          type={typeConversion[a.achievement_type]}
+          specifics={specificsConversion[a.specifics]}
+          task={a.task}
+          goal={a.goal}
+          to={`/controller/achievements/${cipheredAchievementId}`}
+        />
+      </React.Fragment>
+    );
+  });
 
   React.useEffect(() => {
     if (user) {
