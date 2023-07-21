@@ -23,7 +23,7 @@ const SingleStory = ({ params }) => {
 
   const [activePage, setActivePage] = React.useState(1);
 
-  const [customizationsVisible, setCustomizationsVisible] = React.useState(false);
+  const [customizationsVisible, setCustomizationsVisible] = React.useState(true);
   const [fontSize, setFontSize] = React.useState(16);
   const [viewType, setViewType] = React.useState("single");
 

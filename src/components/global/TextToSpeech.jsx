@@ -15,7 +15,8 @@ const TextToSpeech = (props) => {
   const [status, setStatus] = React.useState("init");
   const [volume, setVolume] = React.useState(1);
   const [rate, setRate] = React.useState(1);
-  const [SSU, setSSU] = React.useState(undefined);
+  const [voice, setVoice] = React.useState(null);
+  const [SSU, setSSU] = React.useState(null);
 
   const playVoice = () => {
     const synth = speechSynthesis;
@@ -66,12 +67,18 @@ const TextToSpeech = (props) => {
   };
 
   const handleRate = ({ value }) => {
-    setRate(value);
+    setRate(parseFloat(value));
   };
 
   const handleVolume = ({ value }) => {
-    setVolume(value);
+    setVolume(parseFloat(value));
   };
+
+  React.useEffect(() => {
+    if (typeof window !== "undefined" && "speechSynthesis" in window) {
+      setSSU(new SpeechSynthesisUtterance());
+    }
+  }, []);
 
   React.useEffect(() => {
     if (props.utterance) {
@@ -80,10 +87,21 @@ const TextToSpeech = (props) => {
   }, [setUtterance, props.utterance]);
 
   React.useEffect(() => {
-    if (speechSynthesis && SpeechSynthesisUtterance) {
-      setSSU(new SpeechSynthesisUtterance());
+    if (SSU) {
+      SSU.volume = volume;
+      SSU.rate = rate;
     }
-  }, [setSSU]);
+  }, [SSU, volume, rate]);
+
+  React.useEffect(() => {
+    const cancelSSU = window.speechSynthesis.cancel();
+
+    window.addEventListener("beforeunload", cancelSSU);
+
+    return () => {
+      window.removeEventListener("beforeunload", cancelSSU);
+    };
+  }, []);
 
   return (
     <div className="cstm-flex-col w-full gap-5 t:cstm-flex-row t:w-fit t:gap-2">

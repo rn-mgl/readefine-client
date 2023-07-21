@@ -27,7 +27,7 @@ const SingleStory = ({ params }) => {
   const [fontSize, setFontSize] = React.useState(16);
 
   const [viewType, setViewType] = React.useState("single");
-  const [customizationsVisible, setCustomizationsVisible] = React.useState(false);
+  const [customizationsVisible, setCustomizationsVisible] = React.useState(true);
 
   const [canDeleteStory, setCanDeleteStory] = React.useState(false);
 
