@@ -60,7 +60,7 @@ const StoriesCards = (props) => {
           Read
         </Link>
         {props.isTaken ? (
-          <p className="text-sm italic">You already took this test</p>
+          <p className="text-xs italic">You already took this test</p>
         ) : (
           buttonIfLower
         )}
