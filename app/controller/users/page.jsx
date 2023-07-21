@@ -10,6 +10,7 @@ import { useGlobalContext } from "@/src/context";
 import { localizeDate, inputDate } from "@/src/src/functions/localDate";
 import { useSession } from "next-auth/react";
 import { cipher } from "@/src/src/functions/security";
+import UserRow from "@/src/src/admin/users/UserRow";
 
 const AdminUsers = () => {
   const [users, setUsers] = React.useState([]);
@@ -73,28 +74,9 @@ const AdminUsers = () => {
     const email = user.email.split("@");
     const cipheredUserId = cipher(user.user_id);
     return (
-      <tr key={user.user_id} className="p-2 cstm-flex-row justify-start gap-10 text-center ">
-        <td className="cstm-flex-col">
-          <div className="w-10 h-10 rounded-full bg-prmColor bg-opacity-30" />
-        </td>
-        <td>
-          {email[0]} <br /> <span className="font-light text-xs">@{email[1]}</span>
-        </td>
-        <td className="break-words whitespace-pre-wrap">{user.surname}</td>
-        <td className="break-words whitespace-pre-wrap">{user.name}</td>
-        <td className="break-words whitespace-pre-wrap">{user.username}</td>
-        <td className="break-words whitespace-pre-wrap">{user.lexile}L</td>
-        <td className="break-words whitespace-pre-wrap">{user.grade_level}</td>
-        <td className="break-words whitespace-pre-wrap">{localizeDate(user.date_joined)}</td>
-        <td className="cstm-flex-col">
-          <Link
-            href={`/controller/users/${cipheredUserId}`}
-            className="bg-prmColor rounded-full p-2 text-white w-full"
-          >
-            Visit
-          </Link>
-        </td>
-      </tr>
+      <React.Fragment key={user.user_id}>
+        <UserRow user={user} email={email} cipheredUserId={cipheredUserId} />
+      </React.Fragment>
     );
   });
 
@@ -144,8 +126,8 @@ const AdminUsers = () => {
         className="table-fixed p-4 h-[75vh] cstm-scrollbar rounded-md cstm-flex-col overflow-auto w-full justify-start items-start bg-white text-sm gap-5 
         cstm-w-limit border-collapse"
       >
-        <thead className="w-full ">
-          <tr className="p-2 cstm-flex-row justify-start gap-10 text-center text-prmColor">
+        <thead className="w-full text-sm">
+          <tr className="p-2 cstm-flex-row justify-start text-center text-prmColor gap-5">
             <th>Image</th>
             <th>Email</th>
             <th>Last Name</th>
@@ -158,7 +140,7 @@ const AdminUsers = () => {
           </tr>
         </thead>
 
-        <tbody className="w-full">{userRow}</tbody>
+        <tbody className="w-full text-sm">{userRow}</tbody>
       </table>
     </div>
   );

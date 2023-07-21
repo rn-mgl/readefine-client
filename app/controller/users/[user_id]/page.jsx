@@ -9,7 +9,7 @@ import Message from "@/src/src/components/global/Message";
 import { Chart as ChartJS } from "chart.js/auto";
 import { defaults } from "chart.js";
 import { Line, Scatter } from "react-chartjs-2";
-import { getDaysInMonth, localizeDate, monthMap } from "@/src/src/functions/localDate";
+import { getDaysInMonth, monthMap } from "@/src/src/functions/localDate";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { BsArrowLeft } from "react-icons/bs";
@@ -41,14 +41,17 @@ const SingleUser = ({ params }) => {
   // map lexile level to the days it changed and remain the same on the days it did not change
   const mapLexileToDays = () => {
     let curr = userLexile[0]?.lexile;
-    // set the initial values to be the oldest (curr) record
+
+    // set the initial values to be the oldest lexile (curr) record
     const days = getDaysInMonth(new Date()).map(() => curr);
+
     for (let i = 0; i < days.length; i++) {
-      // check if i is within the user lexile length
+      // check if i is within the user lexile length to get appropriate matching lexile
       if (i < userLexile.length) {
         // change the current value to the next latest lexile data
         curr = userLexile[i];
       }
+
       // check if the current value exists
       if (curr) {
         // get the day as index
@@ -59,6 +62,15 @@ const SingleUser = ({ params }) => {
         days[dayIdx] = curr.lexile;
       }
     }
+
+    const latest = userLexile?.at(-1);
+    const latestLexile = latest.lexile;
+    const lastUpdatedDate = new Date(latest.date_added).getDate();
+
+    for (let i = lastUpdatedDate; i < days.length; i++) {
+      days[i] = latestLexile;
+    }
+
     return days;
   };
 

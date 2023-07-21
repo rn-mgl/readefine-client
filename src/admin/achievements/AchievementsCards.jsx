@@ -13,9 +13,18 @@ const AchievementsCards = (props) => {
 
   return (
     <div className="bg-white p-5 rounded-2xl cstm-flex-col gap-4 min-h-[26rem] w-72 min-w-[18rem] transition-all justify-start">
-      <div className="w-full cstm-flex-col overflow-clip bg-accntColor h-full p-5 rounded-2xl">
-        <Image src={props.image} alt="temp" width={250} height={250} className="h-full" />
-      </div>
+      <Link
+        href={props.to}
+        className="w-full cstm-flex-col overflow-clip bg-accntColor h-full p-5 rounded-2xl"
+      >
+        <Image
+          src={props.image}
+          alt="temp"
+          width={250}
+          height={250}
+          className="h-full saturate-150"
+        />
+      </Link>
       <div className="cstm-flex-col gap-1 w-full">
         <div className="cstm-flex-row font-poppins mr-auto items-start w-full">
           <p className="font-bold text-black mr-auto w-8/12 text-left">{props.title}</p>

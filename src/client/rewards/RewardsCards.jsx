@@ -12,7 +12,7 @@ const RewardsCards = (props) => {
           src={rewardImage}
           alt="temp"
           draggable={false}
-          className="drop-shadow-md w-fit"
+          className="drop-shadow-md w-fit saturate-150"
           width={250}
           height={250}
         />

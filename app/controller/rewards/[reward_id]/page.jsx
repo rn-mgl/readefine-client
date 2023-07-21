@@ -83,7 +83,7 @@ const SingleReward = ({ params }) => {
           {/* reward */}
           <div className="p-5 rounded-2xl gap-5 cstm-flex-col overflow-auto w-full h-[80vh] justify-start bg-white text-sm shadow-md cstm-scrollbar">
             <div className="w-full h-full cstm-flex-col bg-accntColor rounded-2xl p-5">
-              <div className="w-fit animate-float drop-shadow-md">
+              <div className="w-fit animate-float drop-shadow-md saturate-150">
                 <FileViewer src={reward?.reward} />
               </div>
             </div>

@@ -25,10 +25,12 @@ const SingleAchievement = ({ params }) => {
   const user = session?.user?.name;
   const decodedAchievementId = decipher(params?.achievement_id);
 
+  // toggle can delete achievement
   const handleCanDeleteAchievement = () => {
     setCanDeleteAchievement((prev) => !prev);
   };
 
+  // get achievement
   const getAchievement = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/admin_achievement/${decodedAchievementId}`, {
@@ -82,55 +84,65 @@ const SingleAchievement = ({ params }) => {
           </button>
         </div>
 
+        {/* task */}
         <div className="w-full cstm-flex-col">
           <div className="w-full p-5 bg-white rounded-2xl cstm-flex-col gap-2 min-h-[12rem]">
-            <p className="font-bold text-prmColor text-sm">Task</p>
-            <p className="text-sm text-justify">{achievement?.task}</p>
+            <p className=" text-sm">Task</p>
+
+            <p className="text-center text-prmColor font-bold text-xl">{achievement?.task}</p>
           </div>
         </div>
 
+        {/* achievement type */}
         <div className="cstm-flex-col t:cstm-flex-row w-full gap-5">
           <div className="w-full cstm-flex-col">
             <div className="w-full p-5 bg-white rounded-2xl cstm-flex-col gap-2 min-h-[12rem]">
               <p className="text-sm">Achievement Type</p>
-              <p className="text-justify font-bold text-prmColor text-2xl">
+
+              <p className="text-justify font-bold text-prmColor text-xl">
                 {typeConversion[achievement?.achievement_type]}
               </p>
             </div>
           </div>
 
+          {/* specifics */}
           <div className="w-full cstm-flex-col">
             <div className="w-full p-5 bg-white rounded-2xl cstm-flex-col gap-2 min-h-[12rem]">
               <p className="text-sm">Task Specifics</p>
-              <p className="text-justify font-bold text-prmColor text-2xl">
+
+              <p className="text-justify font-bold text-prmColor text-xl">
                 {specificsConversion[achievement?.specifics]}
               </p>
             </div>
           </div>
 
+          {/* goal */}
           <div className="w-full cstm-flex-col">
-            <div className="w-full p-5 bg-white rounded-2xl cstm-flex-col gap-5 min-h-[12rem]">
+            <div className="w-full p-5 bg-white rounded-2xl cstm-flex-col gap-2 min-h-[12rem]">
               <p className="text-sm">Goal</p>
-              <p className="text-justify font-bold text-prmColor text-2xl">{achievement?.goal}</p>
+
+              <p className="text-justify font-bold text-prmColor text-xl">{achievement?.goal}</p>
             </div>
           </div>
         </div>
 
-        <div className="cstm-flex-col w-full gap-5">
+        {/* reward name */}
+        <div className="cstm-flex-col t:cstm-flex-row w-full gap-5 t:h-80">
           <div className="w-full cstm-flex-col h-full">
             <div className="w-full p-5 bg-white rounded-2xl cstm-flex-col gap-2 h-full">
               <p className="text-sm">Reward Name</p>
-              <p className="text-justify font-bold text-prmColor text-2xl">
+
+              <p className="text-justify font-bold text-prmColor text-xl">
                 {achievement?.reward_name}
               </p>
             </div>
           </div>
 
-          <div className="w-full cstm-flex-col">
-            <div className="w-full p-5 bg-white rounded-2xl cstm-flex-col gap-2 min-h-[12rem]">
-              <p className="text-sm text-prmColor font-bold">Reward</p>
-              <div className="animate-float drop-shadow-lg">
-                <FileViewer src={achievement?.reward} />
+          {/* reward */}
+          <div className="w-full cstm-flex-col h-full">
+            <div className="w-full p-5 bg-white rounded-2xl cstm-flex-col gap-5 h-full ">
+              <div className="drop-shadow-lg w-full animate-float t:w-60 saturate-150">
+                <FileViewer src={achievement?.reward} width="w-full" />
               </div>
             </div>
           </div>

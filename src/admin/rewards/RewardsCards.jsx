@@ -5,15 +5,18 @@ import Link from "next/link";
 const RewardsCards = (props) => {
   return (
     <div className="bg-white p-5 rounded-2xl cstm-flex-col gap-4 shadow-md max-h-[25rem] w-72">
-      <div className="w-full h-full cstm-flex-col overflow-clip bg-accntColor p-2 rounded-2xl">
+      <Link
+        href={props.to}
+        className="w-full h-full cstm-flex-col overflow-clip bg-accntColor p-2 rounded-2xl"
+      >
         <Image
           src={props.image}
           alt="temp"
-          className="drop-shadow-md w-fit"
+          className="drop-shadow-md w-fit saturate-150"
           width={250}
           height={250}
         />
-      </div>
+      </Link>
 
       <div className="cstm-flex-row w-full">
         <div className="cstm-flex-row gap-1 font-poppins w-full">
