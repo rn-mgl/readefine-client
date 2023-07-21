@@ -13,9 +13,8 @@ import ActionLabel from "./ActionLabel";
 const TextToSpeech = (props) => {
   const [utterance, setUtterance] = React.useState("");
   const [status, setStatus] = React.useState("init");
-  const [volume, setVolume] = React.useState(1);
+  const [volume, setVolume] = React.useState({ display: 100, apply: 1 });
   const [rate, setRate] = React.useState(1);
-  const [voice, setVoice] = React.useState(null);
   const [SSU, setSSU] = React.useState(null);
 
   const playVoice = () => {
@@ -45,7 +44,7 @@ const TextToSpeech = (props) => {
       SSU.voice = primaryVoices.michelle;
       SSU.text = utterance;
       SSU.rate = rate;
-      SSU.volume = volume;
+      SSU.volume = volume.apply;
 
       synth.speak(SSU);
     }
@@ -71,7 +70,7 @@ const TextToSpeech = (props) => {
   };
 
   const handleVolume = ({ value }) => {
-    setVolume(parseFloat(value));
+    setVolume({ display: parseInt(value), apply: parseFloat(value / 100) });
   };
 
   React.useEffect(() => {
@@ -88,7 +87,7 @@ const TextToSpeech = (props) => {
 
   React.useEffect(() => {
     if (SSU) {
-      SSU.volume = volume;
+      SSU.volume = volume.apply;
       SSU.rate = rate;
     }
   }, [SSU, volume, rate]);
@@ -130,13 +129,16 @@ const TextToSpeech = (props) => {
 
         <button className="relative cstm-bg-hover group" onClick={cancel}>
           <ActionLabel label="Stop" />
+
           <BsFillStopFill className="text-prmColor scale-125" />
         </button>
 
         <div className="relative group p-2">
           <ActionLabel label="Speed" />
+
           <div className="cstm-flex-row gap-2">
             <RiSpeedFill className="text-prmColor" />
+
             <select
               value={rate}
               onChange={(e) => handleRate(e.target)}
@@ -160,19 +162,22 @@ const TextToSpeech = (props) => {
       <div className="cstm-flex-col gap-2">
         <div className="cstm-flex-row gap-2 relative group">
           <ActionLabel label="Volume" />
+
           <BsVolumeUpFill className="text-prmColor" />
+
           <input
             type="range"
             onChange={(e) => handleVolume(e.target)}
-            value={volume}
+            value={volume.display}
             className="cursor-pointer"
             min={0}
-            max={1}
-            step={0.1}
+            max={100}
+            step={1}
           />
+
           <input
             type="number"
-            value={volume}
+            value={volume.display}
             className="w-12 focus:outline-prmColor p-1 px-2 text-xs text-center underline underline-offset-2"
             onChange={(e) => handleVolume(e.target)}
           />
