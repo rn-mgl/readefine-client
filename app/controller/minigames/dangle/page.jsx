@@ -41,7 +41,7 @@ const Dangle = () => {
     setCanSeeHint((prev) => !prev);
   };
 
-  // reset game
+  // reset game stats
   const resetGameStats = () => {
     setCorrectWord([{}]);
     setWordData({});
@@ -117,9 +117,13 @@ const Dangle = () => {
   const submitGuess = () => {
     const stringGuess = guess.letters.join("");
 
+    // do not record if not completely filled inputs
     if (stringGuess.length !== wordData.word.length) return;
 
     let corrects = 0;
+
+    // add entry
+    addToGuessEntry();
 
     for (let i = 0; i < correctWord.length; i++) {
       const guessCandidate = guess.letters[i];
@@ -131,15 +135,11 @@ const Dangle = () => {
 
         // add correct points and win if is the same length of the word
         if (corrects >= correctWord.length) {
-          addToGuessEntry();
           setGameOver({ over: true, status: "win" });
           return;
         }
       }
     }
-
-    // add entry after loop
-    addToGuessEntry();
 
     // if the corrects are not equal to word length, remove heart
     if (corrects !== correctWord.length) {

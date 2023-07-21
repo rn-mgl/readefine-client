@@ -19,6 +19,7 @@ const Minigames = () => {
   const { url } = useGlobalContext();
   const user = session?.user?.name;
 
+  // get counts or amount of times user played a game
   const getCounts = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/minigames_dashboard`, {
@@ -41,11 +42,13 @@ const Minigames = () => {
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <ClientPageHeader mainHeader="Readefine" subHeader="Minigames" />
+
       <div
         className="cstm-flex-col gap-5 justify-start w-full transition-all
         t:cstm-flex-row t:flex-wrap
         cstm-w-limit"
       >
+        {/* riddles */}
         <ClientMinigamesCards
           image={DashboardCardImage2}
           label="Riddles"
@@ -53,6 +56,8 @@ const Minigames = () => {
           count={counts?.riddleCount ? counts?.riddleCount : 0}
           to="/archives/minigames/riddles"
         />
+
+        {/* dangle */}
         <ClientMinigamesCards
           image={DashboardCardImage3}
           label="Dangle"
@@ -60,6 +65,8 @@ const Minigames = () => {
           count={counts?.dangleCount ? counts?.dangleCount : 0}
           to="/archives/minigames/dangle"
         />
+
+        {/* decipher */}
         <ClientMinigamesCards
           image={DashboardCardImage6}
           label="Decipher"

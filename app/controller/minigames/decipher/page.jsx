@@ -152,7 +152,7 @@ const Decipher = () => {
         // increment skips per loop
         skips++;
 
-        // if alphabet is not in A to Z, manually change to A or Z depending of shift direction
+        // if alphabet is not in A to Z, manually change to A or Z depending on shift direction
         if (!newChar.match(/[a-z]/i)) {
           if (shiftDirection === 1) {
             newChar = "A";

@@ -12,21 +12,23 @@ import { typeConversion } from "@/src/src/functions/typeConversion";
 
 const ClientAchievements = () => {
   const [achievements, setAchievements] = React.useState([]);
+  const [message, setMessage] = React.useState({ msg: "", active: false });
+
+  const [goalRangeFilter, setGoalRangeFilter] = React.useState({ from: 0, to: 1250 });
   const [searchFilter, setSearchFilter] = React.useState({
     toSearch: "achievement_name",
     searchKey: "",
   });
-  const [goalRangeFilter, setGoalRangeFilter] = React.useState({ from: 0, to: 1250 });
-  const [message, setMessage] = React.useState({ msg: "", active: false });
   const [sortFilter, setSortFilter] = React.useState({
     toSort: "achievement_name",
     sortMode: "ASC",
   });
-  const { data: session } = useSession({ required: true });
 
+  const { data: session } = useSession({ required: true });
   const user = session?.user?.name;
   const { url } = useGlobalContext();
 
+  // handle onchange search filter
   const handleSearchFilter = ({ name, value }) => {
     setSearchFilter((prev) => {
       return {
@@ -36,6 +38,7 @@ const ClientAchievements = () => {
     });
   };
 
+  // handle onchange on range filter
   const handleGoalRangeFilter = ({ name, value }) => {
     setGoalRangeFilter((prev) => {
       return {
@@ -45,6 +48,7 @@ const ClientAchievements = () => {
     });
   };
 
+  // handle onchange on sort filter
   const handleSortFilter = ({ name, value }) => {
     setSortFilter((prev) => {
       return {
@@ -54,21 +58,7 @@ const ClientAchievements = () => {
     });
   };
 
-  const achievementPanels = achievements.map((a) => {
-    return (
-      <React.Fragment key={a.achievement_id}>
-        <AchievementPanel
-          title={a.achievement_name}
-          task={a.task}
-          points={a.points}
-          goal={a.goal}
-          type={typeConversion[a.achievement_type]}
-          to={`/controller/achievements/${a.achievement_id}`}
-        />
-      </React.Fragment>
-    );
-  });
-
+  // get achievements
   const getAchievement = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/user_achievement`, {
@@ -89,6 +79,22 @@ const ClientAchievements = () => {
     }
   }, [url, user, setAchievements, searchFilter, goalRangeFilter, sortFilter]);
 
+  // map achievements
+  const achievementPanels = achievements.map((a) => {
+    return (
+      <React.Fragment key={a.achievement_id}>
+        <AchievementPanel
+          title={a.achievement_name}
+          task={a.task}
+          points={a.points}
+          goal={a.goal}
+          type={typeConversion[a.achievement_type]}
+          to={`/controller/achievements/${a.achievement_id}`}
+        />
+      </React.Fragment>
+    );
+  });
+
   React.useEffect(() => {
     if (user) {
       getAchievement();
@@ -98,7 +104,9 @@ const ClientAchievements = () => {
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <ClientPageHeader mainHeader="Readefine" subHeader="Achievements" />
+
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+
       <div className="w-full cstm-flex-col gap-2 cstm-w-limit">
         <AchievementsFilter
           handleSearchFilter={handleSearchFilter}

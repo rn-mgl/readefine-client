@@ -110,13 +110,14 @@ const PlayRiddles = () => {
     // return if guess length is not equal to correct one
     if (guessString.length !== correctWordString.length) return;
 
+    addToGuessEntry();
+
     if (guessString === correctWordString) {
       setGameOver({ over: true, status: "win" });
     } else {
       removeHeart();
     }
     setGuess({ letters: Array(correctWord.length).fill(""), letterPos: 0 });
-    addToGuessEntry();
   };
 
   // get riddle data and fill in game data
