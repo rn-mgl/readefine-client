@@ -16,11 +16,12 @@ import { useGlobalContext } from "@/src/context";
 const Archives = () => {
   const [countsData, setCountsData] = React.useState({});
   const [message, setMessage] = React.useState({ msg: "", active: false });
+
   const { data: session } = useSession({ required: true });
+  const { url } = useGlobalContext();
   const user = session?.user?.name;
 
-  const { url } = useGlobalContext();
-
+  // get counts of activities per card
   const getCounts = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/archives`, {
@@ -51,6 +52,7 @@ const Archives = () => {
         t:cstm-flex-row t:flex-wrap
         cstm-w-limit"
       >
+        {/* stories */}
         <ArchivesCards
           label="Read Stories"
           subLabel="Stories Read: "
@@ -58,6 +60,8 @@ const Archives = () => {
           to="/archives/stories"
           image={DashboardCardImage1}
         />
+
+        {/* tests */}
         <ArchivesCards
           label="Take Tests"
           subLabel="Tests Taken: "
@@ -65,6 +69,8 @@ const Archives = () => {
           to="/archives/tests"
           image={DashboardCardImage2}
         />
+
+        {/* rewards */}
         <ArchivesCards
           label="See Rewards"
           subLabel="Rewards Received: "
@@ -72,6 +78,8 @@ const Archives = () => {
           to="/archives/rewards"
           image={DashboardCardImage3}
         />
+
+        {/* achievements */}
         <ArchivesCards
           label="See Achievements"
           subLabel="Achievements Finished: "
@@ -79,6 +87,8 @@ const Archives = () => {
           to="/archives/achievements"
           image={DashboardCardImage5}
         />
+
+        {/* games */}
         <ArchivesCards
           label="Play Minigames"
           subLabel="Available Games:"

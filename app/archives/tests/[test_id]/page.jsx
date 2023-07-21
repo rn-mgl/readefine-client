@@ -6,6 +6,7 @@ import QuestionSlide from "@/src/src/client/tests/QuestionSlide";
 import Link from "next/link";
 import ScorePopup from "@/src/src/components/tests/ScorePopup";
 import Message from "@/src/src/components/global/Message";
+import ReceiveAchievement from "@/src/src/client/achievements/ReceiveAchievement";
 
 import { useSession } from "next-auth/react";
 import { computeScore, shuffleQuestions } from "@/src/src/functions/testFns";
@@ -13,19 +14,20 @@ import { useGlobalContext } from "@/src/context";
 import { AiFillCaretRight, AiFillCaretLeft } from "react-icons/ai";
 import { BsArrowLeft } from "react-icons/bs";
 import { useRouter } from "next/navigation";
-import TestResult from "@/src/src/client/tests/TestResult";
-import ReceiveAchievement from "@/src/src/client/achievements/ReceiveAchievement";
 import { decipher } from "@/src/src/functions/security";
 
 const SingleTest = ({ params }) => {
   const [testData, setTestData] = React.useState({});
   const [questions, setQuestions] = React.useState([]);
-  const [activePage, setActivePage] = React.useState(0);
   const [userLexile, setUserLexile] = React.useState(-1);
+  const [message, setMessage] = React.useState({ msg: "", active: false });
+
+  const [activePage, setActivePage] = React.useState(0);
+
   const [isFinished, setIsFinished] = React.useState(false);
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
   const [score, setScore] = React.useState(0);
-  const [message, setMessage] = React.useState({ msg: "", active: false });
+
   const [selectedChoices, setSelectedChoices] = React.useState({
     choice1: { answer: "", questionId: -1 },
     choice2: { answer: "", questionId: -1 },
@@ -38,6 +40,7 @@ const SingleTest = ({ params }) => {
     choice9: { answer: "", questionId: -1 },
     choice10: { answer: "", questionId: -1 },
   });
+
   const [accomplishedAchievement, setAccomplishedAchievement] = React.useState({
     accomplished: false,
     achievements: [],
@@ -47,8 +50,31 @@ const SingleTest = ({ params }) => {
   const { data: session } = useSession();
   const decodedTestId = decipher(params?.test_id);
   const user = session?.user?.name;
-  const router = useRouter();
 
+  // handle next page
+  const handleIncrement = () => {
+    setActivePage((prev) => (prev + 1 > 9 ? 9 : prev + 1));
+  };
+
+  // handle prev page
+  const handleDecrement = () => {
+    setActivePage((prev) => (prev - 1 < 0 ? 0 : prev - 1));
+  };
+
+  // toggle is finished
+  const handleIsFinished = () => {
+    setIsFinished((prev) => !prev);
+  };
+
+  // handle reset achievement to close pop up reward
+  const handleAccomplishedAchievement = () => {
+    setAccomplishedAchievement({
+      accomplished: false,
+      data: {},
+    });
+  };
+
+  // handle onchange select choice
   const handleSelectedChoices = (id, { name, value }) => {
     setSelectedChoices((prev) => {
       return {
@@ -57,60 +83,6 @@ const SingleTest = ({ params }) => {
       };
     });
   };
-
-  const handleIncrement = () => {
-    setActivePage((prev) => (prev + 1 > 9 ? 9 : prev + 1));
-  };
-
-  const clearChoices = () => {
-    setSelectedChoices({
-      choice1: { answer: "", questionId: -1 },
-      choice2: { answer: "", questionId: -1 },
-      choice3: { answer: "", questionId: -1 },
-      choice4: { answer: "", questionId: -1 },
-      choice5: { answer: "", questionId: -1 },
-      choice6: { answer: "", questionId: -1 },
-      choice7: { answer: "", questionId: -1 },
-      choice8: { answer: "", questionId: -1 },
-      choice9: { answer: "", questionId: -1 },
-      choice10: { answer: "", questionId: -1 },
-    });
-  };
-
-  const handleDecrement = () => {
-    setActivePage((prev) => (prev - 1 < 0 ? 0 : prev - 1));
-  };
-
-  const handleIsFinished = () => {
-    setIsFinished((prev) => !prev);
-  };
-
-  const handleAccomplishedAchievement = () => {
-    setAccomplishedAchievement({
-      accomplished: false,
-      data: {},
-    });
-  };
-
-  const questionSlides = questions.map((q, index) => {
-    return (
-      <React.Fragment key={q.question_id}>
-        <QuestionSlide
-          question={q.question}
-          choice1={q.choice_1}
-          choice2={q.choice_2}
-          choice3={q.choice_3}
-          choice4={q.choice_4}
-          index={index}
-          selectedChoices={selectedChoices}
-          questionId={q.question_id}
-          activePage={activePage}
-          handleSelectedChoices={handleSelectedChoices}
-          maxPage={10}
-        />
-      </React.Fragment>
-    );
-  });
 
   // submit test answers and do checkings
   const submitAnswers = async () => {
@@ -130,14 +102,6 @@ const SingleTest = ({ params }) => {
 
     // get score
     const currScore = computeScore(setScore, setIsFinished, questions, selectedChoices);
-
-    // check if legible for growth
-    if (!legibleForGrowth) {
-      setMessage({
-        active: true,
-        msg: "Your test will be recorded but not graded.",
-      });
-    }
 
     // check if passed, do not record if not
     if (currScore < 7) {
@@ -193,6 +157,14 @@ const SingleTest = ({ params }) => {
           setAccomplishedAchievement({ accomplished: true, achievements: testAchievementData });
         }
 
+        // notice if not legible for lexile growth
+        if (!legibleForGrowth) {
+          setMessage({
+            active: true,
+            msg: "Your test will be recorded but not graded.",
+          });
+        }
+
         // can see result after record
         setIsFinished(true);
         setHasSubmitted(true);
@@ -203,6 +175,7 @@ const SingleTest = ({ params }) => {
     }
   };
 
+  // get test data
   const getTestData = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/test/${decodedTestId}`, {
@@ -217,6 +190,7 @@ const SingleTest = ({ params }) => {
     }
   }, [url, user, decodedTestId]);
 
+  // get questions
   const getQuestions = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/test_question`, {
@@ -232,6 +206,7 @@ const SingleTest = ({ params }) => {
     }
   }, [user, url, decodedTestId]);
 
+  // get user lexile
   const getUserLexile = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/user_lexile`, {
@@ -245,6 +220,27 @@ const SingleTest = ({ params }) => {
       console.log(error);
     }
   }, [setUserLexile, url, user]);
+
+  // map questions
+  const questionSlides = questions.map((q, index) => {
+    return (
+      <React.Fragment key={q.question_id}>
+        <QuestionSlide
+          question={q.question}
+          choice1={q.choice_1}
+          choice2={q.choice_2}
+          choice3={q.choice_3}
+          choice4={q.choice_4}
+          index={index}
+          selectedChoices={selectedChoices}
+          questionId={q.question_id}
+          activePage={activePage}
+          handleSelectedChoices={handleSelectedChoices}
+          maxPage={10}
+        />
+      </React.Fragment>
+    );
+  });
 
   React.useEffect(() => {
     if (user) {
@@ -287,6 +283,7 @@ const SingleTest = ({ params }) => {
             <BsArrowLeft className="text-prmColor" />
           </Link>
 
+          {/* show submit button if at last page and did not submit yet */}
           {activePage === 9 && !hasSubmitted ? (
             <button
               onClick={submitAnswers}
@@ -296,10 +293,12 @@ const SingleTest = ({ params }) => {
             </button>
           ) : null}
         </div>
+
         <p className="text-xs">
           <span className="font-bold text-prmColor">note:</span> Changing tabs will reset your test.
         </p>
 
+        {/* question pane */}
         <div className="cstm-flex-row items-start w-full relative h-[60vh] t:h-[65vh]">
           {questionSlides}
         </div>

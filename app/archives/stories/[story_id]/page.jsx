@@ -6,24 +6,27 @@ import Link from "next/link";
 import Customizations from "@/src/src/components/stories/Customizations";
 import ClientPageHeader from "@/src/src/client/global/PageHeader";
 import Message from "@/src/src/components/global/Message";
+import ReceiveAchievement from "@/src/src/client/achievements/ReceiveAchievement";
+import ActionLabel from "@/src/src/components/global/ActionLabel";
+import StoryDoublePage from "@/src/src/components/stories/StoryDoublePage";
 
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { BsArrowLeft, BsFilter } from "react-icons/bs";
-import ActionLabel from "@/src/src/components/global/ActionLabel";
-import StoryDoublePage from "@/src/src/components/stories/StoryDoublePage";
 import { decipher } from "@/src/src/functions/security";
-import ReceiveAchievement from "@/src/src/client/achievements/ReceiveAchievement";
 
 const SingleStory = ({ params }) => {
   const [story, setStory] = React.useState({});
   const [pages, setPages] = React.useState([]);
+  const [message, setMessage] = React.useState({ msg: "", active: false });
+
   const [activePage, setActivePage] = React.useState(1);
+
+  const [customizationsVisible, setCustomizationsVisible] = React.useState(false);
   const [fontSize, setFontSize] = React.useState(16);
   const [viewType, setViewType] = React.useState("single");
-  const [customizationsVisible, setCustomizationsVisible] = React.useState(false);
-  const [message, setMessage] = React.useState({ msg: "", active: false });
+
   const [accomplishedAchievement, setAccomplishedAchievement] = React.useState({
     accomplished: false,
     achievements: [],
@@ -34,33 +37,40 @@ const SingleStory = ({ params }) => {
   const user = session?.user?.name;
   const decodedStoryId = decipher(params?.story_id);
 
+  // handle next page
   const handleIncrement = () => {
     const increment = viewType === "single" ? 1 : 2;
     setActivePage((prev) => (prev + increment > pages.length ? pages.length : prev + increment));
   };
 
+  // handle prev page
   const handleDecrement = () => {
     const decrement = viewType === "single" ? 1 : 2;
     setActivePage((prev) => (prev - decrement < 1 ? 1 : prev - decrement));
   };
 
+  // handle font size onchange
   const handleFontSize = ({ value }) => {
     setFontSize(() => (value < 16 ? 16 : value > 100 ? 100 : parseInt(value)));
   };
 
+  // track current page
   const handleActivePage = ({ value }) => {
     const newPage = parseInt(value);
     setActivePage(newPage < 1 ? 1 : newPage > pages.length ? pages.length : newPage);
   };
 
+  // toggle can see filter or customizations
   const handleCustomizationsVisible = () => {
     setCustomizationsVisible((prev) => !prev);
   };
 
+  // handle view type if single or double per page
   const handleViewType = (type) => {
     setViewType(type);
   };
 
+  // reset achievement stats to close pop up reward window
   const handleAccomplishedAchievement = () => {
     setAccomplishedAchievement({
       accomplished: false,
@@ -68,34 +78,7 @@ const SingleStory = ({ params }) => {
     });
   };
 
-  const storyPages = pages?.map((page, index, arr) => {
-    return (
-      <div
-        className="absolute left-2/4 -translate-x-2/4 w-full z-10 justify-start "
-        key={page.content_id}
-      >
-        {viewType === "single" ? (
-          <StorySinglePage
-            title={story?.title}
-            activePage={activePage}
-            page={page}
-            index={index + 1}
-            fontSize={fontSize}
-          />
-        ) : (
-          <StoryDoublePage
-            title={story?.title}
-            activePage={activePage}
-            leftPage={page}
-            rightPage={arr[index + 1]}
-            index={index + 1}
-            fontSize={fontSize}
-          />
-        )}
-      </div>
-    );
-  });
-
+  // get pages
   const getPages = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/story_content`, {
@@ -111,6 +94,7 @@ const SingleStory = ({ params }) => {
     }
   }, [url, user, setPages, decodedStoryId]);
 
+  // get story
   const getStory = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/story/${decodedStoryId}`, {
@@ -125,6 +109,7 @@ const SingleStory = ({ params }) => {
     }
   }, [url, user, setStory, decodedStoryId]);
 
+  // read story
   const readStory = async () => {
     try {
       const { data } = await axios.post(
@@ -157,6 +142,35 @@ const SingleStory = ({ params }) => {
     }
   };
 
+  // map pages
+  const storyPages = pages?.map((page, index, arr) => {
+    return (
+      <div
+        className="absolute left-2/4 -translate-x-2/4 w-full z-10 justify-start "
+        key={page.content_id}
+      >
+        {viewType === "single" ? (
+          <StorySinglePage
+            title={story?.title}
+            activePage={activePage}
+            page={page}
+            index={index + 1}
+            fontSize={fontSize}
+          />
+        ) : (
+          <StoryDoublePage
+            title={story?.title}
+            activePage={activePage}
+            leftPage={page}
+            rightPage={arr[index + 1]}
+            index={index + 1}
+            fontSize={fontSize}
+          />
+        )}
+      </div>
+    );
+  });
+
   React.useEffect(() => {
     if (user) {
       getStory();
@@ -182,6 +196,7 @@ const SingleStory = ({ params }) => {
         />
       ) : null}
 
+      {/* user actions */}
       <div className="cstm-flex-row w-full cstm-w-limit">
         <div className="w-full  cstm-flex-row mr-auto">
           <Link href="/archives/stories" className="w-fit cstm-bg-hover mr-auto">
@@ -195,6 +210,7 @@ const SingleStory = ({ params }) => {
         </button>
       </div>
 
+      {/* can see customizations */}
       {customizationsVisible ? (
         <Customizations
           utterance={pages[activePage - 1]?.content}
@@ -206,6 +222,7 @@ const SingleStory = ({ params }) => {
         />
       ) : null}
 
+      {/* pages */}
       <div
         className={`${
           customizationsVisible ? "h-[55vh] t:h-[60vh]" : "h-[70vh] t:h-[75vh]"
@@ -215,6 +232,7 @@ const SingleStory = ({ params }) => {
           {storyPages}
         </div>
 
+        {/* left right button */}
         <div className="fixed bottom-0 left-2/4 -translate-x-2/4 backdrop-blur-md cstm-flex-row p-2 px-5 z-20 w-full cstm-w-limit l-s:right-0 l-s:-translate-x-0">
           <button onClick={handleDecrement} className="cstm-bg-hover">
             <BiChevronLeft className="scale-150 text-black  cursor-pointer t:scale-[2]" />

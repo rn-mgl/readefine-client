@@ -7,7 +7,9 @@ import { IoClose } from "react-icons/io5";
 const ScorePopup = (props) => {
   const score = props.score;
   const passed = score > 7;
-  const message = passed ? "You understood that very well!" : "Don't worry, try reading it again!";
+  const message = passed
+    ? "You understood that very well!"
+    : "Don't worry, try reading it and answer once again!";
   const background = passed
     ? "bg-gradient-to-b from-prmColor to-scndColor "
     : "bg-gradient-to-b from-prmColor to-indigo-950";

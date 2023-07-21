@@ -40,30 +40,37 @@ const Reader = ({ params }) => {
   const user = session?.user?.name;
   const decipheredId = decipher(params?.reader_id);
 
+  // toggle can edit maini
   function handleCanEditMain() {
     setCanEditMain((prev) => !prev);
   }
 
+  // toggle can edit grade level
   const handleCanEditGradeLevel = () => {
     setCanEditGradeLevel((prev) => !prev);
   };
 
+  // toggle can show lexile message
   const handleShowLexileMessage = () => {
     setShowLexileMessage((prev) => !prev);
   };
 
+  // track selected book for low lexile message
   const handleSelectedBook = (id) => {
     setSelectedBook(id);
   };
 
+  // toggle see test record
   const handleSeeTestRecord = (id) => {
     setSeeTestRecord((prev) => (prev === id ? null : id));
   };
 
+  // toggle can change password
   const handleCanChangePassword = () => {
     setCanChangePassword((prev) => !prev);
   };
 
+  // get user data
   const getUserData = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/user/${decipheredId}`, {
@@ -78,6 +85,7 @@ const Reader = ({ params }) => {
     }
   }, [url, user, setUserData, decipheredId]);
 
+  // get user activities
   const getUserActivities = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/activities/${decipheredId}`, {
@@ -92,6 +100,7 @@ const Reader = ({ params }) => {
     }
   }, [url, user, setUserActivities, decipheredId]);
 
+  // map answered questions
   const answeredQuestions = userActivities?.questionsData?.map((q) => {
     return (
       <React.Fragment key={q.answer_id}>
@@ -107,6 +116,7 @@ const Reader = ({ params }) => {
     );
   });
 
+  // map answered dangle
   const answeredDangle = userActivities?.dangleData?.map((q) => {
     return (
       <React.Fragment key={q.answer_id}>
@@ -122,6 +132,7 @@ const Reader = ({ params }) => {
     );
   });
 
+  // map answered decipher
   const answeredDecipher = userActivities?.decipherData?.map((q) => {
     return (
       <React.Fragment key={q.answer_id}>
@@ -137,6 +148,7 @@ const Reader = ({ params }) => {
     );
   });
 
+  // map answered riddles
   const answeredRiddles = userActivities?.riddlesData?.map((q) => {
     return (
       <React.Fragment key={q.answer_id}>
@@ -152,6 +164,7 @@ const Reader = ({ params }) => {
     );
   });
 
+  // map read stories
   const storiesRead = userActivities?.readStoryData?.map((story) => {
     const cipheredStoryId = cipher(story.story_id);
     const testId = story?.test_id ? story?.test_id : story.story_id;
@@ -178,6 +191,7 @@ const Reader = ({ params }) => {
     );
   });
 
+  // map taken tests
   const testsTaken = userActivities?.takenTestData?.map((t) => {
     const cipheredTestId = cipher(t.test_id);
     return (
@@ -201,6 +215,7 @@ const Reader = ({ params }) => {
     );
   });
 
+  // map achievements and rewards
   const achievementsAndRewards = userActivities?.achievementData?.map((reward) => {
     const cipheredRewardId = cipher(reward.reward_id);
     return (
@@ -216,6 +231,7 @@ const Reader = ({ params }) => {
     );
   });
 
+  // map logged sessions
   const loggedSessions = userActivities?.sessionsData?.map((s) => {
     return (
       <div
@@ -253,7 +269,7 @@ const Reader = ({ params }) => {
       {showLexileMessage ? (
         <LowLexileTestMessage
           userLexile={userData.lexile}
-          testLink={`/archives/tests/${selectedBook}`}
+          testLink={`/archives/tests/${cipher(selectedBook)}`}
           handleShowLexileMessage={handleShowLexileMessage}
         />
       ) : null}
@@ -287,6 +303,7 @@ const Reader = ({ params }) => {
           userData={userData}
         />
 
+        {/* read stories cards */}
         <div className="cstm-flex-col gap-5 w-full text-center bg-white p-5 rounded-2xl">
           <p className="text-xl font-extrabold t:mr-auto text-prmColor">Stories Read</p>
 
@@ -295,6 +312,7 @@ const Reader = ({ params }) => {
           </div>
         </div>
 
+        {/* taken tests cards */}
         <div className="cstm-flex-col gap-5 w-full text-center bg-white p-5 rounded-2xl ">
           <p className="text-xl font-extrabold t:mr-auto text-prmColor">Tests Taken</p>
 
@@ -303,6 +321,7 @@ const Reader = ({ params }) => {
           </div>
         </div>
 
+        {/* achievement cards */}
         <div className="cstm-flex-col gap-5 w-full text-center bg-white p-5 rounded-2xl">
           <p className="text-xl font-extrabold t:mr-auto text-prmColor">Achievements & Rewards</p>
 
@@ -311,6 +330,7 @@ const Reader = ({ params }) => {
           </div>
         </div>
 
+        {/* answers */}
         <div className="cstm-flex-col gap-5 w-full text-center bg-white p-5 rounded-2xl">
           <p className="text-xl font-extrabold t:mr-auto text-prmColor">Your Answers</p>
 
@@ -325,6 +345,7 @@ const Reader = ({ params }) => {
           </div>
         </div>
 
+        {/* session */}
         <div className="cstm-flex-col gap-5 w-full text-center bg-white p-5 rounded-2xl">
           <p className="text-2xl font-extrabold t:mr-auto text-prmColor">Your Sessions</p>
 

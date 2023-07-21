@@ -10,23 +10,26 @@ import LowLexileTestMessage from "@/src/src/client/tests/LowLexileTestMessage";
 
 import { useGlobalContext } from "@/src/context";
 import { useSession } from "next-auth/react";
-import { inputDate } from "@/src/src/functions/localDate";
 import { cipher } from "@/src/src/functions/security";
 
 const ClientStories = () => {
   const [stories, setStories] = React.useState([]);
   const [userLexile, setUserLexile] = React.useState(-1);
   const [showLexileMessage, setShowLexileMessage] = React.useState(false);
+
   const [selectedBook, setSelectedBook] = React.useState(-1);
+
   const [searchFilter, setSearchFilter] = React.useState({ toSearch: "title", searchKey: "" });
   const [lexileRangeFilter, setLexileRangeFilter] = React.useState({ from: 0, to: 1250 });
   const [sortFilter, setSortFilter] = React.useState({ toSort: "title", sortMode: "ASC" });
-  const [message, setMessage] = React.useState({ msg: "", active: false });
-  const [dateRangeFilter, setDateRangeFilter] = React.useState({
-    from: "",
-    to: inputDate(new Date().toLocaleDateString()),
-  });
 
+  const [message, setMessage] = React.useState({ msg: "", active: false });
+
+  const { data: session } = useSession();
+  const { url } = useGlobalContext();
+  const user = session?.user?.name;
+
+  // handle onchange on search filter
   const handleSearchFilter = ({ name, value }) => {
     setSearchFilter((prev) => {
       return {
@@ -36,15 +39,7 @@ const ClientStories = () => {
     });
   };
 
-  const handleDateRangeFilter = ({ name, value }) => {
-    setDateRangeFilter((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
-  };
-
+  // handle onchange on lexile range filter
   const handleLexileRangeFilter = ({ name, value }) => {
     setLexileRangeFilter((prev) => {
       return {
@@ -54,6 +49,7 @@ const ClientStories = () => {
     });
   };
 
+  // handle onchange on sort filter
   const handleSortFilter = ({ name, value }) => {
     setSortFilter((prev) => {
       return {
@@ -63,18 +59,52 @@ const ClientStories = () => {
     });
   };
 
+  // show message that the test to be taken has low lexile level for the user
   const handleShowLexileMessage = () => {
     setShowLexileMessage((prev) => !prev);
   };
 
+  // keep track of the book selected to manage low lexile message
   const handleSelectedBook = (id) => {
     setSelectedBook(id);
   };
 
-  const { data: session } = useSession();
-  const { url } = useGlobalContext();
-  const user = session?.user?.name;
+  // get stories
+  const getStories = React.useCallback(async () => {
+    try {
+      const { data } = await axios.get(`${url}/story`, {
+        headers: { Authorization: user.token },
+        params: {
+          searchFilter,
+          lexileRangeFilter,
+          sortFilter,
+        },
+      });
+      if (data) {
+        setStories(data);
+      }
+    } catch (error) {
+      console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg });
+    }
+  }, [url, user, setStories, searchFilter, sortFilter, lexileRangeFilter]);
 
+  // get user lexile
+  const getUserLexile = React.useCallback(async () => {
+    try {
+      const { data } = await axios.get(`${url}/user_lexile`, {
+        headers: { Authorization: user?.token },
+      });
+      if (data) {
+        setUserLexile(data);
+        setLexileRangeFilter({ from: data.lexile - 100, to: data.lexile + 50 });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, [setUserLexile, url, user]);
+
+  // map stories
   const storiesCards = stories.map((story) => {
     const cipheredStoryId = cipher(story.story_id);
     const testId = story?.test_id ? story?.test_id : story.story_id;
@@ -101,40 +131,6 @@ const ClientStories = () => {
     );
   });
 
-  const getStories = React.useCallback(async () => {
-    try {
-      const { data } = await axios.get(`${url}/story`, {
-        headers: { Authorization: user.token },
-        params: {
-          searchFilter,
-          lexileRangeFilter,
-          sortFilter,
-          dateRangeFilter,
-        },
-      });
-      if (data) {
-        setStories(data);
-      }
-    } catch (error) {
-      console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg });
-    }
-  }, [url, user, setStories, searchFilter, sortFilter, dateRangeFilter, lexileRangeFilter]);
-
-  const getUserLexile = React.useCallback(async () => {
-    try {
-      const { data } = await axios.get(`${url}/user_lexile`, {
-        headers: { Authorization: user?.token },
-      });
-      if (data) {
-        setUserLexile(data);
-        setLexileRangeFilter({ from: data.lexile - 100, to: data.lexile + 50 });
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }, [setUserLexile, url, user]);
-
   React.useEffect(() => {
     if (user) {
       getStories();
@@ -155,21 +151,21 @@ const ClientStories = () => {
       {showLexileMessage ? (
         <LowLexileTestMessage
           userLexile={userLexile.lexile}
-          testLink={`/archives/tests/${selectedBook}`}
+          testLink={`/archives/tests/${cipher(selectedBook)}`}
           handleShowLexileMessage={handleShowLexileMessage}
         />
       ) : null}
+
       <div className="w-full cstm-w-limit cstm-flex-col gap-5">
         <StoriesFilter
           handleSearchFilter={handleSearchFilter}
-          handleDateRangeFilter={handleDateRangeFilter}
           handleLexileRangeFilter={handleLexileRangeFilter}
           handleSortFilter={handleSortFilter}
           searchFilter={searchFilter}
           lexileRangeFilter={lexileRangeFilter}
           sortFilter={sortFilter}
-          dateRangeFilter={dateRangeFilter}
         />
+
         <div
           className="cstm-flex-col gap-5 justify-start w-full transition-all 
                   t:cstm-flex-row t:flex-wrap"
