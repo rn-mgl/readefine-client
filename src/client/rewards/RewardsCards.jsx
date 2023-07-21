@@ -10,19 +10,34 @@ const RewardsCards = (props) => {
       className="bg-white p-5 rounded-2xl cstm-flex-col gap-4 min-w-[18rem] w-72 shadow-solid 
                 max-h-[24rem] h-[24rem] relative border-2 border-accntColor"
     >
-      <Link
-        href={props.to}
-        className="w-full h-fit cstm-flex-col overflow-clip bg-accntColor p-2 rounded-2xl justify-start"
-      >
-        <Image
-          src={rewardImage}
-          alt="temp"
-          draggable={false}
-          className="drop-shadow-md w-fit saturate-150"
-          width={250}
-          height={250}
-        />
-      </Link>
+      {props.isReceived ? (
+        <Link
+          href={props.to}
+          className="w-full h-fit cstm-flex-col overflow-clip bg-accntColor p-2 rounded-2xl justify-start"
+        >
+          <Image
+            src={rewardImage}
+            alt="temp"
+            draggable={false}
+            className="drop-shadow-md w-fit saturate-150"
+            width={250}
+            height={250}
+            loading="lazy"
+          />
+        </Link>
+      ) : (
+        <div className="w-full h-fit cstm-flex-col overflow-clip bg-accntColor p-2 rounded-2xl justify-start">
+          <Image
+            src={rewardImage}
+            alt="temp"
+            draggable={false}
+            className="drop-shadow-md w-fit saturate-150"
+            width={250}
+            height={250}
+            loading="lazy"
+          />
+        </div>
+      )}
 
       <div className="cstm-flex-row font-poppins w-full">
         <p className="font-bold text-black text-sm text-left w-8/12">{props.title}</p>

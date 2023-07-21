@@ -1,8 +1,7 @@
 import React from "react";
 
 const AchievementProgress = (props) => {
-  const value = Math.floor(props.current / props.goal) * 100;
-
+  const value = Math.floor((props.points / props.goal) * 100);
   const percentage = value > 100 ? 100 : value;
   return (
     <div className="relative w-full cstm-flex-col items-start transition-all mb-1 t:w-72">

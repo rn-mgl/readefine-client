@@ -16,7 +16,7 @@ const AchievementPanel = (props) => {
         <p className="text-sm">{props.task}</p>
       </div>
 
-      <AchievementProgress current={props.points} goal={props.goal} />
+      <AchievementProgress points={props.points} goal={props.goal} />
     </div>
   );
 };
