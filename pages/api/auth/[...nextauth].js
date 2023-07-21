@@ -15,12 +15,9 @@ export const authOptions = {
       },
 
       async authorize(credentials, req) {
-        const { data } = await axios.post(
-          "https://readefine-server.onrender.com/auth_admin/admin_login",
-          {
-            loginData: credentials,
-          }
-        );
+        const { data } = await axios.post("http://192.168.1.121:9000/auth_admin/admin_login", {
+          loginData: credentials,
+        });
 
         if (data) {
           const user = { name: data.primary };
@@ -41,12 +38,9 @@ export const authOptions = {
       },
 
       async authorize(credentials, req) {
-        const { data } = await axios.post(
-          "https://readefine-server.onrender.com/auth_client/client_login",
-          {
-            loginData: credentials,
-          }
-        );
+        const { data } = await axios.post("http://192.168.1.121:9000/auth_client/client_login", {
+          loginData: credentials,
+        });
 
         if (data) {
           const user = { name: data.primary };
