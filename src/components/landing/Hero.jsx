@@ -32,7 +32,7 @@ const Hero = () => {
       </p>
       <div
         className="w-full cstm-flex-col gap-4
-                  l-s:cstm-flex-row"
+                  t:cstm-flex-row"
       >
         <ButtonLink
           to="login"
