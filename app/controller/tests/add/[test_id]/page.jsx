@@ -148,7 +148,7 @@ const AddTest = ({ params }) => {
         {testPages}
 
         <div className="cstm-flex-row w-full">
-          {pages.length < 10 && (
+          {pages.length < 10 ? (
             <button
               type="button"
               onClick={addPage}
@@ -158,7 +158,7 @@ const AddTest = ({ params }) => {
 
               <IoAddOutline className="cursor-pointer text-prmColor scale-150" />
             </button>
-          )}
+          ) : null}
 
           <button
             type="submit"
