@@ -29,6 +29,7 @@ const AddTestPage = (props) => {
           />
         </div>
       </div>
+
       <div className="w-full h-full cstm-flex-col gap-2">
         <InputChoices
           checked={answerValue === props.page.choice1}
