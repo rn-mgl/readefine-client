@@ -116,17 +116,18 @@ const EditTest = ({ params }) => {
     );
   });
 
+  /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
     if (user) {
       getTest();
     }
-  }, [user, getTest]);
+  }, []);
 
   React.useEffect(() => {
     if (user) {
       getQuestions();
     }
-  }, [user, getQuestions]);
+  }, []);
 
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-2 justify-start">

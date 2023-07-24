@@ -3,6 +3,7 @@ import { BiImage } from "react-icons/bi";
 import FilePreview from "../../components/global/FilePreview";
 import * as fileFns from "../../../src/functions/fileFns";
 import { wordCount } from "../../functions/wordCount";
+import { AiFillDelete } from "react-icons/ai";
 
 const EditStoryPage = (props) => {
   const words = wordCount(props.page?.content);
@@ -17,7 +18,7 @@ const EditStoryPage = (props) => {
           rows="1"
           placeholder="Page Header"
           onChange={(e) => props.handlePage(page, e.target)}
-          className="resize-none p-2 focus:outline-none font-bold text-prmColor mr-auto truncate"
+          className="resize-none p-2 focus:outline-none font-bold text-prmColor mr-auto truncate w-full"
           value={props.page.header}
         ></textarea>
 
@@ -50,7 +51,7 @@ const EditStoryPage = (props) => {
       </div>
 
       <div className="w-full cstm-flex-row gap-5">
-        <label className="mr-auto cstm-bg-hover cursor-pointer" htmlFor={`filePage${page}`}>
+        <label className=" cstm-bg-hover cursor-pointer" htmlFor={`filePage${page}`}>
           <input
             accept="image/*"
             type="file"
@@ -63,9 +64,13 @@ const EditStoryPage = (props) => {
           />
           <BiImage className="scale-150 text-prmColor peer-checked" />
         </label>
-        <p>
+        <p className="mr-auto">
           {words > 1 ? "Words" : "Word"}: {words}
         </p>
+
+        <button onClick={props.deletePage} type="button" className="cstm-bg-hover">
+          <AiFillDelete className="text-prmColor scale-150" />
+        </button>
       </div>
     </div>
   );

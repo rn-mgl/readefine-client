@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useRef } from "react";
 import ActionLabel from "@/src/src/components/global/ActionLabel";
 import StoryDoublePage from "@/src/src/components/stories/StoryDoublePage";
 import AdminPageHeader from "@/src/src/admin/global/PageHeader";
@@ -207,12 +207,15 @@ const SingleStory = ({ params }) => {
       {/* pages */}
       <div
         className={`${
-          customizationsVisible ? "h-[65vh]" : "h-[70vh] t:h-[75vh]"
+          customizationsVisible ? "h-[65vh] l-s:h-[60vh]" : "h-[70vh] t:h-[75vh]"
         }  w-full gap-5  bg-white rounded-2xl p-5 relative overflow-x-hidden overflow-y-auto cstm-w-limit  cstm-scrollbar`}
       >
         <div className="w-full relative overflow-x-hidden h-full cstm-scrollbar">{storyPages}</div>
 
-        <div className="fixed bottom-0 left-2/4 -translate-x-2/4 backdrop-blur-md cstm-flex-row p-2 px-5 z-20 w-full cstm-w-limit l-s:right-0 l-s:-translate-x-0">
+        <div
+          className="fixed bottom-0 left-2/4 -translate-x-2/4 backdrop-blur-md cstm-flex-row 
+                    p-2 px-5 z-20 w-full cstm-w-limit l-s:right-0 l-s:-translate-x-0"
+        >
           <button disabled={activePage === 1} className="cstm-bg-hover disabled:opacity-50">
             <BiChevronLeft
               className={`scale-150 text-black  cursor-pointer t:scale-[2]`}

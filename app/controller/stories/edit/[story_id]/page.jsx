@@ -4,10 +4,12 @@ import AdminPageHeader from "@/src/src/admin/global/PageHeader";
 import axios from "axios";
 import FilePreview from "@/src/src/components/global/FilePreview";
 import Message from "@/src/src/components/global/Message";
-import * as fileFns from "../../../../../src/functions/fileFns";
 import EditStoryPage from "@/src/src/admin/stories/EditStoryPage";
 import EditStoryFilter from "@/src/src/admin/stories/EditStoryFilter";
 import Link from "next/link";
+import Loading from "@/src/src/components/global/Loading";
+
+import * as fileFns from "../../../../../src/functions/fileFns";
 
 import { IoAddOutline } from "react-icons/io5";
 import { BsArrowLeft } from "react-icons/bs";
@@ -15,11 +17,12 @@ import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { useRouter } from "next/navigation";
 import { decipher } from "@/src/src/functions/security";
-import Loading from "@/src/src/components/global/Loading";
 
 const EditStory = ({ params }) => {
+  const scrollRef = React.useRef(null);
   const [story, setStory] = React.useState({});
   const [pages, setPages] = React.useState([]);
+  const [toDelete, setToDelete] = React.useState([]);
   const [message, setMessage] = React.useState({ msg: "", active: false });
   const [loading, setLoading] = React.useState(false);
 
@@ -59,14 +62,34 @@ const EditStory = ({ params }) => {
   const addPage = () => {
     setPages((prev) => {
       const newPage = {
-        pageNumber: pages.length + 1,
-        pageHeader: "",
-        pageContent: "",
+        page: pages.length + 1,
+        header: "",
+        content: "",
+        story_id: story.story_id,
         file: { src: null, name: null },
         rawFile: null,
       };
       return [...prev, newPage];
     });
+  };
+
+  // handle delete page
+  const deletePage = (contentId, index) => {
+    const updatePages = [...pages];
+    const updateToDelete = [...toDelete];
+
+    updatePages.splice(index, 1);
+
+    for (let i = index; i < updatePages.length; i++) {
+      updatePages[i].page = i + 1;
+    }
+
+    if (contentId && !updateToDelete.includes(contentId)) {
+      updateToDelete.push(contentId);
+    }
+
+    setToDelete(updateToDelete);
+    setPages(updatePages);
   };
 
   // remove book cover
@@ -116,7 +139,7 @@ const EditStory = ({ params }) => {
     try {
       const { data } = await axios.patch(
         `${url}/admin_story/${decodedStoryId}`,
-        { pages, story },
+        { pages, story, toDelete },
         { headers: { Authorization: user.token } }
       );
 
@@ -163,30 +186,38 @@ const EditStory = ({ params }) => {
   }, [url, user, setStory, decodedStoryId]);
 
   // map pages
-  const allPages = pages.map((page) => {
+  const allPages = pages.map((page, i) => {
     return (
       <React.Fragment key={page.page}>
         <EditStoryPage
           page={page}
+          maxPages={pages.length}
           handlePage={handlePage}
           setPages={setPages}
-          maxPages={pages.length}
+          deletePage={() => deletePage(page.content_id, i)}
         />
       </React.Fragment>
     );
   });
 
+  /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
     if (user) {
       getStory();
     }
-  }, [getStory, user]);
+  }, [user, getStory]);
 
   React.useEffect(() => {
     if (user) {
       getPages();
     }
-  }, [getPages, user]);
+  }, [user, getPages]);
+
+  React.useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [pages]);
 
   if (loading) {
     return <Loading />;
@@ -229,14 +260,14 @@ const EditStory = ({ params }) => {
         {allPages}
 
         <div className="cstm-flex-row w-full ">
-          <button onClick={addPage} className="cstm-bg-hover mr-auto">
+          <button type="button" onClick={addPage} className="cstm-bg-hover mr-auto">
             <IoAddOutline className="cursor-pointer text-prmColor scale-150" />
           </button>
 
           <button
+            ref={scrollRef}
             type="submit"
-            className="w-fit text-center font-poppins ml-auto text-sm font-normal bg-scndColor text-prmColor rounded-full p-2 px-4
-                t:text-base"
+            className="w-fit text-center font-poppins ml-auto text-sm font-normal bg-scndColor text-prmColor rounded-full p-2 px-4 t:px-10"
           >
             Edit Book
           </button>

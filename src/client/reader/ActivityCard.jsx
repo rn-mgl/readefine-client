@@ -4,7 +4,7 @@ import Image from "next/image";
 
 const ActivityCard = (props) => {
   return (
-    <div className="w-full h-80 t:h-[30rem] bg-white rounded-2xl p-5 shadow-solid cstm-flex-col justify-start gap-5 border-2 border-accntColor">
+    <div className="w-full h-96 t:h-[30rem] bg-white rounded-2xl p-5 shadow-solid cstm-flex-col justify-start gap-5 border-2 border-accntColor">
       <div className="w-full rounded-2xl">
         <p className="font-bold text-lg text-left">{props.label}</p>
       </div>
@@ -14,7 +14,14 @@ const ActivityCard = (props) => {
           props.activity
         ) : (
           <div className="cstm-flex-col w-full">
-            <Image src={noGame} alt="empty" loading="lazy" width={220} draggable={false} />
+            <Image
+              className="saturate-[.9]"
+              src={noGame}
+              alt="empty"
+              loading="lazy"
+              width={220}
+              draggable={false}
+            />
             <p className="text-xs opacity-80">{props.noContentMessage}</p>
           </div>
         )}

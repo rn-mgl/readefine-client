@@ -40,6 +40,16 @@ const AddStory = () => {
   const user = session?.user?.name;
   const router = useRouter();
 
+  // handle on change story data
+  const handleStoryFilter = ({ name, value }) => {
+    setStoryFilter((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
+  };
+
   // handle page on change functions
   const handlePage = (page, { name, value }) => {
     setPages((prev) =>
@@ -55,16 +65,6 @@ const AddStory = () => {
     );
   };
 
-  // handle on change story data
-  const handleStoryFilter = ({ name, value }) => {
-    setStoryFilter((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
-  };
-
   // handle add page
   const addPage = () => {
     setPages((prev) => {
@@ -77,6 +77,19 @@ const AddStory = () => {
       };
       return [...prev, newPage];
     });
+  };
+
+  // handle delete page
+  const deletePage = (index) => {
+    const newPages = [...pages];
+
+    newPages.splice(index, 1);
+
+    for (let i = index; i < newPages.length; i++) {
+      newPages[i].pageNumber = i + 1;
+    }
+
+    setPages(newPages);
   };
 
   // publish book
@@ -133,14 +146,15 @@ const AddStory = () => {
   };
 
   // map pages
-  const allPages = pages.map((page) => {
+  const allPages = pages.map((page, i) => {
     return (
       <React.Fragment key={page.pageNumber}>
         <AddStoryPage
           page={page}
+          maxPages={pages.length}
+          deletePage={() => deletePage(i)}
           handlePage={handlePage}
           setPages={setPages}
-          maxPages={pages.length}
         />
       </React.Fragment>
     );
@@ -181,14 +195,13 @@ const AddStory = () => {
         {allPages}
 
         <div className="cstm-flex-row w-full ">
-          <button onClick={addPage} className="cstm-bg-hover mr-auto">
+          <button type="button" onClick={addPage} className="cstm-bg-hover mr-auto">
             <IoAddOutline className="cursor-pointer text-prmColor scale-150" />
           </button>
 
           <button
             type="submit"
-            className="w-fit text-center font-poppins ml-auto text-sm font-normal bg-prmColor text-accntColor rounded-full p-2 px-4
-                t:text-base"
+            className="w-fit text-center font-poppins ml-auto text-sm font-normal bg-prmColor text-accntColor rounded-full p-2 px-4 t:px-10"
           >
             Publish Book
           </button>

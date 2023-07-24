@@ -317,7 +317,7 @@ const Reader = ({ params }) => {
               storiesRead
             ) : (
               <div className="cstm-flex-col w-full">
-                <Image src={noReads} alt="empty" loading="lazy" width={240} />
+                <Image src={noReads} alt="empty" loading="lazy" width={240} draggable={false} />
                 <p className="text-xs opacity-80">You haven&apos;t read any books yet.</p>
               </div>
             )}
@@ -333,7 +333,7 @@ const Reader = ({ params }) => {
               testsTaken
             ) : (
               <div className="cstm-flex-col w-full">
-                <Image src={noTest} alt="empty" loading="lazy" width={220} />
+                <Image src={noTest} alt="empty" loading="lazy" width={220} draggable={false} />
                 <p className="text-xs opacity-80">You haven&apos;t taken any tests yet.</p>
               </div>
             )}
@@ -349,7 +349,7 @@ const Reader = ({ params }) => {
               achievementsAndRewards
             ) : (
               <div className="cstm-flex-col w-full">
-                <Image src={noReward} alt="empty" loading="lazy" width={220} />
+                <Image src={noReward} alt="empty" loading="lazy" width={220} draggable={false} />
                 <p className="text-xs opacity-80">You haven&apos;t received any rewards yet.</p>
               </div>
             )}

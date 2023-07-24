@@ -93,11 +93,12 @@ const EditAchievement = ({ params }) => {
     }
   }, [user, url, setAchievement, decodedAchievementId]);
 
+  /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
     if (user) {
       getAchievement();
     }
-  }, [getAchievement, user]);
+  }, [user, getAchievement]);
 
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-2 justify-start">

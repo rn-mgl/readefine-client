@@ -102,11 +102,12 @@ const EditReward = ({ params }) => {
     }
   }, [setReward, url, user, decodedRewardId]);
 
+  /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
     if (user) {
       getReward();
     }
-  }, [getReward, user]);
+  }, [user, getReward]);
 
   if (loading) {
     return <Loading />;
