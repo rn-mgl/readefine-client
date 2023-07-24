@@ -14,6 +14,11 @@ import LowLexileTestMessage from "@/src/src/client/tests/LowLexileTestMessage";
 import RewardsCards from "@/src/src/client/rewards/RewardsCards";
 import TestRecord from "@/src/src/client/tests/TestRecord";
 import ChangePassword from "@/src/src/client/reader/ChangePassword";
+import Image from "next/image";
+
+import noReads from "../../../../public/profile/NoReads.svg";
+import noTest from "../../../../public/profile/NoTest.svg";
+import noReward from "../../../../public/profile/NoReward.svg";
 
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
@@ -308,7 +313,14 @@ const Reader = ({ params }) => {
           <p className="text-xl font-extrabold t:mr-auto text-prmColor">Stories Read</p>
 
           <div className="cstm-flex-row gap-5 w-full overflow-x-auto cstm-scrollbar justify-start p-5">
-            {storiesRead}
+            {userActivities?.readStoryData?.length ? (
+              storiesRead
+            ) : (
+              <div className="cstm-flex-col w-full">
+                <Image src={noReads} alt="empty" loading="lazy" width={240} />
+                <p className="text-xs opacity-80">You haven&apos;t read any books yet.</p>
+              </div>
+            )}
           </div>
         </div>
 
@@ -317,7 +329,14 @@ const Reader = ({ params }) => {
           <p className="text-xl font-extrabold t:mr-auto text-prmColor">Tests Taken</p>
 
           <div className="cstm-flex-row gap-5 w-full overflow-x-auto cstm-scrollbar justify-start p-5">
-            {testsTaken}
+            {userActivities?.takenTestData?.length ? (
+              testsTaken
+            ) : (
+              <div className="cstm-flex-col w-full">
+                <Image src={noTest} alt="empty" loading="lazy" width={220} />
+                <p className="text-xs opacity-80">You haven&apos;t taken any tests yet.</p>
+              </div>
+            )}
           </div>
         </div>
 
@@ -326,7 +345,14 @@ const Reader = ({ params }) => {
           <p className="text-xl font-extrabold t:mr-auto text-prmColor">Achievements & Rewards</p>
 
           <div className="cstm-flex-row gap-5 w-full overflow-x-auto cstm-scrollbar justify-start p-5">
-            {achievementsAndRewards}
+            {userActivities?.achievementData?.length ? (
+              achievementsAndRewards
+            ) : (
+              <div className="cstm-flex-col w-full">
+                <Image src={noReward} alt="empty" loading="lazy" width={220} />
+                <p className="text-xs opacity-80">You haven&apos;t received any rewards yet.</p>
+              </div>
+            )}
           </div>
         </div>
 
@@ -335,13 +361,33 @@ const Reader = ({ params }) => {
           <p className="text-xl font-extrabold t:mr-auto text-prmColor">Your Answers</p>
 
           <div className="cstm-flex-col gap-5 w-full">
-            <ActivityCard label="Test Questions" activity={answeredQuestions} />
+            <ActivityCard
+              label="Test Questions"
+              activity={answeredQuestions}
+              hasContent={userActivities?.questionsData?.length}
+              noContentMessage="You haven't answered any test questions yet."
+            />
 
-            <ActivityCard label="Dangle" activity={answeredDangle} />
+            <ActivityCard
+              label="Dangle"
+              activity={answeredDangle}
+              hasContent={userActivities?.dangleData?.length}
+              noContentMessage="You haven't played dangle yet."
+            />
 
-            <ActivityCard label="Decipher" activity={answeredDecipher} />
+            <ActivityCard
+              label="Decipher"
+              activity={answeredDecipher}
+              hasContent={userActivities?.decipherData?.length}
+              noContentMessage="You haven't answered decipher yet."
+            />
 
-            <ActivityCard label="Riddles" activity={answeredRiddles} />
+            <ActivityCard
+              label="Riddles"
+              activity={answeredRiddles}
+              hasContent={userActivities?.riddlesData?.length}
+              noContentMessage="You haven't answered riddles yet."
+            />
           </div>
         </div>
 
@@ -349,7 +395,12 @@ const Reader = ({ params }) => {
         <div className="cstm-flex-col gap-5 w-full text-center bg-white p-5 rounded-2xl">
           <p className="text-2xl font-extrabold t:mr-auto text-prmColor">Your Sessions</p>
 
-          <ActivityCard label="Logs" activity={loggedSessions} />
+          <ActivityCard
+            label="Logs"
+            activity={loggedSessions}
+            hasContent={userActivities?.sessionsData?.length}
+            noContentMessage="You haven't logged in readefine yet."
+          />
         </div>
       </div>
     </div>
