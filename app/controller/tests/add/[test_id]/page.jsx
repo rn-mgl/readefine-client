@@ -17,7 +17,7 @@ const AddTest = ({ params }) => {
   const [pages, setPages] = React.useState([
     {
       testNumber: 1,
-      testQuestion: "",
+      testQuestion: null,
       choice1: "choice 1",
       choice2: "choice 2",
       choice3: "choice 3",
@@ -88,6 +88,21 @@ const AddTest = ({ params }) => {
       return;
     }
 
+    pages.forEach((page, i) => {
+      console.log(page);
+      const answerKey = `answer${i + 1}`;
+
+      if (!page[answerKey]) {
+        setMessage({ active: true, msg: `You do not have an answer in number ${i + 1}.` });
+        return;
+      }
+
+      if (!page.testQuestion) {
+        setMessage({ active: true, msg: `You do not have a question in number ${i + 1}.` });
+        return;
+      }
+    });
+
     try {
       const { data } = await axios.post(
         `${url}/admin_test`,
@@ -132,15 +147,21 @@ const AddTest = ({ params }) => {
         {testPages}
 
         <div className="cstm-flex-row w-full">
-          <button type="button" onClick={addPage} className="cstm-bg-hover mr-auto relative group">
-            <ActionLabel label="Add Page" />
+          {pages.length < 10 && (
+            <button
+              type="button"
+              onClick={addPage}
+              className="cstm-bg-hover mr-auto relative group"
+            >
+              <ActionLabel label="Add Page" />
 
-            <IoAddOutline className="cursor-pointer text-prmColor scale-150" />
-          </button>
+              <IoAddOutline className="cursor-pointer text-prmColor scale-150" />
+            </button>
+          )}
 
           <button
             type="submit"
-            className="w-fit text-center font-poppins ml-auto text-sm font-normal bg-prmColor text-accntColor rounded-full p-2 px-4"
+            className="w-fit text-center font-poppins ml-auto text-sm font-normal bg-prmColor text-accntColor rounded-full p-2 px-4 t:px-10"
           >
             Create Test
           </button>

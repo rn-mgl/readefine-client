@@ -10,6 +10,7 @@ const InputChoices = (props) => {
           className="hidden peer"
           checked={props.checked}
           name={answerIdentifier}
+          required={true}
           id={answerIdentifier + props.choiceValue}
           value={props.choiceValue}
           onChange={(e) => props.handlePages(props.testNumber, e.target)}
@@ -24,6 +25,7 @@ const InputChoices = (props) => {
 
       <textarea
         name={props.name}
+        required={true}
         id={props.name}
         cols="30"
         rows="1"

@@ -15,6 +15,7 @@ const AddTestPage = (props) => {
         </p>
 
         <div className="cstm-separator" />
+
         <div className="w-full h-full cstm-flex-col">
           <textarea
             name="testQuestion"
@@ -23,9 +24,10 @@ const AddTestPage = (props) => {
             rows="1"
             onChange={(e) => props.handlePages(props.testNumber, e.target)}
             value={props.page.testQuestion}
+            required={true}
             placeholder="question..."
             className="resize-none p-2 focus:outline-none w-full h-full mr-auto placeholder:opacity-50"
-          ></textarea>
+          />
         </div>
       </div>
       <div className="w-full h-full cstm-flex-col gap-2">

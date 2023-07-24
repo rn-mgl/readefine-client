@@ -32,7 +32,7 @@ const DeleteTest = (props) => {
       });
 
       if (data) {
-        router.push("/controller/stories");
+        router.push("/controller/tests");
       }
     } catch (error) {
       console.log(error);
