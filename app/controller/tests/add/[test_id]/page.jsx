@@ -89,7 +89,6 @@ const AddTest = ({ params }) => {
     }
 
     pages.forEach((page, i) => {
-      console.log(page);
       const answerKey = `answer${i + 1}`;
 
       if (!page[answerKey]) {
