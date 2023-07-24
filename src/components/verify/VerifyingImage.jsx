@@ -9,9 +9,10 @@ const VerifyingImage = () => {
       <Image
         src={Settings}
         alt="verifying"
+        loading="lazy"
         className="w-8/12 animate-float drop-shadow-md t:w-6/12 animate-fadeIn"
       />
-      <Image src={Smartphone} alt="verifying" className="drop-shadow-md t:w-11/12" />
+      <Image src={Smartphone} alt="verifying" loading="lazy" className="drop-shadow-md t:w-11/12" />
       <p className="text-prmColor font-bold text-base animate-fadeIn">Verifying...</p>
     </div>
   );

@@ -14,6 +14,7 @@ const RewardsCards = (props) => {
           alt="temp"
           className="drop-shadow-md w-fit saturate-150"
           width={250}
+          loading="lazy"
           height={250}
         />
       </Link>

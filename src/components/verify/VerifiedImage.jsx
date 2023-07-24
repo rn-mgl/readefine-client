@@ -12,8 +12,9 @@ const VerifiedImage = () => {
         src={Protected}
         alt="verified"
         className="w-8/12 animate-float drop-shadow-md t:w-6/12 animate-fadeIn"
+        loading="lazy"
       />
-      <Image src={FistBump} alt="verified" className="drop-shadow-md t:w-11/12" />
+      <Image src={FistBump} alt="verified" className="drop-shadow-md t:w-11/12" loading="lazy" />
       <p className="text-prmColor text-base  animate-fadeIn">
         <span className="font-bold">Congratulations!</span> <br />
         <span> You are now verified. Have fun reading!</span>

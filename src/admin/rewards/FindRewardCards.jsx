@@ -10,6 +10,7 @@ const FindRewardCards = (props) => {
         className="rounded-2xl bg-accntColor p-5 h-full"
         width={250}
         height={250}
+        loading="lazy"
       />
 
       <div

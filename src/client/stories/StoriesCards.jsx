@@ -34,7 +34,14 @@ const StoriesCards = (props) => {
       ) : null}
 
       <div className="w-full h-fit cstm-flex-col overflow-clip bg-white rounded-2xl justify-start ">
-        <Image src={props.image} alt="temp" width={240} height={200} className="w-fit" />
+        <Image
+          loading="lazy"
+          src={props.image}
+          alt="temp"
+          width={240}
+          height={200}
+          className="w-fit"
+        />
       </div>
 
       <div className="cstm-flex-col w-full">

@@ -6,7 +6,14 @@ const StoriesCards = (props) => {
   return (
     <div className="bg-white p-5 rounded-2xl cstm-flex-col gap-4 t:w-72 shadow-md max-h-[30rem] h-[30rem]">
       <div className="w-full h-fit cstm-flex-col overflow-clip  bg-white rounded-2xl justify-start">
-        <Image src={props.image} alt="temp" width={240} height={200} className="w-fit" />
+        <Image
+          loading="lazy"
+          src={props.image}
+          alt="temp"
+          width={240}
+          height={200}
+          className="w-fit"
+        />
       </div>
 
       <div className="cstm-flex-row w-full">

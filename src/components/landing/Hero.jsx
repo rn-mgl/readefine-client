@@ -53,6 +53,7 @@ const Hero = () => {
       <Image
         src={book}
         alt="book"
+        loading="lazy"
         className="animate-float drop-shadow-lg w-9/12
                   t:w-96"
       />

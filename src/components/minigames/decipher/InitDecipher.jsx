@@ -40,12 +40,14 @@ const InitDecipher = (props) => {
         alt="decipherBg"
         style={{ animationDelay: "0.5s" }}
         className="w-full t:w-7/12 absolute top-0 left-0 animate-pulse z-0"
+        loading="lazy"
       />
 
       <Image
         src={decipherBgDown}
         alt="decipherBg"
         className="w-full t:w-7/12 absolute bottom-0 right-0 animate-pulse z-0"
+        loading="lazy"
       />
     </div>
   );
