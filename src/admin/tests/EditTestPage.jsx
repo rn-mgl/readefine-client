@@ -14,19 +14,22 @@ const EditTestPage = (props) => {
         </p>
 
         <div className="cstm-separator" />
+
         <div className="w-full h-full cstm-flex-col">
           <textarea
             name="question"
             id="question"
             cols="30"
             rows="1"
+            required={true}
             onChange={(e) => props.handleQuestions(props.questionId, e.target)}
             value={props.question.question}
             placeholder="question..."
             className="resize-none p-2 focus:outline-none w-full h-full mr-auto placeholder:opacity-50"
-          ></textarea>
+          />
         </div>
       </div>
+
       <div className="w-full h-full cstm-flex-col gap-2">
         <EditInputChoices
           checked={answerValue === props.question.choice_1}

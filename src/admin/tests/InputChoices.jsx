@@ -33,7 +33,7 @@ const InputChoices = (props) => {
         placeholder="possible answer..."
         onChange={(e) => props.handlePages(props.testNumber, e.target)}
         className="resize-none p-4 focus:outline-none w-full h-full ml-auto rounded-md text-sm shadow-md placeholder:opacity-50"
-      ></textarea>
+      />
     </div>
   );
 };

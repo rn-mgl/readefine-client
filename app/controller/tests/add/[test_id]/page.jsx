@@ -17,12 +17,12 @@ const AddTest = ({ params }) => {
   const [pages, setPages] = React.useState([
     {
       testNumber: 1,
-      testQuestion: null,
+      testQuestion: "",
       choice1: "choice 1",
       choice2: "choice 2",
       choice3: "choice 3",
       choice4: "choice 4",
-      answer1: null,
+      answer1: "",
     },
   ]);
 
@@ -67,10 +67,12 @@ const AddTest = ({ params }) => {
         choice4: "choice 4",
         [answer]: null,
       };
+
       // if alread has page
       if (prev) {
         return [...prev, newPage];
       }
+
       // if there are no pages
       else {
         return [newPage];

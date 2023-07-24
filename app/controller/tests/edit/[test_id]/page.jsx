@@ -43,6 +43,20 @@ const EditTest = ({ params }) => {
   const editTest = async (e) => {
     e.preventDefault();
 
+    questions.forEach((q, i) => {
+      const answerKey = `answer${q.question_id}`;
+
+      if (!q[answerKey]) {
+        setMessage({ active: true, msg: `You do not have an answer in number ${i + 1}.` });
+        return;
+      }
+
+      if (!q.question) {
+        setMessage({ active: true, msg: `You do not have a question in number ${i + 1}.` });
+        return;
+      }
+    });
+
     try {
       const { data } = await axios.patch(
         `${url}/admin_test/${decodedTestId}`,
@@ -68,6 +82,7 @@ const EditTest = ({ params }) => {
       });
 
       if (data) {
+        //set new answer key to prevent duplicate changes onchange
         const newQuestions = data.map((d) => {
           const answerKey = `answer${d.question_id}`;
           return {
@@ -121,13 +136,13 @@ const EditTest = ({ params }) => {
     if (user) {
       getTest();
     }
-  }, []);
+  }, [user, getTest]);
 
   React.useEffect(() => {
     if (user) {
       getQuestions();
     }
-  }, []);
+  }, [user, getQuestions]);
 
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-2 justify-start">

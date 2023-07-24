@@ -1,6 +1,5 @@
 import React from "react";
 import InputChoices from "./InputChoices";
-import { AiFillDelete } from "react-icons/ai";
 
 const AddTestPage = (props) => {
   const answerValue = props.page[`answer${props.testNumber}`];
@@ -38,6 +37,7 @@ const AddTestPage = (props) => {
           testNumber={props.testNumber}
           name="choice1"
         />
+
         <InputChoices
           checked={answerValue === props.page.choice2}
           choiceValue={props.page.choice2}
@@ -45,6 +45,7 @@ const AddTestPage = (props) => {
           testNumber={props.testNumber}
           name="choice2"
         />
+
         <InputChoices
           checked={answerValue === props.page.choice3}
           choiceValue={props.page.choice3}
@@ -52,6 +53,7 @@ const AddTestPage = (props) => {
           testNumber={props.testNumber}
           name="choice3"
         />
+
         <InputChoices
           checked={answerValue === props.page.choice4}
           choiceValue={props.page.choice4}
