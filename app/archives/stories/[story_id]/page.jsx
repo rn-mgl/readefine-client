@@ -110,7 +110,7 @@ const SingleStory = ({ params }) => {
   }, [url, user, setStory, decodedStoryId]);
 
   // read story
-  const readStory = async () => {
+  const readStory = React.useCallback(async () => {
     try {
       const { data } = await axios.post(
         `${url}/read_story`,
@@ -140,7 +140,7 @@ const SingleStory = ({ params }) => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  };
+  }, [decodedStoryId, url, user?.token]);
 
   // map pages
   const storyPages = pages?.map((page, index, arr) => {
@@ -183,16 +183,17 @@ const SingleStory = ({ params }) => {
     }
   }, [getPages, user]);
 
+  React.useEffect(() => {
+    if (pages.length && activePage >= pages.length - 1) {
+      readStory();
+    }
+  }, [activePage, pages.length, readStory]);
+
   return (
     <div className="p-5 cstm-flex-col bg-accntColor w-full min-h-screen justify-start gap-2">
       <ClientPageHeader subHeader="Stories" mainHeader={story.title} />
 
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
-
-      <ReceiveAchievement
-        // achievements={accomplishedAchievement.achievements}
-        handleAccomplishedAchievement={handleAccomplishedAchievement}
-      />
 
       {accomplishedAchievement.accomplished ? (
         <ReceiveAchievement
@@ -255,7 +256,7 @@ const SingleStory = ({ params }) => {
           <button
             onClick={() => {
               handleIncrement();
-              activePage === pages.length - 1 && readStory();
+              activePage >= pages.length - 1 && readStory();
             }}
             className="cstm-bg-hover"
           >
