@@ -1,7 +1,9 @@
+"use client";
 import React from "react";
 import FileViewer from "../global/FileViewer";
 
 const StoryDoublePage = (props) => {
+  const scrollRef = React.useRef(null);
   const leftPage = props.leftPage;
   const rightPage = props.rightPage;
   const active = props.index === props.activePage;
@@ -10,15 +12,21 @@ const StoryDoublePage = (props) => {
   const hasRightTitle = rightPage?.header;
   const rightContent = rightPage?.content;
 
-  let position = "translate-x-full opacity-0";
+  let position = "translate-x-full opacity-0 hidden";
 
   if (active) {
     position = "translate-x-0";
   }
 
   if (props.index === props.activePage - 2) {
-    position = "-translate-x-full opacity-0";
+    position = "-translate-x-full opacity-0 hidden";
   }
+
+  React.useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [active]);
 
   return (
     <>
@@ -28,6 +36,7 @@ const StoryDoublePage = (props) => {
         {leftPage ? (
           <>
             <p
+              ref={scrollRef}
               style={{ fontSize: `${props.fontSize}px`, lineHeight: `${props.fontSize + 8}px` }}
               className={`${
                 hasLeftTitle ? "opacity-100" : "opacity-50"
@@ -58,6 +67,7 @@ const StoryDoublePage = (props) => {
         {rightPage ? (
           <>
             <p
+              ref={scrollRef}
               style={{ fontSize: `${props.fontSize}px`, lineHeight: `${props.fontSize + 8}px` }}
               className={`${
                 hasRightTitle ? "opacity-100" : "opacity-50"
