@@ -22,7 +22,7 @@ const AdminRiddles = () => {
   const [riddles, setRiddles] = React.useState([]);
   const [canDeleteRiddle, setCanDeleteRiddle] = React.useState(false);
   const [riddleToEdit, setRiddleToEdit] = React.useState(-1);
-  const [message, setMessage] = React.useState({ msg: "", active: false });
+  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
 
   const [riddleToDelete, setRiddleToDelete] = React.useState({ id: -1, answer: "" });
   const [searchFilter, setSearchFilter] = React.useState({ toSearch: "riddle", searchKey: "" });
@@ -129,7 +129,7 @@ const AdminRiddles = () => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg });
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   };
 
@@ -150,7 +150,7 @@ const AdminRiddles = () => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg });
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   }, [setRiddles, url, user, searchFilter, sortFilter, dateRangeFilter]);
 

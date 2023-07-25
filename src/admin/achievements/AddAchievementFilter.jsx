@@ -12,6 +12,7 @@ const AddAchievementFilter = (props) => {
         selectValue={props.achievement?.type}
         name="type"
         label="Type"
+        required={true}
         labelValue={[
           { label: "Sessions", value: "user_session" },
           { label: "Lexile", value: "user_lexile" },
@@ -32,6 +33,7 @@ const AddAchievementFilter = (props) => {
         selectValue={props.achievement.specifics}
         name="specifics"
         label="Specifics"
+        required={true}
         labelValue={[
           { label: "Days Online", value: "days_online" },
           { label: "Lexile Growth", value: "lexile_growth" },
@@ -52,14 +54,16 @@ const AddAchievementFilter = (props) => {
       />
 
       <div className="p-2 bg-white font-poppins rounded-md shadow-md whitespace-nowrap cstm-flex-row">
-        <div
+        <button
+          type="button"
           onClick={props.handleCanSelectReward}
           className={`bg-neutral-50 p-1 px-2 ${
             hasReward ? "rounded-l-md" : "rounded-md"
           } outline-none border-neutral-200 border-2 text-sm cursor-pointer`}
         >
           <p>Reward</p>
-        </div>
+        </button>
+
         {hasReward ? (
           <p className="p-1 px-2  bg-white font-poppins rounded-r-md border-neutral-200 border-2 border-l-0 text-sm">
             {props.achievement.reward.name}

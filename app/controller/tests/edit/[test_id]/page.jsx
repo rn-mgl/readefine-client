@@ -16,7 +16,7 @@ import { decipher } from "@/src/src/functions/security";
 const EditTest = ({ params }) => {
   const [test, setTest] = React.useState({});
   const [questions, setQuestions] = React.useState([]);
-  const [message, setMessage] = React.useState({ msg: "", active: false });
+  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
 
   const { data: session } = useSession({ required: true });
   const { url } = useGlobalContext();
@@ -47,12 +47,20 @@ const EditTest = ({ params }) => {
       const answerKey = `answer${q.question_id}`;
 
       if (!q[answerKey]) {
-        setMessage({ active: true, msg: `You do not have an answer in number ${i + 1}.` });
+        setMessage({
+          active: true,
+          msg: `You do not have an answer in number ${i + 1}.`,
+          type: "error",
+        });
         return;
       }
 
       if (!q.question) {
-        setMessage({ active: true, msg: `You do not have a question in number ${i + 1}.` });
+        setMessage({
+          active: true,
+          msg: `You do not have a question in number ${i + 1}.`,
+          type: "error",
+        });
         return;
       }
     });
@@ -69,7 +77,7 @@ const EditTest = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg });
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   };
 
@@ -95,7 +103,7 @@ const EditTest = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg });
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   }, [url, user, decodedTestId, setQuestions]);
 
@@ -113,7 +121,7 @@ const EditTest = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg });
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   }, [url, user, decodedTestId, router]);
 

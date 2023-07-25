@@ -16,7 +16,7 @@ import { cipher } from "@/src/src/functions/security";
 
 const AdminAchievements = () => {
   const [achievements, setAchievements] = React.useState([]);
-  const [message, setMessage] = React.useState({ msg: "", active: false });
+  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
 
   const [searchFilter, setSearchFilter] = React.useState({
     toSearch: "achievement_name",
@@ -94,7 +94,7 @@ const AdminAchievements = () => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg });
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   }, [url, user, setAchievements, searchFilter, goalRangeFilter, sortFilter, dateRangeFilter]);
 

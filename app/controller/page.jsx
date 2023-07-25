@@ -17,7 +17,7 @@ import { useSession } from "next-auth/react";
 const AdminDashboard = () => {
   const [counts, setCounts] = React.useState({});
   const [updates, setUpdates] = React.useState({});
-  const [message, setMessage] = React.useState({ msg: "", active: false });
+  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
 
   const { data: session } = useSession({ required: true });
 
@@ -53,7 +53,7 @@ const AdminDashboard = () => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg });
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "info" });
     }
   }, [user, url, setUpdates]);
 

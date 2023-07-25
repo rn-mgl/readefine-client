@@ -21,7 +21,8 @@ const AddAchievement = () => {
     goal: 0,
     reward: { name: "", id: "" },
   });
-  const [message, setMessage] = React.useState({ msg: "", active: false });
+  const [hasSubmitted, setHasSubmitted] = React.useState(false);
+  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
   const [canSelectReward, setCanSelectReward] = React.useState(false);
 
   const { data: session } = useSession({ required: true });
@@ -57,6 +58,21 @@ const AddAchievement = () => {
   // add achievement
   const addAchievement = async (e) => {
     e.preventDefault();
+
+    setHasSubmitted(true);
+
+    const { goal, name, reward, specifics, task, type } = achievement;
+
+    if (!goal || !name || !reward.id || !specifics || !task || !type) {
+      setHasSubmitted(false);
+      setMessage({
+        active: true,
+        msg: "Please fill in all achievement information.",
+        type: "error",
+      });
+      return;
+    }
+
     try {
       const { data } = await axios.post(
         `${url}/admin_achievement`,
@@ -70,7 +86,8 @@ const AddAchievement = () => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg });
+      setHasSubmitted(false);
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   };
 
@@ -88,7 +105,7 @@ const AddAchievement = () => {
         onSubmit={(e) => addAchievement(e)}
         className="w-full cstm-flex-col cstm-w-limit border-collapse gap-2"
       >
-        <Link href="/controller/achievements" className="cstm-bg-hover mr-auto">
+        <Link type="button" href="/controller/achievements" className="cstm-bg-hover mr-auto">
           <BsArrowLeft className="text-prmColor cursor-pointer scale-125" />
         </Link>
 
@@ -108,6 +125,7 @@ const AddAchievement = () => {
               id="name"
               cols="30"
               rows="1"
+              required={true}
               placeholder="Achievement Title/Name"
               className="resize-none p-2 focus:outline-none font-bold text-prmColor mr-auto placeholder:opacity-50"
               value={achievement.name}
@@ -123,6 +141,7 @@ const AddAchievement = () => {
               id="task"
               cols="30"
               rows="1"
+              required={true}
               placeholder="task..."
               className="resize-none p-2 focus:outline-none w-full h-full mr-auto placeholder:opacity-50"
               value={achievement.task}
@@ -134,7 +153,8 @@ const AddAchievement = () => {
         <div className="pt-4 cstm-flex-row w-full">
           <button
             type="submit"
-            className="w-fit text-center font-poppins ml-auto text-sm font-normal
+            disabled={hasSubmitted}
+            className="w-fit text-center font-poppins ml-auto text-sm font-normal disabled:saturate-50
                    bg-prmColor text-accntColor rounded-full p-2 px-4"
           >
             Add Achievement

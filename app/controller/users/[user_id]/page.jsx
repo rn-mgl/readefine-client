@@ -20,7 +20,7 @@ const SingleUser = ({ params }) => {
   const [userData, setUserData] = React.useState({});
   const [userLexile, setUserLexile] = React.useState([]);
   const [userReads, setUserReads] = React.useState([]);
-  const [message, setMessage] = React.useState({ msg: "", active: false });
+  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
   const [userQuizzes, setUserQuizzes] = React.useState([]);
   const [quizVariable, setQuizVariable] = React.useState("lexile");
 
@@ -173,7 +173,7 @@ const SingleUser = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg });
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   }, [url, user, setUserData, decodedUserId]);
 
@@ -190,7 +190,7 @@ const SingleUser = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg });
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   }, [url, user, setUserLexile, decodedUserId]);
 
@@ -207,7 +207,7 @@ const SingleUser = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg });
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   }, [url, user, setUserReads, decodedUserId]);
 
@@ -224,7 +224,7 @@ const SingleUser = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg });
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   }, [url, user, setUserQuizzes, decodedUserId]);
 

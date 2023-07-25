@@ -16,7 +16,7 @@ import { decipher } from "@/src/src/functions/security";
 const SingleReward = ({ params }) => {
   const [reward, setReward] = React.useState({});
   const [canDeleteReward, setCanDeleteReward] = React.useState(false);
-  const [message, setMessage] = React.useState({ msg: "", active: false });
+  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -39,7 +39,7 @@ const SingleReward = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg });
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   }, [setReward, url, user, decodedRewardId]);
 

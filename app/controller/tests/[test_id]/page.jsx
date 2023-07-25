@@ -20,7 +20,7 @@ import { decipher } from "@/src/src/functions/security";
 const SingleTest = ({ params }) => {
   const [test, setTest] = React.useState({});
   const [questions, setQuestions] = React.useState([]);
-  const [message, setMessage] = React.useState({ msg: "", active: false });
+  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
 
   const [isFinished, setIsFinished] = React.useState(false);
   const [score, setScore] = React.useState(0);
@@ -86,7 +86,7 @@ const SingleTest = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg });
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   }, [url, user, decodedTestId, setQuestions]);
 
@@ -105,6 +105,7 @@ const SingleTest = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
       router.push(`/controller/tests/add/${params?.test_id}`);
     }
   }, [url, user, decodedTestId, router, params?.test_id]);

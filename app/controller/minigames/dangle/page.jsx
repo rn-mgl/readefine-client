@@ -11,6 +11,7 @@ import DangleTutorial from "@/src/src/components/minigames/dangle/DangleTutorial
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { AiFillHeart } from "react-icons/ai";
+import Message from "@/src/src/components/global/Message";
 
 const Dangle = () => {
   const [wordData, setWordData] = React.useState({});
@@ -26,6 +27,7 @@ const Dangle = () => {
 
   const [gameOver, setGameOver] = React.useState({ over: false, status: "" });
   const [isPlaying, setIsPlaying] = React.useState(false);
+  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
 
   const { data: session } = useSession({ required: true });
   const { url } = useGlobalContext();
@@ -175,6 +177,7 @@ const Dangle = () => {
         }
       } catch (error) {
         console.log(error);
+        setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
       }
     }
   };
@@ -203,6 +206,8 @@ const Dangle = () => {
 
   return (
     <div className="w-full min-h-screen bg-accntColor p-4 cstm-flex-col justify-start">
+      {message ? <Message message={message} setMessage={setMessage} /> : null}
+
       {canSeeHint ? (
         <DangleHint
           handleCanSeeHint={handleCanSeeHint}

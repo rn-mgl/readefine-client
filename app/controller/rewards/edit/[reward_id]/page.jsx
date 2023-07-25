@@ -19,7 +19,7 @@ import Loading from "@/src/src/components/global/Loading";
 
 const EditReward = ({ params }) => {
   const [reward, setReward] = React.useState({});
-  const [message, setMessage] = React.useState({ msg: "", active: false });
+  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
   const [loading, setLoading] = React.useState(false);
 
   const { data: session } = useSession();
@@ -83,7 +83,7 @@ const EditReward = ({ params }) => {
     } catch (error) {
       console.log(error);
       setLoading(false);
-      setMessage({ active: true, msg: error?.response?.data?.msg });
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   };
 
@@ -98,7 +98,7 @@ const EditReward = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg });
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   }, [setReward, url, user, decodedRewardId]);
 

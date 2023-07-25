@@ -10,11 +10,13 @@ import DecipherTutorial from "@/src/src/components/minigames/decipher/DecipherTu
 import { AiFillHeart } from "react-icons/ai";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
+import Message from "@/src/src/components/global/Message";
 
 const Decipher = () => {
   const [wordData, setWordData] = React.useState({});
   const [correctWord, setCorrectWord] = React.useState([]);
   const [canSeeTutorial, setCanSeeTutorial] = React.useState(false);
+  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
 
   const [cipheredWord, setCipheredWord] = React.useState([]);
   const [guess, setGuess] = React.useState([]);
@@ -195,6 +197,7 @@ const Decipher = () => {
         }
       } catch (error) {
         console.log(error);
+        setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
       }
     }
   };
@@ -223,6 +226,8 @@ const Decipher = () => {
 
   return (
     <div className="bg-accntColor p-4 cstm-flex-col justify-start w-full min-h-screen">
+      {message ? <Message message={message} setMessage={setMessage} /> : null}
+
       {gameOver.over ? (
         <Gameover
           gameOver={gameOver}

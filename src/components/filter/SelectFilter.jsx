@@ -17,6 +17,7 @@ const SelectFilter = (props) => {
       <select
         onChange={(e) => props.onChange(e.target)}
         value={props.selectValue}
+        required={props.required}
         name={props.name}
         className="bg-white p-1 px-2 rounded-r-md border-l-0 outline-none border-neutral-200 border-2 text-sm"
       >

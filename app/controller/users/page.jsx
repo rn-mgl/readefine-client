@@ -3,18 +3,17 @@ import React from "react";
 import AdminPageHeader from "@/src/src/admin/global/PageHeader";
 import UsersFilter from "@/src/src/admin/users/UsersFilter";
 import axios from "axios";
-import Link from "next/link";
 import Message from "@/src/src/components/global/Message";
 
 import { useGlobalContext } from "@/src/context";
-import { localizeDate, inputDate } from "@/src/src/functions/localDate";
+import { inputDate } from "@/src/src/functions/localDate";
 import { useSession } from "next-auth/react";
 import { cipher } from "@/src/src/functions/security";
 import UserRow from "@/src/src/admin/users/UserRow";
 
 const AdminUsers = () => {
   const [users, setUsers] = React.useState([]);
-  const [message, setMessage] = React.useState({ msg: "", active: false });
+  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
 
   // search filters
   const [searchFilter, setSearchFilter] = React.useState({ toSearch: "name", searchKey: "" });
@@ -93,7 +92,7 @@ const AdminUsers = () => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg });
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   }, [setUsers, url, user, searchFilter, sortFilter, dateRangeFilter, lexileRangeFilter]);
 

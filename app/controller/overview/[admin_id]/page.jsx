@@ -19,12 +19,16 @@ import { GiBrain, GiNotebook, GiSpellBook } from "react-icons/gi";
 import { ImCheckmark } from "react-icons/im";
 import { AiFillTrophy } from "react-icons/ai";
 import { RxActivityLog } from "react-icons/rx";
+import Message from "@/src/src/components/global/Message";
 
 const Overview = ({ params }) => {
   const [adminData, setAdminData] = React.useState({});
   const [adminActivities, setAdminActivities] = React.useState({});
+
   const [canEditMain, setCanEditMain] = React.useState(false);
   const [canChangePassword, setCanChangePassword] = React.useState(false);
+
+  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -53,6 +57,7 @@ const Overview = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   }, [url, user, setAdminData, decipheredId]);
 
@@ -68,6 +73,7 @@ const Overview = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   }, [url, user, setAdminActivities, decipheredId]);
 
@@ -224,6 +230,8 @@ const Overview = ({ params }) => {
   return (
     <div className="w-full min-h-screen bg-accntColor p-5 cstm-flex-col justify-start cstm-scrollbar gap-5">
       <AdminPageHeader mainHeader="Overview" subHeader="Readefine" />
+
+      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
 
       {canEditMain ? (
         <EditMain

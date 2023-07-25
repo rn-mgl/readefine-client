@@ -15,7 +15,7 @@ import { cipher } from "@/src/src/functions/security";
 
 const AdminRewards = () => {
   const [rewards, setRewards] = React.useState([]);
-  const [message, setMessage] = React.useState({ msg: "", active: false });
+  const [message, setMessage] = React.useState({ msg: "", active: false, type: "error" });
 
   const [sortFilter, setSortFilter] = React.useState({ toSort: "reward_name", sortMode: "ASC" });
   const [searchFilter, setSearchFilter] = React.useState({
@@ -74,7 +74,7 @@ const AdminRewards = () => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg });
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   }, [url, user, setRewards, searchFilter, sortFilter, dateRangeFilter]);
 

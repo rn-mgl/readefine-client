@@ -15,18 +15,19 @@ const EditAchievementFilter = (props) => {
         selectValue={props.achievement?.achievement_type}
         name="achievement_type"
         label="Type"
+        required={true}
         labelValue={[
           { label: "Sessions", value: "user_session" },
-          { label: "Lexile", value: "user" },
+          { label: "Lexile", value: "user_lexile" },
           { label: "Read Stories", value: "read_story" },
-          { label: "Answered Dangles", value: "answered_dangle" },
-          { label: "Answered Deciphers", value: "answered_decipher" },
-          { label: "Answered Riddles", value: "answered_riddles" },
-          { label: "Answered Tests", value: "answered_questions" },
-          { label: "Dangle Score", value: "answered_dangle" },
-          { label: "Decipher Score", value: "answered_decipher" },
-          { label: "Riddle Score", value: "answered_riddles" },
-          { label: "Test Score", value: "answered_questions" },
+          { label: "Answered Tests", value: "answered_tests" },
+          { label: "Test Score", value: "test_score" },
+          { label: "Dangle Plays", value: "dangle_plays" },
+          { label: "Decipher Plays", value: "decipher_plays" },
+          { label: "Riddle Plays", value: "riddle_plays" },
+          { label: "Dangle Wins", value: "dangle_wins" },
+          { label: "Decipher Wins", value: "decipher_wins" },
+          { label: "Riddle Wins", value: "riddle_wins" },
         ]}
       />
 
@@ -35,11 +36,12 @@ const EditAchievementFilter = (props) => {
         selectValue={props.achievement.specifics}
         name="specifics"
         label="Specifics"
+        required={true}
         labelValue={[
           { label: "Days Online", value: "days_online" },
           { label: "Lexile Growth", value: "lexile_growth" },
-          { label: "Total Books", value: "read_count" },
-          { label: "Total Games", value: "play_count" },
+          { label: "Total Books", value: "book_count" },
+          { label: "Total Plays", value: "play_count" },
           { label: "Total Scores", value: "score_count" },
         ]}
       />

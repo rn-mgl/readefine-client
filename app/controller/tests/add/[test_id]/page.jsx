@@ -13,7 +13,7 @@ import { useGlobalContext } from "@/src/context";
 import { decipher } from "@/src/src/functions/security";
 
 const AddTest = ({ params }) => {
-  const [message, setMessage] = React.useState({ msg: "", active: false });
+  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
   const [pages, setPages] = React.useState([
     {
       testNumber: 1,
@@ -53,7 +53,7 @@ const AddTest = ({ params }) => {
     const answer = `answer${pageLen}`;
 
     if (pageLen > 10) {
-      setMessage({ active: true, msg: "You can only put 10 questions." });
+      setMessage({ active: true, msg: "You can only put 10 questions.", type: "warning" });
       return;
     }
 
@@ -86,7 +86,7 @@ const AddTest = ({ params }) => {
 
     // check if there are 10 questions
     if (pages.length < 10) {
-      setMessage({ active: true, msg: "Enter 10 questions before posting." });
+      setMessage({ active: true, msg: "Enter 10 questions before posting.", type: "error" });
       return;
     }
 
@@ -94,12 +94,20 @@ const AddTest = ({ params }) => {
       const answerKey = `answer${i + 1}`;
 
       if (!page[answerKey]) {
-        setMessage({ active: true, msg: `You do not have an answer in number ${i + 1}.` });
+        setMessage({
+          active: true,
+          msg: `You do not have an answer in number ${i + 1}.`,
+          type: "error",
+        });
         return;
       }
 
       if (!page.testQuestion) {
-        setMessage({ active: true, msg: `You do not have a question in number ${i + 1}.` });
+        setMessage({
+          active: true,
+          msg: `You do not have a question in number ${i + 1}.`,
+          type: "error",
+        });
         return;
       }
     });
@@ -117,7 +125,7 @@ const AddTest = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg });
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   };
 

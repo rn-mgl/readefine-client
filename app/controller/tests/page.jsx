@@ -13,7 +13,7 @@ import { cipher } from "@/src/src/functions/security";
 
 const AdminTests = () => {
   const [tests, setTests] = React.useState([]);
-  const [message, setMessage] = React.useState({ msg: "", active: false });
+  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
 
   // filters
   const [searchFilter, setSearchFilter] = React.useState({ toSearch: "title", searchKey: "" });
@@ -86,7 +86,7 @@ const AdminTests = () => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg });
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   }, [url, user, setTests, searchFilter, lexileRangeFilter, sortFilter, dateRangeFilter]);
 

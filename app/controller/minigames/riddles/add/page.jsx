@@ -12,7 +12,7 @@ import { useGlobalContext } from "@/src/context";
 
 const AddRiddle = () => {
   const [riddleData, setRiddleData] = React.useState({ riddle: "", answer: "" });
-  const [message, setMessage] = React.useState({ msg: "", active: false });
+  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
 
   const { data: session } = useSession({ required: true });
   const user = session?.user?.name;
@@ -42,12 +42,12 @@ const AddRiddle = () => {
 
       // reset if riddle is added
       if (data) {
-        setMessage({ active: true, msg: `Successfully added ${answer}.` });
+        setMessage({ active: true, msg: `Successfully added ${answer}.`, type: "info" });
         setRiddleData({ riddle: "", answer: "" });
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg });
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   };
 

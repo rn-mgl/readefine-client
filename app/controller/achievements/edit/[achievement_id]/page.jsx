@@ -15,15 +15,16 @@ import { decipher } from "@/src/src/functions/security";
 
 const EditAchievement = ({ params }) => {
   const [achievement, setAchievement] = React.useState({
-    name: "",
-    type: "user_session",
+    achievement_name: "",
+    achievement_type: "user_session",
     task: "",
     specifics: "days_online",
     goal: 0,
     reward: { name: "", id: "" },
   });
+  const [hasSubmitted, setHasSubmitted] = React.useState(false);
   const [canSelectReward, setCanSelectReward] = React.useState(false);
-  const [message, setMessage] = React.useState({ msg: "", active: false });
+  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
 
   const { data: session } = useSession({ required: true });
   const { url } = useGlobalContext();
@@ -60,6 +61,30 @@ const EditAchievement = ({ params }) => {
   // edit achievement
   const editAchievement = async (e) => {
     e.preventDefault();
+
+    setHasSubmitted(true);
+
+    const { goal, achievement_name, reward_id, reward_name, specifics, task, achievement_type } =
+      achievement;
+
+    if (
+      !goal ||
+      !achievement_name ||
+      !reward_id ||
+      !reward_name ||
+      !specifics ||
+      !task ||
+      !achievement_type
+    ) {
+      setHasSubmitted(false);
+      setMessage({
+        active: true,
+        msg: "Please fill in all achievement information.",
+        type: "error",
+      });
+      return;
+    }
+
     try {
       const { data } = await axios.patch(
         `${url}/admin_achievement/${decodedAchievementId}`,
@@ -73,7 +98,8 @@ const EditAchievement = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg });
+      setHasSubmitted(false);
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   };
 
@@ -89,7 +115,7 @@ const EditAchievement = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg });
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   }, [user, url, setAchievement, decodedAchievementId]);
 
@@ -157,7 +183,9 @@ const EditAchievement = ({ params }) => {
         <div className="pt-4 cstm-flex-row w-full">
           <button
             type="submit"
-            className="w-fit text-center font-poppins ml-auto text-sm font-normal bg-scndColor text-prmColor rounded-full p-2 px-4"
+            disabled={hasSubmitted}
+            className="w-fit text-center font-poppins ml-auto text-sm font-normal bg-scndColor
+                     text-prmColor rounded-full p-2 px-4 t:px-10 disabled:saturate-50"
           >
             Edit Achievement
           </button>

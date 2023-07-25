@@ -18,7 +18,7 @@ import { decipher } from "@/src/src/functions/security";
 const SingleAchievement = ({ params }) => {
   const [achievement, setAchievement] = React.useState({});
   const [canDeleteAchievement, setCanDeleteAchievement] = React.useState(false);
-  const [message, setMessage] = React.useState({ msg: "", active: false });
+  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -42,7 +42,7 @@ const SingleAchievement = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg });
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   }, [user, url, setAchievement, decodedAchievementId]);
 

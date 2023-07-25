@@ -23,7 +23,7 @@ const EditStory = ({ params }) => {
   const [story, setStory] = React.useState({});
   const [pages, setPages] = React.useState([]);
   const [toDelete, setToDelete] = React.useState([]);
-  const [message, setMessage] = React.useState({ msg: "", active: false });
+  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
   const [loading, setLoading] = React.useState(false);
 
   const { data: session } = useSession({ required: true });
@@ -125,6 +125,7 @@ const EditStory = ({ params }) => {
     for (let i = 0; i < pages.length; i++) {
       const page = pages[i];
       let pageImage = null;
+
       if (page.rawFile) {
         pageImage = await fileFns.uploadFile(
           `${url}/readefine_admin_file`,
@@ -132,6 +133,7 @@ const EditStory = ({ params }) => {
           user.token,
           axios
         );
+
         page.file = { src: pageImage, name: "" };
       }
     }
@@ -150,7 +152,7 @@ const EditStory = ({ params }) => {
     } catch (error) {
       console.log(error);
       setLoading(false);
-      setMessage({ active: true, msg: error?.response?.data?.msg });
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   };
 
@@ -166,7 +168,7 @@ const EditStory = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg });
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   }, [url, user, setPages, decodedStoryId]);
 
@@ -181,7 +183,7 @@ const EditStory = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg });
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   }, [url, user, setStory, decodedStoryId]);
 
