@@ -17,7 +17,7 @@ const InputComp = (props) => {
         placeholder={props.placeholder}
         value={props.value}
         onChange={props.onChange}
-        className="focus:rounded-full focus:px-3 focus:l-s:px-5 rounded-md px-2 l-s:px-3
+        className="focus:rounded-full focus:px-3 focus:l-s:px-5 rounded-md px-2 l-s:px-3 
                    shadow-md bg-accntColor p-2 w-full text-sm font-normal transition-all
                     placeholder:text-prmColor placeholder:text-opacity-50
                     focus:outline-none focus:border-none"

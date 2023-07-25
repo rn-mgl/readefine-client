@@ -27,10 +27,13 @@ import { cipher, decipher } from "@/src/src/functions/security";
 import { BsFillPenFill, BsFillSquareFill } from "react-icons/bs";
 import { TbPlusMinus } from "react-icons/tb";
 import { FaBrain } from "react-icons/fa";
+import Message from "@/src/src/components/global/Message";
 
 const Reader = ({ params }) => {
   const [userData, setUserData] = React.useState({});
   const [userActivities, setUserActivities] = React.useState({});
+
+  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
 
   const [canEditMain, setCanEditMain] = React.useState(false);
   const [canEditGradeLevel, setCanEditGradeLevel] = React.useState(false);
@@ -87,6 +90,7 @@ const Reader = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   }, [url, user, setUserData, decipheredId]);
 
@@ -102,6 +106,7 @@ const Reader = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   }, [url, user, setUserActivities, decipheredId]);
 
@@ -270,6 +275,8 @@ const Reader = ({ params }) => {
   return (
     <div className="w-full p-5 cstm-flex-col bg-accntColor min-h-screen overflow-y-auto cstm-scrollbar justify-start gap-5">
       <ClientPageHeader mainHeader="Readefine" subHeader="Profile" />
+
+      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
 
       {showLexileMessage ? (
         <LowLexileTestMessage

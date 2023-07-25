@@ -15,7 +15,7 @@ import { cipher } from "@/src/src/functions/security";
 
 const ClientTests = () => {
   const [tests, setTests] = React.useState([]);
-  const [message, setMessage] = React.useState({ msg: "", active: false });
+  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
   const [showLexileMessage, setShowLexileMessage] = React.useState(false);
 
   const [userLexile, setUserLexile] = React.useState(-1);
@@ -121,7 +121,7 @@ const ClientTests = () => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg });
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   }, [url, user, setTests, searchFilter, lexileRangeFilter, sortFilter, dateRangeFilter]);
 
@@ -136,6 +136,7 @@ const ClientTests = () => {
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   }, [setUserLexile, setLexileRangeFilter, url, user]);
 

@@ -13,14 +13,13 @@ import { computeScore, shuffleQuestions } from "@/src/src/functions/testFns";
 import { useGlobalContext } from "@/src/context";
 import { AiFillCaretRight, AiFillCaretLeft } from "react-icons/ai";
 import { BsArrowLeft } from "react-icons/bs";
-import { useRouter } from "next/navigation";
 import { decipher } from "@/src/src/functions/security";
 
 const SingleTest = ({ params }) => {
   const [testData, setTestData] = React.useState({});
   const [questions, setQuestions] = React.useState([]);
   const [userLexile, setUserLexile] = React.useState(-1);
-  const [message, setMessage] = React.useState({ msg: "", active: false });
+  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
 
   const [activePage, setActivePage] = React.useState(0);
 
@@ -96,7 +95,7 @@ const SingleTest = ({ params }) => {
 
     // do not submit if not all are answered
     if (!answeredAll) {
-      setMessage({ active: true, msg: "Please answer all items." });
+      setMessage({ active: true, msg: "Please answer all items.", type: "warning" });
       return;
     }
 
@@ -162,6 +161,7 @@ const SingleTest = ({ params }) => {
           setMessage({
             active: true,
             msg: "Your test will be recorded but not graded.",
+            type: "info",
           });
         }
 
@@ -171,7 +171,7 @@ const SingleTest = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg });
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   };
 
@@ -186,7 +186,7 @@ const SingleTest = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg });
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   }, [url, user, decodedTestId]);
 
@@ -202,7 +202,7 @@ const SingleTest = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg });
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   }, [user, url, decodedTestId]);
 
@@ -218,6 +218,7 @@ const SingleTest = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   }, [setUserLexile, url, user]);
 
@@ -287,7 +288,9 @@ const SingleTest = ({ params }) => {
           {activePage === 9 && !hasSubmitted ? (
             <button
               onClick={submitAnswers}
-              className="bg-prmColor w-fit ml-auto p-2 px-10  text-sm rounded-full cstm-flex-col font-medium text-scndColor shadow-solid shadow-indigo-950"
+              disabled={hasSubmitted}
+              className="bg-prmColor w-fit ml-auto p-2 px-10  text-sm rounded-full cstm-flex-col 
+                        font-medium text-scndColor shadow-solid shadow-indigo-950 disabled:saturate-50"
             >
               Submit
             </button>

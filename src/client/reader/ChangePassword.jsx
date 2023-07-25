@@ -8,8 +8,11 @@ import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import axios from "axios";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import Message from "../../components/global/Message";
 
 const ChangePassword = (props) => {
+  const [hasSubmitted, setHasSubmitted] = React.useState(false);
+  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
   const [passwordData, setPasswordData] = React.useState({
     oldPassword: { text: "", type: "password" },
     newPassword: { text: "", type: "password" },
@@ -42,9 +45,17 @@ const ChangePassword = (props) => {
   const changePassword = async (e) => {
     e.preventDefault();
 
+    setHasSubmitted(true);
+
     const { oldPassword, newPassword, repeatNewPassword } = passwordData;
 
     if (newPassword.text !== repeatNewPassword.text) {
+      setHasSubmitted(false);
+      setMessage({
+        active: true,
+        msg: "The new password and retyped password do not match.",
+        type: "warning",
+      });
       return;
     }
 
@@ -59,6 +70,7 @@ const ChangePassword = (props) => {
         props.handleCanChangePassword();
       }
     } catch (error) {
+      setHasSubmitted(false);
       console.log(error);
     }
   };
@@ -68,6 +80,9 @@ const ChangePassword = (props) => {
       <button onClick={props.handleCanChangePassword} className="cstm-bg-hover ml-auto">
         <IoClose className="scale-150 text-prmColor" />
       </button>
+
+      {/* if message has popped up */}
+      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
 
       <div className="cstm-w-limit cstm-flex-col w-full my-auto">
         <form
@@ -124,7 +139,9 @@ const ChangePassword = (props) => {
 
           <button
             type="submit"
-            className="bg-prmColor p-2 rounded-full w-full text-scndColor shadow-solid shadow-indigo-900 font-bold t:w-fit t:px-10 text-sm"
+            disabled={hasSubmitted}
+            className="bg-prmColor p-2 rounded-full w-full text-scndColor shadow-solid 
+                      shadow-indigo-900 font-bold t:w-fit t:px-10 text-sm disabled:saturate-50"
           >
             Save Changes
           </button>

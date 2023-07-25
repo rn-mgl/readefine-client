@@ -12,7 +12,7 @@ import { cipher } from "@/src/src/functions/security";
 
 const ClientRewards = () => {
   const [rewards, setRewards] = React.useState([]);
-  const [message, setMessage] = React.useState({ msg: "", active: false });
+  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
 
   const [sortFilter, setSortFilter] = React.useState({ toSort: "reward_name", sortMode: "ASC" });
   const [showFilter, setShowFilter] = React.useState({ toShow: "received" });
@@ -68,7 +68,7 @@ const ClientRewards = () => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg });
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   }, [url, user, setRewards, searchFilter, sortFilter, showFilter]);
 

@@ -24,7 +24,7 @@ const AdminLogin = () => {
   });
   const [visiblePassword, setVisiblePassword] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
-  const [message, setMessage] = React.useState({ msg: "", active: false });
+  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
 
   const { url } = useGlobalContext();
   const router = useRouter();
@@ -65,7 +65,7 @@ const AdminLogin = () => {
     } catch (error) {
       console.log(error);
       setLoading(false);
-      setMessage({ active: true, msg: error?.response?.data?.msg });
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   };
 

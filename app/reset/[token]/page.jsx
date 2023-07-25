@@ -21,7 +21,7 @@ const PasswordReset = ({ params }) => {
     newPassword: false,
     retypedPassword: false,
   });
-  const [message, setMessage] = React.useState({ msg: "", active: false });
+  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
 
   const { url } = useGlobalContext();
   const router = useRouter();
@@ -63,7 +63,7 @@ const PasswordReset = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg });
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   };
 

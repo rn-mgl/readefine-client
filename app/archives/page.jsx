@@ -15,7 +15,7 @@ import { useGlobalContext } from "@/src/context";
 
 const Archives = () => {
   const [countsData, setCountsData] = React.useState({});
-  const [message, setMessage] = React.useState({ msg: "", active: false });
+  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
 
   const { data: session } = useSession({ required: true });
   const { url } = useGlobalContext();
@@ -33,7 +33,7 @@ const Archives = () => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg });
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   }, [url, user, setCountsData]);
 

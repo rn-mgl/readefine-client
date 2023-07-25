@@ -17,7 +17,7 @@ const Decipher = () => {
   const [correctWord, setCorrectWord] = React.useState([]);
   const [cipheredWord, setCipheredWord] = React.useState([]);
 
-  const [message, setMessage] = React.useState({ msg: "", active: false });
+  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
   const [canSeeTutorial, setCanSeeTutorial] = React.useState(false);
 
   const [guess, setGuess] = React.useState([]);
@@ -175,6 +175,31 @@ const Decipher = () => {
     return cipheredText;
   };
 
+  // handle game over
+  const handleGameOver = React.useCallback(async () => {
+    let answer = guess.join("");
+
+    try {
+      const { data } = await axios.post(
+        `${url}/answered_decipher`,
+        {
+          wordId: wordData.word_id,
+          answer,
+          timer,
+        },
+        { headers: { Authorization: user?.token } }
+      );
+
+      // notice users game is recorded
+      if (data) {
+        setMessage({ active: true, msg: "Your game is noted!", type: "info" });
+      }
+    } catch (error) {
+      console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+    }
+  }, [guess, timer, url, user?.token, wordData.word_id]);
+
   // get word data and set game stats
   const getWord = async () => {
     if (user?.token) {
@@ -198,34 +223,10 @@ const Decipher = () => {
         }
       } catch (error) {
         console.log(error);
+        setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
       }
     }
   };
-
-  // handle game over
-  const handleGameOver = React.useCallback(async () => {
-    let answer = guess.join("");
-
-    try {
-      const { data } = await axios.post(
-        `${url}/answered_decipher`,
-        {
-          wordId: wordData.word_id,
-          answer,
-          timer,
-        },
-        { headers: { Authorization: user?.token } }
-      );
-
-      // notice users game is recorded
-      if (data) {
-        setMessage({ active: true, msg: "Your game is noted!" });
-      }
-    } catch (error) {
-      console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg });
-    }
-  }, [guess, timer, url, user?.token, wordData.word_id]);
 
   // map lives
   const remainingLives = lives.status.map((alive, i) => {

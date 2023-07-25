@@ -17,7 +17,7 @@ const Dangle = () => {
   const [wordData, setWordData] = React.useState({});
   const [definitionData, setDefinitionData] = React.useState([]);
   const [correctWord, setCorrectWord] = React.useState([{}]);
-  const [message, setMessage] = React.useState({ msg: "", active: false });
+  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
   const [canSeeTutorial, setCanSeeTutorial] = React.useState(false);
 
   const [guess, setGuess] = React.useState({ letters: [], letterPos: 0 });
@@ -164,11 +164,11 @@ const Dangle = () => {
         { headers: { Authorization: user?.token } }
       );
       if (data) {
-        setMessage({ active: true, msg: "Your game is noted!" });
+        setMessage({ active: true, msg: "Your game is noted!", type: "info" });
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg });
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   }, [entryGuesses, timer, url, user?.token, wordData.word_id]);
 
@@ -197,7 +197,7 @@ const Dangle = () => {
         }
       } catch (error) {
         console.log(error);
-        setMessage({ active: true, msg: error?.response?.data?.msg });
+        setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
       }
     }
   };

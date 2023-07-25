@@ -6,6 +6,8 @@ import React from "react";
 import { IoClose } from "react-icons/io5";
 
 const ConfirmEditGradeLevel = (props) => {
+  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
+  const [hasSubmitted, setHasSubmitted] = React.useState(false);
   const [confirmation, setConfirmation] = React.useState("");
 
   const { data: session } = useSession();
@@ -19,7 +21,15 @@ const ConfirmEditGradeLevel = (props) => {
   const editGrade = async (e) => {
     e.preventDefault();
 
+    setHasSubmitted(true);
+
     if (confirmation !== props.confirmation) {
+      setHasSubmitted(false);
+      setMessage({
+        active: true,
+        msg: "The confirmation does not match",
+        type: "warning",
+      });
       return;
     }
 
@@ -35,6 +45,7 @@ const ConfirmEditGradeLevel = (props) => {
         props.getUserData();
       }
     } catch (error) {
+      setHasSubmitted(false);
       console.log(error);
     }
   };
@@ -79,7 +90,9 @@ const ConfirmEditGradeLevel = (props) => {
 
           <button
             type="submit"
-            className="w-full text-center font-poppins text-sm bg-prmColor font-bold rounded-full p-2 t:w-fit t:px-10 shadow-solid shadow-indigo-900 text-scndColor"
+            disabled={hasSubmitted}
+            className="w-full text-center font-poppins text-sm bg-prmColor font-bold rounded-full p-2 
+                    t:w-fit t:px-10 shadow-solid shadow-indigo-900 text-scndColor disabled:saturate-50"
           >
             Apply Changes
           </button>

@@ -11,9 +11,11 @@ import ClientPageHeader from "@/src/src/client/global/PageHeader";
 
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
+import Message from "@/src/src/components/global/Message";
 
 const Minigames = () => {
   const [counts, setCounts] = React.useState({});
+  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -30,6 +32,7 @@ const Minigames = () => {
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   }, [url, user, setCounts]);
 
@@ -42,6 +45,8 @@ const Minigames = () => {
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <ClientPageHeader mainHeader="Readefine" subHeader="Minigames" />
+
+      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
 
       <div
         className="cstm-flex-col gap-5 justify-start w-full transition-all

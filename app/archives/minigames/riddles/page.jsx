@@ -15,7 +15,7 @@ import { AiFillHeart } from "react-icons/ai";
 const ClientRiddles = () => {
   const [riddleData, setRiddleData] = React.useState({});
   const [correctWord, setCorrectWord] = React.useState([]);
-  const [message, setMessage] = React.useState({ msg: "", active: false });
+  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
   const [canSeeTutorial, setCanSeeTutorial] = React.useState(false);
 
   const [guess, setGuess] = React.useState({ letters: [], letterPos: 0 });
@@ -139,11 +139,11 @@ const ClientRiddles = () => {
 
       // note user if done recording
       if (data) {
-        setMessage({ active: true, msg: "Your game is noted!" });
+        setMessage({ active: true, msg: "Your game is noted!", type: "info" });
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg });
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   }, [entryGuesses, riddleData?.riddle_id, timer, url, user?.token]);
 
@@ -168,6 +168,7 @@ const ClientRiddles = () => {
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   };
 

@@ -5,17 +5,19 @@ import axios from "axios";
 import FilePreview from "../../components/global/FilePreview";
 import FileViewer from "../../components/global/FileViewer";
 import * as fileFns from "../../functions/fileFns";
+import EditInput from "../../components/profile/EditInput";
+import ActionLabel from "../../components/global/ActionLabel";
 
 import { IoClose } from "react-icons/io5";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
-import ActionLabel from "../../components/global/ActionLabel";
 import { BiImage } from "react-icons/bi";
-import EditInput from "../../components/profile/EditInput";
 import { CiUser } from "react-icons/ci";
 
 const EditMain = (props) => {
   const [userData, setUserData] = React.useState({});
+  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
+  const [hasSubmitted, setHasSubmitted] = React.useState(false);
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -39,7 +41,11 @@ const EditMain = (props) => {
     });
   };
 
-  const editMain = async () => {
+  const editMain = async (e) => {
+    e.preventDefault();
+
+    setHasSubmitted(true);
+
     let image = userData?.image;
 
     if (userData?.rawFile) {
@@ -65,6 +71,7 @@ const EditMain = (props) => {
         props.getUserData();
       }
     } catch (error) {
+      setHasSubmitted(false);
       console.log(error);
     }
   };
@@ -95,7 +102,10 @@ const EditMain = (props) => {
         <IoClose className="scale-150 text-prmColor" />
       </button>
 
-      <div className="cstm-w-limit cstm-flex-col gap-5 w-full h-auto justify-start">
+      <form
+        onSubmit={(e) => editMain(e)}
+        className="cstm-w-limit cstm-flex-col gap-5 w-full h-auto justify-start"
+      >
         <div className="cstm-flex-col gap-5 justify-start w-full t:w-10/12 l-l:w-8/12">
           <div className="cstm-flex-col p-5 bg-white w-full rounded-2xl shadow-solid gap-2">
             {userData?.file?.src ? (
@@ -130,7 +140,7 @@ const EditMain = (props) => {
               </label>
 
               {userData?.image ? (
-                <button onClick={clearUpload} className="cstm-bg-hover">
+                <button type="button" onClick={clearUpload} className="cstm-bg-hover">
                   <IoClose className="scale-150 text-prmColor" />
                 </button>
               ) : null}
@@ -171,12 +181,13 @@ const EditMain = (props) => {
         </div>
 
         <button
-          onClick={editMain}
+          type="submit"
+          disabled={hasSubmitted}
           className="w-full rounded-full bg-prmColor p-2 text-sm text-scndColor font-bold t:w-40 shadow-solid shadow-indigo-900"
         >
           Save Changes
         </button>
-      </div>
+      </form>
     </div>
   );
 };

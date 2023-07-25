@@ -10,7 +10,7 @@ import { useGlobalContext } from "@/src/context";
 
 const Verify = ({ params }) => {
   const [status, setStatus] = React.useState("verifying");
-  const [message, setMessage] = React.useState({ msg: "", active: false });
+  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
 
   const { url } = useGlobalContext();
   const token = params?.token;
@@ -28,7 +28,7 @@ const Verify = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg });
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   }, [url, token, setStatus]);
 

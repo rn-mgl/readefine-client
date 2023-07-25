@@ -11,9 +11,11 @@ import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { BsArrowLeft, BsDot, BsTrophyFill } from "react-icons/bs";
 import { BiMedal } from "react-icons/bi";
+import Message from "@/src/src/components/global/Message";
 
 const SingleReward = ({ params }) => {
   const [rewardData, setRewardData] = React.useState({});
+  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -32,6 +34,7 @@ const SingleReward = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   }, [url, user, decodedRewardId]);
 
@@ -44,6 +47,8 @@ const SingleReward = ({ params }) => {
   return (
     <div className="w-full cstm-flex-col p-5 gap-2 t:gap-5 justify-start bg-accntColor max-h-screen h-screen">
       <ClientPageHeader mainHeader="Readefine" subHeader="Your Reward" />
+
+      {message ? <Message message={message} setMessage={setMessage} /> : null}
 
       <div className="cstm-w-limit justify-start cstm-flex-col w-full relative z-10 h-auto">
         <div className="cstm-flex-col gap-2 w-full t:w-10/12 l-l:w-8/12 h-auto">
