@@ -8,20 +8,23 @@ import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { typeConversion } from "../../functions/typeConversion";
 import { inputDate } from "../../functions/localDate";
+import Message from "../../components/global/Message";
 
 const FindRewards = (props) => {
   const [rewards, setRewards] = React.useState([]);
+  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
+
   const [searchFilter, setSearchFilter] = React.useState({
     toSearch: "reward_name",
     searchKey: "",
   });
-  const [sortFilter, setSortFilter] = React.useState({ toSort: "reward_name", sortMode: "ASC" });
   const [dateRangeFilter, setDateRangeFilter] = React.useState({
     from: "",
     to: inputDate(new Date().toLocaleDateString()),
   });
-  const { data: session } = useSession({ required: true });
+  const [sortFilter, setSortFilter] = React.useState({ toSort: "reward_name", sortMode: "ASC" });
 
+  const { data: session } = useSession({ required: true });
   const user = session?.user?.name;
   const { url } = useGlobalContext();
 
@@ -78,6 +81,7 @@ const FindRewards = (props) => {
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   }, [url, user, setRewards, searchFilter, sortFilter, dateRangeFilter]);
 
@@ -89,6 +93,8 @@ const FindRewards = (props) => {
 
   return (
     <div className="p-5 h-full overflow-y-auto cstm-scrollbar backdrop-blur-md bg-black bg-opacity-20 fixed top-0 left-0 w-full min-h-screen cstm-flex-col gap-2 justify-start  z-20">
+      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+
       <button
         onClick={props.handleCanSelectReward}
         className="ml-auto cstm-flex-col w-fit z-20 cstm-bg-hover"

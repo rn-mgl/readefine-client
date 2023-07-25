@@ -6,10 +6,13 @@ import { IoClose } from "react-icons/io5";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useGlobalContext } from "@/src/context";
-import InputComp from "../../components/input/InputComp";
+
+import Message from "../../components/global/Message";
 
 const DeleteReward = (props) => {
   const [confirmation, setConfirmation] = React.useState("");
+  const [hasSubmitted, setHasSubmitted] = React.useState(false);
+  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
 
   const { data: session } = useSession();
 
@@ -26,7 +29,11 @@ const DeleteReward = (props) => {
   const deleteReward = async (e) => {
     e.preventDefault();
 
+    setHasSubmitted(true);
+
     if (confirmation !== props.confirmation) {
+      setHasSubmitted(false);
+      setMessage({ active: true, msg: "The confirmation does not match.", type: "error" });
       return;
     }
 
@@ -40,11 +47,15 @@ const DeleteReward = (props) => {
       }
     } catch (error) {
       console.log(error);
+      setHasSubmitted(true);
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   };
 
   return (
     <div className="w-full min-h-screen backdrop-blur-md fixed z-30 top-0 left-0 p-5 cstm-flex-col justify-start">
+      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+
       <button onClick={props.handleCanDeleteReward} className="cstm-bg-hover ml-auto">
         <IoClose className="text-prmColor scale-150 " />
       </button>
@@ -82,7 +93,9 @@ const DeleteReward = (props) => {
 
           <button
             type="submit"
-            className="w-full text-center font-poppins text-sm font-normal bg-prmColor text-accntColor rounded-full p-2"
+            disabled={hasSubmitted}
+            className="w-full text-center font-poppins text-sm font-normal 
+                    bg-prmColor text-accntColor rounded-full p-2 disabled:saturate-50"
           >
             Confirm Deletion
           </button>

@@ -226,7 +226,7 @@ const Decipher = () => {
 
   return (
     <div className="bg-accntColor p-4 cstm-flex-col justify-start w-full min-h-screen">
-      {message ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
 
       {gameOver.over ? (
         <Gameover

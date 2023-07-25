@@ -8,8 +8,11 @@ import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import axios from "axios";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import Message from "../../components/global/Message";
 
 const ChangePassword = (props) => {
+  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
+  const [hasSubmitted, setHasSubmitted] = React.useState(false);
   const [passwordData, setPasswordData] = React.useState({
     oldPassword: { text: "", type: "password" },
     newPassword: { text: "", type: "password" },
@@ -42,9 +45,17 @@ const ChangePassword = (props) => {
   const changePassword = async (e) => {
     e.preventDefault();
 
+    setHasSubmitted(true);
+
     const { oldPassword, newPassword, repeatNewPassword } = passwordData;
 
     if (newPassword.text !== repeatNewPassword.text) {
+      setHasSubmitted(false);
+      setMessage({
+        active: true,
+        msg: "The new password and retyped password does not match.",
+        type: "error",
+      });
       return;
     }
 
@@ -60,11 +71,14 @@ const ChangePassword = (props) => {
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   };
 
   return (
     <div className="fixed w-full h-full cstm-flex-col backdrop-blur-md z-20 p-5 top-0 left-0 gap-5 cstm-scrollbar overflow-y-auto">
+      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+
       <button onClick={props.handleCanChangePassword} className="cstm-bg-hover ml-auto">
         <IoClose className="scale-150 text-prmColor" />
       </button>
@@ -124,7 +138,9 @@ const ChangePassword = (props) => {
 
           <button
             type="submit"
-            className="bg-prmColor p-2 rounded-full w-full text-white t:w-fit t:px-10 text-sm"
+            disabled={hasSubmitted}
+            className="bg-prmColor p-2 rounded-full w-full 
+                    text-white t:w-fit t:px-10 text-sm disabled:saturate-50"
           >
             Save Changes
           </button>
