@@ -1,7 +1,11 @@
+"use client";
 import React from "react";
 import FileViewer from "../../components/global/FileViewer";
 import Confetti from "react-confetti";
 import Link from "next/link";
+
+import rewardMusic from "../../../public/music/reward/Reward Music.mp3";
+import rewardNotice from "../../../public/music/reward/Reward Notice.mp3";
 
 import { IoClose } from "react-icons/io5";
 import { BsArrowRight } from "react-icons/bs";
@@ -48,6 +52,14 @@ const ReceiveAchievement = (props) => {
     <div className="w-full h-screen fixed top-0 left-0 p-5 z-[60] backdrop-blur-md cstm-flex-col">
       {buttonAction}
       <Confetti width={window?.innerWidth} height={window?.innerHeight} className="z-10" />
+
+      <audio autoPlay>
+        <source src={rewardNotice} type="audio/mp3" />
+      </audio>
+
+      <audio autoPlay loop>
+        <source src={rewardMusic} type="audio/mp3" />
+      </audio>
 
       <div className="cstm-flex-row gap-5 w-full h-full overflow-x-auto scrollbar-none">
         {achievements}

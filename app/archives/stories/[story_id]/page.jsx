@@ -189,6 +189,11 @@ const SingleStory = ({ params }) => {
 
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
 
+      <ReceiveAchievement
+        // achievements={accomplishedAchievement.achievements}
+        handleAccomplishedAchievement={handleAccomplishedAchievement}
+      />
+
       {accomplishedAchievement.accomplished ? (
         <ReceiveAchievement
           achievements={accomplishedAchievement.achievements}
