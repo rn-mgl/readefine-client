@@ -8,6 +8,8 @@ import Gameover from "@/src/src/components/minigames/Gameover";
 import Message from "@/src/src/components/global/Message";
 import RiddleTutorial from "@/src/src/components/minigames/riddles/RiddleTutorial";
 
+import happy from "../../../../public/music/minigames/Happy.mp3";
+
 import { useGlobalContext } from "@/src/context";
 import { useSession } from "next-auth/react";
 import { AiFillHeart } from "react-icons/ai";
@@ -26,9 +28,34 @@ const ClientRiddles = () => {
   const [isPlaying, setIsPlaying] = React.useState(false);
   const [gameOver, setGameOver] = React.useState({ over: false, status: "" });
 
+  const [isMuted, setIsMuted] = React.useState(false);
+  const audioRef = React.useRef();
+
   const { data: session } = useSession();
   const { url } = useGlobalContext();
   const user = session?.user?.name;
+
+  // change audio volume
+  const handleVolume = ({ value }) => {
+    if (typeof audioRef.current.volume !== "undefined") {
+      audioRef.current.volume = value / 100;
+    }
+    setIsMuted(false);
+  };
+
+  // mute volume
+  const handleMuteVolume = () => {
+    if (typeof audioRef.current.volume !== "undefined") {
+      setIsMuted((prev) => {
+        if (prev) {
+          audioRef.current.volume = 1;
+        } else {
+          audioRef.current.volume = 0;
+        }
+        return !prev;
+      });
+    }
+  };
 
   // toggle can see tutorial
   const handleCanSeeTutorial = () => {
@@ -225,20 +252,30 @@ const ClientRiddles = () => {
             remainingLives={remainingLives}
             entryGuesses={entryGuesses}
             timer={timer}
+            isMuted={isMuted}
             setEntryGuesses={setEntryGuesses}
             handleIsPlaying={handleIsPlaying}
             deleteCharacter={deleteCharacter}
             handleInput={handleInput}
             submitGuess={submitGuess}
+            handleVolume={handleVolume}
+            handleMuteVolume={handleMuteVolume}
           />
         ) : (
           <InitRiddle
             to="/archives/minigames"
+            isMuted={isMuted}
             getRiddle={getRiddle}
             handleIsPlaying={handleIsPlaying}
             handleCanSeeTutorial={handleCanSeeTutorial}
+            handleVolume={handleVolume}
+            handleMuteVolume={handleMuteVolume}
           />
         )}
+
+        <audio autoPlay loop ref={audioRef}>
+          <source src={happy} type="audio/mp3" />
+        </audio>
       </div>
     </div>
   );

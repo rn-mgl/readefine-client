@@ -1,6 +1,12 @@
 import Link from "next/link";
 import React from "react";
-import { BsArrowLeft, BsPatchQuestionFill, BsQuestionCircle } from "react-icons/bs";
+import {
+  BsArrowLeft,
+  BsPatchQuestionFill,
+  BsQuestionCircle,
+  BsFillVolumeMuteFill,
+  BsFillVolumeUpFill,
+} from "react-icons/bs";
 
 const InitRiddle = (props) => {
   const letters = "RIDDLES".split("").map((r, i) => {
@@ -18,6 +24,23 @@ const InitRiddle = (props) => {
 
   return (
     <div className="w-full cstm-flex-col relative h-[95vh] gap-5 overflow-hidden animate-fadeIn cstm-w-limit">
+      <div className="absolute top-10 left-0 cstm-flex-col gap-2 z-10 group l-s:top-0">
+        <button className="cstm-bg-hover " onClick={props.handleMuteVolume}>
+          {props.isMuted ? (
+            <BsFillVolumeMuteFill className="scale-125" />
+          ) : (
+            <BsFillVolumeUpFill className="scale-125" />
+          )}
+        </button>
+
+        <input
+          onChange={(e) => props.handleVolume(e.target)}
+          defaultValue={20}
+          type="range"
+          className="absolute bottom-0 rotate-90 translate-y-12 hidden group-hover:flex p-2"
+        />
+      </div>
+
       <div className="absolute top-0 right-0 cstm-flex-col gap-2">
         <Link href={props.to} className="cstm-bg-hover ">
           <BsArrowLeft className="scale-125" />

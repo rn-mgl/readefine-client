@@ -9,6 +9,8 @@ import Gameover from "@/src/src/components/minigames/Gameover";
 import Message from "@/src/src/components/global/Message";
 import DangleTutorial from "@/src/src/components/minigames/dangle/DangleTutorial";
 
+import arcade from "../../../../public/music/minigames/Arcade.mp3";
+
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { AiFillHeart } from "react-icons/ai";
@@ -29,9 +31,34 @@ const Dangle = () => {
   const [gameOver, setGameOver] = React.useState({ over: false, status: "" });
   const [isPlaying, setIsPlaying] = React.useState(false);
 
+  const [isMuted, setIsMuted] = React.useState(false);
+  const audioRef = React.useRef();
+
   const { data: session } = useSession({ required: true });
   const { url } = useGlobalContext();
   const user = session?.user?.name;
+
+  // change audio volume
+  const handleVolume = ({ value }) => {
+    if (typeof audioRef.current.volume !== "undefined") {
+      audioRef.current.volume = value / 100;
+    }
+    setIsMuted(false);
+  };
+
+  // mute volume
+  const handleMuteVolume = () => {
+    if (typeof audioRef.current.volume !== "undefined") {
+      setIsMuted((prev) => {
+        if (prev) {
+          audioRef.current.volume = 1;
+        } else {
+          audioRef.current.volume = 0;
+        }
+        return !prev;
+      });
+    }
+  };
 
   // toggle can see tutorial
   const handleCanSeeTutorial = () => {
@@ -230,6 +257,10 @@ const Dangle = () => {
     }
   }, [gameOver, handleGameOver]);
 
+  // React.useEffect(() => {
+
+  // }, [])
+
   return (
     <div className="w-full min-h-screen bg-accntColor p-4 cstm-flex-col justify-start">
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
@@ -265,21 +296,31 @@ const Dangle = () => {
           guess={guess}
           timer={timer}
           entryGuesses={entryGuesses}
+          isMuted={isMuted}
           handleIsPlaying={handleIsPlaying}
           handleInput={handleInput}
           deleteCharacter={deleteCharacter}
           submitGuess={submitGuess}
           handleCanSeeHint={handleCanSeeHint}
+          handleVolume={handleVolume}
+          handleMuteVolume={handleMuteVolume}
         />
       ) : (
         <InitDangle
           to={`/archives/minigames`}
           isPlaying={isPlaying}
+          isMuted={isMuted}
           getRandomWord={getRandomWord}
           handleIsPlaying={handleIsPlaying}
           handleCanSeeTutorial={handleCanSeeTutorial}
+          handleVolume={handleVolume}
+          handleMuteVolume={handleMuteVolume}
         />
       )}
+
+      <audio autoPlay loop ref={audioRef}>
+        <source src={arcade} type="audio/mp3" />
+      </audio>
     </div>
   );
 };

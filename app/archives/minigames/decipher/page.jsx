@@ -8,6 +8,8 @@ import InitDecipher from "@/src/src/components/minigames/decipher/InitDecipher";
 import DecipherGame from "@/src/src/components/minigames/decipher/DecipherGame";
 import DecipherTutorial from "@/src/src/components/minigames/decipher/DecipherTutorial";
 
+import quirky from "../../../../public/music/minigames/Quirky.mp3";
+
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { AiFillHeart } from "react-icons/ai";
@@ -27,9 +29,34 @@ const Decipher = () => {
   const [gameOver, setGameOver] = React.useState({ over: false, status: "" });
   const [timer, setTimer] = React.useState(0);
 
+  const [isMuted, setIsMuted] = React.useState(false);
+  const audioRef = React.useRef();
+
   const { data: session } = useSession();
   const { url } = useGlobalContext();
   const user = session?.user?.name;
+
+  // change audio volume
+  const handleVolume = ({ value }) => {
+    if (typeof audioRef.current.volume !== "undefined") {
+      audioRef.current.volume = value / 100;
+    }
+    setIsMuted(false);
+  };
+
+  // mute volume
+  const handleMuteVolume = () => {
+    if (typeof audioRef.current.volume !== "undefined") {
+      setIsMuted((prev) => {
+        if (prev) {
+          audioRef.current.volume = 1;
+        } else {
+          audioRef.current.volume = 0;
+        }
+        return !prev;
+      });
+    }
+  };
 
   // toggle can see tutorial
   const handleCanSeeTutorial = () => {
@@ -279,20 +306,30 @@ const Decipher = () => {
           guess={guess}
           remainingLives={remainingLives}
           timer={timer}
+          isMuted={isMuted}
           incrementLetter={incrementLetter}
           decrementLetter={decrementLetter}
           resetGuesses={resetGuesses}
           handleIsPlaying={handleIsPlaying}
           submitGuess={submitGuess}
+          handleVolume={handleVolume}
+          handleMuteVolume={handleMuteVolume}
         />
       ) : (
         <InitDecipher
           to="/archives/minigames"
+          isMuted={isMuted}
           getWord={getWord}
           handleIsPlaying={handleIsPlaying}
           handleCanSeeTutorial={handleCanSeeTutorial}
+          handleVolume={handleVolume}
+          handleMuteVolume={handleMuteVolume}
         />
       )}
+
+      <audio autoPlay loop ref={audioRef}>
+        <source src={quirky} type="audio/mp3" />
+      </audio>
     </div>
   );
 };

@@ -5,7 +5,12 @@ import Dangling from "./Dangling";
 import ActionLabel from "../../global/ActionLabel";
 import DangleEntries from "./DangleEntries";
 
-import { BsArrowLeft, BsFillLightbulbFill } from "react-icons/bs";
+import {
+  BsArrowLeft,
+  BsFillLightbulbFill,
+  BsFillVolumeMuteFill,
+  BsFillVolumeUpFill,
+} from "react-icons/bs";
 
 const DangleGame = (props) => {
   const dangles = props.correctWord?.map((c, i) => {
@@ -25,11 +30,28 @@ const DangleGame = (props) => {
 
   return (
     <div className="w-full h-[95vh] cstm-w-limit cstm-flex-col relative">
+      <div className="absolute top-10 left-0 cstm-flex-col gap-2 z-10 group l-s:top-0">
+        <button className="cstm-bg-hover " onClick={props.handleMuteVolume}>
+          {props.isMuted ? (
+            <BsFillVolumeMuteFill className="scale-125" />
+          ) : (
+            <BsFillVolumeUpFill className="scale-125" />
+          )}
+        </button>
+
+        <input
+          onChange={(e) => props.handleVolume(e.target)}
+          defaultValue={20}
+          type="range"
+          className="absolute bottom-0 rotate-90 translate-y-12 hidden group-hover:flex p-2"
+        />
+      </div>
+
       <button
         className="cstm-bg-hover ml-auto absolute top-0 right-0"
         onClick={props.handleIsPlaying}
       >
-        <BsArrowLeft className="text-black scale-100 m-l:scale-150" />
+        <BsArrowLeft className="text-black scale-125" />
       </button>
 
       <div className="cstm-flex-col gap-2 absolute right-0 top-12 t:gap-3">
