@@ -1,10 +1,13 @@
 "use client";
-import React, { Suspense } from "react";
+import React from "react";
 import ClientPageHeader from "@/src/src/client/global/PageHeader";
 import RewardsCards from "@/src/src/client/rewards/RewardsCards";
 import axios from "axios";
 import RewardsFilter from "@/src/src/client/rewards/RewardsFilter";
 import Message from "@/src/src/components/global/Message";
+import Image from "next/image";
+
+import noReward from "../../../public/profile/NoReward.svg";
 
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
@@ -99,7 +102,7 @@ const ClientRewards = () => {
 
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
 
-      <div className="w-full cstm-w-limit cstm-flex-col gap-2">
+      <div className="w-full cstm-w-limit cstm-flex-col gap-2 relative">
         <RewardsFilter
           searchFilter={searchFilter}
           sortFilter={sortFilter}
@@ -115,7 +118,14 @@ const ClientRewards = () => {
           className="cstm-flex-col gap-5 justify-start w-full transition-all
                   t:cstm-flex-row t:flex-wrap"
         >
-          <Suspense fallback={<p>Loading...</p>}> {rewardsCards}</Suspense>
+          {rewards.length ? (
+            rewardsCards
+          ) : (
+            <div className="cstm-flex-col absolute top-2/4 translate-y-2/4 left-2/4 -translate-x-2/4 w-full">
+              <Image src={noReward} alt="empty" loading="lazy" width={220} draggable={false} />
+              <p className="text-xs opacity-80">No Rewards Found</p>
+            </div>
+          )}
         </div>
       </div>
     </div>

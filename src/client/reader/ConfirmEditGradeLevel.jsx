@@ -92,7 +92,7 @@ const ConfirmEditGradeLevel = (props) => {
             type="submit"
             disabled={hasSubmitted}
             className="w-full text-center font-poppins text-sm bg-prmColor font-bold rounded-full p-2 
-                    t:w-fit t:px-10 shadow-solid shadow-indigo-900 text-scndColor disabled:saturate-50"
+                    t:w-fit t:px-10 shadow-solid shadow-indigo-900 text-scndColor disabled:saturate-0"
           >
             Apply Changes
           </button>

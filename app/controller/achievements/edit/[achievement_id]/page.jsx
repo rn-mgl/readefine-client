@@ -185,7 +185,7 @@ const EditAchievement = ({ params }) => {
             type="submit"
             disabled={hasSubmitted}
             className="w-fit text-center font-poppins ml-auto text-sm font-normal bg-scndColor
-                     text-prmColor rounded-full p-2 px-4 t:px-10 disabled:saturate-50"
+                     text-prmColor rounded-full p-2 px-4 t:px-10 disabled:saturate-0"
           >
             Edit Achievement
           </button>

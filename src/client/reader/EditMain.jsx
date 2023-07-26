@@ -13,6 +13,7 @@ import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { BiImage } from "react-icons/bi";
 import { CiUser } from "react-icons/ci";
+import Message from "../../components/global/Message";
 
 const EditMain = (props) => {
   const [userData, setUserData] = React.useState({});
@@ -71,8 +72,9 @@ const EditMain = (props) => {
         props.getUserData();
       }
     } catch (error) {
-      setHasSubmitted(false);
       console.log(error);
+      setHasSubmitted(false);
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   };
 
@@ -87,6 +89,7 @@ const EditMain = (props) => {
       }
     } catch (error) {
       console.log(error);
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   }, [url, user, setUserData]);
 
@@ -97,7 +100,12 @@ const EditMain = (props) => {
   }, [user, getUserData]);
 
   return (
-    <div className="fixed w-full h-full cstm-flex-col backdrop-blur-md z-20 justify-start p-5 top-0 left-0 gap-5 cstm-scrollbar overflow-y-auto">
+    <div
+      className="fixed w-full h-full cstm-flex-col backdrop-blur-md z-20 
+                justify-start p-5 top-0 left-0 gap-5 cstm-scrollbar overflow-y-auto"
+    >
+      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+
       <button onClick={props.handleCanEditMain} className="cstm-bg-hover ml-auto">
         <IoClose className="scale-150 text-prmColor" />
       </button>
@@ -108,22 +116,18 @@ const EditMain = (props) => {
       >
         <div className="cstm-flex-col gap-5 justify-start w-full t:w-10/12 l-l:w-8/12">
           <div className="cstm-flex-col p-5 bg-white w-full rounded-2xl shadow-solid gap-2">
-            {userData?.file?.src ? (
-              <FilePreview
-                src={userData?.file?.src}
-                purpose="Profile Picture"
-                name={userData?.file?.name}
-                clearFiles={() => fileFns.clearFiles(setUserData)}
-              />
-            ) : userData?.image ? (
-              <FileViewer src={userData?.image} />
-            ) : (
-              <div className="bg-scndColor bg-opacity-10 w-full h-40 rounded-2xl cstm-flex-col p-2">
-                <p className="text-prmColor font-bold text-sm text-center">
-                  You do not have a profile picture.
-                </p>
-              </div>
-            )}
+            <div
+              style={{
+                backgroundImage: userData?.file?.src
+                  ? `url(${userData?.file?.src})`
+                  : userData?.image
+                  ? `url(${userData?.image})`
+                  : null,
+              }}
+              className="w-56 h-56 min-w-[14rem] min-h-[14rem] bg-prmColor bg-opacity-10
+                        bg-center bg-cover rounded-full border-4 border-prmColor
+                        l-l:w-80 l-l:h-80 l-l:min-w-[20rem] l-l:min-h-[20rem] "
+            />
 
             <div className="w-full cstm-flex-row">
               <label className="cstm-bg-hover cursor-pointer w-fit group relative mr-auto">
@@ -140,7 +144,23 @@ const EditMain = (props) => {
               </label>
 
               {userData?.image ? (
-                <button type="button" onClick={clearUpload} className="cstm-bg-hover">
+                <button
+                  type="button"
+                  onClick={clearUpload}
+                  className="cstm-bg-hover group relative"
+                >
+                  <ActionLabel label="Remove Image" />
+                  <IoClose className="scale-150 text-prmColor" />
+                </button>
+              ) : null}
+
+              {userData?.file?.src ? (
+                <button
+                  type="button"
+                  onClick={() => fileFns.clearFiles(setUserData)}
+                  className="cstm-bg-hover group relative"
+                >
+                  <ActionLabel label="Remove Image" />
                   <IoClose className="scale-150 text-prmColor" />
                 </button>
               ) : null}
@@ -183,7 +203,9 @@ const EditMain = (props) => {
         <button
           type="submit"
           disabled={hasSubmitted}
-          className="w-full rounded-full bg-prmColor p-2 text-sm text-scndColor font-bold t:w-40 shadow-solid shadow-indigo-900"
+          className="w-full rounded-full bg-prmColor p-2 text-sm 
+                  text-scndColor font-bold t:w-40 shadow-solid shadow-indigo-900 
+                  disabled:saturate-0"
         >
           Save Changes
         </button>

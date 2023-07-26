@@ -141,7 +141,7 @@ const ChangePassword = (props) => {
             type="submit"
             disabled={hasSubmitted}
             className="bg-prmColor p-2 rounded-full w-full text-scndColor shadow-solid 
-                      shadow-indigo-900 font-bold t:w-fit t:px-10 text-sm disabled:saturate-50"
+                      shadow-indigo-900 font-bold t:w-fit t:px-10 text-sm disabled:saturate-0"
           >
             Save Changes
           </button>

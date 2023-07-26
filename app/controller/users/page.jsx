@@ -4,12 +4,15 @@ import AdminPageHeader from "@/src/src/admin/global/PageHeader";
 import UsersFilter from "@/src/src/admin/users/UsersFilter";
 import axios from "axios";
 import Message from "@/src/src/components/global/Message";
+import UserRow from "@/src/src/admin/users/UserRow";
+
+import noUsers from "../../../public/profile/NoTest.svg";
 
 import { useGlobalContext } from "@/src/context";
 import { inputDate } from "@/src/src/functions/localDate";
 import { useSession } from "next-auth/react";
 import { cipher } from "@/src/src/functions/security";
-import UserRow from "@/src/src/admin/users/UserRow";
+import Image from "next/image";
 
 const AdminUsers = () => {
   const [users, setUsers] = React.useState([]);
@@ -121,26 +124,35 @@ const AdminUsers = () => {
       />
 
       {/* users container */}
-      <table
-        className="table-fixed p-4 h-[75vh] cstm-scrollbar rounded-md cstm-flex-col overflow-auto w-full justify-start items-start bg-white text-sm gap-5 
-        cstm-w-limit border-collapse"
-      >
-        <thead className="w-full text-sm">
-          <tr className="p-2 cstm-flex-row justify-start text-center text-prmColor gap-5">
-            <th>Image</th>
-            <th>Email</th>
-            <th>Last Name</th>
-            <th>First Name</th>
-            <th>Username</th>
-            <th>Lexile</th>
-            <th>Grade</th>
-            <th>Date Joined</th>
-            <th>View</th>
-          </tr>
-        </thead>
+      <div className="cstm-w-limit w-full cstm-flex-col gap-5 relative">
+        {users.length ? (
+          <table
+            className="table-fixed p-4 h-[75vh] cstm-scrollbar rounded-md cstm-flex-col  
+                  overflow-auto w-full justify-start items-start bg-white text-sm gap-5 border-collapse"
+          >
+            <thead className="w-full text-sm">
+              <tr className="p-2 cstm-flex-row justify-start text-center text-prmColor gap-5">
+                <th>Image</th>
+                <th>Email</th>
+                <th>Last Name</th>
+                <th>First Name</th>
+                <th>Username</th>
+                <th>Lexile</th>
+                <th>Grade</th>
+                <th>Date Joined</th>
+                <th>View</th>
+              </tr>
+            </thead>
 
-        <tbody className="w-full text-sm">{userRow}</tbody>
-      </table>
+            <tbody className="w-full text-sm relative">{userRow}</tbody>
+          </table>
+        ) : (
+          <div className="cstm-flex-col absolute top-2/4 translate-y-2/4 left-2/4 -translate-x-2/4 w-full">
+            <Image src={noUsers} alt="empty" loading="lazy" width={220} draggable={false} />
+            <p className="text-xs opacity-80">No Users Found</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

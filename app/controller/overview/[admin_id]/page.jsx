@@ -10,6 +10,12 @@ import MainOverview from "@/src/src/admin/overview/MainOverview";
 import ActivityText from "@/src/src/admin/overview/ActivityText";
 import ChangePassword from "@/src/src/admin/overview/ChangePassword";
 import ComplementActivityText from "@/src/src/admin/overview/ComplementActivityText";
+import Message from "@/src/src/components/global/Message";
+
+import noGame from "../../../../public/profile/NoGame.svg";
+import noReads from "../../../../public/profile/NoReads.svg";
+import noReward from "../../../../public/profile/NoReward.svg";
+import noTest from "../../../../public/profile/NoTest.svg";
 
 import { decipher } from "@/src/src/functions/security";
 import { useSession } from "next-auth/react";
@@ -19,7 +25,6 @@ import { GiBrain, GiNotebook, GiSpellBook } from "react-icons/gi";
 import { ImCheckmark } from "react-icons/im";
 import { AiFillTrophy } from "react-icons/ai";
 import { RxActivityLog } from "react-icons/rx";
-import Message from "@/src/src/components/global/Message";
 
 const Overview = ({ params }) => {
   const [adminData, setAdminData] = React.useState({});
@@ -257,21 +262,69 @@ const Overview = ({ params }) => {
         </div>
 
         <div className="cstm-flex-col justify-start gap-5 t:gap-10 w-full">
-          <ActivityCard label="Story" activity={storyActivity} />
+          <ActivityCard
+            label="Story"
+            activity={storyActivity}
+            isEmpty={adminActivities?.storyData?.length === 0}
+            fillerImage={noReads}
+            fillerText="No activities found on stories."
+          />
 
-          <ActivityCard label="Story Content" activity={storyContentActivity} />
+          <ActivityCard
+            label="Story Content"
+            activity={storyContentActivity}
+            isEmpty={adminActivities?.storyData?.length === 0}
+            fillerImage={noReads}
+            fillerText="No activities found on story content."
+          />
 
-          <ActivityCard label="Test" activity={testActivity} />
+          <ActivityCard
+            label="Test"
+            activity={testActivity}
+            isEmpty={adminActivities?.testData?.length === 0}
+            fillerImage={noTest}
+            fillerText="No activities found on tests."
+          />
 
-          <ActivityCard label="Test Questions" activity={testQuestionsActivity} />
+          <ActivityCard
+            label="Test Questions"
+            activity={testQuestionsActivity}
+            isEmpty={adminActivities?.testQuestionData?.length === 0}
+            fillerImage={noTest}
+            fillerText="No activities found on test questions."
+          />
 
-          <ActivityCard label="Test Answers" activity={testAnswer} />
+          <ActivityCard
+            label="Test Answers"
+            activity={testAnswer}
+            isEmpty={adminActivities?.testAnswerData?.length === 0}
+            fillerImage={noTest}
+            fillerText="No activities found on test answers."
+          />
 
-          <ActivityCard label="Achievements" activity={achievementActivity} />
+          <ActivityCard
+            label="Achievements"
+            activity={achievementActivity}
+            isEmpty={adminActivities?.achievementData?.length === 0}
+            fillerImage={noReward}
+            fillerText="No activities found on achievements."
+          />
 
-          <ActivityCard label="Rewards" activity={rewardActivity} />
+          <ActivityCard
+            label="Rewards"
+            activity={rewardActivity}
+            isEmpty={adminActivities?.rewardData?.length === 0}
+            fillerImage={noReward}
+            fillerText="No activities found on rewards."
+          />
 
-          <ActivityCard label="Riddles" activity={riddlesActivity} />
+          <ActivityCard
+            label="Riddles"
+            activity={riddlesActivity}
+            isEmpty={adminActivities?.riddlesData?.length === 0}
+            fillerImage={noGame}
+            fillerText="No activities found on riddles."
+          />
         </div>
       </div>
     </div>

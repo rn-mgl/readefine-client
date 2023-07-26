@@ -5,6 +5,9 @@ import TestsCards from "@/src/src/admin/tests/TestsCards";
 import TestsFilter from "@/src/src/admin/tests/TestsFilter";
 import axios from "axios";
 import Message from "@/src/src/components/global/Message";
+import Image from "next/image";
+
+import noTest from "../../../public/profile/NoTest.svg";
 
 import { inputDate } from "@/src/src/functions/localDate";
 import { useSession } from "next-auth/react";
@@ -119,25 +122,32 @@ const AdminTests = () => {
       {/* show if has message pop up */}
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
 
-      {/* test filter */}
-      <TestsFilter
-        handleSearchFilter={handleSearchFilter}
-        handleDateRangeFilter={handleDateRangeFilter}
-        handleLexileRangeFilter={handleLexileRangeFilter}
-        handleSortFilter={handleSortFilter}
-        searchFilter={searchFilter}
-        lexileRangeFilter={lexileRangeFilter}
-        sortFilter={sortFilter}
-        dateRangeFilter={dateRangeFilter}
-      />
+      <div className="w-full cstm-w-limit cstm-flex-col gap-5 ">
+        {/* test filter */}
+        <TestsFilter
+          handleSearchFilter={handleSearchFilter}
+          handleDateRangeFilter={handleDateRangeFilter}
+          handleLexileRangeFilter={handleLexileRangeFilter}
+          handleSortFilter={handleSortFilter}
+          searchFilter={searchFilter}
+          lexileRangeFilter={lexileRangeFilter}
+          sortFilter={sortFilter}
+          dateRangeFilter={dateRangeFilter}
+        />
 
-      {/* all tests */}
-      <div className="w-full cstm-w-limit">
+        {/* all tests */}
         <div
-          className="cstm-flex-col gap-5 justify-start w-full transition-all 
+          className="cstm-flex-col gap-5 justify-start w-full transition-all relative 
                   t:cstm-flex-row t:flex-wrap"
         >
-          {testCards}
+          {tests.length ? (
+            testCards
+          ) : (
+            <div className="cstm-flex-col absolute top-2/4 translate-y-2/4 left-2/4 -translate-x-2/4 w-full">
+              <Image src={noTest} alt="empty" loading="lazy" width={220} draggable={false} />
+              <p className="text-xs opacity-80">No Tests Found</p>
+            </div>
+          )}
         </div>
       </div>
     </div>

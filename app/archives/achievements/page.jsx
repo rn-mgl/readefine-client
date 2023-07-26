@@ -5,6 +5,9 @@ import ClientPageHeader from "@/src/src/client/global/PageHeader";
 import axios from "axios";
 import AchievementPanel from "@/src/src/client/achievements/AchievementPanel";
 import Message from "@/src/src/components/global/Message";
+import Image from "next/image";
+
+import noReward from "../../../public/profile/NoReward.svg";
 
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
@@ -107,7 +110,7 @@ const ClientAchievements = () => {
 
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
 
-      <div className="w-full cstm-flex-col gap-2 cstm-w-limit">
+      <div className="w-full cstm-flex-col gap-5 cstm-w-limit ">
         <AchievementsFilter
           handleSearchFilter={handleSearchFilter}
           handleGoalRangeFilter={handleGoalRangeFilter}
@@ -117,8 +120,18 @@ const ClientAchievements = () => {
           sortFilter={sortFilter}
         />
 
-        <div className="w-full overflow-y-auto cstm-scrollbar cstm-flex-col gap-5 justify-start t:items-start p-5 bg-white rounded-2xl min-h-[75vh]">
-          <Suspense fallback={<p>Loading...</p>}> {achievementPanels}</Suspense>
+        <div
+          className="w-full overflow-y-auto cstm-scrollbar cstm-flex-col gap-5 justify-start 
+                      t:items-start p-5 bg-white rounded-2xl min-h-[75vh] relative"
+        >
+          {achievements.length ? (
+            achievementPanels
+          ) : (
+            <div className="cstm-flex-col absolute top-2/4 -translate-y-2/4 left-2/4 -translate-x-2/4 w-full">
+              <Image src={noReward} alt="empty" loading="lazy" width={220} draggable={false} />
+              <p className="text-xs opacity-80">No Achievements Found</p>
+            </div>
+          )}
         </div>
       </div>
     </div>

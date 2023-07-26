@@ -93,7 +93,7 @@ const DeleteAchievement = (props) => {
             type="submit"
             disabled={hasSubmitted}
             className="w-full text-center font-poppins text-sm font-normal 
-                    bg-prmColor text-accntColor rounded-full p-2 t:px-10 disabled:saturate-50"
+                    bg-prmColor text-accntColor rounded-full p-2 t:px-10 disabled:saturate-0"
           >
             Confirm Deletion
           </button>

@@ -5,8 +5,11 @@ import StoriesFilter from "@/src/src/client/stories/StoriesFilter";
 import StoriesCards from "@/src/src/client/stories/StoriesCards";
 import ClientPageHeader from "@/src/src/client/global/PageHeader";
 import Message from "@/src/src/components/global/Message";
-import React, { Suspense } from "react";
+import React from "react";
 import LowLexileTestMessage from "@/src/src/client/tests/LowLexileTestMessage";
+import Image from "next/image";
+
+import noReads from "../../../public/profile/NoReads.svg";
 
 import { useGlobalContext } from "@/src/context";
 import { useSession } from "next-auth/react";
@@ -157,7 +160,7 @@ const ClientStories = () => {
         />
       ) : null}
 
-      <div className="w-full cstm-w-limit cstm-flex-col gap-5">
+      <div className="w-full cstm-w-limit cstm-flex-col gap-5 ">
         <StoriesFilter
           handleSearchFilter={handleSearchFilter}
           handleLexileRangeFilter={handleLexileRangeFilter}
@@ -168,10 +171,17 @@ const ClientStories = () => {
         />
 
         <div
-          className="cstm-flex-col gap-5 justify-start w-full transition-all 
+          className="cstm-flex-col gap-5 justify-start w-full transition-all relative
                   t:cstm-flex-row t:flex-wrap"
         >
-          <Suspense fallback={<p>Loading...</p>}> {storiesCards}</Suspense>
+          {stories.length ? (
+            storiesCards
+          ) : (
+            <div className="cstm-flex-col absolute top-2/4 translate-y-2/4 left-2/4 -translate-x-2/4 w-full">
+              <Image src={noReads} alt="empty" loading="lazy" width={220} draggable={false} />
+              <p className="text-xs opacity-80">No Stories Found</p>
+            </div>
+          )}
         </div>
       </div>
     </div>

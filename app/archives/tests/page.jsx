@@ -1,9 +1,5 @@
 "use client";
-import React, { Suspense } from "react";
-import { inputDate } from "@/src/src/functions/localDate";
-import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/src/context";
-
+import React from "react";
 import TestsCards from "@/src/src/client/tests/TestsCards";
 import TestsFilter from "@/src/src/client/tests/TestsFilter";
 import axios from "axios";
@@ -11,6 +7,13 @@ import ClientPageHeader from "@/src/src/client/global/PageHeader";
 import Message from "@/src/src/components/global/Message";
 import LowLexileTestMessage from "@/src/src/client/tests/LowLexileTestMessage";
 import TestRecord from "@/src/src/client/tests/TestRecord";
+import Image from "next/image";
+
+import noTest from "../../../public/profile/NoTest.svg";
+
+import { inputDate } from "@/src/src/functions/localDate";
+import { useSession } from "next-auth/react";
+import { useGlobalContext } from "@/src/context";
 import { cipher } from "@/src/src/functions/security";
 
 const ClientTests = () => {
@@ -170,23 +173,30 @@ const ClientTests = () => {
 
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
 
-      <TestsFilter
-        handleSearchFilter={handleSearchFilter}
-        handleDateRangeFilter={handleDateRangeFilter}
-        handleLexileRangeFilter={handleLexileRangeFilter}
-        handleSortFilter={handleSortFilter}
-        searchFilter={searchFilter}
-        lexileRangeFilter={lexileRangeFilter}
-        sortFilter={sortFilter}
-        dateRangeFilter={dateRangeFilter}
-      />
+      <div className="w-full cstm-w-limit cstm-flex-col gap-5 ">
+        <TestsFilter
+          handleSearchFilter={handleSearchFilter}
+          handleDateRangeFilter={handleDateRangeFilter}
+          handleLexileRangeFilter={handleLexileRangeFilter}
+          handleSortFilter={handleSortFilter}
+          searchFilter={searchFilter}
+          lexileRangeFilter={lexileRangeFilter}
+          sortFilter={sortFilter}
+          dateRangeFilter={dateRangeFilter}
+        />
 
-      <div className="w-full cstm-w-limit">
         <div
-          className="cstm-flex-col gap-5 justify-start w-full transition-all 
+          className="cstm-flex-col gap-5 justify-start w-full transition-all relative
                   t:cstm-flex-row t:flex-wrap"
         >
-          <Suspense fallback={<p>Loading...</p>}> {testCards}</Suspense>
+          {tests.length ? (
+            testCards
+          ) : (
+            <div className="cstm-flex-col absolute top-2/4 translate-y-2/4 left-2/4 -translate-x-2/4 w-full">
+              <Image src={noTest} alt="empty" loading="lazy" width={220} draggable={false} />
+              <p className="text-xs opacity-80">No Tests Found</p>
+            </div>
+          )}
         </div>
       </div>
     </div>

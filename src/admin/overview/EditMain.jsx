@@ -119,22 +119,18 @@ const EditMain = (props) => {
           className="justify-start cstm-flex-col w-full gap-5 t:w-10/12 l-s:w-8/12 l-l:w-6/12"
         >
           <div className="w-full h-fit p-2 rounded-2xl bg-white cstm-flex-col gap-2 shadow-md">
-            {adminData?.file?.src ? (
-              <FilePreview
-                src={adminData?.file?.src}
-                purpose="Profile Picture"
-                name={adminData?.file?.name}
-                clearFiles={() => fileFns.clearFiles(setAdminData)}
-              />
-            ) : adminData?.image ? (
-              <FileViewer src={adminData.image} clearUpload={clearUpload} />
-            ) : (
-              <div className="w-full h-40 bg-scndColor bg-opacity-20 rounded-2xl whitespace-pre-wrap cstm-flex-col">
-                <p className="text-sm text-prmColor font-medium">
-                  You do not have a profile picture
-                </p>
-              </div>
-            )}
+            <div
+              style={{
+                backgroundImage: adminData?.file?.src
+                  ? `url(${adminData?.file?.src})`
+                  : adminData?.image
+                  ? `url(${adminData?.image})`
+                  : null,
+              }}
+              className="w-56 h-56 min-w-[14rem] min-h-[14rem] bg-prmColor bg-opacity-10
+                        bg-center bg-cover rounded-full border-4 border-prmColor
+                        l-l:w-80 l-l:h-80 l-l:min-w-[20rem] l-l:min-h-[20rem] "
+            />
 
             <div className="w-full cstm-flex-row">
               <label className="cstm-bg-hover cursor-pointer w-fit group relative mr-auto">
@@ -151,7 +147,23 @@ const EditMain = (props) => {
               </label>
 
               {adminData?.image ? (
-                <button type="button" onClick={clearUpload} className="cstm-bg-hover">
+                <button
+                  type="button"
+                  onClick={clearUpload}
+                  className="cstm-bg-hover group relative"
+                >
+                  <ActionLabel label="Remove Image" />
+                  <IoClose className="scale-150 text-prmColor" />
+                </button>
+              ) : null}
+
+              {adminData?.file?.src ? (
+                <button
+                  type="button"
+                  onClick={() => fileFns.clearFiles(setAdminData)}
+                  className="cstm-bg-hover group relative"
+                >
+                  <ActionLabel label="Remove Image" />
                   <IoClose className="scale-150 text-prmColor" />
                 </button>
               ) : null}
@@ -193,7 +205,7 @@ const EditMain = (props) => {
           <button
             type="submit"
             disabled={hasSubmitted}
-            className="w-full rounded-full bg-prmColor p-2 text-scndColor font-bold t:w-fit t:px-10 text-sm disabled:saturate-50"
+            className="w-full rounded-full bg-prmColor p-2 text-scndColor font-bold t:w-fit t:px-10 text-sm disabled:saturate-0"
           >
             Save Changes
           </button>

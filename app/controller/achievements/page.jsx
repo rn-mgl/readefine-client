@@ -6,6 +6,9 @@ import axios from "axios";
 import Link from "next/link";
 import AchievementsCards from "@/src/src/admin/achievements/AchievementsCards";
 import Message from "@/src/src/components/global/Message";
+import Image from "next/image";
+
+import noReward from "../../../public/profile/NoReward.svg";
 
 import { IoAddOutline } from "react-icons/io5";
 import { specificsConversion, typeConversion } from "@/src/src/functions/typeConversion";
@@ -128,10 +131,7 @@ const AdminAchievements = () => {
 
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
 
-      <div
-        className="w-full cstm-flex-col gap-2
-        cstm-w-limit"
-      >
+      <div className="w-full cstm-flex-col gap-5 cstm-w-limit">
         <AchievementsFilter
           handleSearchFilter={handleSearchFilter}
           handleDateRangeFilter={handleDateRangeFilter}
@@ -147,8 +147,15 @@ const AdminAchievements = () => {
           <IoAddOutline className="text-prmColor cursor-pointer scale-150" />
         </Link>
 
-        <div className="w-full cstm-flex-col flex-wrap gap-5 t:items-start t:cstm-flex-row">
-          {achievementCards}
+        <div className="w-full cstm-flex-col flex-wrap gap-5 relative t:items-start t:cstm-flex-row">
+          {achievements.length ? (
+            achievementCards
+          ) : (
+            <div className="cstm-flex-col absolute top-2/4 translate-y-2/4 left-2/4 -translate-x-2/4 w-full">
+              <Image src={noReward} alt="empty" loading="lazy" width={220} draggable={false} />
+              <p className="text-xs opacity-80">No Achievements Found</p>
+            </div>
+          )}
         </div>
       </div>
     </div>

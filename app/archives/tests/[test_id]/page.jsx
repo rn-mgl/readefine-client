@@ -290,7 +290,7 @@ const SingleTest = ({ params }) => {
               onClick={submitAnswers}
               disabled={hasSubmitted}
               className="bg-prmColor w-fit ml-auto p-2 px-10  text-sm rounded-full cstm-flex-col 
-                        font-medium text-scndColor shadow-solid shadow-indigo-950 disabled:saturate-50"
+                        font-medium text-scndColor shadow-solid shadow-indigo-950 disabled:saturate-0"
             >
               Submit
             </button>
