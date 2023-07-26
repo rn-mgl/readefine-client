@@ -16,23 +16,16 @@ const ClientRewards = () => {
 
   const [sortFilter, setSortFilter] = React.useState({ toSort: "reward_name", sortMode: "ASC" });
   const [showFilter, setShowFilter] = React.useState({ toShow: "received" });
-  const [searchFilter, setSearchFilter] = React.useState({
-    toSearch: "reward_name",
-    searchKey: "",
-  });
+  const [searchFilter, setSearchFilter] = React.useState("");
+  const [typeFilter, setTypeFilter] = React.useState("");
 
   const { data: session } = useSession({ required: true });
   const user = session?.user?.name;
   const { url } = useGlobalContext();
 
   // handle onchange on search filter
-  const handleSearchFilter = ({ name, value }) => {
-    setSearchFilter((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
+  const handleSearchFilter = ({ value }) => {
+    setSearchFilter(value);
   };
 
   // handle onchange on sort filter
@@ -55,11 +48,16 @@ const ClientRewards = () => {
     });
   };
 
+  // handle onchange on type filter
+  const handleTypeFilter = ({ value }) => {
+    setTypeFilter(value);
+  };
+
   // get rewards
   const getRewards = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/reward`, {
-        params: { searchFilter, sortFilter, showFilter },
+        params: { searchFilter, sortFilter, showFilter, typeFilter },
         headers: { Authorization: user.token },
       });
 
@@ -70,7 +68,7 @@ const ClientRewards = () => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [url, user, setRewards, searchFilter, sortFilter, showFilter]);
+  }, [url, user, setRewards, searchFilter, sortFilter, showFilter, typeFilter]);
 
   // map rewards
   const rewardsCards = rewards.map((reward) => {
@@ -106,6 +104,8 @@ const ClientRewards = () => {
           searchFilter={searchFilter}
           sortFilter={sortFilter}
           showFilter={showFilter}
+          typeFilter={typeFilter}
+          handleTypeFilter={handleTypeFilter}
           handleShowFilter={handleShowFilter}
           handleSearchFilter={handleSearchFilter}
           handleSortFilter={handleSortFilter}

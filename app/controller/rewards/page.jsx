@@ -18,10 +18,8 @@ const AdminRewards = () => {
   const [message, setMessage] = React.useState({ msg: "", active: false, type: "error" });
 
   const [sortFilter, setSortFilter] = React.useState({ toSort: "reward_name", sortMode: "ASC" });
-  const [searchFilter, setSearchFilter] = React.useState({
-    toSearch: "reward_name",
-    searchKey: "",
-  });
+  const [typeFilter, setTypeFilter] = React.useState("");
+  const [searchFilter, setSearchFilter] = React.useState("");
   const [dateRangeFilter, setDateRangeFilter] = React.useState({
     from: "",
     to: inputDate(new Date().toLocaleDateString()),
@@ -32,13 +30,8 @@ const AdminRewards = () => {
   const { url } = useGlobalContext();
 
   // handle onchange on search filter
-  const handleSearchFilter = ({ name, value }) => {
-    setSearchFilter((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
+  const handleSearchFilter = ({ value }) => {
+    setSearchFilter(value);
   };
 
   // handle onchange on date range filter
@@ -61,11 +54,16 @@ const AdminRewards = () => {
     });
   };
 
+  // handle onchange on type filter
+  const handleTypeFilter = ({ value }) => {
+    setTypeFilter(value);
+  };
+
   // get rewards
   const getRewards = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/admin_reward`, {
-        params: { searchFilter, sortFilter, dateRangeFilter },
+        params: { searchFilter, sortFilter, dateRangeFilter, typeFilter },
         headers: { Authorization: user.token },
       });
 
@@ -76,7 +74,7 @@ const AdminRewards = () => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [url, user, setRewards, searchFilter, sortFilter, dateRangeFilter]);
+  }, [url, user, setRewards, searchFilter, sortFilter, dateRangeFilter, typeFilter]);
 
   // map rewards
   const rewardsCards = rewards.map((reward) => {
@@ -107,12 +105,14 @@ const AdminRewards = () => {
 
       <div className="w-full cstm-w-limit cstm-flex-col gap-2">
         <RewardsFilter
-          handleSearchFilter={handleSearchFilter}
-          handleDateRangeFilter={handleDateRangeFilter}
-          handleSortFilter={handleSortFilter}
           searchFilter={searchFilter}
           sortFilter={sortFilter}
           dateRangeFilter={dateRangeFilter}
+          typeFilter={typeFilter}
+          handleSearchFilter={handleSearchFilter}
+          handleDateRangeFilter={handleDateRangeFilter}
+          handleSortFilter={handleSortFilter}
+          handleTypeFilter={handleTypeFilter}
         />
 
         <Link href="/controller/rewards/add" className="cstm-bg-hover mr-auto p-2 w-fit">
