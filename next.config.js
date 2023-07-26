@@ -12,7 +12,7 @@ const nextConfig = {
     NEXTAUTH_SECRET: "Zq4t7w!z%C*F-JaNdRgUjXn2r5u8x/A?",
     NEXTAUTH_URL: "http://localhost:3000",
   },
-  reactStrictMode: false,
+  reactStrictMode: true,
 };
 
 const mp3Config = {
