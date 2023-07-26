@@ -12,8 +12,13 @@ import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { BsArrowLeft } from "react-icons/bs";
 import { decipher } from "@/src/src/functions/security";
+import Loading from "@/src/src/components/global/Loading";
 
 const EditAchievement = ({ params }) => {
+  const [hasSubmitted, setHasSubmitted] = React.useState(false);
+  const [canSelectReward, setCanSelectReward] = React.useState(false);
+  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
+  const [loading, setLoading] = React.useState(false);
   const [achievement, setAchievement] = React.useState({
     achievement_name: "",
     achievement_type: "user_session",
@@ -22,9 +27,6 @@ const EditAchievement = ({ params }) => {
     goal: 0,
     reward: { name: "", id: "" },
   });
-  const [hasSubmitted, setHasSubmitted] = React.useState(false);
-  const [canSelectReward, setCanSelectReward] = React.useState(false);
-  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
 
   const { data: session } = useSession({ required: true });
   const { url } = useGlobalContext();
@@ -63,6 +65,7 @@ const EditAchievement = ({ params }) => {
     e.preventDefault();
 
     setHasSubmitted(true);
+    setLoading(true);
 
     const { goal, achievement_name, reward_id, reward_name, specifics, task, achievement_type } =
       achievement;
@@ -77,6 +80,7 @@ const EditAchievement = ({ params }) => {
       !achievement_type
     ) {
       setHasSubmitted(false);
+      setLoading(false);
       setMessage({
         active: true,
         msg: "Please fill in all achievement information.",
@@ -99,6 +103,7 @@ const EditAchievement = ({ params }) => {
     } catch (error) {
       console.log(error);
       setHasSubmitted(false);
+      setLoading(false);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   };
@@ -125,6 +130,10 @@ const EditAchievement = ({ params }) => {
       getAchievement();
     }
   }, [user, getAchievement]);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-2 justify-start">

@@ -9,10 +9,12 @@ import { useGlobalContext } from "@/src/context";
 import axios from "axios";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import Message from "../../components/global/Message";
+import Loading from "../../components/global/Loading";
 
 const ChangePassword = (props) => {
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
   const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
+  const [loading, setLoading] = React.useState(false);
   const [passwordData, setPasswordData] = React.useState({
     oldPassword: { text: "", type: "password" },
     newPassword: { text: "", type: "password" },
@@ -46,11 +48,13 @@ const ChangePassword = (props) => {
     e.preventDefault();
 
     setHasSubmitted(true);
+    setLoading(true);
 
     const { oldPassword, newPassword, repeatNewPassword } = passwordData;
 
     if (newPassword.text !== repeatNewPassword.text) {
       setHasSubmitted(false);
+      setLoading(false);
       setMessage({
         active: true,
         msg: "The new password and retyped password do not match.",
@@ -70,10 +74,16 @@ const ChangePassword = (props) => {
         props.handleCanChangePassword();
       }
     } catch (error) {
-      setHasSubmitted(false);
       console.log(error);
+      setHasSubmitted(false);
+      setLoading(false);
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className="fixed w-full h-full cstm-flex-col backdrop-blur-md z-20 p-5 top-0 left-0 gap-5 cstm-scrollbar overflow-y-auto">

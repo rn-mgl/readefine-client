@@ -14,11 +14,13 @@ import { useGlobalContext } from "@/src/context";
 import { BiImage } from "react-icons/bi";
 import { CiUser } from "react-icons/ci";
 import Message from "../../components/global/Message";
+import Loading from "../../components/global/Loading";
 
 const EditMain = (props) => {
   const [userData, setUserData] = React.useState({});
   const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -46,6 +48,7 @@ const EditMain = (props) => {
     e.preventDefault();
 
     setHasSubmitted(true);
+    setLoading(true);
 
     let image = userData?.image;
 
@@ -74,6 +77,7 @@ const EditMain = (props) => {
     } catch (error) {
       console.log(error);
       setHasSubmitted(false);
+      setLoading(false);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   };
@@ -98,6 +102,10 @@ const EditMain = (props) => {
       getUserData();
     }
   }, [user, getUserData]);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div
@@ -137,7 +145,10 @@ const EditMain = (props) => {
                   className="hidden peer"
                   formNoValidate
                   name="file"
-                  onChange={(e) => fileFns.selectedFileViewer(e, setUserData)}
+                  onChange={(e) => {
+                    fileFns.selectedFileViewer(e, setUserData);
+                    clearUpload();
+                  }}
                 />
                 <ActionLabel label="Add Profile Picture" />
                 <BiImage className="scale-150 text-prmColor peer-checked" />

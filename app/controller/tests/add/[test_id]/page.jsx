@@ -11,9 +11,11 @@ import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { decipher } from "@/src/src/functions/security";
+import Loading from "@/src/src/components/global/Loading";
 
 const AddTest = ({ params }) => {
   const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
+  const [loading, setLoading] = React.useState(false);
   const [pages, setPages] = React.useState([
     {
       testNumber: 1,
@@ -84,8 +86,11 @@ const AddTest = ({ params }) => {
   const createTest = async (e) => {
     e.preventDefault();
 
+    setLoading(true);
+
     // check if there are 10 questions
     if (pages.length < 10) {
+      setLoading(false);
       setMessage({ active: true, msg: "Enter 10 questions before posting.", type: "error" });
       return;
     }
@@ -94,6 +99,7 @@ const AddTest = ({ params }) => {
       const answerKey = `answer${i + 1}`;
 
       if (!page[answerKey]) {
+        setLoading(false);
         setMessage({
           active: true,
           msg: `You do not have an answer in number ${i + 1}.`,
@@ -103,6 +109,7 @@ const AddTest = ({ params }) => {
       }
 
       if (!page.testQuestion) {
+        setLoading(false);
         setMessage({
           active: true,
           msg: `You do not have a question in number ${i + 1}.`,
@@ -125,6 +132,7 @@ const AddTest = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
+      setLoading(false);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   };
@@ -142,6 +150,10 @@ const AddTest = ({ params }) => {
       </React.Fragment>
     );
   });
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">

@@ -12,11 +12,13 @@ import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { decipher } from "@/src/src/functions/security";
+import Loading from "@/src/src/components/global/Loading";
 
 const EditTest = ({ params }) => {
   const [test, setTest] = React.useState({});
   const [questions, setQuestions] = React.useState([]);
   const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
+  const [loading, setLoading] = React.useState(false);
 
   const { data: session } = useSession({ required: true });
   const { url } = useGlobalContext();
@@ -43,10 +45,13 @@ const EditTest = ({ params }) => {
   const editTest = async (e) => {
     e.preventDefault();
 
+    setLoading(true);
+
     questions.forEach((q, i) => {
       const answerKey = `answer${q.question_id}`;
 
       if (!q[answerKey]) {
+        setLoading(false);
         setMessage({
           active: true,
           msg: `You do not have an answer in number ${i + 1}.`,
@@ -56,6 +61,7 @@ const EditTest = ({ params }) => {
       }
 
       if (!q.question) {
+        setLoading(false);
         setMessage({
           active: true,
           msg: `You do not have a question in number ${i + 1}.`,
@@ -77,6 +83,7 @@ const EditTest = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
+      setLoading(false);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   };
@@ -151,6 +158,10 @@ const EditTest = ({ params }) => {
       getQuestions();
     }
   }, [user, getQuestions]);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-2 justify-start">

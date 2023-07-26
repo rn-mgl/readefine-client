@@ -1,14 +1,19 @@
 "use client";
-import { useGlobalContext } from "@/src/context";
+
 import axios from "axios";
-import { useSession } from "next-auth/react";
 import React from "react";
+import Message from "../../components/global/Message";
+import Loading from "../../components/global/Loading";
+
+import { useSession } from "next-auth/react";
+import { useGlobalContext } from "@/src/context";
 import { IoClose } from "react-icons/io5";
 
 const ConfirmEditGradeLevel = (props) => {
   const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
   const [confirmation, setConfirmation] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -22,9 +27,11 @@ const ConfirmEditGradeLevel = (props) => {
     e.preventDefault();
 
     setHasSubmitted(true);
+    setLoading(true);
 
     if (confirmation !== props.confirmation) {
       setHasSubmitted(false);
+      setLoading(false);
       setMessage({
         active: true,
         msg: "The confirmation does not match",
@@ -45,13 +52,24 @@ const ConfirmEditGradeLevel = (props) => {
         props.getUserData();
       }
     } catch (error) {
-      setHasSubmitted(false);
       console.log(error);
+      setHasSubmitted(false);
+      setLoading(false);
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   };
 
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
-    <div className="w-full min-h-screen backdrop-blur-md bg-prmColor bg-opacity-10 fixed z-30 top-0 left-0 p-5 cstm-flex-col justify-start">
+    <div
+      className="w-full min-h-screen backdrop-blur-md bg-prmColor bg-opacity-10 fixed 
+                  z-30 top-0 left-0 p-5 cstm-flex-col justify-start"
+    >
+      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+
       <button onClick={props.handleCanSeeConfirmGradeChange} className="cstm-bg-hover ml-auto">
         <IoClose className="text-prmColor scale-125" />
       </button>

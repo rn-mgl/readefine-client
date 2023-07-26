@@ -11,8 +11,13 @@ import { useGlobalContext } from "@/src/context";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { BsArrowLeft } from "react-icons/bs";
+import Loading from "@/src/src/components/global/Loading";
 
 const AddAchievement = () => {
+  const [hasSubmitted, setHasSubmitted] = React.useState(false);
+  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
+  const [canSelectReward, setCanSelectReward] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
   const [achievement, setAchievement] = React.useState({
     name: "",
     type: "user_session",
@@ -21,9 +26,6 @@ const AddAchievement = () => {
     goal: 0,
     reward: { name: "", id: "" },
   });
-  const [hasSubmitted, setHasSubmitted] = React.useState(false);
-  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
-  const [canSelectReward, setCanSelectReward] = React.useState(false);
 
   const { data: session } = useSession({ required: true });
   const { url } = useGlobalContext();
@@ -60,11 +62,13 @@ const AddAchievement = () => {
     e.preventDefault();
 
     setHasSubmitted(true);
+    setLoading(true);
 
     const { goal, name, reward, specifics, task, type } = achievement;
 
     if (!goal || !name || !reward.id || !specifics || !task || !type) {
       setHasSubmitted(false);
+      setLoading(false);
       setMessage({
         active: true,
         msg: "Please fill in all achievement information.",
@@ -87,9 +91,14 @@ const AddAchievement = () => {
     } catch (error) {
       console.log(error);
       setHasSubmitted(false);
+      setLoading(false);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-2 justify-start">

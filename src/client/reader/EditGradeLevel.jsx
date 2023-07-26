@@ -6,19 +6,22 @@ import { useSession } from "next-auth/react";
 import { IoClose } from "react-icons/io5";
 
 const EditGradeLevel = (props) => {
-  const [gradeLevels, setGradeLevels] = React.useState([
-    { grade: 1, lexile: 10 },
-    { grade: 2, lexile: 290 },
-    { grade: 3, lexile: 530 },
-    { grade: 4, lexile: 735 },
-    { grade: 5, lexile: 900 },
-    { grade: 6, lexile: 990 },
-  ]);
+  const [canSeeConfirmGradeChange, setCanSeeConfirmGradeChange] = React.useState(false);
   const [chosenGrade, setChosenGrade] = React.useState({
     grade: props.gradeLevel,
     lexile: props.lexile,
   });
-  const [canSeeConfirmGradeChange, setCanSeeConfirmGradeChange] = React.useState(false);
+  const gradeLevels = React.useMemo(
+    () => [
+      { grade: 1, lexile: 10 },
+      { grade: 2, lexile: 290 },
+      { grade: 3, lexile: 530 },
+      { grade: 4, lexile: 735 },
+      { grade: 5, lexile: 900 },
+      { grade: 6, lexile: 990 },
+    ],
+    []
+  );
 
   const { data: session } = useSession();
   const user = session?.user?.name;

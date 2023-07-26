@@ -15,11 +15,13 @@ import InputComp from "../../components/input/InputComp";
 import { CiUser } from "react-icons/ci";
 import EditInput from "../../components/profile/EditInput";
 import Message from "../../components/global/Message";
+import Loading from "../../components/global/Loading";
 
 const EditMain = (props) => {
   const [adminData, setAdminData] = React.useState({});
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
   const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
+  const [loading, setLoading] = React.useState(false);
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -46,12 +48,14 @@ const EditMain = (props) => {
   const editMain = async (e) => {
     e.preventDefault();
     setHasSubmitted(true);
+    setLoading(true);
 
     let image = adminData?.image;
 
     const { name, surname, username } = adminData;
 
     if (!name || !surname || !username) {
+      setLoading(false);
       setHasSubmitted(false);
       setMessage({ active: true, msg: "Please do not leave anything blank.", type: "error" });
       return;
@@ -80,6 +84,7 @@ const EditMain = (props) => {
     } catch (error) {
       console.log(error);
       setHasSubmitted(false);
+      setLoading(false);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   };
@@ -104,6 +109,10 @@ const EditMain = (props) => {
       getAdminData();
     }
   }, [user, getAdminData]);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className="w-full h-full overflow-y-auto cstm-scrollbar fixed top-0 left-0 backdrop-blur-md z-20 p-5 cstm-flex-col justify-start">
@@ -140,7 +149,10 @@ const EditMain = (props) => {
                   className="hidden peer"
                   formNoValidate
                   name="file"
-                  onChange={(e) => fileFns.selectedFileViewer(e, setAdminData)}
+                  onChange={(e) => {
+                    fileFns.selectedFileViewer(e, setAdminData);
+                    clearUpload();
+                  }}
                 />
                 <ActionLabel label="Add Profile Picture" />
                 <BiImage className="scale-150 text-prmColor peer-checked" />
