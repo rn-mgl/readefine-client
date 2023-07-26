@@ -64,8 +64,8 @@ const SingleUser = ({ params }) => {
     }
 
     const latest = userLexile?.at(-1);
-    const latestLexile = latest.lexile;
-    const lastUpdatedDate = new Date(latest.date_added).getDate();
+    const latestLexile = latest?.lexile;
+    const lastUpdatedDate = new Date(latest?.date_added).getDate();
 
     for (let i = lastUpdatedDate; i < days.length; i++) {
       days[i] = latestLexile;
