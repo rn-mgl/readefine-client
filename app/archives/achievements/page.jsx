@@ -89,7 +89,7 @@ const ClientAchievements = () => {
           points={a.points}
           goal={a.goal}
           type={typeConversion[a.achievement_type]}
-          to={`/controller/achievements/${a.achievement_id}`}
+          to={`/archives/achievements/${a.achievement_id}`}
         />
       </React.Fragment>
     );
