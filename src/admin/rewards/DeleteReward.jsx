@@ -8,11 +8,13 @@ import { useRouter } from "next/navigation";
 import { useGlobalContext } from "@/src/context";
 
 import Message from "../../components/global/Message";
+import Loading from "../../components/global/Loading";
 
 const DeleteReward = (props) => {
   const [confirmation, setConfirmation] = React.useState("");
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
   const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
+  const [loading, setLoading] = React.useState(false);
 
   const { data: session } = useSession();
 
@@ -30,8 +32,10 @@ const DeleteReward = (props) => {
     e.preventDefault();
 
     setHasSubmitted(true);
+    setLoading(true);
 
     if (confirmation !== props.confirmation) {
+      setLoading(false);
       setHasSubmitted(false);
       setMessage({ active: true, msg: "The confirmation does not match.", type: "error" });
       return;
@@ -47,10 +51,15 @@ const DeleteReward = (props) => {
       }
     } catch (error) {
       console.log(error);
+      setLoading(false);
       setHasSubmitted(true);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className="w-full min-h-screen backdrop-blur-md fixed z-30 top-0 left-0 p-5 cstm-flex-col justify-start">
