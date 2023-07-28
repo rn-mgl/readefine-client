@@ -74,7 +74,7 @@ const EditTest = ({ params }) => {
     try {
       const { data } = await axios.patch(
         `${url}/admin_test/${decodedTestId}`,
-        { questions },
+        { questions, testId: decodedTestId },
         { headers: { Authorization: user.token } }
       );
 

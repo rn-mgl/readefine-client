@@ -21,11 +21,12 @@ const AdminAchievements = () => {
   const [achievements, setAchievements] = React.useState([]);
   const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
 
+  const [typeFilter, setTypeFilter] = React.useState("");
+  const [goalRangeFilter, setGoalRangeFilter] = React.useState({ from: 0, to: 1250 });
   const [searchFilter, setSearchFilter] = React.useState({
     toSearch: "achievement_name",
     searchKey: "",
   });
-  const [goalRangeFilter, setGoalRangeFilter] = React.useState({ from: 0, to: 1250 });
   const [sortFilter, setSortFilter] = React.useState({
     toSort: "achievement_name",
     sortMode: "ASC",
@@ -79,6 +80,11 @@ const AdminAchievements = () => {
     });
   };
 
+  // handle onchange on type filter
+  const handleTypeFilter = ({ value }) => {
+    setTypeFilter(value);
+  };
+
   // get achievement data
   const getAchievement = React.useCallback(async () => {
     try {
@@ -89,6 +95,7 @@ const AdminAchievements = () => {
           goalRangeFilter,
           sortFilter,
           dateRangeFilter,
+          typeFilter,
         },
       });
 
@@ -99,7 +106,16 @@ const AdminAchievements = () => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [url, user, setAchievements, searchFilter, goalRangeFilter, sortFilter, dateRangeFilter]);
+  }, [
+    url,
+    user,
+    setAchievements,
+    searchFilter,
+    goalRangeFilter,
+    sortFilter,
+    dateRangeFilter,
+    typeFilter,
+  ]);
 
   // map achievement cards
   const achievementCards = achievements.map((a) => {
@@ -133,14 +149,16 @@ const AdminAchievements = () => {
 
       <div className="w-full cstm-flex-col gap-5 cstm-w-limit">
         <AchievementsFilter
-          handleSearchFilter={handleSearchFilter}
-          handleDateRangeFilter={handleDateRangeFilter}
-          handleGoalRangeFilter={handleGoalRangeFilter}
-          handleSortFilter={handleSortFilter}
+          typeFilter={typeFilter}
           searchFilter={searchFilter}
           goalRangeFilter={goalRangeFilter}
           sortFilter={sortFilter}
           dateRangeFilter={dateRangeFilter}
+          handleSearchFilter={handleSearchFilter}
+          handleDateRangeFilter={handleDateRangeFilter}
+          handleGoalRangeFilter={handleGoalRangeFilter}
+          handleSortFilter={handleSortFilter}
+          handleTypeFilter={handleTypeFilter}
         />
 
         <Link href="/controller/achievements/add" className="cstm-bg-hover mr-auto p-2 w-fit">

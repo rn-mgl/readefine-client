@@ -17,6 +17,7 @@ const ClientAchievements = () => {
   const [achievements, setAchievements] = React.useState([]);
   const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
 
+  const [typeFilter, setTypeFilter] = React.useState("");
   const [goalRangeFilter, setGoalRangeFilter] = React.useState({ from: 0, to: 1250 });
   const [searchFilter, setSearchFilter] = React.useState({
     toSearch: "achievement_name",
@@ -61,6 +62,11 @@ const ClientAchievements = () => {
     });
   };
 
+  // handle onchange on type filter
+  const handleTypeFilter = ({ value }) => {
+    setTypeFilter(value);
+  };
+
   // get achievements
   const getAchievement = React.useCallback(async () => {
     try {
@@ -70,6 +76,7 @@ const ClientAchievements = () => {
           searchFilter,
           goalRangeFilter,
           sortFilter,
+          typeFilter,
         },
       });
 
@@ -80,7 +87,7 @@ const ClientAchievements = () => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [url, user, setAchievements, searchFilter, goalRangeFilter, sortFilter]);
+  }, [url, user, setAchievements, searchFilter, goalRangeFilter, sortFilter, typeFilter]);
 
   // map achievements
   const achievementPanels = achievements.map((a) => {
@@ -112,12 +119,14 @@ const ClientAchievements = () => {
 
       <div className="w-full cstm-flex-col gap-5 cstm-w-limit ">
         <AchievementsFilter
-          handleSearchFilter={handleSearchFilter}
-          handleGoalRangeFilter={handleGoalRangeFilter}
-          handleSortFilter={handleSortFilter}
           searchFilter={searchFilter}
           goalRangeFilter={goalRangeFilter}
           sortFilter={sortFilter}
+          typeFilter={typeFilter}
+          handleSearchFilter={handleSearchFilter}
+          handleGoalRangeFilter={handleGoalRangeFilter}
+          handleSortFilter={handleSortFilter}
+          handleTypeFilter={handleTypeFilter}
         />
 
         <div

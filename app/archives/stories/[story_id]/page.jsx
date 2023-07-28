@@ -231,7 +231,7 @@ const SingleStory = ({ params }) => {
       {/* pages */}
       <div
         className={`${
-          customizationsVisible ? "h-[55vh] t:h-[60vh]" : "h-[70vh] t:h-[75vh]"
+          customizationsVisible ? "h-[60vh]" : "h-[70vh] t:h-[75vh] l-l:h-[80vh]"
         } w-full gap-5  bg-white rounded-2xl p-5 cstm-w-limit transition-all`}
       >
         <div className="cstm-scrollbar w-full relative overflow-x-hidden overflow-y-auto h-full">
