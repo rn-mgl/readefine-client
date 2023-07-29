@@ -151,7 +151,7 @@ const SingleStory = ({ params }) => {
   }, [getPages, user]);
 
   return (
-    <div className="p-5 cstm-flex-col bg-accntColor w-full min-h-screen justify-start gap-2">
+    <div className="p-5 cstm-flex-col bg-accntColor w-full min-h-screen h-screen justify-start gap-5">
       <AdminPageHeader subHeader="Stories" mainHeader={story.title} />
 
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
@@ -205,45 +205,45 @@ const SingleStory = ({ params }) => {
       ) : null}
 
       {/* pages */}
+
       <div
-        className={`${
-          customizationsVisible ? "h-[65vh] l-s:h-[60vh]" : "h-[70vh] t:h-[75vh]"
-        }  w-full gap-5  bg-white rounded-2xl p-5 relative overflow-x-hidden overflow-y-auto cstm-w-limit  cstm-scrollbar`}
+        className="h-[80%] w-full gap-5  bg-white rounded-2xl p-5 relative overflow-x-hidden 
+            overflow-y-auto cstm-w-limit transition-all  cstm-scrollbar"
       >
         <div className="w-full relative overflow-x-hidden h-full cstm-scrollbar">{storyPages}</div>
+      </div>
 
-        <div
-          className="fixed bottom-0 left-2/4 -translate-x-2/4 backdrop-blur-md cstm-flex-row 
+      <div
+        className="fixed bottom-0 left-2/4 -translate-x-2/4 backdrop-blur-md cstm-flex-row h-[5%] t:h-[6%]
                     p-2 px-5 z-20 w-full cstm-w-limit l-s:right-0 l-s:-translate-x-0"
-        >
-          <button disabled={activePage === 1} className="cstm-bg-hover disabled:opacity-50">
-            <BiChevronLeft
-              className={`scale-150 text-black  cursor-pointer t:scale-[2]`}
-              onClick={handleDecrement}
-              onKeyDown={(e) => handleDecrement(e)}
-            />
-          </button>
-
-          <input
-            onChange={(e) => handleActivePage(e.target)}
-            type="number"
-            value={activePage}
-            min={1}
-            max={pages.length}
-            className="text-sm mx-auto text-center w-16 rounded-md px-2 py-1 focus:outline-prmColor"
+      >
+        <button disabled={activePage === 1} className="cstm-bg-hover disabled:opacity-50">
+          <BiChevronLeft
+            className={`scale-150 text-black  cursor-pointer t:scale-[2]`}
+            onClick={handleDecrement}
+            onKeyDown={(e) => handleDecrement(e)}
           />
+        </button>
 
-          <button
-            disabled={activePage === pages.length}
-            className="cstm-bg-hover disabled:opacity-50"
-          >
-            <BiChevronRight
-              className={`scale-150 text-black  cursor-pointer t:scale-[2]`}
-              onClick={handleIncrement}
-              onKeyDown={(e) => handleIncrement(e)}
-            />
-          </button>
-        </div>
+        <input
+          onChange={(e) => handleActivePage(e.target)}
+          type="number"
+          value={activePage}
+          min={1}
+          max={pages.length}
+          className="text-sm mx-auto text-center w-16 rounded-md px-2 py-1 focus:outline-prmColor"
+        />
+
+        <button
+          disabled={activePage === pages.length}
+          className="cstm-bg-hover disabled:opacity-50"
+        >
+          <BiChevronRight
+            className={`scale-150 text-black  cursor-pointer t:scale-[2]`}
+            onClick={handleIncrement}
+            onKeyDown={(e) => handleIncrement(e)}
+          />
+        </button>
       </div>
     </div>
   );
