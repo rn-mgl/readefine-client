@@ -58,7 +58,7 @@ const DeleteRiddle = (props) => {
   }
 
   return (
-    <div className="w-full min-h-screen backdrop-blur-md fixed z-30 top-0 left-0 p-5 cstm-flex-col justify-start">
+    <div className="w-full min-h-screen h-full backdrop-blur-md fixed z-30 top-0 left-0 p-5 cstm-flex-col justify-start">
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
 
       <button onClick={props.handleCanDeleteRiddle} className="cstm-bg-hover ml-auto">
