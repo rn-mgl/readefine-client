@@ -12,7 +12,7 @@ const TestsFilter = (props) => {
         labelValue={[
           { label: "Title", value: "title" },
           { label: "Author", value: "author" },
-          { label: "Lexile", value: "lexile_level" },
+          { label: "Lexile", value: "lexile" },
         ]}
       />
 
@@ -22,7 +22,7 @@ const TestsFilter = (props) => {
         labelValue={[
           { label: "Title", value: "title" },
           { label: "Author", value: "author" },
-          { label: "Lexile", value: "lexile_level" },
+          { label: "Lexile", value: "lexile" },
         ]}
       />
 
