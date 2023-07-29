@@ -188,6 +188,7 @@ const EditMain = (props) => {
               label="Name"
               placeholder="Name"
               name="name"
+              required={true}
               value={adminData?.name}
               onChange={handleAdminData}
               icon={<CiUser />}
@@ -198,6 +199,7 @@ const EditMain = (props) => {
               label="Surname"
               placeholder="Surname"
               name="surname"
+              required={true}
               value={adminData?.surname}
               onChange={handleAdminData}
               icon={<CiUser />}
@@ -208,6 +210,7 @@ const EditMain = (props) => {
               label="Username"
               placeholder="Username"
               name="username"
+              required={true}
               value={adminData?.username}
               onChange={handleAdminData}
               icon={<CiUser />}

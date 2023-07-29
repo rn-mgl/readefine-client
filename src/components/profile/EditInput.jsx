@@ -13,6 +13,7 @@ const EditInput = (props) => {
         id={props.name}
         name={props.name}
         value={props.value}
+        required={props.required}
         onChange={(e) => props.onChange(e.target)}
         className="rounded-md px-2
            bg-accntColor p-2 w-full text-sm font-normal

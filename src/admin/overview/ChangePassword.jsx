@@ -103,6 +103,7 @@ const ChangePassword = (props) => {
             placeholder="Old Password"
             name="oldPassword"
             onChange={handlePasswordData}
+            required={true}
             icon={
               passwordData.oldPassword.type === "password" ? (
                 <AiOutlineEye onClick={() => handlePasswordType("oldPassword")} />
@@ -119,6 +120,7 @@ const ChangePassword = (props) => {
             placeholder="New Password"
             name="newPassword"
             onChange={handlePasswordData}
+            required={true}
             icon={
               passwordData.newPassword.type === "password" ? (
                 <AiOutlineEye onClick={() => handlePasswordType("newPassword")} />
@@ -135,6 +137,7 @@ const ChangePassword = (props) => {
             placeholder="Repeat New Password"
             name="repeatNewPassword"
             onChange={handlePasswordData}
+            required={true}
             icon={
               passwordData.repeatNewPassword.type === "password" ? (
                 <AiOutlineEye onClick={() => handlePasswordType("repeatNewPassword")} />

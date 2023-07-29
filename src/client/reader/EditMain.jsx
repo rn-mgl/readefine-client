@@ -186,6 +186,7 @@ const EditMain = (props) => {
               name="name"
               value={userData?.name}
               onChange={handleUserData}
+              required={true}
               icon={<CiUser />}
             />
 
@@ -196,6 +197,7 @@ const EditMain = (props) => {
               name="surname"
               value={userData?.surname}
               onChange={handleUserData}
+              required={true}
               icon={<CiUser />}
             />
 
@@ -206,6 +208,7 @@ const EditMain = (props) => {
               name="username"
               value={userData?.username}
               onChange={handleUserData}
+              required={true}
               icon={<CiUser />}
             />
           </div>
