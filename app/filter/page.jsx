@@ -50,22 +50,17 @@ const AdminLogin = () => {
     setLoading(true);
 
     // login on middleware
-    await signIn("admin-credentials", {
+    const data = await signIn("admin-credentials", {
       candidateIdentifier: loginData.candidateIdentifier,
       candidatePassword: loginData.candidatePassword,
       redirect: false,
     });
 
-    // log in for loading and directory
-    try {
-      const { data } = await axios.post(`${url}/auth_admin/admin_login`, { loginData });
-      if (data) {
-        router.push("/controller");
-      }
-    } catch (error) {
-      console.log(error);
+    if (data?.ok) {
+      router.push("/controller");
+    } else {
       setLoading(false);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessage({ active: true, msg: "Incorrect login credentials.", type: "error" });
     }
   };
 
