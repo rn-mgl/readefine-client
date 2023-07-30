@@ -27,7 +27,7 @@ const ReceiveAchievement = (props) => {
         <p className="text-prmColor font-extrabold bg-gradient-to-r from-prmColor to-scndColor text-transparent bg-clip-text text-2xl">
           {a.achievement_name}
         </p>
-        <div className="w-full cstm-scrollbar overflow-y-auto cstm-flex-col gap-5 h-40 justify-start">
+        <div className="w-full cstm-scrollbar-2 overflow-y-auto cstm-flex-col gap-5 h-40 justify-start">
           <p className="text-sm text-center">{a.task}</p>
           <p className="text-sm text-center">{a.description}</p>
         </div>

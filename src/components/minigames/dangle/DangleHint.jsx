@@ -26,7 +26,10 @@ const DangleHint = (props) => {
     );
   });
   return (
-    <div className="fixed top-0 left-0 w-full h-screen cstm-scrollbar overflow-y-auto backdrop-blur-md z-10 p-2 cstm-flex-col justify-start gap-5">
+    <div
+      className="fixed top-0 left-0 w-full h-screen cstm-scrollbar-2 overflow-y-auto 
+                  backdrop-blur-md z-10 p-2 cstm-flex-col justify-start gap-5"
+    >
       <div className=" cstm-flex-col cstm-w-limit justify-start w-full">
         <button onClick={props.handleCanSeeHint} className="cstm-bg-hover ml-auto">
           <IoClose className="scale-150 text-prmColor" />

@@ -5,7 +5,10 @@ import { IoClose } from "react-icons/io5";
 
 const RiddleTutorial = (props) => {
   return (
-    <div className="w-full fixed top-0 left-0 h-full backdrop-blur-md z-20 cstm-flex-col p-5 animate-[fadeIn_400ms] overflow-y-auto cstm-scrollbar">
+    <div
+      className="w-full fixed top-0 left-0 h-full backdrop-blur-md z-20 
+                cstm-flex-col p-5 animate-[fadeIn_400ms] overflow-y-auto cstm-scrollbar-2"
+    >
       <button
         className="cstm-bg-hover ml-auto absolute top-3 right-3"
         onClick={props.handleCanSeeTutorial}

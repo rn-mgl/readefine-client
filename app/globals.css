@@ -23,6 +23,10 @@
     @apply scrollbar-thin scrollbar-thumb-scndColor scrollbar-track-transparent scroll-m-0;
   }
 
+  .cstm-scrollbar-2 {
+    @apply scrollbar-thin scrollbar-thumb-prmColor scrollbar-track-transparent scroll-m-0;
+  }
+
   .cstm-bg-hover {
     @apply hover:bg-black hover:bg-opacity-5 transition-all p-2.5 rounded-full cursor-pointer;
   }

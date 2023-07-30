@@ -24,7 +24,7 @@ const ActivityCard = (props) => {
           <p className="text-xs opacity-80">{props.fillerText}</p>
         </div>
       ) : (
-        <div className="cstm-flex-col gap-5 w-full overflow-y-auto cstm-scrollbar justify-start">
+        <div className="cstm-flex-col gap-5 w-full overflow-y-auto cstm-scrollbar-2 justify-start">
           {props.activity}
         </div>
       )}

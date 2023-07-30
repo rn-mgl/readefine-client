@@ -7,7 +7,7 @@ import { BiSearch } from "react-icons/bi";
 
 const RewardsFilter = (props) => {
   return (
-    <div className="cstm-flex-row gap-2 justify-start relative w-full overflow-x-auto py-2 cstm-scrollbar">
+    <div className="cstm-flex-row gap-2 justify-start relative w-full overflow-x-auto py-2 cstm-scrollbar-2">
       <InputFilter
         label="Name"
         placeholder="Search..."

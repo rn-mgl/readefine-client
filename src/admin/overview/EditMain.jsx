@@ -115,7 +115,7 @@ const EditMain = (props) => {
   }
 
   return (
-    <div className="w-full h-full overflow-y-auto cstm-scrollbar fixed top-0 left-0 backdrop-blur-md z-20 p-5 cstm-flex-col justify-start">
+    <div className="w-full h-full overflow-y-auto cstm-scrollbar-2 fixed top-0 left-0 backdrop-blur-md z-20 p-5 cstm-flex-col justify-start">
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
 
       <button onClick={props.handleCanEditMain} className="cstm-bg-hover ml-auto">

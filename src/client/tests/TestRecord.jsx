@@ -81,7 +81,10 @@ const TestRecord = (props) => {
   }, [user, getTestData]);
 
   return (
-    <div className="fixed w-full top-0 left-0 h-full backdrop-blur-md z-30 p-5 cstm-flex-col justify-start overflow-y-auto cstm-scrollbar">
+    <div
+      className="fixed w-full top-0 left-0 h-full backdrop-blur-md z-30 p-5 
+                  cstm-flex-col justify-start overflow-y-auto cstm-scrollbar-2"
+    >
       <div className="w-full h-auto cstm-w-limit cstm-flex-col justify-start gap-5 ">
         <button
           onClick={() => props.handleSeeTestRecord(props.testId)}

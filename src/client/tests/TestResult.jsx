@@ -50,7 +50,7 @@ const TestResult = (props) => {
           <IoClose className="text-prmColor scale-150" />
         </button>
 
-        <div className="w-full h-[85vh] max-h-[85vh] cstm-flex-col gap-2 overflow-y-auto justify-start cstm-scrollbar">
+        <div className="w-full h-[85vh] max-h-[85vh] cstm-flex-col gap-2 overflow-y-auto justify-start cstm-scrollbar-2">
           {mappedQuestions}
         </div>
       </div>

@@ -9,7 +9,7 @@ const ActivityCard = (props) => {
         <p className="font-bold text-lg text-left">{props.label}</p>
       </div>
 
-      <div className="h-full overflow-y-auto cstm-flex-col w-full cstm-scrollbar gap-5 justify-start">
+      <div className="h-full overflow-y-auto cstm-flex-col w-full cstm-scrollbar-2 gap-5 justify-start">
         {props.hasContent ? (
           props.activity
         ) : (
