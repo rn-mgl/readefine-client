@@ -83,7 +83,7 @@ const Login = () => {
         // add session in db
         const { data: sessionData } = await axios.post(
           `http://192.168.1.121:9000/session`,
-          { type: "in" },
+          { type: "in", userId: primary.userId },
           { headers: { Authorization: primary?.token } }
         );
 
@@ -98,9 +98,7 @@ const Login = () => {
         if (achievementData.length) {
           setLoading(false);
           setAccomplishedAchievement({ accomplished: true, achievements: achievementData });
-          setAchievementUrl(
-            primary.isVerified ? "/archives" : `/verify/${primary.token.split(" ")[1]}`
-          );
+          setAchievementUrl(primary.isVerified ? "/archives" : "/sending");
         }
 
         // if not, continue to archives or verification depending on verification status
@@ -108,7 +106,7 @@ const Login = () => {
           if (primary.isVerified) {
             router.push("/archives");
           } else {
-            router.push(`/verify/${primary.token.split(" ")[1]}`);
+            router.push("/sending");
           }
         }
       }

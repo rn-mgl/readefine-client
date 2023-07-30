@@ -31,7 +31,7 @@ const ClientNav = () => {
     try {
       const { data } = await axios.post(
         `${url}/session`,
-        { type: "out", id: user?.userId },
+        { type: "out", userId: user?.userId },
         { headers: { Authorization: user?.token } }
       );
 
