@@ -1,5 +1,5 @@
 import React from "react";
-import Logo from "../../src/components/global/Logo";
+import LandingLogo from "@/src/src/components/global/LandingLogo";
 
 export const metadata = {
   title: "Readefine | Verify",
@@ -9,7 +9,7 @@ export default function RootLayout({ children }) {
   return (
     <main>
       <div className="text-prmColor">
-        <Logo />
+        <LandingLogo />
       </div>
 
       {children}
