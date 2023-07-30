@@ -12,6 +12,7 @@ import axios from "axios";
 
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
+import { isTokenExpired } from "@/src/src/functions/jwtFns";
 
 const Archives = () => {
   const [countsData, setCountsData] = React.useState({});
@@ -42,6 +43,12 @@ const Archives = () => {
       getCounts();
     }
   }, [user, getCounts]);
+
+  React.useEffect(() => {
+    const isExpired = isTokenExpired(user?.token.split(" ")[1]);
+
+    console.log(isExpired);
+  }, [user?.token]);
 
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
