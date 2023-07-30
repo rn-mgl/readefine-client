@@ -15,7 +15,7 @@ import ButtonComp from "../../src/components/input/ButtonComp";
 
 import { useGlobalContext } from "@/src/context";
 import { useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { CiUser } from "react-icons/ci";
 
@@ -30,11 +30,14 @@ const Login = () => {
   });
   const [achievementUrl, setAchievementUrl] = React.useState("/archives");
   const [visiblePassword, setVisiblePassword] = React.useState(false);
+  const [firstLogin, setFirstLogin] = React.useState(false);
   const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
   const [loading, setLoading] = React.useState(false);
 
   const { url } = useGlobalContext();
   const router = useRouter();
+  const { data: session } = useSession();
+  const user = session?.user?.name;
 
   // toggle if password can be seen
   const handleVisiblePassword = () => {
@@ -64,58 +67,63 @@ const Login = () => {
     e.preventDefault();
 
     setLoading(true);
+    setFirstLogin(true);
 
     // log in for middleware
-    await signIn("client-credentials", {
+    const data = await signIn("client-credentials", {
       candidateIdentifier: loginData.candidateIdentifier,
       candidatePassword: loginData.candidatePassword,
       redirect: false,
     });
 
-    // log in for checking achievements
+    if (!data?.ok) {
+      setLoading(false);
+      setFirstLogin(false);
+      setMessage({ active: true, msg: "Login credentials do not match.", type: "error" });
+    }
+  };
+
+  const checkAchievementAndSession = React.useCallback(async () => {
     try {
-      const { data } = await axios.post(`${url}/auth_client/client_login`, { loginData });
+      // add session in db
+      const { data: sessionData } = await axios.post(
+        `http://192.168.1.121:9000/session`,
+        { type: "in", userId: user?.userId },
+        { headers: { Authorization: user?.token } }
+      );
 
-      // if successfully logged in
-      if (data.primary) {
-        const { primary } = data;
+      // update session achievement points and return if achievement is met
+      const { data: achievementData } = await axios.patch(
+        `${url}/user_achievement`,
+        { type: "user_session", specifics: "days_online", toAdd: 1 },
+        { headers: { Authorization: user?.token } }
+      );
 
-        // add session in db
-        const { data: sessionData } = await axios.post(
-          `http://192.168.1.121:9000/session`,
-          { type: "in", userId: primary.userId },
-          { headers: { Authorization: primary?.token } }
-        );
+      // if there are achievements
+      if (achievementData.length) {
+        setLoading(false);
+        setAccomplishedAchievement({ accomplished: true, achievements: achievementData });
+        setAchievementUrl(user?.isVerified ? "/archives" : "/sending");
+      }
 
-        // update session achievement points and return if achievement is met
-        const { data: achievementData } = await axios.patch(
-          `${url}/user_achievement`,
-          { type: "user_session", specifics: "days_online", toAdd: 1 },
-          { headers: { Authorization: primary?.token } }
-        );
-
-        // if there are achievements
-        if (achievementData.length) {
-          setLoading(false);
-          setAccomplishedAchievement({ accomplished: true, achievements: achievementData });
-          setAchievementUrl(primary.isVerified ? "/archives" : "/sending");
-        }
-
-        // if not, continue to archives or verification depending on verification status
-        else {
-          if (primary.isVerified) {
-            router.push("/archives");
-          } else {
-            router.push("/sending");
-          }
+      // if not, continue to archives or verification depending on verification status
+      else {
+        if (user?.isVerified) {
+          router.push("/archives");
+        } else {
+          router.push("/sending");
         }
       }
     } catch (error) {
       console.log(error);
-      setLoading(false);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  };
+  }, [router, url, user]);
+
+  React.useEffect(() => {
+    if (user && firstLogin) {
+      checkAchievementAndSession();
+    }
+  }, [user, firstLogin, checkAchievementAndSession]);
 
   if (loading) {
     return <Loading />;
