@@ -13,6 +13,8 @@ import { inputDate } from "@/src/src/functions/localDate";
 import { useSession } from "next-auth/react";
 import { cipher } from "@/src/src/functions/security";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { isTokenExpired } from "@/src/src/functions/jwtFns";
 
 const AdminUsers = () => {
   const [users, setUsers] = React.useState([]);
@@ -30,6 +32,7 @@ const AdminUsers = () => {
   const { data: session } = useSession({ required: true });
   const { url } = useGlobalContext();
   const user = session?.user?.name;
+  const router = useRouter();
 
   // handle onchange on search filter
   const handleSearchFilter = ({ name, value }) => {
@@ -104,6 +107,14 @@ const AdminUsers = () => {
       getUsers();
     }
   }, [getUsers, user]);
+
+  React.useEffect(() => {
+    const isExpired = isTokenExpired(user?.token.split(" ")[2]);
+
+    if (isExpired) {
+      router.push("/filter");
+    }
+  }, [user?.token, router]);
 
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">

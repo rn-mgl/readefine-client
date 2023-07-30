@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { BsArrowLeft } from "react-icons/bs";
 import Loading from "@/src/src/components/global/Loading";
+import { isTokenExpired } from "@/src/src/functions/jwtFns";
 
 const AddAchievement = () => {
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
@@ -95,6 +96,14 @@ const AddAchievement = () => {
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   };
+
+  React.useEffect(() => {
+    const isExpired = isTokenExpired(user?.token.split(" ")[2]);
+
+    if (isExpired) {
+      router.push("/filter");
+    }
+  }, [user?.token, router]);
 
   if (loading) {
     return <Loading />;

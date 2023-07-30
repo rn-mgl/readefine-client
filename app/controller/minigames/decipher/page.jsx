@@ -13,6 +13,8 @@ import quirky from "../../../../public/music/minigames/Quirky.mp3";
 import { AiFillHeart } from "react-icons/ai";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
+import { useRouter } from "next/navigation";
+import { isTokenExpired } from "@/src/src/functions/jwtFns";
 
 const Decipher = () => {
   const [wordData, setWordData] = React.useState({});
@@ -34,6 +36,7 @@ const Decipher = () => {
   const { data: session } = useSession();
   const { url } = useGlobalContext();
   const user = session?.user?.name;
+  const router = useRouter();
 
   // change audio volume
   const handleVolume = ({ value }) => {
@@ -250,6 +253,14 @@ const Decipher = () => {
       };
     }
   }, [setTimer, gameOver]);
+
+  React.useEffect(() => {
+    const isExpired = isTokenExpired(user?.token.split(" ")[2]);
+
+    if (isExpired) {
+      router.push("/filter");
+    }
+  }, [user?.token, router]);
 
   return (
     <div className="bg-accntColor p-4 cstm-flex-col justify-start w-full min-h-screen">

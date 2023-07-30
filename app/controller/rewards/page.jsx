@@ -15,6 +15,8 @@ import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { inputDate } from "@/src/src/functions/localDate";
 import { cipher } from "@/src/src/functions/security";
+import { useRouter } from "next/navigation";
+import { isTokenExpired } from "@/src/src/functions/jwtFns";
 
 const AdminRewards = () => {
   const [rewards, setRewards] = React.useState([]);
@@ -31,6 +33,7 @@ const AdminRewards = () => {
   const { data: session } = useSession({ required: true });
   const user = session?.user?.name;
   const { url } = useGlobalContext();
+  const router = useRouter();
 
   // handle onchange on search filter
   const handleSearchFilter = ({ value }) => {
@@ -99,6 +102,14 @@ const AdminRewards = () => {
       getRewards();
     }
   }, [user, getRewards]);
+
+  React.useEffect(() => {
+    const isExpired = isTokenExpired(user?.token.split(" ")[2]);
+
+    if (isExpired) {
+      router.push("/filter");
+    }
+  }, [user?.token, router]);
 
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">

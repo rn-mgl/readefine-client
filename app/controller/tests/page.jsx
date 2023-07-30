@@ -13,6 +13,8 @@ import { inputDate } from "@/src/src/functions/localDate";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { cipher } from "@/src/src/functions/security";
+import { useRouter } from "next/navigation";
+import { isTokenExpired } from "@/src/src/functions/jwtFns";
 
 const AdminTests = () => {
   const [tests, setTests] = React.useState([]);
@@ -30,6 +32,7 @@ const AdminTests = () => {
   const { data: session } = useSession();
   const { url } = useGlobalContext();
   const user = session?.user?.name;
+  const router = useRouter();
 
   // handle onchange search filter
   const handleSearchFilter = ({ name, value }) => {
@@ -114,6 +117,14 @@ const AdminTests = () => {
       getTests();
     }
   }, [user, getTests]);
+
+  React.useEffect(() => {
+    const isExpired = isTokenExpired(user?.token.split(" ")[2]);
+
+    if (isExpired) {
+      router.push("/filter");
+    }
+  }, [user?.token, router]);
 
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">

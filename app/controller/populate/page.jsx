@@ -4,6 +4,8 @@ import React from "react";
 import { wordArray } from "./populateLists/wordList";
 import { useGlobalContext } from "@/src/context";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { isTokenExpired } from "@/src/src/functions/jwtFns";
 
 const Populate = () => {
   const [word, setWord] = React.useState(wordArray);
@@ -11,6 +13,7 @@ const Populate = () => {
   const { data: session } = useSession();
   const { url } = useGlobalContext();
   const user = session?.user?.name;
+  const router = useRouter();
 
   const getWord = async () => {
     let visited = [];
@@ -43,6 +46,14 @@ const Populate = () => {
       console.log(error);
     }
   };
+
+  React.useEffect(() => {
+    const isExpired = isTokenExpired(user?.token.split(" ")[2]);
+
+    if (isExpired) {
+      router.push("/filter");
+    }
+  }, [user?.token, router]);
 
   return (
     <div>

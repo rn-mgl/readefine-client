@@ -13,6 +13,7 @@ import { wordCount } from "@/src/src/functions/wordCount";
 import { useGlobalContext } from "@/src/context";
 import { useRouter } from "next/navigation";
 import Loading from "@/src/src/components/global/Loading";
+import { isTokenExpired } from "@/src/src/functions/jwtFns";
 
 const AddReward = () => {
   const [reward, setReward] = React.useState({
@@ -81,6 +82,14 @@ const AddReward = () => {
       }
     }
   };
+
+  React.useEffect(() => {
+    const isExpired = isTokenExpired(user?.token.split(" ")[2]);
+
+    if (isExpired) {
+      router.push("/filter");
+    }
+  }, [user?.token, router]);
 
   if (loading) {
     return <Loading />;

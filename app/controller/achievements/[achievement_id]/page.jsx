@@ -14,6 +14,8 @@ import { BsArrowLeft } from "react-icons/bs";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { specificsConversion, typeConversion } from "@/src/src/functions/typeConversion";
 import { decipher } from "@/src/src/functions/security";
+import { useRouter } from "next/navigation";
+import { isTokenExpired } from "@/src/src/functions/jwtFns";
 
 const SingleAchievement = ({ params }) => {
   const [achievement, setAchievement] = React.useState({});
@@ -24,6 +26,7 @@ const SingleAchievement = ({ params }) => {
   const { url } = useGlobalContext();
   const user = session?.user?.name;
   const decodedAchievementId = decipher(params?.achievement_id);
+  const router = useRouter();
 
   // toggle can delete achievement
   const handleCanDeleteAchievement = () => {
@@ -51,6 +54,14 @@ const SingleAchievement = ({ params }) => {
       getAchievement();
     }
   }, [getAchievement, user]);
+
+  React.useEffect(() => {
+    const isExpired = isTokenExpired(user?.token.split(" ")[2]);
+
+    if (isExpired) {
+      router.push("/filter");
+    }
+  }, [user?.token, router]);
 
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col justify-start gap-2">

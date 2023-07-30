@@ -12,6 +12,8 @@ import { BsArrowLeft } from "react-icons/bs";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { decipher } from "@/src/src/functions/security";
+import { useRouter } from "next/navigation";
+import { isTokenExpired } from "@/src/src/functions/jwtFns";
 
 const SingleReward = ({ params }) => {
   const [reward, setReward] = React.useState({});
@@ -22,6 +24,7 @@ const SingleReward = ({ params }) => {
   const { url } = useGlobalContext();
   const user = session?.user?.name;
   const decodedRewardId = decipher(params?.reward_id);
+  const router = useRouter();
 
   // toggle can delete reward
   const handleCanDeleteReward = () => {
@@ -48,6 +51,14 @@ const SingleReward = ({ params }) => {
       getReward();
     }
   }, [getReward, user]);
+
+  React.useEffect(() => {
+    const isExpired = isTokenExpired(user?.token.split(" ")[2]);
+
+    if (isExpired) {
+      router.push("/filter");
+    }
+  }, [user?.token, router]);
 
   return (
     <div className="w-full min-h-screen bg-accntColor p-5 cstm-flex-col gap-2 justify-start">

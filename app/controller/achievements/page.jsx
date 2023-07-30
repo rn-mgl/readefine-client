@@ -16,6 +16,8 @@ import { inputDate } from "@/src/src/functions/localDate";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { cipher } from "@/src/src/functions/security";
+import { useRouter } from "next/navigation";
+import { isTokenExpired } from "@/src/src/functions/jwtFns";
 
 const AdminAchievements = () => {
   const [achievements, setAchievements] = React.useState([]);
@@ -39,6 +41,7 @@ const AdminAchievements = () => {
   const { data: session } = useSession({ required: true });
   const user = session?.user?.name;
   const { url } = useGlobalContext();
+  const router = useRouter();
 
   // handle onchange on search filter
   const handleSearchFilter = ({ name, value }) => {
@@ -140,6 +143,14 @@ const AdminAchievements = () => {
       getAchievement();
     }
   }, [user, getAchievement]);
+
+  React.useEffect(() => {
+    const isExpired = isTokenExpired(user?.token.split(" ")[2]);
+
+    if (isExpired) {
+      router.push("/filter");
+    }
+  }, [user?.token, router]);
 
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">

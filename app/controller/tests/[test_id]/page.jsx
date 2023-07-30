@@ -16,6 +16,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { computeScore, shuffleQuestions } from "@/src/src/functions/testFns";
 import { decipher } from "@/src/src/functions/security";
+import { isTokenExpired } from "@/src/src/functions/jwtFns";
 
 const SingleTest = ({ params }) => {
   const [test, setTest] = React.useState({});
@@ -179,6 +180,14 @@ const SingleTest = ({ params }) => {
       getQuestions();
     }
   }, [user, getQuestions]);
+
+  React.useEffect(() => {
+    const isExpired = isTokenExpired(user?.token.split(" ")[2]);
+
+    if (isExpired) {
+      router.push("/filter");
+    }
+  }, [user?.token, router]);
 
   return (
     <div className="p-5 w-full min-h-screen bg-accntColor cstm-flex-col gap-2">

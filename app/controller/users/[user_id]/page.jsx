@@ -15,6 +15,8 @@ import { useGlobalContext } from "@/src/context";
 import { BsArrowLeft } from "react-icons/bs";
 import { AiOutlineMail } from "react-icons/ai";
 import { decipher } from "@/src/src/functions/security";
+import { useRouter } from "next/navigation";
+import { isTokenExpired } from "@/src/src/functions/jwtFns";
 
 const SingleUser = ({ params }) => {
   const [userData, setUserData] = React.useState({});
@@ -28,6 +30,7 @@ const SingleUser = ({ params }) => {
   const { url } = useGlobalContext();
   const decodedUserId = decipher(params?.user_id);
   const user = session?.user?.name;
+  const router = useRouter();
 
   defaults.font.family = "Poppins";
   defaults.font.size = 12;
@@ -251,6 +254,14 @@ const SingleUser = ({ params }) => {
       getUserQuizzesAnswered();
     }
   }, [getUserQuizzesAnswered, user]);
+
+  React.useEffect(() => {
+    const isExpired = isTokenExpired(user?.token.split(" ")[2]);
+
+    if (isExpired) {
+      router.push("/filter");
+    }
+  }, [user?.token, router]);
 
   return (
     <div className="w-full min-h-screen bg-accntColor cstm-flex-col justify-start p-5 gap-2">

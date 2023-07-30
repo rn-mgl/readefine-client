@@ -9,6 +9,8 @@ import { BsArrowLeft } from "react-icons/bs";
 import { useSession } from "next-auth/react";
 import { wordCount } from "@/src/src/functions/wordCount";
 import { useGlobalContext } from "@/src/context";
+import { useRouter } from "next/navigation";
+import { isTokenExpired } from "@/src/src/functions/jwtFns";
 
 const AddRiddle = () => {
   const [riddleData, setRiddleData] = React.useState({ riddle: "", answer: "" });
@@ -17,6 +19,7 @@ const AddRiddle = () => {
   const { data: session } = useSession({ required: true });
   const user = session?.user?.name;
   const { url } = useGlobalContext();
+  const router = useRouter();
 
   // handle on change of riddle
   const handleRiddleData = ({ name, value }) => {
@@ -50,6 +53,14 @@ const AddRiddle = () => {
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   };
+
+  React.useEffect(() => {
+    const isExpired = isTokenExpired(user?.token.split(" ")[2]);
+
+    if (isExpired) {
+      router.push("/filter");
+    }
+  }, [user?.token, router]);
 
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-2 justify-start">

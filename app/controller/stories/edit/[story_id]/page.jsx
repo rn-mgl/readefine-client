@@ -17,6 +17,7 @@ import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { useRouter } from "next/navigation";
 import { decipher } from "@/src/src/functions/security";
+import { isTokenExpired } from "@/src/src/functions/jwtFns";
 
 const EditStory = ({ params }) => {
   const scrollRef = React.useRef(null);
@@ -220,6 +221,14 @@ const EditStory = ({ params }) => {
       scrollRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [pages]);
+
+  React.useEffect(() => {
+    const isExpired = isTokenExpired(user?.token.split(" ")[2]);
+
+    if (isExpired) {
+      router.push("/filter");
+    }
+  }, [user?.token, router]);
 
   if (loading) {
     return <Loading />;

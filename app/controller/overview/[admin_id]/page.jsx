@@ -25,6 +25,8 @@ import { GiBrain, GiNotebook, GiSpellBook } from "react-icons/gi";
 import { ImCheckmark } from "react-icons/im";
 import { AiFillTrophy } from "react-icons/ai";
 import { RxActivityLog } from "react-icons/rx";
+import { useRouter } from "next/navigation";
+import { isTokenExpired } from "@/src/src/functions/jwtFns";
 
 const Overview = ({ params }) => {
   const [adminData, setAdminData] = React.useState({});
@@ -39,6 +41,7 @@ const Overview = ({ params }) => {
   const { url } = useGlobalContext();
   const user = session?.user?.name;
   const decipheredId = decipher(params?.admin_id);
+  const router = useRouter();
 
   // toggle can edit main data
   const handleCanEditMain = () => {
@@ -231,6 +234,14 @@ const Overview = ({ params }) => {
       getAdminActivies();
     }
   }, [user, getAdminActivies]);
+
+  React.useEffect(() => {
+    const isExpired = isTokenExpired(user?.token.split(" ")[2]);
+
+    if (isExpired) {
+      router.push("/filter");
+    }
+  }, [user?.token, router]);
 
   return (
     <div className="w-full min-h-screen bg-accntColor p-5 cstm-flex-col justify-start cstm-scrollbar gap-5">

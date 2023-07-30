@@ -13,6 +13,7 @@ import { useGlobalContext } from "@/src/context";
 import { BsArrowLeft } from "react-icons/bs";
 import { decipher } from "@/src/src/functions/security";
 import Loading from "@/src/src/components/global/Loading";
+import { isTokenExpired } from "@/src/src/functions/jwtFns";
 
 const EditAchievement = ({ params }) => {
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
@@ -130,6 +131,14 @@ const EditAchievement = ({ params }) => {
       getAchievement();
     }
   }, [user, getAchievement]);
+
+  React.useEffect(() => {
+    const isExpired = isTokenExpired(user?.token.split(" ")[2]);
+
+    if (isExpired) {
+      router.push("/filter");
+    }
+  }, [user?.token, router]);
 
   if (loading) {
     return <Loading />;

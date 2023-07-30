@@ -17,6 +17,8 @@ import { useGlobalContext } from "@/src/context";
 import { BsArrowLeft, BsFilter } from "react-icons/bs";
 
 import { decipher } from "@/src/src/functions/security";
+import { useRouter } from "next/navigation";
+import { isTokenExpired } from "@/src/src/functions/jwtFns";
 
 const SingleStory = ({ params }) => {
   const [story, setStory] = React.useState({});
@@ -35,6 +37,7 @@ const SingleStory = ({ params }) => {
   const { url } = useGlobalContext();
   const decodedStoryId = decipher(params?.story_id);
   const user = session?.user?.name;
+  const router = useRouter();
 
   // text to speech content
   const leftUtterance = pages[activePage - 1]?.content;
@@ -149,6 +152,14 @@ const SingleStory = ({ params }) => {
       getPages();
     }
   }, [getPages, user]);
+
+  React.useEffect(() => {
+    const isExpired = isTokenExpired(user?.token.split(" ")[2]);
+
+    if (isExpired) {
+      router.push("/filter");
+    }
+  }, [user?.token, router]);
 
   return (
     <div className="p-5 cstm-flex-col bg-accntColor w-full min-h-screen h-screen justify-start gap-5">

@@ -13,6 +13,8 @@ import Message from "@/src/src/components/global/Message";
 
 import { useGlobalContext } from "../../context";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { isTokenExpired } from "@/src/src/functions/jwtFns";
 
 const AdminDashboard = () => {
   const [counts, setCounts] = React.useState({});
@@ -20,10 +22,9 @@ const AdminDashboard = () => {
   const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
 
   const { data: session } = useSession({ required: true });
-
   const user = session?.user?.name;
-
   const { url } = useGlobalContext();
+  const router = useRouter();
 
   // get dashboard counts
   const getCounts = React.useCallback(async () => {
@@ -53,7 +54,7 @@ const AdminDashboard = () => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "info" });
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   }, [user, url, setUpdates]);
 
@@ -68,6 +69,14 @@ const AdminDashboard = () => {
       getUpdates();
     }
   }, [getUpdates, user]);
+
+  React.useEffect(() => {
+    const isExpired = isTokenExpired(user?.token.split(" ")[2]);
+
+    if (isExpired) {
+      router.push("/filter");
+    }
+  }, [user?.token, router]);
 
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">

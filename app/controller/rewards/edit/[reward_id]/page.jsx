@@ -16,6 +16,7 @@ import { useRouter } from "next/navigation";
 import { IoClose } from "react-icons/io5";
 import { decipher } from "@/src/src/functions/security";
 import Loading from "@/src/src/components/global/Loading";
+import { isTokenExpired } from "@/src/src/functions/jwtFns";
 
 const EditReward = ({ params }) => {
   const [reward, setReward] = React.useState({});
@@ -26,10 +27,10 @@ const EditReward = ({ params }) => {
   const { url } = useGlobalContext();
   const user = session?.user?.name;
   const decodedRewardId = decipher(params?.reward_id);
+  const router = useRouter();
 
   // get word count in description
   const words = wordCount(reward.description);
-  const router = useRouter();
 
   // handle onchange on reward
   const handleReward = ({ name, value }) => {
@@ -108,6 +109,14 @@ const EditReward = ({ params }) => {
       getReward();
     }
   }, [user, getReward]);
+
+  React.useEffect(() => {
+    const isExpired = isTokenExpired(user?.token.split(" ")[2]);
+
+    if (isExpired) {
+      router.push("/filter");
+    }
+  }, [user?.token, router]);
 
   if (loading) {
     return <Loading />;

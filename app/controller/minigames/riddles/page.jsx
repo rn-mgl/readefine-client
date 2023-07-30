@@ -10,13 +10,12 @@ import Message from "@/src/src/components/global/Message";
 import { IoAddOutline } from "react-icons/io5";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
-import { inputDate, localizeDate } from "@/src/src/functions/localDate";
-import { AiFillDelete, AiFillEdit } from "react-icons/ai";
-import { IoClose } from "react-icons/io5";
-import { BiCheck } from "react-icons/bi";
+import { inputDate } from "@/src/src/functions/localDate";
 import { BsArrowLeft } from "react-icons/bs";
 import RiddleRow from "@/src/src/admin/riddles/RiddleRow";
 import EditRow from "@/src/src/admin/riddles/EditRow";
+import { useRouter } from "next/navigation";
+import { isTokenExpired } from "@/src/src/functions/jwtFns";
 
 const AdminRiddles = () => {
   const [riddles, setRiddles] = React.useState([]);
@@ -35,6 +34,7 @@ const AdminRiddles = () => {
   const { data: session } = useSession();
   const { url } = useGlobalContext();
   const user = session?.user?.name;
+  const router = useRouter();
 
   // handle selection of riddle to edit
   const handleRiddleToEdit = (id) => {
@@ -180,6 +180,14 @@ const AdminRiddles = () => {
       getRiddles();
     }
   }, [user, url, getRiddles]);
+
+  React.useEffect(() => {
+    const isExpired = isTokenExpired(user?.token.split(" ")[2]);
+
+    if (isExpired) {
+      router.push("/filter");
+    }
+  }, [user?.token, router]);
 
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-2 justify-start">
