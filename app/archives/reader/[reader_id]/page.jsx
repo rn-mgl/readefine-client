@@ -28,6 +28,8 @@ import { BsFillPenFill, BsFillSquareFill } from "react-icons/bs";
 import { TbPlusMinus } from "react-icons/tb";
 import { FaBrain } from "react-icons/fa";
 import Message from "@/src/src/components/global/Message";
+import { useRouter } from "next/navigation";
+import { isTokenExpired } from "@/src/src/functions/jwtFns";
 
 const Reader = ({ params }) => {
   const [userData, setUserData] = React.useState({});
@@ -47,6 +49,7 @@ const Reader = ({ params }) => {
   const { url } = useGlobalContext();
   const user = session?.user?.name;
   const decipheredId = decipher(params?.reader_id);
+  const router = useRouter();
 
   // toggle can edit maini
   function handleCanEditMain() {
@@ -271,6 +274,14 @@ const Reader = ({ params }) => {
       getUserActivities();
     }
   }, [user, getUserActivities]);
+
+  React.useEffect(() => {
+    const isExpired = isTokenExpired(user?.token.split(" ")[1]);
+
+    if (isExpired) {
+      router.push("/login");
+    }
+  }, [user?.token, router]);
 
   return (
     <div className="w-full p-5 cstm-flex-col bg-accntColor min-h-screen overflow-y-auto cstm-scrollbar justify-start gap-5">

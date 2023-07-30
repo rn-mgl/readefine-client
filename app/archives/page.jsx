@@ -13,6 +13,7 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
+import { useRouter } from "next/navigation";
 
 const Archives = () => {
   const [countsData, setCountsData] = React.useState({});
@@ -21,6 +22,7 @@ const Archives = () => {
   const { data: session } = useSession({ required: true });
   const { url } = useGlobalContext();
   const user = session?.user?.name;
+  const router = useRouter();
 
   // get counts of activities per card
   const getCounts = React.useCallback(async () => {
@@ -47,8 +49,10 @@ const Archives = () => {
   React.useEffect(() => {
     const isExpired = isTokenExpired(user?.token.split(" ")[1]);
 
-    console.log(isExpired);
-  }, [user?.token]);
+    if (isExpired) {
+      router.push("/login");
+    }
+  }, [user?.token, router]);
 
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">

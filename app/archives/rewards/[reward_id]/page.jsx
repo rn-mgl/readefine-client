@@ -12,6 +12,8 @@ import { useGlobalContext } from "@/src/context";
 import { BsArrowLeft, BsDot, BsTrophyFill } from "react-icons/bs";
 import { BiMedal } from "react-icons/bi";
 import Message from "@/src/src/components/global/Message";
+import { useRouter } from "next/navigation";
+import { isTokenExpired } from "@/src/src/functions/jwtFns";
 
 const SingleReward = ({ params }) => {
   const [rewardData, setRewardData] = React.useState({});
@@ -22,6 +24,7 @@ const SingleReward = ({ params }) => {
   const { url } = useGlobalContext();
   const user = session?.user?.name;
   const decodedRewardId = decipher(params.reward_id);
+  const router = useRouter();
 
   // get reward
   const getReward = React.useCallback(async () => {
@@ -44,6 +47,14 @@ const SingleReward = ({ params }) => {
       getReward();
     }
   }, [user, getReward]);
+
+  React.useEffect(() => {
+    const isExpired = isTokenExpired(user?.token.split(" ")[1]);
+
+    if (isExpired) {
+      router.push("/login");
+    }
+  }, [user?.token, router]);
 
   return (
     <div className="w-full cstm-flex-col p-5 gap-2 t:gap-5 justify-start bg-accntColor max-h-screen h-screen">

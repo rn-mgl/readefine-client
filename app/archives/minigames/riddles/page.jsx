@@ -13,6 +13,8 @@ import happy from "../../../../public/music/minigames/Happy.mp3";
 import { useGlobalContext } from "@/src/context";
 import { useSession } from "next-auth/react";
 import { AiFillHeart } from "react-icons/ai";
+import { useRouter } from "next/navigation";
+import { isTokenExpired } from "@/src/src/functions/jwtFns";
 
 const ClientRiddles = () => {
   const [riddleData, setRiddleData] = React.useState({});
@@ -34,6 +36,7 @@ const ClientRiddles = () => {
   const { data: session } = useSession();
   const { url } = useGlobalContext();
   const user = session?.user?.name;
+  const router = useRouter();
 
   // change audio volume
   const handleVolume = ({ value }) => {
@@ -226,6 +229,14 @@ const ClientRiddles = () => {
       handleGameOver();
     }
   }, [gameOver, handleGameOver]);
+
+  React.useEffect(() => {
+    const isExpired = isTokenExpired(user?.token.split(" ")[1]);
+
+    if (isExpired) {
+      router.push("/login");
+    }
+  }, [user?.token, router]);
 
   return (
     <div className="w-full min-h-screen bg-accntColor p-4 cstm-flex-col justify-start">

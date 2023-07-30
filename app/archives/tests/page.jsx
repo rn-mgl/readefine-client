@@ -15,6 +15,8 @@ import { inputDate } from "@/src/src/functions/localDate";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { cipher } from "@/src/src/functions/security";
+import { useRouter } from "next/navigation";
+import { isTokenExpired } from "@/src/src/functions/jwtFns";
 
 const ClientTests = () => {
   const [tests, setTests] = React.useState([]);
@@ -36,6 +38,7 @@ const ClientTests = () => {
   const { data: session } = useSession();
   const { url } = useGlobalContext();
   const user = session?.user?.name;
+  const router = useRouter();
 
   const handleSearchFilter = ({ name, value }) => {
     setSearchFilter((prev) => {
@@ -154,6 +157,14 @@ const ClientTests = () => {
       getUserLexile();
     }
   }, [user, getUserLexile]);
+
+  React.useEffect(() => {
+    const isExpired = isTokenExpired(user?.token.split(" ")[1]);
+
+    if (isExpired) {
+      router.push("/login");
+    }
+  }, [user?.token, router]);
 
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">

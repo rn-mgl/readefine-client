@@ -12,6 +12,8 @@ import noReward from "../../../public/profile/NoReward.svg";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { typeConversion } from "@/src/src/functions/typeConversion";
+import { useRouter } from "next/navigation";
+import { isTokenExpired } from "@/src/src/functions/jwtFns";
 
 const ClientAchievements = () => {
   const [achievements, setAchievements] = React.useState([]);
@@ -31,6 +33,7 @@ const ClientAchievements = () => {
   const { data: session } = useSession({ required: true });
   const user = session?.user?.name;
   const { url } = useGlobalContext();
+  const router = useRouter();
 
   // handle onchange search filter
   const handleSearchFilter = ({ name, value }) => {
@@ -110,6 +113,14 @@ const ClientAchievements = () => {
       getAchievement();
     }
   }, [user, getAchievement]);
+
+  React.useEffect(() => {
+    const isExpired = isTokenExpired(user?.token.split(" ")[1]);
+
+    if (isExpired) {
+      router.push("/login");
+    }
+  }, [user?.token, router]);
 
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">

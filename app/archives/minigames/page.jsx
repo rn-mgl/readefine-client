@@ -12,6 +12,8 @@ import ClientPageHeader from "@/src/src/client/global/PageHeader";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import Message from "@/src/src/components/global/Message";
+import { useRouter } from "next/navigation";
+import { isTokenExpired } from "@/src/src/functions/jwtFns";
 
 const Minigames = () => {
   const [counts, setCounts] = React.useState({});
@@ -20,6 +22,7 @@ const Minigames = () => {
   const { data: session } = useSession();
   const { url } = useGlobalContext();
   const user = session?.user?.name;
+  const router = useRouter();
 
   // get counts or amount of times user played a game
   const getCounts = React.useCallback(async () => {
@@ -41,6 +44,14 @@ const Minigames = () => {
       getCounts();
     }
   }, [getCounts, user]);
+
+  React.useEffect(() => {
+    const isExpired = isTokenExpired(user?.token.split(" ")[1]);
+
+    if (isExpired) {
+      router.push("/login");
+    }
+  }, [user?.token, router]);
 
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">

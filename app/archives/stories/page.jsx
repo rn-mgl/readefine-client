@@ -14,6 +14,8 @@ import noReads from "../../../public/profile/NoReads.svg";
 import { useGlobalContext } from "@/src/context";
 import { useSession } from "next-auth/react";
 import { cipher } from "@/src/src/functions/security";
+import { useRouter } from "next/navigation";
+import { isTokenExpired } from "@/src/src/functions/jwtFns";
 
 const ClientStories = () => {
   const [stories, setStories] = React.useState([]);
@@ -31,6 +33,7 @@ const ClientStories = () => {
   const { data: session } = useSession();
   const { url } = useGlobalContext();
   const user = session?.user?.name;
+  const router = useRouter();
 
   // handle onchange on search filter
   const handleSearchFilter = ({ name, value }) => {
@@ -146,6 +149,14 @@ const ClientStories = () => {
       getUserLexile();
     }
   }, [user, getUserLexile]);
+
+  React.useEffect(() => {
+    const isExpired = isTokenExpired(user?.token.split(" ")[1]);
+
+    if (isExpired) {
+      router.push("/login");
+    }
+  }, [user?.token, router]);
 
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">

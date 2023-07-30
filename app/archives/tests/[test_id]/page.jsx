@@ -14,6 +14,8 @@ import { useGlobalContext } from "@/src/context";
 import { AiFillCaretRight, AiFillCaretLeft } from "react-icons/ai";
 import { BsArrowLeft } from "react-icons/bs";
 import { decipher } from "@/src/src/functions/security";
+import { useRouter } from "next/navigation";
+import { isTokenExpired } from "@/src/src/functions/jwtFns";
 
 const SingleTest = ({ params }) => {
   const [testData, setTestData] = React.useState({});
@@ -49,6 +51,7 @@ const SingleTest = ({ params }) => {
   const { data: session } = useSession();
   const decodedTestId = decipher(params?.test_id);
   const user = session?.user?.name;
+  const router = useRouter();
 
   // handle next page
   const handleIncrement = () => {
@@ -260,6 +263,14 @@ const SingleTest = ({ params }) => {
       getUserLexile();
     }
   }, [user, getUserLexile]);
+
+  React.useEffect(() => {
+    const isExpired = isTokenExpired(user?.token.split(" ")[1]);
+
+    if (isExpired) {
+      router.push("/login");
+    }
+  }, [user?.token, router]);
 
   return (
     <div className="p-5 w-full min-h-screen bg-accntColor cstm-flex-col gap-5 justify-start overflow-x-hidden">

@@ -15,6 +15,8 @@ import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { BsArrowLeft, BsFilter } from "react-icons/bs";
 import { decipher } from "@/src/src/functions/security";
+import { useRouter } from "next/navigation";
+import { isTokenExpired } from "@/src/src/functions/jwtFns";
 
 const SingleStory = ({ params }) => {
   const [story, setStory] = React.useState({});
@@ -36,6 +38,7 @@ const SingleStory = ({ params }) => {
   const { url } = useGlobalContext();
   const user = session?.user?.name;
   const decodedStoryId = decipher(params?.story_id);
+  const router = useRouter();
 
   // handle next page
   const handleIncrement = () => {
@@ -188,6 +191,14 @@ const SingleStory = ({ params }) => {
       readStory();
     }
   }, [activePage, pages.length, readStory]);
+
+  React.useEffect(() => {
+    const isExpired = isTokenExpired(user?.token.split(" ")[1]);
+
+    if (isExpired) {
+      router.push("/login");
+    }
+  }, [user?.token, router]);
 
   return (
     <div className="p-5 cstm-flex-col bg-accntColor w-full min-h-screen h-screen justify-start gap-2">
