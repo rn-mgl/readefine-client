@@ -63,7 +63,7 @@ const SingleReward = ({ params }) => {
   }, [user, router]);
 
   return (
-    <div className="w-full min-h-screen bg-accntColor p-5 cstm-flex-col gap-2 justify-start">
+    <div className="w-full min-h-screen h-full overflow-y-auto bg-accntColor p-5 cstm-flex-col gap-2 justify-start">
       <AdminPageHeader subHeader="Reward" mainHeader={reward?.reward_name} />
 
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
@@ -94,7 +94,10 @@ const SingleReward = ({ params }) => {
           </div>
 
           {/* reward */}
-          <div className="p-5 rounded-2xl gap-5 cstm-flex-col overflow-auto w-full h-[80vh] justify-start bg-white text-sm shadow-md cstm-scrollbar">
+          <div
+            className="p-5 rounded-2xl gap-5 cstm-flex-col overflow-auto w-full h-[80vh] 
+                        justify-start bg-white text-sm shadow-md cstm-scrollbar"
+          >
             <div className="w-full h-full cstm-flex-col bg-accntColor rounded-2xl p-5">
               <div className="w-fit animate-float drop-shadow-md saturate-150">
                 <FileViewer src={reward?.reward} />

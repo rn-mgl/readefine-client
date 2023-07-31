@@ -59,7 +59,7 @@ const SingleReward = ({ params }) => {
   }, [user, router]);
 
   return (
-    <div className="w-full cstm-flex-col p-5 gap-2 t:gap-5 justify-start bg-accntColor max-h-screen h-screen">
+    <div className="w-full cstm-flex-col p-5 gap-2 t:gap-5 justify-start bg-accntColor max-h-screen h-full overflow-y-auto">
       <ClientPageHeader mainHeader="Readefine" subHeader="Your Reward" />
 
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
