@@ -47,12 +47,14 @@ const Archives = () => {
   }, [user, getCounts]);
 
   React.useEffect(() => {
-    const isExpired = isTokenExpired(user?.token.split(" ")[1]);
+    if (user) {
+      const isExpired = isTokenExpired(user?.token.split(" ")[1]);
 
-    if (isExpired) {
-      router.push("/login");
+      if (isExpired) {
+        router.push("/login");
+      }
     }
-  }, [user?.token, router]);
+  }, [user, router]);
 
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">

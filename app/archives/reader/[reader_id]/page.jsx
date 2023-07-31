@@ -276,12 +276,14 @@ const Reader = ({ params }) => {
   }, [user, getUserActivities]);
 
   React.useEffect(() => {
-    const isExpired = isTokenExpired(user?.token.split(" ")[1]);
+    if (user) {
+      const isExpired = isTokenExpired(user?.token.split(" ")[1]);
 
-    if (isExpired) {
-      router.push("/login");
+      if (isExpired) {
+        router.push("/login");
+      }
     }
-  }, [user?.token, router]);
+  }, [user, router]);
 
   return (
     <div className="w-full p-5 cstm-flex-col bg-accntColor min-h-screen overflow-y-auto cstm-scrollbar justify-start gap-5">

@@ -49,12 +49,14 @@ const SingleReward = ({ params }) => {
   }, [user, getReward]);
 
   React.useEffect(() => {
-    const isExpired = isTokenExpired(user?.token.split(" ")[1]);
+    if (user) {
+      const isExpired = isTokenExpired(user?.token.split(" ")[1]);
 
-    if (isExpired) {
-      router.push("/login");
+      if (isExpired) {
+        router.push("/login");
+      }
     }
-  }, [user?.token, router]);
+  }, [user, router]);
 
   return (
     <div className="w-full cstm-flex-col p-5 gap-2 t:gap-5 justify-start bg-accntColor max-h-screen h-screen">

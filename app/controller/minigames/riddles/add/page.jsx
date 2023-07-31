@@ -55,12 +55,14 @@ const AddRiddle = () => {
   };
 
   React.useEffect(() => {
-    const isExpired = isTokenExpired(user?.token.split(" ")[2]);
+    if (user) {
+      const isExpired = isTokenExpired(user?.token.split(" ")[2]);
 
-    if (isExpired) {
-      router.push("/filter");
+      if (isExpired) {
+        router.push("/filter");
+      }
     }
-  }, [user?.token, router]);
+  }, [user, router]);
 
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-2 justify-start">

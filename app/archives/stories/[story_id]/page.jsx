@@ -193,12 +193,14 @@ const SingleStory = ({ params }) => {
   }, [activePage, pages.length, readStory]);
 
   React.useEffect(() => {
-    const isExpired = isTokenExpired(user?.token.split(" ")[1]);
+    if (user) {
+      const isExpired = isTokenExpired(user?.token.split(" ")[1]);
 
-    if (isExpired) {
-      router.push("/login");
+      if (isExpired) {
+        router.push("/login");
+      }
     }
-  }, [user?.token, router]);
+  }, [user, router]);
 
   return (
     <div className="p-5 cstm-flex-col bg-accntColor w-full min-h-screen h-screen justify-start gap-2">

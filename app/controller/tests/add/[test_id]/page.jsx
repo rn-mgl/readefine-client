@@ -153,12 +153,14 @@ const AddTest = ({ params }) => {
   });
 
   React.useEffect(() => {
-    const isExpired = isTokenExpired(user?.token.split(" ")[2]);
+    if (user) {
+      const isExpired = isTokenExpired(user?.token.split(" ")[2]);
 
-    if (isExpired) {
-      router.push("/filter");
+      if (isExpired) {
+        router.push("/filter");
+      }
     }
-  }, [user?.token, router]);
+  }, [user, router]);
 
   if (loading) {
     return <Loading />;

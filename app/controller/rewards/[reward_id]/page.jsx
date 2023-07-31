@@ -53,12 +53,14 @@ const SingleReward = ({ params }) => {
   }, [getReward, user]);
 
   React.useEffect(() => {
-    const isExpired = isTokenExpired(user?.token.split(" ")[2]);
+    if (user) {
+      const isExpired = isTokenExpired(user?.token.split(" ")[2]);
 
-    if (isExpired) {
-      router.push("/filter");
+      if (isExpired) {
+        router.push("/filter");
+      }
     }
-  }, [user?.token, router]);
+  }, [user, router]);
 
   return (
     <div className="w-full min-h-screen bg-accntColor p-5 cstm-flex-col gap-2 justify-start">

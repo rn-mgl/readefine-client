@@ -261,12 +261,14 @@ const Dangle = () => {
   }, [gameOver, handleGameOver]);
 
   React.useEffect(() => {
-    const isExpired = isTokenExpired(user?.token.split(" ")[1]);
+    if (user) {
+      const isExpired = isTokenExpired(user?.token.split(" ")[1]);
 
-    if (isExpired) {
-      router.push("/login");
+      if (isExpired) {
+        router.push("/login");
+      }
     }
-  }, [user?.token, router]);
+  }, [user, router]);
 
   return (
     <div className="w-full min-h-screen bg-accntColor p-4 cstm-flex-col justify-start">
