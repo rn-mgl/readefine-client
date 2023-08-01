@@ -87,7 +87,7 @@ const Login = () => {
     try {
       // add session in db
       const { data: sessionData } = await axios.post(
-        `http://192.168.1.121:9000/session`,
+        `${url}/session`,
         { type: "in", userId: user?.userId },
         { headers: { Authorization: user?.token } }
       );
