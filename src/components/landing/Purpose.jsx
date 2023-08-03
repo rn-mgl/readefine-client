@@ -26,6 +26,7 @@ const Purpose = () => {
         utilizing a scientifically-based framework, the program can help students develop critical
         reading skills and become lifelong learners.
       </p>
+
       <ButtonLink
         to="/signup"
         label="Start Now"

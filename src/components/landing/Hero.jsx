@@ -1,11 +1,35 @@
+"use client";
+import React from "react";
 import ButtonLink from "../link/ButtonLink";
 import book from "../../../public/landing/hero/landing book.png";
 import Image from "next/image";
+import axios from "axios";
+import { useGlobalContext } from "@/src/context";
 
 const Hero = () => {
+  const [userCount, setUserCount] = React.useState(0);
+
+  const { url } = useGlobalContext();
+
+  const getUserCount = React.useCallback(async () => {
+    try {
+      const { data } = await axios.get(`${url}/warmer`);
+      if (data) {
+        setUserCount(data?.user_count);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, [url]);
+
+  React.useEffect(() => {
+    getUserCount();
+  }, [getUserCount]);
+
   return (
     <section
-      className="min-h-screen w-full bg-prmColor px-5 text-center cstm-flex-col font-poppins text-accntColor gap-4 pt-20
+      className="min-h-screen w-full bg-prmColor p-5 text-center cstm-flex-col font-poppins 
+              text-accntColor gap-4 pt-20 relative
                 m-m:px-5
                 t:px-10 t:pt-20
                 l-s:gap-4"
@@ -57,6 +81,10 @@ const Hero = () => {
         className="animate-float drop-shadow-lg w-9/12
                   t:w-96"
       />
+
+      <p className="text-xs font-light opacity-50 absolute bottom-5">
+        Readefine Users: <span className="font-bold">{userCount}</span>
+      </p>
     </section>
   );
 };
