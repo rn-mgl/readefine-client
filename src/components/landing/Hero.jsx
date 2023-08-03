@@ -5,19 +5,24 @@ import book from "../../../public/landing/hero/landing book.png";
 import Image from "next/image";
 import axios from "axios";
 import { useGlobalContext } from "@/src/context";
+import { BiLoader } from "react-icons/bi";
 
 const Hero = () => {
   const [userCount, setUserCount] = React.useState(0);
+  const [loading, setLoading] = React.useState(false);
 
   const { url } = useGlobalContext();
 
   const getUserCount = React.useCallback(async () => {
+    setLoading(true);
     try {
       const { data } = await axios.get(`${url}/warmer`);
       if (data) {
         setUserCount(data?.user_count);
+        setLoading(false);
       }
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
   }, [url]);
@@ -83,7 +88,10 @@ const Hero = () => {
       />
 
       <p className="text-xs font-light opacity-50 absolute bottom-5">
-        Readefine Users: <span className="font-bold">{userCount}</span>
+        Readefine Users:{" "}
+        <span className="font-bold">
+          {loading ? <BiLoader className="animate-spin" /> : userCount}
+        </span>
       </p>
     </section>
   );
