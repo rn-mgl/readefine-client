@@ -81,7 +81,7 @@ const AdminLogin = () => {
   }, [router, url, user]);
 
   React.useEffect(() => {
-    if (user) {
+    if (user && user.adminId) {
       recordSession();
     }
   }, [recordSession, user]);

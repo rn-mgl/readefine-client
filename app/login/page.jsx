@@ -117,7 +117,7 @@ const Login = () => {
   }, [router, url, user]);
 
   React.useEffect(() => {
-    if (user) {
+    if (user && user.userId) {
       checkAchievementAndSession();
     }
   }, [user, checkAchievementAndSession]);
