@@ -3,6 +3,8 @@ import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { redirect } from "next/navigation";
 
+const url = "https://readefine-server.onrender.com";
+
 export const authOptions = {
   providers: [
     CredentialsProvider({
@@ -15,12 +17,9 @@ export const authOptions = {
       },
 
       async authorize(credentials, req) {
-        const { data } = await axios.post(
-          "https://readefine-server.onrender.com/auth_admin/admin_login",
-          {
-            loginData: credentials,
-          }
-        );
+        const { data } = await axios.post(`${url}/auth_admin/admin_login`, {
+          loginData: credentials,
+        });
 
         if (data) {
           const user = { name: data.primary };
@@ -41,12 +40,9 @@ export const authOptions = {
       },
 
       async authorize(credentials, req) {
-        const { data } = await axios.post(
-          "https://readefine-server.onrender.com/auth_client/client_login",
-          {
-            loginData: credentials,
-          }
-        );
+        const { data } = await axios.post(`${url}/auth_client/client_login`, {
+          loginData: credentials,
+        });
 
         if (data) {
           const user = { name: data.primary };

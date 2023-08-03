@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { use } from "react";
 import Image from "next/image";
 import axios from "axios";
 
@@ -14,7 +14,7 @@ import Message from "@/src/src/components/global/Message";
 import { useRouter } from "next/navigation";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { CiUser } from "react-icons/ci";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 
 const AdminLogin = () => {
@@ -25,8 +25,11 @@ const AdminLogin = () => {
   const [visiblePassword, setVisiblePassword] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
+  const [firstLogin, setFirstLogin] = React.useState(false);
 
   const { url } = useGlobalContext();
+  const { data: session } = useSession();
+  const user = session?.user?.name;
   const router = useRouter();
 
   // toggle if password can be seen
@@ -48,6 +51,7 @@ const AdminLogin = () => {
   const loginAdmin = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setFirstLogin(true);
 
     // login on middleware
     const data = await signIn("admin-credentials", {
@@ -56,13 +60,34 @@ const AdminLogin = () => {
       redirect: false,
     });
 
-    if (data?.ok) {
-      router.push("/controller");
-    } else {
+    if (!data?.ok) {
+      setFirstLogin(false);
       setLoading(false);
       setMessage({ active: true, msg: "Incorrect login credentials.", type: "error" });
     }
   };
+
+  const recordSession = React.useCallback(async () => {
+    try {
+      const { data } = await axios.post(
+        `${url}/admin_session`,
+        { type: "in", adminId: user?.adminId },
+        { headers: { Authorization: user?.token } }
+      );
+
+      if (data) {
+        router.push("/controller");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, [router, url, user]);
+
+  React.useEffect(() => {
+    if (user && firstLogin) {
+      recordSession();
+    }
+  }, [recordSession, user, firstLogin]);
 
   // return if loading
   if (loading) {

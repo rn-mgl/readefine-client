@@ -27,9 +27,23 @@ const AdminNav = () => {
 
   const path = usePathname();
 
-  const logOut = () => {
+  const logOut = async () => {
     setLoading(true);
-    signOut({ callbackUrl: "/", redirect: true });
+
+    try {
+      const { data } = await axios.post(
+        `${url}/admin_session`,
+        { type: "out", adminId: user?.adminId },
+        { headers: { Authorization: user?.token } }
+      );
+
+      if (data) {
+        signOut({ callbackUrl: "/", redirect: true });
+      }
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+    }
   };
 
   const toggleOpenNav = () => {

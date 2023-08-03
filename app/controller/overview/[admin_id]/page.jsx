@@ -223,6 +223,28 @@ const Overview = ({ params }) => {
     );
   });
 
+  // map session activity
+  const sessionActivity = adminActivities?.sessionData?.map((s, i) => {
+    return (
+      <React.Fragment key={i}>
+        <div
+          className="p-5 rounded-2xl bg-accntColor text-left text-sm w-full cstm-flex-row gap-2"
+          key={s.session_id}
+        >
+          <div
+            style={{ backgroundImage: adminData?.image ? `url(${adminData?.image})` : null }}
+            className="w-10 h-10 min-w-[2.5rem] min-h-[2.5rem] bg-center bg-cover rounded-full bg-prmColor bg-opacity-20"
+          />
+          <p className="w-full">
+            You{" "}
+            <span className="font-semibold">{s.type === "in" ? "logged in" : "logged out"}</span> on{" "}
+            <span className="font-semibold">{localizeDate(s.date_logged)}</span>.
+          </p>
+        </div>
+      </React.Fragment>
+    );
+  });
+
   React.useEffect(() => {
     if (user) {
       getAdminData();
@@ -337,6 +359,14 @@ const Overview = ({ params }) => {
             isEmpty={adminActivities?.riddlesData?.length === 0}
             fillerImage={noGame}
             fillerText="No activities found on riddles."
+          />
+
+          <ActivityCard
+            label="Sessions"
+            activity={sessionActivity}
+            isEmpty={adminActivities?.riddlesData?.length === 0}
+            fillerImage={noGame}
+            fillerText="No sessions found."
           />
         </div>
       </div>
