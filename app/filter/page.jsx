@@ -86,8 +86,6 @@ const AdminLogin = () => {
     }
   }, [recordSession, user]);
 
-  console.log(1);
-
   // return if loading
   if (loading) {
     return <Loading />;
