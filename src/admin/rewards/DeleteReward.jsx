@@ -52,7 +52,7 @@ const DeleteReward = (props) => {
     } catch (error) {
       console.log(error);
       setLoading(false);
-      setHasSubmitted(true);
+      setHasSubmitted(false);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   };
