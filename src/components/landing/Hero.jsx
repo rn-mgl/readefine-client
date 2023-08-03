@@ -87,7 +87,7 @@ const Hero = () => {
                   t:w-96"
       />
 
-      <p className="text-xs font-light opacity-50 absolute bottom-5">
+      <p className="text-xs font-light opacity-50 absolute bottom-5 cstm-flex-row">
         Readefine Users:{" "}
         <span className="font-bold">
           {loading ? <BiLoader className="animate-spin" /> : userCount}
