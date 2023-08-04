@@ -36,7 +36,7 @@ const ClientNav = () => {
       );
 
       if (data) {
-        signOut({ callbackUrl: "/", redirect: true });
+        await signOut({ callbackUrl: "/", redirect: true });
       }
     } catch (error) {
       setLoading(false);

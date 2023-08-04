@@ -25,7 +25,6 @@ const AdminLogin = () => {
   });
   const [visiblePassword, setVisiblePassword] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
-  const [firstLogin, setFirstLogin] = React.useState(false);
   const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
 
   const { url } = useGlobalContext();
@@ -51,8 +50,8 @@ const AdminLogin = () => {
   // login admin
   const loginAdmin = async (e) => {
     e.preventDefault();
+
     setLoading(true);
-    setFirstLogin(true);
 
     // login on middleware
     const data = await signIn("admin-credentials", {
@@ -63,7 +62,6 @@ const AdminLogin = () => {
 
     if (!data?.ok) {
       setLoading(false);
-      setFirstLogin(false);
       setMessage({ active: true, msg: "Incorrect login credentials.", type: "error" });
     }
   };
@@ -89,10 +87,10 @@ const AdminLogin = () => {
   }, [router, url, user]);
 
   React.useEffect(() => {
-    if (user && user.adminId && firstLogin) {
+    if (user && user.adminIdn) {
       recordSession();
     }
-  }, [recordSession, user, firstLogin]);
+  }, [recordSession, user]);
 
   // return if loading
   if (loading) {
