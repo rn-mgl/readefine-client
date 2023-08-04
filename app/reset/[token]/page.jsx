@@ -51,6 +51,16 @@ const PasswordReset = ({ params }) => {
   const changePassword = async (e) => {
     e.preventDefault();
     const { newPassword, retypedPassword } = password;
+
+    if (newPassword !== retypedPassword) {
+      setMessage({
+        active: true,
+        msg: "The new password and retyped password does not match.",
+        type: "error",
+      });
+      return;
+    }
+
     try {
       const { data } = await axios.post(`${url}/auth_client_password_reset/${token}`, {
         newPassword,
