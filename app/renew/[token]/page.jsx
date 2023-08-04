@@ -14,6 +14,7 @@ import Message from "@/src/src/components/global/Message";
 import { useGlobalContext } from "@/src/context";
 import { useRouter } from "next/navigation";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { signOut } from "next-auth/react";
 import Loading from "@/src/src/components/global/Loading";
 
 const AdminPasswordReset = ({ params }) => {
@@ -74,6 +75,8 @@ const AdminPasswordReset = ({ params }) => {
         newPassword,
         retypedPassword,
       });
+
+      await signOut({ redirect: false });
 
       // if changed successfully, move to log in
       if (data) {

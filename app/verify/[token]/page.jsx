@@ -6,6 +6,7 @@ import React from "react";
 import axios from "axios";
 import Message from "@/src/src/components/global/Message";
 
+import { signOut } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 
 const Verify = ({ params }) => {
@@ -19,6 +20,8 @@ const Verify = ({ params }) => {
   const verifyUser = React.useCallback(async () => {
     try {
       const { data } = await axios.patch(`${url}/auth_client/client_verify`, { token });
+
+      await signOut({ redirect: false });
 
       // check if properly verified using the correct token
       if (data) {
