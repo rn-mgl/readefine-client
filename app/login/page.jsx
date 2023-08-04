@@ -30,6 +30,7 @@ const Login = () => {
   });
   const [achievementUrl, setAchievementUrl] = React.useState("/archives");
   const [visiblePassword, setVisiblePassword] = React.useState(false);
+  const [firstLogin, setFirstLogin] = React.useState(false);
   const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
   const [loading, setLoading] = React.useState(false);
 
@@ -66,6 +67,7 @@ const Login = () => {
     e.preventDefault();
 
     setLoading(true);
+    setFirstLogin(true);
 
     // log in for middleware
     const data = await signIn("client-credentials", {
@@ -76,6 +78,7 @@ const Login = () => {
 
     if (!data?.ok) {
       setLoading(false);
+      setFirstLogin(false);
       setMessage({ active: true, msg: "Login credentials do not match.", type: "error" });
     }
   };
@@ -117,10 +120,10 @@ const Login = () => {
   }, [router, url, user]);
 
   React.useEffect(() => {
-    if (user && user.userId) {
+    if (user && user.userId && firstLogin) {
       checkAchievementAndSession();
     }
-  }, [user, checkAchievementAndSession]);
+  }, [user, firstLogin, checkAchievementAndSession]);
 
   if (loading) {
     return <Loading />;

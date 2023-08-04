@@ -25,6 +25,7 @@ const AdminLogin = () => {
   });
   const [visiblePassword, setVisiblePassword] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
+  const [firstLogin, setFirstLogin] = React.useState(false);
   const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
 
   const { url } = useGlobalContext();
@@ -51,6 +52,7 @@ const AdminLogin = () => {
   const loginAdmin = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setFirstLogin(true);
 
     // login on middleware
     const data = await signIn("admin-credentials", {
@@ -61,6 +63,7 @@ const AdminLogin = () => {
 
     if (!data?.ok) {
       setLoading(false);
+      setFirstLogin(false);
       setMessage({ active: true, msg: "Incorrect login credentials.", type: "error" });
     }
   };
