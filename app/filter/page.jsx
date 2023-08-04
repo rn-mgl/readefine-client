@@ -74,7 +74,11 @@ const AdminLogin = () => {
       );
 
       if (data) {
-        router.push("/controller");
+        if (user?.isVerified) {
+          router.push("/controller");
+        } else {
+          router.push("/sending");
+        }
       }
     } catch (error) {
       console.log(error);

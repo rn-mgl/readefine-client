@@ -8,7 +8,7 @@ import Message from "@/src/src/components/global/Message";
 
 import { useGlobalContext } from "@/src/context";
 
-const Verify = ({ params }) => {
+const AdminVerify = ({ params }) => {
   const [status, setStatus] = React.useState("verifying");
   const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
 
@@ -18,7 +18,7 @@ const Verify = ({ params }) => {
   // verify user
   const verifyUser = React.useCallback(async () => {
     try {
-      const { data } = await axios.patch(`${url}/auth_client/client_verify`, { token });
+      const { data } = await axios.patch(`${url}/auth_admin/admin_verify`, { token });
 
       // check if properly verified using the correct token
       if (data) {
@@ -45,7 +45,7 @@ const Verify = ({ params }) => {
       {status === "verifying" ? (
         <VerifyingImage />
       ) : status === "verified" ? (
-        <VerifiedImage to="/login" />
+        <VerifiedImage to="/filter" />
       ) : (
         <UnverifiedImage />
       )}
@@ -53,4 +53,4 @@ const Verify = ({ params }) => {
   );
 };
 
-export default Verify;
+export default AdminVerify;

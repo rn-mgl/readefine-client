@@ -5,7 +5,7 @@ import Protected from "../../../public/verify/Protected.svg";
 import Link from "next/link";
 import { BsArrowRight } from "react-icons/bs";
 
-const VerifiedImage = () => {
+const VerifiedImage = (props) => {
   return (
     <div className="cstm-flex-col p-5 text-center gap-5">
       <Image
@@ -20,7 +20,7 @@ const VerifiedImage = () => {
         <span> You are now verified. Have fun reading!</span>
       </p>
       <Link
-        href="/login"
+        href={props.to}
         className="text-center font-poppins text-sm font-normal bg-prmColor text-accntColor rounded-full w-fit p-2 px-4 cstm-flex-row gap-2
                 t:text-base"
       >
