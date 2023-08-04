@@ -89,7 +89,7 @@ const AdminLogin = () => {
   console.log(user);
 
   React.useEffect(() => {
-    if (user && user.adminIdn) {
+    if (user && user.adminId) {
       recordSession();
     }
   }, [recordSession, user]);
