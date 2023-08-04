@@ -16,10 +16,9 @@ const EditInput = (props) => {
         required={props.required}
         onChange={(e) => props.onChange(e.target)}
         className="rounded-md px-2
-           bg-accntColor p-2 w-full text-sm font-normal
+           bg-accntColor p-2 w-full text-sm font-normal text-prmColor
             placeholder:text-prmColor placeholder:text-opacity-50
-            focus:outline-none focus:border-none
-            m-l:text-base"
+            focus:outline-none focus:border-none"
       />
     </div>
   );

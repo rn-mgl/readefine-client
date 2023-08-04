@@ -2,8 +2,8 @@ import React from "react";
 import LandingLogoAdmin from "@/src/src/components/global/LandingLogoAdmin";
 
 export const metadata = {
-  title: "Readefine | Filter",
-  description: "Readefine Filter",
+  title: "Readefine | Forgot Password",
+  description: "Readefine Forgot Password",
 };
 
 const RootLayout = ({ children }) => {
@@ -12,6 +12,7 @@ const RootLayout = ({ children }) => {
       <div className="text-accntColor">
         <LandingLogoAdmin />
       </div>
+
       {children}
     </main>
   );

@@ -10,7 +10,7 @@ export const metadata = {
 const RootLayout = ({ children }) => {
   return (
     <main>
-      <div className="text-accntColor">
+      <div className="text-prmColor">
         <LandingLogo />
       </div>
 

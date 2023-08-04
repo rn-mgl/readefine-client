@@ -16,6 +16,7 @@ import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { CiUser } from "react-icons/ci";
 import { signIn, useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
+import Link from "next/link";
 
 const AdminLogin = () => {
   const [loginData, setLoginData] = React.useState({
@@ -132,6 +133,11 @@ const AdminLogin = () => {
           onChange={(e) => handleLoginData(e.target)}
           value={loginData.candidatePassword}
         />
+
+        {/* link if password is forgotten */}
+        <Link className="text-xs text-white underline underline-offset-2" href="/fixer">
+          Forgot Password?
+        </Link>
 
         {/* submit form */}
         <ButtonComp

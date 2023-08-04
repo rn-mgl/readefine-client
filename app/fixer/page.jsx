@@ -11,7 +11,7 @@ import { useGlobalContext } from "@/src/context";
 import { useRouter } from "next/navigation";
 import Loading from "@/src/src/components/global/Loading";
 
-const ForgotPassword = () => {
+const AdminForgotPassword = () => {
   const [keys, setKeys] = React.useState({ candidateEmail: "", candidateUsername: "" });
   const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
@@ -33,12 +33,13 @@ const ForgotPassword = () => {
   // send email
   const sendResetEmail = async (e) => {
     e.preventDefault();
-    setHasSubmitted(true);
     setLoading(true);
+    setHasSubmitted(true);
 
     const { candidateEmail, candidateUsername } = keys;
+
     try {
-      const { data } = await axios.post(`${url}/auth_client_password_reset`, {
+      const { data } = await axios.post(`${url}/auth_admin_password_reset`, {
         candidateEmail,
         candidateUsername,
       });
@@ -49,8 +50,8 @@ const ForgotPassword = () => {
       }
     } catch (error) {
       console.log(error);
-      setHasSubmitted(false);
       setLoading(false);
+      setHasSubmitted(false);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   };
@@ -60,20 +61,20 @@ const ForgotPassword = () => {
   }
 
   return (
-    <div className="w-full min-h-screen p-5 cstm-flex-col bg-accntColor">
+    <div className="w-full min-h-screen p-5 cstm-flex-col bg-prmColor">
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
 
-      <p className=" font-extrabold text-2xl text-prmColor relative z-10">Reset Password</p>
+      <p className=" font-extrabold text-2xl text-accntColor relative z-10">Reset Password</p>
 
       <br />
 
       <form
-        className="w-full rounded-md bg-prmColor bg-opacity-10 backdrop-blur-md border-[1px] border-prmColor border-opacity-30 p-5 cstm-flex-col gap-5 relative z-10 shadow-lg
+        className="w-full rounded-md bg-white bg-opacity-20 backdrop-blur-md border-[1px] border-white border-opacity-40 p-5 cstm-flex-col gap-5 relative z-10 shadow-lg
                     t:w-96
                     l-s:w-[26rem]"
         onSubmit={(e) => sendResetEmail(e)}
       >
-        <p className="text-xs text-prmColor">
+        <p className="text-xs text-white">
           Enter your account&apos;s email address and we will send you a password reset link.
         </p>
 
@@ -102,8 +103,8 @@ const ForgotPassword = () => {
         {/* submit form */}
         <ButtonComp
           type="submit"
-          fontColor="text-scndColor"
-          bgColor="bg-prmColor"
+          fontColor="text-prmColor"
+          bgColor="bg-accntColor"
           label="Send Reset Email"
           css="w-full"
           disabled={hasSubmitted}
@@ -113,4 +114,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+export default AdminForgotPassword;

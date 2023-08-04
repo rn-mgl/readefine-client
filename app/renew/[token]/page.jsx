@@ -16,15 +16,15 @@ import { useRouter } from "next/navigation";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import Loading from "@/src/src/components/global/Loading";
 
-const PasswordReset = ({ params }) => {
+const AdminPasswordReset = ({ params }) => {
   const [password, setPassword] = React.useState({ newPassword: "", retypedPassword: "" });
-  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [visiblePassword, setVisiblePassword] = React.useState({
     newPassword: false,
     retypedPassword: false,
   });
+  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
 
   const { url } = useGlobalContext();
   const router = useRouter();
@@ -55,7 +55,6 @@ const PasswordReset = ({ params }) => {
     e.preventDefault();
     setHasSubmitted(true);
     setLoading(true);
-
     const { newPassword, retypedPassword } = password;
 
     if (newPassword !== retypedPassword) {
@@ -66,23 +65,24 @@ const PasswordReset = ({ params }) => {
       });
       setHasSubmitted(false);
       setLoading(false);
+
       return;
     }
 
     try {
-      const { data } = await axios.post(`${url}/auth_client_password_reset/${token}`, {
+      const { data } = await axios.post(`${url}/auth_admin_password_reset/${token}`, {
         newPassword,
         retypedPassword,
       });
 
       // if changed successfully, move to log in
       if (data) {
-        router.push("/login");
+        router.push("/filter");
       }
     } catch (error) {
       console.log(error);
-      setHasSubmitted(false);
       setLoading(false);
+      setHasSubmitted(false);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   };
@@ -92,15 +92,16 @@ const PasswordReset = ({ params }) => {
   }
 
   return (
-    <div className="p-5 cstm-flex-col w-full min-h-screen bg-gradient-to-b bg-accntColor ">
+    <div className="p-5 cstm-flex-col w-full min-h-screen bg-gradient-to-b bg-prmColor ">
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
 
-      <p className=" font-extrabold text-2xl text-prmColor">Enter New Password</p>
+      <p className=" font-extrabold text-2xl text-accntColor">Enter New Password</p>
 
       <br />
 
       <form
-        className="w-full rounded-md bg-prmColor bg-opacity-20 backdrop-blur-md border-[1px] border-prmColor border-opacity-40 p-5 cstm-flex-col gap-5 relative z-10 shadow-lg
+        className="w-full rounded-md bg-accntColor bg-opacity-20 backdrop-blur-md border-[1px] 
+                    border-accntColor border-opacity-40 p-5 cstm-flex-col gap-5 relative z-10 shadow-lg
                     t:w-96
                     l-s:w-[26rem]"
         onSubmit={(e) => changePassword(e)}
@@ -145,8 +146,8 @@ const PasswordReset = ({ params }) => {
           fontColor="text-accntColor"
           bgColor="bg-prmColor"
           label="Change Password"
-          css="w-full"
           disabled={hasSubmitted}
+          css="w-full"
         />
       </form>
 
@@ -177,4 +178,4 @@ const PasswordReset = ({ params }) => {
   );
 };
 
-export default PasswordReset;
+export default AdminPasswordReset;
