@@ -64,6 +64,7 @@ const RiddleGame = (props) => {
       <Keyboard
         submitGuess={props.submitGuess}
         handleInput={props.handleInput}
+        gameOver={props.gameOver}
         deleteCharacter={props.deleteCharacter}
       />
     </div>

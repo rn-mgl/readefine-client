@@ -324,6 +324,7 @@ const Decipher = () => {
           remainingLives={remainingLives}
           timer={timer}
           isMuted={isMuted}
+          gameOver={gameOver}
           incrementLetter={incrementLetter}
           decrementLetter={decrementLetter}
           resetGuesses={resetGuesses}

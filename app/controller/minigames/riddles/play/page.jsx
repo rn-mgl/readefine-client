@@ -228,6 +228,7 @@ const PlayRiddles = () => {
           entryGuesses={entryGuesses}
           timer={timer}
           isMuted={isMuted}
+          gameOver={gameOver}
           setEntryGuesses={setEntryGuesses}
           handleIsPlaying={handleIsPlaying}
           deleteCharacter={deleteCharacter}

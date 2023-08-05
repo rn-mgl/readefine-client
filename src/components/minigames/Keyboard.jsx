@@ -126,7 +126,7 @@ const Keyboard = (props) => {
         {zxcMap}
         <button
           disabled={gameOver}
-          onClick={() => props.submitGuess()}
+          onClick={props.submitGuess}
           className="cstm-flex-col bg-prmColor bg-opacity-20 p-2 rounded-md text-xs text-prmColor shadow-solid shadow-indigo-400 h-9 w-10 text-center 
                     m-l:text-sm 
                     t:w-20 t:h-10 

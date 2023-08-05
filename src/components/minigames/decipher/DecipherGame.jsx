@@ -56,7 +56,10 @@ const DecipherGame = (props) => {
 
         <button
           onClick={props.submitGuess}
-          className="cstm-flex-row gap-2 border-2 border-prmColor bg-prmColor text-sm text-scndColor p-2 w-fit px-10 rounded-full t:w-40 font-bold"
+          disabled={props.gameOver.over}
+          className="cstm-flex-row gap-2 border-2 border-prmColor bg-prmColor text-sm 
+                    text-scndColor p-2 w-fit px-10 rounded-full t:w-40 font-bold
+                    disabled:saturate-50"
         >
           Submit
         </button>
