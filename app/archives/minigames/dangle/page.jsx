@@ -181,7 +181,7 @@ const Dangle = () => {
 
   // handle game over
   const handleGameOver = React.useCallback(async () => {
-    const answer = entryGuesses[entryGuesses.length - 1].join("");
+    const answer = entryGuesses.at(-1).join("");
 
     try {
       const { data } = await axios.post(
