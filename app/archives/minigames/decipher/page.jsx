@@ -209,9 +209,9 @@ const Decipher = () => {
   const handleGameOver = React.useCallback(async () => {
     let answer = "";
 
-    guess.forEach((g) => {
-      answer += g.letter;
-    })
+    guess.forEach((e) => {
+      answer += e.letter;
+    });
 
     try {
       const { data } = await axios.post(
