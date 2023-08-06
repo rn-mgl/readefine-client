@@ -20,7 +20,6 @@ import { decipher } from "@/src/src/functions/security";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 
 const EditStory = ({ params }) => {
-  const scrollRef = React.useRef(null);
   const [story, setStory] = React.useState({});
   const [pages, setPages] = React.useState([]);
   const [toDelete, setToDelete] = React.useState([]);
@@ -217,12 +216,6 @@ const EditStory = ({ params }) => {
   }, [user, getPages]);
 
   React.useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [pages]);
-
-  React.useEffect(() => {
     if (user) {
       const isExpired = isTokenExpired(user?.token.split(" ")[2]);
 
@@ -278,7 +271,6 @@ const EditStory = ({ params }) => {
           </button>
 
           <button
-            ref={scrollRef}
             type="submit"
             className="w-fit text-center font-poppins ml-auto text-sm font-normal bg-scndColor text-prmColor rounded-full p-2 px-4 t:px-10"
           >
