@@ -82,34 +82,31 @@ const Login = () => {
 
   const checkAchievementAndSession = React.useCallback(async () => {
     try {
-      // add session in db
-      const { data: sessionData } = await axios.post(
-        `${url}/session`,
-        { type: "in", userId: user?.userId },
-        { headers: { Authorization: user?.token } }
-      );
+      if (user?.isVerified) {
+        // add session in db
+        const { data: sessionData } = await axios.post(
+          `${url}/session`,
+          { type: "in", userId: user?.userId },
+          { headers: { Authorization: user?.token } }
+        );
 
-      // update session achievement points and return if achievement is met
-      const { data: achievementData } = await axios.patch(
-        `${url}/user_achievement`,
-        { type: "user_session", specifics: "days_online", toAdd: 1 },
-        { headers: { Authorization: user?.token } }
-      );
+        // update session achievement points and return if achievement is met
+        const { data: achievementData } = await axios.patch(
+          `${url}/user_achievement`,
+          { type: "user_session", specifics: "days_online", toAdd: 1 },
+          { headers: { Authorization: user?.token } }
+        );
 
-      // if there are achievements
-      if (achievementData.length) {
-        setLoading(false);
-        setAccomplishedAchievement({ accomplished: true, achievements: achievementData });
-        setAchievementUrl(user?.isVerified ? "/archives" : "/sending");
-      }
-
-      // if not, continue to archives or verification depending on verification status
-      else {
-        if (user?.isVerified) {
-          router.push("/archives");
+        // if there are achievements
+        if (achievementData.length) {
+          setLoading(false);
+          setAccomplishedAchievement({ accomplished: true, achievements: achievementData });
+          setAchievementUrl(user?.isVerified ? "/archives" : "/sending");
         } else {
-          router.push("/sending");
+          router.push("/archives");
         }
+      } else if (!user?.isVerified) {
+        router.push("/sending");
       }
     } catch (error) {
       console.log(error);
