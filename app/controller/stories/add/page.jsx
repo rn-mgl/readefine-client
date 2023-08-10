@@ -113,6 +113,11 @@ const AddStory = () => {
       storyFilter.file = { src: bookCover, name: "" };
     }
 
+    if (!bookCover) {
+      setMessage({ active: true, msg: "You did not add a book cover.", type: "error" });
+      return;
+    }
+
     // check for images in each pages and upload
     for (let i = 0; i < pages.length; i++) {
       const page = pages[i];
