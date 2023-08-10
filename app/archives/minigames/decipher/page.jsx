@@ -273,7 +273,7 @@ const Decipher = () => {
   });
 
   React.useEffect(() => {
-    if (!gameOver.over) {
+    if (wordData && !gameOver.over) {
       const timerInterval = setInterval(() => {
         setTimer((prev) => prev + 1);
       }, 1000);
@@ -282,7 +282,7 @@ const Decipher = () => {
         clearInterval(timerInterval);
       };
     }
-  }, [setTimer, gameOver]);
+  }, [setTimer, gameOver, wordData]);
 
   React.useEffect(() => {
     if (gameOver.over) {

@@ -213,7 +213,7 @@ const ClientRiddles = () => {
   });
 
   React.useEffect(() => {
-    if (!gameOver.over) {
+    if (riddleData && !gameOver.over) {
       const interval = setInterval(() => {
         setTimer((prev) => prev + 1);
       }, 1000);
@@ -222,7 +222,7 @@ const ClientRiddles = () => {
         clearInterval(interval);
       };
     }
-  }, [gameOver, setTimer]);
+  }, [gameOver, setTimer, riddleData]);
 
   React.useEffect(() => {
     if (gameOver.over) {
