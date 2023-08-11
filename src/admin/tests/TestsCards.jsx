@@ -15,7 +15,7 @@ const TestsCards = (props) => {
           className="w-fit"
         />
       </div>
-      <div className="cstm-flex-row w-full">
+      <div className="cstm-flex-row w-full mt-auto mt-auto">
         <div
           className="cstm-flex-col gap-1 font-poppins mr-auto items-start
                     t:text-base"
@@ -37,7 +37,7 @@ const TestsCards = (props) => {
 
       <Link
         href={props.to}
-        className="w-full text-center font-poppins text-sm font-normal bg-prmColor text-accntColor rounded-full p-2 mt-auto"
+        className="w-full text-center font-poppins text-sm font-normal bg-prmColor text-accntColor rounded-full p-2"
       >
         Answer
       </Link>

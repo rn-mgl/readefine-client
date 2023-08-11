@@ -36,7 +36,7 @@ const TestsCards = (props) => {
         <Image src={props.image} alt="temp" width={240} height={200} className="w-fit" />
       </div>
 
-      <div className="cstm-flex-col gap-1 w-full">
+      <div className="cstm-flex-col gap-1 w-full mt-auto">
         <div className="cstm-flex-row  items-start w-full">
           <p className="font-bold text-black whitespace-pre-wrap w-44 text-sm text-left mr-auto">
             {props.title ? props.title : "Title"}
