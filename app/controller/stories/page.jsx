@@ -120,6 +120,7 @@ const AdminStories = () => {
           author={story.author}
           lexile={story.lexile}
           genre={story.genre}
+          testId={story.test_id}
           visit={`/controller/stories/${cipheredStoryId}`}
           test={testLink}
         />

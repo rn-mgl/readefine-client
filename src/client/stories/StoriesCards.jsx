@@ -5,7 +5,8 @@ import ActionLabel from "../../components/global/ActionLabel";
 import Link from "next/link";
 
 const StoriesCards = (props) => {
-  const buttonIfLower = props.isLower ? (
+  const hasTest = props.testId;
+  const buttonOnLexile = props.isLower ? (
     <button
       onClick={() => {
         props.handleShowLexileMessage();
@@ -66,10 +67,14 @@ const StoriesCards = (props) => {
         >
           Read
         </Link>
-        {props.isTaken ? (
-          <p className="text-xs italic">You already took this test</p>
+        {hasTest ? (
+          props.isTaken ? (
+            <p className="text-xs italic">You already took this test</p>
+          ) : (
+            buttonOnLexile
+          )
         ) : (
-          buttonIfLower
+          <p className="text-xs italic">This story does not have a test yet.</p>
         )}
       </div>
     </div>

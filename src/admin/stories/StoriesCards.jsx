@@ -3,6 +3,7 @@ import React from "react";
 import Link from "next/link";
 
 const StoriesCards = (props) => {
+  const hasTest = props.testId;
   return (
     <div className="bg-white p-5 rounded-2xl cstm-flex-col gap-4 t:w-72 shadow-md max-h-[30rem] h-[30rem]">
       <div className="w-full h-fit cstm-flex-col overflow-clip  bg-white rounded-2xl justify-start">
@@ -43,7 +44,7 @@ const StoriesCards = (props) => {
           href={props.test}
           className="w-full text-center font-poppins text-sm font-normal bg-scndColor text-prmColor rounded-full p-2"
         >
-          Test
+          {hasTest ? "Test" : "Create Test"}
         </Link>
       </div>
     </div>
