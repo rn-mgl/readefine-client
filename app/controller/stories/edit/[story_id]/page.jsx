@@ -121,6 +121,11 @@ const EditStory = ({ params }) => {
       story.file = { src: bookCover, name: "" };
     }
 
+    if (!bookCover) {
+      setMessage({ active: true, msg: "You did not put a book cover.", type: "error" });
+      return;
+    }
+
     // check for each pages for images
     for (let i = 0; i < pages.length; i++) {
       const page = pages[i];
