@@ -42,7 +42,11 @@ const StoriesCards = (props) => {
         </Link>
         <Link
           href={props.test}
-          className="w-full text-center font-poppins text-sm font-normal bg-scndColor text-prmColor rounded-full p-2"
+          className={`${
+            hasTest
+              ? "bg-scndColor text-prmColor"
+              : "border-2 border-scndColor bg-white text-scndColor"
+          } w-full text-center font-poppins text-sm font-normal  rounded-full p-2`}
         >
           {hasTest ? "Test" : "Create Test"}
         </Link>
