@@ -17,7 +17,7 @@ const StoriesCards = (props) => {
         />
       </div>
 
-      <div className="cstm-flex-row w-full">
+      <div className="cstm-flex-row w-full mt-auto">
         <div className="cstm-flex-col gap-1 font-poppins mr-auto items-start">
           <p
             className="font-bold text-black overflow-x-auto w-44
@@ -33,7 +33,7 @@ const StoriesCards = (props) => {
         </div>
       </div>
 
-      <div className="cstm-flex-col w-full gap-2 mt-auto">
+      <div className="cstm-flex-col w-full gap-2">
         <Link
           href={props.visit}
           className="w-full text-center font-poppins text-sm font-normal bg-prmColor text-accntColor rounded-full p-2 "
@@ -45,7 +45,7 @@ const StoriesCards = (props) => {
           className={`${
             hasTest
               ? "bg-scndColor text-prmColor"
-              : "border-2 border-scndColor bg-white text-scndColor"
+              : "border-2 border-scndColor bg-white text-prmColor"
           } w-full text-center font-poppins text-sm font-normal  rounded-full p-2`}
         >
           {hasTest ? "Test" : "Create Test"}

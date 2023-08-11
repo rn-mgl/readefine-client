@@ -45,7 +45,7 @@ const StoriesCards = (props) => {
         />
       </div>
 
-      <div className="cstm-flex-col w-full">
+      <div className="cstm-flex-col w-full mt-auto">
         <div className="cstm-flex-row font-poppins mr-auto items-start w-full">
           <p className="font-bold text-black overflow-x-auto w-44 text-left text-sm mr-auto">
             {props.title ? props.title : "Title"}
