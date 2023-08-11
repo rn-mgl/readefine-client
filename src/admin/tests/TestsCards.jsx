@@ -15,23 +15,15 @@ const TestsCards = (props) => {
           className="w-fit"
         />
       </div>
-      <div className="cstm-flex-row w-full mt-auto">
-        <div
-          className="cstm-flex-col gap-1 font-poppins mr-auto items-start
-                    t:text-base"
-        >
-          <p className="font-bold text-black w-44 whitespace-pre-wrap">
+      <div className="cstm-flex-col gap-1 w-full mt-auto">
+        <div className="cstm-flex-row  items-start w-full">
+          <p className="font-bold text-black whitespace-pre-wrap w-44 text-sm text-left mr-auto">
             {props.title ? props.title : "Title"}
           </p>
-          <p className="opacity-50 text-sm">{props.author ? props.author : "author"}</p>
+          <p className="font-bold text-prmColor text-sm">{props.lexile}L</p>
         </div>
-        <div className="cstm-flex-col gap-1 font-poppins mb-auto">
-          <p
-            className="font-bold text-prmColor 
-                    t:text-base"
-          >
-            {props.lexile}L
-          </p>
+        <div className="cstm-flex-row w-full text-xs">
+          <p className="opacity-50 mr-auto">{props.author ? props.author : "author"}</p>
         </div>
       </div>
 

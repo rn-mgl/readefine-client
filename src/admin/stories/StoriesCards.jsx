@@ -17,19 +17,18 @@ const StoriesCards = (props) => {
         />
       </div>
 
-      <div className="cstm-flex-row w-full mt-auto">
-        <div className="cstm-flex-col gap-1 font-poppins mr-auto items-start">
-          <p
-            className="font-bold text-black overflow-x-auto w-44
-                      t:text-base"
-          >
+      <div className="cstm-flex-col w-full mt-auto">
+        <div className="cstm-flex-row font-poppins mr-auto items-start w-full">
+          <p className="font-bold text-black overflow-x-auto w-44 text-left text-sm mr-auto">
             {props.title ? props.title : "Title"}
           </p>
-          <p className="opacity-50 text-sm">{props.author ? props.author : "author"}</p>
+          <p className="font-bold text-prmColor text-sm text-right">{props.lexile}L</p>
         </div>
-        <div className="cstm-flex-col gap-1 font-poppins items-end">
-          <p className="font-bold text-prmColor t:text-base">{props.lexile}L</p>
-          <p className="opacity-50 text-sm">{props.genre ? props.genre : "Genre"}</p>
+        <div className="cstm-flex-row font-poppins items-end w-full">
+          <p className="opacity-50 text-xs text-left mr-auto">
+            {props.author ? props.author : "author"}
+          </p>
+          <p className="opacity-50 text-xs text-right">{props.genre ? props.genre : "Genre"}</p>
         </div>
       </div>
 
