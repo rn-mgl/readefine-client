@@ -110,6 +110,8 @@ const Login = () => {
       }
     } catch (error) {
       console.log(error);
+      setLoading(false);
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   }, [router, url, user]);
 
