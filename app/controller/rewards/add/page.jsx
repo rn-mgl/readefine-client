@@ -25,6 +25,7 @@ const AddReward = () => {
   });
   const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
   const [loading, setLoading] = React.useState(false);
+  const [hasSubmitted, setHasSubmitted] = React.useState(false);
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -48,6 +49,7 @@ const AddReward = () => {
   const addReward = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setHasSubmitted(true);
 
     const { name, type, description, rawFile } = reward;
     let imageSrc = null;
@@ -64,6 +66,7 @@ const AddReward = () => {
 
     if (!imageSrc) {
       setLoading(false);
+      setHasSubmitted(false);
       setMessage({ active: true, msg: "You did not add an image", type: "error" });
       return;
     }
@@ -82,6 +85,7 @@ const AddReward = () => {
     } catch (error) {
       console.log(error);
       setLoading(false);
+      setHasSubmitted(false);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   };
@@ -182,7 +186,9 @@ const AddReward = () => {
 
           <button
             type="submit"
-            className="w-fit text-center font-poppins text-sm font-normal bg-prmColor text-accntColor rounded-full p-2 px-4"
+            disabled={hasSubmitted}
+            className="w-fit text-center font-poppins text-sm font-normal bg-prmColor 
+                      text-accntColor rounded-full p-2 px-4 t:px-10 disabled:saturate-50"
           >
             Add Reward
           </button>
