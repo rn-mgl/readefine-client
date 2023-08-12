@@ -53,16 +53,22 @@ const AdminLogin = () => {
 
     setLoading(true);
 
-    // login on middleware
-    const data = await signIn("admin-credentials", {
-      candidateIdentifier: loginData.candidateIdentifier,
-      candidatePassword: loginData.candidatePassword,
-      redirect: false,
-    });
+    try {
+      // login on middleware
+      const data = await signIn("admin-credentials", {
+        candidateIdentifier: loginData.candidateIdentifier,
+        candidatePassword: loginData.candidatePassword,
+        redirect: false,
+      });
 
-    if (!data?.ok) {
+      if (!data?.ok) {
+        setLoading(false);
+        setMessage({ active: true, msg: "Incorrect login credentials.", type: "error" });
+      }
+    } catch (error) {
+      console.log(error);
       setLoading(false);
-      setMessage({ active: true, msg: "Incorrect login credentials.", type: "error" });
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   };
 

@@ -67,16 +67,22 @@ const Login = () => {
 
     setLoading(true);
 
-    // log in for middleware
-    const data = await signIn("client-credentials", {
-      candidateIdentifier: loginData.candidateIdentifier,
-      candidatePassword: loginData.candidatePassword,
-      redirect: false,
-    });
+    try {
+      // log in for middleware
+      const data = await signIn("client-credentials", {
+        candidateIdentifier: loginData.candidateIdentifier,
+        candidatePassword: loginData.candidatePassword,
+        redirect: false,
+      });
 
-    if (!data?.ok) {
+      if (!data?.ok) {
+        setLoading(false);
+        setMessage({ active: true, msg: "Login credentials do not match.", type: "error" });
+      }
+    } catch (error) {
+      console.log(error);
       setLoading(false);
-      setMessage({ active: true, msg: "Login credentials do not match.", type: "error" });
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   };
 
