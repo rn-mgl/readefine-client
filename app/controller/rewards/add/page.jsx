@@ -62,24 +62,27 @@ const AddReward = () => {
       );
     }
 
-    // upload only if there is image
-    if (imageSrc) {
-      try {
-        const { data } = await axios.post(
-          `${url}/admin_reward`,
-          { name, type, reward: imageSrc, description },
-          { headers: { Authorization: user.token } }
-        );
+    if (!imageSrc) {
+      setLoading(false);
+      setMessage({ active: true, msg: "You did not add an image", type: "error" });
+      return;
+    }
 
-        // if added, move to main reward page
-        if (data) {
-          router.push("/controller/rewards");
-        }
-      } catch (error) {
-        console.log(error);
-        setLoading(false);
-        setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+    try {
+      const { data } = await axios.post(
+        `${url}/admin_reward`,
+        { name, type, reward: imageSrc, description },
+        { headers: { Authorization: user.token } }
+      );
+
+      // if added, move to main reward page
+      if (data) {
+        router.push("/controller/rewards");
       }
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   };
 
@@ -124,6 +127,7 @@ const AddReward = () => {
                 rows="1"
                 placeholder="Reward Name"
                 onChange={(e) => handleReward(e.target)}
+                required={true}
                 value={reward.name}
                 className="resize-none p-2 focus:outline-none font-bold text-prmColor mr-auto placeholder:opacity-50"
               />
@@ -141,6 +145,7 @@ const AddReward = () => {
                 placeholder="description..."
                 onChange={(e) => handleReward(e.target)}
                 value={reward.description}
+                required={true}
                 className="resize-none p-2 focus:outline-none w-full h-full mr-auto placeholder:opacity-50"
               />
               <p className="ml-auto whitespace-nowrap">words: {words}</p>

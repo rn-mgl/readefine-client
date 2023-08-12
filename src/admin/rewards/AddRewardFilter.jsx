@@ -12,6 +12,7 @@ const AddRewardFilter = (props) => {
       <SelectFilter
         onChange={props.handleReward}
         selectValue={props.reward.type}
+        required={true}
         name="type"
         label="Type"
         labelValue={[
