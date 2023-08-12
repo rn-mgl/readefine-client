@@ -80,33 +80,22 @@ const Login = () => {
     }
   };
 
-  const checkAchievementAndSession = React.useCallback(async () => {
+  const checkAchievement = React.useCallback(async () => {
     try {
-      if (user?.isVerified) {
-        // add session in db
-        const { data: sessionData } = await axios.post(
-          `${url}/session`,
-          { type: "in", userId: user?.userId },
-          { headers: { Authorization: user?.token } }
-        );
+      // update session achievement points and return if achievement is met
+      const { data: achievementData } = await axios.patch(
+        `${url}/user_achievement`,
+        { type: "user_session", specifics: "days_online", toAdd: 1 },
+        { headers: { Authorization: user?.token } }
+      );
 
-        // update session achievement points and return if achievement is met
-        const { data: achievementData } = await axios.patch(
-          `${url}/user_achievement`,
-          { type: "user_session", specifics: "days_online", toAdd: 1 },
-          { headers: { Authorization: user?.token } }
-        );
-
-        // if there are achievements
-        if (achievementData.length) {
-          setLoading(false);
-          setAccomplishedAchievement({ accomplished: true, achievements: achievementData });
-          setAchievementUrl(user?.isVerified ? "/archives" : "/sending");
-        } else {
-          router.push("/archives");
-        }
-      } else if (!user?.isVerified) {
-        router.push("/sending");
+      // if there are achievements
+      if (achievementData.length) {
+        setLoading(false);
+        setAccomplishedAchievement({ accomplished: true, achievements: achievementData });
+        setAchievementUrl(user?.isVerified ? "/archives" : "/sending");
+      } else {
+        router.push("/archives");
       }
     } catch (error) {
       console.log(error);
@@ -115,11 +104,42 @@ const Login = () => {
     }
   }, [router, url, user]);
 
-  React.useEffect(() => {
-    if (user && user.userId) {
-      checkAchievementAndSession();
+  const addSession = React.useCallback(async () => {
+    try {
+      // add session in db
+      const { data: sessionData } = await axios.post(
+        `${url}/session`,
+        { type: "in", userId: user?.userId },
+        { headers: { Authorization: user?.token } }
+      );
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [user, checkAchievementAndSession]);
+  }, [url, user]);
+
+  const notYetVerified = React.useCallback(async () => {
+    router.push("/sending");
+  }, [router]);
+
+  React.useEffect(() => {
+    if (user && user.userId && user.isVerified) {
+      addSession();
+    }
+  }, [user, addSession]);
+
+  React.useEffect(() => {
+    if (user && user.userId && user.isVerified) {
+      checkAchievement();
+    }
+  }, [user, checkAchievement]);
+
+  React.useEffect(() => {
+    if (user && user.userId && !user.isVerified) {
+      notYetVerified();
+    }
+  }, [user, notYetVerified]);
 
   if (loading) {
     return <Loading />;
