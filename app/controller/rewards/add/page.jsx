@@ -18,7 +18,7 @@ import { isTokenExpired } from "@/src/src/functions/jwtFns";
 const AddReward = () => {
   const [reward, setReward] = React.useState({
     name: "",
-    type: "",
+    type: "badge",
     file: { src: null, name: null },
     rawFile: null,
     description: "",
