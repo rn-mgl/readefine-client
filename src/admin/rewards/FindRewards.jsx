@@ -14,15 +14,13 @@ const FindRewards = (props) => {
   const [rewards, setRewards] = React.useState([]);
   const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
 
-  const [searchFilter, setSearchFilter] = React.useState({
-    toSearch: "reward_name",
-    searchKey: "",
-  });
+  const [searchFilter, setSearchFilter] = React.useState("");
+  const [typeFilter, setTypeFilter] = React.useState("");
+  const [sortFilter, setSortFilter] = React.useState({ toSort: "reward_name", sortMode: "ASC" });
   const [dateRangeFilter, setDateRangeFilter] = React.useState({
     from: "",
     to: inputDate(new Date().toLocaleDateString()),
   });
-  const [sortFilter, setSortFilter] = React.useState({ toSort: "reward_name", sortMode: "ASC" });
 
   const { data: session } = useSession({ required: true });
   const user = session?.user?.name;
@@ -53,6 +51,11 @@ const FindRewards = (props) => {
         [name]: value,
       };
     });
+  };
+
+  // handle onchange on type filter
+  const handleTypeFilter = ({ value }) => {
+    setTypeFilter(value);
   };
 
   const rewardsCards = rewards.map((reward) => {
@@ -104,12 +107,14 @@ const FindRewards = (props) => {
 
       <div className="w-full cstm-flex-col gap-2 cstm-w-limit">
         <RewardsFilter
-          handleSearchFilter={handleSearchFilter}
-          handleDateRangeFilter={handleDateRangeFilter}
-          handleSortFilter={handleSortFilter}
+          typeFilter={typeFilter}
           searchFilter={searchFilter}
           sortFilter={sortFilter}
           dateRangeFilter={dateRangeFilter}
+          handleSearchFilter={handleSearchFilter}
+          handleDateRangeFilter={handleDateRangeFilter}
+          handleSortFilter={handleSortFilter}
+          handleTypeFilter={handleTypeFilter}
         />
         <div
           className="cstm-flex-col gap-5 justify-start w-full transition-all
