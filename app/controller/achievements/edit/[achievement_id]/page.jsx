@@ -180,6 +180,7 @@ const EditAchievement = ({ params }) => {
               placeholder="Achievement Title/Name"
               className="resize-none p-2 focus:outline-none font-bold text-prmColor mr-auto placeholder:opacity-50"
               value={achievement.achievement_name}
+              required={true}
               onChange={(e) => handleAchievement(e.target)}
             />
           </div>
@@ -195,6 +196,7 @@ const EditAchievement = ({ params }) => {
               placeholder="task..."
               className="resize-none p-2 focus:outline-none w-full h-full mr-auto placeholder:opacity-50"
               value={achievement.task}
+              required={true}
               onChange={(e) => handleAchievement(e.target)}
             />
           </div>
