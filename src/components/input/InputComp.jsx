@@ -16,6 +16,7 @@ const InputComp = (props) => {
         spellCheck={props.spellCheck}
         placeholder={props.placeholder}
         value={props.value}
+        required={props.required}
         onChange={props.onChange}
         className="focus:rounded-full focus:px-3 focus:l-s:px-5 rounded-md px-2 l-s:px-3 
                    shadow-md bg-accntColor p-2 w-full text-sm font-normal transition-all

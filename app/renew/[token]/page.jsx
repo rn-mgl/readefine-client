@@ -62,7 +62,19 @@ const AdminPasswordReset = ({ params }) => {
       setMessage({
         active: true,
         msg: "The new password and retyped password does not match.",
-        type: "error",
+        type: "warning",
+      });
+      setHasSubmitted(false);
+      setLoading(false);
+
+      return;
+    }
+
+    if (newPassword.length < 8) {
+      setMessage({
+        active: true,
+        msg: "Password must not be lower than 8 characters.",
+        type: "warning",
       });
       setHasSubmitted(false);
       setLoading(false);

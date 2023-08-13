@@ -63,6 +63,17 @@ const ChangePassword = (props) => {
       return;
     }
 
+    if (newPassword.text.length < 8) {
+      setHasSubmitted(false);
+      setLoading(false);
+      setMessage({
+        active: true,
+        msg: "Password must not be lower than 8 characters.",
+        type: "warning",
+      });
+      return;
+    }
+
     try {
       const { data } = await axios.patch(
         `${url}/user/${user?.userId}`,

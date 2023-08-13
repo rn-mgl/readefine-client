@@ -16,6 +16,7 @@ const SelectComp = (props) => {
                 text-prmColor focus:outline-none focus:border-none"
       name="gradeLevel"
       value={props.value}
+      required={props.true}
       onChange={(e) => props.onChange(e.target)}
     >
       {mappedOptions}

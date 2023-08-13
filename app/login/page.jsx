@@ -222,7 +222,7 @@ const Login = () => {
       <Image
         src={intersectSM}
         alt="intersect"
-        className="w-full bottom-0 left-0 absolute rotate-180 t:hidden"
+        className="w-full -bottom-10 left-0 fixed rotate-180 t:hidden"
         loading="lazy"
       />
 
@@ -230,7 +230,7 @@ const Login = () => {
       <Image
         src={intersectST}
         alt="intersect"
-        className="hidden w-full bottom-0 rotate-180 left-0 absolute t:block l-s:hidden"
+        className="hidden w-full -bottom-10 rotate-180 left-0 fixed t:block l-s:hidden"
         loading="lazy"
       />
 
@@ -238,7 +238,7 @@ const Login = () => {
       <Image
         src={intersectSL}
         alt="intersect"
-        className="hidden w-full bottom-0 rotate-180 left-0 absolute l-s:block"
+        className="hidden w-full -bottom-10 rotate-180 left-0 fixed l-s:block"
         loading="lazy"
       />
     </div>
