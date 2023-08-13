@@ -75,7 +75,7 @@ const FindRewards = (props) => {
   const getRewards = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/admin_reward`, {
-        params: { searchFilter, sortFilter, dateRangeFilter },
+        params: { searchFilter, sortFilter, dateRangeFilter, typeFilter },
         headers: { Authorization: user.token },
       });
 
@@ -86,7 +86,7 @@ const FindRewards = (props) => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [url, user, setRewards, searchFilter, sortFilter, dateRangeFilter]);
+  }, [url, user, setRewards, searchFilter, sortFilter, dateRangeFilter, typeFilter]);
 
   React.useEffect(() => {
     if (user) {
