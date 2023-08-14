@@ -6,7 +6,7 @@ const ArchivesCards = (props) => {
   return (
     <Link
       href={props.to}
-      className="bg-white p-5 rounded-2xl cstm-flex-col gap-4 group transition-all shadow-solid active:shadow-solidActive
+      className="bg-white p-5 rounded-2xl  min-w-[16rem] cstm-flex-col gap-4 group transition-all shadow-solid active:shadow-solidActive
             t:w-80
             l-l:w-[22rem]"
     >

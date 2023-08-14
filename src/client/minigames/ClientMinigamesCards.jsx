@@ -5,7 +5,7 @@ import Link from "next/link";
 const ClientMinigamesCards = (props) => {
   return (
     <div
-      className="bg-white p-5 rounded-2xl cstm-flex-col gap-2 group shadow-solid group
+      className="bg-white p-5 rounded-2xl min-w-[16rem] cstm-flex-col gap-2 group shadow-solid group
                   t:w-80
                   l-l:w-[22rem]"
     >
