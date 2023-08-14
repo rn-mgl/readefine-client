@@ -151,6 +151,7 @@ const EditReward = ({ params }) => {
                 placeholder="Reward Name"
                 onChange={(e) => handleReward(e.target)}
                 value={reward.reward_name}
+                required={true}
                 className="resize-none p-2 focus:outline-none font-bold text-prmColor mr-auto placeholder:opacity-50"
               />
             </div>
@@ -167,6 +168,7 @@ const EditReward = ({ params }) => {
                 placeholder="description..."
                 onChange={(e) => handleReward(e.target)}
                 value={reward.description}
+                required={true}
                 className="resize-none p-2 focus:outline-none w-full h-full mr-auto placeholder:opacity-50"
               />
               <p className="ml-auto whitespace-nowrap">words: {words}</p>
@@ -210,8 +212,7 @@ const EditReward = ({ params }) => {
 
           <button
             type="submit"
-            className="w-fit text-center font-poppins text-sm font-normal bg-prmColor text-accntColor rounded-full p-2 px-4
-                t:text-base"
+            className="w-fit text-center font-poppins text-sm font-normal bg-prmColor text-accntColor rounded-full p-2 px-4 t:px-10"
           >
             Edit Reward
           </button>

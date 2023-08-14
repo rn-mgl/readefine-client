@@ -19,6 +19,7 @@ const EditRow = (props) => {
           className="w-full resize-none bg-white t:bg-accntColor rounded-md p-2 focus:outline-prmColor animate-[fadeIn_200ms]"
           name="riddle"
           value={props.riddle.riddle}
+          required={true}
           onChange={(e) => props.handleRiddle(props.riddle.riddle_id, e.target)}
         />
       </td>
@@ -37,6 +38,7 @@ const EditRow = (props) => {
                     focus:outline-prmColor animate-[fadeIn_200ms] text-center"
           name="answer"
           value={props.riddle.answer}
+          required={true}
           onChange={(e) => props.handleRiddle(props.riddle.riddle_id, e.target)}
         />
       </td>

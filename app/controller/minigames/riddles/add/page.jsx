@@ -65,7 +65,7 @@ const AddRiddle = () => {
   }, [user, router]);
 
   return (
-    <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-2 justify-start">
+    <div className="p-5 bg-accntColor w-full min-h-screen h-screen cstm-flex-col gap-2 justify-start">
       <AdminPageHeader subHeader="Riddles" mainHeader="Add Riddle" />
 
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
@@ -82,7 +82,10 @@ const AddRiddle = () => {
           <BsArrowLeft />
         </Link>
 
-        <div className="table-fixed p-5 rounded-2xl cstm-flex-col overflow-auto w-full h-[70vh] justify-start items-start bg-white text-sm gap-2 shadow-md cstm-scrollbar">
+        <div
+          className="table-fixed p-5 rounded-2xl cstm-flex-col overflow-auto w-full h-full 
+                    justify-start items-start bg-white text-sm gap-2 shadow-md cstm-scrollbar"
+        >
           <div className="cstm-flex-row w-full">
             <textarea
               name="answer"
@@ -91,6 +94,7 @@ const AddRiddle = () => {
               rows="1"
               placeholder="Answer"
               value={riddleData.answer}
+              required={true}
               className="resize-none p-2 focus:outline-none font-bold text-prmColor mr-auto"
               onChange={(e) => handleRiddleData(e.target)}
             />
@@ -106,6 +110,7 @@ const AddRiddle = () => {
               rows="1"
               placeholder="riddle..."
               value={riddleData.riddle}
+              required={true}
               className="resize-none p-2 focus:outline-none w-full h-full mr-auto"
               onChange={(e) => handleRiddleData(e.target)}
             />
@@ -116,8 +121,8 @@ const AddRiddle = () => {
 
         <div className="pt-4 cstm-flex-row w-full">
           <button
-            className="w-fit text-center font-poppins ml-auto text-sm font-normal bg-prmColor text-accntColor rounded-full p-2 px-4
-                t:text-base"
+            className="w-fit text-center font-poppins ml-auto text-sm font-normal bg-prmColor 
+                          text-accntColor rounded-full p-2 px-4 t:px-10"
           >
             Add Riddle
           </button>
