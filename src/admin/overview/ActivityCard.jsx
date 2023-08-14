@@ -14,13 +14,7 @@ const ActivityCard = (props) => {
 
       {props.isEmpty ? (
         <div className="cstm-flex-col w-full">
-          <Image
-            src={props.fillerImage}
-            alt="filler"
-            loading="lazy"
-            width={220}
-            draggable={false}
-          />
+          <Image src={props.fillerImage} alt="filler" priority width={220} draggable={false} />
           <p className="text-xs opacity-80">{props.fillerText}</p>
         </div>
       ) : (

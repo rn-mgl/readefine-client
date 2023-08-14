@@ -177,7 +177,7 @@ const AdminStories = () => {
             storiesCards
           ) : (
             <div className="cstm-flex-col absolute top-2/4 translate-y-2/4 left-2/4 -translate-x-2/4 w-full">
-              <Image src={noReads} alt="empty" loading="lazy" width={220} draggable={false} />
+              <Image src={noReads} alt="empty" priority width={220} draggable={false} />
               <p className="text-xs opacity-80">No Stories Found</p>
             </div>
           )}

@@ -161,7 +161,7 @@ const AdminUsers = () => {
           </table>
         ) : (
           <div className="cstm-flex-col absolute top-2/4 translate-y-2/4 left-2/4 -translate-x-2/4 w-full">
-            <Image src={noUsers} alt="empty" loading="lazy" width={220} draggable={false} />
+            <Image src={noUsers} alt="empty" priority width={220} draggable={false} />
             <p className="text-xs opacity-80">No Users Found</p>
           </div>
         )}

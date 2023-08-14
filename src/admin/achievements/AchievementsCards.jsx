@@ -23,7 +23,7 @@ const AchievementsCards = (props) => {
           width={250}
           height={250}
           className="h-full saturate-150"
-          loading="lazy"
+          priority
         />
       </Link>
       <div className="cstm-flex-col gap-1 w-full">

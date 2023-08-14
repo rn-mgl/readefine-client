@@ -214,7 +214,7 @@ const Signup = () => {
         src={intersectAM}
         alt="intersect"
         className="w-full bottom-0 left-0 fixed t:hidden"
-        loading="lazy"
+        priority
       />
 
       {/* render on tablet */}
@@ -222,7 +222,7 @@ const Signup = () => {
         src={intersectAT}
         alt="intersect"
         className="hidden w-full -bottom-10 left-0 fixed t:block l-s:hidden"
-        loading="lazy"
+        priority
       />
 
       {/* render on laptop */}
@@ -230,7 +230,7 @@ const Signup = () => {
         src={intersectAL}
         alt="intersect"
         className="hidden w-full -bottom-10 left-0 fixed l-s:block"
-        loading="lazy"
+        priority
       />
     </div>
   );

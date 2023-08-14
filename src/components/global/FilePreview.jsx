@@ -9,7 +9,7 @@ const FilePreview = (props) => {
         src={props.src}
         alt="preview"
         className="w-fit rounded-2xl overflow-clip"
-        loading="lazy"
+        priority
         width={300}
         height={300}
       />

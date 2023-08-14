@@ -22,7 +22,7 @@ const RewardsCards = (props) => {
             className="drop-shadow-md w-fit saturate-150"
             width={250}
             height={250}
-            loading="lazy"
+            priority
           />
         </Link>
       ) : (
@@ -34,7 +34,7 @@ const RewardsCards = (props) => {
             className="drop-shadow-md w-fit saturate-150"
             width={250}
             height={250}
-            loading="lazy"
+            priority
           />
         </div>
       )}

@@ -12,9 +12,9 @@ const VerifiedImage = (props) => {
         src={Protected}
         alt="verified"
         className="w-8/12 animate-float drop-shadow-md t:w-6/12 animate-fadeIn"
-        loading="lazy"
+        priority
       />
-      <Image src={FistBump} alt="verified" className="drop-shadow-md t:w-11/12" loading="lazy" />
+      <Image src={FistBump} alt="verified" className="drop-shadow-md t:w-11/12" priority />
       <p className="text-prmColor text-base  animate-fadeIn">
         <span className="font-bold">Congratulations!</span> <br />
         <span> You are now verified. Have fun reading!</span>

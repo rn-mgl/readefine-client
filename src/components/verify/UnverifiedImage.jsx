@@ -9,7 +9,7 @@ const UnverifiedImage = () => {
         src={Rejected}
         alt="rejected"
         className="w-8/12 animate-float drop-shadow-md t:w-6/12 animate-fadeIn"
-        loading="lazy"
+        priority
       />
       <p className="text-prmColor text-base animate-fadeIn">
         Sorry, you were not verified because your credentials could not be found.

@@ -48,14 +48,14 @@ const Offers = () => {
             src={readLaptop}
             alt="read laptop"
             className="rounded-md hover:scale-105 transition-all duration-300"
-            loading="lazy"
+            priority
             width={1920}
           />
           <Image
             src={readLaptop2}
             alt="read laptop"
             className="rounded-md hover:scale-105 transition-all duration-300"
-            loading="lazy"
+            priority
             width={1920}
           />
         </div>
@@ -85,14 +85,14 @@ const Offers = () => {
             src={testLaptop}
             alt="read laptop"
             className="rounded-md hover:scale-105 transition-all duration-300"
-            loading="lazy"
+            priority
             width={1920}
           />
           <Image
             src={testLaptop2}
             alt="read laptop"
             className="rounded-md hover:scale-105 transition-all duration-300"
-            loading="lazy"
+            priority
             width={1920}
           />
         </div>
@@ -120,21 +120,21 @@ const Offers = () => {
             src={dangleLaptop}
             alt="read laptop"
             className="rounded-md hover:scale-105 transition-all duration-300"
-            loading="lazy"
+            priority
             width={1920}
           />
           <Image
             src={decipherLaptop}
             alt="read laptop"
             className="rounded-md hover:scale-105 transition-all duration-300"
-            loading="lazy"
+            priority
             width={1920}
           />
           <Image
             src={riddleLaptop}
             alt="read laptop"
             className="rounded-md hover:scale-105 transition-all duration-300"
-            loading="lazy"
+            priority
             width={1920}
           />
         </div>

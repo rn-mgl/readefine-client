@@ -18,7 +18,7 @@ const ActivityCard = (props) => {
               className="saturate-[.9]"
               src={noGame}
               alt="empty"
-              loading="lazy"
+              priority
               width={220}
               draggable={false}
             />

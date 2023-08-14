@@ -12,7 +12,7 @@ const AdminMinigamesCards = (props) => {
       <Link href={props.to} className="w-full overflow-hidden rounded-2xl">
         <Image
           src={props.image}
-          loading="lazy"
+          priority
           alt="temp"
           className="rounded-2xl group-hover:scale-110 transition-all duration-300 w-full"
         />
