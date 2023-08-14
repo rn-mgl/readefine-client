@@ -235,7 +235,8 @@ const AdminRiddles = () => {
       ) : null}
 
       <table
-        className="table-fixed p-4 rounded-md cstm-flex-col overflow-auto w-full h-full justify-start items-start bg-white text-sm 
+        className="table-fixed p-4 rounded-md cstm-flex-col cstm-scrollbar-2 overflow-auto 
+                w-full h-full justify-start items-start bg-white text-sm 
                 t:gap-5 cstm-w-limit border-collapse"
       >
         <thead className="w-full ">
