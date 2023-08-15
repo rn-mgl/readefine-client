@@ -141,7 +141,7 @@ const ClientAchievements = () => {
         handleTypeFilter={handleTypeFilter}
       />
 
-      <div className="w-full cstm-flex-col gap-5 cstm-w-limit h-full">
+      <div className="w-full cstm-flex-col gap-5 cstm-w-limit">
         <div
           className="w-full overflow-y-auto cstm-scrollbar cstm-flex-col gap-5 justify-start 
                       t:items-start p-5 bg-white rounded-2xl h-full relative"
