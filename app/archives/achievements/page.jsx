@@ -141,14 +141,16 @@ const ClientAchievements = () => {
         handleTypeFilter={handleTypeFilter}
       />
 
-      <div
-        className="w-full overflow-y-auto cstm-scrollbar-2 cstm-flex-col gap-5 justify-start 
-                      t:items-start p-5 bg-white rounded-2xl h-full min-h-full relative"
-      >
+      <div className="w-full cstm-flex-col gap-5 cstm-w-limit relative">
         {achievements.length ? (
-          achievementPanels
+          <div
+            className="w-full overflow-y-auto cstm-scrollbar-2 cstm-flex-col gap-5 justify-start 
+                      t:items-start p-5 bg-white rounded-2xl h-full min-h-full"
+          >
+            {achievementPanels}
+          </div>
         ) : (
-          <div className="cstm-flex-col absolute top-2/4 -translate-y-2/4 left-2/4 -translate-x-2/4 w-full">
+          <div className="cstm-flex-col left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 h-full min-h-full absolute">
             <Image src={noReward} alt="empty" priority width={220} draggable={false} />
             <p className="text-xs opacity-80">No Achievements Found</p>
           </div>
