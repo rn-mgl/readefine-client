@@ -173,7 +173,7 @@ const ClientStories = () => {
         />
       ) : null}
 
-      <div className="w-full cstm-w-limit cstm-flex-col gap-5 relative">
+      <div className="w-full cstm-w-limit cstm-flex-col gap-5 ">
         <StoriesFilter
           handleSearchFilter={handleSearchFilter}
           handleLexileRangeFilter={handleLexileRangeFilter}
@@ -184,13 +184,13 @@ const ClientStories = () => {
         />
 
         <div
-          className="cstm-flex-col gap-5 justify-start w-full transition-all
+          className="cstm-flex-col gap-5 justify-start w-full transition-all relative
                   t:cstm-flex-row t:flex-wrap"
         >
           {stories.length ? (
             storiesCards
           ) : (
-            <div className="cstm-flex-col absolute top-2/4 translate-y-2/4 left-2/4 -translate-x-2/4">
+            <div className="cstm-flex-col absolute top-2/4 translate-y-2/4 left-2/4 -translate-x-2/4 w-full">
               <Image src={noReads} alt="empty" priority width={220} draggable={false} />
               <p className="text-xs opacity-80">No Stories Found</p>
             </div>
