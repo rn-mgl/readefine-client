@@ -7,7 +7,7 @@ import SelectFilter from "../../components/filter/SelectFilter";
 
 const AchievementsFilter = (props) => {
   return (
-    <div className="cstm-flex-row gap-2 justify-start relative w-full overflow-x-auto p-2 cstm-scrollbar-2">
+    <div className="cstm-flex-row gap-2 justify-start relative w-full overflow-x-auto p-2 cstm-scrollbar-2 cstm-w-limit">
       <SearchFilter
         searchFilter={props.searchFilter}
         handleSearchFilter={props.handleSearchFilter}
