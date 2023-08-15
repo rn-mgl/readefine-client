@@ -125,14 +125,14 @@ const EditReward = ({ params }) => {
   }
 
   return (
-    <div className="w-full min-h-screen bg-accntColor p-5 cstm-flex-col gap-2 justify-start">
+    <div className="w-full min-h-screen bg-accntColor p-5 cstm-flex-col gap-5 justify-start">
       <AdminPageHeader subHeader={reward?.reward_name} mainHeader="Edit Reward" />
 
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
 
       <form
         onSubmit={(e) => editReward(e)}
-        className="w-full cstm-flex-col border-collapse gap-2 cstm-w-limit"
+        className="w-full cstm-flex-col border-collapse gap-5 cstm-w-limit"
       >
         <EditRewardFilter handleReward={handleReward} reward={reward} />
 
@@ -140,7 +140,7 @@ const EditReward = ({ params }) => {
           className="cstm-flex-col gap-5 w-full
                       l-s:cstm-flex-row"
         >
-          <div className="table-fixed p-5 rounded-2xl cstm-flex-col overflow-auto w-full h-[70vh] justify-start items-start bg-white text-sm gap-2 shadow-md cstm-scrollbar">
+          <div className="table-fixed p-5 rounded-2xl cstm-flex-col overflow-auto w-full h-[70vh] justify-start items-start bg-white text-sm gap-5 shadow-md cstm-scrollbar">
             {/* reward name */}
             <div className="cstm-flex-row w-full">
               <textarea
@@ -175,7 +175,7 @@ const EditReward = ({ params }) => {
             </div>
           </div>
 
-          <div className="table-fixed p-5 rounded-2xl cstm-flex-col overflow-auto w-full h-[70vh] justify-start items-start bg-white text-sm gap-2 shadow-md cstm-scrollbar">
+          <div className="table-fixed p-5 rounded-2xl cstm-flex-col overflow-auto w-full h-[70vh] justify-start items-start bg-white text-sm gap-5 shadow-md cstm-scrollbar">
             <div className="w-full h-full cstm-flex-col bg-accntColor rounded-2xl">
               {/* show selected file first then the current reward if none selected */}
               {reward.file?.src ? (

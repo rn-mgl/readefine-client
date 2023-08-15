@@ -2,16 +2,13 @@
 
 import axios from "axios";
 import React from "react";
-import FileViewer from "../../components/global/FileViewer";
 import * as fileFns from "../../functions/fileFns";
 
 import { useGlobalContext } from "@/src/context";
 import { useSession } from "next-auth/react";
 import { IoClose } from "react-icons/io5";
 import { BiImage } from "react-icons/bi";
-import FilePreview from "../../components/global/FilePreview";
 import ActionLabel from "../../components/global/ActionLabel";
-import InputComp from "../../components/input/InputComp";
 import { CiUser } from "react-icons/ci";
 import EditInput from "../../components/profile/EditInput";
 import Message from "../../components/global/Message";

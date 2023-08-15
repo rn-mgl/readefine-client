@@ -320,7 +320,7 @@ const SingleTest = ({ params }) => {
         </div>
       </div>
 
-      <div className="cstm-flex-col w-full mt-auto cstm-w-limit gap-5 t:gap-2">
+      <div className="cstm-flex-col w-full mt-auto cstm-w-limit gap-5 t:gap-5">
         <div className="cstm-flex-row w-full">
           {activePage > 0 ? (
             <button

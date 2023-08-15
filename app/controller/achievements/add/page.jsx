@@ -112,7 +112,7 @@ const AddAchievement = () => {
   }
 
   return (
-    <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-2 justify-start">
+    <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <AdminPageHeader subHeader="Achievements" mainHeader="Add Achievement" />
 
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
@@ -123,7 +123,7 @@ const AddAchievement = () => {
 
       <form
         onSubmit={(e) => addAchievement(e)}
-        className="w-full cstm-flex-col cstm-w-limit border-collapse gap-2"
+        className="w-full cstm-flex-col cstm-w-limit border-collapse gap-5"
       >
         <Link type="button" href="/controller/achievements" className="cstm-bg-hover mr-auto">
           <BsArrowLeft className="text-prmColor cursor-pointer scale-125" />
@@ -137,7 +137,7 @@ const AddAchievement = () => {
 
         <div
           className="table-fixed p-5 rounded-2xl cstm-flex-col overflow-auto w-full h-[70vh] justify-start 
-                      items-start bg-white text-sm gap-2 shadow-md cstm-scrollbar"
+                      items-start bg-white text-sm gap-5 shadow-md cstm-scrollbar"
         >
           <div className="cstm-flex-row w-full">
             <textarea

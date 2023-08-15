@@ -188,7 +188,7 @@ const AddStory = () => {
 
       <form
         action=""
-        className="w-full cstm-flex-col gap-2 cstm-w-limit border-collapse"
+        className="w-full cstm-flex-col gap-5 cstm-w-limit border-collapse"
         onSubmit={(e) => publishBook(e)}
       >
         <AddStoryFilter

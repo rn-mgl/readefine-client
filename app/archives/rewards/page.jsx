@@ -115,7 +115,7 @@ const ClientRewards = () => {
 
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
 
-      <div className="w-full cstm-w-limit cstm-flex-col gap-2 relative">
+      <div className="w-full cstm-w-limit cstm-flex-col gap-5 relative">
         <RewardsFilter
           searchFilter={searchFilter}
           sortFilter={sortFilter}

@@ -137,7 +137,7 @@ const AdminUsers = () => {
       />
 
       {/* users container */}
-      <div className="cstm-w-limit w-full cstm-flex-col gap-5 relative">
+      <div className="cstm-w-limit w-full cstm-flex-col gap-5 relative h-full">
         {users.length ? (
           <table
             className="table-fixed p-4 h-full min-h-full cstm-scrollbar-2 rounded-md cstm-flex-col  

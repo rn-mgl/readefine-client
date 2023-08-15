@@ -235,13 +235,13 @@ const EditStory = ({ params }) => {
   }
 
   return (
-    <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-2 justify-start">
+    <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <AdminPageHeader subHeader="Stories" mainHeader="Edit Story" />
 
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
 
       <form
-        className="w-full cstm-flex-col gap-2 cstm-w-limit border-collapse"
+        className="w-full cstm-flex-col gap-5 cstm-w-limit border-collapse"
         onSubmit={(e) => editBook(e)}
       >
         <Link type="button" href="/controller/stories" className="w-fit cstm-bg-hover mr-auto">

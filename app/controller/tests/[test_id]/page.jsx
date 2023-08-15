@@ -192,7 +192,7 @@ const SingleTest = ({ params }) => {
   }, [user, router]);
 
   return (
-    <div className="p-5 w-full min-h-screen bg-accntColor cstm-flex-col gap-2">
+    <div className="p-5 w-full min-h-screen bg-accntColor cstm-flex-col gap-5">
       <AdminPageHeader subHeader="Tests" mainHeader={test?.title} />
 
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
@@ -215,7 +215,7 @@ const SingleTest = ({ params }) => {
         />
       ) : null}
 
-      <div className="cstm-flex-col gap-2 w-full cstm-w-limit">
+      <div className="cstm-flex-col gap-5 w-full cstm-w-limit">
         <p className="text-sm text-center">
           <b>note:</b> admin submissions are <b>not</b> recorded
         </p>
@@ -236,7 +236,7 @@ const SingleTest = ({ params }) => {
 
         {mappedQuestions}
 
-        <div className="cstm-flex-col w-full gap-2 t:cstm-flex-row t:w-10/12 l-l:w-8/12">
+        <div className="cstm-flex-col w-full gap-5 t:cstm-flex-row t:w-10/12 l-l:w-8/12">
           <button
             onClick={() => computeScore(setScore, setIsFinished, questions, selectedChoices)}
             className={`p-2 bg-prmColor text-scndColor text-sm rounded-full w-full mt-5 t:mt-0 

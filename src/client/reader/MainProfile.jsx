@@ -5,7 +5,7 @@ import { AiFillEdit } from "react-icons/ai";
 
 const MainProfile = (props) => {
   return (
-    <div className="cstm-flex-col w-full gap-5 t:cstm-flex-row">
+    <div className="cstm-flex-col w-full gap-2 t:cstm-flex-row">
       <div className="w-full h-72 bg-white rounded-2xl p-5 shadow-solid cstm-flex-col justify-start relative t:w-6/12">
         <div className="bg-gradient-to-br from-prmColor via-sky-300 to-scndColor h-[40%] w-full rounded-2xl relative cstm-flex-col">
           <div
@@ -45,7 +45,7 @@ const MainProfile = (props) => {
         </button>
       </div>
 
-      <div className="cstm-flex-col gap-5 w-full t:w-6/12 t:h-72 l-l:cstm-flex-row justify-start">
+      <div className="cstm-flex-col gap-2 w-full t:w-6/12 t:h-72 l-l:cstm-flex-row justify-start">
         <div className="w-full h-full  bg-white rounded-2xl p-5 shadow-solid cstm-flex-col gap-2 relative">
           <p>Grade Level</p>
 

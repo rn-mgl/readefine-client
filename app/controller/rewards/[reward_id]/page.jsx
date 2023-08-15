@@ -63,7 +63,7 @@ const SingleReward = ({ params }) => {
   }, [user, router]);
 
   return (
-    <div className="w-full min-h-screen h-full overflow-y-auto bg-accntColor p-5 cstm-flex-col gap-2 justify-start">
+    <div className="w-full min-h-screen h-full overflow-y-auto bg-accntColor p-5 cstm-flex-col gap-5 justify-start">
       <AdminPageHeader subHeader="Reward" mainHeader={reward?.reward_name} />
 
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
@@ -77,7 +77,7 @@ const SingleReward = ({ params }) => {
       ) : null}
 
       <div className="w-full cstm-w-limit cstm-flex-col">
-        <div className="cstm-flex-col gap-2 w-full l-s:w-10/12 l-l:w-8/12">
+        <div className="cstm-flex-col gap-5 w-full l-s:w-10/12 l-l:w-8/12">
           {/* admin actions */}
           <div className="w-full cstm-flex-row">
             <Link href="/controller/rewards" className="cstm-bg-hover mr-auto">

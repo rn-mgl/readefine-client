@@ -203,7 +203,7 @@ const SingleStory = ({ params }) => {
   }, [user, router]);
 
   return (
-    <div className="p-5 cstm-flex-col bg-accntColor w-full min-h-screen h-screen justify-start gap-2">
+    <div className="p-5 cstm-flex-col bg-accntColor w-full min-h-screen h-screen justify-start gap-5">
       <ClientPageHeader subHeader="Stories" mainHeader={story.title} />
 
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}

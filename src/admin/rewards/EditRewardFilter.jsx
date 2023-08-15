@@ -5,7 +5,7 @@ import { BsArrowLeft } from "react-icons/bs";
 
 const EditRewardFilter = (props) => {
   return (
-    <div className="cstm-flex-row gap-2 justify-start relative w-full overflow-x-auto py-2 cstm-scrollbar-2">
+    <div className="cstm-flex-row gap-2  justify-start relative w-full overflow-x-auto py-2 cstm-scrollbar-2 min-h-[5rem]">
       <Link type="button" href="/controller/rewards" className="w-fit cstm-bg-hover mr-auto">
         <BsArrowLeft className=" text-prmColor" />
       </Link>

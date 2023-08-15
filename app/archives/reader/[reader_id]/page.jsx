@@ -248,7 +248,7 @@ const Reader = ({ params }) => {
   const loggedSessions = userActivities?.sessionsData?.map((s) => {
     return (
       <div
-        className="p-5 rounded-2xl bg-accntColor text-left text-sm w-full cstm-flex-row gap-2"
+        className="p-5 rounded-2xl bg-accntColor text-left text-sm w-full cstm-flex-row gap-5"
         key={s.session_id}
       >
         <div

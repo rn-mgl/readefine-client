@@ -266,7 +266,7 @@ const SingleUser = ({ params }) => {
   }, [user, router]);
 
   return (
-    <div className="w-full min-h-screen bg-accntColor cstm-flex-col justify-start p-5 gap-2">
+    <div className="w-full min-h-screen bg-accntColor cstm-flex-col justify-start p-5 gap-5">
       <AdminPageHeader subHeader="User" mainHeader="Dashboard" />
 
       {/* show if has message pop up */}
@@ -280,7 +280,7 @@ const SingleUser = ({ params }) => {
         <div className="cstm-flex-col gap-5 w-full t:cstm-flex-row">
           {/* user data */}
           <div className="cstm-flex-col bg-white rounded-2xl p-5 w-full">
-            <div className="cstm-flex-row gap-2 w-full justify-start">
+            <div className="cstm-flex-row gap-5 w-full justify-start">
               {/* user image */}
               <div
                 style={{ backgroundImage: userData.image ? `url("${userData.image}")` : null }}

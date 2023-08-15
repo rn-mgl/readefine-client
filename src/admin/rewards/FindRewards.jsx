@@ -97,7 +97,7 @@ const FindRewards = (props) => {
   return (
     <div
       className="p-5 h-full overflow-y-auto cstm-scrollbar-2 backdrop-blur-md fixed top-0 
-                  left-0 w-full min-h-screen cstm-flex-col gap-2 justify-start  z-20"
+                  left-0 w-full min-h-screen cstm-flex-col gap-5 justify-start  z-20"
     >
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
 
@@ -108,7 +108,7 @@ const FindRewards = (props) => {
         <IoClose className="text-prmColor scale-150 cursor-pointer" />
       </button>
 
-      <div className="w-full cstm-flex-col gap-2 cstm-w-limit">
+      <div className="w-full cstm-flex-col gap-5 cstm-w-limit">
         <RewardsFilter
           typeFilter={typeFilter}
           searchFilter={searchFilter}

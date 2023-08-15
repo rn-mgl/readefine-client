@@ -12,7 +12,7 @@ const AchievementsCards = (props) => {
   };
 
   return (
-    <div className="bg-white p-5 rounded-2xl cstm-flex-col gap-4 min-h-[26rem] w-72 min-w-[18rem] transition-all justify-start">
+    <div className="bg-white p-5 rounded-2xl cstm-flex-col gap-4 min-h-[26rem] w-72 min-w-[18rem] transition-all justify-start shadow-md">
       <Link
         href={props.to}
         className="w-full cstm-flex-col overflow-clip bg-accntColor h-full p-5 rounded-2xl"
@@ -42,7 +42,7 @@ const AchievementsCards = (props) => {
       </div>
 
       {isActive ? (
-        <div className="cstm-flex-col text-sm overflow-auto w-56 text-center gap-2">
+        <div className="cstm-flex-col text-sm overflow-auto w-56 text-center gap-5">
           <p className="font-semibold text-prmColor">{props.specifics}</p>
           <p className="font-light w-fit overflow-auto whitespace-pre-wrap">{props.task}</p>
         </div>

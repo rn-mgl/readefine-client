@@ -36,10 +36,10 @@ const SortFilter = (props) => {
         className="p-1 px-2  bg-white font-poppins rounded-r-md border-neutral-200 border-2 border-l-0 text-sm
               focus:outline-none "
       >
-        <option className="cstm-flex-row gap-2" value="ASC">
+        <option className="cstm-flex-row gap-5" value="ASC">
           Ascending
         </option>
-        <option className="cstm-flex-row gap-2" value="DESC">
+        <option className="cstm-flex-row gap-5" value="DESC">
           Descending
         </option>
       </select>

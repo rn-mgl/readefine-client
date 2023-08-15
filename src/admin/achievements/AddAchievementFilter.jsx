@@ -6,7 +6,7 @@ const AddAchievementFilter = (props) => {
   const hasReward = props.achievement?.reward?.id;
 
   return (
-    <div className="cstm-flex-row gap-2 justify-start relative w-full overflow-x-auto py-2 cstm-scrollbar-2">
+    <div className="cstm-flex-row gap-2  justify-start relative w-full overflow-x-auto py-2 cstm-scrollbar-2 min-h-[5rem]">
       <SelectFilter
         onChange={props.handleAchievement}
         selectValue={props.achievement?.type}

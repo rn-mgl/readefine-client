@@ -192,12 +192,12 @@ const AdminRiddles = () => {
   }, [user, router]);
 
   return (
-    <div className="p-5 bg-accntColor w-full min-h-screen h-screen cstm-flex-col gap-2 justify-start">
+    <div className="p-5 bg-accntColor w-full min-h-screen h-screen cstm-flex-col gap-5 justify-start">
       <AdminPageHeader subHeader="Readefine" mainHeader="Riddles" />
 
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
 
-      <div className="cstm-flex-col gap-2 w-full cstm-w-limit">
+      <div className="cstm-flex-col gap-5 w-full cstm-w-limit">
         <RiddlesFilter
           handleSearchFilter={handleSearchFilter}
           handleDateRangeFilter={handleDateRangeFilter}
@@ -207,7 +207,7 @@ const AdminRiddles = () => {
           dateRangeFilter={dateRangeFilter}
         />
 
-        <div className="cstm-flex-row w-full gap-2">
+        <div className="cstm-flex-row w-full gap-5">
           <Link href="/controller/minigames" className="cstm-bg-hover">
             <BsArrowLeft className="text-prmColor scale-100 m-l:scale-125" />
           </Link>
