@@ -125,7 +125,7 @@ const ClientAchievements = () => {
   }, [user, router]);
 
   return (
-    <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
+    <div className="p-5 bg-accntColor w-full min-h-screen h-screen cstm-flex-col gap-5 justify-start">
       <ClientPageHeader mainHeader="Readefine" subHeader="Achievements" />
 
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
@@ -143,8 +143,8 @@ const ClientAchievements = () => {
         />
 
         <div
-          className="w-full overflow-y-auto cstm-scrollbar cstm-flex-col gap-5 justify-start 
-                      t:items-start p-5 bg-white rounded-2xl min-h-[75vh] relative"
+          className="w-full overflow-y-auto cstm-scrollbar-2 cstm-flex-col gap-5 justify-start 
+                      t:items-start p-5 bg-white rounded-2xl h-full min-h-full relative"
         >
           {achievements.length ? (
             achievementPanels
