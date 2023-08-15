@@ -150,7 +150,10 @@ const ClientAchievements = () => {
             {achievementPanels}
           </div>
         ) : (
-          <div className="cstm-flex-col absolute top-2/4 -translate-y-2/4 left-2/4 -translate-x-2/4 w-full h-full">
+          <div
+            className="w-full cstm-flex-col left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4
+                        bg-white rounded-2xl h-full min-h-full absolute"
+          >
             <Image src={noReward} alt="empty" priority width={220} draggable={false} />
             <p className="text-xs opacity-80">No Achievements Found</p>
           </div>
