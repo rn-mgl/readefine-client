@@ -130,18 +130,18 @@ const ClientAchievements = () => {
 
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
 
-      <div className="w-full cstm-flex-col gap-5 cstm-w-limit ">
-        <AchievementsFilter
-          searchFilter={searchFilter}
-          goalRangeFilter={goalRangeFilter}
-          sortFilter={sortFilter}
-          typeFilter={typeFilter}
-          handleSearchFilter={handleSearchFilter}
-          handleGoalRangeFilter={handleGoalRangeFilter}
-          handleSortFilter={handleSortFilter}
-          handleTypeFilter={handleTypeFilter}
-        />
+      <AchievementsFilter
+        searchFilter={searchFilter}
+        goalRangeFilter={goalRangeFilter}
+        sortFilter={sortFilter}
+        typeFilter={typeFilter}
+        handleSearchFilter={handleSearchFilter}
+        handleGoalRangeFilter={handleGoalRangeFilter}
+        handleSortFilter={handleSortFilter}
+        handleTypeFilter={handleTypeFilter}
+      />
 
+      <div className="w-full cstm-flex-col gap-5 cstm-w-limit ">
         <div
           className="w-full overflow-y-auto cstm-scrollbar-2 cstm-flex-col gap-5 justify-start 
                       t:items-start p-5 bg-white rounded-2xl h-full min-h-full relative"
