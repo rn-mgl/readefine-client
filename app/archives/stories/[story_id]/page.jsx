@@ -40,6 +40,10 @@ const SingleStory = ({ params }) => {
   const decodedStoryId = decipher(params?.story_id);
   const router = useRouter();
 
+  // text to speech content
+  const leftUtterance = pages[activePage - 1]?.content;
+  const rightUtterance = pages[activePage]?.content;
+
   // handle next page
   const handleIncrement = () => {
     const increment = viewType === "single" ? 1 : 2;
@@ -232,7 +236,13 @@ const SingleStory = ({ params }) => {
       {/* can see customizations */}
       {customizationsVisible ? (
         <Customizations
-          utterance={pages[activePage - 1]?.content}
+          utterance={
+            viewType === "single"
+              ? leftUtterance
+              : rightUtterance
+              ? leftUtterance + " " + rightUtterance
+              : leftUtterance
+          }
           fontSize={fontSize}
           viewType={viewType}
           handleFontSize={handleFontSize}
@@ -243,17 +253,14 @@ const SingleStory = ({ params }) => {
 
       {/* pages */}
       <div
-        className="h-[83%] t:h-[80%] w-full gap-5  bg-white rounded-2xl p-5 relative overflow-x-hidden 
+        className="h-full w-full gap-5 bg-white rounded-2xl p-5 relative overflow-x-hidden 
                   overflow-y-auto cstm-w-limit transition-all  cstm-scrollbar"
       >
         <div className="w-full relative overflow-x-hidden h-full cstm-scrollbar">{storyPages}</div>
       </div>
 
       {/* left right button */}
-      <div
-        className="fixed bottom-0 left-2/4 -translate-x-2/4 backdrop-blur-md cstm-flex-row h-[5%] t:h-[6%]
-                    p-2 px-5 z-20 w-full cstm-w-limit l-s:right-0 l-s:-translate-x-0"
-      >
+      <div className="cstm-flex-row w-full cstm-w-limit">
         <button onClick={handleDecrement} className="cstm-bg-hover">
           <BiChevronLeft className="scale-150 text-black  cursor-pointer t:scale-[2]" />
         </button>
