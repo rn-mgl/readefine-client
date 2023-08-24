@@ -128,7 +128,7 @@ const SingleTest = ({ params }) => {
 
       if (data) {
         // update lexile achievement points and return if achievement is met
-        const { data: lexileAhievementData } = await axios.patch(
+        const { data: lexileAchievementData } = await axios.patch(
           `${url}/user_achievement`,
           {
             type: "user_lexile",
@@ -139,8 +139,8 @@ const SingleTest = ({ params }) => {
         );
 
         // if there are achievements
-        if (lexileAhievementData.length) {
-          setAccomplishedAchievement({ accomplished: true, achievements: lexileAhievementData });
+        if (lexileAchievementData.length) {
+          setAccomplishedAchievement({ accomplished: true, achievements: lexileAchievementData });
         }
 
         // update test achievement points and return if achievement is met
