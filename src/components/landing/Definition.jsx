@@ -46,11 +46,11 @@ const Definition = () => {
           className="relative z-10 text-sm 
                   m-l:text-base
                   t:text-lg t:w-10/12
-                  l-s:text-xl l-s:w-10/12
+                  l-s:text-xl l-s:w-8/12
                   l-l:w-7/12"
         >
           A Lexile is an individual&apos;s reading comprehension level. You will have materials
-          based on your Lexile level to provide efficient growth and sufficient challenges.
+          based on your Lexile level for efficient growth and sufficient challenges.
         </p>
       </div>
 
