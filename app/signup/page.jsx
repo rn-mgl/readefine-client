@@ -114,7 +114,7 @@ const Signup = () => {
 
       // send to the sending page iif successfully registered
       if (data) {
-        router.push("/sending");
+        router.push("/sending?purpose=verify");
       }
     } catch (error) {
       console.log(error);

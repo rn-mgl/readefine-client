@@ -32,6 +32,7 @@ const Login = () => {
   const [visiblePassword, setVisiblePassword] = React.useState(false);
   const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
   const [loading, setLoading] = React.useState(false);
+  const [firstLogin, setFirstLogin] = React.useState(false);
 
   const { url } = useGlobalContext();
   const router = useRouter();
@@ -66,6 +67,7 @@ const Login = () => {
     e.preventDefault();
 
     setLoading(true);
+    setFirstLogin(true);
 
     try {
       // log in for middleware
@@ -82,6 +84,7 @@ const Login = () => {
     } catch (error) {
       console.log(error);
       setLoading(false);
+      setFirstLogin(false);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   };
@@ -99,7 +102,7 @@ const Login = () => {
       if (achievementData.length) {
         setLoading(false);
         setAccomplishedAchievement({ accomplished: true, achievements: achievementData });
-        setAchievementUrl(user?.isVerified ? "/archives" : "/sending");
+        setAchievementUrl(user?.isVerified ? "/archives" : "/sending?purpose=verify");
       } else {
         router.push("/archives");
       }
@@ -126,7 +129,7 @@ const Login = () => {
   }, [url, user]);
 
   const notYetVerified = React.useCallback(async () => {
-    router.push("/sending");
+    router.push("/sending?purpose=verify");
   }, [router]);
 
   React.useEffect(() => {
@@ -142,10 +145,10 @@ const Login = () => {
   }, [user, checkAchievement]);
 
   React.useEffect(() => {
-    if (user && user.userId && !user.isVerified) {
+    if (firstLogin && user && user.userId && !user.isVerified) {
       notYetVerified();
     }
-  }, [user, notYetVerified]);
+  }, [user, firstLogin, notYetVerified]);
 
   if (loading) {
     return <Loading />;

@@ -26,6 +26,7 @@ const AdminLogin = () => {
   const [visiblePassword, setVisiblePassword] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
+  const [firstLogin, setFirstLogin] = React.useState(false);
 
   const { url } = useGlobalContext();
   const { data: session } = useSession();
@@ -52,6 +53,7 @@ const AdminLogin = () => {
     e.preventDefault();
 
     setLoading(true);
+    setFirstLogin(true);
 
     try {
       // login on middleware
@@ -68,6 +70,7 @@ const AdminLogin = () => {
     } catch (error) {
       console.log(error);
       setLoading(false);
+      setFirstLogin(false);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   };
@@ -81,11 +84,7 @@ const AdminLogin = () => {
       );
 
       if (data) {
-        if (user?.isVerified) {
-          router.push("/controller");
-        } else {
-          router.push("/sending");
-        }
+        router.push("/controller");
       }
     } catch (error) {
       console.log(error);
@@ -94,11 +93,21 @@ const AdminLogin = () => {
     }
   }, [router, url, user]);
 
+  const notYetVerified = React.useCallback(() => {
+    router.push("/sending?purpose=verify");
+  }, [router]);
+
   React.useEffect(() => {
-    if (user && user.adminId) {
+    if (user && user.adminId && user.isVerified) {
       recordSession();
     }
   }, [recordSession, user]);
+
+  React.useEffect(() => {
+    if (firstLogin && user && user.adminId && !user.isVerified) {
+      notYetVerified();
+    }
+  }, [notYetVerified, firstLogin, user]);
 
   // return if loading
   if (loading) {

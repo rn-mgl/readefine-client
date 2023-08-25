@@ -45,7 +45,7 @@ const ForgotPassword = () => {
 
       // if sent, move to sending page
       if (data) {
-        router.push("/sending");
+        router.push("/sending?purpose=reset");
       }
     } catch (error) {
       console.log(error);
