@@ -4,7 +4,7 @@ import React from "react";
 const AppContext = React.createContext();
 
 const AppProvider = ({ children }) => {
-  const url = "http://192.168.1.121:9000";
+  const url = "https://readefine-server.onrender.com";
 
   return <AppContext.Provider value={{ url }}>{children}</AppContext.Provider>;
 };
