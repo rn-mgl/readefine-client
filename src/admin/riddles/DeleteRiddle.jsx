@@ -70,8 +70,7 @@ const DeleteRiddle = (props) => {
           onSubmit={(e) => deleteReward(e)}
           className="w-11/12 rounded-md bg-white min-h-[15rem] shadow-md my-auto cstm-flex-col justify-start p-2 text-center gap-5 absolute
                     t:w-7/12
-                    l-s:w-6/12
-                    l-l:w-4/12"
+                    l-s:w-[26rem]"
         >
           <div className="w-full">
             <p className="text-prmColor font-bold">Delete Riddle?</p>
