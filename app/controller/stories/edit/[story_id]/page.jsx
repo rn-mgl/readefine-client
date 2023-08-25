@@ -102,13 +102,15 @@ const EditStory = ({ params }) => {
     });
   };
 
+  console.log(pages);
+
   // edit book
   const editBook = async (e) => {
     e.preventDefault();
 
     setLoading(true);
 
-    let bookCover = null;
+    let bookCover = story.book_cover;
 
     // check for book cover
     if (story.rawFile) {
@@ -129,7 +131,7 @@ const EditStory = ({ params }) => {
     // check for each pages for images
     for (let i = 0; i < pages.length; i++) {
       const page = pages[i];
-      let pageImage = null;
+      let pageImage = page.image;
 
       if (page.rawFile) {
         pageImage = await fileFns.uploadFile(
@@ -163,34 +165,38 @@ const EditStory = ({ params }) => {
 
   // get pages
   const getPages = React.useCallback(async () => {
-    try {
-      const { data } = await axios.get(`${url}/admin_story_content`, {
-        params: { storyId: decodedStoryId },
-        headers: { Authorization: user.token },
-      });
-      if (data) {
-        setPages(data);
+    if (user?.token) {
+      try {
+        const { data } = await axios.get(`${url}/admin_story_content`, {
+          params: { storyId: decodedStoryId },
+          headers: { Authorization: user?.token },
+        });
+        if (data) {
+          setPages(data);
+        }
+      } catch (error) {
+        console.log(error);
+        setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
       }
-    } catch (error) {
-      console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [url, user, setPages, decodedStoryId]);
+  }, [url, user?.token, decodedStoryId]);
 
   // get story
   const getStory = React.useCallback(async () => {
-    try {
-      const { data } = await axios.get(`${url}/admin_story/${decodedStoryId}`, {
-        headers: { Authorization: user.token },
-      });
-      if (data) {
-        setStory(data);
+    if (user?.token) {
+      try {
+        const { data } = await axios.get(`${url}/admin_story/${decodedStoryId}`, {
+          headers: { Authorization: user?.token },
+        });
+        if (data) {
+          setStory(data);
+        }
+      } catch (error) {
+        console.log(error);
+        setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
       }
-    } catch (error) {
-      console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [url, user, setStory, decodedStoryId]);
+  }, [url, user?.token, decodedStoryId]);
 
   // map pages
   const allPages = pages.map((page, i) => {
@@ -207,16 +213,13 @@ const EditStory = ({ params }) => {
     );
   });
 
-  /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
-    if (user) {
-      getStory();
-    }
-  }, [user, getStory]);
+    getStory();
+  }, [getStory]);
 
   React.useEffect(() => {
     getPages();
-  }, [user, getPages]);
+  }, [getPages]);
 
   React.useEffect(() => {
     if (user) {

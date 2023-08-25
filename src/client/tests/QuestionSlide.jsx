@@ -15,13 +15,13 @@ const QuestionSlide = (props) => {
 
   return (
     <div
-      className={`${position} transition-all bg-white p-5 rounded-md cstm-flex-col gap-5 absolute w-full h-full justify-start overflow-y-auto
-                t:cstm-flex-row t:flex-wrap `}
+      className={`${position} transition-all bg-white p-5 rounded-md cstm-flex-col gap-5 
+                absolute w-full h-full justify-start overflow-y-auto`}
     >
-      <p className="mb-auto absolute top-5 left-5 font-bold text-prmColor">{props.index + 1}.</p>
-      <p className="font-bold text-justify mt-auto t:text-lg mx-auto">{props.question}</p>
+      <p className="font-bold text-prmColor mr-auto">{props.index + 1}.</p>
+      <p className="font-bold t:text-lg my-auto">{props.question}</p>
 
-      <div className="cstm-flex-col gap-3 w-full t:cstm-flex-row mt-auto">
+      <div className="cstm-flex-col gap-3 w-full t:cstm-flex-row">
         <TestChoices
           bgColor="bg-indigo-300"
           shadow="shadow-[0_4px_rgba(129,140,248,1)]"

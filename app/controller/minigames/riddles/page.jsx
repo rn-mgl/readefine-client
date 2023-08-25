@@ -121,7 +121,7 @@ const AdminRiddles = () => {
       const { data } = await axios.patch(
         `${url}/admin_riddles/${id}`,
         { riddle, answer },
-        { headers: { Authorization: user.token } }
+        { headers: { Authorization: user?.token } }
       );
 
       if (data) {
@@ -135,24 +135,26 @@ const AdminRiddles = () => {
 
   // get riddles
   const getRiddles = React.useCallback(async () => {
-    try {
-      const { data } = await axios.get(`${url}/admin_riddles`, {
-        headers: { Authorization: user.token },
-        params: {
-          searchFilter,
-          sortFilter,
-          dateRangeFilter,
-        },
-      });
+    if (user?.token) {
+      try {
+        const { data } = await axios.get(`${url}/admin_riddles`, {
+          headers: { Authorization: user?.token },
+          params: {
+            searchFilter,
+            sortFilter,
+            dateRangeFilter,
+          },
+        });
 
-      if (data) {
-        setRiddles(data);
+        if (data) {
+          setRiddles(data);
+        }
+      } catch (error) {
+        console.log(error);
+        setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
       }
-    } catch (error) {
-      console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [setRiddles, url, user, searchFilter, sortFilter, dateRangeFilter]);
+  }, [setRiddles, url, user?.token, searchFilter, sortFilter, dateRangeFilter]);
 
   // map riddle rows
   const riddleRow = riddles.map((riddle) => {
@@ -176,10 +178,8 @@ const AdminRiddles = () => {
   });
 
   React.useEffect(() => {
-    if (user) {
-      getRiddles();
-    }
-  }, [user, url, getRiddles]);
+    getRiddles();
+  }, [getRiddles]);
 
   React.useEffect(() => {
     if (user) {

@@ -86,15 +86,21 @@ const SingleTest = ({ params }) => {
     });
   };
 
+  const allAreAnswered = () => {
+    let answeredTests = 0;
+
+    for (let i = 1; i <= 10; i++) {
+      const currAnswer = selectedChoices[`choice${i}`].answer;
+      answeredTests += currAnswer !== "" ? 1 : 0;
+    }
+
+    return answeredTests === 10;
+  };
+
   // submit test answers and do checkings
   const submitAnswers = async () => {
-    let answeredAll = false;
     const legibleForGrowth = testData.lexile > userLexile.lexile - 100;
-
-    // check if all are answered
-    for (let i = 1; i <= 10; i++) {
-      answeredAll = selectedChoices[`choice${i}`].answer !== "";
-    }
+    const answeredAll = allAreAnswered();
 
     // do not submit if not all are answered
     if (!answeredAll) {
@@ -127,36 +133,38 @@ const SingleTest = ({ params }) => {
       );
 
       if (data) {
-        // update lexile achievement points and return if achievement is met
-        const { data: lexileAchievementData } = await axios.patch(
-          `${url}/user_achievement`,
-          {
-            type: "user_lexile",
-            specifics: "lexile_growth",
-            toAdd: data?.toAdd,
-          },
-          { headers: { Authorization: user?.token } }
-        );
+        if (legibleForGrowth) {
+          // update lexile achievement points and return if achievement is met
+          const { data: lexileAchievementData } = await axios.patch(
+            `${url}/user_achievement`,
+            {
+              type: "user_lexile",
+              specifics: "lexile_growth",
+              toAdd: data?.toAdd,
+            },
+            { headers: { Authorization: user?.token } }
+          );
 
-        // if there are achievements
-        if (lexileAchievementData.length) {
-          setAccomplishedAchievement({ accomplished: true, achievements: lexileAchievementData });
-        }
+          // if there are achievements
+          if (lexileAchievementData.length) {
+            setAccomplishedAchievement({ accomplished: true, achievements: lexileAchievementData });
+          }
 
-        // update test achievement points and return if achievement is met
-        const { data: testAchievementData } = await axios.patch(
-          `${url}/user_achievement`,
-          {
-            type: "answered_tests",
-            specifics: "book_count",
-            toAdd: 1,
-          },
-          { headers: { Authorization: user?.token } }
-        );
+          // update test achievement points and return if achievement is met
+          const { data: testAchievementData } = await axios.patch(
+            `${url}/user_achievement`,
+            {
+              type: "answered_tests",
+              specifics: "book_count",
+              toAdd: 1,
+            },
+            { headers: { Authorization: user?.token } }
+          );
 
-        // if there are achievements
-        if (testAchievementData.length) {
-          setAccomplishedAchievement({ accomplished: true, achievements: testAchievementData });
+          // if there are achievements
+          if (testAchievementData.length) {
+            setAccomplishedAchievement({ accomplished: true, achievements: testAchievementData });
+          }
         }
 
         // notice if not legible for lexile growth
@@ -180,50 +188,56 @@ const SingleTest = ({ params }) => {
 
   // get test data
   const getTestData = React.useCallback(async () => {
-    try {
-      const { data } = await axios.get(`${url}/test/${decodedTestId}`, {
-        headers: { Authorization: user?.token },
-      });
-      if (data) {
-        setTestData(data);
+    if (user?.token) {
+      try {
+        const { data } = await axios.get(`${url}/test/${decodedTestId}`, {
+          headers: { Authorization: user?.token },
+        });
+        if (data) {
+          setTestData(data);
+        }
+      } catch (error) {
+        console.log(error);
+        setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
       }
-    } catch (error) {
-      console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [url, user, decodedTestId]);
+  }, [url, user?.token, decodedTestId]);
 
   // get questions
   const getQuestions = React.useCallback(async () => {
-    try {
-      const { data } = await axios.get(`${url}/test_question`, {
-        params: { testId: decodedTestId },
-        headers: { Authorization: user?.token },
-      });
-      if (data) {
-        setQuestions(shuffleQuestions(data));
+    if (user?.token) {
+      try {
+        const { data } = await axios.get(`${url}/test_question`, {
+          params: { testId: decodedTestId },
+          headers: { Authorization: user?.token },
+        });
+        if (data) {
+          setQuestions(shuffleQuestions(data));
+        }
+      } catch (error) {
+        console.log(error);
+        setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
       }
-    } catch (error) {
-      console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [user, url, decodedTestId]);
+  }, [user?.token, url, decodedTestId]);
 
   // get user lexile
   const getUserLexile = React.useCallback(async () => {
-    try {
-      const { data } = await axios.get(`${url}/user_lexile`, {
-        headers: { Authorization: user?.token },
-      });
+    if (user?.token) {
+      try {
+        const { data } = await axios.get(`${url}/user_lexile`, {
+          headers: { Authorization: user?.token },
+        });
 
-      if (data) {
-        setUserLexile(data);
+        if (data) {
+          setUserLexile(data);
+        }
+      } catch (error) {
+        console.log(error);
+        setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
       }
-    } catch (error) {
-      console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [setUserLexile, url, user]);
+  }, [setUserLexile, url, user?.token]);
 
   // map questions
   const questionSlides = questions.map((q, index) => {
@@ -247,22 +261,16 @@ const SingleTest = ({ params }) => {
   });
 
   React.useEffect(() => {
-    if (user) {
-      getTestData();
-    }
-  }, [user, getTestData]);
+    getTestData();
+  }, [getTestData]);
 
   React.useEffect(() => {
-    if (user) {
-      getQuestions();
-    }
-  }, [user, getQuestions]);
+    getQuestions();
+  }, [getQuestions]);
 
   React.useEffect(() => {
-    if (user) {
-      getUserLexile();
-    }
-  }, [user, getUserLexile]);
+    getUserLexile();
+  }, [getUserLexile]);
 
   React.useEffect(() => {
     if (user) {
@@ -275,7 +283,7 @@ const SingleTest = ({ params }) => {
   }, [user, router]);
 
   return (
-    <div className="p-5 w-full min-h-screen bg-accntColor cstm-flex-col gap-5 justify-start overflow-x-hidden">
+    <div className="p-5 w-full min-h-screen h-screen bg-accntColor cstm-flex-col gap-5 justify-start overflow-x-hidden">
       <ClientPageHeader mainHeader={testData?.title} subHeader="Test" />
 
       {accomplishedAchievement.accomplished ? (
@@ -291,7 +299,7 @@ const SingleTest = ({ params }) => {
         <ScorePopup url="/archives/tests" score={score} handleIsFinished={handleIsFinished} />
       ) : null}
 
-      <div className="cstm-w-limit cstm-flex-col gap-5 w-full">
+      <div className="cstm-w-limit cstm-flex-col gap-5 w-full h-full relative">
         <div className="cstm-flex-row w-full">
           <Link href="/archives/tests" className="cstm-bg-hover mr-auto">
             <BsArrowLeft className="text-prmColor" />
@@ -310,14 +318,8 @@ const SingleTest = ({ params }) => {
           ) : null}
         </div>
 
-        <p className="text-xs">
-          <span className="font-bold text-prmColor">note:</span> Changing tabs will reset your test.
-        </p>
-
         {/* question pane */}
-        <div className="cstm-flex-row items-start w-full relative h-[60vh] t:h-[65vh]">
-          {questionSlides}
-        </div>
+        <div className="cstm-flex-row items-start w-full relative h-full">{questionSlides}</div>
       </div>
 
       <div className="cstm-flex-col w-full mt-auto cstm-w-limit gap-5 t:gap-5">

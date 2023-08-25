@@ -6,13 +6,13 @@ import Link from "next/link";
 import axios from "axios";
 import EditAchievementFilter from "@/src/src/admin/achievements/EditAchievementFilter";
 import Message from "@/src/src/components/global/Message";
+import Loading from "@/src/src/components/global/Loading";
 
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { BsArrowLeft } from "react-icons/bs";
 import { decipher } from "@/src/src/functions/security";
-import Loading from "@/src/src/components/global/Loading";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 
 const EditAchievement = ({ params }) => {
@@ -94,7 +94,7 @@ const EditAchievement = ({ params }) => {
       const { data } = await axios.patch(
         `${url}/admin_achievement/${decodedAchievementId}`,
         { achievement },
-        { headers: { Authorization: user.token } }
+        { headers: { Authorization: user?.token } }
       );
 
       // move to view page after editing
@@ -111,26 +111,25 @@ const EditAchievement = ({ params }) => {
 
   // get achievement data
   const getAchievement = React.useCallback(async () => {
-    try {
-      const { data } = await axios.get(`${url}/admin_achievement/${decodedAchievementId}`, {
-        headers: { Authorization: user.token },
-      });
+    if (user?.token) {
+      try {
+        const { data } = await axios.get(`${url}/admin_achievement/${decodedAchievementId}`, {
+          headers: { Authorization: user?.token },
+        });
 
-      if (data) {
-        setAchievement(data);
+        if (data) {
+          setAchievement(data);
+        }
+      } catch (error) {
+        console.log(error);
+        setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
       }
-    } catch (error) {
-      console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [user, url, setAchievement, decodedAchievementId]);
+  }, [user?.token, url, setAchievement, decodedAchievementId]);
 
-  /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
-    if (user) {
-      getAchievement();
-    }
-  }, [user, getAchievement]);
+    getAchievement();
+  }, [getAchievement]);
 
   React.useEffect(() => {
     if (user) {

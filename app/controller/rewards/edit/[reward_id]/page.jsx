@@ -70,6 +70,11 @@ const EditReward = ({ params }) => {
       );
     }
 
+    if (!imageSrc) {
+      setMessage({ active: true, msg: "You did not put a reward image.", type: "error" });
+      return;
+    }
+
     try {
       const { data } = await axios.patch(
         `${url}/admin_reward/${decodedRewardId}`,
@@ -90,25 +95,24 @@ const EditReward = ({ params }) => {
 
   // get reward
   const getReward = React.useCallback(async () => {
-    try {
-      const { data } = await axios.get(`${url}/admin_reward/${decodedRewardId}`, {
-        headers: { Authorization: user.token },
-      });
-      if (data) {
-        setReward(data);
+    if (user?.token) {
+      try {
+        const { data } = await axios.get(`${url}/admin_reward/${decodedRewardId}`, {
+          headers: { Authorization: user?.token },
+        });
+        if (data) {
+          setReward(data);
+        }
+      } catch (error) {
+        console.log(error);
+        setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
       }
-    } catch (error) {
-      console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [setReward, url, user, decodedRewardId]);
+  }, [setReward, url, user?.token, decodedRewardId]);
 
-  /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
-    if (user) {
-      getReward();
-    }
-  }, [user, getReward]);
+    getReward();
+  }, [getReward]);
 
   React.useEffect(() => {
     if (user) {

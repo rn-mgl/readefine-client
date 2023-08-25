@@ -91,47 +91,49 @@ const EditTest = ({ params }) => {
 
   // get questions
   const getQuestions = React.useCallback(async () => {
-    try {
-      const { data } = await axios.get(`${url}/admin_test_question`, {
-        params: { testId: decodedTestId },
-        headers: { Authorization: user?.token },
-      });
-
-      if (data) {
-        //set new answer key to prevent duplicate changes onchange
-        const newQuestions = data.map((d) => {
-          const answerKey = `answer${d.question_id}`;
-          return {
-            ...d,
-            [answerKey]: d.answer,
-          };
+    if (user?.token) {
+      try {
+        const { data } = await axios.get(`${url}/admin_test_question`, {
+          params: { testId: decodedTestId },
+          headers: { Authorization: user?.token },
         });
 
-        setQuestions(newQuestions);
+        if (data) {
+          //set new answer key to prevent duplicate changes onchange
+          const newQuestions = data.map((d) => {
+            const answerKey = `answer${d.question_id}`;
+            return {
+              ...d,
+              [answerKey]: d.answer,
+            };
+          });
+
+          setQuestions(newQuestions);
+        }
+      } catch (error) {
+        console.log(error);
+        setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
       }
-    } catch (error) {
-      console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [url, user, decodedTestId, setQuestions]);
+  }, [url, user?.token, decodedTestId]);
 
   // get test
   const getTest = React.useCallback(async () => {
-    try {
-      const { data } = await axios.get(`${url}/admin_test/${decodedTestId}`, {
-        headers: { Authorization: user?.token },
-      });
+    if (user?.token) {
+      try {
+        const { data } = await axios.get(`${url}/admin_test/${decodedTestId}`, {
+          headers: { Authorization: user?.token },
+        });
 
-      if (data) {
-        setTest(data);
-      } else {
-        router.push(`/controller/tests/add/${decodedTestId}`);
+        if (data) {
+          setTest(data);
+        }
+      } catch (error) {
+        console.log(error);
+        setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
       }
-    } catch (error) {
-      console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [url, user, decodedTestId, router]);
+  }, [url, user?.token, decodedTestId]);
 
   // map questions
   const testQuestions = questions.map((q, idx) => {
@@ -147,18 +149,13 @@ const EditTest = ({ params }) => {
     );
   });
 
-  /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
-    if (user) {
-      getTest();
-    }
-  }, [user, getTest]);
+    getTest();
+  }, [getTest]);
 
   React.useEffect(() => {
-    if (user) {
-      getQuestions();
-    }
-  }, [user, getQuestions]);
+    getQuestions();
+  }, [getQuestions]);
 
   React.useEffect(() => {
     if (user) {
