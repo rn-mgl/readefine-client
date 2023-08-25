@@ -209,16 +209,12 @@ const EditStory = ({ params }) => {
 
   /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
-    if (user) {
-      getStory();
-    }
-  }, [user, getStory]);
+    getStory();
+  }, [getStory]);
 
   React.useEffect(() => {
-    if (user) {
-      getPages();
-    }
-  }, [user, getPages]);
+    getPages();
+  }, [getPages]);
 
   React.useEffect(() => {
     if (user) {
