@@ -6,7 +6,7 @@ const UserRow = (props) => {
   return (
     <tr
       key={props.user.user_id}
-      className="p-2 cstm-flex-row justify-start text-center gap-5 w-full"
+      className="p-2 cstm-flex-row justify-start text-center gap-24 w-full"
     >
       <td className="cstm-flex-col">
         <div

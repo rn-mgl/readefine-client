@@ -144,7 +144,7 @@ const AdminUsers = () => {
                   overflow-auto w-full justify-start items-start bg-white text-sm gap-5 border-collapse"
           >
             <thead className="w-full text-sm">
-              <tr className="p-2 cstm-flex-row justify-start text-center text-prmColor gap-5">
+              <tr className="p-2 cstm-flex-row justify-start text-center text-prmColor gap-24">
                 <th>Image</th>
                 <th>Email</th>
                 <th>Last Name</th>
