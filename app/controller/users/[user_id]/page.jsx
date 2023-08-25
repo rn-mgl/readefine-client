@@ -13,10 +13,11 @@ import { getDaysInMonth, monthMap } from "@/src/src/functions/localDate";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { BsArrowLeft } from "react-icons/bs";
-import { AiOutlineMail } from "react-icons/ai";
 import { decipher } from "@/src/src/functions/security";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
+import UserMainData from "@/src/src/admin/users/UserMainData";
+import GraphTypeChoice from "@/src/src/admin/users/graph/GraphTypeChoice";
 
 const SingleUser = ({ params }) => {
   const [userData, setUserData] = React.useState({});
@@ -150,7 +151,7 @@ const SingleUser = ({ params }) => {
   };
 
   // place data to answered tests scatter chart
-  const gamesChartData = {
+  const quizChartData = {
     datasets: [
       {
         label: `Quizzes Answered | ${monthMap[new Date().getMonth()]}`,
@@ -272,46 +273,15 @@ const SingleUser = ({ params }) => {
       {/* show if has message pop up */}
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
 
-      <div className="cstm-flex-col gap-5 w-full cstm-w-limit items-start">
+      <div className="cstm-flex-col gap-5 w-full cstm-w-limit">
         <Link href="/controller/users" className="cstm-bg-hover text-prmColor mr-auto">
           <BsArrowLeft />
         </Link>
 
-        <div className="cstm-flex-col gap-5 w-full t:cstm-flex-row">
-          {/* user data */}
-          <div className="cstm-flex-col bg-white rounded-2xl p-5 w-full">
-            <div className="cstm-flex-row gap-5 w-full justify-start">
-              {/* user image */}
-              <div
-                style={{ backgroundImage: userData.image ? `url("${userData.image}")` : null }}
-                className="w-12 h-12 min-w-[3rem] min-h-[3rem] rounded-full bg-prmColor bg-opacity-10 bg-cover bg-center"
-              />
+        <UserMainData userData={userData} />
 
-              <div className="cstm-flex-col items-start overflow-x-auto scrollbar-none">
-                {/* user name and surname */}
-                <p className="capitalize font-bold text-black text-base whitespace-nowrap ">
-                  {userData.name} {userData.surname}
-                </p>
-                {/* user email */}
-                <p className="font-light text-xs">{userData.email}</p>
-              </div>
-
-              {/* send email button */}
-              <Link className="cstm-bg-hover ml-auto" href={`mailto:${userData.email}`}>
-                <AiOutlineMail className=" scale-125 text-prmColor" />
-              </Link>
-            </div>
-          </div>
-
-          {/* user lexile level*/}
-          <div className="cstm-flex-col bg-white rounded-2xl p-5 w-full t:w-4/12">
-            <p className="font-bold text-prmColor text-xl">{userData?.lexile}</p>
-
-            <p className="text-sm">Lexile Level</p>
-          </div>
-        </div>
-
-        <div className="cstm-flex-col gap-5 w-full min-h-screen ">
+        {/* graphs */}
+        <div className="cstm-flex-col gap-5 w-full min-h-screen justify-start">
           {/* graph for lexile */}
           <div className="cstm-flex-col w-full h-auto min-h-[30rem] p-5 bg-white rounded-2xl">
             <Line
@@ -335,49 +305,11 @@ const SingleUser = ({ params }) => {
           {/* graph for quizzes taken */}
           <div className="cstm-flex-col p-5 w-full bg-white rounded-2xl gap-5">
             {/* button to change if y axis is lexile or score */}
-            <div className="cstm-flex-row text-sm gap-5 w-full">
-              <label htmlFor="lexile" className="mr-auto t:mr-0 cursor-pointer">
-                <input
-                  type="radio"
-                  value="lexile"
-                  checked={quizVariable === "lexile"}
-                  name="lexile"
-                  id="lexile"
-                  className="hidden peer"
-                  onChange={(e) => handleQuizVariable(e.target)}
-                />
-
-                <div
-                  className="p-2 peer-checked:bg-prmColor peer-checked:text-white w-16 cstm-flex-col
-                        bg-accntColor rounded-md font-bold"
-                >
-                  Lexile
-                </div>
-              </label>
-
-              <label htmlFor="score" className="t:mr-auto cursor-pointer">
-                <input
-                  type="radio"
-                  value="score"
-                  checked={quizVariable === "score"}
-                  name="score"
-                  id="score"
-                  className="hidden peer"
-                  onChange={(e) => handleQuizVariable(e.target)}
-                />
-
-                <div
-                  className="p-2 peer-checked:bg-prmColor peer-checked:text-white w-16 cstm-flex-col
-                        bg-accntColor rounded-md font-bold"
-                >
-                  Score
-                </div>
-              </label>
-            </div>
+            <GraphTypeChoice quizVariable={quizVariable} handleQuizVariable={handleQuizVariable} />
 
             <div className="cstm-flex-col justify-start w-full h-auto min-h-[30rem]">
               <Scatter
-                data={gamesChartData}
+                data={quizChartData}
                 options={{
                   maintainAspectRatio: false,
                 }}
