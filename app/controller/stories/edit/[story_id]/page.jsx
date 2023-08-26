@@ -102,8 +102,6 @@ const EditStory = ({ params }) => {
     });
   };
 
-  console.log(pages);
-
   // edit book
   const editBook = async (e) => {
     e.preventDefault();
