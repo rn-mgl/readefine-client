@@ -79,6 +79,7 @@ const Login = () => {
 
       if (!data?.ok) {
         setLoading(false);
+        setFirstLogin(false);
         setMessage({ active: true, msg: "Login credentials do not match.", type: "error" });
       }
     } catch (error) {

@@ -65,6 +65,7 @@ const AdminLogin = () => {
 
       if (!data?.ok) {
         setLoading(false);
+        setFirstLogin(false);
         setMessage({ active: true, msg: "Incorrect login credentials.", type: "error" });
       }
     } catch (error) {
