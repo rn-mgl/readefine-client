@@ -38,7 +38,7 @@ const TestsCards = (props) => {
 
       <div className="cstm-flex-col gap-1 w-full mt-auto">
         <div className="cstm-flex-row  items-start w-full">
-          <p className="font-bold text-black whitespace-pre-wrap w-44 text-sm text-left mr-auto">
+          <p className="font-bold text-black w-44 truncate text-sm text-left mr-auto">
             {props.title ? props.title : "Title"}
           </p>
 
@@ -46,7 +46,9 @@ const TestsCards = (props) => {
         </div>
 
         <div className="cstm-flex-row w-full text-xs">
-          <p className="opacity-50 mr-auto">{props.author ? props.author : "author"}</p>
+          <p className="opacity-50 mr-auto w-36 truncate">
+            {props.author ? props.author : "author"}
+          </p>
           {props.isTaken ? (
             <p className="text-prmColor">
               <span className="font-bold"> {props.score}</span> / 10
