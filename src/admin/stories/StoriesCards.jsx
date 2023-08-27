@@ -6,19 +6,19 @@ const StoriesCards = (props) => {
   const hasTest = props.testId;
   return (
     <div className="bg-white p-5 rounded-2xl cstm-flex-col gap-4 t:w-72 shadow-md max-h-[30rem] h-[30rem]">
-      <div className="w-full h-fit cstm-flex-col overflow-clip  bg-white rounded-2xl justify-start">
+      <div className="w-full h-full cstm-flex-col overflow-clip bg-white rounded-2xl justify-start">
         <Image priority src={props.image} alt="temp" width={240} height={200} className="w-fit" />
       </div>
 
       <div className="cstm-flex-col w-full mt-auto">
         <div className="cstm-flex-row font-poppins mr-auto items-start w-full">
-          <p className="font-bold text-black overflow-x-auto w-44 text-left text-sm mr-auto">
+          <p className="font-bold text-black w-44 truncate text-left text-sm mr-auto">
             {props.title ? props.title : "Title"}
           </p>
           <p className="font-bold text-prmColor text-sm text-right">{props.lexile}L</p>
         </div>
         <div className="cstm-flex-row font-poppins items-end w-full">
-          <p className="opacity-50 text-xs text-left mr-auto">
+          <p className="opacity-50 text-xs text-left mr-auto w-36 truncate">
             {props.author ? props.author : "author"}
           </p>
           <p className="opacity-50 text-xs text-right">{props.genre ? props.genre : "Genre"}</p>
