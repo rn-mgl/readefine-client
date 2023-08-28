@@ -17,7 +17,7 @@ const FindRewardCards = (props) => {
         className="cstm-flex-row font-poppins w-full 
                     t:cstm-flex-col t:text-center"
       >
-        <p className="font-bold text-black text-center">{props.title}</p>
+        <p className="font-bold text-black text-center w-44 truncate">{props.title}</p>
         <p className="opacity-50 text-sm">{props.type}</p>
       </div>
 
