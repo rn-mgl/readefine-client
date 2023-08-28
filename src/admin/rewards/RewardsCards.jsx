@@ -21,7 +21,9 @@ const RewardsCards = (props) => {
 
       <div className="cstm-flex-row w-full">
         <div className="cstm-flex-row gap-1 font-poppins w-full">
-          <p className="font-bold text-black mr-auto text-sm w-8/12 text-left">{props.title}</p>
+          <p className="font-bold text-black mr-auto text-sm w-44 truncate text-left">
+            {props.title}
+          </p>
           <p className="opacity-50 text-sm capitalize w-4/12 text-right">{props.type}</p>
         </div>
       </div>
