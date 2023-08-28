@@ -28,7 +28,7 @@ const AchievementsCards = (props) => {
       </Link>
       <div className="cstm-flex-col gap-1 w-full">
         <div className="cstm-flex-row font-poppins mr-auto items-start w-full">
-          <p className="font-bold text-black mr-auto w-8/12 text-left">{props.title}</p>
+          <p className="font-bold text-black mr-auto w-44 truncate text-left">{props.title}</p>
           <p className="font-bold text-prmColor w-4/12 text-right">{props.goal}</p>
         </div>
         <div className="cstm-flex-row w-full font-poppins">
