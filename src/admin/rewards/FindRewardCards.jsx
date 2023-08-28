@@ -7,7 +7,7 @@ const FindRewardCards = (props) => {
       <Image
         src={props.image}
         alt="temp"
-        className="rounded-2xl bg-accntColor p-5 h-full"
+        className="rounded-2xl bg-accntColor p-5 h-full saturate-150 drop-shadow-md"
         width={250}
         height={250}
         priority
