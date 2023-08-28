@@ -133,7 +133,7 @@ const AddReward = () => {
                 onChange={(e) => handleReward(e.target)}
                 required={true}
                 value={reward.name}
-                className="resize-none p-2 focus:outline-none font-bold text-prmColor mr-auto placeholder:opacity-50"
+                className="resize-none w-full p-2 focus:outline-none font-bold text-prmColor mr-auto placeholder:opacity-50"
               />
             </div>
 

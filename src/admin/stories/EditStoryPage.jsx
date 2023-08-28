@@ -23,7 +23,7 @@ const EditStoryPage = (props) => {
           onChange={(e) => props.handlePage(page, e.target)}
           className="resize-none p-2 focus:outline-none font-bold text-prmColor mr-auto truncate w-full"
           value={props.page.header}
-        ></textarea>
+        />
 
         <p className="whitespace-nowrap">
           {props.page.length > 1 ? "Pages" : "Page"}: {page}/{props.maxPages}
@@ -41,8 +41,7 @@ const EditStoryPage = (props) => {
           onChange={(e) => props.handlePage(page, e.target)}
           className="resize-none p-2 focus:outline-none w-full h-full mr-auto"
           value={props.page.content}
-        ></textarea>
-
+        />
         {props.page?.image || props.page?.file?.src ? (
           <FilePreview
             purpose="Page Image"

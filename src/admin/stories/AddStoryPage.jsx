@@ -18,7 +18,7 @@ const AddStoryPage = (props) => {
           rows="1"
           placeholder="Page Header"
           onChange={(e) => props.handlePage(props.page.pageNumber, e.target)}
-          className="resize-none p-2 focus:outline-none font-bold text-prmColor mr-auto truncate"
+          className="resize-none w-full p-2 focus:outline-none font-bold text-prmColor mr-auto truncate"
           value={props.pageHeader}
         />
 

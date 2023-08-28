@@ -156,7 +156,7 @@ const EditReward = ({ params }) => {
                 onChange={(e) => handleReward(e.target)}
                 value={reward.reward_name}
                 required={true}
-                className="resize-none p-2 focus:outline-none font-bold text-prmColor mr-auto placeholder:opacity-50"
+                className="resize-none p-2 w-full focus:outline-none font-bold text-prmColor mr-auto placeholder:opacity-50"
               />
             </div>
 

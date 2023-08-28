@@ -147,7 +147,7 @@ const AddAchievement = () => {
               rows="1"
               required={true}
               placeholder="Achievement Title/Name"
-              className="resize-none p-2 focus:outline-none font-bold text-prmColor mr-auto placeholder:opacity-50"
+              className="resize-none w-full p-2 focus:outline-none font-bold text-prmColor mr-auto placeholder:opacity-50"
               value={achievement.name}
               onChange={(e) => handleAchievement(e.target)}
             />
