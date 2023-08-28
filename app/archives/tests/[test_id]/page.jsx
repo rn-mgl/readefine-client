@@ -139,7 +139,6 @@ const SingleTest = ({ params }) => {
             `${url}/user_achievement`,
             {
               type: "user_lexile",
-              specifics: "lexile_growth",
               toAdd: data?.toAdd,
             },
             { headers: { Authorization: user?.token } }
@@ -155,7 +154,6 @@ const SingleTest = ({ params }) => {
             `${url}/user_achievement`,
             {
               type: "answered_tests",
-              specifics: "book_count",
               toAdd: 1,
             },
             { headers: { Authorization: user?.token } }

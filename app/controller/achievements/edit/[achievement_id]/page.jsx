@@ -24,7 +24,6 @@ const EditAchievement = ({ params }) => {
     achievement_name: "",
     achievement_type: "user_session",
     task: "",
-    specifics: "days_online",
     goal: 0,
     reward: { name: "", id: "" },
   });
@@ -68,18 +67,9 @@ const EditAchievement = ({ params }) => {
     setHasSubmitted(true);
     setLoading(true);
 
-    const { goal, achievement_name, reward_id, reward_name, specifics, task, achievement_type } =
-      achievement;
+    const { goal, achievement_name, reward_id, reward_name, task, achievement_type } = achievement;
 
-    if (
-      !goal ||
-      !achievement_name ||
-      !reward_id ||
-      !reward_name ||
-      !specifics ||
-      !task ||
-      !achievement_type
-    ) {
+    if (!goal || !achievement_name || !reward_id || !reward_name || !task || !achievement_type) {
       setHasSubmitted(false);
       setLoading(false);
       setMessage({

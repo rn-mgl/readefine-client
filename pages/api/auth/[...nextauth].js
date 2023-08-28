@@ -3,7 +3,7 @@ import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { redirect } from "next/navigation";
 
-const url = "https://readefine-server.onrender.com";
+const url = "http://192.168.1.121:9000";
 
 export const authOptions = {
   providers: [

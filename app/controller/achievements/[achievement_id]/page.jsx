@@ -12,7 +12,7 @@ import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { BsArrowLeft } from "react-icons/bs";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
-import { specificsConversion, typeConversion } from "@/src/src/functions/typeConversion";
+import { typeConversion } from "@/src/src/functions/typeConversion";
 import { decipher } from "@/src/src/functions/security";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
@@ -66,7 +66,7 @@ const SingleAchievement = ({ params }) => {
   }, [user, router]);
 
   return (
-    <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col justify-start gap-5">
+    <div className="p-5 bg-accntColor w-full min-h-screen h-full t:h-screen cstm-flex-col justify-start gap-5">
       <AdminPageHeader subHeader="Achievement" mainHeader={achievement.achievement_name} />
 
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
@@ -79,73 +79,62 @@ const SingleAchievement = ({ params }) => {
         />
       ) : null}
 
-      <div className="cstm-flex-col cstm-w-limit w-full gap-5">
-        <div className="cstm-flex-row text-prmColor w-full">
-          <Link href="/controller/achievements" className="cstm-bg-hover mr-auto">
-            <BsArrowLeft />
-          </Link>
+      <div className="cstm-w-limit cstm-flex-row text-prmColor w-full">
+        <Link href="/controller/achievements" className="cstm-bg-hover mr-auto">
+          <BsArrowLeft />
+        </Link>
 
-          <Link
-            href={`/controller/achievements/edit/${params?.achievement_id}`}
-            className="cstm-bg-hover"
-          >
-            <AiFillEdit />
-          </Link>
+        <Link
+          href={`/controller/achievements/edit/${params?.achievement_id}`}
+          className="cstm-bg-hover"
+        >
+          <AiFillEdit />
+        </Link>
 
-          <button onClick={handleCanDeleteAchievement} className="cstm-bg-hover">
-            <AiFillDelete />
-          </button>
-        </div>
+        <button onClick={handleCanDeleteAchievement} className="cstm-bg-hover">
+          <AiFillDelete />
+        </button>
+      </div>
 
+      <div className="cstm-flex-col cstm-w-limit w-full gap-2 h-full">
         {/* task */}
-        <div className="w-full cstm-flex-col">
-          <div className="w-full p-5 bg-white rounded-2xl cstm-flex-col gap-5 min-h-[12rem]">
+        <div className="w-full cstm-flex-col h-full">
+          <div className="w-full p-5 bg-white rounded-2xl cstm-flex-col gap-2 h-full">
             <p className=" text-sm">Task</p>
 
-            <p className="text-center text-prmColor font-bold text-xl">{achievement?.task}</p>
+            <p className="text-center text-prmColor font-bold text-lg">{achievement?.task}</p>
           </div>
         </div>
 
         {/* achievement type */}
-        <div className="cstm-flex-col t:cstm-flex-row w-full gap-5">
-          <div className="w-full cstm-flex-col">
-            <div className="w-full p-5 bg-white rounded-2xl cstm-flex-col gap-5 min-h-[12rem]">
+        <div className="cstm-flex-col t:cstm-flex-row w-full gap-2 h-full">
+          <div className="w-full cstm-flex-col h-full">
+            <div className="w-full p-5 bg-white rounded-2xl cstm-flex-col gap-2 h-full">
               <p className="text-sm">Achievement Type</p>
 
-              <p className="text-justify font-bold text-prmColor text-xl">
+              <p className="text-justify font-bold text-prmColor text-lg">
                 {typeConversion[achievement?.achievement_type]}
               </p>
             </div>
           </div>
 
-          {/* specifics */}
-          <div className="w-full cstm-flex-col">
-            <div className="w-full p-5 bg-white rounded-2xl cstm-flex-col gap-5 min-h-[12rem]">
-              <p className="text-sm">Task Specifics</p>
-
-              <p className="text-justify font-bold text-prmColor text-xl">
-                {specificsConversion[achievement?.specifics]}
-              </p>
-            </div>
-          </div>
-
           {/* goal */}
-          <div className="w-full cstm-flex-col">
-            <div className="w-full p-5 bg-white rounded-2xl cstm-flex-col gap-5 min-h-[12rem]">
+          <div className="w-full cstm-flex-col h-full">
+            <div className="w-full p-5 bg-white rounded-2xl cstm-flex-col gap-2 h-full">
               <p className="text-sm">Goal</p>
 
-              <p className="text-justify font-bold text-prmColor text-xl">{achievement?.goal}</p>
+              <p className="text-justify font-bold text-prmColor text-lg">{achievement?.goal}</p>
             </div>
           </div>
         </div>
 
         {/* reward name */}
-        <div className="cstm-flex-col t:cstm-flex-row w-full gap-5 t:h-80">
+        <div className="cstm-flex-col t:cstm-flex-row w-full gap-2 h-full">
           <div className="w-full cstm-flex-col h-full">
-            <div className="w-full p-5 bg-white rounded-2xl cstm-flex-col gap-5 h-full">
+            <div className="w-full p-5 bg-white rounded-2xl cstm-flex-col gap-2 h-full">
               <p className="text-sm">Reward Name</p>
 
-              <p className="text-justify font-bold text-prmColor text-xl">
+              <p className="text-justify font-bold text-prmColor text-lg">
                 {achievement?.reward_name}
               </p>
             </div>
@@ -153,7 +142,7 @@ const SingleAchievement = ({ params }) => {
 
           {/* reward */}
           <div className="w-full cstm-flex-col h-full">
-            <div className="w-full p-5 bg-white rounded-2xl cstm-flex-col gap-5 h-full ">
+            <div className="w-full p-5 bg-white rounded-2xl cstm-flex-col gap-2 h-full ">
               <div className="drop-shadow-lg w-full animate-float t:w-60 saturate-150">
                 <FileViewer src={achievement?.reward} width="w-full" />
               </div>

@@ -15,7 +15,7 @@ const AddAchievementFilter = (props) => {
         required={true}
         labelValue={[
           { label: "Sessions", value: "user_session" },
-          { label: "Lexile", value: "user_lexile" },
+          { label: "Lexile Growth", value: "user_lexile" },
           { label: "Read Stories", value: "read_story" },
           { label: "Answered Tests", value: "answered_tests" },
           { label: "Test Score", value: "test_score" },
@@ -25,21 +25,6 @@ const AddAchievementFilter = (props) => {
           { label: "Dangle Wins", value: "dangle_wins" },
           { label: "Decipher Wins", value: "decipher_wins" },
           { label: "Riddle Wins", value: "riddle_wins" },
-        ]}
-      />
-
-      <SelectFilter
-        onChange={props.handleAchievement}
-        selectValue={props.achievement.specifics}
-        name="specifics"
-        label="Specifics"
-        required={true}
-        labelValue={[
-          { label: "Days Online", value: "days_online" },
-          { label: "Lexile Growth", value: "lexile_growth" },
-          { label: "Total Books", value: "book_count" },
-          { label: "Total Plays", value: "play_count" },
-          { label: "Total Scores", value: "score_count" },
         ]}
       />
 

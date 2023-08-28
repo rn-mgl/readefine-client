@@ -11,7 +11,7 @@ import Image from "next/image";
 import noReward from "../../../public/profile/NoReward.svg";
 
 import { IoAddOutline } from "react-icons/io5";
-import { specificsConversion, typeConversion } from "@/src/src/functions/typeConversion";
+import { typeConversion } from "@/src/src/functions/typeConversion";
 import { inputDate } from "@/src/src/functions/localDate";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
@@ -129,7 +129,6 @@ const AdminAchievements = () => {
           image={a.reward}
           title={a.achievement_name}
           type={typeConversion[a.achievement_type]}
-          specifics={specificsConversion[a.specifics]}
           task={a.task}
           goal={a.goal}
           to={`/controller/achievements/${cipheredAchievementId}`}

@@ -23,7 +23,6 @@ const AddAchievement = () => {
     name: "",
     type: "user_session",
     task: "",
-    specifics: "days_online",
     goal: 0,
     reward: { name: "", id: "" },
   });
@@ -65,9 +64,9 @@ const AddAchievement = () => {
     setHasSubmitted(true);
     setLoading(true);
 
-    const { goal, name, reward, specifics, task, type } = achievement;
+    const { goal, name, reward, task, type } = achievement;
 
-    if (!goal || !name || !reward.id || !specifics || !task || !type) {
+    if (!goal || !name || !reward.id || !task || !type) {
       setHasSubmitted(false);
       setLoading(false);
       setMessage({

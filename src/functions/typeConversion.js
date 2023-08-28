@@ -13,13 +13,3 @@ export const typeConversion = {
   decipher_wins: "Decipher Wins",
   riddle_wins: "Riddle Wins",
 };
-
-//for achievement task specifics
-
-export const specificsConversion = {
-  days_online: "Days Online",
-  lexile_growth: "Lexile Growth",
-  book_count: "Total Books",
-  play_count: "Total Plays",
-  score_count: "Total Scores",
-};

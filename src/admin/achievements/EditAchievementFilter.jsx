@@ -31,21 +31,6 @@ const EditAchievementFilter = (props) => {
         ]}
       />
 
-      <SelectFilter
-        onChange={props.handleAchievement}
-        selectValue={props.achievement.specifics}
-        name="specifics"
-        label="Specifics"
-        required={true}
-        labelValue={[
-          { label: "Days Online", value: "days_online" },
-          { label: "Lexile Growth", value: "lexile_growth" },
-          { label: "Total Books", value: "book_count" },
-          { label: "Total Plays", value: "play_count" },
-          { label: "Total Scores", value: "score_count" },
-        ]}
-      />
-
       <InputFilter
         label="Goal"
         placeholder="Achievement Goal"

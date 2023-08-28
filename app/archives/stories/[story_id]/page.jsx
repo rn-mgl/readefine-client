@@ -132,7 +132,6 @@ const SingleStory = ({ params }) => {
           `${url}/user_achievement`,
           {
             type: "read_story",
-            specifics: "book_count",
             toAdd: 1,
           },
           { headers: { Authorization: user?.token } }

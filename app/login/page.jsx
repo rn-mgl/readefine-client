@@ -95,7 +95,7 @@ const Login = () => {
       // update session achievement points and return if achievement is met
       const { data: achievementData } = await axios.patch(
         `${url}/user_achievement`,
-        { type: "user_session", specifics: "days_online", toAdd: 1 },
+        { type: "user_session", toAdd: 1 },
         { headers: { Authorization: user?.token } }
       );
 
