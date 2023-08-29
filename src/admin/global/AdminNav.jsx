@@ -86,6 +86,7 @@ const AdminNav = () => {
         className={`${
           isOpen ? "m-s:translate-x-0" : "m-s:-translate-x-full"
         } bg-white w-full h-screen text-center fixed p-5 transition-all cstm-flex-col justify-start gap-5 z-50
+            t:w-[50%]
             l-s:translate-x-0 l-s:left-0 l-s:top-0 l-s:w-[30%]
             l-l:w-[20%]`}
       >
@@ -195,6 +196,12 @@ const AdminNav = () => {
           </button>
         </div>
       </div>
+
+      <div
+        className={`${
+          isOpen ? "block" : "hidden"
+        } fixed z-40 bg-black bg-opacity-20 w-full h-full top-0 left-0 l-s:hidden`}
+      />
     </>
   );
 };
