@@ -75,8 +75,7 @@ const EditMain = (props) => {
       );
 
       if (data) {
-        props.handleCanEditMain();
-        props.getAdminData();
+        window.location.reload();
       }
     } catch (error) {
       console.log(error);

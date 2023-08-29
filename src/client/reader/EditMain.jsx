@@ -2,8 +2,6 @@
 
 import React from "react";
 import axios from "axios";
-import FilePreview from "../../components/global/FilePreview";
-import FileViewer from "../../components/global/FileViewer";
 import * as fileFns from "../../functions/fileFns";
 import EditInput from "../../components/profile/EditInput";
 import ActionLabel from "../../components/global/ActionLabel";
@@ -71,8 +69,7 @@ const EditMain = (props) => {
       );
 
       if (data) {
-        props.handleCanEditMain();
-        props.getUserData();
+        window.location.reload();
       }
     } catch (error) {
       console.log(error);

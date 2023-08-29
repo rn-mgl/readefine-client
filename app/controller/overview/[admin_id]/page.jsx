@@ -274,11 +274,7 @@ const Overview = ({ params }) => {
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
 
       {canEditMain ? (
-        <EditMain
-          getAdminData={getAdminData}
-          adminId={user?.adminId}
-          handleCanEditMain={handleCanEditMain}
-        />
+        <EditMain adminId={user?.adminId} handleCanEditMain={handleCanEditMain} />
       ) : null}
 
       {canChangePassword ? (

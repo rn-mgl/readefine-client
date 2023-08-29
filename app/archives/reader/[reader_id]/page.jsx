@@ -312,9 +312,7 @@ const Reader = ({ params }) => {
         />
       ) : null}
 
-      {canEditMain ? (
-        <EditMain getUserData={getUserData} handleCanEditMain={handleCanEditMain} />
-      ) : null}
+      {canEditMain ? <EditMain handleCanEditMain={handleCanEditMain} /> : null}
 
       {canChangePassword ? (
         <ChangePassword handleCanChangePassword={handleCanChangePassword} />
