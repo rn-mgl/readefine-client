@@ -10,12 +10,15 @@ const ClientMinigamesCards = (props) => {
                   t:w-80 animate-fadeIn
                   l-l:w-[22rem]"
     >
-      <Link href={props.to} className="w-full overflow-hidden rounded-2xl bg-accntColor p-1">
+      <Link
+        href={props.to}
+        className="w-full overflow-hidden rounded-2xl bg-prmColor bg-opacity-5 p-1"
+      >
         <Image
           src={props.image}
           priority
           alt="temp"
-          className="rounded-2xl group-hover:scale-110 transition-all duration-300 w-full"
+          className="rounded-2xl group-hover:scale-110 transition-all duration-300 w-full saturate-150"
         />
       </Link>
 

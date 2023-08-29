@@ -8,10 +8,10 @@ import decipher from "../../../public/minigames/Decipher.svg";
 
 import ClientMinigamesCards from "@/src/src/client/minigames/ClientMinigamesCards";
 import ClientPageHeader from "@/src/src/client/global/PageHeader";
+import Message from "@/src/src/components/global/Message";
 
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
-import Message from "@/src/src/components/global/Message";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 

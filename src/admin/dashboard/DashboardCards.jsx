@@ -9,12 +9,15 @@ const DashboardCards = (props) => {
                   t:w-80
                   l-l:w-[22rem]"
     >
-      <Link href={props.to} className="w-fit overflow-hidden rounded-2xl ">
+      <Link
+        href={props.to}
+        className="w-fit overflow-hidden rounded-2xl bg-prmColor bg-opacity-10 p-1"
+      >
         <Image
           src={props.image}
           priority
           alt="temp"
-          className="rounded-2xl group-hover:scale-110 transition-all duration-300"
+          className="rounded-2xl group-hover:scale-110 transition-all duration-300 saturate-150"
         />
       </Link>
 

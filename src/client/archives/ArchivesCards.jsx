@@ -11,12 +11,12 @@ const ArchivesCards = (props) => {
             t:w-80 animate-fadeIn
             l-l:w-[22rem]"
     >
-      <div className="w-full overflow-hidden rounded-2xl bg-accntColor cstm-flex-col p-1">
+      <div className="w-full overflow-hidden rounded-2xl bg-prmColor bg-opacity-5 cstm-flex-col p-1">
         <Image
           src={props.image}
           width={350}
           alt="temp"
-          className="rounded-2xl group-hover:scale-110 transition-all duration-300 w-full"
+          className="rounded-2xl group-hover:scale-110 transition-all duration-300 w-full saturate-150"
         />
       </div>
 

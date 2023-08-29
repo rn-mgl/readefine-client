@@ -1,8 +1,8 @@
 import React from "react";
 import AdminPageHeader from "@/src/src/admin/global/PageHeader";
-import DashboardCardImage2 from "../../../public/dashboard/DashboardCardImage2.svg";
-import DashboardCardImage3 from "../../../public/dashboard/DashboardCardImage3.svg";
-import DashboardCardImage6 from "../../../public/dashboard/DashboardCardImage6.svg";
+import riddles from "../../../public/minigames/Riddles.svg";
+import dangle from "../../../public/minigames/Dangle.svg";
+import decipher from "../../../public/minigames/Decipher.svg";
 import AdminMinigamesCards from "@/src/src/admin/minigames/AdminMinigamesCards";
 
 const Minigames = () => {
@@ -14,18 +14,10 @@ const Minigames = () => {
         t:cstm-flex-row t:flex-wrap
         cstm-w-limit"
       >
+        <AdminMinigamesCards image={riddles} label="Riddles" to="/controller/minigames/riddles" />
+        <AdminMinigamesCards image={dangle} label="Dangle" to="/controller/minigames/dangle" />
         <AdminMinigamesCards
-          image={DashboardCardImage2}
-          label="Riddles"
-          to="/controller/minigames/riddles"
-        />
-        <AdminMinigamesCards
-          image={DashboardCardImage3}
-          label="Dangle"
-          to="/controller/minigames/dangle"
-        />
-        <AdminMinigamesCards
-          image={DashboardCardImage6}
+          image={decipher}
           label="Decipher"
           to="/controller/minigames/decipher"
         />

@@ -19,7 +19,7 @@ const RewardsCards = (props) => {
             src={rewardImage}
             alt="temp"
             draggable={false}
-            className="drop-shadow-md w-fit saturate-150"
+            className="drop-shadow-md w-fit saturate-150 hover:scale-105 transition-all"
             width={250}
             height={250}
             priority
@@ -31,7 +31,7 @@ const RewardsCards = (props) => {
             src={rewardImage}
             alt="temp"
             draggable={false}
-            className="drop-shadow-md w-fit saturate-150"
+            className="drop-shadow-md w-fit saturate-150 hover:scale-105 transition-all"
             width={250}
             height={250}
             priority

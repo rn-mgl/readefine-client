@@ -7,7 +7,14 @@ const StoriesCards = (props) => {
   return (
     <div className="bg-white p-5 rounded-2xl cstm-flex-col gap-4 t:w-72 shadow-md max-h-[30rem] h-[30rem]">
       <div className="w-full h-full cstm-flex-col overflow-clip bg-white rounded-2xl justify-start">
-        <Image priority src={props.image} alt="temp" width={240} height={200} className="w-fit" />
+        <Image
+          priority
+          src={props.image}
+          alt="temp"
+          width={240}
+          height={200}
+          className="w-fit hover:scale-105 transition-all saturate-150"
+        />
       </div>
 
       <div className="cstm-flex-col w-full mt-auto">

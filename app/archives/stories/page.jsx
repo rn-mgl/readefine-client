@@ -119,7 +119,7 @@ const ClientStories = () => {
     return (
       <React.Fragment key={story.story_id}>
         <StoriesCards
-          image={story.book_cover ? story.book_cover : DashboardCardImage3}
+          image={story.book_cover}
           isRead={story.is_read}
           isTaken={story.is_taken}
           isLower={userLexile.lexile - 100 > story.lexile}

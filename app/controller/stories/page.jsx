@@ -2,7 +2,6 @@
 import React from "react";
 import AdminPageHeader from "../../../src/admin/global/PageHeader";
 import StoriesCards from "@/src/src/admin/stories/StoriesCards";
-import DashboardCardImage3 from "../../../public/dashboard/DashboardCardImage3.svg";
 import StoriesFilter from "@/src/src/admin/stories/StoriesFilter";
 import axios from "axios";
 import Link from "next/link";
@@ -115,7 +114,7 @@ const AdminStories = () => {
     return (
       <React.Fragment key={story.story_id}>
         <StoriesCards
-          image={story.book_cover ? story.book_cover : DashboardCardImage3}
+          image={story.book_cover}
           title={story.title}
           author={story.author}
           lexile={story.lexile}

@@ -2,13 +2,13 @@
 import React from "react";
 import axios from "axios";
 import AdminPageHeader from "../../src/admin/global/PageHeader";
-import DashboardCards from "../../src/admin/dashboard/DashboardCards";
-import DashboardCardImage1 from "../../public/dashboard/DashboardCardImage1.svg";
-import DashboardCardImage2 from "../../public/dashboard/DashboardCardImage2.svg";
-import DashboardCardImage3 from "../../public/dashboard/DashboardCardImage3.svg";
-import DashboardCardImage5 from "../../public/dashboard/DashboardCardImage5.svg";
-import DashboardCardImage6 from "../../public/dashboard/DashboardCardImage6.svg";
-import DashboardCardImage7 from "../../public/dashboard/DashboardCardImage7.svg";
+import DashboardCards from "@/src/src/admin/dashboard/DashboardCards";
+import users from "../../public/dashboard/admin/Users.svg";
+import stories from "../../public/dashboard/admin/Stories.svg";
+import tests from "../../public/dashboard/admin/Tests.svg";
+import rewards from "../../public/dashboard/admin/Rewards.svg";
+import achievements from "../../public/dashboard/admin/Achievements.svg";
+import minigames from "../../public/dashboard/admin/Minigames.svg";
 import Message from "@/src/src/components/global/Message";
 
 import { useGlobalContext } from "../../context";
@@ -93,7 +93,7 @@ const AdminDashboard = () => {
       >
         {/* users card */}
         <DashboardCards
-          image={DashboardCardImage1}
+          image={users}
           label="Users"
           subLabel={`New Member: ${updates.userName}`}
           count={counts.userCount}
@@ -102,7 +102,7 @@ const AdminDashboard = () => {
 
         {/* stories card */}
         <DashboardCards
-          image={DashboardCardImage3}
+          image={stories}
           label="Stories"
           subLabel={`New Story: ${updates.storyTitle}`}
           count={counts.storyCount}
@@ -111,7 +111,7 @@ const AdminDashboard = () => {
 
         {/* tests card */}
         <DashboardCards
-          image={DashboardCardImage2}
+          image={tests}
           label="Tests"
           subLabel={`New Test: ${updates.testTitle}`}
           count={counts.testCount}
@@ -120,7 +120,7 @@ const AdminDashboard = () => {
 
         {/* rewards card */}
         <DashboardCards
-          image={DashboardCardImage6}
+          image={rewards}
           label="Rewards"
           subLabel={`New Reward: ${updates.rewardName}`}
           count={counts.rewardCount}
@@ -129,7 +129,7 @@ const AdminDashboard = () => {
 
         {/* achievements and task card */}
         <DashboardCards
-          image={DashboardCardImage5}
+          image={achievements}
           label="Achievements & Tasks"
           subLabel={`New Achievement: ${updates.achievementName}`}
           count={counts.achievementCount}
@@ -138,7 +138,7 @@ const AdminDashboard = () => {
 
         {/* minigames card */}
         <DashboardCards
-          image={DashboardCardImage7}
+          image={minigames}
           label="Minigames"
           subLabel="Extras"
           count={3}
