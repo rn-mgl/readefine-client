@@ -9,10 +9,14 @@ const AchievementPanel = (props) => {
                 t:cstm-flex-row t:p-5"
     >
       <div className="cstm-flex-col gap-2 t:items-start t:text-left w-full">
-        <p className="font-bold text-prmColor cstm-flex-row gap-1">
-          {props.title} <BsDot className="text-black" />
-          <span className="font-light">{props.type}</span>
-        </p>
+        <div className="cstm-flex-col gap-2 t:cstm-flex-row t:gap-1">
+          <p className="font-bold text-prmColor">{props.title}</p>
+          <div className="hidden t:block">
+            <BsDot className="text-black" />
+          </div>
+          <p className="font-light text-xs text-prmColor">{props.type}</p>
+        </div>
+
         <p className="text-sm">{props.task}</p>
       </div>
 
