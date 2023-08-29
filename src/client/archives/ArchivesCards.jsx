@@ -6,11 +6,12 @@ const ArchivesCards = (props) => {
   return (
     <Link
       href={props.to}
+      style={{ animationDuration: `${props.delay}s` }}
       className="bg-white p-5 rounded-2xl  min-w-[16rem] cstm-flex-col gap-4 group transition-all shadow-solid active:shadow-solidActive
-            t:w-80
+            t:w-80 animate-fadeIn
             l-l:w-[22rem]"
     >
-      <div className="w-full overflow-hidden rounded-2xl">
+      <div className="w-full overflow-hidden rounded-2xl bg-accntColor cstm-flex-col p-1">
         <Image
           src={props.image}
           width={350}

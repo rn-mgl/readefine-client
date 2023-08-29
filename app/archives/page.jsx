@@ -1,11 +1,11 @@
 "use client";
 import React from "react";
 import ArchivesCards from "@/src/src/client/archives/ArchivesCards";
-import DashboardCardImage1 from "../../public/dashboard/DashboardCardImage1.svg";
-import DashboardCardImage2 from "../../public/dashboard/DashboardCardImage2.svg";
-import DashboardCardImage3 from "../../public/dashboard/DashboardCardImage3.svg";
-import DashboardCardImage5 from "../../public/dashboard/DashboardCardImage5.svg";
-import DashboardCardImage6 from "../../public/dashboard/DashboardCardImage6.svg";
+import stories from "../../public/dashboard/client/Stories.svg";
+import tests from "../../public/dashboard/client/Tests.svg";
+import rewards from "../../public/dashboard/client/Rewards.svg";
+import achievement from "../../public/dashboard/client/Achievements.svg";
+import minigames from "../../public/dashboard/client/Minigames.svg";
 import ClientPageHeader from "@/src/src/client/global/PageHeader";
 import Message from "@/src/src/components/global/Message";
 import axios from "axios";
@@ -71,7 +71,8 @@ const Archives = () => {
           subLabel="Stories Read: "
           count={countsData?.readCount}
           to="/archives/stories"
-          image={DashboardCardImage1}
+          image={stories}
+          delay={0.2}
         />
 
         {/* tests */}
@@ -80,7 +81,8 @@ const Archives = () => {
           subLabel="Tests Taken: "
           count={countsData?.testCount}
           to="/archives/tests"
-          image={DashboardCardImage2}
+          image={tests}
+          delay={0.3}
         />
 
         {/* rewards */}
@@ -89,7 +91,8 @@ const Archives = () => {
           subLabel="Rewards Received: "
           count={countsData?.achievementCount}
           to="/archives/rewards"
-          image={DashboardCardImage3}
+          image={rewards}
+          delay={0.4}
         />
 
         {/* achievements */}
@@ -98,7 +101,8 @@ const Archives = () => {
           subLabel="Achievements Finished: "
           count={countsData?.achievementCount}
           to="/archives/achievements"
-          image={DashboardCardImage5}
+          image={achievement}
+          delay={0.5}
         />
 
         {/* games */}
@@ -107,7 +111,8 @@ const Archives = () => {
           subLabel="Available Games:"
           count={3}
           to="/archives/minigames"
-          image={DashboardCardImage6}
+          image={minigames}
+          delay={0.6}
         />
       </div>
     </div>

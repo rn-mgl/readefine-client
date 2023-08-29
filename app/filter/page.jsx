@@ -99,10 +99,10 @@ const AdminLogin = () => {
   }, [router]);
 
   React.useEffect(() => {
-    if (user && user.adminId && user.isVerified) {
+    if (firstLogin && user && user.adminId && user.isVerified) {
       recordSession();
     }
-  }, [recordSession, user]);
+  }, [recordSession, user, firstLogin]);
 
   React.useEffect(() => {
     if (firstLogin && user && user.adminId && !user.isVerified) {

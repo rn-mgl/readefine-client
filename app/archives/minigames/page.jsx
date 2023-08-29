@@ -2,9 +2,9 @@
 import React from "react";
 import axios from "axios";
 
-import DashboardCardImage2 from "../../../public/dashboard/DashboardCardImage2.svg";
-import DashboardCardImage3 from "../../../public/dashboard/DashboardCardImage3.svg";
-import DashboardCardImage6 from "../../../public/dashboard/DashboardCardImage6.svg";
+import riddles from "../../../public/minigames/Riddles.svg";
+import dangle from "../../../public/minigames/Dangle.svg";
+import decipher from "../../../public/minigames/Decipher.svg";
 
 import ClientMinigamesCards from "@/src/src/client/minigames/ClientMinigamesCards";
 import ClientPageHeader from "@/src/src/client/global/PageHeader";
@@ -68,29 +68,32 @@ const Minigames = () => {
       >
         {/* riddles */}
         <ClientMinigamesCards
-          image={DashboardCardImage2}
+          image={riddles}
           label="Riddles"
           subLabel="Riddles Answered: "
           count={counts?.riddleCount ? counts?.riddleCount : 0}
           to="/archives/minigames/riddles"
+          delay={0.2}
         />
 
         {/* dangle */}
         <ClientMinigamesCards
-          image={DashboardCardImage3}
+          image={dangle}
           label="Dangle"
           subLabel="Dangle Played: "
           count={counts?.dangleCount ? counts?.dangleCount : 0}
           to="/archives/minigames/dangle"
+          delay={0.4}
         />
 
         {/* decipher */}
         <ClientMinigamesCards
-          image={DashboardCardImage6}
+          image={decipher}
           label="Decipher"
           subLabel="Decipher Played: "
           count={counts?.decipherCount ? counts?.decipherCount : 0}
           to="/archives/minigames/decipher"
+          delay={0.6}
         />
       </div>
     </div>
