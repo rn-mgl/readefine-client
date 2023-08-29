@@ -205,6 +205,16 @@ const SingleStory = ({ params }) => {
     }
   }, [user, router]);
 
+  React.useEffect(() => {
+    const cancelSSU = window.speechSynthesis.cancel();
+
+    window.addEventListener("beforeunload", cancelSSU);
+
+    return () => {
+      window.removeEventListener("beforeunload", cancelSSU);
+    };
+  }, []);
+
   return (
     <div className="p-5 cstm-flex-col bg-accntColor w-full min-h-screen h-screen justify-start gap-5">
       <ClientPageHeader subHeader="Stories" mainHeader={story.title} />

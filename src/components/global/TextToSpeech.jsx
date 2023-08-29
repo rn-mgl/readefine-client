@@ -9,15 +9,17 @@ import {
 } from "react-icons/bs";
 import { RiSpeedFill } from "react-icons/ri";
 import ActionLabel from "./ActionLabel";
+import { AiFillHighlight } from "react-icons/ai";
 
 const TextToSpeech = (props) => {
   const [utterance, setUtterance] = React.useState("");
+  const [highlightedWords, setHighLightedWords] = React.useState("");
   const [status, setStatus] = React.useState("init");
   const [volume, setVolume] = React.useState({ display: 100, apply: 1 });
   const [rate, setRate] = React.useState(1);
   const [SSU, setSSU] = React.useState(null);
 
-  const playVoice = () => {
+  const playVoice = (words) => {
     const synth = speechSynthesis;
     const voices = synth.getVoices();
 
@@ -42,7 +44,7 @@ const TextToSpeech = (props) => {
       SSU.addEventListener("end", () => setStatus("init"));
 
       SSU.voice = primaryVoices.michelle;
-      SSU.text = utterance;
+      SSU.text = words;
       SSU.rate = rate;
       SSU.volume = volume.apply;
 
@@ -93,20 +95,31 @@ const TextToSpeech = (props) => {
   }, [SSU, volume, rate]);
 
   React.useEffect(() => {
-    const cancelSSU = window.speechSynthesis.cancel();
-
-    window.addEventListener("beforeunload", cancelSSU);
-
-    return () => {
-      window.removeEventListener("beforeunload", cancelSSU);
+    const highlight = () => {
+      const text = window.getSelection().toString();
+      const prevHighlighted = highlightedWords;
+      setHighLightedWords(text === "" ? prevHighlighted : text);
     };
-  }, []);
+
+    window.addEventListener("mouseup", highlight);
+
+    return () => window.removeEventListener("mouseup", highlight);
+  }, [highlightedWords]);
 
   return (
     <div className="cstm-flex-col w-full gap-5 t:cstm-flex-row t:w-fit t:gap-2">
       <div className="cstm-flex-row gap-2 w-full">
+        {highlightedWords ? (
+          <button
+            className="relative cstm-bg-hover group"
+            onClick={() => playVoice(highlightedWords)}
+          >
+            <ActionLabel label="Play Highlighted Word" />
+            <AiFillHighlight className="text-prmColor scale-125" />
+          </button>
+        ) : null}
         {status === "init" ? (
-          <button className="relative cstm-bg-hover group" onClick={playVoice}>
+          <button className="relative cstm-bg-hover group" onClick={() => playVoice(utterance)}>
             <ActionLabel label="Play" />
             <BsFillPlayFill className="text-prmColor scale-125" />
           </button>
@@ -121,7 +134,7 @@ const TextToSpeech = (props) => {
             <BsFillPlayFill className="text-prmColor scale-125" />
           </button>
         ) : (
-          <button className="relative cstm-bg-hover group" onClick={playVoice}>
+          <button className="relative cstm-bg-hover group" onClick={() => playVoice(utterance)}>
             <ActionLabel label="Play" />
             <BsFillPlayFill className="text-prmColor scale-125" />
           </button>
