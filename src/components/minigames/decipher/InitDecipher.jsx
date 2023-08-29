@@ -7,30 +7,17 @@ import TextShuffleAnimation from "../../global/TextShuffleAnimation";
 import decipherBgUp from "../../../../public/decipher/DecipherBGUp.svg";
 import decipherBgDown from "../../../../public/decipher/DecipherBGDown.svg";
 
-import {
-  BsArrowLeft,
-  BsQuestionCircle,
-  BsFillVolumeMuteFill,
-  BsFillVolumeUpFill,
-} from "react-icons/bs";
+import { BsArrowLeft, BsQuestionCircle } from "react-icons/bs";
+import Volume from "../../global/Volume";
 
 const InitDecipher = (props) => {
   return (
     <div className="w-full h-[95vh] cstm-w-limit cstm-flex-col relative overflow-hidden gap-5 animate-fadeIn">
       <div className="absolute top-10 left-0 cstm-flex-col gap-2 z-10 group l-s:top-0">
-        <button className="cstm-bg-hover " onClick={props.handleMuteVolume}>
-          {props.isMuted ? (
-            <BsFillVolumeMuteFill className="scale-125" />
-          ) : (
-            <BsFillVolumeUpFill className="scale-125" />
-          )}
-        </button>
-
-        <input
-          onChange={(e) => props.handleVolume(e.target)}
-          defaultValue={20}
-          type="range"
-          className="absolute bottom-0 rotate-90 translate-y-12 hidden group-hover:flex p-2"
+        <Volume
+          isMuted={props.isMuted}
+          handleMuteVolume={props.handleMuteVolume}
+          handleVolume={props.handleVolume}
         />
       </div>
 

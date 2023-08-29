@@ -60,6 +60,7 @@ const Archives = () => {
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <ClientPageHeader mainHeader="Readefine" subHeader="Home" />
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+
       <div
         className="cstm-flex-col gap-5 w-full transition-all
         t:cstm-flex-row t:flex-wrap

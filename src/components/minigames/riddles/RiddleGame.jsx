@@ -2,31 +2,18 @@ import React from "react";
 import Keyboard from "../Keyboard";
 import RiddleInput from "./RiddleInput";
 
-import {
-  BsArrowLeft,
-  BsPatchQuestionFill,
-  BsFillVolumeMuteFill,
-  BsFillVolumeUpFill,
-} from "react-icons/bs";
+import { BsArrowLeft, BsPatchQuestionFill } from "react-icons/bs";
 import RiddleEntries from "./RiddleEntries";
+import Volume from "../../global/Volume";
 
 const RiddleGame = (props) => {
   return (
     <div className="h-[95vh] cstm-flex-col relative w-full gap-5 cstm-w-limit">
       <div className="absolute top-10 left-0 cstm-flex-col gap-2 z-20 group l-s:top-0">
-        <button className="cstm-bg-hover " onClick={props.handleMuteVolume}>
-          {props.isMuted ? (
-            <BsFillVolumeMuteFill className="scale-125" />
-          ) : (
-            <BsFillVolumeUpFill className="scale-125" />
-          )}
-        </button>
-
-        <input
-          onChange={(e) => props.handleVolume(e.target)}
-          defaultValue={20}
-          type="range"
-          className="absolute bottom-0 rotate-90 translate-y-12  hidden group-hover:flex p-2"
+        <Volume
+          isMuted={props.isMuted}
+          handleMuteVolume={props.handleMuteVolume}
+          handleVolume={props.handleVolume}
         />
       </div>
 

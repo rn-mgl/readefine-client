@@ -9,8 +9,34 @@ import rewardNotice from "../../../public/music/reward/Reward Notice.mp3";
 
 import { IoClose } from "react-icons/io5";
 import { BsArrowRight } from "react-icons/bs";
+import Volume from "../../components/global/Volume";
 
 const ReceiveAchievement = (props) => {
+  const [isMuted, setIsMuted] = React.useState(false);
+  const audioRef = React.useRef();
+
+  // change audio volume
+  const handleVolume = ({ value }) => {
+    if (typeof audioRef.current.volume !== "undefined") {
+      audioRef.current.volume = value / 100;
+    }
+    setIsMuted(false);
+  };
+
+  // mute volume
+  const handleMuteVolume = () => {
+    if (typeof audioRef.current.volume !== "undefined") {
+      setIsMuted((prev) => {
+        if (prev) {
+          audioRef.current.volume = 1;
+        } else {
+          audioRef.current.volume = 0;
+        }
+        return !prev;
+      });
+    }
+  };
+
   const achievements = props?.achievements?.map((a) => {
     return (
       <div
@@ -51,13 +77,18 @@ const ReceiveAchievement = (props) => {
   return (
     <div className="w-full h-screen fixed top-0 left-0 p-5 z-[60] backdrop-blur-md cstm-flex-col">
       {buttonAction}
+
+      <div className="absolute top-14 right-3 cstm-flex-col gap-2 z-10 group text-white">
+        <Volume isMuted={isMuted} handleMuteVolume={handleMuteVolume} handleVolume={handleVolume} />
+      </div>
+
       <Confetti width={window?.innerWidth} height={window?.innerHeight} className="z-10" />
 
-      <audio autoPlay>
+      <audio autoPlay ref={audioRef}>
         <source src={rewardNotice} type="audio/mp3" />
       </audio>
 
-      <audio autoPlay loop>
+      <audio autoPlay loop ref={audioRef}>
         <source src={rewardMusic} type="audio/mp3" />
       </audio>
 
