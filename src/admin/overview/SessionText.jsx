@@ -11,8 +11,7 @@ const SessionText = (props) => {
         }}
         className="w-10 h-10 min-w-[2.5rem] min-h-[2.5rem] bg-center bg-cover rounded-full bg-indigo-100"
       >
-        {" "}
-        {!props.userImage ? (
+        {!props.adminData?.image ? (
           <Image src={avatar} alt="avatar" className="saturate-150" width={100} />
         ) : null}
       </div>
