@@ -1,4 +1,6 @@
 import React from "react";
+import avatar from "../../../public/profile/Avatar White.svg";
+import Image from "next/image";
 
 import { BsDot } from "react-icons/bs";
 import { AiFillEdit } from "react-icons/ai";
@@ -12,8 +14,13 @@ const MainProfile = (props) => {
             style={{
               backgroundImage: props.userData?.image ? `url(${props.userData?.image})` : null,
             }}
-            className="w-20 h-20 rounded-full bg-cover bg-center bg-gradient-to-br from-scndColor to-prmColor border-4 border-white absolute bottom-0 translate-y-10"
-          />
+            className="w-20 h-20 rounded-full bg-cover bg-center bg-gradient-to-br 
+                      from-scndColor to-prmColor border-4 border-white absolute bottom-0 translate-y-10"
+          >
+            {!props.userData?.image ? (
+              <Image src={avatar} alt="avatar" className="w-full saturate-150" width={320} />
+            ) : null}
+          </div>
         </div>
 
         <div className="cstm-flex-col mt-auto w-full">

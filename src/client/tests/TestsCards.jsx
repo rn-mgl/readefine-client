@@ -27,11 +27,12 @@ const TestsCards = (props) => {
   return (
     <div className="bg-white p-5 rounded-2xl cstm-flex-col gap-4 w-72 shadow-solid max-h-[28rem] h-[28rem] relative border-2 border-accntColor">
       {props.isTaken ? (
-        <div className="group absolute top-4 right-4">
+        <div className="group absolute top-4 right-4 z-10">
           <ActionLabel label="Test Taken" />
           <IoCheckmarkDoneCircle className="text-prmColor scale-150" />
         </div>
       ) : null}
+
       <div className="w-full h-fit cstm-flex-col overflow-clip  bg-white rounded-2xl justify-start">
         <Image
           src={props.image}

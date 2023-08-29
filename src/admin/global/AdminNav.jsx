@@ -4,6 +4,8 @@ import Link from "next/link";
 import AdminLink from "../nav/AdminLink";
 import Loading from "../../components/global/Loading";
 import axios from "axios";
+import avatar from "../../../public/profile/Avatar.svg";
+import Image from "next/image";
 
 import { BiMenu, BiTask, BiLogOut } from "react-icons/bi";
 import { BsPenFill, BsPatchQuestionFill } from "react-icons/bs";
@@ -162,15 +164,20 @@ const AdminNav = () => {
             href={`/controller/overview/${cipher(user?.adminId)}`}
             onClick={toggleOpenNav}
             className="text-left hover:bg-neutral-100 p-2 rounded-md 
-            justify-start transition-all cstm-flex-row gap-2 w-full overflow-x-auto scrollbar-none"
+            justify-start transition-all cstm-flex-row gap-2 w-full"
           >
             <div
               style={{ backgroundImage: adminData?.image ? `url(${adminData?.image})` : null }}
-              className="w-12 min-w-[3rem] h-12 min-h-[3rem] rounded-full bg-prmColor bg-opacity-30 bg-cover bg-center"
-            />
+              className="w-12 min-w-[3rem] h-12 min-h-[3rem] rounded-full
+                      bg-indigo-100 bg-cover bg-center"
+            >
+              {!adminData?.image ? (
+                <Image src={avatar} alt="avatar" className="saturate-150" width={100} />
+              ) : null}
+            </div>
             <div className="cstm-flex-col items-start w-full">
               <p className="text-xs">Welcome</p>
-              <p className="font-bold text-prmColor whitespace-nowrap">
+              <p className="font-bold text-prmColor whitespace-nowrap w-44 truncate">
                 {adminData?.name} {adminData?.surname}
               </p>
             </div>

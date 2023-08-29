@@ -2,10 +2,13 @@
 import React from "react";
 import Link from "next/link";
 import ClientLink from "../nav/ClientLink";
+import axios from "axios";
 import Loading from "../../components/global/Loading";
+import avatar from "../../../public/profile/Avatar White.svg";
+import Image from "next/image";
 
 import { BiMenu, BiTask, BiLogOut } from "react-icons/bi";
-import { BsPenFill, BsPatchQuestionFill } from "react-icons/bs";
+import { BsPenFill } from "react-icons/bs";
 import { IoCloseSharp } from "react-icons/io5";
 import { AiFillHome, AiFillBook } from "react-icons/ai";
 import { TbGoGame } from "react-icons/tb";
@@ -13,7 +16,6 @@ import { GiAchievement } from "react-icons/gi";
 import { usePathname } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
-import axios from "axios";
 import { cipher } from "../../functions/security";
 
 const ClientNav = () => {
@@ -157,16 +159,18 @@ const ClientNav = () => {
             href={`/archives/reader/${cipher(user?.userId)}`}
             onClick={toggleOpenNav}
             className="font-poppins text-left hover:bg-neutral-100 p-2 rounded-md 
-                justify-start transition-all cstm-flex-row gap-2 w-full overflow-x-auto scrollbar-none"
+                justify-start transition-all cstm-flex-row gap-2 w-full"
           >
             <div
               style={{ backgroundImage: userData?.image ? `url(${userData?.image})` : null }}
               className="w-12 min-w-[3rem] h-12 min-h-[3rem] rounded-full  
-                    bg-gradient-to-br from-prmColor to-scndColor bg-opacity-30 bg-cover bg-center"
-            />
+                    bg-gradient-to-br from-prmColor to-scndColor bg-cover bg-center"
+            >
+              {!userData?.image ? <Image src={avatar} alt="avatar" width={100} /> : null}
+            </div>
             <div className="cstm-flex-col items-start w-full">
               <p className="text-sm font-semibold">{userData?.lexile}L</p>
-              <p className="font-bold text-prmColor whitespace-nowrap">
+              <p className="font-bold text-prmColor whitespace-nowrap w-44 truncate">
                 {userData?.name} {userData?.surname}
               </p>
             </div>

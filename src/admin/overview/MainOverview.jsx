@@ -1,4 +1,7 @@
 import React from "react";
+import avatar from "../../../public/profile/Avatar.svg";
+import Image from "next/image";
+
 import { localizeDate } from "../../functions/localDate";
 import { BsDot } from "react-icons/bs";
 import { AiFillEdit } from "react-icons/ai";
@@ -12,8 +15,13 @@ const MainOverview = (props) => {
             style={{
               backgroundImage: props.adminData.image ? `url(${props.adminData.image})` : null,
             }}
-            className="w-20 h-20 bg-prmColor rounded-full absolute translate-y-10 bottom-0 border-4 border-white bg-cover bg-center"
-          />
+            className="w-20 h-20 bg-indigo-100 rounded-full absolute translate-y-10 
+                    bottom-0 border-4 border-white bg-cover bg-center"
+          >
+            {!props.adminData?.image ? (
+              <Image src={avatar} alt="avatar" className="w-full" width={320} />
+            ) : null}
+          </div>
         </div>
 
         <div className="cstm-flex-col gap-1 mt-auto">

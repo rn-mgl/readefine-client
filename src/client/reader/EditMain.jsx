@@ -5,14 +5,16 @@ import axios from "axios";
 import * as fileFns from "../../functions/fileFns";
 import EditInput from "../../components/profile/EditInput";
 import ActionLabel from "../../components/global/ActionLabel";
+import avatar from "../../../public/profile/Avatar White.svg";
+import Image from "next/image";
+import Message from "../../components/global/Message";
+import Loading from "../../components/global/Loading";
 
 import { IoClose } from "react-icons/io5";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { BiImage } from "react-icons/bi";
 import { CiUser } from "react-icons/ci";
-import Message from "../../components/global/Message";
-import Loading from "../../components/global/Loading";
 
 const EditMain = (props) => {
   const [userData, setUserData] = React.useState({});
@@ -119,7 +121,7 @@ const EditMain = (props) => {
         onSubmit={(e) => editMain(e)}
         className="cstm-w-limit cstm-flex-col gap-5 w-full h-auto justify-start"
       >
-        <div className="cstm-flex-col gap-5 justify-start w-full t:w-10/12 l-l:w-8/12">
+        <div className="cstm-flex-col gap-5 justify-start w-full t:w-8/12 l-l:w-6/12">
           <div className="cstm-flex-col p-5 bg-white w-full rounded-2xl shadow-solid gap-2">
             <div
               style={{
@@ -129,10 +131,14 @@ const EditMain = (props) => {
                   ? `url(${userData?.image})`
                   : null,
               }}
-              className="w-56 h-56 min-w-[14rem] min-h-[14rem] bg-prmColor bg-opacity-10
-                        bg-center bg-cover rounded-full border-4 border-prmColor
-                        l-l:w-80 l-l:h-80 l-l:min-w-[20rem] l-l:min-h-[20rem] "
-            />
+              className="w-40 h-40 min-w-[10rem] min-h-[10rem] bg-prmColor bg-opacity-50
+                        bg-center bg-cover rounded-full border-4 border-prmColor cstm-flex-col
+                        l-l:w-60 l-l:h-60 l-l:min-w-[15rem] l-l:min-h-[15rem] "
+            >
+              {!userData?.file?.src && !userData?.image ? (
+                <Image src={avatar} alt="avatar" className="w-full" width={320} />
+              ) : null}
+            </div>
 
             <div className="w-full cstm-flex-row">
               <label className="cstm-bg-hover cursor-pointer w-fit group relative mr-auto">

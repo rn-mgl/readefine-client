@@ -3,16 +3,18 @@
 import axios from "axios";
 import React from "react";
 import * as fileFns from "../../functions/fileFns";
+import EditInput from "../../components/profile/EditInput";
+import Message from "../../components/global/Message";
+import Loading from "../../components/global/Loading";
+import ActionLabel from "../../components/global/ActionLabel";
+import avatar from "../../../public/profile/Avatar.svg";
+import Image from "next/image";
 
 import { useGlobalContext } from "@/src/context";
 import { useSession } from "next-auth/react";
 import { IoClose } from "react-icons/io5";
 import { BiImage } from "react-icons/bi";
-import ActionLabel from "../../components/global/ActionLabel";
 import { CiUser } from "react-icons/ci";
-import EditInput from "../../components/profile/EditInput";
-import Message from "../../components/global/Message";
-import Loading from "../../components/global/Loading";
 
 const EditMain = (props) => {
   const [adminData, setAdminData] = React.useState({});
@@ -132,10 +134,14 @@ const EditMain = (props) => {
                   ? `url(${adminData?.image})`
                   : null,
               }}
-              className="w-56 h-56 min-w-[14rem] min-h-[14rem] bg-prmColor bg-opacity-10
+              className="w-40 h-40 min-w-[10rem] min-h-[10rem] bg-prmColor bg-opacity-10 cstm-flex-col
                         bg-center bg-cover rounded-full border-4 border-prmColor
-                        l-l:w-80 l-l:h-80 l-l:min-w-[20rem] l-l:min-h-[20rem] "
-            />
+                        l-l:w-60 l-l:h-60 l-l:min-w-[15rem] l-l:min-h-[15rem] "
+            >
+              {!adminData?.file?.src && !adminData?.image ? (
+                <Image src={avatar} alt="avatar" className="w-full" width={320} />
+              ) : null}
+            </div>
 
             <div className="w-full cstm-flex-row">
               <label className="cstm-bg-hover cursor-pointer w-fit group relative mr-auto">
@@ -178,7 +184,7 @@ const EditMain = (props) => {
             </div>
           </div>
 
-          <div className="w-full h-fit p-2 rounded-2xl bg-white cstm-flex-col gap-5 shadow-md">
+          <div className="w-full h-fit p-5 rounded-2xl bg-white cstm-flex-col gap-5 shadow-md">
             <EditInput
               type="text"
               label="Name"
