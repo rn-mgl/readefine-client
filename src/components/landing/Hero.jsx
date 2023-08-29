@@ -83,7 +83,7 @@ const Hero = () => {
         src={book}
         alt="book"
         priority
-        draggable
+        draggable={false}
         className="animate-float drop-shadow-lg w-9/12
                   t:w-96"
       />
