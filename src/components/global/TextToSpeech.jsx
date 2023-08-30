@@ -109,15 +109,14 @@ const TextToSpeech = (props) => {
   return (
     <div className="cstm-flex-col w-full gap-5 t:cstm-flex-row t:w-fit t:gap-2">
       <div className="cstm-flex-row gap-2 w-full">
-        {highlightedWords ? (
-          <button
-            className="relative cstm-bg-hover group"
-            onClick={() => playVoice(highlightedWords)}
-          >
-            <ActionLabel label="Play Highlighted Word" />
-            <AiFillHighlight className="text-prmColor scale-125" />
-          </button>
-        ) : null}
+        <button
+          className="relative cstm-bg-hover group"
+          onClick={() => playVoice(highlightedWords)}
+        >
+          <ActionLabel label="Play Highlighted Word" />
+          <AiFillHighlight className="text-prmColor scale-125" />
+        </button>
+
         {status === "init" ? (
           <button className="relative cstm-bg-hover group" onClick={() => playVoice(utterance)}>
             <ActionLabel label="Play" />

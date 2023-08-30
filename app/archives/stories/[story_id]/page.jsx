@@ -2,21 +2,21 @@
 import React from "react";
 import StorySinglePage from "@/src/src/components/stories/StorySinglePage";
 import axios from "axios";
-import Link from "next/link";
 import Customizations from "@/src/src/components/stories/Customizations";
 import ClientPageHeader from "@/src/src/client/global/PageHeader";
 import Message from "@/src/src/components/global/Message";
 import ReceiveAchievement from "@/src/src/client/achievements/ReceiveAchievement";
-import ActionLabel from "@/src/src/components/global/ActionLabel";
 import StoryDoublePage from "@/src/src/components/stories/StoryDoublePage";
+import StoryActions from "@/src/src/client/stories/StoryActions";
+import aliceAudio from "../../../../public/music/stories/Alice in Wonderland.mp3";
 
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
-import { BsArrowLeft, BsFilter } from "react-icons/bs";
 import { decipher } from "@/src/src/functions/security";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
+import PageNavigation from "@/src/src/components/stories/PageNavigation";
 
 const SingleStory = ({ params }) => {
   const [story, setStory] = React.useState({});
@@ -33,6 +33,10 @@ const SingleStory = ({ params }) => {
     accomplished: false,
     achievements: [],
   });
+
+  const [isMuted, setIsMuted] = React.useState(false);
+  const [isPlaying, setIsPlaying] = React.useState(false);
+  const audioRef = React.useRef();
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -229,18 +233,15 @@ const SingleStory = ({ params }) => {
       ) : null}
 
       {/* user actions */}
-      <div className="cstm-flex-row w-full cstm-w-limit">
-        <div className="w-full  cstm-flex-row mr-auto">
-          <Link href="/archives/stories" className="w-fit cstm-bg-hover mr-auto">
-            <BsArrowLeft className=" text-prmColor" />
-          </Link>
-        </div>
-
-        <button onClick={handleCustomizationsVisible} className="cstm-bg-hover relative group">
-          <ActionLabel label="Filter" />
-          <BsFilter className="text-prmColor scale-150" />
-        </button>
-      </div>
+      <StoryActions
+        storyId={params?.story_id}
+        isMuted={isMuted}
+        audioRef={audioRef}
+        isPlaying={isPlaying}
+        setIsMuted={setIsMuted}
+        setIsPlaying={setIsPlaying}
+        handleCustomizationsVisible={handleCustomizationsVisible}
+      />
 
       {/* can see customizations */}
       {customizationsVisible ? (
@@ -269,30 +270,17 @@ const SingleStory = ({ params }) => {
       </div>
 
       {/* left right button */}
-      <div className="cstm-flex-row w-full cstm-w-limit">
-        <button onClick={handleDecrement} className="cstm-bg-hover">
-          <BiChevronLeft className="scale-150 text-black  cursor-pointer t:scale-[2]" />
-        </button>
+      <PageNavigation
+        activePage={activePage}
+        pages={pages}
+        handleDecrement={handleDecrement}
+        handleActivePage={handleActivePage}
+        handleIncrement={handleIncrement}
+      />
 
-        <input
-          onChange={(e) => handleActivePage(e.target)}
-          type="number"
-          value={activePage}
-          min={1}
-          max={pages.length}
-          className="text-sm mx-auto text-center w-16 rounded-md px-2 py-1 focus:outline-prmColor"
-        />
-
-        <button
-          onClick={() => {
-            handleIncrement();
-            activePage >= pages.length - 1 && readStory();
-          }}
-          className="cstm-bg-hover"
-        >
-          <BiChevronRight className="scale-150 text-black  cursor-pointer t:scale-[2]" />
-        </button>
-      </div>
+      <audio loop autoPlay ref={audioRef}>
+        <source src={aliceAudio} />
+      </audio>
     </div>
   );
 };
