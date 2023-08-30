@@ -3,7 +3,6 @@ import React from "react";
 import AdminPageHeader from "@/src/src/admin/global/PageHeader";
 import RiddlesFilter from "@/src/src/admin/riddles/RiddlesFilter";
 import axios from "axios";
-import DeleteRiddle from "@/src/src/admin/riddles/DeleteRiddle";
 import Link from "next/link";
 import Message from "@/src/src/components/global/Message";
 
@@ -16,6 +15,7 @@ import RiddleRow from "@/src/src/admin/riddles/RiddleRow";
 import EditRow from "@/src/src/admin/riddles/EditRow";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
+import DeleteData from "@/src/src/admin/global/DeleteData";
 
 const AdminRiddles = () => {
   const [riddles, setRiddles] = React.useState([]);
@@ -25,7 +25,7 @@ const AdminRiddles = () => {
 
   const [riddleToDelete, setRiddleToDelete] = React.useState({ id: -1, answer: "" });
   const [searchFilter, setSearchFilter] = React.useState({ toSearch: "riddle", searchKey: "" });
-  const [sortFilter, setSortFilter] = React.useState({ toSort: "riddle", sortMode: "ASC" });
+  const [sortFilter, setSortFilter] = React.useState({ toSort: "date_added", sortMode: "DESC" });
   const [dateRangeFilter, setDateRangeFilter] = React.useState({
     from: "",
     to: inputDate(new Date().toLocaleDateString()),
@@ -207,6 +207,15 @@ const AdminRiddles = () => {
           dateRangeFilter={dateRangeFilter}
         />
 
+        {canDeleteRiddle ? (
+          <DeleteData
+            apiRoute={`${url}/admin_riddles/${riddleToDelete.id}`}
+            confirmation={riddleToDelete.answer}
+            handleCanDeleteData={handleCanDeleteRiddle}
+            getData={getRiddles}
+          />
+        ) : null}
+
         <div className="cstm-flex-row w-full gap-5">
           <Link href="/controller/minigames" className="cstm-bg-hover">
             <BsArrowLeft className="text-prmColor scale-100 m-l:scale-125" />
@@ -224,15 +233,6 @@ const AdminRiddles = () => {
           </Link>
         </div>
       </div>
-
-      {canDeleteRiddle ? (
-        <DeleteRiddle
-          riddleId={riddleToDelete.id}
-          confirmation={riddleToDelete.answer}
-          handleCanDeleteRiddle={handleCanDeleteRiddle}
-          getRiddles={getRiddles}
-        />
-      ) : null}
 
       <table
         className="table-fixed p-4 rounded-md cstm-flex-col cstm-scrollbar-2 overflow-auto 

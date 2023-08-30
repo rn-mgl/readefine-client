@@ -6,7 +6,6 @@ import axios from "axios";
 import Link from "next/link";
 import Message from "@/src/src/components/global/Message";
 import ScorePopup from "@/src/src/components/tests/ScorePopup";
-import DeleteTest from "@/src/src/admin/tests/DeleteTest";
 import TestResult from "@/src/src/client/tests/TestResult";
 
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
@@ -17,6 +16,7 @@ import { useRouter } from "next/navigation";
 import { computeScore, shuffleQuestions } from "@/src/src/functions/testFns";
 import { decipher } from "@/src/src/functions/security";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
+import DeleteData from "@/src/src/admin/global/DeleteData";
 
 const SingleTest = ({ params }) => {
   const [test, setTest] = React.useState({});
@@ -200,10 +200,11 @@ const SingleTest = ({ params }) => {
       {isFinished ? <ScorePopup score={score} handleIsFinished={handleIsFinished} /> : null}
 
       {canDeleteTest ? (
-        <DeleteTest
-          handleCanDeleteTest={handleCanDeleteTest}
+        <DeleteData
+          apiRoute={`${url}/admin_test/${decodedTestId}`}
+          returnRoute="/controller/tests"
           confirmation={test?.title}
-          testId={decodedTestId}
+          handleCanDeleteData={handleCanDeleteTest}
         />
       ) : null}
 

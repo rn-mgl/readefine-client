@@ -72,7 +72,7 @@ const AddRiddle = () => {
 
       <form
         onSubmit={(e) => addRiddle(e)}
-        className="w-full cstm-flex-col cstm-w-limit border-collapse gap-5"
+        className="w-full cstm-flex-col h-full cstm-w-limit border-collapse gap-5"
       >
         <Link
           href="/controller/minigames/riddles"
@@ -119,7 +119,7 @@ const AddRiddle = () => {
           </div>
         </div>
 
-        <div className="pt-4 cstm-flex-row w-full">
+        <div className="cstm-flex-row w-full">
           <button
             className="w-fit text-center font-poppins ml-auto text-sm font-normal bg-prmColor 
                           text-accntColor rounded-full p-2 px-4 t:px-10"

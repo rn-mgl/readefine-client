@@ -4,8 +4,8 @@ import AdminPageHeader from "@/src/src/admin/global/PageHeader";
 import FileViewer from "@/src/src/components/global/FileViewer";
 import axios from "axios";
 import Link from "next/link";
-import DeleteReward from "@/src/src/admin/rewards/DeleteReward";
 import Message from "@/src/src/components/global/Message";
+import DeleteData from "@/src/src/admin/global/DeleteData";
 
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { BsArrowLeft } from "react-icons/bs";
@@ -69,10 +69,11 @@ const SingleReward = ({ params }) => {
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
 
       {canDeleteReward ? (
-        <DeleteReward
+        <DeleteData
+          apiRoute={`${url}/admin_reward/${decodedRewardId}`}
+          returnRoute="/controller/rewards"
           confirmation={reward?.reward_name}
-          handleCanDeleteReward={handleCanDeleteReward}
-          rewardId={decodedRewardId}
+          handleCanDeleteData={handleCanDeleteReward}
         />
       ) : null}
 

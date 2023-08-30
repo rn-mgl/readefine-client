@@ -48,8 +48,7 @@ const ConfirmEditGradeLevel = (props) => {
       );
 
       if (data) {
-        props.handleCanEditGradeLevel();
-        props.getUserData();
+        window.location.reload();
       }
     } catch (error) {
       console.log(error);

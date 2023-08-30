@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 
+const local = "http://localhost:3000";
+const prod = "https://readefine.vercel.app";
+
 const nextConfig = {
   experimental: {
     appDir: true,
@@ -10,7 +13,7 @@ const nextConfig = {
   env: {
     ENC_SECRET: "2oR/qngblDZSxWzUntrLs9CHg8hFf/6jSZLCN5m4ACgRYETVY+HSKZrGk6ctaaug",
     NEXTAUTH_SECRET: "Zq4t7w!z%C*F-JaNdRgUjXn2r5u8x/A?",
-    NEXTAUTH_URL: "https://readefine.vercel.app",
+    NEXTAUTH_URL: prod,
   },
   reactStrictMode: true,
 };

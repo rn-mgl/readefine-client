@@ -4,7 +4,6 @@ import StoryDoublePage from "@/src/src/components/stories/StoryDoublePage";
 import AdminPageHeader from "@/src/src/admin/global/PageHeader";
 import StorySinglePage from "@/src/src/components/stories/StorySinglePage";
 import axios from "axios";
-import DeleteStory from "@/src/src/admin/stories/DeleteStory";
 import Customizations from "@/src/src/components/stories/Customizations";
 import Message from "@/src/src/components/global/Message";
 import StoryActions from "@/src/src/admin/stories/StoryActions";
@@ -16,6 +15,7 @@ import { decipher } from "@/src/src/functions/security";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import PageNavigation from "@/src/src/components/stories/PageNavigation";
+import DeleteData from "@/src/src/admin/global/DeleteData";
 
 const SingleStory = ({ params }) => {
   const [story, setStory] = React.useState({});
@@ -181,10 +181,11 @@ const SingleStory = ({ params }) => {
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
 
       {canDeleteStory ? (
-        <DeleteStory
+        <DeleteData
+          apiRoute={`${url}/admin_story/${decodedStoryId}`}
+          returnRoute="/controller/stories"
           confirmation={story?.title}
-          handleCanDeleteStory={handleCanDeleteStory}
-          storyId={story?.story_id}
+          handleCanDeleteData={handleCanDeleteStory}
         />
       ) : null}
 

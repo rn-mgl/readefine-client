@@ -16,6 +16,7 @@ import { typeConversion } from "@/src/src/functions/typeConversion";
 import { decipher } from "@/src/src/functions/security";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
+import DeleteData from "@/src/src/admin/global/DeleteData";
 
 const SingleAchievement = ({ params }) => {
   const [achievement, setAchievement] = React.useState({});
@@ -72,10 +73,11 @@ const SingleAchievement = ({ params }) => {
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
 
       {canDeleteAchievement ? (
-        <DeleteAchievement
-          confirmation={achievement.achievement_name}
-          handleCanDeleteAchievement={handleCanDeleteAchievement}
-          achievementId={decodedAchievementId}
+        <DeleteData
+          apiRoute={`${url}/admin_achievement/${decodedAchievementId}}`}
+          returnRoute="/controller/achievements"
+          confirmation={achievement?.achievement_name}
+          handleCanDeleteData={handleCanDeleteAchievement}
         />
       ) : null}
 
