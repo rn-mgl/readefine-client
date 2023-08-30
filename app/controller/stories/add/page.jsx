@@ -7,13 +7,14 @@ import axios from "axios";
 import FilePreview from "@/src/src/components/global/FilePreview";
 import Message from "@/src/src/components/global/Message";
 import * as fileFns from "../../../../src/functions/fileFns";
+import Loading from "@/src/src/components/global/Loading";
 
 import { IoAddOutline } from "react-icons/io5";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { useRouter } from "next/navigation";
-import Loading from "@/src/src/components/global/Loading";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
+import AudioPreview from "@/src/src/components/global/AudioPreview";
 
 const AddStory = () => {
   const [pages, setPages] = React.useState([
@@ -30,6 +31,8 @@ const AddStory = () => {
     author: "",
     genre: "",
     lexile: "",
+    audio: { src: null, name: null },
+    rawAudio: null,
     file: { src: null, name: null },
     rawFile: null,
   });
@@ -114,8 +117,23 @@ const AddStory = () => {
     }
 
     if (!bookCover) {
+      setLoading(false);
       setMessage({ active: true, msg: "You did not add a book cover.", type: "error" });
       return;
+    }
+
+    // book image
+    let bookAudio = null;
+
+    // check if has book audio image
+    if (storyFilter.rawAudio) {
+      bookAudio = await fileFns.uploadFile(
+        `${url}/readefine_admin_file`,
+        storyFilter.rawAudio,
+        user.token,
+        axios
+      );
+      storyFilter.audio = { src: bookAudio, name: "" };
     }
 
     // check for images in each pages and upload
@@ -192,12 +210,20 @@ const AddStory = () => {
         onSubmit={(e) => publishBook(e)}
       >
         <AddStoryFilter
+          storyFilter={storyFilter}
           addPage={addPage}
           handleStoryFilter={handleStoryFilter}
-          storyFilter={storyFilter}
           setStoryFilter={setStoryFilter}
-          selectedFileViewer={fileFns.selectedFileViewer}
         />
+
+        {storyFilter.audio.src ? (
+          <AudioPreview
+            src={storyFilter.audio.src}
+            name={storyFilter.audio.name}
+            clearAudio={() => fileFns.clearAudio(setStoryFilter)}
+            purpose="Book Audio"
+          />
+        ) : null}
 
         {storyFilter.file.src ? (
           <FilePreview

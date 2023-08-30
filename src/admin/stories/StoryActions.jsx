@@ -28,32 +28,41 @@ const StoryActions = (props) => {
         <AiFillDelete className="text-prmColor cursor-pointer" />
       </button>
 
-      <div className="opacity-20">
-        <RxDividerVertical className="scale-150" />
-      </div>
+      {props.story?.audio ? (
+        <>
+          <div className="opacity-20">
+            <RxDividerVertical className="scale-150" />
+          </div>
 
-      <div className="relative group hover:shadow-none text-prmColor cstm-flex-col">
-        <ActionLabel label="Volume" />
-        <Volume isMuted={props.isMuted} audioRef={props.audioRef} setIsMuted={props.setIsMuted} />
-      </div>
+          <div className="relative group hover:shadow-none text-prmColor cstm-flex-col">
+            <ActionLabel label="Volume" />
 
-      {props.isPlaying ? (
-        <button
-          onClick={() => handleToggleAudio(props.audioRef, props.setIsPlaying)}
-          className="cstm-bg-hover relative group"
-        >
-          <ActionLabel label="Pause Audio" />
-          <BsFillPauseFill className="text-prmColor scale-150" />
-        </button>
-      ) : (
-        <button
-          onClick={() => handleToggleAudio(props.audioRef, props.setIsPlaying)}
-          className="cstm-bg-hover relative group"
-        >
-          <ActionLabel label="Play Audio" />
-          <BsFillPlayFill className="text-prmColor scale-150" />
-        </button>
-      )}
+            <Volume
+              isMuted={props.isMuted}
+              audioRef={props.audioRef}
+              setIsMuted={props.setIsMuted}
+            />
+          </div>
+
+          {props.isPlaying ? (
+            <button
+              onClick={() => handleToggleAudio(props.audioRef, props.setIsPlaying)}
+              className="cstm-bg-hover relative group"
+            >
+              <ActionLabel label="Pause Audio" />
+              <BsFillPauseFill className="text-prmColor scale-150" />
+            </button>
+          ) : (
+            <button
+              onClick={() => handleToggleAudio(props.audioRef, props.setIsPlaying)}
+              className="cstm-bg-hover relative group"
+            >
+              <ActionLabel label="Play Audio" />
+              <BsFillPlayFill className="text-prmColor scale-150" />
+            </button>
+          )}
+        </>
+      ) : null}
 
       <div className="opacity-20">
         <RxDividerVertical className="scale-150" />

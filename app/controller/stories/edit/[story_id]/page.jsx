@@ -11,13 +11,15 @@ import Loading from "@/src/src/components/global/Loading";
 
 import * as fileFns from "../../../../../src/functions/fileFns";
 
-import { IoAddOutline } from "react-icons/io5";
+import { IoAddOutline, IoClose } from "react-icons/io5";
 import { BsArrowLeft } from "react-icons/bs";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { useRouter } from "next/navigation";
 import { decipher } from "@/src/src/functions/security";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
+import FileViewer from "@/src/src/components/global/FileViewer";
+import AudioPreview from "@/src/src/components/global/AudioPreview";
 
 const EditStory = ({ params }) => {
   const [story, setStory] = React.useState({});
@@ -102,6 +104,16 @@ const EditStory = ({ params }) => {
     });
   };
 
+  // remove book audio
+  const clearBookAudio = () => {
+    setStory((prev) => {
+      return {
+        ...prev,
+        audio: null,
+      };
+    });
+  };
+
   // edit book
   const editBook = async (e) => {
     e.preventDefault();
@@ -118,12 +130,26 @@ const EditStory = ({ params }) => {
         user.token,
         axios
       );
-      story.file = { src: bookCover, name: "" };
+      story.book_cover = bookCover;
     }
 
     if (!bookCover) {
+      setLoading(false);
       setMessage({ active: true, msg: "You did not put a book cover.", type: "error" });
       return;
+    }
+
+    let bookAudio = story.audio;
+
+    // check for book cover
+    if (story.rawAudio) {
+      bookAudio = await fileFns.uploadFile(
+        `${url}/readefine_admin_file`,
+        story.rawAudio,
+        user.token,
+        axios
+      );
+      story.audio = bookAudio;
     }
 
     // check for each pages for images
@@ -248,23 +274,48 @@ const EditStory = ({ params }) => {
         </Link>
 
         <EditStoryFilter
+          story={story}
           addPage={addPage}
           handleStory={handleStory}
-          story={story}
           setStory={setStory}
-          selectedFileViewer={fileFns.selectedFileViewer}
         />
 
-        {story.book_cover || story.file?.src ? (
+        {story.audio?.src ? (
+          <AudioPreview
+            src={story.audio?.src}
+            name={story.audio?.name}
+            clearAudio={() => fileFns.clearAudio(setStory)}
+            purpose="Book Audio"
+          />
+        ) : story?.audio ? (
+          <AudioPreview
+            src={story?.audio}
+            name="Current Book Audio"
+            clearAudio={clearBookAudio}
+            purpose="Book Audio"
+          />
+        ) : null}
+
+        {story.file?.src ? (
           <FilePreview
-            src={story.book_cover ? story.book_cover : story.file?.src}
+            src={story.file?.src}
             name={story.file?.name}
-            clearFiles={() => {
-              clearBookCover();
-              fileFns.clearFiles(setStory);
-            }}
+            clearFiles={() => fileFns.clearFiles(setStory)}
             purpose="Book Cover"
           />
+        ) : story.book_cover ? (
+          <div className="w-full cstm-flex-col rounded-2xl p-2 gap-2 t:w-80">
+            <FileViewer src={story.book_cover} width="w-40" />
+            <div className="w-full cstm-flex-row gap-5">
+              <p className="text-sm overflow-x-auto w-full mr-auto p-2 whitespace-nowrap scrollbar-none">
+                Current Book Cover
+              </p>
+
+              <button type="button" onClick={clearBookCover} className="cstm-bg-hover ">
+                <IoClose className="text-prmColor scale-125 cursor-pointer " />
+              </button>
+            </div>
+          </div>
         ) : null}
 
         {allPages}

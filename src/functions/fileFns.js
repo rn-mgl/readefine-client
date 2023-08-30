@@ -17,6 +17,26 @@ export const selectedFileViewer = (e, setState) => {
   });
 };
 
+export const selectedAudioViewer = (e, setState) => {
+  const file = e.target.files;
+
+  if (!file || !file.length) {
+    return null;
+  }
+
+  const details = file[0];
+  const name = details.name;
+  const src = URL.createObjectURL(details);
+
+  setState((prev) => {
+    return {
+      ...prev,
+      audio: { src, name },
+      rawAudio: file,
+    };
+  });
+};
+
 // special case because pages are in an array
 export const selectedPageFileViewer = (page, e, setState) => {
   const file = e.target.files;
@@ -74,6 +94,16 @@ export const clearFiles = (setState) => {
       ...prev,
       file: { name: null, src: null },
       rawFile: null,
+    };
+  });
+};
+
+export const clearAudio = (setState) => {
+  setState((prev) => {
+    return {
+      ...prev,
+      audio: { name: null, src: null },
+      rawAudio: null,
     };
   });
 };

@@ -8,9 +8,7 @@ import Message from "@/src/src/components/global/Message";
 import ReceiveAchievement from "@/src/src/client/achievements/ReceiveAchievement";
 import StoryDoublePage from "@/src/src/components/stories/StoryDoublePage";
 import StoryActions from "@/src/src/client/stories/StoryActions";
-import aliceAudio from "../../../../public/music/stories/Alice in Wonderland.mp3";
 
-import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { decipher } from "@/src/src/functions/security";
@@ -234,7 +232,7 @@ const SingleStory = ({ params }) => {
 
       {/* user actions */}
       <StoryActions
-        storyId={params?.story_id}
+        story={story}
         isMuted={isMuted}
         audioRef={audioRef}
         isPlaying={isPlaying}
@@ -278,9 +276,11 @@ const SingleStory = ({ params }) => {
         handleIncrement={handleIncrement}
       />
 
-      <audio loop autoPlay ref={audioRef}>
-        <source src={aliceAudio} />
-      </audio>
+      {story?.audio ? (
+        <audio loop autoPlay ref={audioRef}>
+          <source src={story.audio} />
+        </audio>
+      ) : null}
     </div>
   );
 };
