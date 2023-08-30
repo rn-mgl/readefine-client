@@ -5,7 +5,10 @@ import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 const PageNavigation = (props) => {
   return (
     <div className="cstm-flex-row w-full cstm-w-limit">
-      <button disabled={props.activePage === 1} className="cstm-bg-hover disabled:opacity-50">
+      <button
+        disabled={props.activePage === 1}
+        className="cstm-bg-hover disabled:opacity-50"
+      >
         <BiChevronLeft
           className={`scale-150 text-black  cursor-pointer t:scale-[2]`}
           onClick={props.handleDecrement}

@@ -18,7 +18,11 @@ import { isTokenExpired } from "@/src/src/functions/jwtFns";
 const EditAchievement = ({ params }) => {
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
   const [canSelectReward, setCanSelectReward] = React.useState(false);
-  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
+  const [message, setMessage] = React.useState({
+    msg: "",
+    active: false,
+    type: "info",
+  });
   const [loading, setLoading] = React.useState(false);
   const [achievement, setAchievement] = React.useState({
     achievement_name: "",
@@ -67,9 +71,23 @@ const EditAchievement = ({ params }) => {
     setHasSubmitted(true);
     setLoading(true);
 
-    const { goal, achievement_name, reward_id, reward_name, task, achievement_type } = achievement;
+    const {
+      goal,
+      achievement_name,
+      reward_id,
+      reward_name,
+      task,
+      achievement_type,
+    } = achievement;
 
-    if (!goal || !achievement_name || !reward_id || !reward_name || !task || !achievement_type) {
+    if (
+      !goal ||
+      !achievement_name ||
+      !reward_id ||
+      !reward_name ||
+      !task ||
+      !achievement_type
+    ) {
       setHasSubmitted(false);
       setLoading(false);
       setMessage({
@@ -95,7 +113,11 @@ const EditAchievement = ({ params }) => {
       console.log(error);
       setHasSubmitted(false);
       setLoading(false);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessage({
+        active: true,
+        msg: error?.response?.data?.msg,
+        type: "error",
+      });
     }
   };
 
@@ -103,16 +125,23 @@ const EditAchievement = ({ params }) => {
   const getAchievement = React.useCallback(async () => {
     if (user?.token) {
       try {
-        const { data } = await axios.get(`${url}/admin_achievement/${decodedAchievementId}`, {
-          headers: { Authorization: user?.token },
-        });
+        const { data } = await axios.get(
+          `${url}/admin_achievement/${decodedAchievementId}`,
+          {
+            headers: { Authorization: user?.token },
+          }
+        );
 
         if (data) {
           setAchievement(data);
         }
       } catch (error) {
         console.log(error);
-        setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+        setMessage({
+          active: true,
+          msg: error?.response?.data?.msg,
+          type: "error",
+        });
       }
     }
   }, [user?.token, url, setAchievement, decodedAchievementId]);
@@ -139,10 +168,15 @@ const EditAchievement = ({ params }) => {
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <AdminPageHeader subHeader="Achievements" mainHeader="Edit Achievement" />
 
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? (
+        <Message message={message} setMessage={setMessage} />
+      ) : null}
 
       {canSelectReward ? (
-        <FindRewards selectReward={selectReward} handleCanSelectReward={handleCanSelectReward} />
+        <FindRewards
+          selectReward={selectReward}
+          handleCanSelectReward={handleCanSelectReward}
+        />
       ) : null}
 
       <form
@@ -159,7 +193,10 @@ const EditAchievement = ({ params }) => {
           handleCanSelectReward={handleCanSelectReward}
         />
 
-        <div className="table-fixed p-5 rounded-2xl cstm-flex-col overflow-auto w-full h-[70vh] justify-start items-start bg-white text-sm gap-5 shadow-md cstm-scrollbar">
+        <div
+          className="table-fixed p-5 rounded-2xl cstm-flex-col overflow-auto w-full h-[70vh] 
+                      justify-start items-start bg-white text-sm gap-5 shadow-md cstm-scrollbar"
+        >
           <div className="cstm-flex-row w-full">
             <textarea
               name="achievement_name"
@@ -167,7 +204,8 @@ const EditAchievement = ({ params }) => {
               cols="30"
               rows="1"
               placeholder="Achievement Title/Name"
-              className="resize-none w-full p-2 focus:outline-none font-bold text-prmColor mr-auto placeholder:opacity-50"
+              className="resize-none w-full p-2 focus:outline-none font-bold 
+                        text-prmColor mr-auto placeholder:opacity-50"
               value={achievement.achievement_name}
               required={true}
               onChange={(e) => handleAchievement(e.target)}

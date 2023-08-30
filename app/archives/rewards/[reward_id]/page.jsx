@@ -18,7 +18,11 @@ import { isTokenExpired } from "@/src/src/functions/jwtFns";
 const SingleReward = ({ params }) => {
   const [rewardData, setRewardData] = React.useState({});
 
-  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
+  const [message, setMessage] = React.useState({
+    msg: "",
+    active: false,
+    type: "info",
+  });
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -38,7 +42,11 @@ const SingleReward = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessage({
+        active: true,
+        msg: error?.response?.data?.msg,
+        type: "error",
+      });
     }
   }, [url, user, decodedRewardId]);
 
@@ -62,7 +70,9 @@ const SingleReward = ({ params }) => {
     <div className="w-full cstm-flex-col p-5 gap-5 t:gap-5 justify-start bg-accntColor max-h-screen h-full overflow-y-auto">
       <ClientPageHeader mainHeader="Readefine" subHeader="Your Reward" />
 
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? (
+        <Message message={message} setMessage={setMessage} />
+      ) : null}
 
       <div className="cstm-w-limit justify-start cstm-flex-col w-full relative z-10 h-auto">
         <div className="cstm-flex-col gap-5 w-full t:w-10/12 l-l:w-8/12 h-auto">

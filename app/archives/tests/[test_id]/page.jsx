@@ -16,12 +16,18 @@ import { BsArrowLeft } from "react-icons/bs";
 import { decipher } from "@/src/src/functions/security";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
+import TestActions from "@/src/src/client/tests/TestActions";
+import PageNavigation from "@/src/src/client/tests/PageNavigation";
 
 const SingleTest = ({ params }) => {
   const [testData, setTestData] = React.useState({});
   const [questions, setQuestions] = React.useState([]);
   const [userLexile, setUserLexile] = React.useState(-1);
-  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
+  const [message, setMessage] = React.useState({
+    msg: "",
+    active: false,
+    type: "info",
+  });
 
   const [activePage, setActivePage] = React.useState(0);
 
@@ -104,12 +110,21 @@ const SingleTest = ({ params }) => {
 
     // do not submit if not all are answered
     if (!answeredAll) {
-      setMessage({ active: true, msg: "Please answer all items.", type: "warning" });
+      setMessage({
+        active: true,
+        msg: "Please answer all items.",
+        type: "warning",
+      });
       return;
     }
 
     // get score
-    const currScore = computeScore(setScore, setIsFinished, questions, selectedChoices);
+    const currScore = computeScore(
+      setScore,
+      setIsFinished,
+      questions,
+      selectedChoices
+    );
 
     // check if passed, do not record if not
     if (currScore < 7) {
@@ -146,7 +161,10 @@ const SingleTest = ({ params }) => {
 
           // if there are achievements
           if (lexileAchievementData.length) {
-            setAccomplishedAchievement({ accomplished: true, achievements: lexileAchievementData });
+            setAccomplishedAchievement({
+              accomplished: true,
+              achievements: lexileAchievementData,
+            });
           }
 
           // update test achievement points and return if achievement is met
@@ -161,7 +179,10 @@ const SingleTest = ({ params }) => {
 
           // if there are achievements
           if (testAchievementData.length) {
-            setAccomplishedAchievement({ accomplished: true, achievements: testAchievementData });
+            setAccomplishedAchievement({
+              accomplished: true,
+              achievements: testAchievementData,
+            });
           }
         }
 
@@ -180,7 +201,11 @@ const SingleTest = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessage({
+        active: true,
+        msg: error?.response?.data?.msg,
+        type: "error",
+      });
     }
   };
 
@@ -196,7 +221,11 @@ const SingleTest = ({ params }) => {
         }
       } catch (error) {
         console.log(error);
-        setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+        setMessage({
+          active: true,
+          msg: error?.response?.data?.msg,
+          type: "error",
+        });
       }
     }
   }, [url, user?.token, decodedTestId]);
@@ -214,7 +243,11 @@ const SingleTest = ({ params }) => {
         }
       } catch (error) {
         console.log(error);
-        setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+        setMessage({
+          active: true,
+          msg: error?.response?.data?.msg,
+          type: "error",
+        });
       }
     }
   }, [user?.token, url, decodedTestId]);
@@ -232,7 +265,11 @@ const SingleTest = ({ params }) => {
         }
       } catch (error) {
         console.log(error);
-        setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+        setMessage({
+          active: true,
+          msg: error?.response?.data?.msg,
+          type: "error",
+        });
       }
     }
   }, [setUserLexile, url, user?.token]);
@@ -291,56 +328,36 @@ const SingleTest = ({ params }) => {
         />
       ) : null}
 
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? (
+        <Message message={message} setMessage={setMessage} />
+      ) : null}
 
       {isFinished ? (
-        <ScorePopup url="/archives/tests" score={score} handleIsFinished={handleIsFinished} />
+        <ScorePopup
+          url="/archives/tests"
+          score={score}
+          handleIsFinished={handleIsFinished}
+        />
       ) : null}
 
       <div className="cstm-w-limit cstm-flex-col gap-5 w-full h-full relative">
-        <div className="cstm-flex-row w-full">
-          <Link href="/archives/tests" className="cstm-bg-hover mr-auto">
-            <BsArrowLeft className="text-prmColor" />
-          </Link>
-
-          {/* show submit button if at last page and did not submit yet */}
-          {activePage === 9 && !hasSubmitted ? (
-            <button
-              onClick={submitAnswers}
-              disabled={hasSubmitted}
-              className="bg-prmColor w-fit ml-auto p-2 px-10  text-sm rounded-full cstm-flex-col 
-                        font-medium text-scndColor shadow-solid shadow-indigo-950 disabled:saturate-0"
-            >
-              Submit
-            </button>
-          ) : null}
-        </div>
+        <TestActions
+          activePage={activePage}
+          hasSubmitted={hasSubmitted}
+          submitAnswers={submitAnswers}
+        />
 
         {/* question pane */}
-        <div className="cstm-flex-row items-start w-full relative h-full">{questionSlides}</div>
-      </div>
-
-      <div className="cstm-flex-col w-full mt-auto cstm-w-limit gap-5 t:gap-5">
-        <div className="cstm-flex-row w-full">
-          {activePage > 0 ? (
-            <button
-              onClick={handleDecrement}
-              className="bg-prmColor mr-auto p-2 w-16 rounded-md cstm-flex-col font-medium text-white shadow-solid shadow-indigo-950"
-            >
-              <AiFillCaretLeft />
-            </button>
-          ) : null}
-
-          {activePage < 9 ? (
-            <button
-              onClick={handleIncrement}
-              className="bg-prmColor ml-auto p-2 w-16 rounded-md cstm-flex-col font-medium text-white shadow-solid shadow-indigo-950"
-            >
-              <AiFillCaretRight />
-            </button>
-          ) : null}
+        <div className="cstm-flex-row items-start w-full relative h-full">
+          {questionSlides}
         </div>
       </div>
+
+      <PageNavigation
+        activePage={activePage}
+        handleDecrement={handleDecrement}
+        handleIncrement={handleIncrement}
+      />
     </div>
   );
 };

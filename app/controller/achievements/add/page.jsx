@@ -16,7 +16,11 @@ import { isTokenExpired } from "@/src/src/functions/jwtFns";
 
 const AddAchievement = () => {
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
-  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
+  const [message, setMessage] = React.useState({
+    msg: "",
+    active: false,
+    type: "info",
+  });
   const [canSelectReward, setCanSelectReward] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [achievement, setAchievement] = React.useState({
@@ -92,7 +96,11 @@ const AddAchievement = () => {
       console.log(error);
       setHasSubmitted(false);
       setLoading(false);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessage({
+        active: true,
+        msg: error?.response?.data?.msg,
+        type: "error",
+      });
     }
   };
 
@@ -114,17 +122,26 @@ const AddAchievement = () => {
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <AdminPageHeader subHeader="Achievements" mainHeader="Add Achievement" />
 
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? (
+        <Message message={message} setMessage={setMessage} />
+      ) : null}
 
       {canSelectReward ? (
-        <FindRewards selectReward={selectReward} handleCanSelectReward={handleCanSelectReward} />
+        <FindRewards
+          selectReward={selectReward}
+          handleCanSelectReward={handleCanSelectReward}
+        />
       ) : null}
 
       <form
         onSubmit={(e) => addAchievement(e)}
         className="w-full cstm-flex-col cstm-w-limit border-collapse gap-5"
       >
-        <Link type="button" href="/controller/achievements" className="cstm-bg-hover mr-auto">
+        <Link
+          type="button"
+          href="/controller/achievements"
+          className="cstm-bg-hover mr-auto"
+        >
           <BsArrowLeft className="text-prmColor cursor-pointer scale-125" />
         </Link>
 
@@ -146,7 +163,8 @@ const AddAchievement = () => {
               rows="1"
               required={true}
               placeholder="Achievement Title/Name"
-              className="resize-none w-full p-2 focus:outline-none font-bold text-prmColor mr-auto placeholder:opacity-50"
+              className="resize-none w-full p-2 focus:outline-none font-bold text-prmColor
+                        mr-auto placeholder:opacity-50"
               value={achievement.name}
               onChange={(e) => handleAchievement(e.target)}
             />

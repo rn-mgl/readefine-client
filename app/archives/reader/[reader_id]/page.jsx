@@ -14,10 +14,11 @@ import LowLexileTestMessage from "@/src/src/client/tests/LowLexileTestMessage";
 import RewardsCards from "@/src/src/client/rewards/RewardsCards";
 import TestRecord from "@/src/src/client/tests/TestRecord";
 import ChangePassword from "@/src/src/client/reader/ChangePassword";
-import Image from "next/image";
-
+import SessionText from "@/src/src/client/reader/SessionText";
+import ActivityInCard from "@/src/src/client/reader/ActivityInCard";
 import noReads from "../../../../public/profile/NoReads.svg";
 import noTest from "../../../../public/profile/NoTest.svg";
+import Message from "@/src/src/components/global/Message";
 import noReward from "../../../../public/profile/NoReward.svg";
 
 import { useSession } from "next-auth/react";
@@ -27,16 +28,18 @@ import { cipher, decipher } from "@/src/src/functions/security";
 import { BsFillPenFill, BsFillSquareFill } from "react-icons/bs";
 import { TbPlusMinus } from "react-icons/tb";
 import { FaBrain } from "react-icons/fa";
-import Message from "@/src/src/components/global/Message";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
-import SessionText from "@/src/src/client/reader/SessionText";
 
 const Reader = ({ params }) => {
   const [userData, setUserData] = React.useState({});
   const [userActivities, setUserActivities] = React.useState({});
 
-  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
+  const [message, setMessage] = React.useState({
+    msg: "",
+    active: false,
+    type: "info",
+  });
 
   const [canEditMain, setCanEditMain] = React.useState(false);
   const [canEditGradeLevel, setCanEditGradeLevel] = React.useState(false);
@@ -94,7 +97,11 @@ const Reader = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessage({
+        active: true,
+        msg: error?.response?.data?.msg,
+        type: "error",
+      });
     }
   }, [url, user, setUserData, decipheredId]);
 
@@ -110,7 +117,11 @@ const Reader = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessage({
+        active: true,
+        msg: error?.response?.data?.msg,
+        type: "error",
+      });
     }
   }, [url, user, setUserActivities, decipheredId]);
 
@@ -230,20 +241,22 @@ const Reader = ({ params }) => {
   });
 
   // map achievements and rewards
-  const achievementsAndRewards = userActivities?.achievementData?.map((reward) => {
-    const cipheredRewardId = cipher(reward.reward_id);
-    return (
-      <React.Fragment key={reward.reward_id}>
-        <RewardsCards
-          image={reward.reward}
-          title={reward.reward_name}
-          type={reward.reward_type}
-          isReceived={reward.is_received}
-          to={`/archives/rewards/${cipheredRewardId}`}
-        />
-      </React.Fragment>
-    );
-  });
+  const achievementsAndRewards = userActivities?.achievementData?.map(
+    (reward) => {
+      const cipheredRewardId = cipher(reward.reward_id);
+      return (
+        <React.Fragment key={reward.reward_id}>
+          <RewardsCards
+            image={reward.reward}
+            title={reward.reward_name}
+            type={reward.reward_type}
+            isReceived={reward.is_received}
+            to={`/archives/rewards/${cipheredRewardId}`}
+          />
+        </React.Fragment>
+      );
+    }
+  );
 
   // map logged sessions
   const loggedSessions = userActivities?.sessionsData?.map((session) => {
@@ -281,10 +294,15 @@ const Reader = ({ params }) => {
   }, [user, router]);
 
   return (
-    <div className="w-full p-5 cstm-flex-col bg-accntColor min-h-screen overflow-y-auto cstm-scrollbar justify-start gap-5">
+    <div
+      className="w-full p-5 cstm-flex-col bg-accntColor min-h-screen overflow-y-auto 
+                  cstm-scrollbar justify-start gap-5"
+    >
       <ClientPageHeader mainHeader="Readefine" subHeader="Profile" />
 
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? (
+        <Message message={message} setMessage={setMessage} />
+      ) : null}
 
       {showLexileMessage ? (
         <LowLexileTestMessage
@@ -295,7 +313,10 @@ const Reader = ({ params }) => {
       ) : null}
 
       {seeTestRecord ? (
-        <TestRecord testId={seeTestRecord} handleSeeTestRecord={handleSeeTestRecord} />
+        <TestRecord
+          testId={seeTestRecord}
+          handleSeeTestRecord={handleSeeTestRecord}
+        />
       ) : null}
 
       {canEditGradeLevel ? (
@@ -322,56 +343,37 @@ const Reader = ({ params }) => {
         />
 
         {/* read stories cards */}
-        <div className="cstm-flex-col gap-5 w-full text-center bg-white p-5 rounded-2xl">
-          <p className="text-xl font-extrabold t:mr-auto text-prmColor">Stories Read</p>
-
-          <div className="cstm-flex-row gap-5 w-full overflow-x-auto cstm-scrollbar justify-start p-5">
-            {userActivities?.readStoryData?.length ? (
-              storiesRead
-            ) : (
-              <div className="cstm-flex-col w-full">
-                <Image src={noReads} alt="empty" priority width={240} draggable={false} />
-                <p className="text-xs opacity-80">You haven&apos;t read any books yet.</p>
-              </div>
-            )}
-          </div>
-        </div>
+        <ActivityInCard
+          header="Stories Read"
+          placeholder="You haven't read any books yet."
+          tempImage={noReads}
+          hasActivities={userActivities?.readStoryData?.length}
+          activities={storiesRead}
+        />
 
         {/* taken tests cards */}
-        <div className="cstm-flex-col gap-5 w-full text-center bg-white p-5 rounded-2xl ">
-          <p className="text-xl font-extrabold t:mr-auto text-prmColor">Tests Taken</p>
-
-          <div className="cstm-flex-row gap-5 w-full overflow-x-auto cstm-scrollbar justify-start p-5">
-            {userActivities?.takenTestData?.length ? (
-              testsTaken
-            ) : (
-              <div className="cstm-flex-col w-full">
-                <Image src={noTest} alt="empty" priority width={220} draggable={false} />
-                <p className="text-xs opacity-80">You haven&apos;t taken any tests yet.</p>
-              </div>
-            )}
-          </div>
-        </div>
+        <ActivityInCard
+          header="Tests Taken"
+          placeholder="You haven't taken any tests yet."
+          tempImage={noTest}
+          hasActivities={userActivities?.takenTestData?.length}
+          activities={testsTaken}
+        />
 
         {/* achievement cards */}
-        <div className="cstm-flex-col gap-5 w-full text-center bg-white p-5 rounded-2xl">
-          <p className="text-xl font-extrabold t:mr-auto text-prmColor">Achievements & Rewards</p>
-
-          <div className="cstm-flex-row gap-5 w-full overflow-x-auto cstm-scrollbar justify-start p-5">
-            {userActivities?.achievementData?.length ? (
-              achievementsAndRewards
-            ) : (
-              <div className="cstm-flex-col w-full">
-                <Image src={noReward} alt="empty" priority width={220} draggable={false} />
-                <p className="text-xs opacity-80">You haven&apos;t received any rewards yet.</p>
-              </div>
-            )}
-          </div>
-        </div>
+        <ActivityInCard
+          header="Achievements & Rewards"
+          placeholder=" You haven't received any rewards yet."
+          tempImage={noReward}
+          hasActivities={userActivities?.achievementData?.length}
+          activities={achievementsAndRewards}
+        />
 
         {/* answers */}
         <div className="cstm-flex-col gap-5 w-full text-center bg-white p-5 rounded-2xl">
-          <p className="text-xl font-extrabold t:mr-auto text-prmColor">Your Answers</p>
+          <p className="text-xl font-extrabold t:mr-auto text-prmColor">
+            Your Answers
+          </p>
 
           <div className="cstm-flex-col gap-5 w-full">
             <ActivityCard
@@ -406,7 +408,9 @@ const Reader = ({ params }) => {
 
         {/* session */}
         <div className="cstm-flex-col gap-5 w-full text-center bg-white p-5 rounded-2xl">
-          <p className="text-2xl font-extrabold t:mr-auto text-prmColor">Your Sessions</p>
+          <p className="text-2xl font-extrabold t:mr-auto text-prmColor">
+            Your Sessions
+          </p>
 
           <ActivityCard
             label="Logs"
