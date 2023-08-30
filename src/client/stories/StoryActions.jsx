@@ -10,7 +10,7 @@ import { RxDividerVertical } from "react-icons/rx";
 const StoryActions = (props) => {
   return (
     <div className="w-full cstm-w-limit cstm-flex-row">
-      <Link href="/controller/stories" className="w-fit cstm-bg-hover mr-auto">
+      <Link href={props.to} className="w-fit cstm-bg-hover mr-auto">
         <BsArrowLeft className=" text-prmColor" />
       </Link>
 

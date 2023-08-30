@@ -232,6 +232,7 @@ const SingleStory = ({ params }) => {
 
       {/* user actions */}
       <StoryActions
+        to="/archives/stories"
         story={story}
         isMuted={isMuted}
         audioRef={audioRef}

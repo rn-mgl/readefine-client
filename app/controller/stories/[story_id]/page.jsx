@@ -191,6 +191,7 @@ const SingleStory = ({ params }) => {
       {/* admin actions */}
       <StoryActions
         storyId={params?.story_id}
+        to="/controller/stories"
         story={story}
         isMuted={isMuted}
         audioRef={audioRef}
