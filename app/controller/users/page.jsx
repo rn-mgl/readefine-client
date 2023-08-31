@@ -18,12 +18,25 @@ import { isTokenExpired } from "@/src/src/functions/jwtFns";
 
 const AdminUsers = () => {
   const [users, setUsers] = React.useState([]);
-  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
+  const [message, setMessage] = React.useState({
+    msg: "",
+    active: false,
+    type: "info",
+  });
 
   // search filters
-  const [searchFilter, setSearchFilter] = React.useState({ toSearch: "name", searchKey: "" });
-  const [sortFilter, setSortFilter] = React.useState({ toSort: "name", sortMode: "ASC" });
-  const [lexileRangeFilter, setLexileRangeFilter] = React.useState({ from: 0, to: 1250 });
+  const [searchFilter, setSearchFilter] = React.useState({
+    toSearch: "name",
+    searchKey: "",
+  });
+  const [sortFilter, setSortFilter] = React.useState({
+    toSort: "name",
+    sortMode: "ASC",
+  });
+  const [lexileRangeFilter, setLexileRangeFilter] = React.useState({
+    from: 0,
+    to: 1250,
+  });
   const [dateRangeFilter, setDateRangeFilter] = React.useState({
     from: "",
     to: inputDate(new Date().toLocaleDateString()),
@@ -90,7 +103,12 @@ const AdminUsers = () => {
     try {
       const { data } = await axios.get(`${url}/admin_user`, {
         headers: { Authorization: user.token },
-        params: { searchFilter, sortFilter, dateRangeFilter, lexileRangeFilter },
+        params: {
+          searchFilter,
+          sortFilter,
+          dateRangeFilter,
+          lexileRangeFilter,
+        },
       });
 
       if (data) {
@@ -98,9 +116,21 @@ const AdminUsers = () => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessage({
+        active: true,
+        msg: error?.response?.data?.msg,
+        type: "error",
+      });
     }
-  }, [setUsers, url, user, searchFilter, sortFilter, dateRangeFilter, lexileRangeFilter]);
+  }, [
+    setUsers,
+    url,
+    user,
+    searchFilter,
+    sortFilter,
+    dateRangeFilter,
+    lexileRangeFilter,
+  ]);
 
   React.useEffect(() => {
     if (user) {
@@ -122,7 +152,9 @@ const AdminUsers = () => {
     <div className="p-5 bg-accntColor w-full min-h-screen h-screen cstm-flex-col gap-5 justify-start">
       <AdminPageHeader subHeader="Readefine" mainHeader="Users" />
 
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? (
+        <Message message={message} setMessage={setMessage} />
+      ) : null}
 
       {/* filters */}
       <UsersFilter
@@ -160,8 +192,14 @@ const AdminUsers = () => {
             <tbody className="w-full text-sm relative">{userRow}</tbody>
           </table>
         ) : (
-          <div className="cstm-flex-col absolute top-2/4 translate-y-2/4 left-2/4 -translate-x-2/4 w-full">
-            <Image src={noUsers} alt="empty" priority width={220} draggable={false} />
+          <div className="cstm-flex-col absolute left-2/4 -translate-x-2/4 w-full">
+            <Image
+              src={noUsers}
+              alt="empty"
+              priority
+              width={220}
+              draggable={false}
+            />
             <p className="text-xs opacity-80">No Users Found</p>
           </div>
         )}
