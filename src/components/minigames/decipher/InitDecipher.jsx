@@ -12,15 +12,7 @@ import Volume from "../../global/Volume";
 
 const InitDecipher = (props) => {
   return (
-    <div className="w-full h-[95vh] cstm-w-limit cstm-flex-col relative overflow-hidden gap-5 animate-fadeIn">
-      <div className="absolute top-10 left-0 cstm-flex-col gap-2 z-10 group l-s:top-0">
-        <Volume
-          isMuted={props.isMuted}
-          handleMuteVolume={props.handleMuteVolume}
-          handleVolume={props.handleVolume}
-        />
-      </div>
-
+    <>
       <div className="absolute top-0 right-0 cstm-flex-col gap-2 z-10">
         <Link href={props.to} className="cstm-bg-hover ">
           <BsArrowLeft className="scale-125" />
@@ -58,7 +50,7 @@ const InitDecipher = (props) => {
         className="w-full t:w-7/12 absolute bottom-0 right-0 animate-pulse z-0"
         priority
       />
-    </div>
+    </>
   );
 };
 

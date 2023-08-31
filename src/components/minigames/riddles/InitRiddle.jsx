@@ -1,12 +1,19 @@
 import Link from "next/link";
 import React from "react";
-import { BsArrowLeft, BsPatchQuestionFill, BsQuestionCircle } from "react-icons/bs";
-import Volume from "../../global/Volume";
+import {
+  BsArrowLeft,
+  BsPatchQuestionFill,
+  BsQuestionCircle,
+} from "react-icons/bs";
 
 const InitRiddle = (props) => {
   const letters = "RIDDLES".split("").map((r, i) => {
     return (
-      <div style={{ animationDelay: `${i / 5}s` }} key={i} className="animate-float ">
+      <div
+        style={{ animationDelay: `${i / 5}s` }}
+        key={i}
+        className="animate-float "
+      >
         <p
           style={{ animationDelay: `${i / 20}s` }}
           className="animate-slideDown font-extrabold text-4xl drop-shadow-md"
@@ -18,16 +25,8 @@ const InitRiddle = (props) => {
   });
 
   return (
-    <div className="w-full cstm-flex-col relative h-[95vh] gap-5 overflow-hidden animate-fadeIn cstm-w-limit">
-      <div className="absolute top-10 left-0 cstm-flex-col gap-2 z-10 group l-s:top-0">
-        <Volume
-          isMuted={props.isMuted}
-          handleMuteVolume={props.handleMuteVolume}
-          handleVolume={props.handleVolume}
-        />
-      </div>
-
-      <div className="absolute top-0 right-0 cstm-flex-col gap-2">
+    <div className="w-full h-full cstm-w-limit cstm-flex-col relative overflow-hidden">
+      <div className="absolute top-0 right-0 cstm-flex-col gap-2 z-10">
         <Link href={props.to} className="cstm-bg-hover ">
           <BsArrowLeft className="scale-125" />
         </Link>
@@ -45,7 +44,9 @@ const InitRiddle = (props) => {
         <BsPatchQuestionFill className="scale-[30] opacity-10" />
       </div>
 
-      <div className="cstm-flex-row gap-0.5 animate-fadeIn w-full">{letters}</div>
+      <div className="cstm-flex-row gap-0.5 animate-fadeIn w-full">
+        {letters}
+      </div>
 
       <button
         onClick={() => {

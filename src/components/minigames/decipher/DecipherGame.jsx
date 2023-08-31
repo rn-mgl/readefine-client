@@ -18,17 +18,12 @@ const DecipherGame = (props) => {
   });
 
   return (
-    <div className="w-full cstm-w-limit cstm-flex-col h-[95vh] relative">
-      <div className="absolute top-10 left-0 cstm-flex-col gap-2 z-10 group l-s:top-0">
-        <Volume
-          isMuted={props.isMuted}
-          handleMuteVolume={props.handleMuteVolume}
-          handleVolume={props.handleVolume}
-        />
-      </div>
-
+    <>
       <div className="absolute top-0 right-0 cstm-flex-col gap-5">
-        <button onClick={props.handleIsPlaying} className="cstm-bg-hover ml-auto">
+        <button
+          onClick={props.handleIsPlaying}
+          className="cstm-bg-hover ml-auto"
+        >
           <BsArrowLeft />
         </button>
         <div className="cstm-flex-col gap-2"> {props.remainingLives}</div>
@@ -37,7 +32,9 @@ const DecipherGame = (props) => {
         </div>
       </div>
 
-      <div className="cstm-flex-row my-auto m-l:gap-2 t:gap-5">{letterBlocks}</div>
+      <div className="cstm-flex-row my-auto m-l:gap-2 t:gap-5">
+        {letterBlocks}
+      </div>
       <div className="cstm-flex-row w-full ">
         <button
           onClick={props.resetGuesses}
@@ -56,7 +53,7 @@ const DecipherGame = (props) => {
           Submit
         </button>
       </div>
-    </div>
+    </>
   );
 };
 

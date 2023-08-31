@@ -14,6 +14,7 @@ import { useSession } from "next-auth/react";
 import { AiFillHeart } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
+import Volume from "@/src/src/components/global/Volume";
 
 const PlayRiddles = () => {
   const [riddleData, setRiddleData] = React.useState({});
@@ -21,7 +22,10 @@ const PlayRiddles = () => {
   const [canSeeTutorial, setCanSeeTutorial] = React.useState(false);
 
   const [guess, setGuess] = React.useState({ letters: [], letterPos: 0 });
-  const [lives, setLives] = React.useState({ status: [1, 1, 1, 1, 1], activePos: 4 });
+  const [lives, setLives] = React.useState({
+    status: [1, 1, 1, 1, 1],
+    activePos: 4,
+  });
   const [timer, setTimer] = React.useState(0);
   const [entryGuesses, setEntryGuesses] = React.useState([]);
 
@@ -35,28 +39,6 @@ const PlayRiddles = () => {
   const { url } = useGlobalContext();
   const user = session?.user?.name;
   const router = useRouter();
-
-  // change audio volume
-  const handleVolume = ({ value }) => {
-    if (typeof audioRef.current.volume !== "undefined") {
-      audioRef.current.volume = value / 100;
-    }
-    setIsMuted(false);
-  };
-
-  // mute volume
-  const handleMuteVolume = () => {
-    if (typeof audioRef.current.volume !== "undefined") {
-      setIsMuted((prev) => {
-        if (prev) {
-          audioRef.current.volume = 1;
-        } else {
-          audioRef.current.volume = 0;
-        }
-        return !prev;
-      });
-    }
-  };
 
   // toggle can see tutorial
   const handleCanSeeTutorial = () => {
@@ -178,7 +160,9 @@ const PlayRiddles = () => {
     return (
       <AiFillHeart
         key={i}
-        className={` ${alive ? "text-prmColor" : "text-neutral-400 animate-shake"} t:scale-125`}
+        className={` ${
+          alive ? "text-prmColor" : "text-neutral-400 animate-shake"
+        } t:scale-125`}
       />
     );
   });
@@ -206,7 +190,7 @@ const PlayRiddles = () => {
   }, [user, router]);
 
   return (
-    <div className="w-full min-h-screen bg-accntColor p-4 cstm-flex-col justify-start">
+    <div className="w-full min-h-screen h-screen bg-accntColor p-4 cstm-flex-col justify-start">
       {gameOver.over ? (
         <Gameover
           gameOver={gameOver}
@@ -218,7 +202,19 @@ const PlayRiddles = () => {
         />
       ) : null}
 
-      {canSeeTutorial ? <RiddleTutorial handleCanSeeTutorial={handleCanSeeTutorial} /> : null}
+      {canSeeTutorial ? (
+        <RiddleTutorial handleCanSeeTutorial={handleCanSeeTutorial} />
+      ) : null}
+
+      <div className="w-full cstm-w-limit cstm-flex-col relative">
+        <div className="absolute top-10 left-0 z-20 l-s:top-0 cstm-flex-col gap-2 group">
+          <Volume
+            audioRef={audioRef}
+            setIsMuted={setIsMuted}
+            isMuted={isMuted}
+          />
+        </div>
+      </div>
 
       {isPlaying ? (
         <RiddleGame
@@ -227,25 +223,19 @@ const PlayRiddles = () => {
           remainingLives={remainingLives}
           entryGuesses={entryGuesses}
           timer={timer}
-          isMuted={isMuted}
           gameOver={gameOver}
           setEntryGuesses={setEntryGuesses}
           handleIsPlaying={handleIsPlaying}
           deleteCharacter={deleteCharacter}
           handleInput={handleInput}
           submitGuess={submitGuess}
-          handleVolume={handleVolume}
-          handleMuteVolume={handleMuteVolume}
         />
       ) : (
         <InitRiddle
           to="/controller/minigames/riddles"
-          isMuted={isMuted}
           getRiddle={getRiddle}
           handleIsPlaying={handleIsPlaying}
           handleCanSeeTutorial={handleCanSeeTutorial}
-          handleVolume={handleVolume}
-          handleMuteVolume={handleMuteVolume}
         />
       )}
 

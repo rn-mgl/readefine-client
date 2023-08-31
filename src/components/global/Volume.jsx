@@ -17,7 +17,9 @@ const Volume = (props) => {
       </button>
 
       <input
-        onChange={(e) => handleVolume(e.target, props.audioRef, props.setIsMuted)}
+        onChange={(e) =>
+          handleVolume(e.target, props.audioRef, props.setIsMuted)
+        }
         defaultValue={50}
         type="range"
         className="absolute bottom-0 rotate-90 translate-y-12 hidden group-hover:flex p-2 z-30"

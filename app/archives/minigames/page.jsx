@@ -17,7 +17,11 @@ import { isTokenExpired } from "@/src/src/functions/jwtFns";
 
 const Minigames = () => {
   const [counts, setCounts] = React.useState({});
-  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
+  const [message, setMessage] = React.useState({
+    msg: "",
+    active: false,
+    type: "info",
+  });
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -35,7 +39,11 @@ const Minigames = () => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessage({
+        active: true,
+        msg: error?.response?.data?.msg,
+        type: "error",
+      });
     }
   }, [url, user, setCounts]);
 
@@ -59,7 +67,9 @@ const Minigames = () => {
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <ClientPageHeader mainHeader="Readefine" subHeader="Minigames" />
 
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? (
+        <Message message={message} setMessage={setMessage} />
+      ) : null}
 
       <div
         className="cstm-flex-col gap-5 justify-start w-full transition-all

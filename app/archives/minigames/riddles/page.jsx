@@ -15,15 +15,23 @@ import { useSession } from "next-auth/react";
 import { AiFillHeart } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
+import Volume from "@/src/src/components/global/Volume";
 
 const ClientRiddles = () => {
   const [riddleData, setRiddleData] = React.useState({});
   const [correctWord, setCorrectWord] = React.useState([]);
-  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
+  const [message, setMessage] = React.useState({
+    msg: "",
+    active: false,
+    type: "info",
+  });
   const [canSeeTutorial, setCanSeeTutorial] = React.useState(false);
 
   const [guess, setGuess] = React.useState({ letters: [], letterPos: 0 });
-  const [lives, setLives] = React.useState({ status: [1, 1, 1, 1, 1], activePos: 4 });
+  const [lives, setLives] = React.useState({
+    status: [1, 1, 1, 1, 1],
+    activePos: 4,
+  });
   const [timer, setTimer] = React.useState(0);
   const [entryGuesses, setEntryGuesses] = React.useState([]);
 
@@ -37,28 +45,6 @@ const ClientRiddles = () => {
   const { url } = useGlobalContext();
   const user = session?.user?.name;
   const router = useRouter();
-
-  // change audio volume
-  const handleVolume = ({ value }) => {
-    if (typeof audioRef.current.volume !== "undefined") {
-      audioRef.current.volume = value / 100;
-    }
-    setIsMuted(false);
-  };
-
-  // mute volume
-  const handleMuteVolume = () => {
-    if (typeof audioRef.current.volume !== "undefined") {
-      setIsMuted((prev) => {
-        if (prev) {
-          audioRef.current.volume = 1;
-        } else {
-          audioRef.current.volume = 0;
-        }
-        return !prev;
-      });
-    }
-  };
 
   // toggle can see tutorial
   const handleCanSeeTutorial = () => {
@@ -173,7 +159,11 @@ const ClientRiddles = () => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessage({
+        active: true,
+        msg: error?.response?.data?.msg,
+        type: "error",
+      });
     }
   }, [entryGuesses, riddleData?.riddle_id, timer, url, user?.token]);
 
@@ -198,7 +188,11 @@ const ClientRiddles = () => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessage({
+        active: true,
+        msg: error?.response?.data?.msg,
+        type: "error",
+      });
     }
   };
 
@@ -207,7 +201,9 @@ const ClientRiddles = () => {
     return (
       <AiFillHeart
         key={i}
-        className={` ${alive ? "text-prmColor" : "text-neutral-400 animate-shake"} t:scale-125`}
+        className={` ${
+          alive ? "text-prmColor" : "text-neutral-400 animate-shake"
+        } t:scale-125`}
       />
     );
   });
@@ -241,10 +237,14 @@ const ClientRiddles = () => {
   }, [user, router]);
 
   return (
-    <div className="w-full min-h-screen bg-accntColor p-4 cstm-flex-col justify-start">
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+    <div className="w-full min-h-screen h-screen bg-accntColor p-4 cstm-flex-col justify-start">
+      {message.active ? (
+        <Message message={message} setMessage={setMessage} />
+      ) : null}
 
-      {canSeeTutorial ? <RiddleTutorial handleCanSeeTutorial={handleCanSeeTutorial} /> : null}
+      {canSeeTutorial ? (
+        <RiddleTutorial handleCanSeeTutorial={handleCanSeeTutorial} />
+      ) : null}
 
       {gameOver.over ? (
         <Gameover
@@ -257,40 +257,42 @@ const ClientRiddles = () => {
         />
       ) : null}
 
-      <div className="cstm-flex-col w-full h-full justify-start">
-        {isPlaying ? (
-          <RiddleGame
-            riddleData={riddleData}
-            guess={guess}
-            remainingLives={remainingLives}
-            entryGuesses={entryGuesses}
-            timer={timer}
+      <div className="w-full cstm-w-limit cstm-flex-col relative">
+        <div className="absolute top-10 left-0 z-20 l-s:top-0 cstm-flex-col gap-2 group">
+          <Volume
+            audioRef={audioRef}
+            setIsMuted={setIsMuted}
             isMuted={isMuted}
-            gameOver={gameOver}
-            setEntryGuesses={setEntryGuesses}
-            handleIsPlaying={handleIsPlaying}
-            deleteCharacter={deleteCharacter}
-            handleInput={handleInput}
-            submitGuess={submitGuess}
-            handleVolume={handleVolume}
-            handleMuteVolume={handleMuteVolume}
           />
-        ) : (
-          <InitRiddle
-            to="/archives/minigames"
-            isMuted={isMuted}
-            getRiddle={getRiddle}
-            handleIsPlaying={handleIsPlaying}
-            handleCanSeeTutorial={handleCanSeeTutorial}
-            handleVolume={handleVolume}
-            handleMuteVolume={handleMuteVolume}
-          />
-        )}
-
-        <audio autoPlay loop ref={audioRef}>
-          <source src={happy} type="audio/mp3" />
-        </audio>
+        </div>
       </div>
+
+      {isPlaying ? (
+        <RiddleGame
+          riddleData={riddleData}
+          guess={guess}
+          remainingLives={remainingLives}
+          entryGuesses={entryGuesses}
+          timer={timer}
+          gameOver={gameOver}
+          setEntryGuesses={setEntryGuesses}
+          handleIsPlaying={handleIsPlaying}
+          deleteCharacter={deleteCharacter}
+          handleInput={handleInput}
+          submitGuess={submitGuess}
+        />
+      ) : (
+        <InitRiddle
+          to="/archives/minigames"
+          getRiddle={getRiddle}
+          handleIsPlaying={handleIsPlaying}
+          handleCanSeeTutorial={handleCanSeeTutorial}
+        />
+      )}
+
+      <audio autoPlay loop ref={audioRef}>
+        <source src={happy} type="audio/mp3" />
+      </audio>
     </div>
   );
 };

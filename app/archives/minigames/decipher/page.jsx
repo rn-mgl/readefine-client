@@ -15,13 +15,18 @@ import { useGlobalContext } from "@/src/context";
 import { AiFillHeart } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
+import Volume from "@/src/src/components/global/Volume";
 
 const Decipher = () => {
   const [wordData, setWordData] = React.useState({});
   const [correctWord, setCorrectWord] = React.useState([]);
   const [cipheredWord, setCipheredWord] = React.useState([]);
 
-  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
+  const [message, setMessage] = React.useState({
+    msg: "",
+    active: false,
+    type: "info",
+  });
   const [canSeeTutorial, setCanSeeTutorial] = React.useState(false);
 
   const [guess, setGuess] = React.useState([]);
@@ -38,28 +43,6 @@ const Decipher = () => {
   const { url } = useGlobalContext();
   const user = session?.user?.name;
   const router = useRouter();
-
-  // change audio volume
-  const handleVolume = ({ value }) => {
-    if (typeof audioRef.current.volume !== "undefined") {
-      audioRef.current.volume = value / 100;
-    }
-    setIsMuted(false);
-  };
-
-  // mute volume
-  const handleMuteVolume = () => {
-    if (typeof audioRef.current.volume !== "undefined") {
-      setIsMuted((prev) => {
-        if (prev) {
-          audioRef.current.volume = 1;
-        } else {
-          audioRef.current.volume = 0;
-        }
-        return !prev;
-      });
-    }
-  };
 
   // toggle can see tutorial
   const handleCanSeeTutorial = () => {
@@ -230,7 +213,11 @@ const Decipher = () => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessage({
+        active: true,
+        msg: error?.response?.data?.msg,
+        type: "error",
+      });
     }
   }, [guess, timer, url, user?.token, wordData.word_id]);
 
@@ -257,7 +244,11 @@ const Decipher = () => {
         }
       } catch (error) {
         console.log(error);
-        setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+        setMessage({
+          active: true,
+          msg: error?.response?.data?.msg,
+          type: "error",
+        });
       }
     }
   };
@@ -267,7 +258,9 @@ const Decipher = () => {
     return (
       <AiFillHeart
         key={i}
-        className={` ${alive ? "text-prmColor" : "text-neutral-400 animate-shake"} t:scale-125`}
+        className={` ${
+          alive ? "text-prmColor" : "text-neutral-400 animate-shake"
+        } t:scale-125`}
       />
     );
   });
@@ -301,10 +294,14 @@ const Decipher = () => {
   }, [user, router]);
 
   return (
-    <div className="bg-accntColor p-4 cstm-flex-col justify-start w-full min-h-screen">
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+    <div className="bg-accntColor p-4 cstm-flex-col justify-start w-full min-h-screen h-screen">
+      {message.active ? (
+        <Message message={message} setMessage={setMessage} />
+      ) : null}
 
-      {canSeeTutorial ? <DecipherTutorial handleCanSeeTutorial={handleCanSeeTutorial} /> : null}
+      {canSeeTutorial ? (
+        <DecipherTutorial handleCanSeeTutorial={handleCanSeeTutorial} />
+      ) : null}
 
       {gameOver.over ? (
         <Gameover
@@ -317,33 +314,36 @@ const Decipher = () => {
         />
       ) : null}
 
-      {isPlaying ? (
-        <DecipherGame
-          cipheredWord={cipheredWord}
-          guess={guess}
-          remainingLives={remainingLives}
-          timer={timer}
-          isMuted={isMuted}
-          gameOver={gameOver}
-          incrementLetter={incrementLetter}
-          decrementLetter={decrementLetter}
-          resetGuesses={resetGuesses}
-          handleIsPlaying={handleIsPlaying}
-          submitGuess={submitGuess}
-          handleVolume={handleVolume}
-          handleMuteVolume={handleMuteVolume}
-        />
-      ) : (
-        <InitDecipher
-          to="/archives/minigames"
-          isMuted={isMuted}
-          getWord={getWord}
-          handleIsPlaying={handleIsPlaying}
-          handleCanSeeTutorial={handleCanSeeTutorial}
-          handleVolume={handleVolume}
-          handleMuteVolume={handleMuteVolume}
-        />
-      )}
+      <div className="w-full h-full cstm-w-limit cstm-flex-col relative overflow-hidden gap-5 animate-fadeIn">
+        <div className="absolute top-10 left-0 cstm-flex-col gap-2 z-10 group l-s:top-0">
+          <Volume
+            audioRef={audioRef}
+            setIsMuted={setIsMuted}
+            isMuted={isMuted}
+          />
+        </div>
+        {isPlaying ? (
+          <DecipherGame
+            cipheredWord={cipheredWord}
+            guess={guess}
+            remainingLives={remainingLives}
+            timer={timer}
+            gameOver={gameOver}
+            incrementLetter={incrementLetter}
+            decrementLetter={decrementLetter}
+            resetGuesses={resetGuesses}
+            handleIsPlaying={handleIsPlaying}
+            submitGuess={submitGuess}
+          />
+        ) : (
+          <InitDecipher
+            to="/archives/minigames"
+            getWord={getWord}
+            handleIsPlaying={handleIsPlaying}
+            handleCanSeeTutorial={handleCanSeeTutorial}
+          />
+        )}
+      </div>
 
       <audio autoPlay loop ref={audioRef}>
         <source src={quirky} type="audio/mp3" />

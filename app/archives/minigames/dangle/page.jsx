@@ -16,18 +16,26 @@ import { useGlobalContext } from "@/src/context";
 import { AiFillHeart } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
+import Volume from "@/src/src/components/global/Volume";
 
 const Dangle = () => {
   const [wordData, setWordData] = React.useState({});
   const [definitionData, setDefinitionData] = React.useState([]);
   const [correctWord, setCorrectWord] = React.useState([{}]);
-  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
+  const [message, setMessage] = React.useState({
+    msg: "",
+    active: false,
+    type: "info",
+  });
   const [canSeeTutorial, setCanSeeTutorial] = React.useState(false);
 
   const [guess, setGuess] = React.useState({ letters: [], letterPos: 0 });
   const [entryGuesses, setEntryGuesses] = React.useState([]);
   const [canSeeHint, setCanSeeHint] = React.useState(false);
-  const [lives, setLives] = React.useState({ status: [1, 1, 1, 1, 1], activePos: 4 });
+  const [lives, setLives] = React.useState({
+    status: [1, 1, 1, 1, 1],
+    activePos: 4,
+  });
   const [timer, setTimer] = React.useState(0);
 
   const [gameOver, setGameOver] = React.useState({ over: false, status: "" });
@@ -40,28 +48,6 @@ const Dangle = () => {
   const { url } = useGlobalContext();
   const user = session?.user?.name;
   const router = useRouter();
-
-  // change audio volume
-  const handleVolume = ({ value }) => {
-    if (typeof audioRef.current.volume !== "undefined") {
-      audioRef.current.volume = value / 100;
-    }
-    setIsMuted(false);
-  };
-
-  // mute volume
-  const handleMuteVolume = () => {
-    if (typeof audioRef.current.volume !== "undefined") {
-      setIsMuted((prev) => {
-        if (prev) {
-          audioRef.current.volume = 1;
-        } else {
-          audioRef.current.volume = 0;
-        }
-        return !prev;
-      });
-    }
-  };
 
   // toggle can see tutorial
   const handleCanSeeTutorial = () => {
@@ -198,7 +184,11 @@ const Dangle = () => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessage({
+        active: true,
+        msg: error?.response?.data?.msg,
+        type: "error",
+      });
     }
   }, [entryGuesses, timer, url, user?.token, wordData.word_id]);
 
@@ -227,7 +217,11 @@ const Dangle = () => {
         }
       } catch (error) {
         console.log(error);
-        setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+        setMessage({
+          active: true,
+          msg: error?.response?.data?.msg,
+          type: "error",
+        });
       }
     }
   };
@@ -237,7 +231,9 @@ const Dangle = () => {
     return (
       <AiFillHeart
         key={i}
-        className={` ${alive ? "text-prmColor" : "text-neutral-400 animate-shake"} t:scale-125`}
+        className={` ${
+          alive ? "text-prmColor" : "text-neutral-400 animate-shake"
+        } t:scale-125`}
       />
     );
   });
@@ -272,9 +268,13 @@ const Dangle = () => {
 
   return (
     <div className="w-full min-h-screen bg-accntColor p-4 cstm-flex-col justify-start">
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? (
+        <Message message={message} setMessage={setMessage} />
+      ) : null}
 
-      {canSeeTutorial ? <DangleTutorial handleCanSeeTutorial={handleCanSeeTutorial} /> : null}
+      {canSeeTutorial ? (
+        <DangleTutorial handleCanSeeTutorial={handleCanSeeTutorial} />
+      ) : null}
 
       {canSeeHint ? (
         <DangleHint
@@ -296,36 +296,40 @@ const Dangle = () => {
         />
       ) : null}
 
-      {isPlaying ? (
-        <DangleGame
-          correctWord={correctWord}
-          remainingLives={remainingLives}
-          isPlaying={isPlaying}
-          gameOver={gameOver}
-          guess={guess}
-          timer={timer}
-          entryGuesses={entryGuesses}
-          isMuted={isMuted}
-          handleIsPlaying={handleIsPlaying}
-          handleInput={handleInput}
-          deleteCharacter={deleteCharacter}
-          submitGuess={submitGuess}
-          handleCanSeeHint={handleCanSeeHint}
-          handleVolume={handleVolume}
-          handleMuteVolume={handleMuteVolume}
-        />
-      ) : (
-        <InitDangle
-          to={`/archives/minigames`}
-          isPlaying={isPlaying}
-          isMuted={isMuted}
-          getRandomWord={getRandomWord}
-          handleIsPlaying={handleIsPlaying}
-          handleCanSeeTutorial={handleCanSeeTutorial}
-          handleVolume={handleVolume}
-          handleMuteVolume={handleMuteVolume}
-        />
-      )}
+      <div className="w-full h-[95vh] cstm-w-limit cstm-flex-col relative">
+        <div className="absolute top-10 left-0 cstm-flex-col gap-2 z-10 group l-s:top-0">
+          <Volume
+            audioRef={audioRef}
+            setIsMuted={setIsMuted}
+            isMuted={isMuted}
+          />
+        </div>
+
+        {isPlaying ? (
+          <DangleGame
+            correctWord={correctWord}
+            remainingLives={remainingLives}
+            isPlaying={isPlaying}
+            gameOver={gameOver}
+            guess={guess}
+            timer={timer}
+            entryGuesses={entryGuesses}
+            handleIsPlaying={handleIsPlaying}
+            handleInput={handleInput}
+            deleteCharacter={deleteCharacter}
+            submitGuess={submitGuess}
+            handleCanSeeHint={handleCanSeeHint}
+          />
+        ) : (
+          <InitDangle
+            to={`/archives/minigames`}
+            isPlaying={isPlaying}
+            getRandomWord={getRandomWord}
+            handleIsPlaying={handleIsPlaying}
+            handleCanSeeTutorial={handleCanSeeTutorial}
+          />
+        )}
+      </div>
 
       <audio autoPlay loop ref={audioRef}>
         <source src={arcade} type="audio/mp3" />

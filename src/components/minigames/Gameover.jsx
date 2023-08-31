@@ -15,9 +15,13 @@ const Gameover = (props) => {
   });
 
   return (
-    <div className="fixed w-full h-screen backdrop-blur-md z-20 top-0 text-white animate-fadeIn">
+    <div className="fixed w-full h-screen backdrop-blur-md z-30 top-0 text-white animate-fadeIn">
       {didWin ? (
-        <Confetti width={window.innerWidth} height={window.innerHeight} className="z-50" />
+        <Confetti
+          width={window.innerWidth}
+          height={window.innerHeight}
+          className="z-50"
+        />
       ) : null}
 
       <div className="h-3/6 bg-prmColor w-full p-5 cstm-flex-col gap-5 t:gap-10 cstm-w-limit translate-y-full">
@@ -26,7 +30,8 @@ const Gameover = (props) => {
 
           {didWin ? (
             <p className="font-light text-sm">
-              Time taken: <span className="font-bold">{props.timer} </span> seconds
+              Time taken: <span className="font-bold">{props.timer} </span>{" "}
+              seconds
             </p>
           ) : null}
         </div>

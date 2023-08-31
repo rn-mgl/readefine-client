@@ -15,28 +15,6 @@ const ReceiveAchievement = (props) => {
   const [isMuted, setIsMuted] = React.useState(false);
   const audioRef = React.useRef();
 
-  // change audio volume
-  const handleVolume = ({ value }) => {
-    if (typeof audioRef.current.volume !== "undefined") {
-      audioRef.current.volume = value / 100;
-    }
-    setIsMuted(false);
-  };
-
-  // mute volume
-  const handleMuteVolume = () => {
-    if (typeof audioRef.current.volume !== "undefined") {
-      setIsMuted((prev) => {
-        if (prev) {
-          audioRef.current.volume = 1;
-        } else {
-          audioRef.current.volume = 0;
-        }
-        return !prev;
-      });
-    }
-  };
-
   const achievements = props?.achievements?.map((a) => {
     return (
       <div
@@ -89,16 +67,20 @@ const ReceiveAchievement = (props) => {
       <div className="cstm-flex-row w-full relative z-20">
         <div className="cstm-flex-col gap-2 z-10 group text-white mr-auto">
           <Volume
+            audioRef={audioRef}
+            setIsMuted={setIsMuted}
             isMuted={isMuted}
-            handleMuteVolume={handleMuteVolume}
-            handleVolume={handleVolume}
           />
         </div>
 
         {buttonAction}
       </div>
 
-      <Confetti width={window?.innerWidth} height={window?.innerHeight} className="z-10" />
+      <Confetti
+        width={window?.innerWidth}
+        height={window?.innerHeight}
+        className="z-10"
+      />
 
       <audio autoPlay ref={audioRef}>
         <source src={rewardNotice} type="audio/mp3" />

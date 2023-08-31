@@ -6,7 +6,6 @@ import ActionLabel from "../../global/ActionLabel";
 import DangleEntries from "./DangleEntries";
 
 import { BsArrowLeft, BsFillLightbulbFill } from "react-icons/bs";
-import Volume from "../../global/Volume";
 
 const DangleGame = (props) => {
   const dangles = props.correctWord?.map((c, i) => {
@@ -25,15 +24,7 @@ const DangleGame = (props) => {
   });
 
   return (
-    <div className="w-full h-[95vh] cstm-w-limit cstm-flex-col relative">
-      <div className="absolute top-10 left-0 cstm-flex-col gap-2 z-10 group l-s:top-0">
-        <Volume
-          isMuted={props.isMuted}
-          handleMuteVolume={props.handleMuteVolume}
-          handleVolume={props.handleVolume}
-        />
-      </div>
-
+    <>
       <button
         className="cstm-bg-hover ml-auto absolute top-0 right-0"
         onClick={props.handleIsPlaying}
@@ -49,7 +40,10 @@ const DangleGame = (props) => {
             <p className="text-prmColor text-xs">{props.timer}</p>
           </div>
 
-          <button onClick={props.handleCanSeeHint} className="cstm-bg-hover relative group">
+          <button
+            onClick={props.handleCanSeeHint}
+            className="cstm-bg-hover relative group"
+          >
             <ActionLabel label="Hint" />
             <BsFillLightbulbFill />
           </button>
@@ -78,7 +72,7 @@ const DangleGame = (props) => {
         handleInput={props.handleInput}
         gameOver={props.gameOver}
       />
-    </div>
+    </>
   );
 };
 
