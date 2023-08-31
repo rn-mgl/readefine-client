@@ -85,7 +85,7 @@ const SingleReward = ({ params }) => {
             <div className="cstm-flex-col p-2 rounded-2xl bg-accntColor w-full relative overflow-hidden">
               <BiMedal className="absolute scale-[10] top-10 left-0 opacity-10 t:scale-[15] t:top-20 t:left-20 text-prmColor " />
 
-              <div className="animate-float drop-shadow-md relative z-10">
+              <div className="animate-float drop-shadow-md relative z-10 saturate-150">
                 <FileViewer src={rewardData?.reward} />
               </div>
 
