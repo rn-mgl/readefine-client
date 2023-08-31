@@ -67,25 +67,25 @@ const SingleReward = ({ params }) => {
   }, [user, router]);
 
   return (
-    <div className="w-full cstm-flex-col p-5 gap-5 t:gap-5 justify-start bg-accntColor max-h-screen h-full overflow-y-auto">
+    <div className="w-full cstm-flex-col p-5 gap-5 t:gap-5 justify-start bg-accntColor max-h-screen h-screen">
       <ClientPageHeader mainHeader="Readefine" subHeader="Your Reward" />
 
       {message.active ? (
         <Message message={message} setMessage={setMessage} />
       ) : null}
 
-      <div className="cstm-w-limit justify-start cstm-flex-col w-full relative z-10 h-auto">
-        <div className="cstm-flex-col gap-5 w-full t:w-10/12 l-l:w-8/12 h-auto">
+      <div className="cstm-w-limit justify-start cstm-flex-col w-full relative z-10 h-full">
+        <div className="cstm-flex-col gap-5 w-full t:w-10/12 l-l:w-8/12 h-full">
           <Link className="cstm-bg-hover mr-auto" href="/archives/rewards">
             <BsArrowLeft className="text-white scale-125" />
           </Link>
 
-          <div className="cstm-flex-col bg-white rounded-2xl p-5 w-full shadow-solid gap-5 text-center h-auto">
+          <div className="cstm-flex-col bg-white rounded-2xl p-5 w-full shadow-solid gap-5 text-center h-full">
             {/* reward */}
-            <div className="cstm-flex-col p-2 rounded-2xl bg-accntColor w-full relative overflow-hidden">
+            <div className="cstm-flex-col p-2 rounded-2xl bg-accntColor w-full relative overflow-hidden h-full">
               <BiMedal className="absolute scale-[10] top-10 left-0 opacity-10 t:scale-[15] t:top-20 t:left-20 text-prmColor " />
 
-              <div className="animate-float drop-shadow-md relative z-10 saturate-150">
+              <div className="animate-float drop-shadow-md relative z-10 saturate-150 h-full cstm-flex-col">
                 <FileViewer src={rewardData?.reward} />
               </div>
 
@@ -104,7 +104,9 @@ const SingleReward = ({ params }) => {
             <div className="cstm-separator" />
 
             {/* description */}
-            <p className="text-sm">{rewardData?.description}</p>
+            <p className="text-sm h-32 overflow-y-auto cstm-scrollbar-2">
+              {rewardData?.description}
+            </p>
           </div>
         </div>
       </div>

@@ -18,7 +18,11 @@ import { isTokenExpired } from "@/src/src/functions/jwtFns";
 const SingleReward = ({ params }) => {
   const [reward, setReward] = React.useState({});
   const [canDeleteReward, setCanDeleteReward] = React.useState(false);
-  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
+  const [message, setMessage] = React.useState({
+    msg: "",
+    active: false,
+    type: "info",
+  });
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -34,15 +38,22 @@ const SingleReward = ({ params }) => {
   // get reward data
   const getReward = React.useCallback(async () => {
     try {
-      const { data } = await axios.get(`${url}/admin_reward/${decodedRewardId}`, {
-        headers: { Authorization: user.token },
-      });
+      const { data } = await axios.get(
+        `${url}/admin_reward/${decodedRewardId}`,
+        {
+          headers: { Authorization: user.token },
+        }
+      );
       if (data) {
         setReward(data);
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessage({
+        active: true,
+        msg: error?.response?.data?.msg,
+        type: "error",
+      });
     }
   }, [setReward, url, user, decodedRewardId]);
 
@@ -63,10 +74,12 @@ const SingleReward = ({ params }) => {
   }, [user, router]);
 
   return (
-    <div className="w-full min-h-screen h-full overflow-y-auto bg-accntColor p-5 cstm-flex-col gap-5 justify-start">
+    <div className="w-full min-h-screen h-screen bg-accntColor p-5 cstm-flex-col gap-5 justify-start">
       <AdminPageHeader subHeader="Reward" mainHeader={reward?.reward_name} />
 
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? (
+        <Message message={message} setMessage={setMessage} />
+      ) : null}
 
       {canDeleteReward ? (
         <DeleteData
@@ -77,15 +90,18 @@ const SingleReward = ({ params }) => {
         />
       ) : null}
 
-      <div className="w-full cstm-w-limit cstm-flex-col">
-        <div className="cstm-flex-col gap-5 w-full l-s:w-10/12 l-l:w-8/12">
+      <div className="w-full cstm-w-limit cstm-flex-col h-full">
+        <div className="cstm-flex-col gap-5 w-full l-s:w-10/12 l-l:w-8/12 h-full">
           {/* admin actions */}
           <div className="w-full cstm-flex-row">
             <Link href="/controller/rewards" className="cstm-bg-hover mr-auto">
               <BsArrowLeft className=" text-prmColor" />
             </Link>
 
-            <Link href={`/controller/rewards/edit/${params?.reward_id}`} className="cstm-bg-hover">
+            <Link
+              href={`/controller/rewards/edit/${params?.reward_id}`}
+              className="cstm-bg-hover"
+            >
               <AiFillEdit className=" text-prmColor cursor-pointer" />
             </Link>
 
@@ -96,7 +112,7 @@ const SingleReward = ({ params }) => {
 
           {/* reward */}
           <div
-            className="p-5 rounded-2xl gap-5 cstm-flex-col overflow-auto w-full h-[80vh] 
+            className="p-5 rounded-2xl gap-5 cstm-flex-col overflow-auto w-full h-full 
                         justify-start bg-white text-sm shadow-md cstm-scrollbar"
           >
             <div className="w-full h-full cstm-flex-col bg-accntColor rounded-2xl p-5">
@@ -105,11 +121,15 @@ const SingleReward = ({ params }) => {
               </div>
             </div>
 
-            <p className="text-sm font-bold text-prmColor capitalize">{reward?.reward_type}</p>
+            <p className="text-sm font-bold text-prmColor capitalize">
+              {reward?.reward_type}
+            </p>
 
             <div className="cstm-separator" />
 
-            <p className="text-sm text-center">{reward?.description}</p>
+            <p className="text-sm text-center h-32 overflow-y-auto cstm-scrollbar-2">
+              {reward?.description}
+            </p>
           </div>
         </div>
       </div>
