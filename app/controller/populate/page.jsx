@@ -19,7 +19,9 @@ const Populate = () => {
     let visited = [];
     try {
       word.map(async (w) => {
-        const { data } = await axios.get(`https://api.dictionaryapi.dev/api/v2/entries/en/${w}`);
+        const { data } = await axios.get(
+          `https://api.dictionaryapi.dev/api/v2/entries/en/${w}`
+        );
         if (data && data[0] && !visited.includes(w)) {
           const word = await axios.post(
             `${url}/admin_words`,
@@ -59,7 +61,7 @@ const Populate = () => {
 
   return (
     <div>
-      <button onClick={getWord}>get</button>
+      <button onClick={getAll}>get</button>
     </div>
   );
 };
