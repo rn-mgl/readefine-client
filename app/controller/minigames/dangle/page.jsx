@@ -237,7 +237,7 @@ const Dangle = () => {
   }, [user, router]);
 
   return (
-    <div className="w-full min-h-screen bg-accntColor p-4 cstm-flex-col justify-start">
+    <div className="w-full min-h-screen h-screen bg-accntColor p-4 cstm-flex-col justify-start">
       {message.active ? (
         <Message message={message} setMessage={setMessage} />
       ) : null}
@@ -266,7 +266,7 @@ const Dangle = () => {
         />
       ) : null}
 
-      <div className="w-full h-[95vh] cstm-w-limit cstm-flex-col relative">
+      <div className="w-full h-full cstm-w-limit cstm-flex-col relative">
         <div className="absolute top-10 left-0 cstm-flex-col gap-2 z-10 group l-s:top-0">
           <Volume
             audioRef={audioRef}
