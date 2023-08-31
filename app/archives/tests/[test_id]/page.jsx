@@ -3,21 +3,19 @@ import axios from "axios";
 import React from "react";
 import ClientPageHeader from "@/src/src/client/global/PageHeader";
 import QuestionSlide from "@/src/src/client/tests/QuestionSlide";
-import Link from "next/link";
 import ScorePopup from "@/src/src/components/tests/ScorePopup";
 import Message from "@/src/src/components/global/Message";
 import ReceiveAchievement from "@/src/src/client/achievements/ReceiveAchievement";
+import TestActions from "@/src/src/client/tests/TestActions";
+import PageNavigation from "@/src/src/client/tests/PageNavigation";
 
 import { useSession } from "next-auth/react";
 import { computeScore, shuffleQuestions } from "@/src/src/functions/testFns";
 import { useGlobalContext } from "@/src/context";
-import { AiFillCaretRight, AiFillCaretLeft } from "react-icons/ai";
-import { BsArrowLeft } from "react-icons/bs";
 import { decipher } from "@/src/src/functions/security";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
-import TestActions from "@/src/src/client/tests/TestActions";
-import PageNavigation from "@/src/src/client/tests/PageNavigation";
+import { handleAccomplishedAchievement } from "@/src/src/functions/achievementFns";
 
 const SingleTest = ({ params }) => {
   const [testData, setTestData] = React.useState({});
@@ -74,14 +72,6 @@ const SingleTest = ({ params }) => {
     setIsFinished((prev) => !prev);
   };
 
-  // handle reset achievement to close pop up reward
-  const handleAccomplishedAchievement = () => {
-    setAccomplishedAchievement({
-      accomplished: false,
-      data: {},
-    });
-  };
-
   // handle onchange select choice
   const handleSelectedChoices = (id, { name, value }) => {
     setSelectedChoices((prev) => {
@@ -101,6 +91,64 @@ const SingleTest = ({ params }) => {
     }
 
     return answeredTests === 10;
+  };
+
+  const updateLexileAchievement = async (toAdd) => {
+    try {
+      // update lexile achievement points and return if achievement is met
+      const { data: lexileAchievementData } = await axios.patch(
+        `${url}/user_achievement`,
+        {
+          type: "user_lexile",
+          toAdd,
+        },
+        { headers: { Authorization: user?.token } }
+      );
+
+      // if there are achievements
+      if (lexileAchievementData.length) {
+        setAccomplishedAchievement({
+          accomplished: true,
+          achievements: lexileAchievementData,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      setMessage({
+        active: true,
+        msg: error?.response?.data?.msg,
+        type: "error",
+      });
+    }
+  };
+
+  const updateTestAchievement = async () => {
+    try {
+      // update test achievement points and return if achievement is met
+      const { data: testAchievementData } = await axios.patch(
+        `${url}/user_achievement`,
+        {
+          type: "answered_tests",
+          toAdd: 1,
+        },
+        { headers: { Authorization: user?.token } }
+      );
+
+      // if there are achievements
+      if (testAchievementData.length) {
+        setAccomplishedAchievement({
+          accomplished: true,
+          achievements: testAchievementData,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      setMessage({
+        active: true,
+        msg: error?.response?.data?.msg,
+        type: "error",
+      });
+    }
   };
 
   // submit test answers and do checkings
@@ -149,41 +197,8 @@ const SingleTest = ({ params }) => {
 
       if (data) {
         if (legibleForGrowth) {
-          // update lexile achievement points and return if achievement is met
-          const { data: lexileAchievementData } = await axios.patch(
-            `${url}/user_achievement`,
-            {
-              type: "user_lexile",
-              toAdd: data?.toAdd,
-            },
-            { headers: { Authorization: user?.token } }
-          );
-
-          // if there are achievements
-          if (lexileAchievementData.length) {
-            setAccomplishedAchievement({
-              accomplished: true,
-              achievements: lexileAchievementData,
-            });
-          }
-
-          // update test achievement points and return if achievement is met
-          const { data: testAchievementData } = await axios.patch(
-            `${url}/user_achievement`,
-            {
-              type: "answered_tests",
-              toAdd: 1,
-            },
-            { headers: { Authorization: user?.token } }
-          );
-
-          // if there are achievements
-          if (testAchievementData.length) {
-            setAccomplishedAchievement({
-              accomplished: true,
-              achievements: testAchievementData,
-            });
-          }
+          const lexileAchievement = await updateLexileAchievement(data?.toAdd);
+          const testAchievement = await updateTestAchievement();
         }
 
         // notice if not legible for lexile growth
@@ -324,7 +339,9 @@ const SingleTest = ({ params }) => {
       {accomplishedAchievement.accomplished ? (
         <ReceiveAchievement
           achievements={accomplishedAchievement.achievements}
-          handleAccomplishedAchievement={handleAccomplishedAchievement}
+          handleAccomplishedAchievement={() =>
+            handleAccomplishedAchievement(setAccomplishedAchievement)
+          }
         />
       ) : null}
 

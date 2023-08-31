@@ -18,6 +18,7 @@ import { useRouter } from "next/navigation";
 import { signIn, useSession } from "next-auth/react";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { CiUser } from "react-icons/ci";
+import { handleAccomplishedAchievement } from "@/src/src/functions/achievementFns";
 
 const Login = () => {
   const [loginData, setLoginData] = React.useState({
@@ -30,7 +31,11 @@ const Login = () => {
   });
   const [achievementUrl, setAchievementUrl] = React.useState("/archives");
   const [visiblePassword, setVisiblePassword] = React.useState(false);
-  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
+  const [message, setMessage] = React.useState({
+    msg: "",
+    active: false,
+    type: "info",
+  });
   const [loading, setLoading] = React.useState(false);
   const [firstLogin, setFirstLogin] = React.useState(false);
 
@@ -54,14 +59,6 @@ const Login = () => {
     });
   };
 
-  // reset accomplished achievement to close popup
-  const handleAccomplishedAchievement = () => {
-    setAccomplishedAchievement({
-      accomplished: false,
-      data: {},
-    });
-  };
-
   // log in user
   const loginUser = async (e) => {
     e.preventDefault();
@@ -80,13 +77,21 @@ const Login = () => {
       if (!data?.ok) {
         setLoading(false);
         setFirstLogin(false);
-        setMessage({ active: true, msg: "Login credentials do not match.", type: "error" });
+        setMessage({
+          active: true,
+          msg: "Login credentials do not match.",
+          type: "error",
+        });
       }
     } catch (error) {
       console.log(error);
       setLoading(false);
       setFirstLogin(false);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessage({
+        active: true,
+        msg: error?.response?.data?.msg,
+        type: "error",
+      });
     }
   };
 
@@ -102,15 +107,24 @@ const Login = () => {
       // if there are achievements
       if (achievementData.length) {
         setLoading(false);
-        setAccomplishedAchievement({ accomplished: true, achievements: achievementData });
-        setAchievementUrl(user?.isVerified ? "/archives" : "/sending?purpose=verify");
+        setAccomplishedAchievement({
+          accomplished: true,
+          achievements: achievementData,
+        });
+        setAchievementUrl(
+          user?.isVerified ? "/archives" : "/sending?purpose=verify"
+        );
       } else {
         router.push("/archives");
       }
     } catch (error) {
       console.log(error);
       setLoading(false);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessage({
+        active: true,
+        msg: error?.response?.data?.msg,
+        type: "error",
+      });
     }
   }, [router, url, user]);
 
@@ -125,7 +139,11 @@ const Login = () => {
     } catch (error) {
       console.log(error);
       setLoading(false);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessage({
+        active: true,
+        msg: error?.response?.data?.msg,
+        type: "error",
+      });
     }
   }, [url, user]);
 
@@ -162,12 +180,16 @@ const Login = () => {
         <ReceiveAchievement
           achievements={accomplishedAchievement.achievements}
           url={achievementUrl}
-          handleAccomplishedAchievement={handleAccomplishedAchievement}
+          handleAccomplishedAchievement={() =>
+            handleAccomplishedAchievement(setAccomplishedAchievement)
+          }
         />
       ) : null}
 
       {/* if message has popped up */}
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? (
+        <Message message={message} setMessage={setMessage} />
+      ) : null}
 
       <p className=" font-extrabold text-2xl text-prmColor">Log In</p>
 
@@ -208,7 +230,10 @@ const Login = () => {
         />
 
         {/* link if password is forgotten */}
-        <Link className="text-xs text-white underline underline-offset-2" href="/forgot">
+        <Link
+          className="text-xs text-white underline underline-offset-2"
+          href="/forgot"
+        >
           Forgot Password?
         </Link>
 

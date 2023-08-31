@@ -21,7 +21,11 @@ import DeleteData from "@/src/src/admin/global/DeleteData";
 const SingleTest = ({ params }) => {
   const [test, setTest] = React.useState({});
   const [questions, setQuestions] = React.useState([]);
-  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
+  const [message, setMessage] = React.useState({
+    msg: "",
+    active: false,
+    type: "info",
+  });
 
   const [isFinished, setIsFinished] = React.useState(false);
   const [score, setScore] = React.useState(0);
@@ -87,7 +91,11 @@ const SingleTest = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessage({
+        active: true,
+        msg: error?.response?.data?.msg,
+        type: "error",
+      });
     }
   }, [url, user, decodedTestId, setQuestions]);
 
@@ -106,7 +114,11 @@ const SingleTest = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessage({
+        active: true,
+        msg: error?.response?.data?.msg,
+        type: "error",
+      });
       router.push(`/controller/tests/add/${params?.test_id}`);
     }
   }, [url, user, decodedTestId, router, params?.test_id]);
@@ -195,9 +207,13 @@ const SingleTest = ({ params }) => {
     <div className="p-5 w-full min-h-screen bg-accntColor cstm-flex-col gap-5">
       <AdminPageHeader subHeader="Tests" mainHeader={test?.title} />
 
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? (
+        <Message message={message} setMessage={setMessage} />
+      ) : null}
 
-      {isFinished ? <ScorePopup score={score} handleIsFinished={handleIsFinished} /> : null}
+      {isFinished ? (
+        <ScorePopup score={score} handleIsFinished={handleIsFinished} />
+      ) : null}
 
       {canDeleteTest ? (
         <DeleteData
@@ -222,11 +238,17 @@ const SingleTest = ({ params }) => {
         </p>
 
         <div className="cstm-flex-row w-full t:w-10/12 l-l:w-8/12">
-          <Link href="/controller/tests" className="w-fit cstm-bg-hover mr-auto">
+          <Link
+            href="/controller/tests"
+            className="w-fit cstm-bg-hover mr-auto"
+          >
             <BsArrowLeft className=" text-prmColor" />
           </Link>
 
-          <Link href={`/controller/tests/edit/${params.test_id}`} className="cstm-bg-hover">
+          <Link
+            href={`/controller/tests/edit/${params.test_id}`}
+            className="cstm-bg-hover"
+          >
             <AiFillEdit className=" text-prmColor cursor-pointer" />
           </Link>
 
@@ -239,7 +261,9 @@ const SingleTest = ({ params }) => {
 
         <div className="cstm-flex-col w-full gap-5 t:cstm-flex-row t:w-10/12 l-l:w-8/12">
           <button
-            onClick={() => computeScore(setScore, setIsFinished, questions, selectedChoices)}
+            onClick={() =>
+              computeScore(setScore, setIsFinished, questions, selectedChoices)
+            }
             className={`p-2 bg-prmColor text-scndColor text-sm rounded-full w-full mt-5 t:mt-0 
                       t:w-fit t:px-10 t:mr-auto shadow-solid shadow-indigo-900`}
           >
