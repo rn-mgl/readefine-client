@@ -17,6 +17,7 @@ import GradePos from "@/src/src/client/signup/GradePos";
 import AuthPos from "@/src/src/client/signup/AuthPos";
 import validator from "validator";
 import { BsDot } from "react-icons/bs";
+import { avatar } from "./avatar";
 
 const Signup = () => {
   const [userData, setUserData] = React.useState({
@@ -25,12 +26,17 @@ const Signup = () => {
     email: "",
     username: "",
     password: "",
+    image: "",
     gradeLevel: 4,
   });
   const [activePos, setActivePos] = React.useState(1);
   const [visiblePassword, setVisiblePassword] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
-  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
+  const [message, setMessage] = React.useState({
+    msg: "",
+    active: false,
+    type: "info",
+  });
 
   const { url } = useGlobalContext();
 
@@ -50,19 +56,31 @@ const Signup = () => {
   const infoAreFilled = () => {
     if (activePos === 1) {
       if (!userData.name || !userData.surname) {
-        setMessage({ active: true, msg: "Do not skip any information.", type: "warning" });
+        setMessage({
+          active: true,
+          msg: "Do not skip any information.",
+          type: "warning",
+        });
         return false;
       }
     }
 
     if (activePos === 2) {
       if (!userData.email || !userData.username || !userData.password) {
-        setMessage({ active: true, msg: "Do not skip any information.", type: "warning" });
+        setMessage({
+          active: true,
+          msg: "Do not skip any information.",
+          type: "warning",
+        });
         return false;
       }
 
       if (!validator.isEmail(userData.email)) {
-        setMessage({ active: true, msg: "The email you entered is not valid.", type: "warning" });
+        setMessage({
+          active: true,
+          msg: "The email you entered is not valid.",
+          type: "warning",
+        });
         return false;
       }
 
@@ -78,7 +96,11 @@ const Signup = () => {
 
     if (activePos === 3) {
       if (!userData.gradeLevel) {
-        setMessage({ active: true, msg: "Do not skip any information.", type: "warning" });
+        setMessage({
+          active: true,
+          msg: "Do not skip any information.",
+          type: "warning",
+        });
         return false;
       }
     }
@@ -107,6 +129,11 @@ const Signup = () => {
   const signUp = async (e) => {
     e.preventDefault();
     setLoading(true);
+
+    const randomIndex = Math.floor(Math.random() * avatar.length);
+    const userAvatar = avatar[randomIndex];
+    userData.image = userAvatar;
+
     try {
       const { data } = await axios.post(`${url}/auth_client/client_signup`, {
         userData,
@@ -118,7 +145,11 @@ const Signup = () => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessage({
+        active: true,
+        msg: error?.response?.data?.msg,
+        type: "error",
+      });
       setLoading(false);
     }
   };
@@ -145,7 +176,9 @@ const Signup = () => {
   return (
     <div className="w-full h-screen bg-prmColor p-5 cstm-flex-col font-poppins ">
       {/* show message pop up */}
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? (
+        <Message message={message} setMessage={setMessage} />
+      ) : null}
 
       <p className=" font-extrabold text-2xl text-accntColor">Sign Up</p>
       <br />
@@ -160,17 +193,23 @@ const Signup = () => {
         <div className="cstm-flex-row">
           <BsDot
             className={`${
-              activePos === 1 ? "text-scndColor scale-150" : "text-black scale-125"
+              activePos === 1
+                ? "text-scndColor scale-150"
+                : "text-black scale-125"
             } transition-all`}
           />
           <BsDot
             className={`${
-              activePos === 2 ? "text-scndColor scale-150" : "text-black scale-125"
+              activePos === 2
+                ? "text-scndColor scale-150"
+                : "text-black scale-125"
             } transition-all`}
           />
           <BsDot
             className={`${
-              activePos === 3 ? "text-scndColor scale-150" : "text-black scale-125"
+              activePos === 3
+                ? "text-scndColor scale-150"
+                : "text-black scale-125"
             } transition-all`}
           />
         </div>
