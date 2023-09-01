@@ -229,12 +229,7 @@ const Dangle = () => {
   // map lives
   const remainingLives = lives.status.map((alive, i) => {
     return (
-      <AiFillHeart
-        key={i}
-        className={` ${
-          alive ? "text-prmColor" : "text-neutral-400 animate-shake"
-        } t:scale-125`}
-      />
+      <AiFillHeart key={i} className={` ${alive ? "text-prmColor" : "text-neutral-400 animate-shake"} t:scale-125`} />
     );
   });
 
@@ -268,13 +263,9 @@ const Dangle = () => {
 
   return (
     <div className="w-full min-h-screen h-screen bg-accntColor p-4 cstm-flex-col justify-start">
-      {message.active ? (
-        <Message message={message} setMessage={setMessage} />
-      ) : null}
+      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
 
-      {canSeeTutorial ? (
-        <DangleTutorial handleCanSeeTutorial={handleCanSeeTutorial} />
-      ) : null}
+      {canSeeTutorial ? <DangleTutorial handleCanSeeTutorial={handleCanSeeTutorial} /> : null}
 
       {canSeeHint ? (
         <DangleHint
@@ -298,11 +289,7 @@ const Dangle = () => {
 
       <div className="w-full h-full cstm-w-limit cstm-flex-col relative">
         <div className="absolute top-10 left-0 cstm-flex-col gap-2 z-10 group l-s:top-0">
-          <Volume
-            audioRef={audioRef}
-            setIsMuted={setIsMuted}
-            isMuted={isMuted}
-          />
+          <Volume audioRef={audioRef} setIsMuted={setIsMuted} isMuted={isMuted} />
         </div>
 
         {isPlaying ? (

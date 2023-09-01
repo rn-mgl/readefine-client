@@ -1,23 +1,20 @@
 import React from "react";
 
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
+import { handleActivePage, handleDecrement, handleIncrement } from "../../functions/storyFns";
 
 const PageNavigation = (props) => {
   return (
     <div className="cstm-flex-row w-full cstm-w-limit">
-      <button
-        disabled={props.activePage === 1}
-        className="cstm-bg-hover disabled:opacity-50"
-      >
+      <button disabled={props.activePage === 1} className="cstm-bg-hover disabled:opacity-50">
         <BiChevronLeft
           className={`scale-150 text-black  cursor-pointer t:scale-[2]`}
-          onClick={props.handleDecrement}
-          onKeyDown={(e) => props.handleDecrement(e)}
+          onClick={(e) => handleDecrement(props.setActivePage, props.viewType)}
         />
       </button>
 
       <input
-        onChange={(e) => props.handleActivePage(e.target)}
+        onChange={(e) => handleActivePage(e.target, props.setActivePage, props.pages)}
         type="number"
         value={props.activePage}
         min={1}
@@ -25,14 +22,10 @@ const PageNavigation = (props) => {
         className="text-sm mx-auto text-center w-16 rounded-md px-2 py-1 focus:outline-prmColor"
       />
 
-      <button
-        disabled={props.activePage === props.pages.length}
-        className="cstm-bg-hover disabled:opacity-50"
-      >
+      <button disabled={props.activePage === props.pages.length} className="cstm-bg-hover disabled:opacity-50">
         <BiChevronRight
           className={`scale-150 text-black  cursor-pointer t:scale-[2]`}
-          onClick={props.handleIncrement}
-          onKeyDown={(e) => props.handleIncrement(e)}
+          onClick={() => handleIncrement(props.setActivePage, props.viewType, props.pages)}
         />
       </button>
     </div>

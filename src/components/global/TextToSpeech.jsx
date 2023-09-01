@@ -1,12 +1,6 @@
 "use client";
 import React from "react";
-import {
-  BsFillPlayFill,
-  BsFillPauseFill,
-  BsFillStopFill,
-  BsVolumeUpFill,
-  BsQuestionCircle,
-} from "react-icons/bs";
+import { BsFillPlayFill, BsFillPauseFill, BsFillStopFill, BsVolumeUpFill, BsQuestionCircle } from "react-icons/bs";
 import { RiSpeedFill } from "react-icons/ri";
 import ActionLabel from "./ActionLabel";
 import { AiFillHighlight } from "react-icons/ai";
@@ -107,12 +101,9 @@ const TextToSpeech = (props) => {
   }, [highlightedWords]);
 
   return (
-    <div className="cstm-flex-col w-full gap-5 t:cstm-flex-row t:w-fit t:gap-2">
+    <div className="cstm-flex-col w-full gap-2 t:cstm-flex-row t:w-fit t:gap-2">
       <div className="cstm-flex-row gap-2 w-full">
-        <button
-          className="relative cstm-bg-hover group"
-          onClick={() => playVoice(highlightedWords)}
-        >
+        <button className="relative cstm-bg-hover group" onClick={() => playVoice(highlightedWords)}>
           <ActionLabel label="Play Highlighted Word" />
           <AiFillHighlight className="text-prmColor scale-125" />
         </button>

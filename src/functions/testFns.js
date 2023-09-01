@@ -8,12 +8,22 @@ export const shuffleQuestions = (arr) => {
   return arr;
 };
 
-export const computeScore = (
-  setScore,
-  setIsFinished,
-  questions,
-  selectedChoices
-) => {
+// toggle is finished
+export const handleIsFinished = (setIsFinished) => {
+  setIsFinished((prev) => !prev);
+};
+
+// handle onchange select choice
+export const handleSelectedChoices = (id, { name, value }, setSelectedChoices) => {
+  setSelectedChoices((prev) => {
+    return {
+      ...prev,
+      [name]: { answer: value, questionId: id },
+    };
+  });
+};
+
+export const computeScore = (setScore, setIsFinished, questions, selectedChoices) => {
   let score = 0;
   let visited = [];
 
@@ -24,10 +34,7 @@ export const computeScore = (
       const choiceIdx = `choice${j}`;
       const currChoice = selectedChoices[choiceIdx];
 
-      if (
-        currChoice?.questionId === q?.question_id &&
-        !visited.includes(q.question_id)
-      ) {
+      if (currChoice?.questionId === q?.question_id && !visited.includes(q.question_id)) {
         if (q.answer === currChoice.answer) {
           score++;
           visited.push(q.question_id);
@@ -46,4 +53,27 @@ export const computeScore = (
   }
 
   return score;
+};
+
+export const choicesStyle = {
+  1: {
+    bgColor: "bg-indigo-300",
+    shadow: "shadow-[0_4px_rgba(129,140,248,1)]",
+    shadowActive: "shadow-[inset_0_4px_rgba(129,140,248,1)]",
+  },
+  2: {
+    bgColor: "bg-indigo-500",
+    shadow: "shadow-[0_4px_rgba(79,70,229,1)]",
+    shadowActive: "shadow-[inset_0_4px_rgba(79,70,229,1)]",
+  },
+  3: {
+    bgColor: "bg-indigo-700",
+    shadow: "shadow-[0_4px_rgba(55,48,163,1)]",
+    shadowActive: "shadow-[inset_0_4px_rgba(55,48,163,1)]",
+  },
+  4: {
+    bgColor: "bg-indigo-900",
+    shadow: "shadow-[0_4px_rgba(25,22,75,1)]",
+    shadowActive: "shadow-[inset_0_4px_rgba(25,22,75,1)]",
+  },
 };

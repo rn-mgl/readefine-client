@@ -7,6 +7,8 @@ import axios from "axios";
 import Customizations from "@/src/src/components/stories/Customizations";
 import Message from "@/src/src/components/global/Message";
 import StoryActions from "@/src/src/admin/stories/StoryActions";
+import PageNavigation from "@/src/src/components/stories/PageNavigation";
+import DeleteData from "@/src/src/admin/global/DeleteData";
 
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
@@ -14,13 +16,16 @@ import { useGlobalContext } from "@/src/context";
 import { decipher } from "@/src/src/functions/security";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
-import PageNavigation from "@/src/src/components/stories/PageNavigation";
-import DeleteData from "@/src/src/admin/global/DeleteData";
+import { handleCustomizationsVisible } from "@/src/src/functions/storyFns";
 
 const SingleStory = ({ params }) => {
   const [story, setStory] = React.useState({});
   const [pages, setPages] = React.useState([]);
-  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
+  const [message, setMessage] = React.useState({
+    msg: "",
+    active: false,
+    type: "info",
+  });
 
   const [activePage, setActivePage] = React.useState(1);
   const [fontSize, setFontSize] = React.useState(16);
@@ -44,42 +49,9 @@ const SingleStory = ({ params }) => {
   const leftUtterance = pages[activePage - 1]?.content;
   const rightUtterance = pages[activePage]?.content;
 
-  // handle to next page
-  const handleIncrement = () => {
-    const increment = viewType === "single" ? 1 : 2;
-    setActivePage((prev) => (prev + increment > pages.length ? pages.length : prev + increment));
-  };
-
-  // handle tp prev page
-  const handleDecrement = () => {
-    const decrement = viewType === "single" ? 1 : 2;
-    setActivePage((prev) => (prev - decrement < 1 ? 1 : prev - decrement));
-  };
-
   // toggle can delete story
   const handleCanDeleteStory = () => {
     setCanDeleteStory((prev) => !prev);
-  };
-
-  // handle change font style
-  const handleFontSize = ({ value }) => {
-    setFontSize(() => (value < 16 ? 16 : value > 100 ? 100 : parseInt(value)));
-  };
-
-  // toggle can see filter aka customizations
-  const handleCustomizationsVisible = () => {
-    setCustomizationsVisible((prev) => !prev);
-  };
-
-  // handle the active page
-  const handleActivePage = ({ value }) => {
-    const newPage = parseInt(value);
-    setActivePage(newPage < 1 ? 1 : newPage > pages.length ? pages.length : newPage);
-  };
-
-  // change view type, single or double
-  const handleViewType = (type) => {
-    setViewType(type);
   };
 
   // get pages
@@ -94,7 +66,11 @@ const SingleStory = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessage({
+        active: true,
+        msg: error?.response?.data?.msg,
+        type: "error",
+      });
     }
   }, [url, user, setPages, decodedStoryId]);
 
@@ -109,17 +85,18 @@ const SingleStory = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessage({
+        active: true,
+        msg: error?.response?.data?.msg,
+        type: "error",
+      });
     }
   }, [url, user, setStory, decodedStoryId]);
 
   // map story pages
   const storyPages = pages?.map((page, index, arr) => {
     return (
-      <div
-        className="absolute left-2/4 -translate-x-2/4 w-full z-10 justify-start "
-        key={page.content_id}
-      >
+      <div className="absolute left-2/4 -translate-x-2/4 w-full z-10 justify-start " key={page.content_id}>
         {viewType === "single" ? (
           <StorySinglePage
             title={story?.title}
@@ -200,7 +177,7 @@ const SingleStory = ({ params }) => {
         setIsMuted={setIsMuted}
         handleCanDeleteStory={handleCanDeleteStory}
         setIsPlaying={setIsPlaying}
-        handleCustomizationsVisible={handleCustomizationsVisible}
+        handleCustomizationsVisible={() => handleCustomizationsVisible(setCustomizationsVisible)}
       />
 
       {/* filter aka customizations  */}
@@ -215,11 +192,9 @@ const SingleStory = ({ params }) => {
               : leftUtterance
           }
           fontSize={fontSize}
-          customizationsVisible={customizationsVisible}
           viewType={viewType}
-          handleFontSize={handleFontSize}
-          handleCustomizationsVisible={handleCustomizationsVisible}
-          handleViewType={handleViewType}
+          setFontSize={setFontSize}
+          setViewType={setViewType}
         />
       ) : null}
 
@@ -231,13 +206,7 @@ const SingleStory = ({ params }) => {
         <div className="w-full relative overflow-x-hidden h-full cstm-scrollbar">{storyPages}</div>
       </div>
 
-      <PageNavigation
-        activePage={activePage}
-        pages={pages}
-        handleDecrement={handleDecrement}
-        handleActivePage={handleActivePage}
-        handleIncrement={handleIncrement}
-      />
+      <PageNavigation activePage={activePage} pages={pages} viewType={viewType} setActivePage={setActivePage} />
 
       {story?.audio ? (
         <audio loop autoPlay ref={audioRef}>

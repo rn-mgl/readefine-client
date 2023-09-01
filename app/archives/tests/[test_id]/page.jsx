@@ -10,7 +10,7 @@ import TestActions from "@/src/src/client/tests/TestActions";
 import PageNavigation from "@/src/src/client/tests/PageNavigation";
 
 import { useSession } from "next-auth/react";
-import { computeScore, shuffleQuestions } from "@/src/src/functions/testFns";
+import { computeScore, handleIsFinished, shuffleQuestions } from "@/src/src/functions/testFns";
 import { useGlobalContext } from "@/src/context";
 import { decipher } from "@/src/src/functions/security";
 import { useRouter } from "next/navigation";
@@ -67,21 +67,7 @@ const SingleTest = ({ params }) => {
     setActivePage((prev) => (prev - 1 < 0 ? 0 : prev - 1));
   };
 
-  // toggle is finished
-  const handleIsFinished = () => {
-    setIsFinished((prev) => !prev);
-  };
-
-  // handle onchange select choice
-  const handleSelectedChoices = (id, { name, value }) => {
-    setSelectedChoices((prev) => {
-      return {
-        ...prev,
-        [name]: { answer: value, questionId: id },
-      };
-    });
-  };
-
+  // checker to see if all items are answered
   const allAreAnswered = () => {
     let answeredTests = 0;
 
@@ -167,12 +153,7 @@ const SingleTest = ({ params }) => {
     }
 
     // get score
-    const currScore = computeScore(
-      setScore,
-      setIsFinished,
-      questions,
-      selectedChoices
-    );
+    const currScore = computeScore(setScore, setIsFinished, questions, selectedChoices);
 
     // check if passed, do not record if not
     if (currScore < 7) {
@@ -294,6 +275,8 @@ const SingleTest = ({ params }) => {
     return (
       <React.Fragment key={q.question_id}>
         <QuestionSlide
+          name={`choice${index + 1}`}
+          questionId={q.question_id}
           question={q.question}
           choice1={q.choice_1}
           choice2={q.choice_2}
@@ -301,9 +284,8 @@ const SingleTest = ({ params }) => {
           choice4={q.choice_4}
           index={index}
           selectedChoices={selectedChoices}
-          questionId={q.question_id}
           activePage={activePage}
-          handleSelectedChoices={handleSelectedChoices}
+          setSelectedChoices={setSelectedChoices}
           maxPage={10}
         />
       </React.Fragment>
@@ -339,42 +321,24 @@ const SingleTest = ({ params }) => {
       {accomplishedAchievement.accomplished ? (
         <ReceiveAchievement
           achievements={accomplishedAchievement.achievements}
-          handleAccomplishedAchievement={() =>
-            handleAccomplishedAchievement(setAccomplishedAchievement)
-          }
+          handleAccomplishedAchievement={() => handleAccomplishedAchievement(setAccomplishedAchievement)}
         />
       ) : null}
 
-      {message.active ? (
-        <Message message={message} setMessage={setMessage} />
-      ) : null}
+      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
 
       {isFinished ? (
-        <ScorePopup
-          url="/archives/tests"
-          score={score}
-          handleIsFinished={handleIsFinished}
-        />
+        <ScorePopup url="/archives/tests" score={score} handleIsFinished={() => handleIsFinished(setIsFinished)} />
       ) : null}
 
       <div className="cstm-w-limit cstm-flex-col gap-5 w-full h-full relative">
-        <TestActions
-          activePage={activePage}
-          hasSubmitted={hasSubmitted}
-          submitAnswers={submitAnswers}
-        />
+        <TestActions activePage={activePage} hasSubmitted={hasSubmitted} submitAnswers={submitAnswers} />
 
         {/* question pane */}
-        <div className="cstm-flex-row items-start w-full relative h-full">
-          {questionSlides}
-        </div>
+        <div className="cstm-flex-row items-start w-full relative h-full">{questionSlides}</div>
       </div>
 
-      <PageNavigation
-        activePage={activePage}
-        handleDecrement={handleDecrement}
-        handleIncrement={handleIncrement}
-      />
+      <PageNavigation activePage={activePage} handleDecrement={handleDecrement} handleIncrement={handleIncrement} />
     </div>
   );
 };

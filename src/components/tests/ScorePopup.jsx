@@ -7,18 +7,13 @@ import { IoClose } from "react-icons/io5";
 const ScorePopup = (props) => {
   const score = props.score;
   const passed = score > 7;
-  const message = passed
-    ? "You understood that very well!"
-    : "Don't worry, try reading it and answer once again!";
+  const message = passed ? "You understood that very well!" : "Don't worry, try reading it and answer once again!";
   const background = passed
     ? "bg-gradient-to-b from-prmColor to-scndColor "
     : "bg-gradient-to-b from-prmColor to-indigo-950";
 
   const buttonAction = props.url ? (
-    <Link
-      href={props.url}
-      className="p-2 hover:bg-black hover:bg-opacity-10 rounded-full w-fit ml-auto "
-    >
+    <Link href={props.url} className="p-2 hover:bg-black hover:bg-opacity-10 rounded-full w-fit ml-auto ">
       <IoClose className="scale-150 text-white" />
     </Link>
   ) : (
