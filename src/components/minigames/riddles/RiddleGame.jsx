@@ -9,10 +9,7 @@ const RiddleGame = (props) => {
   return (
     <div className="w-full h-full cstm-w-limit cstm-flex-col relative">
       <div className="relative ml-auto cstm-flex-col gap-5 z-10">
-        <button
-          onClick={props.handleIsPlaying}
-          className="cstm-bg-hover ml-auto"
-        >
+        <button onClick={props.handleIsPlaying} className="cstm-bg-hover ml-auto">
           <BsArrowLeft className="scale-125" />
         </button>
         <div className="p-2 rounded-full border-2 border-prmColor w-8 h-8 cstm-flex-col">
@@ -31,9 +28,7 @@ const RiddleGame = (props) => {
         >
           <div className="cstm-flex-row gap-2">{props.remainingLives}</div>
 
-          <p className=" font-bold text-center gap-2 text-prmColor animate-fadeIn">
-            {props.riddleData.riddle}
-          </p>
+          <p className=" font-bold text-center gap-2 text-prmColor animate-fadeIn">{props.riddleData.riddle}</p>
 
           <div className="cstm-separator" />
 
@@ -42,10 +37,7 @@ const RiddleGame = (props) => {
       </div>
 
       {props.entryGuesses ? (
-        <RiddleEntries
-          setEntryGuesses={props.setEntryGuesses}
-          entryGuesses={props.entryGuesses}
-        />
+        <RiddleEntries setEntryGuesses={props.setEntryGuesses} entryGuesses={props.entryGuesses} />
       ) : null}
 
       <Keyboard

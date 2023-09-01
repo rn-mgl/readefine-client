@@ -6,6 +6,7 @@ import axios from "axios";
 import RiddleGame from "@/src/src/components/minigames/riddles/RiddleGame";
 import Gameover from "@/src/src/components/minigames/Gameover";
 import RiddleTutorial from "@/src/src/components/minigames/riddles/RiddleTutorial";
+import Volume from "@/src/src/components/global/Volume";
 
 import happy from "../../../../../public/music/minigames/Happy.mp3";
 
@@ -14,24 +15,17 @@ import { useSession } from "next-auth/react";
 import { AiFillHeart } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
-import Volume from "@/src/src/components/global/Volume";
+
 import { useAudioControls } from "@/src/src/hooks/useAudioControls";
+import { useRiddleStatus } from "@/src/src/hooks/useRiddleStatus";
+import Message from "@/src/src/components/global/Message";
 
 const PlayRiddles = () => {
-  const [riddleData, setRiddleData] = React.useState({});
-  const [correctWord, setCorrectWord] = React.useState([]);
-  const [canSeeTutorial, setCanSeeTutorial] = React.useState(false);
-
-  const [guess, setGuess] = React.useState({ letters: [], letterPos: 0 });
-  const [lives, setLives] = React.useState({
-    status: [1, 1, 1, 1, 1],
-    activePos: 4,
+  const [message, setMessage] = React.useState({
+    msg: "",
+    active: false,
+    type: "info",
   });
-  const [timer, setTimer] = React.useState(0);
-  const [entryGuesses, setEntryGuesses] = React.useState([]);
-
-  const [isPlaying, setIsPlaying] = React.useState(false);
-  const [gameOver, setGameOver] = React.useState({ over: false, status: "" });
 
   const {
     audioRef,
@@ -42,102 +36,34 @@ const PlayRiddles = () => {
     handleToggleAudio,
   } = useAudioControls();
 
+  const {
+    riddleData,
+    correctWord,
+    guess,
+    canSeeTutorial,
+    isPlaying,
+    gameOver,
+    lives,
+    entryGuesses,
+    timer,
+    handleCanSeeTutorial,
+    handleIsPlaying,
+    handleGameOverStatus,
+    deleteCharacter,
+    handleInput,
+    resetEntryGuesses,
+    resetTimer,
+    submitGuess,
+    setNewLives,
+    setNewRiddleData,
+    setNewCorrectWord,
+    setNewGuess,
+  } = useRiddleStatus();
+
   const { data: session } = useSession();
   const { url } = useGlobalContext();
   const user = session?.user?.name;
   const router = useRouter();
-
-  // toggle can see tutorial
-  const handleCanSeeTutorial = () => {
-    setCanSeeTutorial((prev) => !prev);
-  };
-
-  // reset game stats
-  const resetGameStats = () => {
-    setRiddleData({});
-    setCorrectWord([]);
-    setGuess({ letters: [], letterPos: 0 });
-    setLives({ status: [1, 1, 1, 1, 1], activePos: 4 });
-    setTimer(0);
-    setEntryGuesses([]);
-    setGameOver({ over: false, status: "" });
-  };
-
-  // toggle is playing, if playing reset, else main menu
-  const handleIsPlaying = () => {
-    setIsPlaying((prev) => {
-      if (prev) {
-        resetGameStats();
-      }
-      return !prev;
-    });
-  };
-
-  // handle input from virtual keyb
-  const handleInput = (key) => {
-    if (guess.letterPos >= correctWord.length) return;
-    const newLetters = [...guess.letters];
-    newLetters[guess.letterPos] = key;
-    setGuess((prev) => {
-      return {
-        letters: newLetters,
-        letterPos: prev.letterPos + 1,
-      };
-    });
-  };
-
-  // handle delete character
-  const deleteCharacter = () => {
-    if (guess.letterPos - 1 < 0) return;
-    const newLetters = [...guess.letters];
-    newLetters[guess.letterPos - 1] = null;
-    setGuess((prev) => {
-      return {
-        letters: newLetters,
-        letterPos: prev.letterPos - 1,
-      };
-    });
-  };
-
-  // add to guesses
-  const addToGuessEntry = () => {
-    setEntryGuesses(guess.letters);
-  };
-
-  // remove heart
-  const removeHeart = () => {
-    // game over if lives are empty
-    if (lives.activePos <= 0) {
-      setGameOver({ over: true, status: "lose" });
-    }
-
-    const newLives = [...lives.status];
-    newLives[lives.activePos] = 0;
-    setLives((prev) => {
-      return {
-        status: newLives,
-        activePos: prev.activePos - 1 < 0 ? 0 : prev.activePos - 1,
-      };
-    });
-  };
-
-  // submit guess
-  const submitGuess = () => {
-    const guessString = guess.letters.join("");
-    const correctWordString = correctWord.join("");
-
-    // return if guess length is not equal to correct one
-    if (guessString.length !== correctWordString.length) return;
-
-    addToGuessEntry();
-
-    if (guessString === correctWordString) {
-      setGameOver({ over: true, status: "win" });
-    } else {
-      removeHeart();
-    }
-    setGuess({ letters: Array(correctWord.length).fill(""), letterPos: 0 });
-  };
 
   // get riddle data and fill in game data
   const getRiddle = async () => {
@@ -149,16 +75,22 @@ const PlayRiddles = () => {
         const word = data.answer.toUpperCase();
         const wordSplit = word.split("");
         const wordLen = wordSplit.length;
-        setCorrectWord(wordSplit);
-        setGuess({ letters: Array(wordLen).fill(""), letterPos: 0 });
-        setRiddleData(data);
-        setLives({ status: [1, 1, 1, 1, 1], activePos: 4 });
-        setTimer(0);
-        setEntryGuesses([]);
-        setGameOver({ over: false, status: "" });
+
+        setNewCorrectWord(wordSplit);
+        setNewGuess(Array(wordLen).fill(""), 0);
+        setNewRiddleData(data);
+        setNewLives();
+        resetTimer();
+        resetEntryGuesses();
+        handleGameOverStatus(false, "");
       }
     } catch (error) {
       console.log(error);
+      setMessage({
+        active: true,
+        msg: error?.response?.data?.msg,
+        type: "error",
+      });
     }
   };
 
@@ -168,18 +100,6 @@ const PlayRiddles = () => {
       <AiFillHeart key={i} className={` ${alive ? "text-prmColor" : "text-neutral-400 animate-shake"} t:scale-125`} />
     );
   });
-
-  React.useEffect(() => {
-    if (riddleData && !gameOver.over) {
-      const interval = setInterval(() => {
-        setTimer((prev) => prev + 1);
-      }, 1000);
-
-      return () => {
-        clearInterval(interval);
-      };
-    }
-  }, [gameOver, setTimer, riddleData]);
 
   React.useEffect(() => {
     if (user) {
@@ -193,6 +113,10 @@ const PlayRiddles = () => {
 
   return (
     <div className="w-full min-h-screen h-screen bg-accntColor p-4 cstm-flex-col justify-start">
+      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+
+      {canSeeTutorial ? <RiddleTutorial handleCanSeeTutorial={handleCanSeeTutorial} /> : null}
+
       {gameOver.over ? (
         <Gameover
           gameOver={gameOver}
@@ -203,8 +127,6 @@ const PlayRiddles = () => {
           handleIsPlaying={handleIsPlaying}
         />
       ) : null}
-
-      {canSeeTutorial ? <RiddleTutorial handleCanSeeTutorial={handleCanSeeTutorial} /> : null}
 
       <div className="w-full cstm-w-limit cstm-flex-col relative">
         <div className="absolute top-10 left-0 z-20 l-s:top-0 cstm-flex-col flex-col-reverse gap-2">
@@ -226,7 +148,6 @@ const PlayRiddles = () => {
           entryGuesses={entryGuesses}
           timer={timer}
           gameOver={gameOver}
-          setEntryGuesses={setEntryGuesses}
           handleIsPlaying={handleIsPlaying}
           deleteCharacter={deleteCharacter}
           handleInput={handleInput}
