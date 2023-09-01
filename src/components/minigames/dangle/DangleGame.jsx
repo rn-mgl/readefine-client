@@ -13,22 +13,14 @@ const DangleGame = (props) => {
     const isGuessed = latestEntry && latestEntry[i] === c;
     return (
       <React.Fragment key={i}>
-        <Dangling
-          character={c}
-          isGuessed={isGuessed}
-          isPlaying={props.isPlaying}
-          gameOver={props.gameOver}
-        />
+        <Dangling character={c} isGuessed={isGuessed} isPlaying={props.isPlaying} gameOver={props.gameOver} />
       </React.Fragment>
     );
   });
 
   return (
     <>
-      <button
-        className="cstm-bg-hover ml-auto absolute top-0 right-0"
-        onClick={props.handleIsPlaying}
-      >
+      <button className="cstm-bg-hover ml-auto absolute top-0 right-0" onClick={props.handleIsPlaying}>
         <BsArrowLeft className="text-black scale-125" />
       </button>
 
@@ -40,21 +32,14 @@ const DangleGame = (props) => {
             <p className="text-prmColor text-xs">{props.timer}</p>
           </div>
 
-          <button
-            onClick={props.handleCanSeeHint}
-            className="cstm-bg-hover relative group"
-          >
+          <button onClick={props.handleCanSeeHint} className="cstm-bg-hover relative group">
             <ActionLabel label="Hint" />
             <BsFillLightbulbFill />
           </button>
         </div>
       </div>
 
-      <div
-        className={`${
-          props.isPlaying ? "mb-auto" : "mb-0"
-        } cstm-flex-row gap-2 absolute -top-52 t:gap-5`}
-      >
+      <div className={`${props.isPlaying ? "mb-auto" : "mb-0"} cstm-flex-row gap-2 absolute -top-52 t:gap-5`}>
         {dangles}
       </div>
 

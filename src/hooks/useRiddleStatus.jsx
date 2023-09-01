@@ -169,7 +169,6 @@ export const useRiddleStatus = () => {
     handleInput,
     deleteCharacter,
     resetEntryGuesses,
-    resetGameStats,
     resetTimer,
     submitGuess,
     setNewLives,
