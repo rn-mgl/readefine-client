@@ -38,10 +38,6 @@ const SingleStory = ({ params }) => {
     achievements: [],
   });
 
-  const [isMuted, setIsMuted] = React.useState(false);
-  const [isPlaying, setIsPlaying] = React.useState(false);
-  const audioRef = React.useRef();
-
   const { data: session } = useSession();
   const { url } = useGlobalContext();
   const user = session?.user?.name;
@@ -211,11 +207,6 @@ const SingleStory = ({ params }) => {
       <StoryActions
         to="/archives/stories"
         story={story}
-        isMuted={isMuted}
-        audioRef={audioRef}
-        isPlaying={isPlaying}
-        setIsMuted={setIsMuted}
-        setIsPlaying={setIsPlaying}
         handleCustomizationsVisible={() => handleCustomizationsVisible(setCustomizationsVisible)}
       />
 
@@ -246,12 +237,6 @@ const SingleStory = ({ params }) => {
 
       {/* left right button */}
       <PageNavigation activePage={activePage} pages={pages} viewType={viewType} setActivePage={setActivePage} />
-
-      {story?.audio ? (
-        <audio loop autoPlay ref={audioRef}>
-          <source src={story.audio} />
-        </audio>
-      ) : null}
     </div>
   );
 };

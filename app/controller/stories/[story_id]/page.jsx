@@ -17,6 +17,7 @@ import { decipher } from "@/src/src/functions/security";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import { handleCustomizationsVisible } from "@/src/src/functions/storyFns";
+import { useAudioControls } from "@/src/src/hooks/useAudioControls";
 
 const SingleStory = ({ params }) => {
   const [story, setStory] = React.useState({});
@@ -34,10 +35,6 @@ const SingleStory = ({ params }) => {
   const [customizationsVisible, setCustomizationsVisible] = React.useState(true);
 
   const [canDeleteStory, setCanDeleteStory] = React.useState(false);
-
-  const [isMuted, setIsMuted] = React.useState(false);
-  const [isPlaying, setIsPlaying] = React.useState(false);
-  const audioRef = React.useRef();
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -168,15 +165,10 @@ const SingleStory = ({ params }) => {
 
       {/* admin actions */}
       <StoryActions
-        storyId={params?.story_id}
         to="/controller/stories"
+        storyId={params?.story_id}
         story={story}
-        isMuted={isMuted}
-        audioRef={audioRef}
-        isPlaying={isPlaying}
-        setIsMuted={setIsMuted}
         handleCanDeleteStory={handleCanDeleteStory}
-        setIsPlaying={setIsPlaying}
         handleCustomizationsVisible={() => handleCustomizationsVisible(setCustomizationsVisible)}
       />
 
@@ -207,12 +199,6 @@ const SingleStory = ({ params }) => {
       </div>
 
       <PageNavigation activePage={activePage} pages={pages} viewType={viewType} setActivePage={setActivePage} />
-
-      {story?.audio ? (
-        <audio loop autoPlay ref={audioRef}>
-          <source src={story?.audio} />
-        </audio>
-      ) : null}
     </div>
   );
 };

@@ -14,6 +14,7 @@ import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
+import ReceiveAchievement from "@/src/src/client/achievements/ReceiveAchievement";
 
 const Minigames = () => {
   const [counts, setCounts] = React.useState({});
@@ -67,9 +68,7 @@ const Minigames = () => {
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <ClientPageHeader mainHeader="Readefine" subHeader="Minigames" />
 
-      {message.active ? (
-        <Message message={message} setMessage={setMessage} />
-      ) : null}
+      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
 
       <div
         className="cstm-flex-col gap-5 justify-start w-full transition-all

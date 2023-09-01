@@ -17,6 +17,7 @@ import { AiFillHeart } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import Volume from "@/src/src/components/global/Volume";
+import { useAudioControls } from "@/src/src/hooks/useAudioControls";
 
 const Dangle = () => {
   const [wordData, setWordData] = React.useState({});
@@ -41,8 +42,14 @@ const Dangle = () => {
   const [gameOver, setGameOver] = React.useState({ over: false, status: "" });
   const [isPlaying, setIsPlaying] = React.useState(false);
 
-  const [isMuted, setIsMuted] = React.useState(false);
-  const audioRef = React.useRef();
+  const {
+    audioRef,
+    isMuted,
+    isPlaying: audioIsPlaying,
+    handleMuteVolume,
+    handleVolumeChange,
+    handleToggleAudio,
+  } = useAudioControls();
 
   const { data: session } = useSession({ required: true });
   const { url } = useGlobalContext();
@@ -288,8 +295,14 @@ const Dangle = () => {
       ) : null}
 
       <div className="w-full h-full cstm-w-limit cstm-flex-col relative">
-        <div className="absolute top-10 left-0 cstm-flex-col gap-2 z-10 group l-s:top-0">
-          <Volume audioRef={audioRef} setIsMuted={setIsMuted} isMuted={isMuted} />
+        <div className="absolute top-10 left-0 z-20 l-s:top-0 cstm-flex-col flex-col-reverse gap-2">
+          <Volume
+            isMuted={isMuted}
+            isPlaying={audioIsPlaying}
+            handleMuteVolume={handleMuteVolume}
+            handleVolumeChange={handleVolumeChange}
+            handleToggleAudio={handleToggleAudio}
+          />
         </div>
 
         {isPlaying ? (

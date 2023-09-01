@@ -3,22 +3,29 @@ import Link from "next/link";
 import ActionLabel from "../../components/global/ActionLabel";
 import Volume from "../../components/global/Volume";
 
-import { handleToggleAudio } from "../../functions/audioFns";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { BsArrowLeft, BsFillPauseFill, BsFillPlayFill, BsFilter } from "react-icons/bs";
 import { RxDividerVertical } from "react-icons/rx";
+import { useAudioControls } from "../../hooks/useAudioControls";
 
 const StoryActions = (props) => {
+  const { isMuted, isPlaying, audioRef, handleMuteVolume, handleVolumeChange, handleToggleAudio } = useAudioControls();
+
+  const storyAudio = props.story?.audio;
+
   return (
     <div className="w-full cstm-w-limit cstm-flex-row">
+      {storyAudio ? (
+        <audio loop autoPlay ref={audioRef}>
+          <source src={storyAudio} />
+        </audio>
+      ) : null}
+
       <Link href="/controller/stories" className="w-fit cstm-bg-hover mr-auto">
         <BsArrowLeft className=" text-prmColor" />
       </Link>
 
-      <Link
-        href={`/controller/stories/edit/${props.storyId}`}
-        className="relative group cstm-bg-hover"
-      >
+      <Link href={`/controller/stories/edit/${props.storyId}`} className="relative group cstm-bg-hover">
         <ActionLabel label="Edit" />
         <AiFillEdit className=" text-prmColor cursor-pointer" />
       </Link>
@@ -28,39 +35,21 @@ const StoryActions = (props) => {
         <AiFillDelete className="text-prmColor cursor-pointer" />
       </button>
 
-      {props.story?.audio ? (
+      {storyAudio ? (
         <>
           <div className="opacity-20">
             <RxDividerVertical className="scale-150" />
           </div>
 
-          <div className="relative group hover:shadow-none text-prmColor cstm-flex-col">
-            <ActionLabel label="Volume" />
-
+          <div className="cstm-flex-row text-prmColor">
             <Volume
-              isMuted={props.isMuted}
-              audioRef={props.audioRef}
-              setIsMuted={props.setIsMuted}
+              isPlaying={isPlaying}
+              isMuted={isMuted}
+              handleMuteVolume={handleMuteVolume}
+              handleVolumeChange={handleVolumeChange}
+              handleToggleAudio={handleToggleAudio}
             />
           </div>
-
-          {props.isPlaying ? (
-            <button
-              onClick={() => handleToggleAudio(props.audioRef, props.setIsPlaying)}
-              className="cstm-bg-hover relative group"
-            >
-              <ActionLabel label="Pause Audio" />
-              <BsFillPauseFill className="text-prmColor scale-150" />
-            </button>
-          ) : (
-            <button
-              onClick={() => handleToggleAudio(props.audioRef, props.setIsPlaying)}
-              className="cstm-bg-hover relative group"
-            >
-              <ActionLabel label="Play Audio" />
-              <BsFillPlayFill className="text-prmColor scale-150" />
-            </button>
-          )}
         </>
       ) : null}
 

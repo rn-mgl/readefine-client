@@ -1,7 +1,6 @@
 import React from "react";
 import { BsArrowLeft } from "react-icons/bs";
 import DecipherLetterBlock from "./DecipherLetterBlock";
-import Volume from "../../global/Volume";
 
 const DecipherGame = (props) => {
   const letterBlocks = props.guess?.map((cipher, i) => {
@@ -20,10 +19,7 @@ const DecipherGame = (props) => {
   return (
     <>
       <div className="absolute top-0 right-0 cstm-flex-col gap-5">
-        <button
-          onClick={props.handleIsPlaying}
-          className="cstm-bg-hover ml-auto"
-        >
+        <button onClick={props.handleIsPlaying} className="cstm-bg-hover ml-auto">
           <BsArrowLeft />
         </button>
         <div className="cstm-flex-col gap-2"> {props.remainingLives}</div>
@@ -32,9 +28,7 @@ const DecipherGame = (props) => {
         </div>
       </div>
 
-      <div className="cstm-flex-row my-auto m-l:gap-2 t:gap-5">
-        {letterBlocks}
-      </div>
+      <div className="cstm-flex-row my-auto m-l:gap-2 t:gap-5">{letterBlocks}</div>
       <div className="cstm-flex-row w-full ">
         <button
           onClick={props.resetGuesses}

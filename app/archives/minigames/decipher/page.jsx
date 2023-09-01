@@ -16,6 +16,7 @@ import { AiFillHeart } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import Volume from "@/src/src/components/global/Volume";
+import { useAudioControls } from "@/src/src/hooks/useAudioControls";
 
 const Decipher = () => {
   const [wordData, setWordData] = React.useState({});
@@ -36,8 +37,14 @@ const Decipher = () => {
   const [gameOver, setGameOver] = React.useState({ over: false, status: "" });
   const [timer, setTimer] = React.useState(0);
 
-  const [isMuted, setIsMuted] = React.useState(false);
-  const audioRef = React.useRef();
+  const {
+    audioRef,
+    isMuted,
+    isPlaying: audioIsPlaying,
+    handleMuteVolume,
+    handleVolumeChange,
+    handleToggleAudio,
+  } = useAudioControls();
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -256,12 +263,7 @@ const Decipher = () => {
   // map lives
   const remainingLives = lives.status.map((alive, i) => {
     return (
-      <AiFillHeart
-        key={i}
-        className={` ${
-          alive ? "text-prmColor" : "text-neutral-400 animate-shake"
-        } t:scale-125`}
-      />
+      <AiFillHeart key={i} className={` ${alive ? "text-prmColor" : "text-neutral-400 animate-shake"} t:scale-125`} />
     );
   });
 
@@ -295,13 +297,9 @@ const Decipher = () => {
 
   return (
     <div className="bg-accntColor p-4 cstm-flex-col justify-start w-full min-h-screen h-screen">
-      {message.active ? (
-        <Message message={message} setMessage={setMessage} />
-      ) : null}
+      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
 
-      {canSeeTutorial ? (
-        <DecipherTutorial handleCanSeeTutorial={handleCanSeeTutorial} />
-      ) : null}
+      {canSeeTutorial ? <DecipherTutorial handleCanSeeTutorial={handleCanSeeTutorial} /> : null}
 
       {gameOver.over ? (
         <Gameover
@@ -315,13 +313,16 @@ const Decipher = () => {
       ) : null}
 
       <div className="w-full h-full cstm-w-limit cstm-flex-col relative overflow-hidden gap-5 animate-fadeIn">
-        <div className="absolute top-10 left-0 cstm-flex-col gap-2 z-10 group l-s:top-0">
+        <div className="absolute top-10 left-0 z-20 l-s:top-0 cstm-flex-col flex-col-reverse gap-2">
           <Volume
-            audioRef={audioRef}
-            setIsMuted={setIsMuted}
             isMuted={isMuted}
+            isPlaying={audioIsPlaying}
+            handleMuteVolume={handleMuteVolume}
+            handleVolumeChange={handleVolumeChange}
+            handleToggleAudio={handleToggleAudio}
           />
         </div>
+
         {isPlaying ? (
           <DecipherGame
             cipheredWord={cipheredWord}

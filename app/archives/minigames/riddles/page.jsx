@@ -7,7 +7,7 @@ import RiddleGame from "@/src/src/components/minigames/riddles/RiddleGame";
 import Gameover from "@/src/src/components/minigames/Gameover";
 import Message from "@/src/src/components/global/Message";
 import RiddleTutorial from "@/src/src/components/minigames/riddles/RiddleTutorial";
-
+import Volume from "@/src/src/components/global/Volume";
 import happy from "../../../../public/music/minigames/Happy.mp3";
 
 import { useGlobalContext } from "@/src/context";
@@ -15,7 +15,7 @@ import { useSession } from "next-auth/react";
 import { AiFillHeart } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
-import Volume from "@/src/src/components/global/Volume";
+import { useAudioControls } from "@/src/src/hooks/useAudioControls";
 
 const ClientRiddles = () => {
   const [riddleData, setRiddleData] = React.useState({});
@@ -38,8 +38,14 @@ const ClientRiddles = () => {
   const [isPlaying, setIsPlaying] = React.useState(false);
   const [gameOver, setGameOver] = React.useState({ over: false, status: "" });
 
-  const [isMuted, setIsMuted] = React.useState(false);
-  const audioRef = React.useRef();
+  const {
+    audioRef,
+    isMuted,
+    isPlaying: audioIsPlaying,
+    handleMuteVolume,
+    handleVolumeChange,
+    handleToggleAudio,
+  } = useAudioControls();
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -199,12 +205,7 @@ const ClientRiddles = () => {
   // map lives
   const remainingLives = lives.status.map((alive, i) => {
     return (
-      <AiFillHeart
-        key={i}
-        className={` ${
-          alive ? "text-prmColor" : "text-neutral-400 animate-shake"
-        } t:scale-125`}
-      />
+      <AiFillHeart key={i} className={` ${alive ? "text-prmColor" : "text-neutral-400 animate-shake"} t:scale-125`} />
     );
   });
 
@@ -238,13 +239,9 @@ const ClientRiddles = () => {
 
   return (
     <div className="w-full min-h-screen h-screen bg-accntColor p-4 cstm-flex-col justify-start">
-      {message.active ? (
-        <Message message={message} setMessage={setMessage} />
-      ) : null}
+      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
 
-      {canSeeTutorial ? (
-        <RiddleTutorial handleCanSeeTutorial={handleCanSeeTutorial} />
-      ) : null}
+      {canSeeTutorial ? <RiddleTutorial handleCanSeeTutorial={handleCanSeeTutorial} /> : null}
 
       {gameOver.over ? (
         <Gameover
@@ -258,11 +255,13 @@ const ClientRiddles = () => {
       ) : null}
 
       <div className="w-full cstm-w-limit cstm-flex-col relative">
-        <div className="absolute top-10 left-0 z-20 l-s:top-0 cstm-flex-col gap-2 group">
+        <div className="absolute top-10 left-0 z-20 l-s:top-0 cstm-flex-col flex-col-reverse gap-2">
           <Volume
-            audioRef={audioRef}
-            setIsMuted={setIsMuted}
             isMuted={isMuted}
+            isPlaying={audioIsPlaying}
+            handleMuteVolume={handleMuteVolume}
+            handleVolumeChange={handleVolumeChange}
+            handleToggleAudio={handleToggleAudio}
           />
         </div>
       </div>

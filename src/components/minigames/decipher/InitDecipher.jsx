@@ -8,7 +8,6 @@ import decipherBgUp from "../../../../public/decipher/DecipherBGUp.svg";
 import decipherBgDown from "../../../../public/decipher/DecipherBGDown.svg";
 
 import { BsArrowLeft, BsQuestionCircle } from "react-icons/bs";
-import Volume from "../../global/Volume";
 
 const InitDecipher = (props) => {
   return (

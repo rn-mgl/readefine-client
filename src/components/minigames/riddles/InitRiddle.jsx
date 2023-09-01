@@ -1,19 +1,11 @@
 import Link from "next/link";
 import React from "react";
-import {
-  BsArrowLeft,
-  BsPatchQuestionFill,
-  BsQuestionCircle,
-} from "react-icons/bs";
+import { BsArrowLeft, BsPatchQuestionFill, BsQuestionCircle } from "react-icons/bs";
 
 const InitRiddle = (props) => {
   const letters = "RIDDLES".split("").map((r, i) => {
     return (
-      <div
-        style={{ animationDelay: `${i / 5}s` }}
-        key={i}
-        className="animate-float "
-      >
+      <div style={{ animationDelay: `${i / 5}s` }} key={i} className="animate-float ">
         <p
           style={{ animationDelay: `${i / 20}s` }}
           className="animate-slideDown font-extrabold text-4xl drop-shadow-md"
@@ -44,9 +36,7 @@ const InitRiddle = (props) => {
         <BsPatchQuestionFill className="scale-[30] opacity-10" />
       </div>
 
-      <div className="cstm-flex-row gap-0.5 animate-fadeIn w-full">
-        {letters}
-      </div>
+      <div className="cstm-flex-row gap-0.5 animate-fadeIn w-full">{letters}</div>
 
       <button
         onClick={() => {

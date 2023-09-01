@@ -15,6 +15,7 @@ import { AiFillHeart } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import Volume from "@/src/src/components/global/Volume";
+import { useAudioControls } from "@/src/src/hooks/useAudioControls";
 
 const PlayRiddles = () => {
   const [riddleData, setRiddleData] = React.useState({});
@@ -32,8 +33,14 @@ const PlayRiddles = () => {
   const [isPlaying, setIsPlaying] = React.useState(false);
   const [gameOver, setGameOver] = React.useState({ over: false, status: "" });
 
-  const [isMuted, setIsMuted] = React.useState(false);
-  const audioRef = React.useRef();
+  const {
+    audioRef,
+    isMuted,
+    isPlaying: audioIsPlaying,
+    handleMuteVolume,
+    handleVolumeChange,
+    handleToggleAudio,
+  } = useAudioControls();
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -158,12 +165,7 @@ const PlayRiddles = () => {
   // map lives
   const remainingLives = lives.status.map((alive, i) => {
     return (
-      <AiFillHeart
-        key={i}
-        className={` ${
-          alive ? "text-prmColor" : "text-neutral-400 animate-shake"
-        } t:scale-125`}
-      />
+      <AiFillHeart key={i} className={` ${alive ? "text-prmColor" : "text-neutral-400 animate-shake"} t:scale-125`} />
     );
   });
 
@@ -202,16 +204,16 @@ const PlayRiddles = () => {
         />
       ) : null}
 
-      {canSeeTutorial ? (
-        <RiddleTutorial handleCanSeeTutorial={handleCanSeeTutorial} />
-      ) : null}
+      {canSeeTutorial ? <RiddleTutorial handleCanSeeTutorial={handleCanSeeTutorial} /> : null}
 
       <div className="w-full cstm-w-limit cstm-flex-col relative">
-        <div className="absolute top-10 left-0 z-20 l-s:top-0 cstm-flex-col gap-2 group">
+        <div className="absolute top-10 left-0 z-20 l-s:top-0 cstm-flex-col flex-col-reverse gap-2">
           <Volume
-            audioRef={audioRef}
-            setIsMuted={setIsMuted}
             isMuted={isMuted}
+            isPlaying={audioIsPlaying}
+            handleMuteVolume={handleMuteVolume}
+            handleVolumeChange={handleVolumeChange}
+            handleToggleAudio={handleToggleAudio}
           />
         </div>
       </div>

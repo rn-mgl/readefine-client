@@ -3,17 +3,17 @@ import React from "react";
 import FileViewer from "../../components/global/FileViewer";
 import Confetti from "react-confetti";
 import Link from "next/link";
+import Volume from "../../components/global/Volume";
 
 import rewardMusic from "../../../public/music/reward/Reward Music.mp3";
 import rewardNotice from "../../../public/music/reward/Reward Notice.mp3";
 
 import { IoClose } from "react-icons/io5";
 import { BsArrowRight } from "react-icons/bs";
-import Volume from "../../components/global/Volume";
+import { useAudioControls } from "../../hooks/useAudioControls";
 
 const ReceiveAchievement = (props) => {
-  const [isMuted, setIsMuted] = React.useState(false);
-  const audioRef = React.useRef();
+  const { audioRef, isPlaying, isMuted, handleMuteVolume, handleToggleAudio, handleVolumeChange } = useAudioControls();
 
   const achievements = props?.achievements?.map((a) => {
     return (
@@ -51,10 +51,7 @@ const ReceiveAchievement = (props) => {
       <BsArrowRight className="scale-150  text-white" />
     </Link>
   ) : (
-    <button
-      onClick={props.handleAccomplishedAchievement}
-      className="cstm-bg-hover top-3 right-3 z-10"
-    >
+    <button onClick={props.handleAccomplishedAchievement} className="cstm-bg-hover top-3 right-3 z-10">
       <IoClose className="scale-150  text-white " />
     </button>
   );
@@ -64,23 +61,21 @@ const ReceiveAchievement = (props) => {
       className="w-full h-screen fixed top-0 left-0 p-5 z-[60]
                   backdrop-blur-md cstm-flex-col gap-5 justify-start"
     >
-      <div className="cstm-flex-row w-full relative z-20">
-        <div className="cstm-flex-col gap-2 z-10 group text-white mr-auto">
+      <div className="cstm-flex-row w-full relative z-20 items-start">
+        <div className="cstm-flex-col gap-2 z-10 text-white mr-auto flex-col-reverse">
           <Volume
-            audioRef={audioRef}
-            setIsMuted={setIsMuted}
             isMuted={isMuted}
+            isPlaying={isPlaying}
+            handleMuteVolume={handleMuteVolume}
+            handleVolumeChange={handleVolumeChange}
+            handleToggleAudio={handleToggleAudio}
           />
         </div>
 
         {buttonAction}
       </div>
 
-      <Confetti
-        width={window?.innerWidth}
-        height={window?.innerHeight}
-        className="z-10"
-      />
+      <Confetti width={window?.innerWidth} height={window?.innerHeight} className="z-10" />
 
       <audio autoPlay ref={audioRef}>
         <source src={rewardNotice} type="audio/mp3" />
