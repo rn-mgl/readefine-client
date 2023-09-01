@@ -23,7 +23,7 @@ const Customizations = (props) => {
 
           <div className="cstm-separator t:hidden " />
 
-          <div className="cstm-flex-row gap-2 t:ml-auto">
+          <div className="cstm-flex-row gap-3 t:ml-auto">
             <button
               onClick={(e) => handleViewType("single", props.setViewType)}
               value="single"
