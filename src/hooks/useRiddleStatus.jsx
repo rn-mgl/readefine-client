@@ -87,7 +87,7 @@ export const useRiddleStatus = () => {
     addToGuessEntry();
 
     if (guessString === correctWordString) {
-      handleGameOver(true, "win");
+      setGameOver({ over: true, status: "win" });
     } else {
       removeHeart();
     }
