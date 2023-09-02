@@ -79,7 +79,7 @@ const PlayRiddles = () => {
         setNewCorrectWord(wordSplit);
         setNewGuess(Array(wordLen).fill(""), 0);
         setNewRiddleData(data);
-        setNewLives();
+        setNewLives([1, 1, 1, 1, 1]);
         resetTimer();
         resetEntryGuesses();
         handleGameOverStatus(false, "");

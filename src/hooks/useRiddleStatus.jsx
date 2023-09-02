@@ -111,8 +111,8 @@ export const useRiddleStatus = () => {
   };
 
   // new set of lives
-  const setNewLives = () => {
-    setLives({ status: [1, 1, 1, 1, 1], activePos: 4 });
+  const setNewLives = (status) => {
+    setLives({ status, activePos: status?.length - 1 });
   };
 
   // new set of riddle data

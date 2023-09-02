@@ -86,7 +86,7 @@ const Dangle = () => {
           setNewDefinitionData(data.definitionData);
           setNewCorrectWord(wordSplit);
           setNewGuess(Array(wordLen).fill(""), 0);
-          setNewLives(Array(wordLen).fill(1), wordLen - 1);
+          setNewLives([1, 1, 1, 1, 1]);
           handleGameOverStatus(false, "");
         }
       } catch (error) {

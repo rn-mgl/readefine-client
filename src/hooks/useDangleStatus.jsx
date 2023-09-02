@@ -166,8 +166,8 @@ export const useDangleStatus = () => {
   };
 
   // new set of lives
-  const setNewLives = (status, activePos) => {
-    setLives({ status, activePos });
+  const setNewLives = (status) => {
+    setLives({ status, activePos: status?.length - 1 });
   };
 
   React.useEffect(() => {
