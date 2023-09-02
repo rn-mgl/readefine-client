@@ -16,25 +16,33 @@ import { useGlobalContext } from "@/src/context";
 import { decipher } from "@/src/src/functions/security";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
-import { handleCustomizationsVisible } from "@/src/src/functions/storyFns";
-import { useAudioControls } from "@/src/src/hooks/useAudioControls";
+import { useStoryPageControls } from "@/src/src/hooks/useStoryPageControls";
 
 const SingleStory = ({ params }) => {
-  const [story, setStory] = React.useState({});
-  const [pages, setPages] = React.useState([]);
   const [message, setMessage] = React.useState({
     msg: "",
     active: false,
     type: "info",
   });
 
-  const [activePage, setActivePage] = React.useState(1);
-  const [fontSize, setFontSize] = React.useState(16);
-
-  const [viewType, setViewType] = React.useState("single");
-  const [customizationsVisible, setCustomizationsVisible] = React.useState(true);
-
   const [canDeleteStory, setCanDeleteStory] = React.useState(false);
+
+  const {
+    story,
+    pages,
+    activePage,
+    fontSize,
+    viewType,
+    customizationsVisible,
+    handleIncrement,
+    handleDecrement,
+    handleFontSize,
+    handleActivePage,
+    handleCustomizationsVisible,
+    handleViewType,
+    setNewStory,
+    setNewPages,
+  } = useStoryPageControls();
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -59,7 +67,7 @@ const SingleStory = ({ params }) => {
         headers: { Authorization: user.token },
       });
       if (data) {
-        setPages(data);
+        setNewPages(data);
       }
     } catch (error) {
       console.log(error);
@@ -69,7 +77,7 @@ const SingleStory = ({ params }) => {
         type: "error",
       });
     }
-  }, [url, user, setPages, decodedStoryId]);
+  }, [url, user, setNewPages, decodedStoryId]);
 
   // get story
   const getStory = React.useCallback(async () => {
@@ -78,7 +86,7 @@ const SingleStory = ({ params }) => {
         headers: { Authorization: user.token },
       });
       if (data) {
-        setStory(data);
+        setNewStory(data);
       }
     } catch (error) {
       console.log(error);
@@ -88,7 +96,7 @@ const SingleStory = ({ params }) => {
         type: "error",
       });
     }
-  }, [url, user, setStory, decodedStoryId]);
+  }, [url, user, setNewStory, decodedStoryId]);
 
   // map story pages
   const storyPages = pages?.map((page, index, arr) => {
@@ -169,7 +177,7 @@ const SingleStory = ({ params }) => {
         storyId={params?.story_id}
         story={story}
         handleCanDeleteStory={handleCanDeleteStory}
-        handleCustomizationsVisible={() => handleCustomizationsVisible(setCustomizationsVisible)}
+        handleCustomizationsVisible={handleCustomizationsVisible}
       />
 
       {/* filter aka customizations  */}
@@ -185,8 +193,8 @@ const SingleStory = ({ params }) => {
           }
           fontSize={fontSize}
           viewType={viewType}
-          setFontSize={setFontSize}
-          setViewType={setViewType}
+          handleViewType={handleViewType}
+          handleFontSize={handleFontSize}
         />
       ) : null}
 
@@ -198,7 +206,14 @@ const SingleStory = ({ params }) => {
         <div className="w-full relative overflow-x-hidden h-full cstm-scrollbar">{storyPages}</div>
       </div>
 
-      <PageNavigation activePage={activePage} pages={pages} viewType={viewType} setActivePage={setActivePage} />
+      <PageNavigation
+        activePage={activePage}
+        pages={pages}
+        viewType={viewType}
+        handleIncrement={handleIncrement}
+        handleDecrement={handleDecrement}
+        handleActivePage={handleActivePage}
+      />
     </div>
   );
 };

@@ -1,7 +1,6 @@
 import React from "react";
 
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
-import { handleActivePage, handleDecrement, handleIncrement } from "../../functions/storyFns";
 
 const PageNavigation = (props) => {
   return (
@@ -9,12 +8,12 @@ const PageNavigation = (props) => {
       <button disabled={props.activePage === 1} className="cstm-bg-hover disabled:opacity-50">
         <BiChevronLeft
           className={`scale-150 text-black  cursor-pointer t:scale-[2]`}
-          onClick={(e) => handleDecrement(props.setActivePage, props.viewType)}
+          onClick={() => props.handleDecrement()}
         />
       </button>
 
       <input
-        onChange={(e) => handleActivePage(e.target, props.setActivePage, props.pages)}
+        onChange={(e) => props.handleActivePage(e.target)}
         type="number"
         value={props.activePage}
         min={1}
@@ -25,7 +24,7 @@ const PageNavigation = (props) => {
       <button disabled={props.activePage === props.pages.length} className="cstm-bg-hover disabled:opacity-50">
         <BiChevronRight
           className={`scale-150 text-black  cursor-pointer t:scale-[2]`}
-          onClick={() => handleIncrement(props.setActivePage, props.viewType, props.pages)}
+          onClick={() => props.handleIncrement()}
         />
       </button>
     </div>

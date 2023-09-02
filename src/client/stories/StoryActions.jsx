@@ -3,7 +3,7 @@ import Link from "next/link";
 import ActionLabel from "../../components/global/ActionLabel";
 import Volume from "../../components/global/Volume";
 
-import { BsArrowLeft, BsFillPauseFill, BsFillPlayFill, BsFilter } from "react-icons/bs";
+import { BsArrowLeft, BsFilter } from "react-icons/bs";
 import { RxDividerVertical } from "react-icons/rx";
 import { useAudioControls } from "../../hooks/useAudioControls";
 
@@ -13,7 +13,7 @@ const StoryActions = (props) => {
   const storyAudio = props.story?.audio;
 
   return (
-    <div className="w-full cstm-w-limit cstm-flex-row">
+    <div className="w-full cstm-w-limit cstm-flex-row text-prmColor">
       {storyAudio ? (
         <audio loop autoPlay ref={audioRef}>
           <source src={storyAudio} />
@@ -26,7 +26,7 @@ const StoryActions = (props) => {
 
       {storyAudio ? (
         <>
-          <div className="cstm-flex-row text-prmColor">
+          <div className="cstm-flex-row">
             <Volume
               isPlaying={isPlaying}
               isMuted={isMuted}
@@ -37,7 +37,7 @@ const StoryActions = (props) => {
           </div>
 
           <div className="opacity-20">
-            <RxDividerVertical className="scale-150" />
+            <RxDividerVertical className="scale-150 text-black" />
           </div>
         </>
       ) : null}

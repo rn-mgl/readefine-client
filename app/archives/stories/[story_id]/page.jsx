@@ -16,27 +16,36 @@ import { decipher } from "@/src/src/functions/security";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import { handleAccomplishedAchievement } from "@/src/src/functions/achievementFns";
-import { handleCustomizationsVisible } from "@/src/src/functions/storyFns";
+import { useStoryPageControls } from "@/src/src/hooks/useStoryPageControls";
 
 const SingleStory = ({ params }) => {
-  const [story, setStory] = React.useState({});
-  const [pages, setPages] = React.useState([]);
   const [message, setMessage] = React.useState({
     msg: "",
     active: false,
     type: "info",
   });
 
-  const [activePage, setActivePage] = React.useState(1);
-
-  const [customizationsVisible, setCustomizationsVisible] = React.useState(true);
-  const [fontSize, setFontSize] = React.useState(16);
-  const [viewType, setViewType] = React.useState("single");
-
   const [accomplishedAchievement, setAccomplishedAchievement] = React.useState({
     accomplished: false,
     achievements: [],
   });
+
+  const {
+    story,
+    pages,
+    activePage,
+    fontSize,
+    viewType,
+    customizationsVisible,
+    handleIncrement,
+    handleDecrement,
+    handleFontSize,
+    handleActivePage,
+    handleCustomizationsVisible,
+    handleViewType,
+    setNewStory,
+    setNewPages,
+  } = useStoryPageControls();
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -56,7 +65,7 @@ const SingleStory = ({ params }) => {
         headers: { Authorization: user.token },
       });
       if (data) {
-        setPages(data);
+        setNewPages(data);
       }
     } catch (error) {
       console.log(error);
@@ -66,7 +75,7 @@ const SingleStory = ({ params }) => {
         type: "error",
       });
     }
-  }, [url, user, setPages, decodedStoryId]);
+  }, [url, user, setNewPages, decodedStoryId]);
 
   // get story
   const getStory = React.useCallback(async () => {
@@ -75,7 +84,7 @@ const SingleStory = ({ params }) => {
         headers: { Authorization: user.token },
       });
       if (data) {
-        setStory(data);
+        setNewStory(data);
       }
     } catch (error) {
       console.log(error);
@@ -85,7 +94,7 @@ const SingleStory = ({ params }) => {
         type: "error",
       });
     }
-  }, [url, user, setStory, decodedStoryId]);
+  }, [url, user, setNewStory, decodedStoryId]);
 
   // read story
   const readStory = React.useCallback(async () => {
@@ -204,11 +213,7 @@ const SingleStory = ({ params }) => {
       ) : null}
 
       {/* user actions */}
-      <StoryActions
-        to="/archives/stories"
-        story={story}
-        handleCustomizationsVisible={() => handleCustomizationsVisible(setCustomizationsVisible)}
-      />
+      <StoryActions to="/archives/stories" story={story} handleCustomizationsVisible={handleCustomizationsVisible} />
 
       {/* can see customizations */}
       {customizationsVisible ? (
@@ -222,8 +227,8 @@ const SingleStory = ({ params }) => {
           }
           fontSize={fontSize}
           viewType={viewType}
-          setFontSize={setFontSize}
-          setViewType={setViewType}
+          handleViewType={handleViewType}
+          handleFontSize={handleFontSize}
         />
       ) : null}
 
@@ -236,7 +241,14 @@ const SingleStory = ({ params }) => {
       </div>
 
       {/* left right button */}
-      <PageNavigation activePage={activePage} pages={pages} viewType={viewType} setActivePage={setActivePage} />
+      <PageNavigation
+        activePage={activePage}
+        pages={pages}
+        viewType={viewType}
+        handleIncrement={handleIncrement}
+        handleDecrement={handleDecrement}
+        handleActivePage={handleActivePage}
+      />
     </div>
   );
 };

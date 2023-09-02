@@ -1,9 +1,9 @@
 import React from "react";
 import TextToSpeech from "../global/TextToSpeech";
-import { AiOutlineFontSize } from "react-icons/ai";
 import ActionLabel from "../global/ActionLabel";
+
+import { AiOutlineFontSize } from "react-icons/ai";
 import { TbRectangle, TbRectangleFilled } from "react-icons/tb";
-import { handleFontSize, handleViewType } from "../../functions/storyFns";
 
 const Customizations = (props) => {
   const isSingleView = props.viewType === "single";
@@ -25,7 +25,7 @@ const Customizations = (props) => {
 
           <div className="cstm-flex-row gap-3 t:ml-auto">
             <button
-              onClick={(e) => handleViewType("single", props.setViewType)}
+              onClick={() => props.handleViewType("single")}
               value="single"
               className="cstm-bg-hover relative group"
               name="singleView"
@@ -39,7 +39,7 @@ const Customizations = (props) => {
             </button>
 
             <button
-              onClick={() => handleViewType("double", props.setViewType)}
+              onClick={() => props.handleViewType("double")}
               value="double"
               className="cstm-flex-row gap-1 cstm-bg-hover relative group"
               name="doubleView"
@@ -68,7 +68,7 @@ const Customizations = (props) => {
 
               <input
                 type="range"
-                onChange={(e) => handleFontSize(e.target, props.setFontSize)}
+                onChange={(e) => props.handleFontSize(e.target)}
                 value={props.fontSize}
                 className="cursor-pointer"
               />
@@ -77,7 +77,7 @@ const Customizations = (props) => {
                 type="number"
                 value={props.fontSize}
                 className="w-12 focus:outline-prmColor p-1 px-2 text-xs text-center underline underline-offset-2 rounded-md"
-                onChange={(e) => handleFontSize(e.target, props.setFontSize)}
+                onChange={(e) => props.handleFontSize(e.target)}
               />
             </div>
           </div>
