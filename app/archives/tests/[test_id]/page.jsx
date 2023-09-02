@@ -15,7 +15,7 @@ import { useGlobalContext } from "@/src/context";
 import { decipher } from "@/src/src/functions/security";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
-import { handleAccomplishedAchievement } from "@/src/src/functions/achievementFns";
+import { useReceiveAchievement } from "@/src/src/hooks/useReceiveAchievement";
 
 const SingleTest = ({ params }) => {
   const [testData, setTestData] = React.useState({});
@@ -46,10 +46,7 @@ const SingleTest = ({ params }) => {
     choice10: { answer: "", questionId: -1 },
   });
 
-  const [accomplishedAchievement, setAccomplishedAchievement] = React.useState({
-    accomplished: false,
-    achievements: [],
-  });
+  const { accomplishedAchievement, claimNewAchievement, resetAchievement } = useReceiveAchievement();
 
   const { url } = useGlobalContext();
   const { data: session } = useSession();
@@ -93,10 +90,7 @@ const SingleTest = ({ params }) => {
 
       // if there are achievements
       if (lexileAchievementData.length) {
-        setAccomplishedAchievement({
-          accomplished: true,
-          achievements: lexileAchievementData,
-        });
+        claimNewAchievement(lexileAchievementData);
       }
     } catch (error) {
       console.log(error);
@@ -122,10 +116,7 @@ const SingleTest = ({ params }) => {
 
       // if there are achievements
       if (testAchievementData.length) {
-        setAccomplishedAchievement({
-          accomplished: true,
-          achievements: testAchievementData,
-        });
+        claimNewAchievement(testAchievementData);
       }
     } catch (error) {
       console.log(error);
@@ -319,10 +310,7 @@ const SingleTest = ({ params }) => {
       <ClientPageHeader mainHeader={testData?.title} subHeader="Test" />
 
       {accomplishedAchievement.accomplished ? (
-        <ReceiveAchievement
-          achievements={accomplishedAchievement.achievements}
-          handleAccomplishedAchievement={() => handleAccomplishedAchievement(setAccomplishedAchievement)}
-        />
+        <ReceiveAchievement achievements={accomplishedAchievement.achievements} resetAchievement={resetAchievement} />
       ) : null}
 
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}

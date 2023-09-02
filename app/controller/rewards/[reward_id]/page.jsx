@@ -38,12 +38,9 @@ const SingleReward = ({ params }) => {
   // get reward data
   const getReward = React.useCallback(async () => {
     try {
-      const { data } = await axios.get(
-        `${url}/admin_reward/${decodedRewardId}`,
-        {
-          headers: { Authorization: user.token },
-        }
-      );
+      const { data } = await axios.get(`${url}/admin_reward/${decodedRewardId}`, {
+        headers: { Authorization: user.token },
+      });
       if (data) {
         setReward(data);
       }
@@ -77,9 +74,7 @@ const SingleReward = ({ params }) => {
     <div className="w-full min-h-screen h-screen bg-accntColor p-5 cstm-flex-col gap-5 justify-start">
       <AdminPageHeader subHeader="Reward" mainHeader={reward?.reward_name} />
 
-      {message.active ? (
-        <Message message={message} setMessage={setMessage} />
-      ) : null}
+      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
 
       {canDeleteReward ? (
         <DeleteData
@@ -98,10 +93,7 @@ const SingleReward = ({ params }) => {
               <BsArrowLeft className=" text-prmColor" />
             </Link>
 
-            <Link
-              href={`/controller/rewards/edit/${params?.reward_id}`}
-              className="cstm-bg-hover"
-            >
+            <Link href={`/controller/rewards/edit/${params?.reward_id}`} className="cstm-bg-hover">
               <AiFillEdit className=" text-prmColor cursor-pointer" />
             </Link>
 
@@ -115,21 +107,17 @@ const SingleReward = ({ params }) => {
             className="p-5 rounded-2xl gap-5 cstm-flex-col overflow-auto w-full h-full 
                         justify-start bg-white text-sm shadow-md cstm-scrollbar"
           >
-            <div className="w-full h-full cstm-flex-col bg-accntColor rounded-2xl p-5">
+            <div className="w-full cstm-flex-col bg-accntColor rounded-2xl p-5 h-4/6">
               <div className="w-fit animate-float drop-shadow-md saturate-150">
                 <FileViewer src={reward?.reward} />
               </div>
             </div>
 
-            <p className="text-sm font-bold text-prmColor capitalize">
-              {reward?.reward_type}
-            </p>
-
-            <div className="cstm-separator" />
-
-            <p className="text-sm text-center h-32 overflow-y-auto cstm-scrollbar-2">
-              {reward?.description}
-            </p>
+            <div className="cstm-flex-col gap-5 h-2/6">
+              <p className="text-sm font-bold text-prmColor capitalize">{reward?.reward_type}</p>
+              <div className="cstm-separator" />
+              <p className="text-sm text-center max-h-28 overflow-y-auto cstm-scrollbar-2">{reward?.description}</p>
+            </div>
           </div>
         </div>
       </div>

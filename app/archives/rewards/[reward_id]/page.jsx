@@ -70,9 +70,7 @@ const SingleReward = ({ params }) => {
     <div className="w-full cstm-flex-col p-5 gap-5 t:gap-5 justify-start bg-accntColor max-h-screen h-screen">
       <ClientPageHeader mainHeader="Readefine" subHeader="Your Reward" />
 
-      {message.active ? (
-        <Message message={message} setMessage={setMessage} />
-      ) : null}
+      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
 
       <div className="cstm-w-limit justify-start cstm-flex-col w-full relative z-10 h-full">
         <div className="cstm-flex-col gap-5 w-full t:w-10/12 l-l:w-8/12 h-full">
@@ -82,7 +80,7 @@ const SingleReward = ({ params }) => {
 
           <div className="cstm-flex-col bg-white rounded-2xl p-5 w-full shadow-solid gap-5 text-center h-full">
             {/* reward */}
-            <div className="cstm-flex-col p-2 rounded-2xl bg-accntColor w-full relative overflow-hidden h-full">
+            <div className="cstm-flex-col p-2 rounded-2xl bg-accntColor w-full relative overflow-hidden h-4/6">
               <BiMedal className="absolute scale-[10] top-10 left-0 opacity-10 t:scale-[15] t:top-20 t:left-20 text-prmColor " />
 
               <div className="animate-float drop-shadow-md relative z-10 saturate-150 h-full cstm-flex-col">
@@ -92,21 +90,21 @@ const SingleReward = ({ params }) => {
               <BsTrophyFill className="absolute scale-[7] bottom-5 right-0 opacity-10 t:scale-[12] t:bottom-20 t:right-24 text-prmColor " />
             </div>
 
-            {/* name */}
-            <p className="font-extrabold text-xl text-prmColor cstm-flex-row">
-              <BsDot className="text-black" />
+            <div className="cstm-flex-col gap-5 h-2/6">
+              {/* name */}
+              <p className="font-extrabold text-xl text-prmColor cstm-flex-row">
+                <BsDot className="text-black" />
 
-              {rewardData?.reward_name}
+                {rewardData?.reward_name}
 
-              <BsDot className="text-black" />
-            </p>
+                <BsDot className="text-black" />
+              </p>
 
-            <div className="cstm-separator" />
+              <div className="cstm-separator" />
 
-            {/* description */}
-            <p className="text-sm h-32 overflow-y-auto cstm-scrollbar-2">
-              {rewardData?.description}
-            </p>
+              {/* description */}
+              <p className="text-sm max-h-28 overflow-y-auto cstm-scrollbar-2 ">{rewardData?.description}</p>
+            </div>
           </div>
         </div>
       </div>

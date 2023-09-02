@@ -20,7 +20,7 @@ const ReceiveAchievement = (props) => {
       <div
         key={a.achievement_id}
         className="bg-white p-5 rounded-2xl w-full m-s:min-w-full t:min-w-0 shadow-solid cstm-flex-col m-2 
-                    gap-5 animate-slideDown relative z-10 t:w-80 l-l:w-[30rem]"
+                    gap-5 animate-slideDown relative z-10 t:w-[25rem] l-l:w-[30rem]"
       >
         <p className="font-bold">Achievement Unlocked!</p>
 
@@ -51,7 +51,7 @@ const ReceiveAchievement = (props) => {
       <BsArrowRight className="scale-150  text-white" />
     </Link>
   ) : (
-    <button onClick={props.handleAccomplishedAchievement} className="cstm-bg-hover top-3 right-3 z-10">
+    <button onClick={props.resetAchievement} className="cstm-bg-hover top-3 right-3 z-10">
       <IoClose className="scale-150  text-white " />
     </button>
   );

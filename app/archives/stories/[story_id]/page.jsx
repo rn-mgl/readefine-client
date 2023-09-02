@@ -15,19 +15,14 @@ import { useGlobalContext } from "@/src/context";
 import { decipher } from "@/src/src/functions/security";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
-import { handleAccomplishedAchievement } from "@/src/src/functions/achievementFns";
 import { useStoryPageControls } from "@/src/src/hooks/useStoryPageControls";
+import { useReceiveAchievement } from "@/src/src/hooks/useReceiveAchievement";
 
 const SingleStory = ({ params }) => {
   const [message, setMessage] = React.useState({
     msg: "",
     active: false,
     type: "info",
-  });
-
-  const [accomplishedAchievement, setAccomplishedAchievement] = React.useState({
-    accomplished: false,
-    achievements: [],
   });
 
   const {
@@ -46,6 +41,8 @@ const SingleStory = ({ params }) => {
     setNewStory,
     setNewPages,
   } = useStoryPageControls();
+
+  const { accomplishedAchievement, claimNewAchievement, resetAchievement } = useReceiveAchievement();
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -119,10 +116,7 @@ const SingleStory = ({ params }) => {
 
         // if there are achievements
         if (achievementData.length) {
-          setAccomplishedAchievement({
-            accomplished: true,
-            achievements: achievementData,
-          });
+          claimNewAchievement(achievementData);
         }
       }
     } catch (error) {
@@ -133,7 +127,7 @@ const SingleStory = ({ params }) => {
         type: "error",
       });
     }
-  }, [decodedStoryId, url, user?.token]);
+  }, [decodedStoryId, url, user?.token, claimNewAchievement]);
 
   // map pages
   const storyPages = pages?.map((page, index, arr) => {
@@ -206,10 +200,7 @@ const SingleStory = ({ params }) => {
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
 
       {accomplishedAchievement.accomplished ? (
-        <ReceiveAchievement
-          achievements={accomplishedAchievement.achievements}
-          handleAccomplishedAchievement={() => handleAccomplishedAchievement(setAccomplishedAchievement)}
-        />
+        <ReceiveAchievement achievements={accomplishedAchievement.achievements} resetAchievement={resetAchievement} />
       ) : null}
 
       {/* user actions */}

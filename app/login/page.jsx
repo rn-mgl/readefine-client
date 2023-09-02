@@ -18,19 +18,14 @@ import { useRouter } from "next/navigation";
 import { signIn, useSession } from "next-auth/react";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { CiUser } from "react-icons/ci";
-import { handleAccomplishedAchievement } from "@/src/src/functions/achievementFns";
+import { useReceiveAchievement } from "@/src/src/hooks/useReceiveAchievement";
 
 const Login = () => {
+  const [visiblePassword, setVisiblePassword] = React.useState(false);
   const [loginData, setLoginData] = React.useState({
     candidateIdentifier: "",
     candidatePassword: "",
   });
-  const [accomplishedAchievement, setAccomplishedAchievement] = React.useState({
-    accomplished: false,
-    achievements: [],
-  });
-  const [achievementUrl, setAchievementUrl] = React.useState("/archives");
-  const [visiblePassword, setVisiblePassword] = React.useState(false);
   const [message, setMessage] = React.useState({
     msg: "",
     active: false,
@@ -38,6 +33,9 @@ const Login = () => {
   });
   const [loading, setLoading] = React.useState(false);
   const [firstLogin, setFirstLogin] = React.useState(false);
+
+  const { accomplishedAchievement, achievementUrl, claimNewAchievement, resetAchievement, setNewAchievementUrl } =
+    useReceiveAchievement();
 
   const { url } = useGlobalContext();
   const router = useRouter();
@@ -107,13 +105,8 @@ const Login = () => {
       // if there are achievements
       if (achievementData.length) {
         setLoading(false);
-        setAccomplishedAchievement({
-          accomplished: true,
-          achievements: achievementData,
-        });
-        setAchievementUrl(
-          user?.isVerified ? "/archives" : "/sending?purpose=verify"
-        );
+        claimNewAchievement(achievementData);
+        setNewAchievementUrl(user?.isVerified ? "/archives" : "/sending?purpose=verify");
       } else {
         router.push("/archives");
       }
@@ -126,7 +119,7 @@ const Login = () => {
         type: "error",
       });
     }
-  }, [router, url, user]);
+  }, [router, url, user, claimNewAchievement, setNewAchievementUrl]);
 
   const addSession = React.useCallback(async () => {
     try {
@@ -180,16 +173,12 @@ const Login = () => {
         <ReceiveAchievement
           achievements={accomplishedAchievement.achievements}
           url={achievementUrl}
-          handleAccomplishedAchievement={() =>
-            handleAccomplishedAchievement(setAccomplishedAchievement)
-          }
+          handleAccomplishedAchievement={resetAchievement}
         />
       ) : null}
 
       {/* if message has popped up */}
-      {message.active ? (
-        <Message message={message} setMessage={setMessage} />
-      ) : null}
+      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
 
       <p className=" font-extrabold text-2xl text-prmColor">Log In</p>
 
@@ -230,21 +219,12 @@ const Login = () => {
         />
 
         {/* link if password is forgotten */}
-        <Link
-          className="text-xs text-white underline underline-offset-2"
-          href="/forgot"
-        >
+        <Link className="text-xs text-white underline underline-offset-2" href="/forgot">
           Forgot Password?
         </Link>
 
         {/* submit form */}
-        <ButtonComp
-          type="submit"
-          fontColor="text-accntColor"
-          bgColor="bg-prmColor"
-          label="Log In"
-          css="w-full"
-        />
+        <ButtonComp type="submit" fontColor="text-accntColor" bgColor="bg-prmColor" label="Log In" css="w-full" />
       </form>
 
       {/* render on phone */}
