@@ -7,44 +7,39 @@ import Link from "next/link";
 import Message from "@/src/src/components/global/Message";
 import ScorePopup from "@/src/src/components/tests/ScorePopup";
 import TestResult from "@/src/src/client/tests/TestResult";
+import DeleteData from "@/src/src/admin/global/DeleteData";
 
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { BsArrowLeft } from "react-icons/bs";
 import { useGlobalContext } from "@/src/context";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { choicesStyle, computeScore, handleIsFinished, shuffleQuestions } from "@/src/src/functions/testFns";
+import { choicesStyle, shuffleQuestions } from "@/src/src/functions/testFns";
 import { decipher } from "@/src/src/functions/security";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
-import DeleteData from "@/src/src/admin/global/DeleteData";
+import { useTestControls } from "@/src/src/hooks/useTestControls";
 
 const SingleTest = ({ params }) => {
-  const [test, setTest] = React.useState({});
-  const [questions, setQuestions] = React.useState([]);
+  const [canDeleteTest, setCanDeleteTest] = React.useState(false);
+  const [canSeeResult, setCanSeeResult] = React.useState(false); // see result
   const [message, setMessage] = React.useState({
     msg: "",
     active: false,
     type: "info",
   });
 
-  const [isFinished, setIsFinished] = React.useState(false);
-  const [score, setScore] = React.useState(0);
-
-  const [canDeleteTest, setCanDeleteTest] = React.useState(false);
-  const [canSeeResult, setCanSeeResult] = React.useState(false); // see result
-
-  const [selectedChoices, setSelectedChoices] = React.useState({
-    choice1: { answer: "", questionId: -1 },
-    choice2: { answer: "", questionId: -1 },
-    choice3: { answer: "", questionId: -1 },
-    choice4: { answer: "", questionId: -1 },
-    choice5: { answer: "", questionId: -1 },
-    choice6: { answer: "", questionId: -1 },
-    choice7: { answer: "", questionId: -1 },
-    choice8: { answer: "", questionId: -1 },
-    choice9: { answer: "", questionId: -1 },
-    choice10: { answer: "", questionId: -1 },
-  });
+  const {
+    testData,
+    questions,
+    isFinished,
+    score,
+    selectedChoices,
+    handleIsFinished,
+    handleSelectedChoices,
+    computeScore,
+    setNewTestData,
+    setNewQuestions,
+  } = useTestControls();
 
   const { url } = useGlobalContext();
   const { data: session } = useSession({ required: true });
@@ -72,7 +67,7 @@ const SingleTest = ({ params }) => {
 
       if (data) {
         shuffleQuestions(data);
-        setQuestions(data);
+        setNewQuestions(data);
       }
     } catch (error) {
       console.log(error);
@@ -82,7 +77,7 @@ const SingleTest = ({ params }) => {
         type: "error",
       });
     }
-  }, [url, user, decodedTestId, setQuestions]);
+  }, [url, user, decodedTestId, setNewQuestions]);
 
   // get test
   const getTest = React.useCallback(async () => {
@@ -93,7 +88,7 @@ const SingleTest = ({ params }) => {
 
       // if no test, move to add test page
       if (data) {
-        setTest(data);
+        setNewTestData(data);
       } else {
         router.push(`/controller/tests/add/${params?.test_id}`);
       }
@@ -106,17 +101,20 @@ const SingleTest = ({ params }) => {
       });
       router.push(`/controller/tests/add/${params?.test_id}`);
     }
-  }, [url, user, decodedTestId, router, params?.test_id]);
+  }, [url, user, decodedTestId, router, params?.test_id, setNewTestData]);
 
   // map questions
   const mappedQuestions = questions.map((q, i) => {
     return (
       <div className="p-5 bg-white rounded-md w-full cstm-flex-col gap-5 items-start" key={q.question_id}>
         <p className="font-bold">{q.question}</p>
+
         <div className="cstm-separator" />
+
         <div className="cstm-flex-col gap-3 w-full t:cstm-flex-row">
           {[1, 2, 3, 4].map((choiceNumber) => {
             const currChoice = q[`choice_${choiceNumber}`];
+
             return (
               <React.Fragment key={choiceNumber}>
                 <TestChoices
@@ -126,7 +124,7 @@ const SingleTest = ({ params }) => {
                   choice={currChoice}
                   name={`choice${i + 1}`}
                   selectedChoices={selectedChoices}
-                  setSelectedChoices={setSelectedChoices}
+                  handleSelectedChoices={handleSelectedChoices}
                   questionId={q.question_id}
                 />
               </React.Fragment>
@@ -161,17 +159,17 @@ const SingleTest = ({ params }) => {
 
   return (
     <div className="p-5 w-full min-h-screen bg-accntColor cstm-flex-col gap-5">
-      <AdminPageHeader subHeader="Tests" mainHeader={test?.title} />
+      <AdminPageHeader subHeader="Tests" mainHeader={testData?.title} />
 
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
 
-      {isFinished ? <ScorePopup score={score} handleIsFinished={() => handleIsFinished(setIsFinished)} /> : null}
+      {isFinished ? <ScorePopup score={score} handleIsFinished={() => handleIsFinished(false)} /> : null}
 
       {canDeleteTest ? (
         <DeleteData
           apiRoute={`${url}/admin_test/${decodedTestId}`}
           returnRoute="/controller/tests"
-          confirmation={test?.title}
+          confirmation={testData?.title}
           handleCanDeleteData={handleCanDeleteTest}
         />
       ) : null}
@@ -204,7 +202,10 @@ const SingleTest = ({ params }) => {
 
           <div className="cstm-flex-col w-full gap-5 t:cstm-flex-row ">
             <button
-              onClick={() => computeScore(setScore, setIsFinished, questions, selectedChoices)}
+              onClick={() => {
+                computeScore();
+                handleIsFinished(true);
+              }}
               className={`p-2 bg-prmColor text-scndColor text-sm rounded-full w-full mt-5 t:mt-0 
                       t:w-fit t:px-10 t:mr-auto shadow-solid shadow-indigo-900`}
             >

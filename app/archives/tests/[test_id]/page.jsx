@@ -10,41 +10,37 @@ import TestActions from "@/src/src/client/tests/TestActions";
 import PageNavigation from "@/src/src/client/tests/PageNavigation";
 
 import { useSession } from "next-auth/react";
-import { computeScore, handleIsFinished, shuffleQuestions } from "@/src/src/functions/testFns";
+import { shuffleQuestions } from "@/src/src/functions/testFns";
 import { useGlobalContext } from "@/src/context";
 import { decipher } from "@/src/src/functions/security";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import { useReceiveAchievement } from "@/src/src/hooks/useReceiveAchievement";
+import { useTestControls } from "@/src/src/hooks/useTestControls";
 
 const SingleTest = ({ params }) => {
-  const [testData, setTestData] = React.useState({});
-  const [questions, setQuestions] = React.useState([]);
   const [userLexile, setUserLexile] = React.useState(-1);
+  const [activePage, setActivePage] = React.useState(0);
+  const [hasSubmitted, setHasSubmitted] = React.useState(false);
+
   const [message, setMessage] = React.useState({
     msg: "",
     active: false,
     type: "info",
   });
 
-  const [activePage, setActivePage] = React.useState(0);
-
-  const [isFinished, setIsFinished] = React.useState(false);
-  const [hasSubmitted, setHasSubmitted] = React.useState(false);
-  const [score, setScore] = React.useState(0);
-
-  const [selectedChoices, setSelectedChoices] = React.useState({
-    choice1: { answer: "", questionId: -1 },
-    choice2: { answer: "", questionId: -1 },
-    choice3: { answer: "", questionId: -1 },
-    choice4: { answer: "", questionId: -1 },
-    choice5: { answer: "", questionId: -1 },
-    choice6: { answer: "", questionId: -1 },
-    choice7: { answer: "", questionId: -1 },
-    choice8: { answer: "", questionId: -1 },
-    choice9: { answer: "", questionId: -1 },
-    choice10: { answer: "", questionId: -1 },
-  });
+  const {
+    testData,
+    questions,
+    isFinished,
+    score,
+    selectedChoices,
+    handleIsFinished,
+    handleSelectedChoices,
+    computeScore,
+    setNewTestData,
+    setNewQuestions,
+  } = useTestControls();
 
   const { accomplishedAchievement, claimNewAchievement, resetAchievement } = useReceiveAchievement();
 
@@ -144,11 +140,11 @@ const SingleTest = ({ params }) => {
     }
 
     // get score
-    const currScore = computeScore(setScore, setIsFinished, questions, selectedChoices);
+    const score = computeScore();
 
     // check if passed, do not record if not
-    if (currScore < 7) {
-      setIsFinished(true);
+    if (score < 7) {
+      handleIsFinished(true);
       return;
     }
 
@@ -160,7 +156,7 @@ const SingleTest = ({ params }) => {
         {
           selectedChoices,
           testId: decodedTestId,
-          score: currScore,
+          score,
           legibleForGrowth,
           lexile: userLexile?.lexile,
         },
@@ -183,7 +179,7 @@ const SingleTest = ({ params }) => {
         }
 
         // can see result after record
-        setIsFinished(true);
+        handleIsFinished(true);
         setHasSubmitted(true);
       }
     } catch (error) {
@@ -203,8 +199,9 @@ const SingleTest = ({ params }) => {
         const { data } = await axios.get(`${url}/test/${decodedTestId}`, {
           headers: { Authorization: user?.token },
         });
+
         if (data) {
-          setTestData(data);
+          setNewTestData(data);
         }
       } catch (error) {
         console.log(error);
@@ -215,7 +212,7 @@ const SingleTest = ({ params }) => {
         });
       }
     }
-  }, [url, user?.token, decodedTestId]);
+  }, [url, user?.token, decodedTestId, setNewTestData]);
 
   // get questions
   const getQuestions = React.useCallback(async () => {
@@ -225,8 +222,10 @@ const SingleTest = ({ params }) => {
           params: { testId: decodedTestId },
           headers: { Authorization: user?.token },
         });
+
         if (data) {
-          setQuestions(shuffleQuestions(data));
+          const shuffledQuestions = shuffleQuestions(data);
+          setNewQuestions(shuffledQuestions);
         }
       } catch (error) {
         console.log(error);
@@ -237,7 +236,7 @@ const SingleTest = ({ params }) => {
         });
       }
     }
-  }, [user?.token, url, decodedTestId]);
+  }, [user?.token, url, decodedTestId, setNewQuestions]);
 
   // get user lexile
   const getUserLexile = React.useCallback(async () => {
@@ -276,7 +275,7 @@ const SingleTest = ({ params }) => {
           index={index}
           selectedChoices={selectedChoices}
           activePage={activePage}
-          setSelectedChoices={setSelectedChoices}
+          handleSelectedChoices={handleSelectedChoices}
           maxPage={10}
         />
       </React.Fragment>
@@ -316,7 +315,7 @@ const SingleTest = ({ params }) => {
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
 
       {isFinished ? (
-        <ScorePopup url="/archives/tests" score={score} handleIsFinished={() => handleIsFinished(setIsFinished)} />
+        <ScorePopup url="/archives/tests" score={score} handleIsFinished={() => handleIsFinished(false)} />
       ) : null}
 
       <div className="cstm-w-limit cstm-flex-col gap-5 w-full h-full relative">

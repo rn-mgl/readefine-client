@@ -1,13 +1,11 @@
 import React from "react";
-import { RiRecordCircleFill } from "react-icons/ri";
-import { handleSelectedChoices } from "../../functions/testFns";
 
 const TestChoices = (props) => {
   const clicked = props.selectedChoices[props.name].answer === props.choice;
 
   return (
     <button
-      onClick={(e) => handleSelectedChoices(props.questionId, e.target, props.setSelectedChoices)}
+      onClick={(e) => props.handleSelectedChoices(props.questionId, e.target)}
       value={props.choice}
       name={props.name}
       type="button"

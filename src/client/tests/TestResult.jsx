@@ -28,9 +28,7 @@ const TestResult = (props) => {
                   </div>
                 )}
               </div>
-              <p className={`${choice ? "opacity-100" : "opacity-50"}`}>
-                {choice ? choice : "No Answer"}
-              </p>
+              <p className={`${choice ? "opacity-100" : "opacity-50"}`}>{choice ? choice : "No Answer"}</p>
             </div>
             <div className="cstm-separator t:hidden" />
             <div className="cstm-flex-col w-full gap-2 text-center t:w-full bg-prmColor p-2 rounded-md h-full">

@@ -26,8 +26,8 @@ const QuestionSlide = (props) => {
           choice={currChoice}
           name={props.name}
           selectedChoices={props.selectedChoices}
-          setSelectedChoices={props.setSelectedChoices}
           questionId={props.questionId}
+          handleSelectedChoices={props.handleSelectedChoices}
         />
       </React.Fragment>
     );
