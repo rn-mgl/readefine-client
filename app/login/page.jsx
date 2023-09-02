@@ -173,7 +173,7 @@ const Login = () => {
         <ReceiveAchievement
           achievements={accomplishedAchievement.achievements}
           url={achievementUrl}
-          handleAccomplishedAchievement={resetAchievement}
+          resetAchievement={resetAchievement}
         />
       ) : null}
 
