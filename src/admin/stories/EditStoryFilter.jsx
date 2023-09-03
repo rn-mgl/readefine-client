@@ -18,7 +18,7 @@ const EditStoryFilter = (props) => {
             name="file"
             id="fileCover"
             onChange={(e) => props.selectedImageViewer(e)}
-            defaultValue=""
+            ref={props.rawImage}
           />
           <BiImage className="scale-150 text-prmColor peer-checked" />
         </label>
@@ -36,6 +36,7 @@ const EditStoryFilter = (props) => {
             name="audio"
             id="audio"
             onChange={(e) => props.selectedAudioViewer(e)}
+            ref={props.rawAudio}
           />
           <BiMusic className="scale-150 text-prmColor peer-checked" />
         </label>

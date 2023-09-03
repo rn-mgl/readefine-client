@@ -45,6 +45,8 @@ const AddStory = () => {
     removeSelectedImage,
     removeSelectedAudio,
     uploadFile,
+    hasRawAudio,
+    hasRawImage,
   } = useFileControls();
 
   const { data: session } = useSession({ required: true });
@@ -113,8 +115,8 @@ const AddStory = () => {
     // book image
     let bookCover = null;
 
-    if (rawImage) {
-      bookCover = await uploadFile("readefine_admin_file", rawImage);
+    if (hasRawImage()) {
+      bookCover = await uploadFile("readefine_admin_file", rawImage.current?.files);
     } else {
       setLoading(false);
       setMessage({ active: true, msg: "You did not add a book cover.", type: "error" });
@@ -126,8 +128,8 @@ const AddStory = () => {
     // book audio
     let bookAudio = null;
 
-    if (rawAudio) {
-      bookAudio = await uploadFile("readefine_admin_file", rawAudio);
+    if (hasRawAudio()) {
+      bookAudio = await uploadFile("readefine_admin_file", rawAudio.current?.files);
     }
 
     storyFilter.bookAudio = bookAudio;
@@ -202,29 +204,33 @@ const AddStory = () => {
       >
         <AddStoryFilter
           storyFilter={storyFilter}
+          rawAudio={rawAudio}
+          rawImage={rawImage}
           addPage={addPage}
           handleStoryFilter={handleStoryFilter}
           selectedImageViewer={selectedImageViewer}
           selectedAudioViewer={selectedAudioViewer}
         />
 
-        {audioFile.src ? (
-          <AudioPreview
-            src={audioFile.src}
-            name={audioFile.name}
-            clearAudio={removeSelectedAudio}
-            purpose="Book Audio"
-          />
-        ) : null}
+        <div className="cstm-flex-col gap-5 w-full t:w-96 l-l:w-[30rem]">
+          {audioFile.src ? (
+            <AudioPreview
+              src={audioFile.src}
+              name={audioFile.name}
+              clearAudio={removeSelectedAudio}
+              purpose="Book Audio"
+            />
+          ) : null}
 
-        {imageFile.src ? (
-          <FilePreview
-            src={imageFile.src}
-            name={imageFile.name}
-            clearFiles={removeSelectedImage}
-            purpose="Book Cover"
-          />
-        ) : null}
+          {imageFile.src ? (
+            <FilePreview
+              src={imageFile.src}
+              name={imageFile.name}
+              clearFiles={removeSelectedImage}
+              purpose="Book Cover"
+            />
+          ) : null}
+        </div>
 
         {allPages}
 

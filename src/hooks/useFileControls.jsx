@@ -4,11 +4,11 @@ import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 
 export const useFileControls = () => {
-  const [imageFile, setImageFile] = React.useState({ src: null, name: null });
-  const [rawImage, setRawImage] = React.useState(null);
+  const [imageFile, setImageFile] = React.useState({ src: "", name: "" });
+  const rawImage = React.useRef(null);
 
-  const [audioFile, setAudioFile] = React.useState({ src: null, name: null });
-  const [rawAudio, setRawAudio] = React.useState(null);
+  const [audioFile, setAudioFile] = React.useState({ src: "", name: "" });
+  const rawAudio = React.useRef(null);
 
   const { url } = useGlobalContext();
   const { data: session } = useSession();
@@ -31,7 +31,9 @@ export const useFileControls = () => {
     }
 
     setImageFile({ src, name });
-    setRawImage(currImageFile);
+    if (rawImage.current) {
+      rawImage.current.files = currImageFile;
+    }
   };
 
   const selectedAudioViewer = (e) => {
@@ -51,17 +53,51 @@ export const useFileControls = () => {
     }
 
     setAudioFile({ src, name });
-    setRawAudio(currAudioFile);
+    if (rawAudio.current) {
+      rawAudio.current.files = currAudioFile;
+    }
   };
 
   const removeSelectedImage = () => {
     setImageFile({ src: null, name: null });
-    setRawImage(null);
+    if (rawImage.current) {
+      rawImage.current.value = null;
+    }
   };
 
   const removeSelectedAudio = () => {
     setAudioFile({ src: null, name: null });
-    setRawAudio(null);
+    if (rawAudio.current) {
+      rawAudio.current.value = null;
+    }
+  };
+
+  const hasRawImage = () => {
+    const file = rawImage.current?.files;
+
+    if (!file || file.length < 1) {
+      return false;
+    }
+
+    if (!file[0]) {
+      return false;
+    }
+
+    return true;
+  };
+
+  const hasRawAudio = () => {
+    const file = rawAudio.current?.files;
+
+    if (!file || file.length < 1) {
+      return false;
+    }
+
+    if (!file[0]) {
+      return false;
+    }
+
+    return true;
   };
 
   const uploadFile = async (path, file) => {
@@ -98,5 +134,7 @@ export const useFileControls = () => {
     removeSelectedImage,
     removeSelectedAudio,
     uploadFile,
+    hasRawImage,
+    hasRawAudio,
   };
 };

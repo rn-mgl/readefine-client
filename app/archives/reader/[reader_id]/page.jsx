@@ -241,22 +241,20 @@ const Reader = ({ params }) => {
   });
 
   // map achievements and rewards
-  const achievementsAndRewards = userActivities?.achievementData?.map(
-    (reward) => {
-      const cipheredRewardId = cipher(reward.reward_id);
-      return (
-        <React.Fragment key={reward.reward_id}>
-          <RewardsCards
-            image={reward.reward}
-            title={reward.reward_name}
-            type={reward.reward_type}
-            isReceived={reward.is_received}
-            to={`/archives/rewards/${cipheredRewardId}`}
-          />
-        </React.Fragment>
-      );
-    }
-  );
+  const achievementsAndRewards = userActivities?.achievementData?.map((reward) => {
+    const cipheredRewardId = cipher(reward.reward_id);
+    return (
+      <React.Fragment key={reward.reward_id}>
+        <RewardsCards
+          image={reward.reward}
+          title={reward.reward_name}
+          type={reward.reward_type}
+          isReceived={reward.is_received}
+          to={`/archives/rewards/${cipheredRewardId}`}
+        />
+      </React.Fragment>
+    );
+  });
 
   // map logged sessions
   const loggedSessions = userActivities?.sessionsData?.map((session) => {
@@ -300,9 +298,7 @@ const Reader = ({ params }) => {
     >
       <ClientPageHeader mainHeader="Readefine" subHeader="Profile" />
 
-      {message.active ? (
-        <Message message={message} setMessage={setMessage} />
-      ) : null}
+      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
 
       {showLexileMessage ? (
         <LowLexileTestMessage
@@ -312,12 +308,7 @@ const Reader = ({ params }) => {
         />
       ) : null}
 
-      {seeTestRecord ? (
-        <TestRecord
-          testId={seeTestRecord}
-          handleSeeTestRecord={handleSeeTestRecord}
-        />
-      ) : null}
+      {seeTestRecord ? <TestRecord testId={seeTestRecord} handleSeeTestRecord={handleSeeTestRecord} /> : null}
 
       {canEditGradeLevel ? (
         <EditGradeLevel
@@ -330,9 +321,7 @@ const Reader = ({ params }) => {
 
       {canEditMain ? <EditMain handleCanEditMain={handleCanEditMain} /> : null}
 
-      {canChangePassword ? (
-        <ChangePassword handleCanChangePassword={handleCanChangePassword} />
-      ) : null}
+      {canChangePassword ? <ChangePassword handleCanChangePassword={handleCanChangePassword} /> : null}
 
       <div className="cstm-w-limit cstm-flex-col gap-5 w-full">
         <MainProfile
@@ -371,9 +360,7 @@ const Reader = ({ params }) => {
 
         {/* answers */}
         <div className="cstm-flex-col gap-5 w-full text-center bg-white p-5 rounded-2xl">
-          <p className="text-xl font-extrabold t:mr-auto text-prmColor">
-            Your Answers
-          </p>
+          <p className="text-xl font-extrabold t:mr-auto text-prmColor">Your Answers</p>
 
           <div className="cstm-flex-col gap-5 w-full">
             <ActivityCard
@@ -408,9 +395,7 @@ const Reader = ({ params }) => {
 
         {/* session */}
         <div className="cstm-flex-col gap-5 w-full text-center bg-white p-5 rounded-2xl">
-          <p className="text-2xl font-extrabold t:mr-auto text-prmColor">
-            Your Sessions
-          </p>
+          <p className="text-2xl font-extrabold t:mr-auto text-prmColor">Your Sessions</p>
 
           <ActivityCard
             label="Logs"

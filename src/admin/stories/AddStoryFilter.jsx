@@ -18,6 +18,7 @@ const AddStoryFilter = (props) => {
             name="file"
             id="fileCover"
             onChange={(e) => props.selectedImageViewer(e)}
+            ref={props.rawImage}
           />
           <BiImage className="scale-150 text-prmColor peer-checked" />
         </label>
@@ -37,6 +38,7 @@ const AddStoryFilter = (props) => {
             name="audio"
             id="audio"
             onChange={(e) => props.selectedAudioViewer(e)}
+            ref={props.rawAudio}
           />
           <BiMusic className="scale-150 text-prmColor peer-checked" />
         </label>

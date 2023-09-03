@@ -26,7 +26,7 @@ const AddReward = () => {
   const [loading, setLoading] = React.useState(false);
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
 
-  const { imageFile, rawImage, selectedImageViewer, removeSelectedImage, uploadFile } = useFileControls();
+  const { imageFile, rawImage, selectedImageViewer, removeSelectedImage, uploadFile, hasRawImage } = useFileControls();
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -56,8 +56,8 @@ const AddReward = () => {
     let rewardImage = null;
 
     // check for reward image
-    if (rawImage) {
-      rewardImage = await uploadFile("readefine_admin_file", rawImage);
+    if (hasRawImage()) {
+      rewardImage = await uploadFile("readefine_admin_file", rawImage.current?.files);
     } else {
       setLoading(false);
       setHasSubmitted(false);
@@ -147,7 +147,10 @@ const AddReward = () => {
             </div>
           </div>
 
-          <div className="table-fixed p-5 rounded-2xl cstm-flex-col overflow-auto w-full h-[70vh] justify-start items-start bg-white text-sm gap-5 shadow-md cstm-scrollbar">
+          <div
+            className="table-fixed p-5 rounded-2xl cstm-flex-col overflow-auto w-full h-[70vh] 
+                          justify-start items-start bg-white text-sm gap-5 shadow-md cstm-scrollbar"
+          >
             <div className="w-full h-full cstm-flex-col bg-accntColor rounded-2xl">
               {/* show if there is image selected */}
               {imageFile.src ? (
@@ -172,6 +175,7 @@ const AddReward = () => {
               name="rewardImage"
               id="rewardImage"
               onChange={selectedImageViewer}
+              ref={rawImage}
             />
 
             <BiImage className="scale-150 text-prmColor peer-checked" />

@@ -23,7 +23,7 @@ const EditMain = (props) => {
   const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
   const [loading, setLoading] = React.useState(false);
 
-  const { imageFile, rawImage, removeSelectedImage, selectedImageViewer, uploadFile } = useFileControls();
+  const { imageFile, rawImage, removeSelectedImage, selectedImageViewer, uploadFile, hasRawImage } = useFileControls();
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -63,8 +63,8 @@ const EditMain = (props) => {
       return;
     }
 
-    if (rawImage) {
-      profileImage = await uploadFile("readefine_admin_file", rawImage);
+    if (hasRawImage()) {
+      profileImage = await uploadFile("readefine_admin_file", rawImage.current?.files);
     }
 
     const randomIndex = Math.floor(Math.random() * avatars.length);
@@ -158,6 +158,7 @@ const EditMain = (props) => {
                   formNoValidate
                   name="file"
                   onChange={(e) => selectedImageViewer(e)}
+                  ref={rawImage}
                 />
                 <ActionLabel label="Add Profile Picture" />
                 <BiImage className="scale-150 text-prmColor peer-checked" />

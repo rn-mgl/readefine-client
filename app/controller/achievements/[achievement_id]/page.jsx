@@ -4,8 +4,6 @@ import React from "react";
 import axios from "axios";
 import AdminPageHeader from "@/src/src/admin/global/PageHeader";
 import Link from "next/link";
-import FileViewer from "@/src/src/components/global/FileViewer";
-import DeleteAchievement from "@/src/src/admin/achievements/DeleteAchievement";
 import Message from "@/src/src/components/global/Message";
 
 import { useSession } from "next-auth/react";
@@ -17,6 +15,7 @@ import { decipher } from "@/src/src/functions/security";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import DeleteData from "@/src/src/admin/global/DeleteData";
+import Image from "next/image";
 
 const SingleAchievement = ({ params }) => {
   const [achievement, setAchievement] = React.useState({});
@@ -86,10 +85,7 @@ const SingleAchievement = ({ params }) => {
           <BsArrowLeft />
         </Link>
 
-        <Link
-          href={`/controller/achievements/edit/${params?.achievement_id}`}
-          className="cstm-bg-hover"
-        >
+        <Link href={`/controller/achievements/edit/${params?.achievement_id}`} className="cstm-bg-hover">
           <AiFillEdit />
         </Link>
 
@@ -136,9 +132,7 @@ const SingleAchievement = ({ params }) => {
             <div className="w-full p-5 bg-white rounded-2xl cstm-flex-col gap-2 h-full">
               <p className="text-sm">Reward Name</p>
 
-              <p className="text-justify font-bold text-prmColor text-lg">
-                {achievement?.reward_name}
-              </p>
+              <p className="text-justify font-bold text-prmColor text-lg">{achievement?.reward_name}</p>
             </div>
           </div>
 
@@ -146,7 +140,15 @@ const SingleAchievement = ({ params }) => {
           <div className="w-full cstm-flex-col h-full">
             <div className="w-full p-5 bg-white rounded-2xl cstm-flex-col gap-2 h-full ">
               <div className="drop-shadow-lg w-full animate-float t:w-60 saturate-150">
-                <FileViewer src={achievement?.reward} width="w-full" />
+                <Image
+                  src={achievement?.reward}
+                  alt="viewer"
+                  width={350}
+                  height={350}
+                  className="w-full rounded-2xl"
+                  draggable={false}
+                  priority
+                />
               </div>
             </div>
           </div>

@@ -3,7 +3,7 @@ import { IoClose } from "react-icons/io5";
 
 const AudioPreview = (props) => {
   return (
-    <div className="w-full cstm-flex-col rounded-2xl p-2 gap-2 t:w-80">
+    <div className="w-full cstm-flex-col rounded-2xl p-2 gap-2">
       <audio controls className="w-full">
         <source src={props.src} />
       </audio>

@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import FileViewer from "../global/FileViewer";
+import Image from "next/image";
 
 const StorySinglePage = (props) => {
   const scrollRef = React.useRef(null);
@@ -29,14 +29,22 @@ const StorySinglePage = (props) => {
       <p
         style={{ fontSize: `${props.fontSize}px`, lineHeight: `${props.fontSize + 8}px` }}
         ref={scrollRef}
-        className={`${
-          hasTitle ? "opacity-100" : "opacity-50"
-        } text-black font-semibold text-center`}
+        className={`${hasTitle ? "opacity-100" : "opacity-50"} text-black font-semibold text-center`}
       >
         {props.page?.header ? props.page?.header : props.title}
       </p>
 
-      <FileViewer src={props.page?.image} width={content ? "w-full t:w-96" : "w-fit"} />
+      {props.page?.image ? (
+        <Image
+          src={props.page?.image}
+          alt="viewer"
+          width={350}
+          height={350}
+          className="w-full rounded-2xl t:w-96"
+          draggable={false}
+          priority
+        />
+      ) : null}
 
       {content ? (
         <p

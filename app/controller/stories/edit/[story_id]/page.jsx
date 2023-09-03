@@ -9,7 +9,6 @@ import EditStoryFilter from "@/src/src/admin/stories/EditStoryFilter";
 import Link from "next/link";
 import Loading from "@/src/src/components/global/Loading";
 
-import FileViewer from "@/src/src/components/global/FileViewer";
 import AudioPreview from "@/src/src/components/global/AudioPreview";
 
 import { IoAddOutline, IoClose } from "react-icons/io5";
@@ -20,6 +19,7 @@ import { useRouter } from "next/navigation";
 import { decipher } from "@/src/src/functions/security";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import { useFileControls } from "@/src/src/hooks/useFileControls";
+import Image from "next/image";
 
 const EditStory = ({ params }) => {
   const [story, setStory] = React.useState({});
@@ -38,6 +38,8 @@ const EditStory = ({ params }) => {
     removeSelectedImage,
     removeSelectedAudio,
     uploadFile,
+    hasRawAudio,
+    hasRawImage,
   } = useFileControls();
 
   const { data: session } = useSession({ required: true });
@@ -137,9 +139,9 @@ const EditStory = ({ params }) => {
     // check for book cover
     let bookCover = story.book_cover;
 
-    if (rawImage) {
+    if (hasRawImage()) {
       try {
-        bookCover = await uploadFile("readefine_admin_file", rawImage);
+        bookCover = await uploadFile("readefine_admin_file", rawImage.current?.files);
       } catch (error) {
         uploadErrors.push(error);
       }
@@ -156,9 +158,9 @@ const EditStory = ({ params }) => {
     // check for book audio
     let bookAudio = story.audio;
 
-    if (rawAudio) {
+    if (hasRawAudio()) {
       try {
-        bookAudio = await uploadFile("readefine_admin_file", rawAudio);
+        bookAudio = await uploadFile("readefine_admin_file", rawAudio.current?.files);
       } catch (error) {
         uploadErrors.push(error);
       }
@@ -301,44 +303,57 @@ const EditStory = ({ params }) => {
 
         <EditStoryFilter
           story={story}
+          rawAudio={rawAudio}
+          rawImage={rawImage}
           addPage={addPage}
           handleStory={handleStory}
           selectedImageViewer={selectedImageViewer}
           selectedAudioViewer={selectedAudioViewer}
         />
 
-        {audioFile.src ? (
-          <AudioPreview
-            src={audioFile.src}
-            name={audioFile.name}
-            clearAudio={removeSelectedAudio}
-            purpose="Book Audio"
-          />
-        ) : story?.audio ? (
-          <AudioPreview src={story?.audio} clearAudio={clearBookAudio} purpose="Current Book Audio" />
-        ) : null}
+        <div className="cstm-flex-col gap-5 w-full t:w-80 l-l:w-[30rem]">
+          {audioFile.src ? (
+            <AudioPreview
+              src={audioFile.src}
+              name={audioFile.name}
+              clearAudio={removeSelectedAudio}
+              purpose="Book Audio"
+            />
+          ) : story?.audio ? (
+            <AudioPreview src={story?.audio} clearAudio={clearBookAudio} purpose="Current Book Audio" />
+          ) : null}
 
-        {imageFile.src ? (
-          <FilePreview
-            src={imageFile.src}
-            name={imageFile.name}
-            clearFiles={removeSelectedImage}
-            purpose="Book Cover"
-          />
-        ) : story.book_cover ? (
-          <div className="w-full cstm-flex-col rounded-2xl p-2 gap-2 t:w-80">
-            <FileViewer src={story.book_cover} width="w-40" />
-            <div className="w-full cstm-flex-row gap-5">
-              <p className="text-sm overflow-x-auto w-full mr-auto p-2 whitespace-nowrap scrollbar-none font-bold">
-                Current Book Cover
-              </p>
+          {imageFile.src ? (
+            <FilePreview
+              src={imageFile.src}
+              name={imageFile.name}
+              clearFiles={removeSelectedImage}
+              purpose="Book Cover"
+            />
+          ) : story?.book_cover ? (
+            <div className="w-full cstm-flex-col rounded-2xl p-2 gap-2">
+              <Image
+                src={story?.book_cover}
+                alt="viewer"
+                width={350}
+                height={350}
+                className="w-full rounded-2xl"
+                draggable={false}
+                priority
+              />
 
-              <button type="button" onClick={clearBookCover} className="cstm-bg-hover ">
-                <IoClose className="text-prmColor scale-125 cursor-pointer " />
-              </button>
+              <div className="w-full cstm-flex-row gap-5">
+                <p className="text-sm overflow-x-auto w-full mr-auto p-2 whitespace-nowrap scrollbar-none font-bold">
+                  Current Book Cover
+                </p>
+
+                <button type="button" onClick={clearBookCover} className="cstm-bg-hover ">
+                  <IoClose className="text-prmColor scale-125 cursor-pointer " />
+                </button>
+              </div>
             </div>
-          </div>
-        ) : null}
+          ) : null}
+        </div>
 
         {allPages}
 

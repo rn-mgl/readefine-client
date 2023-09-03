@@ -3,7 +3,6 @@
 import React from "react";
 import axios from "axios";
 import ClientPageHeader from "@/src/src/client/global/PageHeader";
-import FileViewer from "@/src/src/components/global/FileViewer";
 import Link from "next/link";
 
 import { decipher } from "@/src/src/functions/security";
@@ -14,6 +13,7 @@ import { BiMedal } from "react-icons/bi";
 import Message from "@/src/src/components/global/Message";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
+import Image from "next/image";
 
 const SingleReward = ({ params }) => {
   const [rewardData, setRewardData] = React.useState({});
@@ -84,7 +84,15 @@ const SingleReward = ({ params }) => {
               <BiMedal className="absolute scale-[10] top-10 left-0 opacity-10 t:scale-[15] t:top-20 t:left-20 text-prmColor " />
 
               <div className="animate-float drop-shadow-md relative z-10 saturate-150 h-full cstm-flex-col">
-                <FileViewer src={rewardData?.reward} />
+                <Image
+                  src={rewardData?.reward}
+                  alt="viewer"
+                  width={350}
+                  height={350}
+                  className="w-full rounded-2xl"
+                  draggable={false}
+                  priority
+                />
               </div>
 
               <BsTrophyFill className="absolute scale-[7] bottom-5 right-0 opacity-10 t:scale-[12] t:bottom-20 t:right-24 text-prmColor " />

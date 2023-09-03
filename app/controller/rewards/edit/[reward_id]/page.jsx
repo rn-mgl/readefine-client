@@ -5,7 +5,6 @@ import FilePreview from "@/src/src/components/global/FilePreview";
 import axios from "axios";
 import EditRewardFilter from "@/src/src/admin/rewards/EditRewardFilter";
 import Message from "@/src/src/components/global/Message";
-import FileViewer from "@/src/src/components/global/FileViewer";
 import Loading from "@/src/src/components/global/Loading";
 
 import { BiImage } from "react-icons/bi";
@@ -17,13 +16,14 @@ import { IoClose } from "react-icons/io5";
 import { decipher } from "@/src/src/functions/security";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import { useFileControls } from "@/src/src/hooks/useFileControls";
+import Image from "next/image";
 
 const EditReward = ({ params }) => {
   const [reward, setReward] = React.useState({});
   const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
   const [loading, setLoading] = React.useState(false);
 
-  const { imageFile, rawImage, selectedImageViewer, removeSelectedImage, uploadFile } = useFileControls();
+  const { imageFile, rawImage, selectedImageViewer, removeSelectedImage, uploadFile, hasRawImage } = useFileControls();
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -63,8 +63,8 @@ const EditReward = ({ params }) => {
     let rewardImage = reward?.reward;
 
     // check for uploaded reward
-    if (rawImage) {
-      rewardImage = await uploadFile("readefine_admin_file", rawImage);
+    if (hasRawImage()) {
+      rewardImage = await uploadFile("readefine_admin_file", rawImage.current?.files);
     }
 
     if (!rewardImage) {
@@ -187,7 +187,16 @@ const EditReward = ({ params }) => {
                 />
               ) : reward.reward ? (
                 <div className="w-full cstm-flex-col rounded-2xl p-2 gap-2">
-                  <FileViewer src={reward.reward} />
+                  <Image
+                    src={reward.reward}
+                    alt="viewer"
+                    width={350}
+                    height={350}
+                    className="w-full rounded-2xl"
+                    draggable={false}
+                    priority
+                  />
+
                   <div className="w-full cstm-flex-row gap-5">
                     <p className="text-sm overflow-x-auto w-full mr-auto p-2 whitespace-nowrap scrollbar-none font-bold">
                       Current Reward
@@ -213,6 +222,7 @@ const EditReward = ({ params }) => {
               name="rewardImage"
               id="rewardImage"
               onChange={selectedImageViewer}
+              ref={rawImage}
             />
             <BiImage className="scale-150 text-prmColor peer-checked" />
           </label>

@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import FileViewer from "../../components/global/FileViewer";
 import Confetti from "react-confetti";
 import Link from "next/link";
 import Volume from "../../components/global/Volume";
@@ -11,6 +10,7 @@ import rewardNotice from "../../../public/music/reward/Reward Notice.mp3";
 import { IoClose } from "react-icons/io5";
 import { BsArrowRight } from "react-icons/bs";
 import { useAudioControls } from "../../hooks/useAudioControls";
+import Image from "next/image";
 
 const ReceiveAchievement = (props) => {
   const { audioRef, isPlaying, isMuted, handleMuteVolume, handleToggleAudio, handleVolumeChange } = useAudioControls();
@@ -26,7 +26,15 @@ const ReceiveAchievement = (props) => {
 
         <div className="cstm-flex-col p-5 bg-accntColor rounded-2xl">
           <div className="animate-float drop-shadow-lg w-full cstm-flex-col">
-            <FileViewer src={a.reward} width="w-full" />
+            <Image
+              src={a.reward}
+              alt="viewer"
+              width={350}
+              height={350}
+              className="w-full rounded-2xl"
+              draggable={false}
+              priority
+            />
           </div>
         </div>
 

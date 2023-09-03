@@ -4,8 +4,8 @@ import FilePreview from "../../components/global/FilePreview";
 import * as fileFns from "../../../src/functions/fileFns";
 import { wordCount } from "../../functions/wordCount";
 import { AiFillDelete } from "react-icons/ai";
-import FileViewer from "../../components/global/FileViewer";
 import { IoClose } from "react-icons/io5";
+import Image from "next/image";
 
 const EditStoryPage = (props) => {
   const words = wordCount(props.page?.content);
@@ -54,7 +54,16 @@ const EditStoryPage = (props) => {
           />
         ) : props.page?.image ? (
           <div className="w-full cstm-flex-col rounded-2xl p-2 gap-2 t:w-80">
-            <FileViewer src={props.page?.image} width="w-40" />
+            <Image
+              src={props.page?.image}
+              alt="viewer"
+              width={350}
+              height={350}
+              className="w-full rounded-2xl"
+              draggable={false}
+              priority
+            />
+
             <div className="w-full cstm-flex-row gap-5">
               <p className="text-sm overflow-x-auto w-full mr-auto p-2 whitespace-nowrap scrollbar-none font-bold">
                 Current Page Image

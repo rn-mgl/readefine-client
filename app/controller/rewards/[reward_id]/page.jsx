@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import AdminPageHeader from "@/src/src/admin/global/PageHeader";
-import FileViewer from "@/src/src/components/global/FileViewer";
 import axios from "axios";
 import Link from "next/link";
 import Message from "@/src/src/components/global/Message";
@@ -14,6 +13,7 @@ import { useGlobalContext } from "@/src/context";
 import { decipher } from "@/src/src/functions/security";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
+import Image from "next/image";
 
 const SingleReward = ({ params }) => {
   const [reward, setReward] = React.useState({});
@@ -109,7 +109,7 @@ const SingleReward = ({ params }) => {
           >
             <div className="w-full cstm-flex-col bg-accntColor rounded-2xl p-5 h-4/6">
               <div className="w-fit animate-float drop-shadow-md saturate-150">
-                <FileViewer src={reward?.reward} />
+                <Image src={reward?.reward} alt="reward" width={300} height={300} className="rounded-2xl" />
               </div>
             </div>
 

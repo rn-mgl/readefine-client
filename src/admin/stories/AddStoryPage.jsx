@@ -41,14 +41,16 @@ const AddStoryPage = (props) => {
           value={props.page.pageContent}
         />
 
-        {props.page.pageImage.src ? (
-          <FilePreview
-            purpose="Page Image"
-            name={props.page.pageImage.name}
-            src={props.page.pageImage.src}
-            clearFiles={() => fileFns.removeSelectedPageImage(props.page.pageNumber, props.setPages)}
-          />
-        ) : null}
+        <div className="w-full t:w-80 l-l:w-96">
+          {props.page?.pageImage?.src ? (
+            <FilePreview
+              purpose="Page Image"
+              name={props.page?.pageImage?.name}
+              src={props.page?.pageImage?.src}
+              clearFiles={() => fileFns.removeSelectedPageImage(props.page.pageNumber, props.setPages)}
+            />
+          ) : null}
+        </div>
       </div>
 
       <div className="w-full cstm-flex-row gap-2">
