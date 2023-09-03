@@ -10,14 +10,15 @@ import intersectAL from "../../public/signup/IntersectAL.svg";
 import Loading from "@/src/src/components/global/Loading";
 import Message from "@/src/src/components/global/Message";
 
-import { useGlobalContext } from "../../context";
-import { useRouter } from "next/navigation";
 import NamePos from "@/src/src/client/signup/NamePos";
 import GradePos from "@/src/src/client/signup/GradePos";
 import AuthPos from "@/src/src/client/signup/AuthPos";
 import validator from "validator";
+
+import { useGlobalContext } from "../../context";
+import { useRouter } from "next/navigation";
 import { BsDot } from "react-icons/bs";
-import { avatar } from "./avatar";
+import { avatars } from "@/src/src/functions/avatars";
 
 const Signup = () => {
   const [userData, setUserData] = React.useState({
@@ -130,8 +131,8 @@ const Signup = () => {
     e.preventDefault();
     setLoading(true);
 
-    const randomIndex = Math.floor(Math.random() * avatar.length);
-    const userAvatar = avatar[randomIndex];
+    const randomIndex = Math.floor(Math.random() * avatars.length);
+    const userAvatar = avatars[randomIndex];
     userData.image = userAvatar;
 
     try {
@@ -176,9 +177,7 @@ const Signup = () => {
   return (
     <div className="w-full h-screen bg-prmColor p-5 cstm-flex-col font-poppins ">
       {/* show message pop up */}
-      {message.active ? (
-        <Message message={message} setMessage={setMessage} />
-      ) : null}
+      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
 
       <p className=" font-extrabold text-2xl text-accntColor">Sign Up</p>
       <br />
@@ -192,25 +191,13 @@ const Signup = () => {
 
         <div className="cstm-flex-row">
           <BsDot
-            className={`${
-              activePos === 1
-                ? "text-scndColor scale-150"
-                : "text-black scale-125"
-            } transition-all`}
+            className={`${activePos === 1 ? "text-scndColor scale-150" : "text-black scale-125"} transition-all`}
           />
           <BsDot
-            className={`${
-              activePos === 2
-                ? "text-scndColor scale-150"
-                : "text-black scale-125"
-            } transition-all`}
+            className={`${activePos === 2 ? "text-scndColor scale-150" : "text-black scale-125"} transition-all`}
           />
           <BsDot
-            className={`${
-              activePos === 3
-                ? "text-scndColor scale-150"
-                : "text-black scale-125"
-            } transition-all`}
+            className={`${activePos === 3 ? "text-scndColor scale-150" : "text-black scale-125"} transition-all`}
           />
         </div>
 
@@ -238,10 +225,7 @@ const Signup = () => {
           ) : null}
 
           {activePos === 3 ? (
-            <button
-              type="submit"
-              className="text-sm bg-scndColor text-prmColor p-2 w-24 rounded-md font-bold"
-            >
+            <button type="submit" className="text-sm bg-scndColor text-prmColor p-2 w-24 rounded-md font-bold">
               Sign Up
             </button>
           ) : null}
@@ -249,12 +233,7 @@ const Signup = () => {
       </form>
 
       {/* render on mobile view*/}
-      <Image
-        src={intersectAM}
-        alt="intersect"
-        className="w-full bottom-0 left-0 fixed t:hidden"
-        priority
-      />
+      <Image src={intersectAM} alt="intersect" className="w-full bottom-0 left-0 fixed t:hidden" priority />
 
       {/* render on tablet */}
       <Image
@@ -265,12 +244,7 @@ const Signup = () => {
       />
 
       {/* render on laptop */}
-      <Image
-        src={intersectAL}
-        alt="intersect"
-        className="hidden w-full -bottom-10 left-0 fixed l-s:block"
-        priority
-      />
+      <Image src={intersectAL} alt="intersect" className="hidden w-full -bottom-10 left-0 fixed l-s:block" priority />
     </div>
   );
 };

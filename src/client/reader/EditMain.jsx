@@ -2,7 +2,6 @@
 
 import React from "react";
 import axios from "axios";
-import * as fileFns from "../../functions/fileFns";
 import EditInput from "../../components/profile/EditInput";
 import ActionLabel from "../../components/global/ActionLabel";
 import avatar from "../../../public/profile/Avatar White.svg";
@@ -15,12 +14,16 @@ import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { BiImage } from "react-icons/bi";
 import { CiUser } from "react-icons/ci";
+import { avatars } from "../../functions/avatars";
+import { useFileControls } from "../../hooks/useFileControls";
 
 const EditMain = (props) => {
   const [userData, setUserData] = React.useState({});
   const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
+
+  const { imageFile, rawImage, removeSelectedImage, selectedImageViewer, uploadFile } = useFileControls();
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -50,23 +53,23 @@ const EditMain = (props) => {
     setHasSubmitted(true);
     setLoading(true);
 
-    let image = userData?.image;
+    const { name, surname, username } = userData;
 
-    if (userData?.rawFile) {
-      image = await fileFns.uploadFile(
-        `${url}/readefine_client_file`,
-        userData?.rawFile,
-        user?.token,
-        axios
-      );
+    let profileImage = userData?.image;
+
+    if (rawImage) {
+      profileImage = await uploadFile("readefine_client_file", rawImage);
     }
 
-    const { name, surname, username } = userData;
+    const randomIndex = Math.floor(Math.random() * avatars.length);
+    const randomAvatar = avatars[randomIndex];
+
+    profileImage = profileImage ? profileImage : randomAvatar;
 
     try {
       const { data } = await axios.patch(
         `${url}/user/${user?.userId}`,
-        { name, surname, username, image, type: "main" },
+        { name, surname, username, image: profileImage, type: "main" },
         { headers: { Authorization: user?.token } }
       );
 
@@ -117,16 +120,13 @@ const EditMain = (props) => {
         <IoClose className="scale-150 text-prmColor" />
       </button>
 
-      <form
-        onSubmit={(e) => editMain(e)}
-        className="cstm-w-limit cstm-flex-col gap-5 w-full h-auto justify-start"
-      >
+      <form onSubmit={(e) => editMain(e)} className="cstm-w-limit cstm-flex-col gap-5 w-full h-auto justify-start">
         <div className="cstm-flex-col gap-5 justify-start w-full t:w-8/12 l-l:w-6/12">
           <div className="cstm-flex-col p-5 bg-white w-full rounded-2xl shadow-solid gap-2">
             <div
               style={{
-                backgroundImage: userData?.file?.src
-                  ? `url(${userData?.file?.src})`
+                backgroundImage: imageFile.src
+                  ? `url(${imageFile.src})`
                   : userData?.image
                   ? `url(${userData?.image})`
                   : null,
@@ -135,7 +135,7 @@ const EditMain = (props) => {
                         bg-center bg-cover rounded-full border-4 border-prmColor cstm-flex-col
                         l-l:w-60 l-l:h-60 l-l:min-w-[15rem] l-l:min-h-[15rem] "
             >
-              {!userData?.file?.src && !userData?.image ? (
+              {!imageFile.src && !userData?.image ? (
                 <Image src={avatar} alt="avatar" className="w-full" width={320} />
               ) : null}
             </div>
@@ -148,32 +148,19 @@ const EditMain = (props) => {
                   className="hidden peer"
                   formNoValidate
                   name="file"
-                  onChange={(e) => {
-                    fileFns.selectedFileViewer(e, setUserData);
-                    clearUpload();
-                  }}
+                  onChange={(e) => selectedImageViewer(e)}
                 />
                 <ActionLabel label="Add Profile Picture" />
                 <BiImage className="scale-150 text-prmColor peer-checked" />
               </label>
 
-              {userData?.image ? (
-                <button
-                  type="button"
-                  onClick={clearUpload}
-                  className="cstm-bg-hover group relative"
-                >
+              {imageFile.src ? (
+                <button type="button" onClick={removeSelectedImage} className="cstm-bg-hover group relative">
                   <ActionLabel label="Remove Image" />
                   <IoClose className="scale-150 text-prmColor" />
                 </button>
-              ) : null}
-
-              {userData?.file?.src ? (
-                <button
-                  type="button"
-                  onClick={() => fileFns.clearFiles(setUserData)}
-                  className="cstm-bg-hover group relative"
-                >
+              ) : userData?.image ? (
+                <button type="button" onClick={clearUpload} className="cstm-bg-hover group relative">
                   <ActionLabel label="Remove Image" />
                   <IoClose className="scale-150 text-prmColor" />
                 </button>

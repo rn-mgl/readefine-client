@@ -41,31 +41,26 @@ const AddStoryPage = (props) => {
           value={props.page.pageContent}
         />
 
-        {props.page.file.src ? (
+        {props.page.pageImage.src ? (
           <FilePreview
             purpose="Page Image"
-            name={props.page.file.name}
-            src={props.page.file.src}
-            clearFiles={() => fileFns.clearPageFile(props.page.pageNumber, props.setPages)}
+            name={props.page.pageImage.name}
+            src={props.page.pageImage.src}
+            clearFiles={() => fileFns.removeSelectedPageImage(props.page.pageNumber, props.setPages)}
           />
         ) : null}
       </div>
 
       <div className="w-full cstm-flex-row gap-2">
-        <label
-          className=" cstm-bg-hover cursor-pointer"
-          htmlFor={`filePage${props.page.pageNumber}`}
-        >
+        <label className=" cstm-bg-hover cursor-pointer" htmlFor={`filePage${props.page.pageNumber}`}>
           <input
             accept="image/*"
             type="file"
             className="hidden peer"
             formNoValidate
-            name="file"
+            name="pageImage"
             id={`filePage${props.page.pageNumber}`}
-            onChange={(e) =>
-              fileFns.selectedPageFileViewer(props.page.pageNumber, e, props.setPages)
-            }
+            onChange={(e) => fileFns.selectedPageImageViewer(props.page.pageNumber, e, props.setPages)}
           />
 
           <BiImage className="scale-150 text-prmColor peer-checked" />

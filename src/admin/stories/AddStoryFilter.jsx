@@ -1,5 +1,4 @@
 import React from "react";
-import * as fileFns from "../../functions/fileFns";
 
 import { BiImage, BiMusic } from "react-icons/bi";
 import InputFilter from "../../components/filter/InputFilter";
@@ -18,7 +17,7 @@ const AddStoryFilter = (props) => {
             className="hidden peer"
             name="file"
             id="fileCover"
-            onChange={(e) => fileFns.selectedFileViewer(e, props.setStoryFilter)}
+            onChange={(e) => props.selectedImageViewer(e)}
           />
           <BiImage className="scale-150 text-prmColor peer-checked" />
         </label>
@@ -37,7 +36,7 @@ const AddStoryFilter = (props) => {
             className="hidden peer"
             name="audio"
             id="audio"
-            onChange={(e) => fileFns.selectedAudioViewer(e, props.setStoryFilter)}
+            onChange={(e) => props.selectedAudioViewer(e)}
           />
           <BiMusic className="scale-150 text-prmColor peer-checked" />
         </label>

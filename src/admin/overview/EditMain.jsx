@@ -2,7 +2,6 @@
 
 import axios from "axios";
 import React from "react";
-import * as fileFns from "../../functions/fileFns";
 import EditInput from "../../components/profile/EditInput";
 import Message from "../../components/global/Message";
 import Loading from "../../components/global/Loading";
@@ -15,12 +14,16 @@ import { useSession } from "next-auth/react";
 import { IoClose } from "react-icons/io5";
 import { BiImage } from "react-icons/bi";
 import { CiUser } from "react-icons/ci";
+import { useFileControls } from "../../hooks/useFileControls";
+import { avatars } from "../../functions/avatars";
 
 const EditMain = (props) => {
   const [adminData, setAdminData] = React.useState({});
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
   const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
   const [loading, setLoading] = React.useState(false);
+
+  const { imageFile, rawImage, removeSelectedImage, selectedImageViewer, uploadFile } = useFileControls();
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -49,9 +52,9 @@ const EditMain = (props) => {
     setHasSubmitted(true);
     setLoading(true);
 
-    let image = adminData?.image;
-
     const { name, surname, username } = adminData;
+
+    let profileImage = adminData?.image;
 
     if (!name || !surname || !username) {
       setLoading(false);
@@ -60,19 +63,19 @@ const EditMain = (props) => {
       return;
     }
 
-    if (adminData?.rawFile) {
-      image = await fileFns.uploadFile(
-        `${url}/readefine_admin_file`,
-        adminData?.rawFile,
-        user?.token,
-        axios
-      );
+    if (rawImage) {
+      profileImage = await uploadFile("readefine_admin_file", rawImage);
     }
+
+    const randomIndex = Math.floor(Math.random() * avatars.length);
+    const randomAvatar = avatars[randomIndex];
+
+    profileImage = profileImage ? profileImage : randomAvatar;
 
     try {
       const { data } = await axios.patch(
         `${url}/admin/${props.adminId}`,
-        { image, name, surname, username, type: "main" },
+        { image: profileImage, name, surname, username, type: "main" },
         { headers: { Authorization: user?.token } }
       );
 
@@ -113,23 +116,26 @@ const EditMain = (props) => {
   }
 
   return (
-    <div className="w-full h-full overflow-y-auto cstm-scrollbar-2 fixed top-0 left-0 backdrop-blur-md z-20 p-5 cstm-flex-col justify-start">
+    <div
+      className="w-full h-full overflow-y-auto cstm-scrollbar-2 fixed top-0 left-0 
+                  backdrop-blur-md z-20 p-5 cstm-flex-col justify-start"
+    >
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
 
       <button onClick={props.handleCanEditMain} className="cstm-bg-hover ml-auto">
         <IoClose className="scale-150 text-prmColor" />
       </button>
 
-      <div className="cstm-w-limit  w-full justify-start cstm-flex-col ">
+      <div className="cstm-w-limit  w-full justify-start cstm-flex-col  ">
         <form
           onSubmit={(e) => editMain(e)}
           className="justify-start cstm-flex-col w-full gap-5 t:w-10/12 l-s:w-8/12 l-l:w-6/12"
         >
-          <div className="w-full h-fit p-2 rounded-2xl bg-white cstm-flex-col gap-2 shadow-md">
+          <div className="w-full h-fit p-5 rounded-2xl bg-white cstm-flex-col gap-2 shadow-md">
             <div
               style={{
-                backgroundImage: adminData?.file?.src
-                  ? `url(${adminData?.file?.src})`
+                backgroundImage: imageFile.src
+                  ? `url(${imageFile.src})`
                   : adminData?.image
                   ? `url(${adminData?.image})`
                   : null,
@@ -138,7 +144,7 @@ const EditMain = (props) => {
                         bg-center bg-cover rounded-full border-4 border-prmColor
                         l-l:w-60 l-l:h-60 l-l:min-w-[15rem] l-l:min-h-[15rem] "
             >
-              {!adminData?.file?.src && !adminData?.image ? (
+              {!imageFile.src && !adminData?.image ? (
                 <Image src={avatar} alt="avatar" className="w-full" width={320} />
               ) : null}
             </div>
@@ -151,32 +157,19 @@ const EditMain = (props) => {
                   className="hidden peer"
                   formNoValidate
                   name="file"
-                  onChange={(e) => {
-                    fileFns.selectedFileViewer(e, setAdminData);
-                    clearUpload();
-                  }}
+                  onChange={(e) => selectedImageViewer(e)}
                 />
                 <ActionLabel label="Add Profile Picture" />
                 <BiImage className="scale-150 text-prmColor peer-checked" />
               </label>
 
-              {adminData?.image ? (
-                <button
-                  type="button"
-                  onClick={clearUpload}
-                  className="cstm-bg-hover group relative"
-                >
+              {imageFile.src ? (
+                <button type="button" onClick={removeSelectedImage} className="cstm-bg-hover group relative">
                   <ActionLabel label="Remove Image" />
                   <IoClose className="scale-150 text-prmColor" />
                 </button>
-              ) : null}
-
-              {adminData?.file?.src ? (
-                <button
-                  type="button"
-                  onClick={() => fileFns.clearFiles(setAdminData)}
-                  className="cstm-bg-hover group relative"
-                >
+              ) : adminData?.image ? (
+                <button type="button" onClick={clearUpload} className="cstm-bg-hover group relative">
                   <ActionLabel label="Remove Image" />
                   <IoClose className="scale-150 text-prmColor" />
                 </button>
@@ -222,7 +215,8 @@ const EditMain = (props) => {
           <button
             type="submit"
             disabled={hasSubmitted}
-            className="w-full rounded-full bg-prmColor p-2 text-scndColor font-bold t:w-fit t:px-10 text-sm disabled:saturate-0"
+            className="w-full rounded-full bg-prmColor p-2 text-scndColor 
+                      font-bold t:w-fit t:px-10 text-sm disabled:saturate-0"
           >
             Save Changes
           </button>

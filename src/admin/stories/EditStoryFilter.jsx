@@ -1,5 +1,4 @@
 import React from "react";
-import * as fileFns from "../../functions/fileFns";
 
 import { BiImage, BiMusic } from "react-icons/bi";
 import InputFilter from "../../components/filter/InputFilter";
@@ -18,7 +17,7 @@ const EditStoryFilter = (props) => {
             className="hidden peer"
             name="file"
             id="fileCover"
-            onChange={(e) => fileFns.selectedFileViewer(e, props.setStory)}
+            onChange={(e) => props.selectedImageViewer(e)}
             defaultValue=""
           />
           <BiImage className="scale-150 text-prmColor peer-checked" />
@@ -27,9 +26,7 @@ const EditStoryFilter = (props) => {
 
       <div className="p-2 bg-white font-poppins rounded-md shadow-md whitespace-nowrap cstm-flex-row">
         <div className="bg-neutral-50 p-1 px-2 rounded-md outline-none border-neutral-200 border-2 text-sm">
-          <p className="max-w-[5rem] truncate">
-            {props.story.audio?.name ? props.story.audio?.name : "Audio"}
-          </p>
+          <p className="max-w-[5rem] truncate">{props.story.audio?.name ? props.story.audio?.name : "Audio"}</p>
         </div>
         <label className="mr-auto  cstm-bg-hover cursor-pointer" htmlFor="audio">
           <input
@@ -38,7 +35,7 @@ const EditStoryFilter = (props) => {
             className="hidden peer"
             name="audio"
             id="audio"
-            onChange={(e) => fileFns.selectedAudioViewer(e, props.setStory)}
+            onChange={(e) => props.selectedAudioViewer(e)}
           />
           <BiMusic className="scale-150 text-prmColor peer-checked" />
         </label>

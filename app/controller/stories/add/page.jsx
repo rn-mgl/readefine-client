@@ -6,7 +6,6 @@ import AddStoryPage from "@/src/src/admin/stories/AddStoryPage";
 import axios from "axios";
 import FilePreview from "@/src/src/components/global/FilePreview";
 import Message from "@/src/src/components/global/Message";
-import * as fileFns from "../../../../src/functions/fileFns";
 import Loading from "@/src/src/components/global/Loading";
 
 import { IoAddOutline } from "react-icons/io5";
@@ -15,6 +14,7 @@ import { useGlobalContext } from "@/src/context";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import AudioPreview from "@/src/src/components/global/AudioPreview";
+import { useFileControls } from "@/src/src/hooks/useFileControls";
 
 const AddStory = () => {
   const [pages, setPages] = React.useState([
@@ -22,8 +22,8 @@ const AddStory = () => {
       pageNumber: 1,
       pageHeader: "",
       pageContent: "",
-      file: { src: null, name: null },
-      rawFile: null,
+      pageImage: { src: null, name: null },
+      rawPageImage: null,
     },
   ]);
   const [storyFilter, setStoryFilter] = React.useState({
@@ -31,13 +31,21 @@ const AddStory = () => {
     author: "",
     genre: "",
     lexile: "",
-    audio: { src: null, name: null },
-    rawAudio: null,
-    file: { src: null, name: null },
-    rawFile: null,
   });
   const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
   const [loading, setLoading] = React.useState(false);
+
+  const {
+    imageFile,
+    rawImage,
+    audioFile,
+    rawAudio,
+    selectedImageViewer,
+    selectedAudioViewer,
+    removeSelectedImage,
+    removeSelectedAudio,
+    uploadFile,
+  } = useFileControls();
 
   const { data: session } = useSession({ required: true });
   const { url } = useGlobalContext();
@@ -105,50 +113,33 @@ const AddStory = () => {
     // book image
     let bookCover = null;
 
-    // check if has book cover image
-    if (storyFilter.rawFile) {
-      bookCover = await fileFns.uploadFile(
-        `${url}/readefine_admin_file`,
-        storyFilter.rawFile,
-        user.token,
-        axios
-      );
-      storyFilter.file = { src: bookCover, name: "" };
-    }
-
-    if (!bookCover) {
+    if (rawImage) {
+      bookCover = await uploadFile("readefine_admin_file", rawImage);
+    } else {
       setLoading(false);
       setMessage({ active: true, msg: "You did not add a book cover.", type: "error" });
       return;
     }
 
-    // book image
+    storyFilter.bookCover = bookCover;
+
+    // book audio
     let bookAudio = null;
 
-    // check if has book audio image
-    if (storyFilter.rawAudio) {
-      bookAudio = await fileFns.uploadFile(
-        `${url}/readefine_admin_file`,
-        storyFilter.rawAudio,
-        user.token,
-        axios
-      );
-      storyFilter.audio = { src: bookAudio, name: "" };
+    if (rawAudio) {
+      bookAudio = await uploadFile("readefine_admin_file", rawAudio);
     }
+
+    storyFilter.bookAudio = bookAudio;
 
     // check for images in each pages and upload
     for (let i = 0; i < pages.length; i++) {
       const page = pages[i];
       let pageImage = null;
-      if (page.rawFile) {
-        pageImage = await fileFns.uploadFile(
-          `${url}/readefine_admin_file`,
-          page.rawFile,
-          user.token,
-          axios
-        );
-        page.file = { src: pageImage, name: "" };
+      if (page.rawPageImage) {
+        pageImage = await uploadFile("readefine_admin_file", page.rawPageImage);
       }
+      page.pageImage = pageImage;
     }
 
     try {
@@ -213,23 +204,24 @@ const AddStory = () => {
           storyFilter={storyFilter}
           addPage={addPage}
           handleStoryFilter={handleStoryFilter}
-          setStoryFilter={setStoryFilter}
+          selectedImageViewer={selectedImageViewer}
+          selectedAudioViewer={selectedAudioViewer}
         />
 
-        {storyFilter.audio.src ? (
+        {audioFile.src ? (
           <AudioPreview
-            src={storyFilter.audio.src}
-            name={storyFilter.audio.name}
-            clearAudio={() => fileFns.clearAudio(setStoryFilter)}
+            src={audioFile.src}
+            name={audioFile.name}
+            clearAudio={removeSelectedAudio}
             purpose="Book Audio"
           />
         ) : null}
 
-        {storyFilter.file.src ? (
+        {imageFile.src ? (
           <FilePreview
-            src={storyFilter.file.src}
-            name={storyFilter.file.name}
-            clearFiles={() => fileFns.clearFiles(setStoryFilter)}
+            src={imageFile.src}
+            name={imageFile.name}
+            clearFiles={removeSelectedImage}
             purpose="Book Cover"
           />
         ) : null}

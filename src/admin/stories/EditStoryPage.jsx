@@ -4,6 +4,8 @@ import FilePreview from "../../components/global/FilePreview";
 import * as fileFns from "../../../src/functions/fileFns";
 import { wordCount } from "../../functions/wordCount";
 import { AiFillDelete } from "react-icons/ai";
+import FileViewer from "../../components/global/FileViewer";
+import { IoClose } from "react-icons/io5";
 
 const EditStoryPage = (props) => {
   const words = wordCount(props.page?.content);
@@ -42,13 +44,31 @@ const EditStoryPage = (props) => {
           className="resize-none p-2 focus:outline-none w-full h-full mr-auto"
           value={props.page.content}
         />
-        {props.page?.image || props.page?.file?.src ? (
+
+        {props.page?.pageImage?.src ? (
           <FilePreview
             purpose="Page Image"
-            name={props.page.file?.name}
-            src={props.page?.image ? props.page?.image : props.page?.file?.src}
-            clearFiles={() => fileFns.clearPageUpload(page, props.setPages)}
+            name={props.page?.pageImage?.name}
+            src={props.page?.pageImage?.src}
+            clearFiles={() => fileFns.removeSelectedPageImage(page, props.setPages)}
           />
+        ) : props.page?.image ? (
+          <div className="w-full cstm-flex-col rounded-2xl p-2 gap-2 t:w-80">
+            <FileViewer src={props.page?.image} width="w-40" />
+            <div className="w-full cstm-flex-row gap-5">
+              <p className="text-sm overflow-x-auto w-full mr-auto p-2 whitespace-nowrap scrollbar-none font-bold">
+                Current Page Image
+              </p>
+
+              <button
+                type="button"
+                onClick={() => fileFns.removeUploadedPageImage(page, props.setPages)}
+                className="cstm-bg-hover "
+              >
+                <IoClose className="text-prmColor scale-125 cursor-pointer " />
+              </button>
+            </div>
+          </div>
         ) : null}
       </div>
 
@@ -59,9 +79,9 @@ const EditStoryPage = (props) => {
             type="file"
             className="hidden peer"
             formNoValidate
-            name="file"
+            name="pageImage"
             id={`filePage${page}`}
-            onChange={(e) => fileFns.selectedUploadFileViewer(page, e, props.setPages)}
+            onChange={(e) => fileFns.updateUploadedPageImage(page, e, props.setPages)}
             defaultValue=""
           />
           <BiImage className="scale-150 text-prmColor peer-checked" />

@@ -4,28 +4,29 @@ import AdminPageHeader from "@/src/src/admin/global/PageHeader";
 import FilePreview from "@/src/src/components/global/FilePreview";
 import AddRewardFilter from "@/src/src/admin/rewards/AddRewardFilter";
 import Message from "@/src/src/components/global/Message";
-import * as fileFns from "../../../../src/functions/fileFns";
 import axios from "axios";
+import Loading from "@/src/src/components/global/Loading";
 
 import { BiImage } from "react-icons/bi";
 import { useSession } from "next-auth/react";
 import { wordCount } from "@/src/src/functions/wordCount";
 import { useGlobalContext } from "@/src/context";
 import { useRouter } from "next/navigation";
-import Loading from "@/src/src/components/global/Loading";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
+import { useFileControls } from "@/src/src/hooks/useFileControls";
 
 const AddReward = () => {
   const [reward, setReward] = React.useState({
     name: "",
     type: "badge",
-    file: { src: null, name: null },
-    rawFile: null,
     description: "",
   });
+
   const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
   const [loading, setLoading] = React.useState(false);
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
+
+  const { imageFile, rawImage, selectedImageViewer, removeSelectedImage, uploadFile } = useFileControls();
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -52,19 +53,12 @@ const AddReward = () => {
     setHasSubmitted(true);
 
     const { name, type, description, rawFile } = reward;
-    let imageSrc = null;
+    let rewardImage = null;
 
     // check for reward image
-    if (rawFile) {
-      imageSrc = await fileFns.uploadFile(
-        `${url}/readefine_admin_file`,
-        rawFile,
-        user.token,
-        axios
-      );
-    }
-
-    if (!imageSrc) {
+    if (rawImage) {
+      rewardImage = await uploadFile("readefine_admin_file", rawImage);
+    } else {
       setLoading(false);
       setHasSubmitted(false);
       setMessage({ active: true, msg: "You did not add an image", type: "error" });
@@ -74,7 +68,7 @@ const AddReward = () => {
     try {
       const { data } = await axios.post(
         `${url}/admin_reward`,
-        { name, type, reward: imageSrc, description },
+        { name, type, reward: rewardImage, description },
         { headers: { Authorization: user.token } }
       );
 
@@ -110,10 +104,7 @@ const AddReward = () => {
 
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
 
-      <form
-        onSubmit={(e) => addReward(e)}
-        className="w-full cstm-flex-col cstm-w-limit border-collapse gap-5"
-      >
+      <form onSubmit={(e) => addReward(e)} className="w-full cstm-flex-col cstm-w-limit border-collapse gap-5">
         {/* reward data */}
         <AddRewardFilter handleReward={handleReward} reward={reward} />
 
@@ -159,10 +150,12 @@ const AddReward = () => {
           <div className="table-fixed p-5 rounded-2xl cstm-flex-col overflow-auto w-full h-[70vh] justify-start items-start bg-white text-sm gap-5 shadow-md cstm-scrollbar">
             <div className="w-full h-full cstm-flex-col bg-accntColor rounded-2xl">
               {/* show if there is image selected */}
-              {reward.file.src ? (
+              {imageFile.src ? (
                 <FilePreview
-                  src={reward.file.src}
-                  clearFiles={() => fileFns.clearFiles(setReward)}
+                  src={imageFile.src}
+                  name={imageFile.name}
+                  purpose="Reward"
+                  clearFiles={removeSelectedImage}
                 />
               ) : null}
             </div>
@@ -171,14 +164,14 @@ const AddReward = () => {
 
         <div className="pt-4 cstm-flex-row w-full">
           {/* select image */}
-          <label className="mr-auto cstm-bg-hover" htmlFor="file">
+          <label className="mr-auto cstm-bg-hover" htmlFor="rewardImage">
             <input
               accept="image/*"
               type="file"
               className="hidden peer"
-              name="file"
-              id="file"
-              onChange={(e) => fileFns.selectedFileViewer(e, setReward)}
+              name="rewardImage"
+              id="rewardImage"
+              onChange={selectedImageViewer}
             />
 
             <BiImage className="scale-150 text-prmColor peer-checked" />

@@ -1,4 +1,4 @@
-export const avatar = [
+export const avatars = [
   `https://res.cloudinary.com/dnzuptxvy/image/upload/v1693453390/readefine-uploads/avatars/man-with-mustache_nji0zc.svg`,
   `https://res.cloudinary.com/dnzuptxvy/image/upload/v1693453390/readefine-uploads/avatars/man_1_t1krog.svg`,
   `https://res.cloudinary.com/dnzuptxvy/image/upload/v1693453390/readefine-uploads/avatars/man_jsb1va.svg`,

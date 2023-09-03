@@ -9,7 +9,8 @@ import EditStoryFilter from "@/src/src/admin/stories/EditStoryFilter";
 import Link from "next/link";
 import Loading from "@/src/src/components/global/Loading";
 
-import * as fileFns from "../../../../../src/functions/fileFns";
+import FileViewer from "@/src/src/components/global/FileViewer";
+import AudioPreview from "@/src/src/components/global/AudioPreview";
 
 import { IoAddOutline, IoClose } from "react-icons/io5";
 import { BsArrowLeft } from "react-icons/bs";
@@ -18,8 +19,7 @@ import { useGlobalContext } from "@/src/context";
 import { useRouter } from "next/navigation";
 import { decipher } from "@/src/src/functions/security";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
-import FileViewer from "@/src/src/components/global/FileViewer";
-import AudioPreview from "@/src/src/components/global/AudioPreview";
+import { useFileControls } from "@/src/src/hooks/useFileControls";
 
 const EditStory = ({ params }) => {
   const [story, setStory] = React.useState({});
@@ -27,6 +27,18 @@ const EditStory = ({ params }) => {
   const [toDelete, setToDelete] = React.useState([]);
   const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
   const [loading, setLoading] = React.useState(false);
+
+  const {
+    imageFile,
+    rawImage,
+    audioFile,
+    rawAudio,
+    selectedImageViewer,
+    selectedAudioViewer,
+    removeSelectedImage,
+    removeSelectedAudio,
+    uploadFile,
+  } = useFileControls();
 
   const { data: session } = useSession({ required: true });
   const { url } = useGlobalContext();
@@ -120,17 +132,17 @@ const EditStory = ({ params }) => {
 
     setLoading(true);
 
-    let bookCover = story.book_cover;
+    const uploadErrors = [];
 
     // check for book cover
-    if (story.rawFile) {
-      bookCover = await fileFns.uploadFile(
-        `${url}/readefine_admin_file`,
-        story.rawFile,
-        user.token,
-        axios
-      );
-      story.book_cover = bookCover;
+    let bookCover = story.book_cover;
+
+    if (rawImage) {
+      try {
+        bookCover = await uploadFile("readefine_admin_file", rawImage);
+      } catch (error) {
+        uploadErrors.push(error);
+      }
     }
 
     if (!bookCover) {
@@ -139,34 +151,51 @@ const EditStory = ({ params }) => {
       return;
     }
 
+    story.bookCover = bookCover;
+
+    // check for book audio
     let bookAudio = story.audio;
 
-    // check for book cover
-    if (story.rawAudio) {
-      bookAudio = await fileFns.uploadFile(
-        `${url}/readefine_admin_file`,
-        story.rawAudio,
-        user.token,
-        axios
-      );
-      story.audio = bookAudio;
+    if (rawAudio) {
+      try {
+        bookAudio = await uploadFile("readefine_admin_file", rawAudio);
+      } catch (error) {
+        uploadErrors.push(error);
+      }
     }
+
+    story.bookAudio = bookAudio;
 
     // check for each pages for images
     for (let i = 0; i < pages.length; i++) {
       const page = pages[i];
       let pageImage = page.image;
 
-      if (page.rawFile) {
-        pageImage = await fileFns.uploadFile(
-          `${url}/readefine_admin_file`,
-          page.rawFile,
-          user.token,
-          axios
-        );
-
-        page.file = { src: pageImage, name: "" };
+      if (page.rawPageImage) {
+        try {
+          pageImage = await uploadFile("readefine_admin_file", page.rawPageImage);
+        } catch (error) {
+          uploadErrors.push(error);
+        }
       }
+      page.pageImage = pageImage;
+    }
+
+    const numberOfErrors = uploadErrors.length;
+
+    if (numberOfErrors > 0) {
+      for (const error of uploadErrors) {
+        console.log(error);
+      }
+      setLoading(false);
+      setMessage({
+        active: true,
+        msg: `${numberOfErrors} ${
+          numberOfErrors > 1 ? "errors" : "error"
+        } occurred in file upload. Please check file size or file type.`,
+        type: "error",
+      });
+      return;
     }
 
     try {
@@ -265,10 +294,7 @@ const EditStory = ({ params }) => {
 
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
 
-      <form
-        className="w-full cstm-flex-col gap-5 cstm-w-limit border-collapse"
-        onSubmit={(e) => editBook(e)}
-      >
+      <form className="w-full cstm-flex-col gap-5 cstm-w-limit border-collapse" onSubmit={(e) => editBook(e)}>
         <Link type="button" href="/controller/stories" className="w-fit cstm-bg-hover mr-auto">
           <BsArrowLeft className=" text-prmColor" />
         </Link>
@@ -277,37 +303,33 @@ const EditStory = ({ params }) => {
           story={story}
           addPage={addPage}
           handleStory={handleStory}
-          setStory={setStory}
+          selectedImageViewer={selectedImageViewer}
+          selectedAudioViewer={selectedAudioViewer}
         />
 
-        {story.audio?.src ? (
+        {audioFile.src ? (
           <AudioPreview
-            src={story.audio?.src}
-            name={story.audio?.name}
-            clearAudio={() => fileFns.clearAudio(setStory)}
+            src={audioFile.src}
+            name={audioFile.name}
+            clearAudio={removeSelectedAudio}
             purpose="Book Audio"
           />
         ) : story?.audio ? (
-          <AudioPreview
-            src={story?.audio}
-            name="Current Book Audio"
-            clearAudio={clearBookAudio}
-            purpose="Book Audio"
-          />
+          <AudioPreview src={story?.audio} clearAudio={clearBookAudio} purpose="Current Book Audio" />
         ) : null}
 
-        {story.file?.src ? (
+        {imageFile.src ? (
           <FilePreview
-            src={story.file?.src}
-            name={story.file?.name}
-            clearFiles={() => fileFns.clearFiles(setStory)}
+            src={imageFile.src}
+            name={imageFile.name}
+            clearFiles={removeSelectedImage}
             purpose="Book Cover"
           />
         ) : story.book_cover ? (
           <div className="w-full cstm-flex-col rounded-2xl p-2 gap-2 t:w-80">
             <FileViewer src={story.book_cover} width="w-40" />
             <div className="w-full cstm-flex-row gap-5">
-              <p className="text-sm overflow-x-auto w-full mr-auto p-2 whitespace-nowrap scrollbar-none">
+              <p className="text-sm overflow-x-auto w-full mr-auto p-2 whitespace-nowrap scrollbar-none font-bold">
                 Current Book Cover
               </p>
 

@@ -6,7 +6,7 @@ import axios from "axios";
 import EditRewardFilter from "@/src/src/admin/rewards/EditRewardFilter";
 import Message from "@/src/src/components/global/Message";
 import FileViewer from "@/src/src/components/global/FileViewer";
-import * as fileFns from "../../../../../src/functions/fileFns";
+import Loading from "@/src/src/components/global/Loading";
 
 import { BiImage } from "react-icons/bi";
 import { wordCount } from "@/src/src/functions/wordCount";
@@ -15,13 +15,15 @@ import { useGlobalContext } from "@/src/context";
 import { useRouter } from "next/navigation";
 import { IoClose } from "react-icons/io5";
 import { decipher } from "@/src/src/functions/security";
-import Loading from "@/src/src/components/global/Loading";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
+import { useFileControls } from "@/src/src/hooks/useFileControls";
 
 const EditReward = ({ params }) => {
   const [reward, setReward] = React.useState({});
   const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
   const [loading, setLoading] = React.useState(false);
+
+  const { imageFile, rawImage, selectedImageViewer, removeSelectedImage, uploadFile } = useFileControls();
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -58,19 +60,15 @@ const EditReward = ({ params }) => {
     setLoading(true);
 
     const { reward_name, reward_type, description, rawFile } = reward;
-    let imageSrc = reward?.reward;
+    let rewardImage = reward?.reward;
 
     // check for uploaded reward
-    if (rawFile) {
-      imageSrc = await fileFns.uploadFile(
-        `${url}/readefine_admin_file`,
-        rawFile,
-        user.token,
-        axios
-      );
+    if (rawImage) {
+      rewardImage = await uploadFile("readefine_admin_file", rawImage);
     }
 
-    if (!imageSrc) {
+    if (!rewardImage) {
+      setLoading(false);
       setMessage({ active: true, msg: "You did not put a reward image.", type: "error" });
       return;
     }
@@ -78,7 +76,7 @@ const EditReward = ({ params }) => {
     try {
       const { data } = await axios.patch(
         `${url}/admin_reward/${decodedRewardId}`,
-        { reward_name, reward_type, reward: imageSrc, description },
+        { reward_name, reward_type, reward: rewardImage, description },
         { headers: { Authorization: user.token } }
       );
 
@@ -134,10 +132,7 @@ const EditReward = ({ params }) => {
 
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
 
-      <form
-        onSubmit={(e) => editReward(e)}
-        className="w-full cstm-flex-col border-collapse gap-5 cstm-w-limit"
-      >
+      <form onSubmit={(e) => editReward(e)} className="w-full cstm-flex-col border-collapse gap-5 cstm-w-limit">
         <EditRewardFilter handleReward={handleReward} reward={reward} />
 
         <div
@@ -182,18 +177,26 @@ const EditReward = ({ params }) => {
           <div className="table-fixed p-5 rounded-2xl cstm-flex-col overflow-auto w-full h-[70vh] justify-start items-start bg-white text-sm gap-5 shadow-md cstm-scrollbar">
             <div className="w-full h-full cstm-flex-col bg-accntColor rounded-2xl">
               {/* show selected file first then the current reward if none selected */}
-              {reward.file?.src ? (
+
+              {imageFile.src ? (
                 <FilePreview
-                  src={reward.file?.src}
-                  clearFiles={() => fileFns.clearFiles(setReward)}
+                  src={imageFile.src}
+                  name={imageFile.name}
+                  purpose="Reward"
+                  clearFiles={removeSelectedImage}
                 />
               ) : reward.reward ? (
-                <div className="w-full cstm-flex-col gap-5">
-                  <FileViewer src={reward.reward} clearFiles={clearUploadedReward} />
+                <div className="w-full cstm-flex-col rounded-2xl p-2 gap-2">
+                  <FileViewer src={reward.reward} />
+                  <div className="w-full cstm-flex-row gap-5">
+                    <p className="text-sm overflow-x-auto w-full mr-auto p-2 whitespace-nowrap scrollbar-none font-bold">
+                      Current Reward
+                    </p>
 
-                  <button onClick={clearUploadedReward} className="cstm-bg-hover">
-                    <IoClose className="scale-150 text-prmColor" />
-                  </button>
+                    <button type="button" onClick={clearUploadedReward} className="cstm-bg-hover ">
+                      <IoClose className="text-prmColor scale-125 cursor-pointer " />
+                    </button>
+                  </div>
                 </div>
               ) : null}
             </div>
@@ -202,14 +205,14 @@ const EditReward = ({ params }) => {
 
         <div className="pt-4 cstm-flex-row w-full">
           {/* select image */}
-          <label className="mr-auto cstm-bg-hover" htmlFor="file">
+          <label className="mr-auto cstm-bg-hover" htmlFor="rewardImage">
             <input
               accept="image/*"
               type="file"
               className="hidden peer"
-              name="file"
-              id="file"
-              onChange={(e) => fileFns.selectedFileViewer(e, setReward)}
+              name="rewardImage"
+              id="rewardImage"
+              onChange={selectedImageViewer}
             />
             <BiImage className="scale-150 text-prmColor peer-checked" />
           </label>

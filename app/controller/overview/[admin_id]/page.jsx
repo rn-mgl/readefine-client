@@ -90,11 +90,7 @@ const Overview = ({ params }) => {
   const storyActivity = adminActivities?.storyData?.map((d, i) => {
     return (
       <React.Fragment key={i}>
-        <ActivityText
-          addedData={d.title}
-          dateAdded={localizeDate(d.date_added)}
-          userImage={adminData?.image}
-        />
+        <ActivityText addedData={d.title} dateAdded={localizeDate(d.date_added)} userImage={adminData?.image} />
       </React.Fragment>
     );
   });
@@ -134,11 +130,7 @@ const Overview = ({ params }) => {
   const testActivity = adminActivities?.testData?.map((d, i) => {
     return (
       <React.Fragment key={i}>
-        <ActivityText
-          addedData={d.title}
-          dateAdded={localizeDate(d.date_added)}
-          userImage={adminData?.image}
-        />
+        <ActivityText addedData={d.title} dateAdded={localizeDate(d.date_added)} userImage={adminData?.image} />
       </React.Fragment>
     );
   });
@@ -265,13 +257,9 @@ const Overview = ({ params }) => {
 
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
 
-      {canEditMain ? (
-        <EditMain adminId={user?.adminId} handleCanEditMain={handleCanEditMain} />
-      ) : null}
+      {canEditMain ? <EditMain adminId={user?.adminId} handleCanEditMain={handleCanEditMain} /> : null}
 
-      {canChangePassword ? (
-        <ChangePassword handleCanChangePassword={handleCanChangePassword} />
-      ) : null}
+      {canChangePassword ? <ChangePassword handleCanChangePassword={handleCanChangePassword} /> : null}
 
       <div className="cstm-flex-col cstm-scrollbar cstm-w-limit w-full gap-5">
         <MainOverview
