@@ -82,8 +82,8 @@ const EditStory = ({ params }) => {
         header: "",
         content: "",
         story_id: story.story_id,
-        file: { src: null, name: null },
-        rawFile: null,
+        pageImage: { src: null, name: null },
+        rawPageImage: null,
       };
       return [...prev, newPage];
     });

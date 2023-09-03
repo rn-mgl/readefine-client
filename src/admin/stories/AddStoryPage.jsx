@@ -19,7 +19,7 @@ const AddStoryPage = (props) => {
           placeholder="Page Header"
           onChange={(e) => props.handlePage(props.page.pageNumber, e.target)}
           className="resize-none w-full p-2 focus:outline-none font-bold text-prmColor mr-auto truncate"
-          value={props.pageHeader}
+          value={props.page.pageHeader}
         />
 
         <p className="whitespace-nowrap">

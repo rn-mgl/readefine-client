@@ -86,8 +86,8 @@ const AddStory = () => {
         pageNumber: pages.length + 1,
         pageHeader: "",
         pageContent: "",
-        file: { src: null, name: null },
-        rawFile: null,
+        pageImage: { src: null, name: null },
+        rawPageImage: null,
       };
       return [...prev, newPage];
     });
@@ -95,15 +95,15 @@ const AddStory = () => {
 
   // handle delete page
   const deletePage = (index) => {
-    const newPages = [...pages];
+    const updatedPages = [...pages];
 
-    newPages.splice(index, 1);
+    updatedPages.splice(index, 1);
 
-    for (let i = index; i < newPages.length; i++) {
-      newPages[i].pageNumber = i + 1;
+    for (let i = index; i < updatedPages.length; i++) {
+      updatedPages[i].pageNumber = i + 1;
     }
 
-    setPages(newPages);
+    setPages(updatedPages);
   };
 
   // publish book

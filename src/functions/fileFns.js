@@ -72,6 +72,8 @@ export const removeUploadedPageImage = (page, setState) => {
         return {
           ...p,
           image: null,
+          pageImage: { src: null, name: null },
+          rawPageImage: null,
         };
       }
       return p;
