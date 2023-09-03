@@ -78,13 +78,3 @@ export const removeUploadedPageImage = (page, setState) => {
     })
   );
 };
-
-export const clearFiles = (setState) => {
-  setState((prev) => {
-    return {
-      ...prev,
-      file: { name: null, src: null },
-      rawFile: null,
-    };
-  });
-};
