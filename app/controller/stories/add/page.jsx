@@ -15,7 +15,6 @@ import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import AudioPreview from "@/src/src/components/global/AudioPreview";
 import { useFileControls } from "@/src/src/hooks/useFileControls";
-import { usePageFileControls } from "@/src/src/hooks/usePageFileControls";
 
 const AddStory = () => {
   const [pages, setPages] = React.useState([
@@ -24,6 +23,7 @@ const AddStory = () => {
       pageHeader: "",
       pageContent: "",
       pageImage: { src: null, name: null },
+      rawPageImage: null,
     },
   ]);
   const [storyFilter, setStoryFilter] = React.useState({
@@ -48,9 +48,6 @@ const AddStory = () => {
     hasRawAudio,
     hasRawImage,
   } = useFileControls();
-
-  const { rawPageImages, setRawPageImage, removeRawPageImage, deleteRawImagePage, hasRawPageImage } =
-    usePageFileControls();
 
   const { data: session } = useSession({ required: true });
   const { url } = useGlobalContext();
@@ -90,6 +87,7 @@ const AddStory = () => {
         pageHeader: "",
         pageContent: "",
         pageImage: { src: null, name: null },
+        rawPageImage: null,
       };
       return [...prev, newPage];
     });
@@ -106,7 +104,6 @@ const AddStory = () => {
     }
 
     setPages(updatedPages);
-    deleteRawImagePage(index);
   };
 
   // publish book
@@ -137,16 +134,13 @@ const AddStory = () => {
     storyFilter.bookAudio = bookAudio;
 
     // check for images in each pages and upload
-    for (let i = 0; i < rawPageImages.current.length; i++) {
+    for (let i = 0; i < pages.length; i++) {
       const page = pages[i];
-      const rawPageImage = rawPageImages.current[i];
-
       let pageImage = null;
 
-      if (hasRawPageImage(i)) {
-        pageImage = await uploadFile("readefine_admin_file", rawPageImage.files);
+      if (page.rawPageImage) {
+        pageImage = await uploadFile("readefine_admin_file", page.rawPageImage);
       }
-
       page.pageImage = pageImage;
     }
 
@@ -176,12 +170,9 @@ const AddStory = () => {
           index={i}
           page={page}
           maxPages={pages.length}
-          rawPageImages={rawPageImages}
           deletePage={() => deletePage(i)}
           handlePage={handlePage}
           setPages={setPages}
-          setRawPageImage={setRawPageImage}
-          removeRawPageImage={removeRawPageImage}
         />
       </React.Fragment>
     );

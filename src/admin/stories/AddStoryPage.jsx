@@ -1,9 +1,9 @@
 import React from "react";
+import { wordCount } from "../../functions/wordCount";
+import { AiFillDelete } from "react-icons/ai";
 import { BiImage } from "react-icons/bi";
 import FilePreview from "../../components/global/FilePreview";
 import * as fileFns from "../../../src/functions/fileFns";
-import { wordCount } from "../../functions/wordCount";
-import { AiFillDelete } from "react-icons/ai";
 
 const AddStoryPage = (props) => {
   const words = wordCount(props.page?.pageContent);
@@ -52,10 +52,7 @@ const AddStoryPage = (props) => {
               purpose="Page Image"
               name={props.page?.pageImage?.name}
               src={props.page?.pageImage?.src}
-              clearFiles={() => {
-                fileFns.removeSelectedPageImage(pageNumber, props.setPages);
-                props.removeRawPageImage(index);
-              }}
+              clearFiles={() => fileFns.removeSelectedPageImage(pageNumber, props.setPages)}
             />
           ) : null}
         </div>
@@ -70,11 +67,7 @@ const AddStoryPage = (props) => {
             formNoValidate
             name="pageImage"
             id={`filePage${pageNumber}`}
-            onChange={(e) => {
-              fileFns.selectedPageImageViewer(pageNumber, e, props.setPages);
-              props.setRawPageImage(e, index);
-            }}
-            ref={(e) => (props.rawPageImages.current[index] = e)}
+            onChange={(e) => fileFns.selectedPageImageViewer(pageNumber, e, props.setPages)}
           />
 
           <BiImage className="scale-150 text-prmColor peer-checked" />

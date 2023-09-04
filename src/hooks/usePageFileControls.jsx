@@ -10,17 +10,15 @@ export const usePageFileControls = () => {
       return null;
     }
 
-    rawPageImages.current[index].files = currPageImage;
-  };
-
-  const removeRawPageImage = (index) => {
-    if (rawPageImages.current) {
-      rawPageImages.current[index].value = null;
+    if (rawPageImages.current && rawPageImages.current[index]) {
+      rawPageImages.current[index].files = currPageImage;
     }
   };
 
-  const deleteRawImagePage = (index) => {
-    rawPageImages.current.splice(index, 1);
+  const removeRawPageImage = (index) => {
+    if (rawPageImages.current && rawPageImages.current[index]) {
+      rawPageImages.current[index].value = null;
+    }
   };
 
   const hasRawPageImage = (index) => {
@@ -41,7 +39,6 @@ export const usePageFileControls = () => {
     rawPageImages,
     setRawPageImage,
     removeRawPageImage,
-    deleteRawImagePage,
     hasRawPageImage,
   };
 };

@@ -235,7 +235,6 @@ const EditStory = ({ params }) => {
       }
     }
   }, [url, user?.token, decodedStoryId]);
-
   // get story
   const getStory = React.useCallback(async () => {
     if (user?.token) {
@@ -259,6 +258,7 @@ const EditStory = ({ params }) => {
       <React.Fragment key={page.page}>
         <EditStoryPage
           page={page}
+          index={i}
           maxPages={pages.length}
           handlePage={handlePage}
           setPages={setPages}

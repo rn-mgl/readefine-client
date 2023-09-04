@@ -10,6 +10,8 @@ import Image from "next/image";
 const EditStoryPage = (props) => {
   const words = wordCount(props.page?.content);
   const page = props.page.page;
+  const index = props.index;
+
   return (
     <div
       className="table-fixed p-5 rounded-2xl cstm-flex-col overflow-auto w-full h-screen justify-start 
@@ -33,6 +35,7 @@ const EditStoryPage = (props) => {
       </div>
 
       <div className="cstm-separator" />
+
       <div className="cstm-flex-col w-full t:cstm-flex-row gap-5 h-full">
         <textarea
           name="content"
@@ -50,10 +53,10 @@ const EditStoryPage = (props) => {
             purpose="Page Image"
             name={props.page?.pageImage?.name}
             src={props.page?.pageImage?.src}
-            clearFiles={() => fileFns.removeUploadedPageImage(page, props.setPages)}
+            clearFiles={() => fileFns.removeUpdatedUploadedPageImage(page, props.setPages)}
           />
         ) : props.page?.image ? (
-          <div className="w-full cstm-flex-col rounded-2xl p-2 gap-2 t:w-80">
+          <div className="w-full cstm-flex-col rounded-2xl p-2 gap-2">
             <Image
               src={props.page?.image}
               alt="viewer"
@@ -91,7 +94,6 @@ const EditStoryPage = (props) => {
             name="pageImage"
             id={`filePage${page}`}
             onChange={(e) => fileFns.updateUploadedPageImage(page, e, props.setPages)}
-            defaultValue=""
           />
           <BiImage className="scale-150 text-prmColor peer-checked" />
         </label>

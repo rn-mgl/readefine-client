@@ -1,4 +1,7 @@
-// special case because pages are in an array
+// these are not in the usePageFileControls hook because it uses a different state for the preview
+// the hook handles the rawFiles for upload in cloudinary, these functions handle the UI and UX or viewing before uploading a file
+
+// for add story page because pageNumber is used as variable property
 export const selectedPageImageViewer = (pageNumber, e, setState) => {
   const currPageImage = e.target.files;
 
@@ -16,6 +19,7 @@ export const selectedPageImageViewer = (pageNumber, e, setState) => {
         return {
           ...p,
           pageImage: { src, name },
+          rawPageImage: currPageImage,
         };
       }
       return p;
@@ -23,6 +27,7 @@ export const selectedPageImageViewer = (pageNumber, e, setState) => {
   );
 };
 
+// for add story page because pageNumber is used as variable property
 export const removeSelectedPageImage = (pageNumber, setState) => {
   setState((prev) =>
     prev.map((p) => {
@@ -30,6 +35,7 @@ export const removeSelectedPageImage = (pageNumber, setState) => {
         return {
           ...p,
           pageImage: { src: null, name: null },
+          rawPageImage: null,
         };
       }
       return p;
@@ -37,6 +43,7 @@ export const removeSelectedPageImage = (pageNumber, setState) => {
   );
 };
 
+// for edit story page because page is used as variable property
 export const updateUploadedPageImage = (page, e, setState) => {
   const currPageImage = e.target.files;
 
@@ -62,6 +69,23 @@ export const updateUploadedPageImage = (page, e, setState) => {
   );
 };
 
+// for edit story page because page is used as variable property
+export const removeUpdatedUploadedPageImage = (page, setState) => {
+  setState((prev) =>
+    prev.map((p) => {
+      if (p.page === page) {
+        return {
+          ...p,
+          pageImage: { src: null, name: null },
+          rawPageImage: null,
+        };
+      }
+      return p;
+    })
+  );
+};
+
+// for edit story page because page is used as variable property
 export const removeUploadedPageImage = (page, setState) => {
   setState((prev) =>
     prev.map((p) => {
@@ -69,8 +93,6 @@ export const removeUploadedPageImage = (page, setState) => {
         return {
           ...p,
           image: null,
-          pageImage: { src: null, name: null },
-          rawPageImage: null,
         };
       }
       return p;
