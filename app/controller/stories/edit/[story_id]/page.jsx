@@ -286,12 +286,10 @@ const EditStory = ({ params }) => {
     }
   }, [user, router]);
 
-  if (loading) {
-    return <Loading />;
-  }
-
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
+      {loading ? <Loading /> : null}
+
       <AdminPageHeader subHeader="Stories" mainHeader="Edit Story" />
 
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}

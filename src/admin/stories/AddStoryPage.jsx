@@ -7,9 +7,14 @@ import { AiFillDelete } from "react-icons/ai";
 
 const AddStoryPage = (props) => {
   const words = wordCount(props.page?.pageContent);
+  const pageNumber = props.page.pageNumber;
+  const index = props.index;
 
   return (
-    <div className="table-fixed p-5 rounded-2xl cstm-flex-col overflow-auto w-full h-screen justify-start items-start bg-white text-sm gap-2 shadow-md cstm-scrollbar">
+    <div
+      className="p-5 rounded-2xl cstm-flex-col overflow-auto w-full h-screen 
+                  justify-start items-start bg-white text-sm gap-2 shadow-md cstm-scrollbar"
+    >
       <div className="cstm-flex-row w-full gap-5">
         <textarea
           name="pageHeader"
@@ -17,13 +22,13 @@ const AddStoryPage = (props) => {
           cols="30"
           rows="1"
           placeholder="Page Header"
-          onChange={(e) => props.handlePage(props.page.pageNumber, e.target)}
+          onChange={(e) => props.handlePage(pageNumber, e.target)}
           className="resize-none w-full p-2 focus:outline-none font-bold text-prmColor mr-auto truncate"
           value={props.page.pageHeader}
         />
 
         <p className="whitespace-nowrap">
-          {props.page.length > 1 ? "Pages" : "Page"}: {props.page.pageNumber}/{props.maxPages}
+          {props.page.length > 1 ? "Pages" : "Page"}: {pageNumber}/{props.maxPages}
         </p>
       </div>
 
@@ -36,33 +41,40 @@ const AddStoryPage = (props) => {
           cols="30"
           rows="1"
           placeholder="Page Content"
-          onChange={(e) => props.handlePage(props.page.pageNumber, e.target)}
+          onChange={(e) => props.handlePage(pageNumber, e.target)}
           className="resize-none p-2 focus:outline-none w-full h-full mr-auto"
           value={props.page.pageContent}
         />
 
-        <div className="w-full t:w-80 l-l:w-96">
+        <div className="w-full">
           {props.page?.pageImage?.src ? (
             <FilePreview
               purpose="Page Image"
               name={props.page?.pageImage?.name}
               src={props.page?.pageImage?.src}
-              clearFiles={() => fileFns.removeSelectedPageImage(props.page.pageNumber, props.setPages)}
+              clearFiles={() => {
+                fileFns.removeSelectedPageImage(pageNumber, props.setPages);
+                props.removeRawPageImage(index);
+              }}
             />
           ) : null}
         </div>
       </div>
 
       <div className="w-full cstm-flex-row gap-2">
-        <label className=" cstm-bg-hover cursor-pointer" htmlFor={`filePage${props.page.pageNumber}`}>
+        <label className=" cstm-bg-hover cursor-pointer" htmlFor={`filePage${pageNumber}`}>
           <input
             accept="image/*"
             type="file"
             className="hidden peer"
             formNoValidate
             name="pageImage"
-            id={`filePage${props.page.pageNumber}`}
-            onChange={(e) => fileFns.selectedPageImageViewer(props.page.pageNumber, e, props.setPages)}
+            id={`filePage${pageNumber}`}
+            onChange={(e) => {
+              fileFns.selectedPageImageViewer(pageNumber, e, props.setPages);
+              props.setRawPageImage(e, index);
+            }}
+            ref={(e) => (props.rawPageImages.current[index] = e)}
           />
 
           <BiImage className="scale-150 text-prmColor peer-checked" />

@@ -1,5 +1,5 @@
 // special case because pages are in an array
-export const selectedPageImageViewer = (page, e, setState) => {
+export const selectedPageImageViewer = (pageNumber, e, setState) => {
   const currPageImage = e.target.files;
 
   if (!currPageImage || currPageImage.length < 1) {
@@ -12,11 +12,10 @@ export const selectedPageImageViewer = (page, e, setState) => {
 
   setState((prev) =>
     prev.map((p) => {
-      if (p.pageNumber === page) {
+      if (p.pageNumber === pageNumber) {
         return {
           ...p,
           pageImage: { src, name },
-          rawPageImage: currPageImage,
         };
       }
       return p;
@@ -24,14 +23,13 @@ export const selectedPageImageViewer = (page, e, setState) => {
   );
 };
 
-export const removeSelectedPageImage = (page, setState) => {
+export const removeSelectedPageImage = (pageNumber, setState) => {
   setState((prev) =>
     prev.map((p) => {
-      if (p.pageNumber === page) {
+      if (p.pageNumber === pageNumber) {
         return {
           ...p,
           pageImage: { src: null, name: null },
-          rawPageImage: null,
         };
       }
       return p;
@@ -39,7 +37,6 @@ export const removeSelectedPageImage = (page, setState) => {
   );
 };
 
-// special case because pages are in an array
 export const updateUploadedPageImage = (page, e, setState) => {
   const currPageImage = e.target.files;
 

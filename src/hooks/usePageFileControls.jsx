@@ -1,64 +1,47 @@
 import React from "react";
 
-export const usePageFileControls = (params) => {
-  const [pageImages, setPageImages] = React.useState([{ pageImage: { src: null, name: null } }]);
+export const usePageFileControls = () => {
   const rawPageImages = React.useRef([]);
 
-  const selectedPageImageViewer = (e, pageNumber) => {
+  const setRawPageImage = (e, index) => {
     const currPageImage = e.target.files;
 
     if (!currPageImage || currPageImage.length < 1) {
       return null;
     }
 
-    const details = currPageImage[0];
-    const name = details.name;
-    const src = URL.createObjectURL(details);
-
-    const updatedPageImages = [...pageImages];
-
-    updatedPageImages.splice(pageNumber - 1, 0, { pageImage: { src, name } });
-
-    setPageImages(updatedPageImages);
-
-    rawPageImages.current[pageNumber].files = currPageImage;
+    rawPageImages.current[index].files = currPageImage;
   };
 
-  const removeSelectedPageImage = (pageNumber) => {
-    const updatedPageImages = [...pageImages];
-
-    updatedPageImages[pageNumber - 1].pageImage = { src: null, name: null };
-
-    setPageImages(updatedPageImages);
-
+  const removeRawPageImage = (index) => {
     if (rawPageImages.current) {
-      rawPageImages.current[pageNumber].value = null;
+      rawPageImages.current[index].value = null;
     }
   };
 
-  const deletePageRef = (pageNumber) => {
-    rawPageImages.current.splice(pageNumber, 1);
+  const deleteRawImagePage = (index) => {
+    rawPageImages.current.splice(index, 1);
   };
 
-  const addImagePage = () => {
-    const updatedPageImages = [...pageImages];
-    updatedPageImages.push({ pageImage: { src: null, name: null } });
-    setPageImages(updatedPageImages);
-  };
+  const hasRawPageImage = (index) => {
+    const file = rawPageImages.current[index]?.files;
 
-  const deleteImagePage = (pageNumber) => {
-    const updatedPageImages = [...pageImages];
-    updatedPageImages.splice(pageNumber, 1);
-    setPageImages(updatedPageImages);
+    if (!file || file.length < 0) {
+      return false;
+    }
+
+    if (!file[0]) {
+      return false;
+    }
+
+    return true;
   };
 
   return {
-    pageImages,
     rawPageImages,
-    selectedPageImageViewer,
-    removeSelectedPageImage,
-    deletePageRef,
-    addImagePage,
-    deleteImagePage,
+    setRawPageImage,
+    removeRawPageImage,
+    deleteRawImagePage,
+    hasRawPageImage,
   };
 };
