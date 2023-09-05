@@ -94,13 +94,13 @@ const AddStory = () => {
   };
 
   // handle delete page
-  const deletePage = (index) => {
-    const updatedPages = [...pages];
+  const deletePage = (pageNumber) => {
+    const updatedPages = pages.filter((page) => page.pageNumber !== pageNumber);
 
-    updatedPages.splice(index, 1);
-
-    for (let i = index; i < updatedPages.length; i++) {
-      updatedPages[i].pageNumber = i + 1;
+    // use pageNumber - 1 because 0 indexed based on array and pageNumber is 1 indexed
+    for (let i = pageNumber - 1; i < updatedPages.length; i++) {
+      const currPage = updatedPages[i];
+      currPage.pageNumber = i + 1;
     }
 
     setPages(updatedPages);
@@ -170,7 +170,7 @@ const AddStory = () => {
           index={i}
           page={page}
           maxPages={pages.length}
-          deletePage={() => deletePage(i)}
+          deletePage={() => deletePage(page.pageNumber)}
           handlePage={handlePage}
           setPages={setPages}
         />

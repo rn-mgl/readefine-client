@@ -90,22 +90,21 @@ const EditStory = ({ params }) => {
   };
 
   // handle delete page
-  const deletePage = (contentId, index) => {
-    const updatePages = [...pages];
-    const updateToDelete = [...toDelete];
+  const deletePage = (contentId, pageNumber) => {
+    const updatedPages = pages.filter((page) => page.page !== pageNumber);
+    const updatedToDelete = [...toDelete];
 
-    updatePages.splice(index, 1);
-
-    for (let i = index; i < updatePages.length; i++) {
-      updatePages[i].page = i + 1;
+    for (let i = pageNumber - 1; i < updatedPages.length; i++) {
+      const currPage = updatedPages[i];
+      currPage.page = i + 1;
     }
 
-    if (contentId && !updateToDelete.includes(contentId)) {
-      updateToDelete.push(contentId);
+    if (contentId && !updatedToDelete.includes(contentId)) {
+      updatedToDelete.push(contentId);
     }
 
-    setToDelete(updateToDelete);
-    setPages(updatePages);
+    setToDelete(updatedToDelete);
+    setPages(updatedPages);
   };
 
   // remove book cover
@@ -262,7 +261,7 @@ const EditStory = ({ params }) => {
           maxPages={pages.length}
           handlePage={handlePage}
           setPages={setPages}
-          deletePage={() => deletePage(page.content_id, i)}
+          deletePage={() => deletePage(page.content_id, page.page)}
         />
       </React.Fragment>
     );
