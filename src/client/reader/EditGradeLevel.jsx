@@ -13,8 +13,6 @@ const EditGradeLevel = (props) => {
   });
   const gradeLevels = React.useMemo(
     () => [
-      { grade: 1, lexile: 10 },
-      { grade: 2, lexile: 290 },
       { grade: 3, lexile: 530 },
       { grade: 4, lexile: 735 },
       { grade: 5, lexile: 900 },
@@ -69,8 +67,8 @@ const EditGradeLevel = (props) => {
       <div className="cstm-flex-col cstm-w-limit my-auto">
         <div className="cstm-flex-col w-full h-full gap-5 t:w-8/12 l-s:w-6/12 bg-white shadow-solid rounded-2xl p-5 justify-start ">
           <p className="text-xs text-center">
-            <span className="font-bold text-prmColor">note:</span> changing your grade level will
-            affect your lexile level and reset it to the lowest level in the grade you will choose.
+            <span className="font-bold text-prmColor">note:</span> changing your grade level will affect your lexile
+            level and reset it to the lowest level in the grade you will choose.
           </p>
 
           <p className="font-bold">Grade and Lexile</p>
