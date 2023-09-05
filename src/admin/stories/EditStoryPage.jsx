@@ -56,7 +56,7 @@ const EditStoryPage = (props) => {
             clearFiles={() => fileFns.removeUpdatedUploadedPageImage(page, props.setPages)}
           />
         ) : props.page?.image ? (
-          <div className="w-full cstm-flex-col rounded-2xl p-2 gap-2">
+          <div className="w-fit cstm-flex-col rounded-2xl p-2 gap-2">
             <Image
               src={props.page?.image}
               alt="viewer"
