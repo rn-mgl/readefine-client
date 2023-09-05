@@ -145,16 +145,16 @@ const Login = () => {
   }, [router]);
 
   React.useEffect(() => {
-    if (user && user.userId && user.isVerified) {
+    if (firstLogin && user && user.userId && user.isVerified) {
       addSession();
     }
-  }, [user, addSession]);
+  }, [user, firstLogin, addSession]);
 
   React.useEffect(() => {
-    if (user && user.userId && user.isVerified) {
+    if (firstLogin && user && user.userId && user.isVerified) {
       checkAchievement();
     }
-  }, [user, checkAchievement]);
+  }, [user, firstLogin, checkAchievement]);
 
   React.useEffect(() => {
     if (firstLogin && user && user.userId && !user.isVerified) {
