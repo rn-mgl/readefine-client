@@ -53,7 +53,7 @@ const EditGradeLevel = (props) => {
       {canSeeConfirmGradeChange ? (
         <ConfirmEditGradeLevel
           chosenGrade={chosenGrade}
-          confirmation={`Grade ${chosenGrade.grade} - ${user?.username}`}
+          confirmation={`Grade ${chosenGrade.grade} - Yes`}
           handleCanSeeConfirmGradeChange={handleCanSeeConfirmGradeChange}
           handleCanEditGradeLevel={props.handleCanEditGradeLevel}
           getUserData={props.getUserData}
