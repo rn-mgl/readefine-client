@@ -128,9 +128,11 @@ const SingleTest = ({ params }) => {
   const submitAnswers = async () => {
     const legibleForGrowth = testData.lexile > userLexile.lexile - 100;
     const answeredAll = allAreAnswered();
+    setHasSubmitted(true);
 
     // do not submit if not all are answered
     if (!answeredAll) {
+      setHasSubmitted(false);
       setMessage({
         active: true,
         msg: "Please answer all items.",
@@ -180,10 +182,10 @@ const SingleTest = ({ params }) => {
 
         // can see result after record
         handleIsFinished(true);
-        setHasSubmitted(true);
       }
     } catch (error) {
       console.log(error);
+      setHasSubmitted(false);
       setMessage({
         active: true,
         msg: error?.response?.data?.msg,
