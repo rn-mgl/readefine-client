@@ -5,18 +5,18 @@ import AddTestPage from "@/src/src/admin/tests/AddTestPage";
 import ActionLabel from "@/src/src/components/global/ActionLabel";
 import axios from "axios";
 import Message from "@/src/src/components/global/Message";
+import Loading from "@/src/src/components/global/Loading";
 
 import { IoAddOutline } from "react-icons/io5";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { decipher } from "@/src/src/functions/security";
-import Loading from "@/src/src/components/global/Loading";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
+import { useLoading } from "@/src/src/hooks/useLoading";
 
 const AddTest = ({ params }) => {
   const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
-  const [loading, setLoading] = React.useState(false);
   const [pages, setPages] = React.useState([
     {
       testNumber: 1,
@@ -28,6 +28,8 @@ const AddTest = ({ params }) => {
       answer1: "",
     },
   ]);
+
+  const { loading, setLoadingState } = useLoading(false);
 
   const { data: session } = useSession({ required: true });
   const { url } = useGlobalContext();
@@ -87,11 +89,11 @@ const AddTest = ({ params }) => {
   const createTest = async (e) => {
     e.preventDefault();
 
-    setLoading(true);
+    setLoadingState(true);
 
     // check if there are 10 questions
     if (pages.length < 10) {
-      setLoading(false);
+      setLoadingState(false);
       setMessage({ active: true, msg: "Enter 10 questions before posting.", type: "error" });
       return;
     }
@@ -100,7 +102,7 @@ const AddTest = ({ params }) => {
       const answerKey = `answer${i + 1}`;
 
       if (!page[answerKey]) {
-        setLoading(false);
+        setLoadingState(false);
         setMessage({
           active: true,
           msg: `You do not have an answer in number ${i + 1}.`,
@@ -110,7 +112,7 @@ const AddTest = ({ params }) => {
       }
 
       if (!page.testQuestion) {
-        setLoading(false);
+        setLoadingState(false);
         setMessage({
           active: true,
           msg: `You do not have a question in number ${i + 1}.`,
@@ -133,7 +135,7 @@ const AddTest = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
-      setLoading(false);
+      setLoadingState(false);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   };
@@ -172,19 +174,12 @@ const AddTest = ({ params }) => {
 
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
 
-      <form
-        onSubmit={(e) => createTest(e)}
-        className="w-full cstm-flex-col cstm-w-limit border-collapse gap-5"
-      >
+      <form onSubmit={(e) => createTest(e)} className="w-full cstm-flex-col cstm-w-limit border-collapse gap-5">
         {testPages}
 
         <div className="cstm-flex-row w-full">
           {pages.length < 10 ? (
-            <button
-              type="button"
-              onClick={addPage}
-              className="cstm-bg-hover mr-auto relative group"
-            >
+            <button type="button" onClick={addPage} className="cstm-bg-hover mr-auto relative group">
               <ActionLabel label="Add Page" />
 
               <IoAddOutline className="cursor-pointer text-prmColor scale-150" />

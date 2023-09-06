@@ -14,6 +14,8 @@ import Message from "@/src/src/components/global/Message";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import Image from "next/image";
+import { useLoading } from "@/src/src/hooks/useLoading";
+import FetchingMessage from "@/src/src/components/global/FetchingMessage";
 
 const SingleReward = ({ params }) => {
   const [rewardData, setRewardData] = React.useState({});
@@ -24,6 +26,8 @@ const SingleReward = ({ params }) => {
     type: "info",
   });
 
+  const { loading, setLoadingState } = useLoading(true);
+
   const { data: session } = useSession();
   const { url } = useGlobalContext();
   const user = session?.user?.name;
@@ -32,6 +36,7 @@ const SingleReward = ({ params }) => {
 
   // get reward
   const getReward = React.useCallback(async () => {
+    setLoadingState(true);
     try {
       const { data } = await axios.get(`${url}/reward/${decodedRewardId}`, {
         headers: { Authorization: user?.token },
@@ -39,16 +44,18 @@ const SingleReward = ({ params }) => {
 
       if (data) {
         setRewardData(data);
+        setLoadingState(false);
       }
     } catch (error) {
       console.log(error);
+      setLoadingState(false);
       setMessage({
         active: true,
         msg: error?.response?.data?.msg,
         type: "error",
       });
     }
-  }, [url, user, decodedRewardId]);
+  }, [url, user, decodedRewardId, setLoadingState]);
 
   React.useEffect(() => {
     if (user) {
@@ -67,7 +74,7 @@ const SingleReward = ({ params }) => {
   }, [user, router]);
 
   return (
-    <div className="w-full cstm-flex-col p-5 gap-5 t:gap-5 justify-start bg-accntColor max-h-screen h-screen">
+    <div className="w-full cstm-flex-col p-5 gap-5 t:gap-5 justify-start bg-accntColor max-h-screen h-full">
       <ClientPageHeader mainHeader="Readefine" subHeader="Your Reward" />
 
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
@@ -79,6 +86,7 @@ const SingleReward = ({ params }) => {
           </Link>
 
           <div className="cstm-flex-col bg-white rounded-2xl p-5 w-full shadow-solid gap-5 text-center h-full">
+            {loading ? <FetchingMessage /> : null}
             {/* reward */}
             <div className="cstm-flex-col p-2 rounded-2xl bg-accntColor w-full relative overflow-hidden h-full">
               <BiMedal className="absolute scale-[10] top-10 left-0 opacity-10 t:scale-[15] t:top-20 t:left-20 text-prmColor " />
@@ -98,7 +106,7 @@ const SingleReward = ({ params }) => {
               <BsTrophyFill className="absolute scale-[7] bottom-5 right-0 opacity-10 t:scale-[12] t:bottom-20 t:right-24 text-prmColor " />
             </div>
 
-            <div className="cstm-flex-col gap-5 h-[30%]">
+            <div className="cstm-flex-col gap-5 max-h-[30vh]">
               {/* name */}
               <p className="font-extrabold text-xl text-prmColor cstm-flex-row">
                 <BsDot className="text-black" />
@@ -111,7 +119,9 @@ const SingleReward = ({ params }) => {
               <div className="cstm-separator" />
 
               {/* description */}
-              <p className="text-sm overflow-y-auto cstm-scrollbar-2 ">{rewardData?.description}</p>
+              <p className="text-sm overflow-y-auto cstm-scrollbar-2 ">
+                {rewardData?.description} {loading ? <FetchingMessage /> : null}
+              </p>
             </div>
           </div>
         </div>

@@ -10,16 +10,18 @@ import axios from "axios";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import Message from "../../components/global/Message";
 import Loading from "../../components/global/Loading";
+import { useLoading } from "../../hooks/useLoading";
 
 const ChangePassword = (props) => {
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
   const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
-  const [loading, setLoading] = React.useState(false);
   const [passwordData, setPasswordData] = React.useState({
     oldPassword: { text: "", type: "password" },
     newPassword: { text: "", type: "password" },
     repeatNewPassword: { text: "", type: "password" },
   });
+
+  const { loading, setLoadingState } = useLoading(false);
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -48,13 +50,13 @@ const ChangePassword = (props) => {
     e.preventDefault();
 
     setHasSubmitted(true);
-    setLoading(true);
+    setLoadingState(true);
 
     const { oldPassword, newPassword, repeatNewPassword } = passwordData;
 
     if (newPassword.text !== repeatNewPassword.text) {
       setHasSubmitted(false);
-      setLoading(false);
+      setLoadingState(false);
       setMessage({
         active: true,
         msg: "The new password and retyped password do not match.",
@@ -65,7 +67,7 @@ const ChangePassword = (props) => {
 
     if (newPassword.text.length < 8) {
       setHasSubmitted(false);
-      setLoading(false);
+      setLoadingState(false);
       setMessage({
         active: true,
         msg: "Password must not be lower than 8 characters.",
@@ -87,7 +89,7 @@ const ChangePassword = (props) => {
     } catch (error) {
       console.log(error);
       setHasSubmitted(false);
-      setLoading(false);
+      setLoadingState(false);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   };

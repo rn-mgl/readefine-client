@@ -6,26 +6,27 @@ import Image from "next/image";
 import axios from "axios";
 import { useGlobalContext } from "@/src/context";
 import { BiLoader } from "react-icons/bi";
+import { useLoading } from "../../hooks/useLoading";
 
 const Hero = () => {
   const [userCount, setUserCount] = React.useState(0);
-  const [loading, setLoading] = React.useState(false);
+  const { loading, setLoadingState } = useLoading(false);
 
   const { url } = useGlobalContext();
 
   const getUserCount = React.useCallback(async () => {
-    setLoading(true);
+    setLoadingState(true);
     try {
       const { data } = await axios.get(`${url}/warmer`);
       if (data) {
         setUserCount(data?.user_count);
-        setLoading(false);
+        setLoadingState(false);
       }
     } catch (error) {
-      setLoading(false);
+      setLoadingState(false);
       console.log(error);
     }
-  }, [url]);
+  }, [url, setLoadingState]);
 
   React.useEffect(() => {
     getUserCount();
@@ -56,8 +57,8 @@ const Hero = () => {
                   l-s:text-xl l-s:w-10/12
                   l-l:w-7/12"
       >
-        <span className="font-bold">Readefine</span> : Gamification Approach to Engage and Enhance
-        Elementary Student&apos;s Reading Comprehension Skills in the English Language
+        <span className="font-bold">Readefine</span> : Gamification Approach to Engage and Enhance Elementary
+        Student&apos;s Reading Comprehension Skills in the English Language
       </p>
       <div
         className="w-full cstm-flex-col gap-4
@@ -90,9 +91,7 @@ const Hero = () => {
 
       <p className="text-xs font-light opacity-50 absolute bottom-5 cstm-flex-row gap-1">
         Readefine Users:{" "}
-        <span className="font-bold">
-          {loading ? <BiLoader className="animate-spin" /> : userCount}
-        </span>
+        <span className="font-bold">{loading ? <BiLoader className="animate-spin" /> : userCount}</span>
       </p>
     </section>
   );

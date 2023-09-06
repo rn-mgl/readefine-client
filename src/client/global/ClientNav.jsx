@@ -17,18 +17,20 @@ import { usePathname } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { cipher } from "../../functions/security";
+import { useLoading } from "../../hooks/useLoading";
 
 const ClientNav = () => {
   const [userData, setUserData] = React.useState({});
   const [isOpen, setIsOpen] = React.useState(false);
-  const [loading, setLoading] = React.useState(false);
+
+  const { loading, setLoadingState } = useLoading(false);
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
   const user = session?.user?.name;
 
   const logOut = async () => {
-    setLoading(true);
+    setLoadingState(true);
 
     try {
       const { data } = await axios.post(
@@ -41,7 +43,7 @@ const ClientNav = () => {
         await signOut({ callbackUrl: "/", redirect: true });
       }
     } catch (error) {
-      setLoading(false);
+      setLoadingState(false);
       console.log(error);
     }
   };
@@ -78,10 +80,7 @@ const ClientNav = () => {
 
   return (
     <>
-      <button
-        onClick={toggleOpenNav}
-        className="absolute cstm-bg-hover z-20 top-4 left-4 l-s:hidden"
-      >
+      <button onClick={toggleOpenNav} className="absolute cstm-bg-hover z-20 top-4 left-4 l-s:hidden">
         <BiMenu className="scale-150 cursor-pointer" />
       </button>
 

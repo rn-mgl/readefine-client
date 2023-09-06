@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import AudioPreview from "@/src/src/components/global/AudioPreview";
 import { useFileControls } from "@/src/src/hooks/useFileControls";
+import { useLoading } from "@/src/src/hooks/useLoading";
 
 const AddStory = () => {
   const [pages, setPages] = React.useState([
@@ -33,7 +34,6 @@ const AddStory = () => {
     lexile: "",
   });
   const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
-  const [loading, setLoading] = React.useState(false);
 
   const {
     imageFile,
@@ -48,6 +48,8 @@ const AddStory = () => {
     hasRawAudio,
     hasRawImage,
   } = useFileControls();
+
+  const { loading, setLoadingState } = useLoading(false);
 
   const { data: session } = useSession({ required: true });
   const { url } = useGlobalContext();
@@ -109,7 +111,7 @@ const AddStory = () => {
   // publish book
   const publishBook = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    setLoadingState(true);
 
     // book image
     let bookCover = null;
@@ -117,7 +119,7 @@ const AddStory = () => {
     if (hasRawImage()) {
       bookCover = await uploadFile("readefine_admin_file", rawImage.current?.files);
     } else {
-      setLoading(false);
+      setLoadingState(false);
       setMessage({ active: true, msg: "You did not add a book cover.", type: "error" });
       return;
     }
@@ -157,7 +159,7 @@ const AddStory = () => {
       }
     } catch (error) {
       console.log(error);
-      setLoading(false);
+      setLoadingState(false);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   };

@@ -17,6 +17,8 @@ import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import { useStoryPageControls } from "@/src/src/hooks/useStoryPageControls";
 import { useReceiveAchievement } from "@/src/src/hooks/useReceiveAchievement";
+import { useLoading } from "@/src/src/hooks/useLoading";
+import FetchingMessage from "@/src/src/components/global/FetchingMessage";
 
 const SingleStory = ({ params }) => {
   const [message, setMessage] = React.useState({
@@ -44,6 +46,8 @@ const SingleStory = ({ params }) => {
 
   const { accomplishedAchievement, claimNewAchievement, resetAchievement } = useReceiveAchievement();
 
+  const { loading, setLoadingState } = useLoading(true);
+
   const { data: session } = useSession();
   const { url } = useGlobalContext();
   const user = session?.user?.name;
@@ -56,6 +60,7 @@ const SingleStory = ({ params }) => {
 
   // get pages
   const getPages = React.useCallback(async () => {
+    setLoadingState(true);
     try {
       const { data } = await axios.get(`${url}/story_content`, {
         params: { storyId: decodedStoryId },
@@ -63,35 +68,40 @@ const SingleStory = ({ params }) => {
       });
       if (data) {
         setNewPages(data);
+        setLoadingState(false);
       }
     } catch (error) {
       console.log(error);
+      setLoadingState(false);
       setMessage({
         active: true,
         msg: error?.response?.data?.msg,
         type: "error",
       });
     }
-  }, [url, user, setNewPages, decodedStoryId]);
+  }, [url, user, setNewPages, setLoadingState, decodedStoryId]);
 
   // get story
   const getStory = React.useCallback(async () => {
+    setLoadingState(true);
     try {
       const { data } = await axios.get(`${url}/story/${decodedStoryId}`, {
         headers: { Authorization: user.token },
       });
       if (data) {
         setNewStory(data);
+        setLoadingState(false);
       }
     } catch (error) {
       console.log(error);
+      setLoadingState(false);
       setMessage({
         active: true,
         msg: error?.response?.data?.msg,
         type: "error",
       });
     }
-  }, [url, user, setNewStory, decodedStoryId]);
+  }, [url, user, setNewStory, setLoadingState, decodedStoryId]);
 
   // read story
   const readStory = React.useCallback(async () => {
@@ -228,7 +238,9 @@ const SingleStory = ({ params }) => {
         className="h-full w-full gap-5 bg-white rounded-2xl p-5 relative overflow-x-hidden 
                   overflow-y-auto cstm-w-limit transition-all  cstm-scrollbar"
       >
-        <div className="w-full relative overflow-x-hidden h-full cstm-scrollbar">{storyPages}</div>
+        <div className="w-full relative overflow-x-hidden h-full cstm-scrollbar">
+          {pages.length ? storyPages : loading ? <FetchingMessage /> : <p>There is no story content yet.</p>}
+        </div>
       </div>
 
       {/* left right button */}

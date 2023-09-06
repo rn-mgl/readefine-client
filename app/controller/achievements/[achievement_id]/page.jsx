@@ -16,11 +16,15 @@ import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import DeleteData from "@/src/src/admin/global/DeleteData";
 import Image from "next/image";
+import { useLoading } from "@/src/src/hooks/useLoading";
+import FetchingMessage from "@/src/src/components/global/FetchingMessage";
 
 const SingleAchievement = ({ params }) => {
   const [achievement, setAchievement] = React.useState({});
   const [canDeleteAchievement, setCanDeleteAchievement] = React.useState(false);
   const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
+
+  const { loading, setLoadingState } = useLoading(true);
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -35,6 +39,7 @@ const SingleAchievement = ({ params }) => {
 
   // get achievement
   const getAchievement = React.useCallback(async () => {
+    setLoadingState(true);
     try {
       const { data } = await axios.get(`${url}/admin_achievement/${decodedAchievementId}`, {
         headers: { Authorization: user.token },
@@ -42,12 +47,14 @@ const SingleAchievement = ({ params }) => {
 
       if (data) {
         setAchievement(data);
+        setLoadingState(false);
       }
     } catch (error) {
       console.log(error);
+      setLoadingState(false);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [user, url, setAchievement, decodedAchievementId]);
+  }, [user, url, setAchievement, setLoadingState, decodedAchievementId]);
 
   React.useEffect(() => {
     if (user) {
@@ -100,7 +107,9 @@ const SingleAchievement = ({ params }) => {
           <div className="w-full p-5 bg-white rounded-2xl cstm-flex-col gap-2 h-full">
             <p className=" text-sm">Task</p>
 
-            <p className="text-center text-prmColor font-bold text-lg">{achievement?.task}</p>
+            <p className="text-center text-prmColor font-bold text-lg">
+              {achievement?.task} {loading ? <FetchingMessage /> : null}
+            </p>
           </div>
         </div>
 

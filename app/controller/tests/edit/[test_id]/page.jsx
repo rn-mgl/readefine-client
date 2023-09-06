@@ -6,20 +6,22 @@ import axios from "axios";
 import AdminPageHeader from "@/src/src/admin/global/PageHeader";
 import EditTestPage from "@/src/src/admin/tests/EditTestPage";
 import Message from "@/src/src/components/global/Message";
+import Loading from "@/src/src/components/global/Loading";
 
 import { BsArrowLeft } from "react-icons/bs";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { decipher } from "@/src/src/functions/security";
-import Loading from "@/src/src/components/global/Loading";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
+import { useLoading } from "@/src/src/hooks/useLoading";
 
 const EditTest = ({ params }) => {
   const [test, setTest] = React.useState({});
   const [questions, setQuestions] = React.useState([]);
   const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
-  const [loading, setLoading] = React.useState(false);
+
+  const { loading, setLoadingState } = useLoading(false);
 
   const { data: session } = useSession({ required: true });
   const { url } = useGlobalContext();
@@ -46,13 +48,13 @@ const EditTest = ({ params }) => {
   const editTest = async (e) => {
     e.preventDefault();
 
-    setLoading(true);
+    setLoadingState(true);
 
     questions.forEach((q, i) => {
       const answerKey = `answer${q.question_id}`;
 
       if (!q[answerKey]) {
-        setLoading(false);
+        setLoadingState(false);
         setMessage({
           active: true,
           msg: `You do not have an answer in number ${i + 1}.`,
@@ -62,7 +64,7 @@ const EditTest = ({ params }) => {
       }
 
       if (!q.question) {
-        setLoading(false);
+        setLoadingState(false);
         setMessage({
           active: true,
           msg: `You do not have a question in number ${i + 1}.`,
@@ -84,7 +86,7 @@ const EditTest = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
-      setLoading(false);
+      setLoadingState(false);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   };
@@ -139,12 +141,7 @@ const EditTest = ({ params }) => {
   const testQuestions = questions.map((q, idx) => {
     return (
       <React.Fragment key={q?.question_id}>
-        <EditTestPage
-          handleQuestions={handleQuestions}
-          questionId={q?.question_id}
-          question={q}
-          testNumber={idx + 1}
-        />
+        <EditTestPage handleQuestions={handleQuestions} questionId={q?.question_id} question={q} testNumber={idx + 1} />
       </React.Fragment>
     );
   });
@@ -177,15 +174,8 @@ const EditTest = ({ params }) => {
 
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
 
-      <form
-        onSubmit={(e) => editTest(e)}
-        className="w-full cstm-flex-col cstm-w-limit border-collapse gap-5"
-      >
-        <Link
-          type="button"
-          href={`/controller/tests/${params?.test_id}`}
-          className="w-fit cstm-bg-hover mr-auto"
-        >
+      <form onSubmit={(e) => editTest(e)} className="w-full cstm-flex-col cstm-w-limit border-collapse gap-5">
+        <Link type="button" href={`/controller/tests/${params?.test_id}`} className="w-fit cstm-bg-hover mr-auto">
           <BsArrowLeft className=" text-prmColor" />
         </Link>
 

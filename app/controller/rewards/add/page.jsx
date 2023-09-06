@@ -14,6 +14,7 @@ import { useGlobalContext } from "@/src/context";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import { useFileControls } from "@/src/src/hooks/useFileControls";
+import { useLoading } from "@/src/src/hooks/useLoading";
 
 const AddReward = () => {
   const [reward, setReward] = React.useState({
@@ -23,10 +24,10 @@ const AddReward = () => {
   });
 
   const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
-  const [loading, setLoading] = React.useState(false);
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
 
   const { imageFile, rawImage, selectedImageViewer, removeSelectedImage, uploadFile, hasRawImage } = useFileControls();
+  const { loading, setLoadingState } = useLoading(false);
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -49,7 +50,7 @@ const AddReward = () => {
   // add reward
   const addReward = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    setLoadingState(true);
     setHasSubmitted(true);
 
     const { name, type, description, rawFile } = reward;
@@ -59,7 +60,7 @@ const AddReward = () => {
     if (hasRawImage()) {
       rewardImage = await uploadFile("readefine_admin_file", rawImage.current?.files);
     } else {
-      setLoading(false);
+      setLoadingState(false);
       setHasSubmitted(false);
       setMessage({ active: true, msg: "You did not add an image", type: "error" });
       return;
@@ -78,7 +79,7 @@ const AddReward = () => {
       }
     } catch (error) {
       console.log(error);
-      setLoading(false);
+      setLoadingState(false);
       setHasSubmitted(false);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }

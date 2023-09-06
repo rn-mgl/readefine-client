@@ -8,12 +8,14 @@ import { useRouter } from "next/navigation";
 import { useGlobalContext } from "@/src/context";
 import Message from "../../components/global/Message";
 import Loading from "../../components/global/Loading";
+import { useLoading } from "../../hooks/useLoading";
 
 const DeleteData = (props) => {
   const [confirmation, setConfirmation] = React.useState("");
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
   const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
-  const [loading, setLoading] = React.useState(false);
+
+  const { loading, setLoadingState } = useLoading(false);
 
   const { data: session } = useSession();
   const user = session?.user?.name;
@@ -30,10 +32,10 @@ const DeleteData = (props) => {
     e.preventDefault();
 
     setHasSubmitted(true);
-    setLoading(true);
+    setLoadingState(true);
 
     if (confirmation !== props.confirmation) {
-      setLoading(false);
+      setLoadingState(false);
       setHasSubmitted(false);
       setMessage({ active: true, msg: "The confirmation does not match.", type: "error" });
       return;
@@ -54,7 +56,7 @@ const DeleteData = (props) => {
       }
     } catch (error) {
       console.log(error);
-      setLoading(false);
+      setLoadingState(false);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   };
@@ -84,8 +86,7 @@ const DeleteData = (props) => {
           </div>
 
           <p className="text-xs font-ligt ">
-            Type <span className="font-bold text-prmColor">{props.confirmation}</span> to confirm
-            deletion.
+            Type <span className="font-bold text-prmColor">{props.confirmation}</span> to confirm deletion.
           </p>
 
           <input

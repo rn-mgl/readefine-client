@@ -1,6 +1,7 @@
 import React from "react";
 import noGame from "../../../public/profile/NoGame.svg";
 import Image from "next/image";
+import FetchingMessage from "../../components/global/FetchingMessage";
 
 const ActivityCard = (props) => {
   return (
@@ -12,16 +13,11 @@ const ActivityCard = (props) => {
       <div className="h-full overflow-y-auto cstm-flex-col w-full cstm-scrollbar-2 gap-5 justify-start">
         {props.hasContent ? (
           props.activity
+        ) : props.loading ? (
+          <FetchingMessage />
         ) : (
           <div className="cstm-flex-col w-full">
-            <Image
-              className="saturate-[.9]"
-              src={noGame}
-              alt="empty"
-              priority
-              width={220}
-              draggable={false}
-            />
+            <Image className="saturate-[.9]" src={noGame} alt="empty" priority width={220} draggable={false} />
             <p className="text-xs opacity-80">{props.noContentMessage}</p>
           </div>
         )}

@@ -16,14 +16,15 @@ import { BiImage } from "react-icons/bi";
 import { CiUser } from "react-icons/ci";
 import { useFileControls } from "../../hooks/useFileControls";
 import { avatars } from "../../functions/avatars";
+import { useLoading } from "../../hooks/useLoading";
 
 const EditMain = (props) => {
   const [adminData, setAdminData] = React.useState({});
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
   const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
-  const [loading, setLoading] = React.useState(false);
 
   const { imageFile, rawImage, removeSelectedImage, selectedImageViewer, uploadFile, hasRawImage } = useFileControls();
+  const { loading, setLoadingState } = useLoading(false);
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -50,14 +51,14 @@ const EditMain = (props) => {
   const editMain = async (e) => {
     e.preventDefault();
     setHasSubmitted(true);
-    setLoading(true);
+    setLoadingState(true);
 
     const { name, surname, username } = adminData;
 
     let profileImage = adminData?.image;
 
     if (!name || !surname || !username) {
-      setLoading(false);
+      setLoadingState(false);
       setHasSubmitted(false);
       setMessage({ active: true, msg: "Please do not leave anything blank.", type: "error" });
       return;
@@ -85,7 +86,7 @@ const EditMain = (props) => {
     } catch (error) {
       console.log(error);
       setHasSubmitted(false);
-      setLoading(false);
+      setLoadingState(false);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   };

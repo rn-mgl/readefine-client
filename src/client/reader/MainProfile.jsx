@@ -44,10 +44,7 @@ const MainProfile = (props) => {
           change password
         </button>
 
-        <button
-          onClick={props.handleCanEditMain}
-          className="cstm-bg-hover absolute bottom-2 right-2"
-        >
+        <button onClick={props.handleCanEditMain} className="cstm-bg-hover absolute bottom-2 right-2">
           <AiFillEdit className="text-prmColor" />
         </button>
       </div>
@@ -58,10 +55,7 @@ const MainProfile = (props) => {
 
           <p className="text-4xl text-prmColor font-bold">{props.userData?.grade_level}</p>
 
-          <button
-            onClick={props.handleCanEditGradeLevel}
-            className="cstm-bg-hover absolute bottom-2 right-2"
-          >
+          <button onClick={props.handleCanEditGradeLevel} className="cstm-bg-hover absolute bottom-2 right-2">
             <AiFillEdit className="text-prmColor" />
           </button>
         </div>

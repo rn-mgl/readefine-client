@@ -14,6 +14,8 @@ import { decipher } from "@/src/src/functions/security";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import Image from "next/image";
+import { useLoading } from "@/src/src/hooks/useLoading";
+import FetchingMessage from "@/src/src/components/global/FetchingMessage";
 
 const SingleReward = ({ params }) => {
   const [reward, setReward] = React.useState({});
@@ -23,6 +25,8 @@ const SingleReward = ({ params }) => {
     active: false,
     type: "info",
   });
+
+  const { loading, setLoadingState } = useLoading(true);
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -37,22 +41,25 @@ const SingleReward = ({ params }) => {
 
   // get reward data
   const getReward = React.useCallback(async () => {
+    setLoadingState(true);
     try {
       const { data } = await axios.get(`${url}/admin_reward/${decodedRewardId}`, {
         headers: { Authorization: user.token },
       });
       if (data) {
         setReward(data);
+        setLoadingState(false);
       }
     } catch (error) {
       console.log(error);
+      setLoadingState(false);
       setMessage({
         active: true,
         msg: error?.response?.data?.msg,
         type: "error",
       });
     }
-  }, [setReward, url, user, decodedRewardId]);
+  }, [setReward, setLoadingState, url, user, decodedRewardId]);
 
   React.useEffect(() => {
     if (user) {
@@ -116,7 +123,9 @@ const SingleReward = ({ params }) => {
             <div className="cstm-flex-col gap-5 h-[30%]">
               <p className="text-sm font-bold text-prmColor capitalize">{reward?.reward_type}</p>
               <div className="cstm-separator" />
-              <p className="text-sm text-center max-h-28 overflow-y-auto cstm-scrollbar-2">{reward?.description}</p>
+              <p className="text-sm text-center max-h-28 overflow-y-auto cstm-scrollbar-2">
+                {reward?.description} {loading ? <FetchingMessage /> : null}
+              </p>
             </div>
           </div>
         </div>

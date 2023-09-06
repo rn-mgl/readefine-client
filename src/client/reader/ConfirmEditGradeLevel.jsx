@@ -8,12 +8,14 @@ import Loading from "../../components/global/Loading";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { IoClose } from "react-icons/io5";
+import { useLoading } from "../../hooks/useLoading";
 
 const ConfirmEditGradeLevel = (props) => {
   const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
   const [confirmation, setConfirmation] = React.useState("");
-  const [loading, setLoading] = React.useState(false);
+
+  const { loading, setLoadingState } = useLoading(false);
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -27,11 +29,11 @@ const ConfirmEditGradeLevel = (props) => {
     e.preventDefault();
 
     setHasSubmitted(true);
-    setLoading(true);
+    setLoadingState(true);
 
     if (confirmation !== props.confirmation) {
       setHasSubmitted(false);
-      setLoading(false);
+      setLoadingState(false);
       setMessage({
         active: true,
         msg: "The confirmation does not match",
@@ -53,7 +55,7 @@ const ConfirmEditGradeLevel = (props) => {
     } catch (error) {
       console.log(error);
       setHasSubmitted(false);
-      setLoading(false);
+      setLoadingState(false);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   };
@@ -84,14 +86,13 @@ const ConfirmEditGradeLevel = (props) => {
           <div className="w-full">
             <p className="text-prmColor font-bold">Change Grade?</p>
             <p className="text-xs font-light">
-              <span className="font-semibold">note:</span> once you change your grade and lexile, it
-              cannot be retrieved.
+              <span className="font-semibold">note:</span> once you change your grade and lexile, it cannot be
+              retrieved.
             </p>
           </div>
 
           <p className="text-xs font-ligt ">
-            Type <span className="font-bold text-prmColor">{props.confirmation}</span> to confirm
-            update.
+            Type <span className="font-bold text-prmColor">{props.confirmation}</span> to confirm update.
           </p>
 
           <input

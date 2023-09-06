@@ -4,18 +4,20 @@ import InputComp from "@/src/src/components/input/InputComp";
 import ButtonComp from "@/src/src/components/input/ButtonComp";
 import axios from "axios";
 import Message from "@/src/src/components/global/Message";
+import Loading from "@/src/src/components/global/Loading";
 
 import { AiOutlineMail } from "react-icons/ai";
 import { CiUser } from "react-icons/ci";
 import { useGlobalContext } from "@/src/context";
 import { useRouter } from "next/navigation";
-import Loading from "@/src/src/components/global/Loading";
+import { useLoading } from "@/src/src/hooks/useLoading";
 
 const ForgotPassword = () => {
   const [keys, setKeys] = React.useState({ candidateEmail: "", candidateUsername: "" });
   const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
-  const [loading, setLoading] = React.useState(false);
+
+  const { loading, setLoadingState } = useLoading(false);
 
   const { url } = useGlobalContext();
   const router = useRouter();
@@ -34,7 +36,7 @@ const ForgotPassword = () => {
   const sendResetEmail = async (e) => {
     e.preventDefault();
     setHasSubmitted(true);
-    setLoading(true);
+    setLoadingState(true);
 
     const { candidateEmail, candidateUsername } = keys;
     try {
@@ -50,7 +52,7 @@ const ForgotPassword = () => {
     } catch (error) {
       console.log(error);
       setHasSubmitted(false);
-      setLoading(false);
+      setLoadingState(false);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   };

@@ -5,17 +5,17 @@ import RiddlesFilter from "@/src/src/admin/riddles/RiddlesFilter";
 import axios from "axios";
 import Link from "next/link";
 import Message from "@/src/src/components/global/Message";
+import RiddleRow from "@/src/src/admin/riddles/RiddleRow";
+import EditRow from "@/src/src/admin/riddles/EditRow";
+import DeleteData from "@/src/src/admin/global/DeleteData";
 
 import { IoAddOutline } from "react-icons/io5";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { inputDate } from "@/src/src/functions/localDate";
 import { BsArrowLeft } from "react-icons/bs";
-import RiddleRow from "@/src/src/admin/riddles/RiddleRow";
-import EditRow from "@/src/src/admin/riddles/EditRow";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
-import DeleteData from "@/src/src/admin/global/DeleteData";
 
 const AdminRiddles = () => {
   const [riddles, setRiddles] = React.useState([]);
@@ -151,6 +151,7 @@ const AdminRiddles = () => {
         }
       } catch (error) {
         console.log(error);
+
         setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
       }
     }

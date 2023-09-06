@@ -16,14 +16,15 @@ import { BiImage } from "react-icons/bi";
 import { CiUser } from "react-icons/ci";
 import { avatars } from "../../functions/avatars";
 import { useFileControls } from "../../hooks/useFileControls";
+import { useLoading } from "../../hooks/useLoading";
 
 const EditMain = (props) => {
   const [userData, setUserData] = React.useState({});
   const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
-  const [loading, setLoading] = React.useState(false);
 
   const { imageFile, rawImage, removeSelectedImage, selectedImageViewer, uploadFile, hasRawImage } = useFileControls();
+  const { loading, setLoadingState } = useLoading(false);
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -51,7 +52,7 @@ const EditMain = (props) => {
     e.preventDefault();
 
     setHasSubmitted(true);
-    setLoading(true);
+    setLoadingState(true);
 
     const { name, surname, username } = userData;
 
@@ -79,7 +80,7 @@ const EditMain = (props) => {
     } catch (error) {
       console.log(error);
       setHasSubmitted(false);
-      setLoading(false);
+      setLoadingState(false);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   };

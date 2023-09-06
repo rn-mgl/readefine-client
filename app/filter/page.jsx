@@ -10,13 +10,14 @@ import InputComp from "../../src/components/input/InputComp";
 import ButtonComp from "../../src/components/input/ButtonComp";
 import Loading from "@/src/src/components/global/Loading";
 import Message from "@/src/src/components/global/Message";
+import Link from "next/link";
 
 import { useRouter } from "next/navigation";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { CiUser } from "react-icons/ci";
 import { signIn, useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
-import Link from "next/link";
+import { useLoading } from "@/src/src/hooks/useLoading";
 
 const AdminLogin = () => {
   const [loginData, setLoginData] = React.useState({
@@ -24,9 +25,10 @@ const AdminLogin = () => {
     candidatePassword: "",
   });
   const [visiblePassword, setVisiblePassword] = React.useState(false);
-  const [loading, setLoading] = React.useState(false);
   const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
   const [firstLogin, setFirstLogin] = React.useState(false);
+
+  const { loading, setLoadingState } = useLoading(false);
 
   const { url } = useGlobalContext();
   const { data: session } = useSession();
@@ -52,7 +54,7 @@ const AdminLogin = () => {
   const loginAdmin = async (e) => {
     e.preventDefault();
 
-    setLoading(true);
+    setLoadingState(true);
     setFirstLogin(true);
 
     try {
@@ -64,13 +66,13 @@ const AdminLogin = () => {
       });
 
       if (!data?.ok) {
-        setLoading(false);
+        setLoadingState(false);
         setFirstLogin(false);
         setMessage({ active: true, msg: "Incorrect login credentials.", type: "error" });
       }
     } catch (error) {
       console.log(error);
-      setLoading(false);
+      setLoadingState(false);
       setFirstLogin(false);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
@@ -89,10 +91,10 @@ const AdminLogin = () => {
       }
     } catch (error) {
       console.log(error);
-      setLoading(false);
+      setLoadingState(false);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [router, url, user]);
+  }, [router, url, user, setLoadingState]);
 
   const notYetVerified = React.useCallback(() => {
     router.push("/sending?purpose=verify");
@@ -163,13 +165,7 @@ const AdminLogin = () => {
         </Link>
 
         {/* submit form */}
-        <ButtonComp
-          type="submit"
-          fontColor="text-accntColor"
-          bgColor="bg-prmColor"
-          label="Log In"
-          css="w-full"
-        />
+        <ButtonComp type="submit" fontColor="text-accntColor" bgColor="bg-prmColor" label="Log In" css="w-full" />
       </form>
 
       {/* render on phone */}

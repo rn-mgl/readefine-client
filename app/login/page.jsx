@@ -19,6 +19,7 @@ import { signIn, useSession } from "next-auth/react";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { CiUser } from "react-icons/ci";
 import { useReceiveAchievement } from "@/src/src/hooks/useReceiveAchievement";
+import { useLoading } from "@/src/src/hooks/useLoading";
 
 const Login = () => {
   const [visiblePassword, setVisiblePassword] = React.useState(false);
@@ -31,11 +32,12 @@ const Login = () => {
     active: false,
     type: "info",
   });
-  const [loading, setLoading] = React.useState(false);
   const [firstLogin, setFirstLogin] = React.useState(false);
 
   const { accomplishedAchievement, achievementUrl, claimNewAchievement, resetAchievement, setNewAchievementUrl } =
     useReceiveAchievement();
+
+  const { loading, setLoadingState } = useLoading(false);
 
   const { url } = useGlobalContext();
   const router = useRouter();
@@ -61,7 +63,7 @@ const Login = () => {
   const loginUser = async (e) => {
     e.preventDefault();
 
-    setLoading(true);
+    setLoadingState(true);
     setFirstLogin(true);
 
     try {
@@ -73,7 +75,7 @@ const Login = () => {
       });
 
       if (!data?.ok) {
-        setLoading(false);
+        setLoadingState(false);
         setFirstLogin(false);
         setMessage({
           active: true,
@@ -83,7 +85,7 @@ const Login = () => {
       }
     } catch (error) {
       console.log(error);
-      setLoading(false);
+      setLoadingState(false);
       setFirstLogin(false);
       setMessage({
         active: true,
@@ -104,7 +106,7 @@ const Login = () => {
 
       // if there are achievements
       if (achievementData.length) {
-        setLoading(false);
+        setLoadingState(false);
         claimNewAchievement(achievementData);
         setNewAchievementUrl(user?.isVerified ? "/archives" : "/sending?purpose=verify");
       } else {
@@ -112,14 +114,14 @@ const Login = () => {
       }
     } catch (error) {
       console.log(error);
-      setLoading(false);
+      setLoadingState(false);
       setMessage({
         active: true,
         msg: error?.response?.data?.msg,
         type: "error",
       });
     }
-  }, [router, url, user, claimNewAchievement, setNewAchievementUrl]);
+  }, [router, url, user, claimNewAchievement, setNewAchievementUrl, setLoadingState]);
 
   const addSession = React.useCallback(async () => {
     try {
@@ -131,14 +133,14 @@ const Login = () => {
       );
     } catch (error) {
       console.log(error);
-      setLoading(false);
+      setLoadingState(false);
       setMessage({
         active: true,
         msg: error?.response?.data?.msg,
         type: "error",
       });
     }
-  }, [url, user]);
+  }, [url, user, setLoadingState]);
 
   const notYetVerified = React.useCallback(async () => {
     router.push("/sending?purpose=verify");

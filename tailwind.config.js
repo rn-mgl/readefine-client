@@ -50,9 +50,9 @@ module.exports = {
           "100%": { transform: "translateY(10%)" },
         },
 
-        flowingBg: {
-          "0%": { transform: "translateX(-20%)" },
-          "100%": { transform: "translateX(20%)" },
+        gradientLoader: {
+          "0%": { backgroundSize: "100%" },
+          "100%": { backgroundSize: "1000%" },
         },
 
         lightRays: {
@@ -70,7 +70,7 @@ module.exports = {
         slideDown: "slideDown 1s ease-in-out",
         dangle: "dangle 2s ease-in-out infinite alternate",
         shake: "shake 200ms ease-in-out",
-        flowingBg: "flowingBg 5s ease-in-out infinite alternate",
+        gradientLoader: "gradientLoader 2s ease-in-out infinite alternate",
         lightRays: "lightRays 5s ease-in-out infinite alternate",
       },
       boxShadow: {

@@ -6,6 +6,7 @@ import axios from "axios";
 import EditRewardFilter from "@/src/src/admin/rewards/EditRewardFilter";
 import Message from "@/src/src/components/global/Message";
 import Loading from "@/src/src/components/global/Loading";
+import Image from "next/image";
 
 import { BiImage } from "react-icons/bi";
 import { wordCount } from "@/src/src/functions/wordCount";
@@ -16,14 +17,14 @@ import { IoClose } from "react-icons/io5";
 import { decipher } from "@/src/src/functions/security";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import { useFileControls } from "@/src/src/hooks/useFileControls";
-import Image from "next/image";
+import { useLoading } from "@/src/src/hooks/useLoading";
 
 const EditReward = ({ params }) => {
   const [reward, setReward] = React.useState({});
   const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
-  const [loading, setLoading] = React.useState(false);
 
   const { imageFile, rawImage, selectedImageViewer, removeSelectedImage, uploadFile, hasRawImage } = useFileControls();
+  const { loading, setLoadingState } = useLoading(false);
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -57,7 +58,7 @@ const EditReward = ({ params }) => {
   // edit reward
   const editReward = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    setLoadingState(true);
 
     const { reward_name, reward_type, description, rawFile } = reward;
     let rewardImage = reward?.reward;
@@ -68,7 +69,7 @@ const EditReward = ({ params }) => {
     }
 
     if (!rewardImage) {
-      setLoading(false);
+      setLoadingState(false);
       setMessage({ active: true, msg: "You did not put a reward image.", type: "error" });
       return;
     }
@@ -86,7 +87,7 @@ const EditReward = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
-      setLoading(false);
+      setLoadingState(false);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   };

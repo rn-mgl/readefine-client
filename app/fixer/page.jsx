@@ -10,12 +10,14 @@ import { CiUser } from "react-icons/ci";
 import { useGlobalContext } from "@/src/context";
 import { useRouter } from "next/navigation";
 import Loading from "@/src/src/components/global/Loading";
+import { useLoading } from "@/src/src/hooks/useLoading";
 
 const AdminForgotPassword = () => {
   const [keys, setKeys] = React.useState({ candidateEmail: "", candidateUsername: "" });
   const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
-  const [loading, setLoading] = React.useState(false);
+
+  const { loading, setLoadingState } = useLoading(false);
 
   const { url } = useGlobalContext();
   const router = useRouter();
@@ -33,7 +35,7 @@ const AdminForgotPassword = () => {
   // send email
   const sendResetEmail = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    setLoadingState(true);
     setHasSubmitted(true);
 
     const { candidateEmail, candidateUsername } = keys;
@@ -50,7 +52,7 @@ const AdminForgotPassword = () => {
       }
     } catch (error) {
       console.log(error);
-      setLoading(false);
+      setLoadingState(false);
       setHasSubmitted(false);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }

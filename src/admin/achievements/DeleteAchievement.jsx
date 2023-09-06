@@ -8,12 +8,14 @@ import { useRouter } from "next/navigation";
 import { useGlobalContext } from "@/src/context";
 import Message from "../../components/global/Message";
 import Loading from "../../components/global/Loading";
+import { useLoading } from "../../hooks/useLoading";
 
 const DeleteAchievement = (props) => {
   const [confirmation, setConfirmation] = React.useState("");
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
   const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
-  const [loading, setLoading] = React.useState(false);
+
+  const { loading, setLoadingState } = useLoading(false);
 
   const { data: session } = useSession();
   const user = session?.user?.name;
@@ -30,10 +32,10 @@ const DeleteAchievement = (props) => {
     e.preventDefault();
 
     setHasSubmitted(true);
-    setLoading(true);
+    setLoadingState(true);
 
     if (confirmation !== props.confirmation) {
-      setLoading(false);
+      setLoadingState(false);
       setHasSubmitted(false);
       setMessage({ active: true, msg: "The confirmation does not match.", type: "error" });
       return;
@@ -50,7 +52,7 @@ const DeleteAchievement = (props) => {
     } catch (error) {
       console.log(error);
       setHasSubmitted(false);
-      setLoading(false);
+      setLoadingState(false);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   };
@@ -77,14 +79,12 @@ const DeleteAchievement = (props) => {
           <div className="w-full">
             <p className="text-prmColor font-bold">Delete Achievement?</p>
             <p className="text-xs font-light">
-              <span className="font-semibold">note:</span> once you delete an achievement, it cannot
-              be retrieved.
+              <span className="font-semibold">note:</span> once you delete an achievement, it cannot be retrieved.
             </p>
           </div>
 
           <p className="text-xs font-ligt ">
-            Type <span className="font-bold text-prmColor">{props.confirmation}</span> to confirm
-            deletion.
+            Type <span className="font-bold text-prmColor">{props.confirmation}</span> to confirm deletion.
           </p>
 
           <input

@@ -17,11 +17,13 @@ import { usePathname } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { cipher } from "../../functions/security";
+import { useLoading } from "../../hooks/useLoading";
 
 const AdminNav = () => {
   const [adminData, setAdminData] = React.useState({});
   const [isOpen, setIsOpen] = React.useState(false);
-  const [loading, setLoading] = React.useState(false);
+
+  const { loading, setLoadingState } = useLoading(false);
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -30,7 +32,7 @@ const AdminNav = () => {
   const path = usePathname();
 
   const logOut = async () => {
-    setLoading(true);
+    setLoadingState(true);
 
     try {
       const { data } = await axios.post(
@@ -43,7 +45,7 @@ const AdminNav = () => {
         signOut({ callbackUrl: "/", redirect: true });
       }
     } catch (error) {
-      setLoading(false);
+      setLoadingState(false);
       console.log(error);
     }
   };
@@ -172,9 +174,7 @@ const AdminNav = () => {
               className="w-12 min-w-[3rem] h-12 min-h-[3rem] rounded-full
                       bg-indigo-100 bg-cover bg-center"
             >
-              {!adminData?.image ? (
-                <Image src={avatar} alt="avatar" className="saturate-150" width={100} />
-              ) : null}
+              {!adminData?.image ? <Image src={avatar} alt="avatar" className="saturate-150" width={100} /> : null}
             </div>
             <div className="cstm-flex-col items-start w-full">
               <p className="text-xs">Welcome</p>

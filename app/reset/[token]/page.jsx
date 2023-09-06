@@ -10,22 +10,24 @@ import Image from "next/image";
 import InputComp from "@/src/src/components/input/InputComp";
 import ButtonComp from "@/src/src/components/input/ButtonComp";
 import Message from "@/src/src/components/global/Message";
+import Loading from "@/src/src/components/global/Loading";
 
 import { useGlobalContext } from "@/src/context";
 import { useRouter } from "next/navigation";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { signOut } from "next-auth/react";
-import Loading from "@/src/src/components/global/Loading";
+import { useLoading } from "@/src/src/hooks/useLoading";
 
 const PasswordReset = ({ params }) => {
   const [password, setPassword] = React.useState({ newPassword: "", retypedPassword: "" });
   const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
-  const [loading, setLoading] = React.useState(false);
   const [visiblePassword, setVisiblePassword] = React.useState({
     newPassword: false,
     retypedPassword: false,
   });
+
+  const { loading, setLoadingState } = useLoading(false);
 
   const { url } = useGlobalContext();
   const router = useRouter();
@@ -55,7 +57,7 @@ const PasswordReset = ({ params }) => {
   const changePassword = async (e) => {
     e.preventDefault();
     setHasSubmitted(true);
-    setLoading(true);
+    setLoadingState(true);
 
     const { newPassword, retypedPassword } = password;
 
@@ -66,7 +68,7 @@ const PasswordReset = ({ params }) => {
         type: "warning",
       });
       setHasSubmitted(false);
-      setLoading(false);
+      setLoadingState(false);
       return;
     }
 
@@ -77,7 +79,7 @@ const PasswordReset = ({ params }) => {
         type: "warning",
       });
       setHasSubmitted(false);
-      setLoading(false);
+      setLoadingState(false);
 
       return;
     }
@@ -97,7 +99,7 @@ const PasswordReset = ({ params }) => {
     } catch (error) {
       console.log(error);
       setHasSubmitted(false);
-      setLoading(false);
+      setLoadingState(false);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   };

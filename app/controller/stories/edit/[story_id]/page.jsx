@@ -20,13 +20,13 @@ import { decipher } from "@/src/src/functions/security";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import { useFileControls } from "@/src/src/hooks/useFileControls";
 import Image from "next/image";
+import { useLoading } from "@/src/src/hooks/useLoading";
 
 const EditStory = ({ params }) => {
   const [story, setStory] = React.useState({});
   const [pages, setPages] = React.useState([]);
   const [toDelete, setToDelete] = React.useState([]);
   const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
-  const [loading, setLoading] = React.useState(false);
 
   const {
     imageFile,
@@ -41,6 +41,8 @@ const EditStory = ({ params }) => {
     hasRawAudio,
     hasRawImage,
   } = useFileControls();
+
+  const { loading, setLoadingState } = useLoading(false);
 
   const { data: session } = useSession({ required: true });
   const { url } = useGlobalContext();
@@ -131,7 +133,7 @@ const EditStory = ({ params }) => {
   const editBook = async (e) => {
     e.preventDefault();
 
-    setLoading(true);
+    setLoadingState(true);
 
     const uploadErrors = [];
 
@@ -147,7 +149,7 @@ const EditStory = ({ params }) => {
     }
 
     if (!bookCover) {
-      setLoading(false);
+      setLoadingState(false);
       setMessage({ active: true, msg: "You did not put a book cover.", type: "error" });
       return;
     }
@@ -188,7 +190,7 @@ const EditStory = ({ params }) => {
       for (const error of uploadErrors) {
         console.log(error);
       }
-      setLoading(false);
+      setLoadingState(false);
       setMessage({
         active: true,
         msg: `${numberOfErrors} ${
@@ -212,7 +214,7 @@ const EditStory = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
-      setLoading(false);
+      setLoadingState(false);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
   };

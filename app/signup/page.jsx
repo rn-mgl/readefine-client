@@ -19,6 +19,7 @@ import { useGlobalContext } from "../../context";
 import { useRouter } from "next/navigation";
 import { BsDot } from "react-icons/bs";
 import { avatars } from "@/src/src/functions/avatars";
+import { useLoading } from "@/src/src/hooks/useLoading";
 
 const Signup = () => {
   const [userData, setUserData] = React.useState({
@@ -32,12 +33,13 @@ const Signup = () => {
   });
   const [activePos, setActivePos] = React.useState(1);
   const [visiblePassword, setVisiblePassword] = React.useState(false);
-  const [loading, setLoading] = React.useState(false);
   const [message, setMessage] = React.useState({
     msg: "",
     active: false,
     type: "info",
   });
+
+  const { loading, setLoadingState } = useLoading(false);
 
   const { url } = useGlobalContext();
 
@@ -129,7 +131,7 @@ const Signup = () => {
   // register the user
   const signUp = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    setLoadingState(true);
 
     const randomIndex = Math.floor(Math.random() * avatars.length);
     const userAvatar = avatars[randomIndex];
@@ -151,7 +153,7 @@ const Signup = () => {
         msg: error?.response?.data?.msg,
         type: "error",
       });
-      setLoading(false);
+      setLoadingState(false);
     }
   };
 

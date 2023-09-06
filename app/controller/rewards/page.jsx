@@ -17,6 +17,8 @@ import { inputDate } from "@/src/src/functions/localDate";
 import { cipher } from "@/src/src/functions/security";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
+import { useLoading } from "@/src/src/hooks/useLoading";
+import FetchingMessage from "@/src/src/components/global/FetchingMessage";
 
 const AdminRewards = () => {
   const [rewards, setRewards] = React.useState([]);
@@ -29,6 +31,8 @@ const AdminRewards = () => {
     from: "",
     to: inputDate(new Date().toLocaleDateString()),
   });
+
+  const { loading, setLoadingState } = useLoading(true);
 
   const { data: session } = useSession({ required: true });
   const user = session?.user?.name;
@@ -67,6 +71,7 @@ const AdminRewards = () => {
 
   // get rewards
   const getRewards = React.useCallback(async () => {
+    setLoadingState(true);
     try {
       const { data } = await axios.get(`${url}/admin_reward`, {
         params: { searchFilter, sortFilter, dateRangeFilter, typeFilter },
@@ -75,12 +80,14 @@ const AdminRewards = () => {
 
       if (data) {
         setRewards(data);
+        setLoadingState(false);
       }
     } catch (error) {
       console.log(error);
+      setLoadingState(false);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [url, user, setRewards, searchFilter, sortFilter, dateRangeFilter, typeFilter]);
+  }, [url, user, setRewards, setLoadingState, searchFilter, sortFilter, dateRangeFilter, typeFilter]);
 
   // map rewards
   const rewardsCards = rewards.map((reward) => {
@@ -141,6 +148,8 @@ const AdminRewards = () => {
         >
           {rewards.length ? (
             rewardsCards
+          ) : loading ? (
+            <FetchingMessage />
           ) : (
             <div className="cstm-flex-col absolute top-2/4 translate-y-2/4 left-2/4 -translate-x-2/4 w-full">
               <Image src={noReward} alt="empty" priority width={220} draggable={false} />
