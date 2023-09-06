@@ -107,13 +107,13 @@ const SingleReward = ({ params }) => {
             className="p-5 rounded-2xl gap-5 cstm-flex-col overflow-auto w-full h-full 
                         justify-start bg-white text-sm shadow-md cstm-scrollbar"
           >
-            <div className="w-full cstm-flex-col bg-accntColor rounded-2xl p-5 h-4/6">
+            <div className="w-full cstm-flex-col bg-accntColor rounded-2xl p-5 h-full">
               <div className="w-fit animate-float drop-shadow-md saturate-150">
                 <Image src={reward?.reward} alt="reward" width={300} height={300} className="rounded-2xl" />
               </div>
             </div>
 
-            <div className="cstm-flex-col gap-5 h-2/6">
+            <div className="cstm-flex-col gap-5 h-[30%]">
               <p className="text-sm font-bold text-prmColor capitalize">{reward?.reward_type}</p>
               <div className="cstm-separator" />
               <p className="text-sm text-center max-h-28 overflow-y-auto cstm-scrollbar-2">{reward?.description}</p>
