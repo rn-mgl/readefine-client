@@ -84,6 +84,7 @@ const ChangePassword = (props) => {
       );
 
       if (data) {
+        setLoadingState(false);
         props.handleCanChangePassword();
       }
     } catch (error) {

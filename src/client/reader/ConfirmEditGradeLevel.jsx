@@ -50,6 +50,7 @@ const ConfirmEditGradeLevel = (props) => {
       );
 
       if (data) {
+        setHasSubmitted(false);
         window.location.reload();
       }
     } catch (error) {
