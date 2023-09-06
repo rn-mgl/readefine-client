@@ -17,11 +17,13 @@ import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import { useReceiveAchievement } from "@/src/src/hooks/useReceiveAchievement";
 import { useTestControls } from "@/src/src/hooks/useTestControls";
+import Loading from "@/src/src/components/global/Loading";
 
 const SingleTest = ({ params }) => {
   const [userLexile, setUserLexile] = React.useState(-1);
   const [activePage, setActivePage] = React.useState(0);
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
 
   const [message, setMessage] = React.useState({
     msg: "",
@@ -90,6 +92,7 @@ const SingleTest = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
+      setLoading(false);
       setMessage({
         active: true,
         msg: error?.response?.data?.msg,
@@ -116,6 +119,7 @@ const SingleTest = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
+      setLoading(false);
       setMessage({
         active: true,
         msg: error?.response?.data?.msg,
@@ -129,10 +133,12 @@ const SingleTest = ({ params }) => {
     const legibleForGrowth = testData.lexile > userLexile.lexile - 100;
     const answeredAll = allAreAnswered();
     setHasSubmitted(true);
+    setLoading(true);
 
     // do not submit if not all are answered
     if (!answeredAll) {
       setHasSubmitted(false);
+      setLoading(false);
       setMessage({
         active: true,
         msg: "Please answer all items.",
@@ -182,10 +188,12 @@ const SingleTest = ({ params }) => {
 
         // can see result after record
         handleIsFinished(true);
+        setLoading(false);
       }
     } catch (error) {
       console.log(error);
       setHasSubmitted(false);
+      setLoading(false);
       setMessage({
         active: true,
         msg: error?.response?.data?.msg,
@@ -308,6 +316,8 @@ const SingleTest = ({ params }) => {
 
   return (
     <div className="p-5 w-full min-h-screen h-screen bg-accntColor cstm-flex-col gap-5 justify-start overflow-x-hidden">
+      {loading ? <Loading /> : null}
+
       <ClientPageHeader mainHeader={testData?.title} subHeader="Test" />
 
       {accomplishedAchievement.accomplished ? (
