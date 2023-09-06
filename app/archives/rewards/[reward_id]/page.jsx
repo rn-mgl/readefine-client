@@ -80,10 +80,10 @@ const SingleReward = ({ params }) => {
 
           <div className="cstm-flex-col bg-white rounded-2xl p-5 w-full shadow-solid gap-5 text-center h-full">
             {/* reward */}
-            <div className="cstm-flex-col p-2 rounded-2xl bg-accntColor w-full relative overflow-hidden h-4/6">
+            <div className="cstm-flex-col p-2 rounded-2xl bg-accntColor w-full relative overflow-hidden h-full">
               <BiMedal className="absolute scale-[10] top-10 left-0 opacity-10 t:scale-[15] t:top-20 t:left-20 text-prmColor " />
 
-              <div className="animate-float drop-shadow-md relative z-10 saturate-150 h-full cstm-flex-col">
+              <div className="animate-float drop-shadow-md relative z-10 saturate-150 cstm-flex-col w-full t:w-60 l-s:w-72">
                 <Image
                   src={rewardData?.reward}
                   alt="viewer"
@@ -98,7 +98,7 @@ const SingleReward = ({ params }) => {
               <BsTrophyFill className="absolute scale-[7] bottom-5 right-0 opacity-10 t:scale-[12] t:bottom-20 t:right-24 text-prmColor " />
             </div>
 
-            <div className="cstm-flex-col gap-5 h-2/6">
+            <div className="cstm-flex-col gap-5 h-[30%]">
               {/* name */}
               <p className="font-extrabold text-xl text-prmColor cstm-flex-row">
                 <BsDot className="text-black" />
@@ -111,7 +111,7 @@ const SingleReward = ({ params }) => {
               <div className="cstm-separator" />
 
               {/* description */}
-              <p className="text-sm max-h-28 overflow-y-auto cstm-scrollbar-2 ">{rewardData?.description}</p>
+              <p className="text-sm overflow-y-auto cstm-scrollbar-2 ">{rewardData?.description}</p>
             </div>
           </div>
         </div>
