@@ -1,6 +1,5 @@
 import Image from "next/image";
 import React from "react";
-import FetchingMessage from "../../components/global/FetchingMessage";
 
 const ActivityInCard = (props) => {
   return (
@@ -10,8 +9,6 @@ const ActivityInCard = (props) => {
       <div className="cstm-flex-row gap-5 w-full overflow-x-auto cstm-scrollbar justify-start p-5">
         {props.hasActivities ? (
           props.activities
-        ) : props.loading ? (
-          <FetchingMessage />
         ) : (
           <div className="cstm-flex-col w-full">
             <Image src={props.tempImage} alt="empty" priority width={240} draggable={false} />

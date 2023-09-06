@@ -17,8 +17,6 @@ import { useGlobalContext } from "@/src/context";
 import { cipher } from "@/src/src/functions/security";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
-import { useLoading } from "@/src/src/hooks/useLoading";
-import FetchingMessage from "@/src/src/components/global/FetchingMessage";
 
 const ClientTests = () => {
   const [tests, setTests] = React.useState([]);
@@ -36,8 +34,6 @@ const ClientTests = () => {
     from: "",
     to: inputDate(new Date().toLocaleDateString()),
   });
-
-  const { loading, setLoadingState } = useLoading(true);
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -116,7 +112,6 @@ const ClientTests = () => {
   });
 
   const getTests = React.useCallback(async () => {
-    setLoadingState(true);
     try {
       const { data } = await axios.get(`${url}/test`, {
         params: {
@@ -129,32 +124,27 @@ const ClientTests = () => {
       });
       if (data) {
         setTests(data);
-        setLoadingState(false);
       }
     } catch (error) {
       console.log(error);
-      setLoadingState(false);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [url, user, setTests, setLoadingState, searchFilter, lexileRangeFilter, sortFilter, dateRangeFilter]);
+  }, [url, user, setTests, searchFilter, lexileRangeFilter, sortFilter, dateRangeFilter]);
 
   const getUserLexile = React.useCallback(async () => {
-    setLoadingState(true);
     try {
       const { data } = await axios.get(`${url}/user_lexile`, {
         headers: { Authorization: user?.token },
       });
       if (data) {
         setUserLexile(data);
-        setLoadingState(false);
         setLexileRangeFilter({ from: data.lexile - 100, to: data.lexile + 50 });
       }
     } catch (error) {
       console.log(error);
-      setLoadingState(false);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [setUserLexile, setLexileRangeFilter, setLoadingState, url, user]);
+  }, [setUserLexile, setLexileRangeFilter, url, user]);
 
   React.useEffect(() => {
     if (user) {
@@ -212,8 +202,6 @@ const ClientTests = () => {
         >
           {tests.length ? (
             testCards
-          ) : loading ? (
-            <FetchingMessage />
           ) : (
             <div className="cstm-flex-col absolute top-2/4 translate-y-2/4 left-2/4 -translate-x-2/4 w-full">
               <Image src={noTest} alt="empty" priority width={220} draggable={false} />

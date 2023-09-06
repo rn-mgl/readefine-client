@@ -15,8 +15,6 @@ import { cipher } from "@/src/src/functions/security";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
-import { useLoading } from "@/src/src/hooks/useLoading";
-import FetchingMessage from "@/src/src/components/global/FetchingMessage";
 
 const AdminUsers = () => {
   const [users, setUsers] = React.useState([]);
@@ -43,8 +41,6 @@ const AdminUsers = () => {
     from: "",
     to: inputDate(new Date().toLocaleDateString()),
   });
-
-  const { loading, setLoadingState } = useLoading(true);
 
   const { data: session } = useSession({ required: true });
   const { url } = useGlobalContext();
@@ -104,7 +100,6 @@ const AdminUsers = () => {
 
   // get users
   const getUsers = React.useCallback(async () => {
-    setLoadingState(true);
     try {
       const { data } = await axios.get(`${url}/admin_user`, {
         headers: { Authorization: user.token },
@@ -118,18 +113,16 @@ const AdminUsers = () => {
 
       if (data) {
         setUsers(data);
-        setLoadingState(false);
       }
     } catch (error) {
       console.log(error);
-      setLoadingState(false);
       setMessage({
         active: true,
         msg: error?.response?.data?.msg,
         type: "error",
       });
     }
-  }, [setUsers, setLoadingState, url, user, searchFilter, sortFilter, dateRangeFilter, lexileRangeFilter]);
+  }, [setUsers, url, user, searchFilter, sortFilter, dateRangeFilter, lexileRangeFilter]);
 
   React.useEffect(() => {
     if (user) {
@@ -188,8 +181,6 @@ const AdminUsers = () => {
 
             <tbody className="w-full text-sm relative">{userRow}</tbody>
           </table>
-        ) : loading ? (
-          <FetchingMessage />
         ) : (
           <div className="cstm-flex-col absolute left-2/4 -translate-x-2/4 w-full">
             <Image src={noUsers} alt="empty" priority width={220} draggable={false} />

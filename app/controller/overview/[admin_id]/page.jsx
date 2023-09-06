@@ -28,7 +28,6 @@ import { RxActivityLog } from "react-icons/rx";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import SessionText from "@/src/src/admin/overview/SessionText";
-import { useLoading } from "@/src/src/hooks/useLoading";
 
 const Overview = ({ params }) => {
   const [adminData, setAdminData] = React.useState({});
@@ -38,8 +37,6 @@ const Overview = ({ params }) => {
   const [canChangePassword, setCanChangePassword] = React.useState(false);
 
   const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
-
-  const { loading, setLoadingState } = useLoading(true);
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -59,7 +56,6 @@ const Overview = ({ params }) => {
 
   // get admin data
   const getAdminData = React.useCallback(async () => {
-    setLoadingState(true);
     try {
       const { data } = await axios.get(`${url}/admin/${decipheredId}`, {
         headers: { Authorization: user?.token },
@@ -67,18 +63,16 @@ const Overview = ({ params }) => {
 
       if (data) {
         setAdminData(data);
-        setLoadingState(false);
       }
     } catch (error) {
       console.log(error);
-      setLoadingState(false);
+
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [url, user, setAdminData, setLoadingState, decipheredId]);
+  }, [url, user, setAdminData, decipheredId]);
 
   // get admin activities
   const getAdminActivies = React.useCallback(async () => {
-    setLoadingState(true);
     try {
       const { data } = await axios.get(`${url}/admin_activities/${decipheredId}`, {
         headers: { Authorization: user?.token },
@@ -86,14 +80,12 @@ const Overview = ({ params }) => {
 
       if (data) {
         setAdminActivities(data);
-        setLoadingState(false);
       }
     } catch (error) {
       console.log(error);
-      setLoadingState(false);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [url, user, setAdminActivities, setLoadingState, decipheredId]);
+  }, [url, user, setAdminActivities, decipheredId]);
 
   // map story activity
   const storyActivity = adminActivities?.storyData?.map((d, i) => {
@@ -288,7 +280,6 @@ const Overview = ({ params }) => {
             isEmpty={adminActivities?.storyData?.length === 0}
             fillerImage={noReads}
             fillerText="No activities found on stories."
-            loading={loading}
           />
 
           <ActivityCard
@@ -297,7 +288,6 @@ const Overview = ({ params }) => {
             isEmpty={adminActivities?.storyData?.length === 0}
             fillerImage={noReads}
             fillerText="No activities found on story content."
-            loading={loading}
           />
 
           <ActivityCard
@@ -306,7 +296,6 @@ const Overview = ({ params }) => {
             isEmpty={adminActivities?.testData?.length === 0}
             fillerImage={noTest}
             fillerText="No activities found on tests."
-            loading={loading}
           />
 
           <ActivityCard
@@ -315,7 +304,6 @@ const Overview = ({ params }) => {
             isEmpty={adminActivities?.testQuestionData?.length === 0}
             fillerImage={noTest}
             fillerText="No activities found on test questions."
-            loading={loading}
           />
 
           <ActivityCard
@@ -324,7 +312,6 @@ const Overview = ({ params }) => {
             isEmpty={adminActivities?.testAnswerData?.length === 0}
             fillerImage={noTest}
             fillerText="No activities found on test answers."
-            loading={loading}
           />
 
           <ActivityCard
@@ -333,7 +320,6 @@ const Overview = ({ params }) => {
             isEmpty={adminActivities?.achievementData?.length === 0}
             fillerImage={noReward}
             fillerText="No activities found on achievements."
-            loading={loading}
           />
 
           <ActivityCard
@@ -342,7 +328,6 @@ const Overview = ({ params }) => {
             isEmpty={adminActivities?.rewardData?.length === 0}
             fillerImage={noReward}
             fillerText="No activities found on rewards."
-            loading={loading}
           />
 
           <ActivityCard
@@ -351,7 +336,6 @@ const Overview = ({ params }) => {
             isEmpty={adminActivities?.riddlesData?.length === 0}
             fillerImage={noGame}
             fillerText="No activities found on riddles."
-            loading={loading}
           />
 
           <ActivityCard
@@ -360,7 +344,6 @@ const Overview = ({ params }) => {
             isEmpty={adminActivities?.riddlesData?.length === 0}
             fillerImage={noGame}
             fillerText="No sessions found."
-            loading={loading}
           />
         </div>
       </div>

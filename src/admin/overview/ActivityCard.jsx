@@ -1,6 +1,5 @@
 import Image from "next/image";
 import React from "react";
-import FetchingMessage from "../../components/global/FetchingMessage";
 
 const ActivityCard = (props) => {
   return (
@@ -18,8 +17,6 @@ const ActivityCard = (props) => {
           <Image src={props.fillerImage} alt="filler" priority width={220} draggable={false} />
           <p className="text-xs opacity-80">{props.fillerText}</p>
         </div>
-      ) : props.loading ? (
-        <FetchingMessage />
       ) : (
         <div className="cstm-flex-col gap-5 w-full overflow-y-auto cstm-scrollbar-2 justify-start">
           {props.activity}

@@ -16,8 +16,6 @@ import { useSession } from "next-auth/react";
 import { cipher } from "@/src/src/functions/security";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
-import { useLoading } from "@/src/src/hooks/useLoading";
-import FetchingMessage from "@/src/src/components/global/FetchingMessage";
 
 const ClientStories = () => {
   const [stories, setStories] = React.useState([]);
@@ -31,8 +29,6 @@ const ClientStories = () => {
   const [sortFilter, setSortFilter] = React.useState({ toSort: "title", sortMode: "ASC" });
 
   const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
-
-  const { loading, setLoadingState } = useLoading(true);
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -81,7 +77,6 @@ const ClientStories = () => {
 
   // get stories
   const getStories = React.useCallback(async () => {
-    setLoadingState(true);
     try {
       const { data } = await axios.get(`${url}/story`, {
         headers: { Authorization: user.token },
@@ -93,18 +88,16 @@ const ClientStories = () => {
       });
       if (data) {
         setStories(data);
-        setLoadingState(false);
       }
     } catch (error) {
       console.log(error);
-      setLoadingState(false);
+
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [url, user, setStories, setLoadingState, searchFilter, sortFilter, lexileRangeFilter]);
+  }, [url, user, setStories, searchFilter, sortFilter, lexileRangeFilter]);
 
   // get user lexile
   const getUserLexile = React.useCallback(async () => {
-    setLoadingState(true);
     try {
       const { data } = await axios.get(`${url}/user_lexile`, {
         headers: { Authorization: user?.token },
@@ -112,14 +105,13 @@ const ClientStories = () => {
       if (data) {
         setUserLexile(data);
         setLexileRangeFilter({ from: data.lexile - 100, to: data.lexile + 50 });
-        setLoadingState(false);
       }
     } catch (error) {
       console.log(error);
-      setLoadingState(false);
+
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [setUserLexile, setLoadingState, url, user]);
+  }, [setUserLexile, url, user]);
 
   // map stories
   const storiesCards = stories.map((story) => {
@@ -199,8 +191,6 @@ const ClientStories = () => {
         >
           {stories.length ? (
             storiesCards
-          ) : loading ? (
-            <FetchingMessage />
           ) : (
             <div className="cstm-flex-col absolute top-2/4 translate-y-2/4 left-2/4 -translate-x-2/4 w-full">
               <Image src={noReads} alt="empty" priority width={220} draggable={false} />

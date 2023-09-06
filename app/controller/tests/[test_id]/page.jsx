@@ -18,9 +18,6 @@ import { choicesStyle, shuffleQuestions } from "@/src/src/functions/testFns";
 import { decipher } from "@/src/src/functions/security";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import { useTestControls } from "@/src/src/hooks/useTestControls";
-import { useLoading } from "@/src/src/hooks/useLoading";
-import FetchingMessage from "@/src/src/components/global/FetchingMessage";
-import Loading from "@/src/src/components/global/Loading";
 
 const SingleTest = ({ params }) => {
   const [canDeleteTest, setCanDeleteTest] = React.useState(false);
@@ -44,8 +41,6 @@ const SingleTest = ({ params }) => {
     setNewQuestions,
   } = useTestControls();
 
-  const { loading, setLoadingState } = useLoading(true);
-
   const { url } = useGlobalContext();
   const { data: session } = useSession({ required: true });
   const decodedTestId = decipher(params?.test_id);
@@ -64,7 +59,6 @@ const SingleTest = ({ params }) => {
 
   // get questions
   const getQuestions = React.useCallback(async () => {
-    setLoadingState(true);
     try {
       const { data } = await axios.get(`${url}/admin_test_question`, {
         params: { testId: decodedTestId },
@@ -74,22 +68,19 @@ const SingleTest = ({ params }) => {
       if (data) {
         shuffleQuestions(data);
         setNewQuestions(data);
-        setLoadingState(false);
       }
     } catch (error) {
       console.log(error);
-      setLoadingState(false);
       setMessage({
         active: true,
         msg: error?.response?.data?.msg,
         type: "error",
       });
     }
-  }, [url, user, decodedTestId, setNewQuestions, setLoadingState]);
+  }, [url, user, decodedTestId, setNewQuestions]);
 
   // get test
   const getTest = React.useCallback(async () => {
-    setLoadingState(true);
     try {
       const { data } = await axios.get(`${url}/admin_test/${decodedTestId}`, {
         headers: { Authorization: user?.token },
@@ -98,13 +89,11 @@ const SingleTest = ({ params }) => {
       // if no test, move to add test page
       if (data) {
         setNewTestData(data);
-        setLoadingState(false);
       } else {
         router.push(`/controller/tests/add/${params?.test_id}`);
       }
     } catch (error) {
       console.log(error);
-      setLoadingState(false);
       setMessage({
         active: true,
         msg: error?.response?.data?.msg,
@@ -112,7 +101,7 @@ const SingleTest = ({ params }) => {
       });
       router.push(`/controller/tests/add/${params?.test_id}`);
     }
-  }, [url, user, decodedTestId, router, params?.test_id, setNewTestData, setLoadingState]);
+  }, [url, user, decodedTestId, router, params?.test_id, setNewTestData]);
 
   // map questions
   const mappedQuestions = questions.map((q, i) => {
@@ -170,8 +159,6 @@ const SingleTest = ({ params }) => {
 
   return (
     <div className="p-5 w-full min-h-screen bg-accntColor cstm-flex-col gap-5">
-      {loading ? <Loading /> : null}
-
       <AdminPageHeader subHeader="Tests" mainHeader={testData?.title} />
 
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}

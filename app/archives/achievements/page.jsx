@@ -14,8 +14,6 @@ import { useGlobalContext } from "@/src/context";
 import { typeConversion } from "@/src/src/functions/typeConversion";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
-import { useLoading } from "@/src/src/hooks/useLoading";
-import FetchingMessage from "@/src/src/components/global/FetchingMessage";
 
 const ClientAchievements = () => {
   const [achievements, setAchievements] = React.useState([]);
@@ -31,8 +29,6 @@ const ClientAchievements = () => {
     toSort: "achievement_name",
     sortMode: "ASC",
   });
-
-  const { loading, setLoadingState } = useLoading(true);
 
   const { data: session } = useSession({ required: true });
   const user = session?.user?.name;
@@ -76,7 +72,6 @@ const ClientAchievements = () => {
 
   // get achievements
   const getAchievement = React.useCallback(async () => {
-    setLoadingState(true);
     try {
       const { data } = await axios.get(`${url}/user_achievement`, {
         headers: { Authorization: user.token },
@@ -90,14 +85,13 @@ const ClientAchievements = () => {
 
       if (data) {
         setAchievements(data);
-        setLoadingState(false);
       }
     } catch (error) {
       console.log(error);
-      setLoadingState(false);
+
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [url, user, searchFilter, goalRangeFilter, sortFilter, typeFilter, setAchievements, setLoadingState]);
+  }, [url, user, searchFilter, goalRangeFilter, sortFilter, typeFilter, setAchievements]);
 
   // map achievements
   const achievementPanels = achievements.map((a) => {
@@ -156,8 +150,6 @@ const ClientAchievements = () => {
           >
             {achievementPanels}
           </div>
-        ) : loading ? (
-          <FetchingMessage />
         ) : (
           <div className="cstm-flex-col absolute top-2/4 translate-y-2/4 left-2/4 -translate-x-2/4 w-full">
             <Image src={noReward} alt="empty" priority width={220} draggable={false} />

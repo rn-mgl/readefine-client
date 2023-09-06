@@ -30,7 +30,6 @@ import { TbPlusMinus } from "react-icons/tb";
 import { FaBrain } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
-import { useLoading } from "@/src/src/hooks/useLoading";
 
 const Reader = ({ params }) => {
   const [userData, setUserData] = React.useState({});
@@ -49,8 +48,6 @@ const Reader = ({ params }) => {
   const [showLexileMessage, setShowLexileMessage] = React.useState(false);
   const [selectedBook, setSelectedBook] = React.useState(-1);
   const [seeTestRecord, setSeeTestRecord] = React.useState(null);
-
-  const { loading, setLoadingState } = useLoading(true);
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -90,7 +87,6 @@ const Reader = ({ params }) => {
 
   // get user data
   const getUserData = React.useCallback(async () => {
-    setLoadingState(true);
     try {
       const { data } = await axios.get(`${url}/user/${decipheredId}`, {
         headers: { Authorization: user?.token },
@@ -98,22 +94,20 @@ const Reader = ({ params }) => {
 
       if (data) {
         setUserData(data);
-        setLoadingState(false);
       }
     } catch (error) {
       console.log(error);
-      setLoadingState(false);
+
       setMessage({
         active: true,
         msg: error?.response?.data?.msg,
         type: "error",
       });
     }
-  }, [url, user, setUserData, setLoadingState, decipheredId]);
+  }, [url, user, setUserData, decipheredId]);
 
   // get user activities
   const getUserActivities = React.useCallback(async () => {
-    setLoadingState(true);
     try {
       const { data } = await axios.get(`${url}/activities/${decipheredId}`, {
         headers: { Authorization: user?.token },
@@ -121,18 +115,17 @@ const Reader = ({ params }) => {
 
       if (data) {
         setUserActivities(data);
-        setLoadingState(false);
       }
     } catch (error) {
       console.log(error);
-      setLoadingState(false);
+
       setMessage({
         active: true,
         msg: error?.response?.data?.msg,
         type: "error",
       });
     }
-  }, [url, user, setUserActivities, setLoadingState, decipheredId]);
+  }, [url, user, setUserActivities, decipheredId]);
 
   // map answered questions
   const answeredQuestions = userActivities?.questionsData?.map((q) => {
@@ -338,7 +331,6 @@ const Reader = ({ params }) => {
           handleCanEditMain={handleCanEditMain}
           handleCanChangePassword={handleCanChangePassword}
           userData={userData}
-          loading={loading}
         />
 
         {/* read stories cards */}
@@ -348,7 +340,6 @@ const Reader = ({ params }) => {
           tempImage={noReads}
           hasActivities={userActivities?.readStoryData?.length}
           activities={storiesRead}
-          loading={loading}
         />
 
         {/* taken tests cards */}
@@ -358,7 +349,6 @@ const Reader = ({ params }) => {
           tempImage={noTest}
           hasActivities={userActivities?.takenTestData?.length}
           activities={testsTaken}
-          loading={loading}
         />
 
         {/* achievement cards */}
@@ -368,7 +358,6 @@ const Reader = ({ params }) => {
           tempImage={noReward}
           hasActivities={userActivities?.achievementData?.length}
           activities={achievementsAndRewards}
-          loading={loading}
         />
 
         {/* answers */}
@@ -381,7 +370,6 @@ const Reader = ({ params }) => {
               activity={answeredQuestions}
               hasContent={userActivities?.questionsData?.length}
               noContentMessage="You haven't answered any test questions yet."
-              loading={loading}
             />
 
             <ActivityCard
@@ -389,7 +377,6 @@ const Reader = ({ params }) => {
               activity={answeredDangle}
               hasContent={userActivities?.dangleData?.length}
               noContentMessage="You haven't played dangle yet."
-              loading={loading}
             />
 
             <ActivityCard
@@ -397,7 +384,6 @@ const Reader = ({ params }) => {
               activity={answeredDecipher}
               hasContent={userActivities?.decipherData?.length}
               noContentMessage="You haven't answered decipher yet."
-              loading={loading}
             />
 
             <ActivityCard
@@ -405,7 +391,6 @@ const Reader = ({ params }) => {
               activity={answeredRiddles}
               hasContent={userActivities?.riddlesData?.length}
               noContentMessage="You haven't answered riddles yet."
-              loading={loading}
             />
           </div>
         </div>
@@ -419,7 +404,6 @@ const Reader = ({ params }) => {
             activity={loggedSessions}
             hasContent={userActivities?.sessionsData?.length}
             noContentMessage="You haven't logged in readefine yet."
-            loading={loading}
           />
         </div>
       </div>

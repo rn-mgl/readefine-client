@@ -17,8 +17,6 @@ import { decipher } from "@/src/src/functions/security";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import { useStoryPageControls } from "@/src/src/hooks/useStoryPageControls";
-import { useLoading } from "@/src/src/hooks/useLoading";
-import FetchingMessage from "@/src/src/components/global/FetchingMessage";
 
 const SingleStory = ({ params }) => {
   const [message, setMessage] = React.useState({
@@ -46,8 +44,6 @@ const SingleStory = ({ params }) => {
     setNewPages,
   } = useStoryPageControls();
 
-  const { loading, setLoadingState } = useLoading(true);
-
   const { data: session } = useSession();
   const { url } = useGlobalContext();
   const decodedStoryId = decipher(params?.story_id);
@@ -65,7 +61,6 @@ const SingleStory = ({ params }) => {
 
   // get pages
   const getPages = React.useCallback(async () => {
-    setLoadingState(true);
     try {
       const { data } = await axios.get(`${url}/admin_story_content`, {
         params: { storyId: decodedStoryId },
@@ -73,40 +68,35 @@ const SingleStory = ({ params }) => {
       });
       if (data) {
         setNewPages(data);
-        setLoadingState(false);
       }
     } catch (error) {
       console.log(error);
-      setLoadingState(false);
       setMessage({
         active: true,
         msg: error?.response?.data?.msg,
         type: "error",
       });
     }
-  }, [url, user, setNewPages, setLoadingState, decodedStoryId]);
+  }, [url, user, setNewPages, decodedStoryId]);
 
   // get story
   const getStory = React.useCallback(async () => {
-    setLoadingState(true);
     try {
       const { data } = await axios.get(`${url}/admin_story/${decodedStoryId}`, {
         headers: { Authorization: user.token },
       });
       if (data) {
         setNewStory(data);
-        setLoadingState(false);
       }
     } catch (error) {
       console.log(error);
-      setLoadingState(false);
       setMessage({
         active: true,
         msg: error?.response?.data?.msg,
         type: "error",
       });
     }
-  }, [url, user, setNewStory, setLoadingState, decodedStoryId]);
+  }, [url, user, setNewStory, decodedStoryId]);
 
   // map story pages
   const storyPages = pages?.map((page, index, arr) => {
@@ -213,9 +203,7 @@ const SingleStory = ({ params }) => {
         className="h-full w-full gap-5  bg-white rounded-2xl p-5 relative overflow-x-hidden 
             overflow-y-auto cstm-w-limit transition-all  cstm-scrollbar"
       >
-        <div className="w-full relative overflow-x-hidden h-full cstm-scrollbar">
-          {pages.length ? storyPages : loading ? <FetchingMessage /> : null}
-        </div>
+        <div className="w-full relative overflow-x-hidden h-full cstm-scrollbar">{storyPages}</div>
       </div>
 
       <PageNavigation

@@ -14,8 +14,6 @@ import { useGlobalContext } from "@/src/context";
 import { cipher } from "@/src/src/functions/security";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
-import { useLoading } from "@/src/src/hooks/useLoading";
-import FetchingMessage from "@/src/src/components/global/FetchingMessage";
 
 const ClientRewards = () => {
   const [rewards, setRewards] = React.useState([]);
@@ -25,8 +23,6 @@ const ClientRewards = () => {
   const [showFilter, setShowFilter] = React.useState({ toShow: "received" });
   const [searchFilter, setSearchFilter] = React.useState("");
   const [typeFilter, setTypeFilter] = React.useState("");
-
-  const { loading, setLoadingState } = useLoading(true);
 
   const { data: session } = useSession({ required: true });
   const user = session?.user?.name;
@@ -65,7 +61,6 @@ const ClientRewards = () => {
 
   // get rewards
   const getRewards = React.useCallback(async () => {
-    setLoadingState(true);
     try {
       const { data } = await axios.get(`${url}/reward`, {
         params: { searchFilter, sortFilter, showFilter, typeFilter },
@@ -74,15 +69,13 @@ const ClientRewards = () => {
 
       if (data) {
         setRewards(data);
-        setLoadingState(false);
       }
     } catch (error) {
       console.log(error);
-      setLoadingState(false);
 
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [url, user, setRewards, setLoadingState, searchFilter, sortFilter, showFilter, typeFilter]);
+  }, [url, user, setRewards, searchFilter, sortFilter, showFilter, typeFilter]);
 
   // map rewards
   const rewardsCards = rewards.map((reward) => {
@@ -141,8 +134,6 @@ const ClientRewards = () => {
         >
           {rewards.length ? (
             rewardsCards
-          ) : loading ? (
-            <FetchingMessage />
           ) : (
             <div className="cstm-flex-col absolute top-2/4 translate-y-2/4 left-2/4 -translate-x-2/4 w-full">
               <Image src={noReward} alt="empty" priority width={220} draggable={false} />

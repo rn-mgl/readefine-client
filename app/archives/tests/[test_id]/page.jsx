@@ -19,7 +19,6 @@ import { useReceiveAchievement } from "@/src/src/hooks/useReceiveAchievement";
 import { useTestControls } from "@/src/src/hooks/useTestControls";
 import Loading from "@/src/src/components/global/Loading";
 import { useLoading } from "@/src/src/hooks/useLoading";
-import FetchingMessage from "@/src/src/components/global/FetchingMessage";
 
 const SingleTest = ({ params }) => {
   const [userLexile, setUserLexile] = React.useState(-1);
@@ -207,7 +206,6 @@ const SingleTest = ({ params }) => {
 
   // get test data
   const getTestData = React.useCallback(async () => {
-    setLoadingState(true);
     if (user?.token) {
       try {
         const { data } = await axios.get(`${url}/test/${decodedTestId}`, {
@@ -216,11 +214,9 @@ const SingleTest = ({ params }) => {
 
         if (data) {
           setNewTestData(data);
-          setLoadingState(false);
         }
       } catch (error) {
         console.log(error);
-        setLoadingState(false);
 
         setMessage({
           active: true,
@@ -229,11 +225,10 @@ const SingleTest = ({ params }) => {
         });
       }
     }
-  }, [url, user?.token, decodedTestId, setNewTestData, setLoadingState]);
+  }, [url, user?.token, decodedTestId, setNewTestData]);
 
   // get questions
   const getQuestions = React.useCallback(async () => {
-    setLoadingState(true);
     if (user?.token) {
       try {
         const { data } = await axios.get(`${url}/test_question`, {
@@ -244,11 +239,10 @@ const SingleTest = ({ params }) => {
         if (data) {
           const shuffledQuestions = shuffleQuestions(data);
           setNewQuestions(shuffledQuestions);
-          setLoadingState(false);
         }
       } catch (error) {
         console.log(error);
-        setLoadingState(false);
+
         setMessage({
           active: true,
           msg: error?.response?.data?.msg,
@@ -256,11 +250,10 @@ const SingleTest = ({ params }) => {
         });
       }
     }
-  }, [user?.token, url, decodedTestId, setNewQuestions, setLoadingState]);
+  }, [user?.token, url, decodedTestId, setNewQuestions]);
 
   // get user lexile
   const getUserLexile = React.useCallback(async () => {
-    setLoadingState(true);
     if (user?.token) {
       try {
         const { data } = await axios.get(`${url}/user_lexile`, {
@@ -269,11 +262,9 @@ const SingleTest = ({ params }) => {
 
         if (data) {
           setUserLexile(data);
-          setLoadingState(false);
         }
       } catch (error) {
         console.log(error);
-        setLoadingState(false);
         setMessage({
           active: true,
           msg: error?.response?.data?.msg,
@@ -281,7 +272,7 @@ const SingleTest = ({ params }) => {
         });
       }
     }
-  }, [setUserLexile, setLoadingState, url, user?.token]);
+  }, [setUserLexile, url, user?.token]);
 
   // map questions
   const questionSlides = questions.map((q, index) => {
@@ -348,13 +339,7 @@ const SingleTest = ({ params }) => {
 
         {/* question pane */}
         <div className="cstm-flex-row items-start w-full relative h-full">
-          {questions.length ? (
-            questionSlides
-          ) : loading ? (
-            <FetchingMessage />
-          ) : (
-            <p>There is no test content for this story yet.</p>
-          )}
+          {questions.length ? questionSlides : <p>There is no test content for this story yet.</p>}
         </div>
       </div>
 

@@ -18,8 +18,6 @@ import { useGlobalContext } from "@/src/context";
 import { cipher } from "@/src/src/functions/security";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
-import { useLoading } from "@/src/src/hooks/useLoading";
-import FetchingMessage from "@/src/src/components/global/FetchingMessage";
 
 const AdminStories = () => {
   const [stories, setStories] = React.useState([]);
@@ -33,8 +31,6 @@ const AdminStories = () => {
     from: "",
     to: inputDate(new Date().toLocaleDateString()),
   });
-
-  const { loading, setLoadingState } = useLoading(true);
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -83,7 +79,6 @@ const AdminStories = () => {
 
   // get all stories
   const getAllStories = React.useCallback(async () => {
-    setLoadingState(true);
     try {
       const { data } = await axios.get(`${url}/admin_story/`, {
         headers: { Authorization: user.token },
@@ -97,14 +92,12 @@ const AdminStories = () => {
 
       if (data) {
         setStories(data);
-        setLoadingState(false);
       }
     } catch (error) {
       console.log(error);
-      setLoadingState(false);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [url, user, setStories, setLoadingState, searchFilter, lexileRangeFilter, sortFilter, dateRangeFilter]);
+  }, [url, user, setStories, searchFilter, lexileRangeFilter, sortFilter, dateRangeFilter]);
 
   // map stories
   const storiesCards = stories.map((story) => {
@@ -181,8 +174,6 @@ const AdminStories = () => {
         >
           {stories.length ? (
             storiesCards
-          ) : loading ? (
-            <FetchingMessage />
           ) : (
             <div className="cstm-flex-col absolute top-2/4 translate-y-2/4 left-2/4 -translate-x-2/4 w-full">
               <Image src={noReads} alt="empty" priority width={220} draggable={false} />
