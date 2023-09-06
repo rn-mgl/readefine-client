@@ -18,9 +18,7 @@ const MainOverview = (props) => {
             className="w-20 h-20 bg-indigo-100 rounded-full absolute translate-y-10 
                     bottom-0 border-4 border-white bg-cover bg-center"
           >
-            {!props.adminData?.image ? (
-              <Image src={avatar} alt="avatar" className="w-full" width={320} />
-            ) : null}
+            {!props.adminData?.image ? <Image src={avatar} alt="avatar" className="w-full" width={320} /> : null}
           </div>
         </div>
 
@@ -36,10 +34,7 @@ const MainOverview = (props) => {
           <p className="font-light text-xs"> {props.adminData.email}</p>
         </div>
 
-        <button
-          onClick={props.handleCanEditMain}
-          className="cstm-bg-hover absolute right-2 bottom-2"
-        >
+        <button onClick={props.handleCanEditMain} className="cstm-bg-hover absolute right-2 bottom-2">
           <AiFillEdit className="text-prmColor" />
         </button>
 
@@ -53,9 +48,7 @@ const MainOverview = (props) => {
 
       <div className="bg-white h-48 w-full p-2 rounded-2xl cstm-flex-col gap-2 t:w-6/12 t:h-72">
         <p className="text-black font-light text-sm">Date Joined</p>
-        <p className="font-bold text-lg text-prmColor">
-          {localizeDate(props.adminData?.date_joined)}
-        </p>
+        <p className="font-bold text-lg text-prmColor">{localizeDate(props.adminData?.date_joined)}</p>
       </div>
     </div>
   );

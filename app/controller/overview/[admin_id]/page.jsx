@@ -222,9 +222,9 @@ const Overview = ({ params }) => {
     return (
       <React.Fragment key={s.session_id}>
         <SessionText
-          sessionType={session.type === "in" ? "logged in" : "logged out"}
+          sessionType={s.type === "in" ? "logged in" : "logged out"}
           adminData={adminData}
-          dateLogged={localizeDate(session.date_logged)}
+          dateLogged={localizeDate(s.date_logged)}
         />
       </React.Fragment>
     );
@@ -341,7 +341,7 @@ const Overview = ({ params }) => {
           <ActivityCard
             label="Sessions"
             activity={sessionActivity}
-            isEmpty={adminActivities?.riddlesData?.length === 0}
+            isEmpty={adminActivities?.sessionData?.length === 0}
             fillerImage={noGame}
             fillerText="No sessions found."
           />
