@@ -76,7 +76,7 @@ const FindRewards = (props) => {
     try {
       const { data } = await axios.get(`${url}/admin_reward`, {
         params: { searchFilter, sortFilter, dateRangeFilter, typeFilter },
-        headers: { Authorization: user.token },
+        headers: { Authorization: user?.token },
       });
 
       if (data) {
@@ -86,7 +86,7 @@ const FindRewards = (props) => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [url, user, setRewards, searchFilter, sortFilter, dateRangeFilter, typeFilter]);
+  }, [url, user?.token, setRewards, searchFilter, sortFilter, dateRangeFilter, typeFilter]);
 
   React.useEffect(() => {
     if (user) {
@@ -101,10 +101,7 @@ const FindRewards = (props) => {
     >
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
 
-      <button
-        onClick={props.handleCanSelectReward}
-        className="ml-auto cstm-flex-col w-fit z-20 cstm-bg-hover"
-      >
+      <button onClick={props.handleCanSelectReward} className="ml-auto cstm-flex-col w-fit z-20 cstm-bg-hover">
         <IoClose className="text-prmColor scale-150 cursor-pointer" />
       </button>
 

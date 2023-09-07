@@ -70,7 +70,7 @@ const AdminRewards = () => {
     try {
       const { data } = await axios.get(`${url}/admin_reward`, {
         params: { searchFilter, sortFilter, dateRangeFilter, typeFilter },
-        headers: { Authorization: user.token },
+        headers: { Authorization: user?.token },
       });
 
       if (data) {
@@ -81,7 +81,7 @@ const AdminRewards = () => {
 
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [url, user, setRewards, searchFilter, sortFilter, dateRangeFilter, typeFilter]);
+  }, [url, user?.token, setRewards, searchFilter, sortFilter, dateRangeFilter, typeFilter]);
 
   // map rewards
   const rewardsCards = rewards.map((reward) => {

@@ -39,7 +39,7 @@ const SingleReward = ({ params }) => {
   const getReward = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/admin_reward/${decodedRewardId}`, {
-        headers: { Authorization: user.token },
+        headers: { Authorization: user?.token },
       });
       if (data) {
         setReward(data);
@@ -53,7 +53,7 @@ const SingleReward = ({ params }) => {
         type: "error",
       });
     }
-  }, [setReward, url, user, decodedRewardId]);
+  }, [setReward, url, user?.token, decodedRewardId]);
 
   React.useEffect(() => {
     if (user) {

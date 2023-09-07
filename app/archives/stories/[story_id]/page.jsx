@@ -59,7 +59,7 @@ const SingleStory = ({ params }) => {
     try {
       const { data } = await axios.get(`${url}/story_content`, {
         params: { storyId: decodedStoryId },
-        headers: { Authorization: user.token },
+        headers: { Authorization: user?.token },
       });
       if (data) {
         setNewPages(data);
@@ -73,13 +73,13 @@ const SingleStory = ({ params }) => {
         type: "error",
       });
     }
-  }, [url, user, setNewPages, decodedStoryId]);
+  }, [url, user?.token, setNewPages, decodedStoryId]);
 
   // get story
   const getStory = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/story/${decodedStoryId}`, {
-        headers: { Authorization: user.token },
+        headers: { Authorization: user?.token },
       });
       if (data) {
         setNewStory(data);
@@ -93,7 +93,7 @@ const SingleStory = ({ params }) => {
         type: "error",
       });
     }
-  }, [url, user, setNewStory, decodedStoryId]);
+  }, [url, user?.token, setNewStory, decodedStoryId]);
 
   // read story
   const readStory = React.useCallback(async () => {

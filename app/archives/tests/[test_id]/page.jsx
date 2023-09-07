@@ -206,71 +206,65 @@ const SingleTest = ({ params }) => {
 
   // get test data
   const getTestData = React.useCallback(async () => {
-    if (user?.token) {
-      try {
-        const { data } = await axios.get(`${url}/test/${decodedTestId}`, {
-          headers: { Authorization: user?.token },
-        });
+    try {
+      const { data } = await axios.get(`${url}/test/${decodedTestId}`, {
+        headers: { Authorization: user?.token },
+      });
 
-        if (data) {
-          setNewTestData(data);
-        }
-      } catch (error) {
-        console.log(error);
-
-        setMessage({
-          active: true,
-          msg: error?.response?.data?.msg,
-          type: "error",
-        });
+      if (data) {
+        setNewTestData(data);
       }
+    } catch (error) {
+      console.log(error);
+
+      setMessage({
+        active: true,
+        msg: error?.response?.data?.msg,
+        type: "error",
+      });
     }
   }, [url, user?.token, decodedTestId, setNewTestData]);
 
   // get questions
   const getQuestions = React.useCallback(async () => {
-    if (user?.token) {
-      try {
-        const { data } = await axios.get(`${url}/test_question`, {
-          params: { testId: decodedTestId },
-          headers: { Authorization: user?.token },
-        });
+    try {
+      const { data } = await axios.get(`${url}/test_question`, {
+        params: { testId: decodedTestId },
+        headers: { Authorization: user?.token },
+      });
 
-        if (data) {
-          const shuffledQuestions = shuffleQuestions(data);
-          setNewQuestions(shuffledQuestions);
-        }
-      } catch (error) {
-        console.log(error);
-
-        setMessage({
-          active: true,
-          msg: error?.response?.data?.msg,
-          type: "error",
-        });
+      if (data) {
+        const shuffledQuestions = shuffleQuestions(data);
+        setNewQuestions(shuffledQuestions);
       }
+    } catch (error) {
+      console.log(error);
+
+      setMessage({
+        active: true,
+        msg: error?.response?.data?.msg,
+        type: "error",
+      });
     }
   }, [user?.token, url, decodedTestId, setNewQuestions]);
 
   // get user lexile
   const getUserLexile = React.useCallback(async () => {
-    if (user?.token) {
-      try {
-        const { data } = await axios.get(`${url}/user_lexile`, {
-          headers: { Authorization: user?.token },
-        });
+    try {
+      const { data } = await axios.get(`${url}/user_lexile`, {
+        headers: { Authorization: user?.token },
+      });
 
-        if (data) {
-          setUserLexile(data);
-        }
-      } catch (error) {
-        console.log(error);
-        setMessage({
-          active: true,
-          msg: error?.response?.data?.msg,
-          type: "error",
-        });
+      if (data) {
+        setUserLexile(data);
       }
+    } catch (error) {
+      console.log(error);
+      setMessage({
+        active: true,
+        msg: error?.response?.data?.msg,
+        type: "error",
+      });
     }
   }, [setUserLexile, url, user?.token]);
 

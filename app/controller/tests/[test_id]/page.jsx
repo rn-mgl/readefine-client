@@ -77,7 +77,7 @@ const SingleTest = ({ params }) => {
         type: "error",
       });
     }
-  }, [url, user, decodedTestId, setNewQuestions]);
+  }, [url, user?.token, decodedTestId, setNewQuestions]);
 
   // get test
   const getTest = React.useCallback(async () => {
@@ -101,7 +101,7 @@ const SingleTest = ({ params }) => {
       });
       router.push(`/controller/tests/add/${params?.test_id}`);
     }
-  }, [url, user, decodedTestId, router, params?.test_id, setNewTestData]);
+  }, [url, user?.token, decodedTestId, router, params?.test_id, setNewTestData]);
 
   // map questions
   const mappedQuestions = questions.map((q, i) => {

@@ -79,7 +79,7 @@ const ClientStories = () => {
   const getStories = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/story`, {
-        headers: { Authorization: user.token },
+        headers: { Authorization: user?.token },
         params: {
           searchFilter,
           lexileRangeFilter,
@@ -94,7 +94,7 @@ const ClientStories = () => {
 
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [url, user, setStories, searchFilter, sortFilter, lexileRangeFilter]);
+  }, [url, user?.token, setStories, searchFilter, sortFilter, lexileRangeFilter]);
 
   // get user lexile
   const getUserLexile = React.useCallback(async () => {
@@ -111,7 +111,7 @@ const ClientStories = () => {
 
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [setUserLexile, url, user]);
+  }, [setUserLexile, url, user?.token]);
 
   // map stories
   const storiesCards = stories.map((story) => {

@@ -31,7 +31,7 @@ const AdminDashboard = () => {
     try {
       const { data } = await axios.get(`${url}/admin_dashboard`, {
         params: { query: "counts" },
-        headers: { Authorization: user.token },
+        headers: { Authorization: user?.token },
       });
       if (data) {
         setCounts(data);
@@ -40,14 +40,14 @@ const AdminDashboard = () => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg });
     }
-  }, [user, url, setCounts]);
+  }, [user?.token, url, setCounts]);
 
   // get dashboard updates
   const getUpdates = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/admin_dashboard`, {
         params: { query: "updates" },
-        headers: { Authorization: user.token },
+        headers: { Authorization: user?.token },
       });
       if (data) {
         setUpdates(data);
@@ -56,7 +56,7 @@ const AdminDashboard = () => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [user, url, setUpdates]);
+  }, [user?.token, url, setUpdates]);
 
   React.useEffect(() => {
     if (user) {
@@ -137,13 +137,7 @@ const AdminDashboard = () => {
         />
 
         {/* minigames card */}
-        <DashboardCards
-          image={minigames}
-          label="Minigames"
-          subLabel="Extras"
-          count={3}
-          to="/controller/minigames"
-        />
+        <DashboardCards image={minigames} label="Minigames" subLabel="Extras" count={3} to="/controller/minigames" />
       </div>
     </div>
   );

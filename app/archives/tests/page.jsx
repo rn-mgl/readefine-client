@@ -129,7 +129,7 @@ const ClientTests = () => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [url, user, setTests, searchFilter, lexileRangeFilter, sortFilter, dateRangeFilter]);
+  }, [url, user?.token, setTests, searchFilter, lexileRangeFilter, sortFilter, dateRangeFilter]);
 
   const getUserLexile = React.useCallback(async () => {
     try {
@@ -144,7 +144,7 @@ const ClientTests = () => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [setUserLexile, setLexileRangeFilter, url, user]);
+  }, [setUserLexile, setLexileRangeFilter, url, user?.token]);
 
   React.useEffect(() => {
     if (user) {

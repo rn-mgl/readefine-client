@@ -38,7 +38,7 @@ const Archives = () => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [url, user, setCountsData]);
+  }, [url, user?.token, user?.userId, setCountsData]);
 
   React.useEffect(() => {
     if (user) {

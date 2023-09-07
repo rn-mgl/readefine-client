@@ -102,7 +102,7 @@ const AdminUsers = () => {
   const getUsers = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/admin_user`, {
-        headers: { Authorization: user.token },
+        headers: { Authorization: user?.token },
         params: {
           searchFilter,
           sortFilter,
@@ -122,7 +122,7 @@ const AdminUsers = () => {
         type: "error",
       });
     }
-  }, [setUsers, url, user, searchFilter, sortFilter, dateRangeFilter, lexileRangeFilter]);
+  }, [setUsers, url, user?.token, searchFilter, sortFilter, dateRangeFilter, lexileRangeFilter]);
 
   React.useEffect(() => {
     if (user) {

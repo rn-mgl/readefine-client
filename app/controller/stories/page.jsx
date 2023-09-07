@@ -81,7 +81,7 @@ const AdminStories = () => {
   const getAllStories = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/admin_story/`, {
-        headers: { Authorization: user.token },
+        headers: { Authorization: user?.token },
         params: {
           searchFilter,
           lexileRangeFilter,
@@ -97,7 +97,7 @@ const AdminStories = () => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [url, user, setStories, searchFilter, lexileRangeFilter, sortFilter, dateRangeFilter]);
+  }, [url, user?.token, setStories, searchFilter, lexileRangeFilter, sortFilter, dateRangeFilter]);
 
   // map stories
   const storiesCards = stories.map((story) => {

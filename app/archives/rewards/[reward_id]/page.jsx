@@ -49,7 +49,7 @@ const SingleReward = ({ params }) => {
         type: "error",
       });
     }
-  }, [url, user, decodedRewardId]);
+  }, [url, user?.token, decodedRewardId]);
 
   React.useEffect(() => {
     if (user) {

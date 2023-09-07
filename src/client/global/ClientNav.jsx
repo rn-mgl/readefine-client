@@ -66,7 +66,7 @@ const ClientNav = () => {
     } catch (error) {
       console.log(error);
     }
-  }, [url, user, setUserData]);
+  }, [url, user?.token, user?.userId, setUserData]);
 
   React.useEffect(() => {
     if (user) {

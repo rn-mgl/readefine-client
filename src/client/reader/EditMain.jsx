@@ -99,7 +99,7 @@ const EditMain = (props) => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [url, user, setUserData]);
+  }, [url, user?.token, user?.userId, setUserData]);
 
   React.useEffect(() => {
     if (user) {

@@ -29,22 +29,12 @@ const TestRecord = (props) => {
             <div className="cstm-flex-col w-full gap-2 text-center t:w-full bg-accntColor rounded-md p-2 h-full">
               <div className="cstm-flex-row gap-2  w-full ">
                 <p className="font-bold text-prmColor">Your Answer</p>
-                <div
-                  className={`${
-                    isCorrect ? "bg-prmColor" : "bg-scndColor"
-                  } rounded-full cstm-flex-col`}
-                >
-                  {isCorrect ? (
-                    <BsCheck className="text-scndColor" />
-                  ) : (
-                    <IoClose className="text-prmColor " />
-                  )}
+                <div className={`${isCorrect ? "bg-prmColor" : "bg-scndColor"} rounded-full cstm-flex-col`}>
+                  {isCorrect ? <BsCheck className="text-scndColor" /> : <IoClose className="text-prmColor " />}
                 </div>
               </div>
 
-              <p className={`${q.choice ? "opacity-100" : "opacity-50"}`}>
-                {q.choice ? q.choice : "No Answer"}
-              </p>
+              <p className={`${q.choice ? "opacity-100" : "opacity-50"}`}>{q.choice ? q.choice : "No Answer"}</p>
             </div>
 
             <div className="cstm-separator t:hidden" />
@@ -72,7 +62,7 @@ const TestRecord = (props) => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg });
     }
-  }, [url, user, props.testId]);
+  }, [url, user?.token, props.testId]);
 
   React.useEffect(() => {
     if (user) {
@@ -86,10 +76,7 @@ const TestRecord = (props) => {
                   cstm-flex-col justify-start overflow-y-auto cstm-scrollbar-2"
     >
       <div className="w-full h-auto cstm-w-limit cstm-flex-col justify-start gap-5 ">
-        <button
-          onClick={() => props.handleSeeTestRecord(props.testId)}
-          className="cstm-bg-hover ml-auto"
-        >
+        <button onClick={() => props.handleSeeTestRecord(props.testId)} className="cstm-bg-hover ml-auto">
           <IoClose className="text-prmColor scale-150" />
         </button>
 

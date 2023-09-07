@@ -37,7 +37,7 @@ const SingleAchievement = ({ params }) => {
   const getAchievement = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/admin_achievement/${decodedAchievementId}`, {
-        headers: { Authorization: user.token },
+        headers: { Authorization: user?.token },
       });
 
       if (data) {
@@ -47,7 +47,7 @@ const SingleAchievement = ({ params }) => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [user, url, setAchievement, decodedAchievementId]);
+  }, [user?.token, url, setAchievement, decodedAchievementId]);
 
   React.useEffect(() => {
     if (user) {

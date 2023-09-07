@@ -94,7 +94,7 @@ const AdminLogin = () => {
       setLoadingState(false);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [router, url, user, setLoadingState]);
+  }, [router, url, user?.token, user?.adminId, setLoadingState]);
 
   const notYetVerified = React.useCallback(() => {
     router.push("/sending?purpose=verify");

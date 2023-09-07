@@ -64,7 +64,7 @@ const SingleStory = ({ params }) => {
     try {
       const { data } = await axios.get(`${url}/admin_story_content`, {
         params: { storyId: decodedStoryId },
-        headers: { Authorization: user.token },
+        headers: { Authorization: user?.token },
       });
       if (data) {
         setNewPages(data);
@@ -77,13 +77,13 @@ const SingleStory = ({ params }) => {
         type: "error",
       });
     }
-  }, [url, user, setNewPages, decodedStoryId]);
+  }, [url, user?.token, setNewPages, decodedStoryId]);
 
   // get story
   const getStory = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/admin_story/${decodedStoryId}`, {
-        headers: { Authorization: user.token },
+        headers: { Authorization: user?.token },
       });
       if (data) {
         setNewStory(data);
@@ -96,7 +96,7 @@ const SingleStory = ({ params }) => {
         type: "error",
       });
     }
-  }, [url, user, setNewStory, decodedStoryId]);
+  }, [url, user?.token, setNewStory, decodedStoryId]);
 
   // map story pages
   const storyPages = pages?.map((page, index, arr) => {

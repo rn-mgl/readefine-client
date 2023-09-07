@@ -46,7 +46,7 @@ const Minigames = () => {
         type: "error",
       });
     }
-  }, [url, user, setCounts]);
+  }, [url, user?.token, setCounts]);
 
   React.useEffect(() => {
     if (user) {

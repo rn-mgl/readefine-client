@@ -69,7 +69,7 @@ const Overview = ({ params }) => {
 
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [url, user, setAdminData, decipheredId]);
+  }, [url, user?.token, setAdminData, decipheredId]);
 
   // get admin activities
   const getAdminActivies = React.useCallback(async () => {
@@ -85,7 +85,7 @@ const Overview = ({ params }) => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [url, user, setAdminActivities, decipheredId]);
+  }, [url, user?.token, setAdminActivities, decipheredId]);
 
   // map story activity
   const storyActivity = adminActivities?.storyData?.map((d, i) => {

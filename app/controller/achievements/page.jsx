@@ -92,7 +92,7 @@ const AdminAchievements = () => {
   const getAchievement = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/admin_achievement`, {
-        headers: { Authorization: user.token },
+        headers: { Authorization: user?.token },
         params: {
           searchFilter,
           goalRangeFilter,
@@ -109,7 +109,7 @@ const AdminAchievements = () => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [url, user, setAchievements, searchFilter, goalRangeFilter, sortFilter, dateRangeFilter, typeFilter]);
+  }, [url, user?.token, setAchievements, searchFilter, goalRangeFilter, sortFilter, dateRangeFilter, typeFilter]);
 
   // map achievement cards
   const achievementCards = achievements.map((a) => {

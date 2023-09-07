@@ -64,7 +64,7 @@ const ClientRewards = () => {
     try {
       const { data } = await axios.get(`${url}/reward`, {
         params: { searchFilter, sortFilter, showFilter, typeFilter },
-        headers: { Authorization: user.token },
+        headers: { Authorization: user?.token },
       });
 
       if (data) {
@@ -75,7 +75,7 @@ const ClientRewards = () => {
 
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [url, user, setRewards, searchFilter, sortFilter, showFilter, typeFilter]);
+  }, [url, user?.token, setRewards, searchFilter, sortFilter, showFilter, typeFilter]);
 
   // map rewards
   const rewardsCards = rewards.map((reward) => {

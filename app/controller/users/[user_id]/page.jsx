@@ -169,7 +169,7 @@ const SingleUser = ({ params }) => {
   const getUserData = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/admin_user/${decodedUserId}`, {
-        headers: { Authorization: user.token },
+        headers: { Authorization: user?.token },
       });
 
       if (data) {
@@ -179,14 +179,14 @@ const SingleUser = ({ params }) => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [url, user, setUserData, decodedUserId]);
+  }, [url, user?.token, setUserData, decodedUserId]);
 
   // get user lexile for graph
   const getUserLexile = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/admin_user_lexile`, {
         params: { userId: decodedUserId },
-        headers: { Authorization: user.token },
+        headers: { Authorization: user?.token },
       });
 
       if (data) {
@@ -196,14 +196,14 @@ const SingleUser = ({ params }) => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [url, user, setUserLexile, decodedUserId]);
+  }, [url, user?.token, setUserLexile, decodedUserId]);
 
   // get books read for graph
   const getUserBooksRead = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/admin_read_story`, {
         params: { userId: decodedUserId },
-        headers: { Authorization: user.token },
+        headers: { Authorization: user?.token },
       });
 
       if (data) {
@@ -213,14 +213,14 @@ const SingleUser = ({ params }) => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [url, user, setUserReads, decodedUserId]);
+  }, [url, user?.token, setUserReads, decodedUserId]);
 
   // get quizzes for graph
   const getUserQuizzesAnswered = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/admin_taken_test`, {
         params: { userId: decodedUserId },
-        headers: { Authorization: user.token },
+        headers: { Authorization: user?.token },
       });
 
       if (data) {
@@ -230,7 +230,7 @@ const SingleUser = ({ params }) => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [url, user, setUserQuizzes, decodedUserId]);
+  }, [url, user?.token, setUserQuizzes, decodedUserId]);
 
   React.useEffect(() => {
     if (user) {

@@ -121,7 +121,7 @@ const Login = () => {
         type: "error",
       });
     }
-  }, [router, url, user, claimNewAchievement, setNewAchievementUrl, setLoadingState]);
+  }, [router, url, user?.token, user?.isVerified, claimNewAchievement, setNewAchievementUrl, setLoadingState]);
 
   const addSession = React.useCallback(async () => {
     try {
@@ -140,7 +140,7 @@ const Login = () => {
         type: "error",
       });
     }
-  }, [url, user, setLoadingState]);
+  }, [url, user?.token, user?.userId, setLoadingState]);
 
   const notYetVerified = React.useCallback(async () => {
     router.push("/sending?purpose=verify");
