@@ -94,7 +94,7 @@ const ClientStories = () => {
 
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [url, user?.token, setStories, searchFilter, sortFilter, lexileRangeFilter]);
+  }, [url, user?.token, searchFilter, sortFilter, lexileRangeFilter]);
 
   // get user lexile
   const getUserLexile = React.useCallback(async () => {
@@ -108,10 +108,9 @@ const ClientStories = () => {
       }
     } catch (error) {
       console.log(error);
-
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [setUserLexile, url, user?.token]);
+  }, [url, user?.token]);
 
   // map stories
   const storiesCards = stories.map((story) => {

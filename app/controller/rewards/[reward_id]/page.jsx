@@ -53,7 +53,7 @@ const SingleReward = ({ params }) => {
         type: "error",
       });
     }
-  }, [setReward, url, user?.token, decodedRewardId]);
+  }, [url, user?.token, decodedRewardId]);
 
   React.useEffect(() => {
     if (user) {

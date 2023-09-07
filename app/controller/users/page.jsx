@@ -122,7 +122,7 @@ const AdminUsers = () => {
         type: "error",
       });
     }
-  }, [setUsers, url, user?.token, searchFilter, sortFilter, dateRangeFilter, lexileRangeFilter]);
+  }, [url, user?.token, searchFilter, sortFilter, dateRangeFilter, lexileRangeFilter]);
 
   React.useEffect(() => {
     if (user) {

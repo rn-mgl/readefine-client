@@ -104,7 +104,7 @@ const Reader = ({ params }) => {
         type: "error",
       });
     }
-  }, [url, user?.token, setUserData, decipheredId]);
+  }, [url, user?.token, decipheredId]);
 
   // get user activities
   const getUserActivities = React.useCallback(async () => {
@@ -125,7 +125,7 @@ const Reader = ({ params }) => {
         type: "error",
       });
     }
-  }, [url, user?.token, setUserActivities, decipheredId]);
+  }, [url, user?.token, decipheredId]);
 
   // map answered questions
   const answeredQuestions = userActivities?.questionsData?.map((q) => {

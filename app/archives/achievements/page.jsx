@@ -91,7 +91,7 @@ const ClientAchievements = () => {
 
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [url, user?.token, searchFilter, goalRangeFilter, sortFilter, typeFilter, setAchievements]);
+  }, [url, user?.token, searchFilter, goalRangeFilter, sortFilter, typeFilter]);
 
   // map achievements
   const achievementPanels = achievements.map((a) => {

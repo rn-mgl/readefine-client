@@ -179,7 +179,7 @@ const SingleUser = ({ params }) => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [url, user?.token, setUserData, decodedUserId]);
+  }, [url, user?.token, decodedUserId]);
 
   // get user lexile for graph
   const getUserLexile = React.useCallback(async () => {
@@ -196,7 +196,7 @@ const SingleUser = ({ params }) => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [url, user?.token, setUserLexile, decodedUserId]);
+  }, [url, user?.token, decodedUserId]);
 
   // get books read for graph
   const getUserBooksRead = React.useCallback(async () => {
@@ -213,7 +213,7 @@ const SingleUser = ({ params }) => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [url, user?.token, setUserReads, decodedUserId]);
+  }, [url, user?.token, decodedUserId]);
 
   // get quizzes for graph
   const getUserQuizzesAnswered = React.useCallback(async () => {
@@ -230,7 +230,7 @@ const SingleUser = ({ params }) => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [url, user?.token, setUserQuizzes, decodedUserId]);
+  }, [url, user?.token, decodedUserId]);
 
   React.useEffect(() => {
     if (user) {

@@ -266,7 +266,7 @@ const SingleTest = ({ params }) => {
         type: "error",
       });
     }
-  }, [setUserLexile, url, user?.token]);
+  }, [url, user?.token]);
 
   // map questions
   const questionSlides = questions.map((q, index) => {

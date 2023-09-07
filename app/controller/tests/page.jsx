@@ -94,7 +94,7 @@ const AdminTests = () => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [url, user?.token, setTests, searchFilter, lexileRangeFilter, sortFilter, dateRangeFilter]);
+  }, [url, user?.token, searchFilter, lexileRangeFilter, sortFilter, dateRangeFilter]);
 
   // map test cards
   const testCards = tests.map((t) => {

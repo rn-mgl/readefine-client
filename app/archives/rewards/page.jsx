@@ -75,7 +75,7 @@ const ClientRewards = () => {
 
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [url, user?.token, setRewards, searchFilter, sortFilter, showFilter, typeFilter]);
+  }, [url, user?.token, searchFilter, sortFilter, showFilter, typeFilter]);
 
   // map rewards
   const rewardsCards = rewards.map((reward) => {

@@ -155,7 +155,7 @@ const AdminRiddles = () => {
         setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
       }
     }
-  }, [setRiddles, url, user?.token, searchFilter, sortFilter, dateRangeFilter]);
+  }, [url, user?.token, searchFilter, sortFilter, dateRangeFilter]);
 
   // map riddle rows
   const riddleRow = riddles.map((riddle) => {

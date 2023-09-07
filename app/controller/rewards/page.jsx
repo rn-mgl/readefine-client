@@ -81,7 +81,7 @@ const AdminRewards = () => {
 
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [url, user?.token, setRewards, searchFilter, sortFilter, dateRangeFilter, typeFilter]);
+  }, [url, user?.token, searchFilter, sortFilter, dateRangeFilter, typeFilter]);
 
   // map rewards
   const rewardsCards = rewards.map((reward) => {

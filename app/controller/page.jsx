@@ -40,7 +40,7 @@ const AdminDashboard = () => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg });
     }
-  }, [user?.token, url, setCounts]);
+  }, [user?.token, url]);
 
   // get dashboard updates
   const getUpdates = React.useCallback(async () => {
@@ -56,7 +56,7 @@ const AdminDashboard = () => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [user?.token, url, setUpdates]);
+  }, [user?.token, url]);
 
   React.useEffect(() => {
     if (user) {

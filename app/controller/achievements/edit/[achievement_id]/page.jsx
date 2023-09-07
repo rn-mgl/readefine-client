@@ -129,7 +129,7 @@ const EditAchievement = ({ params }) => {
         });
       }
     }
-  }, [user?.token, url, setAchievement, decodedAchievementId]);
+  }, [user?.token, url, decodedAchievementId]);
 
   React.useEffect(() => {
     getAchievement();

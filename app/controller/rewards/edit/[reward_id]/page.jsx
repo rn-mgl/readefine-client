@@ -107,7 +107,7 @@ const EditReward = ({ params }) => {
         setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
       }
     }
-  }, [setReward, url, user?.token, decodedRewardId]);
+  }, [url, user?.token, decodedRewardId]);
 
   React.useEffect(() => {
     getReward();

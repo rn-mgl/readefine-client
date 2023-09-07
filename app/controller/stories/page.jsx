@@ -97,7 +97,7 @@ const AdminStories = () => {
       console.log(error);
       setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
     }
-  }, [url, user?.token, setStories, searchFilter, lexileRangeFilter, sortFilter, dateRangeFilter]);
+  }, [url, user?.token, searchFilter, lexileRangeFilter, sortFilter, dateRangeFilter]);
 
   // map stories
   const storiesCards = stories.map((story) => {
