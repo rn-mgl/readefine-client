@@ -18,12 +18,13 @@ import { decipher } from "@/src/src/functions/security";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import { useFileControls } from "@/src/src/hooks/useFileControls";
 import { useLoading } from "@/src/src/hooks/useLoading";
+import { useMessage } from "@/src/src/hooks/useMessage";
 
 const EditReward = ({ params }) => {
   const [reward, setReward] = React.useState({});
-  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
 
   const { imageFile, rawImage, selectedImageViewer, removeSelectedImage, uploadFile, hasRawImage } = useFileControls();
+  const { message, setMessageStatus } = useMessage();
   const { loading, setLoadingState } = useLoading(false);
 
   const { data: session } = useSession();
@@ -70,7 +71,7 @@ const EditReward = ({ params }) => {
 
     if (!rewardImage) {
       setLoadingState(false);
-      setMessage({ active: true, msg: "You did not put a reward image.", type: "error" });
+      setMessageStatus(true, "You did not put a reward image.", "error");
       return;
     }
 
@@ -88,7 +89,7 @@ const EditReward = ({ params }) => {
     } catch (error) {
       console.log(error);
       setLoadingState(false);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
   };
 
@@ -104,10 +105,10 @@ const EditReward = ({ params }) => {
         }
       } catch (error) {
         console.log(error);
-        setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+        setMessageStatus(true, error?.response?.data?.msg, "error");
       }
     }
-  }, [url, user?.token, decodedRewardId]);
+  }, [url, user?.token, decodedRewardId, setMessageStatus]);
 
   React.useEffect(() => {
     getReward();
@@ -131,7 +132,7 @@ const EditReward = ({ params }) => {
     <div className="w-full min-h-screen bg-accntColor p-5 cstm-flex-col gap-5 justify-start">
       <AdminPageHeader subHeader={reward?.reward_name} mainHeader="Edit Reward" />
 
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       <form onSubmit={(e) => editReward(e)} className="w-full cstm-flex-col border-collapse gap-5 cstm-w-limit">
         <EditRewardFilter handleReward={handleReward} reward={reward} />
@@ -193,7 +194,7 @@ const EditReward = ({ params }) => {
                     alt="viewer"
                     width={350}
                     height={350}
-                    className="w-full rounded-2xl"
+                    className="w-fit rounded-2xl"
                     draggable={false}
                     priority
                   />
@@ -222,7 +223,7 @@ const EditReward = ({ params }) => {
               className="hidden peer"
               name="rewardImage"
               id="rewardImage"
-              onChange={selectedImageViewer}
+              onChange={(e) => selectedImageViewer(e, setMessageStatus)}
               ref={rawImage}
             />
             <BiImage className="scale-150 text-prmColor peer-checked" />

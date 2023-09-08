@@ -17,13 +17,14 @@ import { CiUser } from "react-icons/ci";
 import { avatars } from "../../functions/avatars";
 import { useFileControls } from "../../hooks/useFileControls";
 import { useLoading } from "../../hooks/useLoading";
+import { useMessage } from "../../hooks/useMessage";
 
 const EditMain = (props) => {
   const [userData, setUserData] = React.useState({});
-  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
 
   const { imageFile, rawImage, removeSelectedImage, selectedImageViewer, uploadFile, hasRawImage } = useFileControls();
+  const { message, setMessageStatus } = useMessage();
   const { loading, setLoadingState } = useLoading(false);
 
   const { data: session } = useSession();
@@ -82,7 +83,7 @@ const EditMain = (props) => {
       console.log(error);
       setHasSubmitted(false);
       setLoadingState(false);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
   };
 
@@ -97,9 +98,9 @@ const EditMain = (props) => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, user?.userId, setUserData]);
+  }, [url, user?.token, user?.userId, setUserData, setMessageStatus]);
 
   React.useEffect(() => {
     if (user) {
@@ -116,7 +117,7 @@ const EditMain = (props) => {
       className="fixed w-full h-full cstm-flex-col backdrop-blur-md z-20 
                 justify-start p-5 top-0 left-0 gap-5 cstm-scrollbar-2 overflow-y-auto"
     >
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       <button onClick={props.handleCanEditMain} className="cstm-bg-hover ml-auto">
         <IoClose className="scale-150 text-prmColor" />
@@ -150,7 +151,7 @@ const EditMain = (props) => {
                   className="hidden peer"
                   formNoValidate
                   name="file"
-                  onChange={(e) => selectedImageViewer(e)}
+                  onChange={(e) => selectedImageViewer(e, setMessageStatus)}
                   ref={rawImage}
                 />
                 <ActionLabel label="Add Profile Picture" />

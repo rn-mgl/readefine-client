@@ -93,7 +93,7 @@ const EditStoryPage = (props) => {
             formNoValidate
             name="pageImage"
             id={`filePage${page}`}
-            onChange={(e) => fileFns.updateUploadedPageImage(page, e, props.setPages)}
+            onChange={(e) => fileFns.updateUploadedPageImage(page, e, props.setPages, props.setMessageStatus)}
           />
           <BiImage className="scale-150 text-prmColor peer-checked" />
         </label>

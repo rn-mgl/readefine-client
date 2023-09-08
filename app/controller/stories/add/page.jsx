@@ -16,6 +16,7 @@ import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import AudioPreview from "@/src/src/components/global/AudioPreview";
 import { useFileControls } from "@/src/src/hooks/useFileControls";
 import { useLoading } from "@/src/src/hooks/useLoading";
+import { useMessage } from "@/src/src/hooks/useMessage";
 
 const AddStory = () => {
   const [pages, setPages] = React.useState([
@@ -33,7 +34,6 @@ const AddStory = () => {
     genre: "",
     lexile: "",
   });
-  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
 
   const {
     imageFile,
@@ -48,6 +48,8 @@ const AddStory = () => {
     hasRawAudio,
     hasRawImage,
   } = useFileControls();
+
+  const { message, setMessageStatus } = useMessage();
 
   const { loading, setLoadingState } = useLoading(false);
 
@@ -120,7 +122,7 @@ const AddStory = () => {
       bookCover = await uploadFile("readefine_admin_file", rawImage.current?.files);
     } else {
       setLoadingState(false);
-      setMessage({ active: true, msg: "You did not add a book cover.", type: "error" });
+      setMessageStatus(true, "You did not add a book cover.", "error");
       return;
     }
 
@@ -160,7 +162,7 @@ const AddStory = () => {
     } catch (error) {
       console.log(error);
       setLoadingState(false);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
   };
 
@@ -175,6 +177,7 @@ const AddStory = () => {
           deletePage={() => deletePage(page.pageNumber)}
           handlePage={handlePage}
           setPages={setPages}
+          setMessageStatus={setMessageStatus}
         />
       </React.Fragment>
     );
@@ -196,7 +199,7 @@ const AddStory = () => {
 
       <AdminPageHeader subHeader="Stories" mainHeader="Add Story" />
 
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       <form
         action=""
@@ -211,6 +214,7 @@ const AddStory = () => {
           handleStoryFilter={handleStoryFilter}
           selectedImageViewer={selectedImageViewer}
           selectedAudioViewer={selectedAudioViewer}
+          setMessageStatus={setMessageStatus}
         />
 
         <div className="cstm-flex-col gap-5 w-full t:w-96 l-l:w-[30rem]">
@@ -242,7 +246,8 @@ const AddStory = () => {
 
           <button
             type="submit"
-            className="w-fit text-center font-poppins ml-auto text-sm font-normal bg-prmColor text-accntColor rounded-full p-2 px-4 t:px-10"
+            className="w-fit text-center font-poppins ml-auto text-sm font-normal 
+                      bg-prmColor text-accntColor rounded-full p-2 px-4 t:px-10"
           >
             Publish Book
           </button>

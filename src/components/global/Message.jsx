@@ -8,9 +8,7 @@ const Message = (props) => {
     error: "border-red-400 bg-red-100 text-red-900",
   };
 
-  const messageInfo = props.message.msg
-    ? props.message.msg
-    : "We have a problem in our end. Please try again later.";
+  const messageInfo = props.message.msg ? props.message.msg : "We have a problem in our end. Please try again later.";
 
   React.useEffect(() => {
     if (props.message.active) {
@@ -19,7 +17,7 @@ const Message = (props) => {
 
       // Set the timeout and store the ID
       timeoutId = setTimeout(() => {
-        props.setMessage({ msg: "", active: false });
+        props.setMessageStatus(false, "", "info");
       }, 5000);
 
       // Cleanup function to clear the timeout when the component unmounts or re-renders
@@ -42,7 +40,7 @@ const Message = (props) => {
       {messageInfo}
 
       <button
-        onClick={() => props.setMessage({ msg: "", active: false })}
+        onClick={() => props.setMessageStatus(false, "", "info")}
         className="cstm-bg-hover absolute top-0 right-0"
       >
         <IoCloseCircleOutline className="text-inherit scale-125 " />

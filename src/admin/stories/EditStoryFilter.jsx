@@ -17,7 +17,7 @@ const EditStoryFilter = (props) => {
             className="hidden peer"
             name="file"
             id="fileCover"
-            onChange={(e) => props.selectedImageViewer(e)}
+            onChange={(e) => props.selectedImageViewer(e, props.setMessageStatus)}
             ref={props.rawImage}
           />
           <BiImage className="scale-150 text-prmColor peer-checked" />
@@ -35,7 +35,7 @@ const EditStoryFilter = (props) => {
             className="hidden peer"
             name="audio"
             id="audio"
-            onChange={(e) => props.selectedAudioViewer(e)}
+            onChange={(e) => props.selectedAudioViewer(e, props.setMessageStatus)}
             ref={props.rawAudio}
           />
           <BiMusic className="scale-150 text-prmColor peer-checked" />

@@ -52,7 +52,7 @@ const AddStoryPage = (props) => {
               purpose="Page Image"
               name={props.page?.pageImage?.name}
               src={props.page?.pageImage?.src}
-              clearFiles={() => fileFns.removeSelectedPageImage(pageNumber, props.setPages)}
+              clearFiles={(e) => fileFns.removeSelectedPageImage(pageNumber, props.setPages)}
             />
           ) : null}
         </div>
@@ -67,7 +67,7 @@ const AddStoryPage = (props) => {
             formNoValidate
             name="pageImage"
             id={`filePage${pageNumber}`}
-            onChange={(e) => fileFns.selectedPageImageViewer(pageNumber, e, props.setPages)}
+            onChange={(e) => fileFns.selectedPageImageViewer(pageNumber, e, props.setPages, props.setMessageStatus)}
           />
 
           <BiImage className="scale-150 text-prmColor peer-checked" />

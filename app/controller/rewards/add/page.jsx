@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import { useFileControls } from "@/src/src/hooks/useFileControls";
 import { useLoading } from "@/src/src/hooks/useLoading";
+import { useMessage } from "@/src/src/hooks/useMessage";
 
 const AddReward = () => {
   const [reward, setReward] = React.useState({
@@ -23,10 +24,10 @@ const AddReward = () => {
     description: "",
   });
 
-  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
 
   const { imageFile, rawImage, selectedImageViewer, removeSelectedImage, uploadFile, hasRawImage } = useFileControls();
+  const { message, setMessageStatus } = useMessage();
   const { loading, setLoadingState } = useLoading(false);
 
   const { data: session } = useSession();
@@ -53,7 +54,7 @@ const AddReward = () => {
     setLoadingState(true);
     setHasSubmitted(true);
 
-    const { name, type, description, rawFile } = reward;
+    const { name, type, description } = reward;
     let rewardImage = null;
 
     // check for reward image
@@ -62,7 +63,7 @@ const AddReward = () => {
     } else {
       setLoadingState(false);
       setHasSubmitted(false);
-      setMessage({ active: true, msg: "You did not add an image", type: "error" });
+      setMessageStatus(true, "You did not add an image", "error");
       return;
     }
 
@@ -81,7 +82,7 @@ const AddReward = () => {
       console.log(error);
       setLoadingState(false);
       setHasSubmitted(false);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
   };
 
@@ -103,7 +104,7 @@ const AddReward = () => {
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col justify-start">
       <AdminPageHeader subHeader="Rewards" mainHeader="Add Reward" />
 
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       <form onSubmit={(e) => addReward(e)} className="w-full cstm-flex-col cstm-w-limit border-collapse gap-5">
         {/* reward data */}
@@ -175,7 +176,9 @@ const AddReward = () => {
               className="hidden peer"
               name="rewardImage"
               id="rewardImage"
-              onChange={selectedImageViewer}
+              onChange={(e) => {
+                selectedImageViewer(e, setMessageStatus);
+              }}
               ref={rawImage}
             />
 

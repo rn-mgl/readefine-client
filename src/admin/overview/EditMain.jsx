@@ -17,13 +17,14 @@ import { CiUser } from "react-icons/ci";
 import { useFileControls } from "../../hooks/useFileControls";
 import { avatars } from "../../functions/avatars";
 import { useLoading } from "../../hooks/useLoading";
+import { useMessage } from "../../hooks/useMessage";
 
 const EditMain = (props) => {
   const [adminData, setAdminData] = React.useState({});
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
-  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
 
   const { imageFile, rawImage, removeSelectedImage, selectedImageViewer, uploadFile, hasRawImage } = useFileControls();
+  const { message, setMessageStatus } = useMessage();
   const { loading, setLoadingState } = useLoading(false);
 
   const { data: session } = useSession();
@@ -60,7 +61,7 @@ const EditMain = (props) => {
     if (!name || !surname || !username) {
       setLoadingState(false);
       setHasSubmitted(false);
-      setMessage({ active: true, msg: "Please do not leave anything blank.", type: "error" });
+      setMessageStatus(true, "Please do not leave anything blank.", "error");
       return;
     }
 
@@ -87,7 +88,7 @@ const EditMain = (props) => {
       console.log(error);
       setHasSubmitted(false);
       setLoadingState(false);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
   };
 
@@ -102,9 +103,9 @@ const EditMain = (props) => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, props.adminId, setAdminData]);
+  }, [url, user?.token, props.adminId, setAdminData, setMessageStatus]);
 
   React.useEffect(() => {
     if (user) {
@@ -121,7 +122,7 @@ const EditMain = (props) => {
       className="w-full h-full overflow-y-auto cstm-scrollbar-2 fixed top-0 left-0 
                   backdrop-blur-md z-20 p-5 cstm-flex-col justify-start"
     >
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       <button onClick={props.handleCanEditMain} className="cstm-bg-hover ml-auto">
         <IoClose className="scale-150 text-prmColor" />
@@ -158,7 +159,7 @@ const EditMain = (props) => {
                   className="hidden peer"
                   formNoValidate
                   name="file"
-                  onChange={(e) => selectedImageViewer(e)}
+                  onChange={(e) => selectedImageViewer(e, setMessageStatus)}
                   ref={rawImage}
                 />
                 <ActionLabel label="Add Profile Picture" />

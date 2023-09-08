@@ -14,7 +14,7 @@ export const useFileControls = () => {
   const { data: session } = useSession();
   const user = session?.user?.name;
 
-  const selectedImageViewer = (e) => {
+  const selectedImageViewer = (e, setMessageStatus) => {
     const currImageFile = e.target.files;
 
     if (!currImageFile || currImageFile.length < 1) {
@@ -27,6 +27,7 @@ export const useFileControls = () => {
     const src = URL.createObjectURL(details);
 
     if (size > 10000000) {
+      setMessageStatus(true, "The selected file is too large. Please choose below 10MB.", "error");
       throw new Error("The selected file is too large. Please choose below 10mb.");
     }
 
@@ -36,7 +37,7 @@ export const useFileControls = () => {
     }
   };
 
-  const selectedAudioViewer = (e) => {
+  const selectedAudioViewer = (e, setMessageStatus) => {
     const currAudioFile = e.target.files;
 
     if (!currAudioFile || currAudioFile.length < 1) {
@@ -49,6 +50,7 @@ export const useFileControls = () => {
     const src = URL.createObjectURL(details);
 
     if (size > 10000000) {
+      setMessageStatus("The selected file is too large. Please choose below 10MB.", true, "error");
       throw new Error("The selected file is too large. Please choose below 10mb.");
     }
 

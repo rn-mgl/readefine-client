@@ -21,12 +21,12 @@ import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import { useFileControls } from "@/src/src/hooks/useFileControls";
 import Image from "next/image";
 import { useLoading } from "@/src/src/hooks/useLoading";
+import { useMessage } from "@/src/src/hooks/useMessage";
 
 const EditStory = ({ params }) => {
   const [story, setStory] = React.useState({});
   const [pages, setPages] = React.useState([]);
   const [toDelete, setToDelete] = React.useState([]);
-  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
 
   const {
     imageFile,
@@ -41,6 +41,8 @@ const EditStory = ({ params }) => {
     hasRawAudio,
     hasRawImage,
   } = useFileControls();
+
+  const { message, setMessageStatus } = useMessage();
 
   const { loading, setLoadingState } = useLoading(false);
 
@@ -150,7 +152,7 @@ const EditStory = ({ params }) => {
 
     if (!bookCover) {
       setLoadingState(false);
-      setMessage({ active: true, msg: "You did not put a book cover.", type: "error" });
+      setMessageStatus(true, "You did not put a book cover.", "error");
       return;
     }
 
@@ -191,13 +193,13 @@ const EditStory = ({ params }) => {
         console.log(error);
       }
       setLoadingState(false);
-      setMessage({
-        active: true,
-        msg: `${numberOfErrors} ${
+      setMessageStatus(
+        true,
+        `${numberOfErrors} ${
           numberOfErrors > 1 ? "errors" : "error"
         } occurred in file upload. Please check file size or file type.`,
-        type: "error",
-      });
+        "error"
+      );
       return;
     }
 
@@ -215,7 +217,7 @@ const EditStory = ({ params }) => {
     } catch (error) {
       console.log(error);
       setLoadingState(false);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
   };
 
@@ -232,10 +234,10 @@ const EditStory = ({ params }) => {
         }
       } catch (error) {
         console.log(error);
-        setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+        setMessageStatus(true, error?.response?.data?.msg, "error");
       }
     }
-  }, [url, user?.token, decodedStoryId]);
+  }, [url, user?.token, decodedStoryId, setMessageStatus]);
   // get story
   const getStory = React.useCallback(async () => {
     if (user?.token) {
@@ -248,10 +250,10 @@ const EditStory = ({ params }) => {
         }
       } catch (error) {
         console.log(error);
-        setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+        setMessageStatus(true, error?.response?.data?.msg, "error");
       }
     }
-  }, [url, user?.token, decodedStoryId]);
+  }, [url, user?.token, decodedStoryId, setMessageStatus]);
 
   // map pages
   const allPages = pages.map((page, i) => {
@@ -264,6 +266,7 @@ const EditStory = ({ params }) => {
           handlePage={handlePage}
           setPages={setPages}
           deletePage={() => deletePage(page.content_id, page.page)}
+          setMessageStatus={setMessageStatus}
         />
       </React.Fragment>
     );
@@ -293,7 +296,7 @@ const EditStory = ({ params }) => {
 
       <AdminPageHeader subHeader="Stories" mainHeader="Edit Story" />
 
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       <form className="w-full cstm-flex-col gap-5 cstm-w-limit border-collapse" onSubmit={(e) => editBook(e)}>
         <Link type="button" href="/controller/stories" className="w-fit cstm-bg-hover mr-auto">
@@ -308,6 +311,7 @@ const EditStory = ({ params }) => {
           handleStory={handleStory}
           selectedImageViewer={selectedImageViewer}
           selectedAudioViewer={selectedAudioViewer}
+          setMessageStatus={setMessageStatus}
         />
 
         <div className="cstm-flex-col gap-5 w-full t:w-80 l-l:w-[30rem]">
