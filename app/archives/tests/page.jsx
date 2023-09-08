@@ -17,10 +17,10 @@ import { useGlobalContext } from "@/src/context";
 import { cipher } from "@/src/src/functions/security";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
+import { useMessage } from "@/src/src/hooks/useMessage";
 
 const ClientTests = () => {
   const [tests, setTests] = React.useState([]);
-  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
   const [showLexileMessage, setShowLexileMessage] = React.useState(false);
 
   const [userLexile, setUserLexile] = React.useState(-1);
@@ -34,6 +34,8 @@ const ClientTests = () => {
     from: "",
     to: inputDate(new Date().toLocaleDateString()),
   });
+
+  const { message, setMessageStatus } = useMessage();
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -127,9 +129,9 @@ const ClientTests = () => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, searchFilter, lexileRangeFilter, sortFilter, dateRangeFilter]);
+  }, [url, user?.token, searchFilter, lexileRangeFilter, sortFilter, dateRangeFilter, setMessageStatus]);
 
   const getUserLexile = React.useCallback(async () => {
     try {
@@ -142,9 +144,9 @@ const ClientTests = () => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token]);
+  }, [url, user?.token, setMessageStatus]);
 
   React.useEffect(() => {
     if (user) {
@@ -182,7 +184,7 @@ const ClientTests = () => {
         />
       ) : null}
 
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       <div className="w-full cstm-w-limit cstm-flex-col gap-5 ">
         <TestsFilter

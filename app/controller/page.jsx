@@ -15,11 +15,13 @@ import { useGlobalContext } from "../../context";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
+import { useMessage } from "@/src/src/hooks/useMessage";
 
 const AdminDashboard = () => {
   const [counts, setCounts] = React.useState({});
   const [updates, setUpdates] = React.useState({});
-  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
+
+  const { message, setMessageStatus } = useMessage();
 
   const { data: session } = useSession({ required: true });
   const user = session?.user?.name;
@@ -38,9 +40,9 @@ const AdminDashboard = () => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [user?.token, url]);
+  }, [user?.token, url, setMessageStatus]);
 
   // get dashboard updates
   const getUpdates = React.useCallback(async () => {
@@ -54,9 +56,9 @@ const AdminDashboard = () => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [user?.token, url]);
+  }, [user?.token, url, setMessageStatus]);
 
   React.useEffect(() => {
     if (user) {
@@ -84,7 +86,7 @@ const AdminDashboard = () => {
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <AdminPageHeader subHeader="Counts" mainHeader="Main Dashboard" />
 
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       <div
         className="cstm-flex-col gap-5 justify-start w-full transition-all

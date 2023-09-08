@@ -18,10 +18,10 @@ import { useGlobalContext } from "@/src/context";
 import { cipher } from "@/src/src/functions/security";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
+import { useMessage } from "@/src/src/hooks/useMessage";
 
 const AdminAchievements = () => {
   const [achievements, setAchievements] = React.useState([]);
-  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
 
   const [typeFilter, setTypeFilter] = React.useState("");
   const [goalRangeFilter, setGoalRangeFilter] = React.useState({ from: 0, to: 1250 });
@@ -37,6 +37,8 @@ const AdminAchievements = () => {
     from: "",
     to: inputDate(new Date().toLocaleDateString()),
   });
+
+  const { message, setMessageStatus } = useMessage();
 
   const { data: session } = useSession({ required: true });
   const user = session?.user?.name;
@@ -107,9 +109,9 @@ const AdminAchievements = () => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, searchFilter, goalRangeFilter, sortFilter, dateRangeFilter, typeFilter]);
+  }, [url, user?.token, searchFilter, goalRangeFilter, sortFilter, dateRangeFilter, typeFilter, setMessageStatus]);
 
   // map achievement cards
   const achievementCards = achievements.map((a) => {
@@ -148,7 +150,7 @@ const AdminAchievements = () => {
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <AdminPageHeader subHeader="Readefine" mainHeader="Achievements & Tasks" />
 
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       <div className="w-full cstm-flex-col gap-5 cstm-w-limit">
         <AchievementsFilter

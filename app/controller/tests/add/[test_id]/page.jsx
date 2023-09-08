@@ -14,9 +14,9 @@ import { useGlobalContext } from "@/src/context";
 import { decipher } from "@/src/src/functions/security";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import { useLoading } from "@/src/src/hooks/useLoading";
+import { useMessage } from "@/src/src/hooks/useMessage";
 
 const AddTest = ({ params }) => {
-  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
   const [pages, setPages] = React.useState([
     {
       testNumber: 1,
@@ -30,6 +30,7 @@ const AddTest = ({ params }) => {
   ]);
 
   const { loading, setLoadingState } = useLoading(false);
+  const { message, setMessageStatus } = useMessage();
 
   const { data: session } = useSession({ required: true });
   const { url } = useGlobalContext();
@@ -58,7 +59,7 @@ const AddTest = ({ params }) => {
     const answer = `answer${pageLen}`;
 
     if (pageLen > 10) {
-      setMessage({ active: true, msg: "You can only put 10 questions.", type: "warning" });
+      setMessageStatus(true, "You can only put 10 questions.", "warning");
       return;
     }
 
@@ -94,7 +95,7 @@ const AddTest = ({ params }) => {
     // check if there are 10 questions
     if (pages.length < 10) {
       setLoadingState(false);
-      setMessage({ active: true, msg: "Enter 10 questions before posting.", type: "error" });
+      setMessageStatus(true, "Enter 10 questions before posting.", "error");
       return;
     }
 
@@ -103,21 +104,13 @@ const AddTest = ({ params }) => {
 
       if (!page[answerKey]) {
         setLoadingState(false);
-        setMessage({
-          active: true,
-          msg: `You do not have an answer in number ${i + 1}.`,
-          type: "error",
-        });
+        setMessageStatus(true, `You do not have an answer in number ${i + 1}.`, "error");
         return;
       }
 
       if (!page.testQuestion) {
         setLoadingState(false);
-        setMessage({
-          active: true,
-          msg: `You do not have a question in number ${i + 1}.`,
-          type: "error",
-        });
+        setMessageStatus(true, `You do not have a question in number ${i + 1}.`, "error");
         return;
       }
     });
@@ -136,7 +129,7 @@ const AddTest = ({ params }) => {
     } catch (error) {
       console.log(error);
       setLoadingState(false);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
   };
 
@@ -172,7 +165,7 @@ const AddTest = ({ params }) => {
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <AdminPageHeader subHeader="Tests" mainHeader="Add Test" />
 
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       <form onSubmit={(e) => createTest(e)} className="w-full cstm-flex-col cstm-w-limit border-collapse gap-5">
         {testPages}

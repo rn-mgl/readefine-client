@@ -16,12 +16,12 @@ import { inputDate } from "@/src/src/functions/localDate";
 import { BsArrowLeft } from "react-icons/bs";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
+import { useMessage } from "@/src/src/hooks/useMessage";
 
 const AdminRiddles = () => {
   const [riddles, setRiddles] = React.useState([]);
   const [canDeleteRiddle, setCanDeleteRiddle] = React.useState(false);
   const [riddleToEdit, setRiddleToEdit] = React.useState(-1);
-  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
 
   const [riddleToDelete, setRiddleToDelete] = React.useState({ id: -1, answer: "" });
   const [searchFilter, setSearchFilter] = React.useState({ toSearch: "riddle", searchKey: "" });
@@ -30,6 +30,8 @@ const AdminRiddles = () => {
     from: "",
     to: inputDate(new Date().toLocaleDateString()),
   });
+
+  const { message, setMessageStatus } = useMessage();
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -129,7 +131,7 @@ const AdminRiddles = () => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
   };
 
@@ -152,10 +154,10 @@ const AdminRiddles = () => {
       } catch (error) {
         console.log(error);
 
-        setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+        setMessageStatus(true, error?.response?.data?.msg, "error");
       }
     }
-  }, [url, user?.token, searchFilter, sortFilter, dateRangeFilter]);
+  }, [url, user?.token, searchFilter, sortFilter, dateRangeFilter, setMessageStatus]);
 
   // map riddle rows
   const riddleRow = riddles.map((riddle) => {
@@ -196,7 +198,7 @@ const AdminRiddles = () => {
     <div className="p-5 bg-accntColor w-full min-h-screen h-screen cstm-flex-col gap-5 justify-start">
       <AdminPageHeader subHeader="Readefine" mainHeader="Riddles" />
 
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       <div className="cstm-flex-col gap-5 w-full cstm-w-limit">
         <RiddlesFilter

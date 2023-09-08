@@ -28,6 +28,7 @@ import { RxActivityLog } from "react-icons/rx";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import SessionText from "@/src/src/admin/overview/SessionText";
+import { useMessage } from "@/src/src/hooks/useMessage";
 
 const Overview = ({ params }) => {
   const [adminData, setAdminData] = React.useState({});
@@ -36,8 +37,7 @@ const Overview = ({ params }) => {
   const [canEditMain, setCanEditMain] = React.useState(false);
   const [canChangePassword, setCanChangePassword] = React.useState(false);
 
-  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
-
+  const { message, setMessageStatus } = useMessage();
   const { data: session } = useSession();
   const { url } = useGlobalContext();
   const user = session?.user?.name;
@@ -67,9 +67,9 @@ const Overview = ({ params }) => {
     } catch (error) {
       console.log(error);
 
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, decipheredId]);
+  }, [url, user?.token, decipheredId, setMessageStatus]);
 
   // get admin activities
   const getAdminActivies = React.useCallback(async () => {
@@ -83,9 +83,9 @@ const Overview = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, decipheredId]);
+  }, [url, user?.token, decipheredId, setMessageStatus]);
 
   // map story activity
   const storyActivity = adminActivities?.storyData?.map((d, i) => {
@@ -256,7 +256,7 @@ const Overview = ({ params }) => {
     <div className="w-full min-h-screen bg-accntColor p-5 cstm-flex-col justify-start cstm-scrollbar gap-5">
       <AdminPageHeader mainHeader="Overview" subHeader="Readefine" />
 
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       {canEditMain ? <EditMain adminId={user?.adminId} handleCanEditMain={handleCanEditMain} /> : null}
 

@@ -18,14 +18,16 @@ import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import UserMainData from "@/src/src/admin/users/UserMainData";
 import GraphTypeChoice from "@/src/src/admin/users/graph/GraphTypeChoice";
+import { useMessage } from "@/src/src/hooks/useMessage";
 
 const SingleUser = ({ params }) => {
   const [userData, setUserData] = React.useState({});
   const [userLexile, setUserLexile] = React.useState([]);
   const [userReads, setUserReads] = React.useState([]);
-  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
   const [userQuizzes, setUserQuizzes] = React.useState([]);
   const [quizVariable, setQuizVariable] = React.useState("lexile");
+
+  const { message, setMessageStatus } = useMessage();
 
   const { data: session } = useSession({ required: true });
   const { url } = useGlobalContext();
@@ -177,9 +179,9 @@ const SingleUser = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, decodedUserId]);
+  }, [url, user?.token, decodedUserId, setMessageStatus]);
 
   // get user lexile for graph
   const getUserLexile = React.useCallback(async () => {
@@ -194,9 +196,9 @@ const SingleUser = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, decodedUserId]);
+  }, [url, user?.token, decodedUserId, setMessageStatus]);
 
   // get books read for graph
   const getUserBooksRead = React.useCallback(async () => {
@@ -211,9 +213,9 @@ const SingleUser = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, decodedUserId]);
+  }, [url, user?.token, decodedUserId, setMessageStatus]);
 
   // get quizzes for graph
   const getUserQuizzesAnswered = React.useCallback(async () => {
@@ -228,9 +230,9 @@ const SingleUser = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, decodedUserId]);
+  }, [url, user?.token, decodedUserId, setMessageStatus]);
 
   React.useEffect(() => {
     if (user) {
@@ -271,7 +273,7 @@ const SingleUser = ({ params }) => {
       <AdminPageHeader subHeader="User" mainHeader="Dashboard" />
 
       {/* show if has message pop up */}
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       <div className="cstm-flex-col gap-5 w-full cstm-w-limit">
         <Link href="/controller/users" className="cstm-bg-hover text-prmColor mr-auto">

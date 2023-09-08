@@ -14,10 +14,10 @@ import { useGlobalContext } from "@/src/context";
 import { typeConversion } from "@/src/src/functions/typeConversion";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
+import { useMessage } from "@/src/src/hooks/useMessage";
 
 const ClientAchievements = () => {
   const [achievements, setAchievements] = React.useState([]);
-  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
 
   const [typeFilter, setTypeFilter] = React.useState("");
   const [goalRangeFilter, setGoalRangeFilter] = React.useState({ from: 0, to: 1250 });
@@ -29,6 +29,8 @@ const ClientAchievements = () => {
     toSort: "achievement_name",
     sortMode: "ASC",
   });
+
+  const { message, setMessageStatus } = useMessage();
 
   const { data: session } = useSession({ required: true });
   const user = session?.user?.name;
@@ -89,9 +91,9 @@ const ClientAchievements = () => {
     } catch (error) {
       console.log(error);
 
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, searchFilter, goalRangeFilter, sortFilter, typeFilter]);
+  }, [url, user?.token, searchFilter, goalRangeFilter, sortFilter, typeFilter, setMessageStatus]);
 
   // map achievements
   const achievementPanels = achievements.map((a) => {
@@ -129,7 +131,7 @@ const ClientAchievements = () => {
     <div className="p-5 bg-accntColor w-full min-h-screen h-full cstm-flex-col gap-5 justify-start overflow-hidden">
       <ClientPageHeader mainHeader="Readefine" subHeader="Achievements" />
 
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       <AchievementsFilter
         searchFilter={searchFilter}

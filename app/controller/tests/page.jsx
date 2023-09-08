@@ -15,10 +15,10 @@ import { useGlobalContext } from "@/src/context";
 import { cipher } from "@/src/src/functions/security";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
+import { useMessage } from "@/src/src/hooks/useMessage";
 
 const AdminTests = () => {
   const [tests, setTests] = React.useState([]);
-  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
 
   // filters
   const [searchFilter, setSearchFilter] = React.useState({ toSearch: "title", searchKey: "" });
@@ -28,6 +28,8 @@ const AdminTests = () => {
     from: "",
     to: inputDate(new Date().toLocaleDateString()),
   });
+
+  const { message, setMessageStatus } = useMessage();
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -92,9 +94,9 @@ const AdminTests = () => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, searchFilter, lexileRangeFilter, sortFilter, dateRangeFilter]);
+  }, [url, user?.token, searchFilter, lexileRangeFilter, sortFilter, dateRangeFilter, setMessageStatus]);
 
   // map test cards
   const testCards = tests.map((t) => {
@@ -133,7 +135,7 @@ const AdminTests = () => {
       <AdminPageHeader subHeader="Readefine" mainHeader="Tests" />
 
       {/* show if has message pop up */}
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       <div className="w-full cstm-w-limit cstm-flex-col gap-5 ">
         {/* test filter */}

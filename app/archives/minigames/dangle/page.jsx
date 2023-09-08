@@ -19,14 +19,9 @@ import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import { useAudioControls } from "@/src/src/hooks/useAudioControls";
 import { useDangleStatus } from "@/src/src/hooks/useDangleStatus";
+import { useMessage } from "@/src/src/hooks/useMessage";
 
 const Dangle = () => {
-  const [message, setMessage] = React.useState({
-    msg: "",
-    active: false,
-    type: "info",
-  });
-
   const {
     audioRef,
     isMuted,
@@ -64,6 +59,8 @@ const Dangle = () => {
     setNewWordData,
   } = useDangleStatus();
 
+  const { message, setMessageStatus } = useMessage();
+
   const { data: session } = useSession({ required: true });
   const { url } = useGlobalContext();
   const user = session?.user?.name;
@@ -84,17 +81,13 @@ const Dangle = () => {
         { headers: { Authorization: user?.token } }
       );
       if (data) {
-        setMessage({ active: true, msg: "Your game is noted!", type: "info" });
+        setMessageStatus(true, "Your game is noted!", "info");
       }
     } catch (error) {
       console.log(error);
-      setMessage({
-        active: true,
-        msg: error?.response?.data?.msg,
-        type: "error",
-      });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [entryGuesses, timer, url, user?.token, wordData.word_id]);
+  }, [entryGuesses, timer, url, user?.token, wordData.word_id, setMessageStatus]);
 
   // get word and set game stats
   const getRandomWord = async () => {
@@ -119,11 +112,7 @@ const Dangle = () => {
         }
       } catch (error) {
         console.log(error);
-        setMessage({
-          active: true,
-          msg: error?.response?.data?.msg,
-          type: "error",
-        });
+        setMessageStatus(true, error?.response?.data?.msg, "error");
       }
     }
   };
@@ -153,7 +142,7 @@ const Dangle = () => {
 
   return (
     <div className="w-full min-h-screen h-screen bg-accntColor p-4 cstm-flex-col justify-start">
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       {canSeeTutorial ? <DangleTutorial handleCanSeeTutorial={handleCanSeeTutorial} /> : null}
 

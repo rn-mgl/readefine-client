@@ -15,14 +15,10 @@ import { cipher } from "@/src/src/functions/security";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
+import { useMessage } from "@/src/src/hooks/useMessage";
 
 const AdminUsers = () => {
   const [users, setUsers] = React.useState([]);
-  const [message, setMessage] = React.useState({
-    msg: "",
-    active: false,
-    type: "info",
-  });
 
   // search filters
   const [searchFilter, setSearchFilter] = React.useState({
@@ -41,6 +37,8 @@ const AdminUsers = () => {
     from: "",
     to: inputDate(new Date().toLocaleDateString()),
   });
+
+  const { message, setMessageStatus } = useMessage();
 
   const { data: session } = useSession({ required: true });
   const { url } = useGlobalContext();
@@ -116,13 +114,9 @@ const AdminUsers = () => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({
-        active: true,
-        msg: error?.response?.data?.msg,
-        type: "error",
-      });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, searchFilter, sortFilter, dateRangeFilter, lexileRangeFilter]);
+  }, [url, user?.token, searchFilter, sortFilter, dateRangeFilter, lexileRangeFilter, setMessageStatus]);
 
   React.useEffect(() => {
     if (user) {
@@ -144,7 +138,7 @@ const AdminUsers = () => {
     <div className="p-5 bg-accntColor w-full min-h-screen h-screen cstm-flex-col gap-5 justify-start">
       <AdminPageHeader subHeader="Readefine" mainHeader="Users" />
 
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       {/* filters */}
       <UsersFilter

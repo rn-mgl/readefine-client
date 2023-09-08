@@ -20,6 +20,7 @@ import { useRouter } from "next/navigation";
 import { BsDot } from "react-icons/bs";
 import { avatars } from "@/src/src/functions/avatars";
 import { useLoading } from "@/src/src/hooks/useLoading";
+import { useMessage } from "@/src/src/hooks/useMessage";
 
 const Signup = () => {
   const [userData, setUserData] = React.useState({
@@ -33,13 +34,9 @@ const Signup = () => {
   });
   const [activePos, setActivePos] = React.useState(1);
   const [visiblePassword, setVisiblePassword] = React.useState(false);
-  const [message, setMessage] = React.useState({
-    msg: "",
-    active: false,
-    type: "info",
-  });
 
   const { loading, setLoadingState } = useLoading(false);
+  const { message, setMessageStatus } = useMessage();
 
   const { url } = useGlobalContext();
 
@@ -59,51 +56,31 @@ const Signup = () => {
   const infoAreFilled = () => {
     if (activePos === 1) {
       if (!userData.name || !userData.surname) {
-        setMessage({
-          active: true,
-          msg: "Do not skip any information.",
-          type: "warning",
-        });
+        setMessageStatus(true, "Do not skip any information.", "warning");
         return false;
       }
     }
 
     if (activePos === 2) {
       if (!userData.email || !userData.username || !userData.password) {
-        setMessage({
-          active: true,
-          msg: "Do not skip any information.",
-          type: "warning",
-        });
+        setMessageStatus(true, "Do not skip any information.", "warning");
         return false;
       }
 
       if (!validator.isEmail(userData.email)) {
-        setMessage({
-          active: true,
-          msg: "The email you entered is not valid.",
-          type: "warning",
-        });
+        setMessageStatus(true, "The email you entered is not valid.", "warning");
         return false;
       }
 
       if (userData.password?.length < 8) {
-        setMessage({
-          active: true,
-          msg: "Password must not be lower than 8 characters.",
-          type: "warning",
-        });
+        setMessageStatus(true, "Password must not be lower than 8 characters.", "warning");
         return false;
       }
     }
 
     if (activePos === 3) {
       if (!userData.gradeLevel) {
-        setMessage({
-          active: true,
-          msg: "Do not skip any information.",
-          type: "warning",
-        });
+        setMessageStatus(true, "Do not skip any information.", "warning");
         return false;
       }
     }
@@ -148,11 +125,7 @@ const Signup = () => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({
-        active: true,
-        msg: error?.response?.data?.msg,
-        type: "error",
-      });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
       setLoadingState(false);
     }
   };
@@ -179,7 +152,7 @@ const Signup = () => {
   return (
     <div className="w-full h-screen bg-prmColor p-5 cstm-flex-col font-poppins ">
       {/* show message pop up */}
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       <p className=" font-extrabold text-2xl text-accntColor">Sign Up</p>
       <br />

@@ -9,13 +9,14 @@ import { useGlobalContext } from "@/src/context";
 import Message from "../../components/global/Message";
 import Loading from "../../components/global/Loading";
 import { useLoading } from "../../hooks/useLoading";
+import { useMessage } from "../../hooks/useMessage";
 
 const DeleteData = (props) => {
   const [confirmation, setConfirmation] = React.useState("");
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
-  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
 
   const { loading, setLoadingState } = useLoading(false);
+  const { message, setMessageStatus } = useMessage();
 
   const { data: session } = useSession();
   const user = session?.user?.name;
@@ -37,7 +38,7 @@ const DeleteData = (props) => {
     if (confirmation !== props.confirmation) {
       setLoadingState(false);
       setHasSubmitted(false);
-      setMessage({ active: true, msg: "The confirmation does not match.", type: "error" });
+      setMessageStatus(true, "The confirmation does not match.", "error");
       return;
     }
 
@@ -57,7 +58,7 @@ const DeleteData = (props) => {
     } catch (error) {
       console.log(error);
       setLoadingState(false);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
   };
 
@@ -67,7 +68,7 @@ const DeleteData = (props) => {
 
   return (
     <div className="w-full min-h-screen h-full backdrop-blur-md fixed z-30 top-0 left-0 p-5 cstm-flex-col justify-start">
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       <button onClick={props.handleCanDeleteData} className="cstm-bg-hover ml-auto">
         <IoClose className="text-prmColor scale-150 " />

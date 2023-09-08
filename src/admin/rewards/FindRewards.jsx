@@ -9,10 +9,10 @@ import { useGlobalContext } from "@/src/context";
 import { typeConversion } from "../../functions/typeConversion";
 import { inputDate } from "../../functions/localDate";
 import Message from "../../components/global/Message";
+import { useMessage } from "../../hooks/useMessage";
 
 const FindRewards = (props) => {
   const [rewards, setRewards] = React.useState([]);
-  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
 
   const [searchFilter, setSearchFilter] = React.useState("");
   const [typeFilter, setTypeFilter] = React.useState("");
@@ -21,6 +21,8 @@ const FindRewards = (props) => {
     from: "",
     to: inputDate(new Date().toLocaleDateString()),
   });
+
+  const { message, setMessageStatus } = useMessage();
 
   const { data: session } = useSession({ required: true });
   const user = session?.user?.name;
@@ -84,9 +86,9 @@ const FindRewards = (props) => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, setRewards, searchFilter, sortFilter, dateRangeFilter, typeFilter]);
+  }, [url, user?.token, setRewards, searchFilter, sortFilter, dateRangeFilter, typeFilter, setMessageStatus]);
 
   React.useEffect(() => {
     if (user) {
@@ -99,7 +101,7 @@ const FindRewards = (props) => {
       className="p-5 h-full overflow-y-auto cstm-scrollbar-2 backdrop-blur-md fixed top-0 
                   left-0 w-full min-h-screen cstm-flex-col gap-5 justify-start  z-20"
     >
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       <button onClick={props.handleCanSelectReward} className="ml-auto cstm-flex-col w-fit z-20 cstm-bg-hover">
         <IoClose className="text-prmColor scale-150 cursor-pointer" />

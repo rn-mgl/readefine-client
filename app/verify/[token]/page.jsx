@@ -8,10 +8,12 @@ import Message from "@/src/src/components/global/Message";
 
 import { signOut } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
+import { useMessage } from "@/src/src/hooks/useMessage";
 
 const Verify = ({ params }) => {
   const [status, setStatus] = React.useState("verifying");
-  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
+
+  const { message, setMessageStatus } = useMessage();
 
   const { url } = useGlobalContext();
   const token = params?.token;
@@ -31,9 +33,9 @@ const Verify = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, token]);
+  }, [url, token, setMessageStatus]);
 
   React.useEffect(() => {
     verifyUser();
@@ -41,7 +43,7 @@ const Verify = ({ params }) => {
 
   return (
     <div className="cstm-flex-col w-full min-h-screen bg-accntColor">
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       {/* render image depending on verification status */}
 

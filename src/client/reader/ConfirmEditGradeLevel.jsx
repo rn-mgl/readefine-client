@@ -9,13 +9,14 @@ import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { IoClose } from "react-icons/io5";
 import { useLoading } from "../../hooks/useLoading";
+import { useMessage } from "../../hooks/useMessage";
 
 const ConfirmEditGradeLevel = (props) => {
-  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
   const [confirmation, setConfirmation] = React.useState("");
 
   const { loading, setLoadingState } = useLoading(false);
+  const { message, setMessageStatus } = useMessage();
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -34,11 +35,7 @@ const ConfirmEditGradeLevel = (props) => {
     if (confirmation !== props.confirmation) {
       setHasSubmitted(false);
       setLoadingState(false);
-      setMessage({
-        active: true,
-        msg: "The confirmation does not match",
-        type: "warning",
-      });
+      setMessageStatus(true, "The confirmation does not match", "warning");
       return;
     }
 
@@ -57,7 +54,7 @@ const ConfirmEditGradeLevel = (props) => {
       console.log(error);
       setHasSubmitted(false);
       setLoadingState(false);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
   };
 
@@ -70,7 +67,7 @@ const ConfirmEditGradeLevel = (props) => {
       className="w-full min-h-screen h-full backdrop-blur-md bg-prmColor bg-opacity-10 fixed 
                   z-30 top-0 left-0 p-5 cstm-flex-col justify-start"
     >
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       <button onClick={props.handleCanSeeConfirmGradeChange} className="cstm-bg-hover ml-auto">
         <IoClose className="text-prmColor scale-125" />

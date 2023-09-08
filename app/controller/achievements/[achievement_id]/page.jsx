@@ -16,11 +16,13 @@ import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import DeleteData from "@/src/src/admin/global/DeleteData";
 import Image from "next/image";
+import { useMessage } from "@/src/src/hooks/useMessage";
 
 const SingleAchievement = ({ params }) => {
   const [achievement, setAchievement] = React.useState({});
   const [canDeleteAchievement, setCanDeleteAchievement] = React.useState(false);
-  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
+
+  const { message, setMessageStatus } = useMessage();
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -45,9 +47,9 @@ const SingleAchievement = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [user?.token, url, decodedAchievementId]);
+  }, [user?.token, url, decodedAchievementId, setMessageStatus]);
 
   React.useEffect(() => {
     if (user) {
@@ -69,7 +71,7 @@ const SingleAchievement = ({ params }) => {
     <div className="p-5 bg-accntColor w-full min-h-screen h-full t:h-screen cstm-flex-col justify-start gap-5">
       <AdminPageHeader subHeader="Achievement" mainHeader={achievement.achievement_name} />
 
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       {canDeleteAchievement ? (
         <DeleteData

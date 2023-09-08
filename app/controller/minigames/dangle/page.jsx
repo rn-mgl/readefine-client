@@ -18,14 +18,9 @@ import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import { useAudioControls } from "@/src/src/hooks/useAudioControls";
 import { useDangleStatus } from "@/src/src/hooks/useDangleStatus";
+import { useMessage } from "@/src/src/hooks/useMessage";
 
 const Dangle = () => {
-  const [message, setMessage] = React.useState({
-    msg: "",
-    active: false,
-    type: "info",
-  });
-
   const {
     audioRef,
     isMuted,
@@ -63,6 +58,8 @@ const Dangle = () => {
     setNewWordData,
   } = useDangleStatus();
 
+  const { message, setMessageStatus } = useMessage();
+
   const { data: session } = useSession({ required: true });
   const { url } = useGlobalContext();
   const user = session?.user?.name;
@@ -91,11 +88,7 @@ const Dangle = () => {
         }
       } catch (error) {
         console.log(error);
-        setMessage({
-          active: true,
-          msg: error?.response?.data?.msg,
-          type: "error",
-        });
+        setMessageStatus(true, error?.response?.data?.msg, "error");
       }
     }
   };
@@ -119,7 +112,7 @@ const Dangle = () => {
 
   return (
     <div className="w-full min-h-screen h-screen bg-accntColor p-4 cstm-flex-col justify-start">
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       {canSeeTutorial ? <DangleTutorial handleCanSeeTutorial={handleCanSeeTutorial} /> : null}
 

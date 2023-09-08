@@ -17,10 +17,10 @@ import { useRouter } from "next/navigation";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { signOut } from "next-auth/react";
 import { useLoading } from "@/src/src/hooks/useLoading";
+import { useMessage } from "@/src/src/hooks/useMessage";
 
 const PasswordReset = ({ params }) => {
   const [password, setPassword] = React.useState({ newPassword: "", retypedPassword: "" });
-  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
   const [visiblePassword, setVisiblePassword] = React.useState({
     newPassword: false,
@@ -28,6 +28,7 @@ const PasswordReset = ({ params }) => {
   });
 
   const { loading, setLoadingState } = useLoading(false);
+  const { message, setMessageStatus } = useMessage();
 
   const { url } = useGlobalContext();
   const router = useRouter();
@@ -62,22 +63,14 @@ const PasswordReset = ({ params }) => {
     const { newPassword, retypedPassword } = password;
 
     if (newPassword !== retypedPassword) {
-      setMessage({
-        active: true,
-        msg: "The new password and retyped password does not match.",
-        type: "warning",
-      });
+      setMessageStatus(true, "The new password and retyped password does not match.", "warning");
       setHasSubmitted(false);
       setLoadingState(false);
       return;
     }
 
     if (newPassword.length < 8) {
-      setMessage({
-        active: true,
-        msg: "Password must not be lower than 8 characters.",
-        type: "warning",
-      });
+      setMessageStatus(true, "Password must not be lower than 8 characters.", "warning");
       setHasSubmitted(false);
       setLoadingState(false);
 
@@ -100,7 +93,7 @@ const PasswordReset = ({ params }) => {
       console.log(error);
       setHasSubmitted(false);
       setLoadingState(false);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
   };
 
@@ -110,7 +103,7 @@ const PasswordReset = ({ params }) => {
 
   return (
     <div className="p-5 cstm-flex-col w-full min-h-screen bg-gradient-to-b bg-accntColor ">
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       <p className=" font-extrabold text-2xl text-prmColor">Enter New Password</p>
 

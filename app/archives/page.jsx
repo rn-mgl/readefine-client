@@ -14,10 +14,11 @@ import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import { useRouter } from "next/navigation";
+import { useMessage } from "@/src/src/hooks/useMessage";
 
 const Archives = () => {
   const [countsData, setCountsData] = React.useState({});
-  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
+  const { message, setMessageStatus } = useMessage();
 
   const { data: session } = useSession({ required: true });
   const { url } = useGlobalContext();
@@ -36,9 +37,9 @@ const Archives = () => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, user?.userId]);
+  }, [url, user?.token, user?.userId, setMessageStatus]);
 
   React.useEffect(() => {
     if (user) {
@@ -59,7 +60,7 @@ const Archives = () => {
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <ClientPageHeader mainHeader="Readefine" subHeader="Home" />
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       <div
         className="cstm-flex-col gap-5 w-full transition-all

@@ -11,10 +11,10 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import Message from "../../components/global/Message";
 import Loading from "../../components/global/Loading";
 import { useLoading } from "../../hooks/useLoading";
+import { useMessage } from "../../hooks/useMessage";
 
 const ChangePassword = (props) => {
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
-  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
   const [passwordData, setPasswordData] = React.useState({
     oldPassword: { text: "", type: "password" },
     newPassword: { text: "", type: "password" },
@@ -22,6 +22,7 @@ const ChangePassword = (props) => {
   });
 
   const { loading, setLoadingState } = useLoading(false);
+  const { message, setMessageStatus } = useMessage();
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -57,22 +58,14 @@ const ChangePassword = (props) => {
     if (newPassword.text !== repeatNewPassword.text) {
       setHasSubmitted(false);
       setLoadingState(false);
-      setMessage({
-        active: true,
-        msg: "The new password and retyped password do not match.",
-        type: "warning",
-      });
+      setMessageStatus(true, "The new password and retyped password do not match.", "warning");
       return;
     }
 
     if (newPassword.text.length < 8) {
       setHasSubmitted(false);
       setLoadingState(false);
-      setMessage({
-        active: true,
-        msg: "Password must not be lower than 8 characters.",
-        type: "warning",
-      });
+      setMessageStatus(true, "Password must not be lower than 8 characters.", "warning");
       return;
     }
 
@@ -91,7 +84,7 @@ const ChangePassword = (props) => {
       console.log(error);
       setHasSubmitted(false);
       setLoadingState(false);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
   };
 
@@ -106,7 +99,7 @@ const ChangePassword = (props) => {
       </button>
 
       {/* if message has popped up */}
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       <div className="cstm-w-limit cstm-flex-col w-full my-auto">
         <form

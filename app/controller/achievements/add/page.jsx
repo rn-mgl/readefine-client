@@ -14,14 +14,10 @@ import { BsArrowLeft } from "react-icons/bs";
 import Loading from "@/src/src/components/global/Loading";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import { useLoading } from "@/src/src/hooks/useLoading";
+import { useMessage } from "@/src/src/hooks/useMessage";
 
 const AddAchievement = () => {
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
-  const [message, setMessage] = React.useState({
-    msg: "",
-    active: false,
-    type: "info",
-  });
   const [canSelectReward, setCanSelectReward] = React.useState(false);
   const { loading, setLoadingState } = useLoading(false);
   const [achievement, setAchievement] = React.useState({
@@ -31,6 +27,8 @@ const AddAchievement = () => {
     goal: 0,
     reward: { name: "", id: "" },
   });
+
+  const { message, setMessageStatus } = useMessage();
 
   const { data: session } = useSession({ required: true });
   const { url } = useGlobalContext();
@@ -74,11 +72,7 @@ const AddAchievement = () => {
     if (!goal || !name || !reward.id || !task || !type) {
       setHasSubmitted(false);
       setLoadingState(false);
-      setMessage({
-        active: true,
-        msg: "Please fill in all achievement information.",
-        type: "error",
-      });
+      setMessageStatus(true, "Please fill in all achievement information.", "error");
       return;
     }
 
@@ -97,11 +91,7 @@ const AddAchievement = () => {
       console.log(error);
       setHasSubmitted(false);
       setLoadingState(false);
-      setMessage({
-        active: true,
-        msg: error?.response?.data?.msg,
-        type: "error",
-      });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
   };
 
@@ -123,7 +113,7 @@ const AddAchievement = () => {
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <AdminPageHeader subHeader="Achievements" mainHeader="Add Achievement" />
 
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       {canSelectReward ? (
         <FindRewards selectReward={selectReward} handleCanSelectReward={handleCanSelectReward} />

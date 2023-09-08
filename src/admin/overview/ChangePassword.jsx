@@ -11,9 +11,9 @@ import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { useLoading } from "../../hooks/useLoading";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { useMessage } from "../../hooks/useMessage";
 
 const ChangePassword = (props) => {
-  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
   const [passwordData, setPasswordData] = React.useState({
     oldPassword: { text: "", type: "password" },
@@ -22,6 +22,7 @@ const ChangePassword = (props) => {
   });
 
   const { loading, setLoadingState } = useLoading(false);
+  const { message, setMessageStatus } = useMessage();
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -57,11 +58,7 @@ const ChangePassword = (props) => {
     if (newPassword.text !== repeatNewPassword.text) {
       setHasSubmitted(false);
       setLoadingState(false);
-      setMessage({
-        active: true,
-        msg: "The new password and retyped password does not match.",
-        type: "error",
-      });
+      setMessageStatus(true, "The new password and retyped password does not match.", "error");
       return;
     }
 
@@ -79,7 +76,7 @@ const ChangePassword = (props) => {
       console.log(error);
       setLoadingState(false);
       setHasSubmitted(false);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
   };
 
@@ -89,7 +86,7 @@ const ChangePassword = (props) => {
 
   return (
     <div className="fixed w-full h-full cstm-flex-col backdrop-blur-md z-20 p-5 top-0 left-0 gap-5 cstm-scrollbar-2 overflow-y-auto">
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       <button onClick={props.handleCanChangePassword} className="cstm-bg-hover ml-auto">
         <IoClose className="scale-150 text-prmColor" />

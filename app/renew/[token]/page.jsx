@@ -17,6 +17,7 @@ import { useRouter } from "next/navigation";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { signOut } from "next-auth/react";
 import { useLoading } from "@/src/src/hooks/useLoading";
+import { useMessage } from "@/src/src/hooks/useMessage";
 
 const AdminPasswordReset = ({ params }) => {
   const [password, setPassword] = React.useState({ newPassword: "", retypedPassword: "" });
@@ -25,9 +26,9 @@ const AdminPasswordReset = ({ params }) => {
     newPassword: false,
     retypedPassword: false,
   });
-  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
 
   const { loading, setLoadingState } = useLoading(false);
+  const { message, setMessageStatus } = useMessage();
 
   const { url } = useGlobalContext();
   const router = useRouter();
@@ -61,11 +62,7 @@ const AdminPasswordReset = ({ params }) => {
     const { newPassword, retypedPassword } = password;
 
     if (newPassword !== retypedPassword) {
-      setMessage({
-        active: true,
-        msg: "The new password and retyped password does not match.",
-        type: "warning",
-      });
+      setMessageStatus(true, "The new password and retyped password does not match.", "warning");
       setHasSubmitted(false);
       setLoadingState(false);
 
@@ -73,11 +70,7 @@ const AdminPasswordReset = ({ params }) => {
     }
 
     if (newPassword.length < 8) {
-      setMessage({
-        active: true,
-        msg: "Password must not be lower than 8 characters.",
-        type: "warning",
-      });
+      setMessageStatus(true, "Password must not be lower than 8 characters.", "warning");
       setHasSubmitted(false);
       setLoadingState(false);
 
@@ -100,7 +93,7 @@ const AdminPasswordReset = ({ params }) => {
       console.log(error);
       setLoadingState(false);
       setHasSubmitted(false);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
   };
 
@@ -110,7 +103,7 @@ const AdminPasswordReset = ({ params }) => {
 
   return (
     <div className="p-5 cstm-flex-col w-full min-h-screen bg-gradient-to-b bg-prmColor ">
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       <p className=" font-extrabold text-2xl text-accntColor">Enter New Password</p>
 

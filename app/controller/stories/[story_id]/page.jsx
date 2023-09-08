@@ -17,14 +17,9 @@ import { decipher } from "@/src/src/functions/security";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import { useStoryPageControls } from "@/src/src/hooks/useStoryPageControls";
+import { useMessage } from "@/src/src/hooks/useMessage";
 
 const SingleStory = ({ params }) => {
-  const [message, setMessage] = React.useState({
-    msg: "",
-    active: false,
-    type: "info",
-  });
-
   const [canDeleteStory, setCanDeleteStory] = React.useState(false);
 
   const {
@@ -43,6 +38,8 @@ const SingleStory = ({ params }) => {
     setNewStory,
     setNewPages,
   } = useStoryPageControls();
+
+  const { message, setMessageStatus } = useMessage();
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -71,13 +68,9 @@ const SingleStory = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({
-        active: true,
-        msg: error?.response?.data?.msg,
-        type: "error",
-      });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, setNewPages, decodedStoryId]);
+  }, [url, user?.token, setNewPages, decodedStoryId, setMessageStatus]);
 
   // get story
   const getStory = React.useCallback(async () => {
@@ -90,13 +83,9 @@ const SingleStory = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({
-        active: true,
-        msg: error?.response?.data?.msg,
-        type: "error",
-      });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, setNewStory, decodedStoryId]);
+  }, [url, user?.token, setNewStory, decodedStoryId, setMessageStatus]);
 
   // map story pages
   const storyPages = pages?.map((page, index, arr) => {
@@ -160,7 +149,7 @@ const SingleStory = ({ params }) => {
     <div className="p-5 cstm-flex-col bg-accntColor w-full min-h-screen h-screen justify-start gap-5">
       <AdminPageHeader subHeader="Stories" mainHeader={story.title} />
 
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       {canDeleteStory ? (
         <DeleteData

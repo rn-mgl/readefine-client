@@ -14,15 +14,17 @@ import { useGlobalContext } from "@/src/context";
 import { cipher } from "@/src/src/functions/security";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
+import { useMessage } from "@/src/src/hooks/useMessage";
 
 const ClientRewards = () => {
   const [rewards, setRewards] = React.useState([]);
-  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
 
   const [sortFilter, setSortFilter] = React.useState({ toSort: "reward_name", sortMode: "ASC" });
   const [showFilter, setShowFilter] = React.useState({ toShow: "received" });
   const [searchFilter, setSearchFilter] = React.useState("");
   const [typeFilter, setTypeFilter] = React.useState("");
+
+  const { message, setMessageStatus } = useMessage();
 
   const { data: session } = useSession({ required: true });
   const user = session?.user?.name;
@@ -73,9 +75,9 @@ const ClientRewards = () => {
     } catch (error) {
       console.log(error);
 
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, searchFilter, sortFilter, showFilter, typeFilter]);
+  }, [url, user?.token, searchFilter, sortFilter, showFilter, typeFilter, setMessageStatus]);
 
   // map rewards
   const rewardsCards = rewards.map((reward) => {
@@ -114,7 +116,7 @@ const ClientRewards = () => {
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <ClientPageHeader mainHeader="Readefine" subHeader="Rewards" />
 
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       <div className="w-full cstm-w-limit cstm-flex-col gap-5 relative">
         <RewardsFilter

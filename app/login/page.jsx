@@ -20,6 +20,7 @@ import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { CiUser } from "react-icons/ci";
 import { useReceiveAchievement } from "@/src/src/hooks/useReceiveAchievement";
 import { useLoading } from "@/src/src/hooks/useLoading";
+import { useMessage } from "@/src/src/hooks/useMessage";
 
 const Login = () => {
   const [visiblePassword, setVisiblePassword] = React.useState(false);
@@ -27,15 +28,12 @@ const Login = () => {
     candidateIdentifier: "",
     candidatePassword: "",
   });
-  const [message, setMessage] = React.useState({
-    msg: "",
-    active: false,
-    type: "info",
-  });
   const [firstLogin, setFirstLogin] = React.useState(false);
 
   const { accomplishedAchievement, achievementUrl, claimNewAchievement, resetAchievement, setNewAchievementUrl } =
     useReceiveAchievement();
+
+  const { message, setMessageStatus } = useMessage();
 
   const { loading, setLoadingState } = useLoading(false);
 
@@ -77,21 +75,13 @@ const Login = () => {
       if (!data?.ok) {
         setLoadingState(false);
         setFirstLogin(false);
-        setMessage({
-          active: true,
-          msg: "Login credentials do not match.",
-          type: "error",
-        });
+        setMessageStatus(true, "Login credentials do not match.", "error");
       }
     } catch (error) {
       console.log(error);
       setLoadingState(false);
       setFirstLogin(false);
-      setMessage({
-        active: true,
-        msg: error?.response?.data?.msg,
-        type: "error",
-      });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
   };
 
@@ -115,13 +105,18 @@ const Login = () => {
     } catch (error) {
       console.log(error);
       setLoadingState(false);
-      setMessage({
-        active: true,
-        msg: error?.response?.data?.msg,
-        type: "error",
-      });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [router, url, user?.token, user?.isVerified, claimNewAchievement, setNewAchievementUrl, setLoadingState]);
+  }, [
+    router,
+    url,
+    user?.token,
+    user?.isVerified,
+    claimNewAchievement,
+    setNewAchievementUrl,
+    setLoadingState,
+    setMessageStatus,
+  ]);
 
   const addSession = React.useCallback(async () => {
     try {
@@ -134,13 +129,9 @@ const Login = () => {
     } catch (error) {
       console.log(error);
       setLoadingState(false);
-      setMessage({
-        active: true,
-        msg: error?.response?.data?.msg,
-        type: "error",
-      });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, user?.userId, setLoadingState]);
+  }, [url, user?.token, user?.userId, setLoadingState, setMessageStatus]);
 
   const notYetVerified = React.useCallback(async () => {
     router.push("/sending?purpose=verify");
@@ -180,7 +171,7 @@ const Login = () => {
       ) : null}
 
       {/* if message has popped up */}
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       <p className=" font-extrabold text-2xl text-prmColor">Log In</p>
 

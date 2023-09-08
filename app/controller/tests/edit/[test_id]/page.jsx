@@ -15,13 +15,14 @@ import { useGlobalContext } from "@/src/context";
 import { decipher } from "@/src/src/functions/security";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import { useLoading } from "@/src/src/hooks/useLoading";
+import { useMessage } from "@/src/src/hooks/useMessage";
 
 const EditTest = ({ params }) => {
   const [test, setTest] = React.useState({});
   const [questions, setQuestions] = React.useState([]);
-  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
 
   const { loading, setLoadingState } = useLoading(false);
+  const { message, setMessageStatus } = useMessage();
 
   const { data: session } = useSession({ required: true });
   const { url } = useGlobalContext();
@@ -55,21 +56,13 @@ const EditTest = ({ params }) => {
 
       if (!q[answerKey]) {
         setLoadingState(false);
-        setMessage({
-          active: true,
-          msg: `You do not have an answer in number ${i + 1}.`,
-          type: "error",
-        });
+        setMessageStatus(true, `You do not have an answer in number ${i + 1}.`, "error");
         return;
       }
 
       if (!q.question) {
         setLoadingState(false);
-        setMessage({
-          active: true,
-          msg: `You do not have a question in number ${i + 1}.`,
-          type: "error",
-        });
+        setMessageStatus(true, `You do not have a question in number ${i + 1}.`, "error");
         return;
       }
     });
@@ -87,7 +80,7 @@ const EditTest = ({ params }) => {
     } catch (error) {
       console.log(error);
       setLoadingState(false);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
   };
 
@@ -114,10 +107,10 @@ const EditTest = ({ params }) => {
         }
       } catch (error) {
         console.log(error);
-        setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+        setMessageStatus(true, error?.response?.data?.msg, "error");
       }
     }
-  }, [url, user?.token, decodedTestId]);
+  }, [url, user?.token, decodedTestId, setMessageStatus]);
 
   // get test
   const getTest = React.useCallback(async () => {
@@ -132,10 +125,10 @@ const EditTest = ({ params }) => {
         }
       } catch (error) {
         console.log(error);
-        setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+        setMessageStatus(true, error?.response?.data?.msg, "error");
       }
     }
-  }, [url, user?.token, decodedTestId]);
+  }, [url, user?.token, decodedTestId, setMessageStatus]);
 
   // map questions
   const testQuestions = questions.map((q, idx) => {
@@ -172,7 +165,7 @@ const EditTest = ({ params }) => {
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <AdminPageHeader subHeader={test?.title} mainHeader="Edit Test" />
 
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       <form onSubmit={(e) => editTest(e)} className="w-full cstm-flex-col cstm-w-limit border-collapse gap-5">
         <Link type="button" href={`/controller/tests/${params?.test_id}`} className="w-fit cstm-bg-hover mr-auto">

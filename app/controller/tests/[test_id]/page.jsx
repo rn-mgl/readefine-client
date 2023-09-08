@@ -18,15 +18,11 @@ import { choicesStyle, shuffleQuestions } from "@/src/src/functions/testFns";
 import { decipher } from "@/src/src/functions/security";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import { useTestControls } from "@/src/src/hooks/useTestControls";
+import { useMessage } from "@/src/src/hooks/useMessage";
 
 const SingleTest = ({ params }) => {
   const [canDeleteTest, setCanDeleteTest] = React.useState(false);
   const [canSeeResult, setCanSeeResult] = React.useState(false); // see result
-  const [message, setMessage] = React.useState({
-    msg: "",
-    active: false,
-    type: "info",
-  });
 
   const {
     testData,
@@ -40,6 +36,8 @@ const SingleTest = ({ params }) => {
     setNewTestData,
     setNewQuestions,
   } = useTestControls();
+
+  const { message, setMessageStatus } = useMessage();
 
   const { url } = useGlobalContext();
   const { data: session } = useSession({ required: true });
@@ -71,13 +69,9 @@ const SingleTest = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({
-        active: true,
-        msg: error?.response?.data?.msg,
-        type: "error",
-      });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, decodedTestId, setNewQuestions]);
+  }, [url, user?.token, decodedTestId, setNewQuestions, setMessageStatus]);
 
   // get test
   const getTest = React.useCallback(async () => {
@@ -94,14 +88,10 @@ const SingleTest = ({ params }) => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({
-        active: true,
-        msg: error?.response?.data?.msg,
-        type: "error",
-      });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
       router.push(`/controller/tests/add/${params?.test_id}`);
     }
-  }, [url, user?.token, decodedTestId, router, params?.test_id, setNewTestData]);
+  }, [url, user?.token, decodedTestId, router, params?.test_id, setNewTestData, setMessageStatus]);
 
   // map questions
   const mappedQuestions = questions.map((q, i) => {
@@ -161,7 +151,7 @@ const SingleTest = ({ params }) => {
     <div className="p-5 w-full min-h-screen bg-accntColor cstm-flex-col gap-5">
       <AdminPageHeader subHeader="Tests" mainHeader={testData?.title} />
 
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       {isFinished ? <ScorePopup score={score} handleIsFinished={() => handleIsFinished(false)} /> : null}
 

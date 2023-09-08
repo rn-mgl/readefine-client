@@ -16,6 +16,7 @@ import { useSession } from "next-auth/react";
 import { cipher } from "@/src/src/functions/security";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
+import { useMessage } from "@/src/src/hooks/useMessage";
 
 const ClientStories = () => {
   const [stories, setStories] = React.useState([]);
@@ -28,7 +29,7 @@ const ClientStories = () => {
   const [lexileRangeFilter, setLexileRangeFilter] = React.useState({ from: 0, to: 1250 });
   const [sortFilter, setSortFilter] = React.useState({ toSort: "title", sortMode: "ASC" });
 
-  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
+  const { message, setMessageStatus } = useMessage();
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -92,9 +93,9 @@ const ClientStories = () => {
     } catch (error) {
       console.log(error);
 
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, searchFilter, sortFilter, lexileRangeFilter]);
+  }, [url, user?.token, searchFilter, sortFilter, lexileRangeFilter, setMessageStatus]);
 
   // get user lexile
   const getUserLexile = React.useCallback(async () => {
@@ -108,9 +109,9 @@ const ClientStories = () => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token]);
+  }, [url, user?.token, setMessageStatus]);
 
   // map stories
   const storiesCards = stories.map((story) => {
@@ -164,7 +165,7 @@ const ClientStories = () => {
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <ClientPageHeader mainHeader="Readefine" subHeader="Stories" />
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       {showLexileMessage ? (
         <LowLexileTestMessage

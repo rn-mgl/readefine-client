@@ -18,14 +18,9 @@ import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import { useAudioControls } from "@/src/src/hooks/useAudioControls";
 import { useDecipherStatus } from "@/src/src/hooks/useDecipherStatus";
+import { useMessage } from "@/src/src/hooks/useMessage";
 
 const Decipher = () => {
-  const [message, setMessage] = React.useState({
-    msg: "",
-    active: false,
-    type: "info",
-  });
-
   const {
     audioRef,
     isMuted,
@@ -61,6 +56,8 @@ const Decipher = () => {
     setNewLives,
   } = useDecipherStatus();
 
+  const { message, setMessageStatus } = useMessage();
+
   const { data: session } = useSession();
   const { url } = useGlobalContext();
   const user = session?.user?.name;
@@ -87,17 +84,13 @@ const Decipher = () => {
 
       // notice users game is recorded
       if (data) {
-        setMessage({ active: true, msg: "Your game is noted!", type: "info" });
+        setMessageStatus(true, "Your game is noted!", "info");
       }
     } catch (error) {
       console.log(error);
-      setMessage({
-        active: true,
-        msg: error?.response?.data?.msg,
-        type: "error",
-      });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [guess, timer, url, user?.token, wordData.word_id]);
+  }, [guess, timer, url, user?.token, wordData.word_id, setMessageStatus]);
 
   // get word data and set game stats
   const getWord = async () => {
@@ -121,11 +114,7 @@ const Decipher = () => {
         }
       } catch (error) {
         console.log(error);
-        setMessage({
-          active: true,
-          msg: error?.response?.data?.msg,
-          type: "error",
-        });
+        setMessageStatus(true, error?.response?.data?.msg, "error");
       }
     }
   };
@@ -155,7 +144,7 @@ const Decipher = () => {
 
   return (
     <div className="bg-accntColor p-4 cstm-flex-col justify-start w-full min-h-screen h-screen">
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       {canSeeTutorial ? <DecipherTutorial handleCanSeeTutorial={handleCanSeeTutorial} /> : null}
 

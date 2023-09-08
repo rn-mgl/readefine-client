@@ -18,6 +18,7 @@ import { CiUser } from "react-icons/ci";
 import { signIn, useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { useLoading } from "@/src/src/hooks/useLoading";
+import { useMessage } from "@/src/src/hooks/useMessage";
 
 const AdminLogin = () => {
   const [loginData, setLoginData] = React.useState({
@@ -25,10 +26,10 @@ const AdminLogin = () => {
     candidatePassword: "",
   });
   const [visiblePassword, setVisiblePassword] = React.useState(false);
-  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
   const [firstLogin, setFirstLogin] = React.useState(false);
 
   const { loading, setLoadingState } = useLoading(false);
+  const { message, setMessageStatus } = useMessage();
 
   const { url } = useGlobalContext();
   const { data: session } = useSession();
@@ -68,13 +69,13 @@ const AdminLogin = () => {
       if (!data?.ok) {
         setLoadingState(false);
         setFirstLogin(false);
-        setMessage({ active: true, msg: "Incorrect login credentials.", type: "error" });
+        setMessageStatus(true, "Incorrect login credentials.", "error");
       }
     } catch (error) {
       console.log(error);
       setLoadingState(false);
       setFirstLogin(false);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
   };
 
@@ -92,9 +93,9 @@ const AdminLogin = () => {
     } catch (error) {
       console.log(error);
       setLoadingState(false);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [router, url, user?.token, user?.adminId, setLoadingState]);
+  }, [router, url, user?.token, user?.adminId, setLoadingState, setMessageStatus]);
 
   const notYetVerified = React.useCallback(() => {
     router.push("/sending?purpose=verify");
@@ -119,7 +120,7 @@ const AdminLogin = () => {
 
   return (
     <div className="w-full h-screen bg-prmColor p-5 cstm-flex-col font-poppins overflow-hidden">
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       <p className=" font-extrabold text-2xl text-accntColor">Log In</p>
 

@@ -6,14 +6,19 @@ import { useGlobalContext } from "@/src/context";
 import { useSession } from "next-auth/react";
 import { IoClose } from "react-icons/io5";
 import { BsCheck } from "react-icons/bs";
+import Message from "../../components/global/Message";
+import { useMessage } from "../../hooks/useMessage";
 
 const TestRecord = (props) => {
   const [testData, setTestData] = React.useState([]);
-  const [message, setMessage] = React.useState({ msg: "", active: false });
+
+  const { message, setMessageStatus } = useMessage();
 
   const { url } = useGlobalContext();
   const { data: session } = useSession();
   const user = session?.user?.name;
+
+  console.log(1);
 
   const questionsAndAnswer = testData?.map((q, i) => {
     const isCorrect = q.choice === q.answer;
@@ -60,9 +65,9 @@ const TestRecord = (props) => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, props.testId]);
+  }, [url, user?.token, props.testId, setMessageStatus]);
 
   React.useEffect(() => {
     if (user) {
@@ -75,6 +80,7 @@ const TestRecord = (props) => {
       className="fixed w-full top-0 left-0 h-full backdrop-blur-md z-30 p-5 
                   cstm-flex-col justify-start overflow-y-auto cstm-scrollbar-2"
     >
+      {message.active ? <Message setMessageStatus={setMessageStatus} /> : null}
       <div className="w-full h-auto cstm-w-limit cstm-flex-col justify-start gap-5 ">
         <button onClick={() => props.handleSeeTestRecord(props.testId)} className="cstm-bg-hover ml-auto">
           <IoClose className="text-prmColor scale-150" />

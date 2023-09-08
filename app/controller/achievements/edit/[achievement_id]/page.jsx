@@ -15,15 +15,11 @@ import { BsArrowLeft } from "react-icons/bs";
 import { decipher } from "@/src/src/functions/security";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import { useLoading } from "@/src/src/hooks/useLoading";
+import { useMessage } from "@/src/src/hooks/useMessage";
 
 const EditAchievement = ({ params }) => {
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
   const [canSelectReward, setCanSelectReward] = React.useState(false);
-  const [message, setMessage] = React.useState({
-    msg: "",
-    active: false,
-    type: "info",
-  });
   const [achievement, setAchievement] = React.useState({
     achievement_name: "",
     achievement_type: "user_session",
@@ -33,6 +29,7 @@ const EditAchievement = ({ params }) => {
   });
 
   const { loading, setLoadingState } = useLoading(false);
+  const { message, setMessageStatus } = useMessage();
 
   const { data: session } = useSession({ required: true });
   const { url } = useGlobalContext();
@@ -78,11 +75,7 @@ const EditAchievement = ({ params }) => {
     if (!goal || !achievement_name || !reward_id || !reward_name || !task || !achievement_type) {
       setHasSubmitted(false);
       setLoadingState(false);
-      setMessage({
-        active: true,
-        msg: "Please fill in all achievement information.",
-        type: "error",
-      });
+      setMessageStatus(true, "Please fill in all achievement information.", "error");
       return;
     }
 
@@ -101,11 +94,7 @@ const EditAchievement = ({ params }) => {
       console.log(error);
       setHasSubmitted(false);
       setLoadingState(false);
-      setMessage({
-        active: true,
-        msg: error?.response?.data?.msg,
-        type: "error",
-      });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
   };
 
@@ -122,14 +111,10 @@ const EditAchievement = ({ params }) => {
         }
       } catch (error) {
         console.log(error);
-        setMessage({
-          active: true,
-          msg: error?.response?.data?.msg,
-          type: "error",
-        });
+        setMessageStatus(true, error?.response?.data?.msg, "error");
       }
     }
-  }, [user?.token, url, decodedAchievementId]);
+  }, [user?.token, url, decodedAchievementId, setMessageStatus]);
 
   React.useEffect(() => {
     getAchievement();
@@ -153,7 +138,7 @@ const EditAchievement = ({ params }) => {
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <AdminPageHeader subHeader="Achievements" mainHeader="Edit Achievement" />
 
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       {canSelectReward ? (
         <FindRewards selectReward={selectReward} handleCanSelectReward={handleCanSelectReward} />

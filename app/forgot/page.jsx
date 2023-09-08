@@ -11,13 +11,14 @@ import { CiUser } from "react-icons/ci";
 import { useGlobalContext } from "@/src/context";
 import { useRouter } from "next/navigation";
 import { useLoading } from "@/src/src/hooks/useLoading";
+import { useMessage } from "@/src/src/hooks/useMessage";
 
 const ForgotPassword = () => {
   const [keys, setKeys] = React.useState({ candidateEmail: "", candidateUsername: "" });
-  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
 
   const { loading, setLoadingState } = useLoading(false);
+  const { message, setMessageStatus } = useMessage();
 
   const { url } = useGlobalContext();
   const router = useRouter();
@@ -53,7 +54,7 @@ const ForgotPassword = () => {
       console.log(error);
       setHasSubmitted(false);
       setLoadingState(false);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
   };
 
@@ -63,7 +64,7 @@ const ForgotPassword = () => {
 
   return (
     <div className="w-full min-h-screen p-5 cstm-flex-col bg-accntColor">
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       <p className=" font-extrabold text-2xl text-prmColor relative z-10">Reset Password</p>
 

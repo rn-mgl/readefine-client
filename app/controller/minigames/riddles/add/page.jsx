@@ -11,10 +11,12 @@ import { wordCount } from "@/src/src/functions/wordCount";
 import { useGlobalContext } from "@/src/context";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
+import { useMessage } from "@/src/src/hooks/useMessage";
 
 const AddRiddle = () => {
   const [riddleData, setRiddleData] = React.useState({ riddle: "", answer: "" });
-  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
+
+  const { message, setMessageStatus } = useMessage();
 
   const { data: session } = useSession({ required: true });
   const user = session?.user?.name;
@@ -45,12 +47,12 @@ const AddRiddle = () => {
 
       // reset if riddle is added
       if (data) {
-        setMessage({ active: true, msg: `Successfully added ${answer}.`, type: "info" });
+        setMessageStatus(true, `Successfully added ${answer}.`, "info");
         setRiddleData({ riddle: "", answer: "" });
       }
     } catch (error) {
       console.log(error);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
   };
 
@@ -68,17 +70,10 @@ const AddRiddle = () => {
     <div className="p-5 bg-accntColor w-full min-h-screen h-screen cstm-flex-col gap-5 justify-start">
       <AdminPageHeader subHeader="Riddles" mainHeader="Add Riddle" />
 
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
-      <form
-        onSubmit={(e) => addRiddle(e)}
-        className="w-full cstm-flex-col h-full cstm-w-limit border-collapse gap-5"
-      >
-        <Link
-          href="/controller/minigames/riddles"
-          className="cstm-bg-hover mr-auto text-prmColor"
-          type="button"
-        >
+      <form onSubmit={(e) => addRiddle(e)} className="w-full cstm-flex-col h-full cstm-w-limit border-collapse gap-5">
+        <Link href="/controller/minigames/riddles" className="cstm-bg-hover mr-auto text-prmColor" type="button">
           <BsArrowLeft />
         </Link>
 

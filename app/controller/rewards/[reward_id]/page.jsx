@@ -14,15 +14,13 @@ import { decipher } from "@/src/src/functions/security";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import Image from "next/image";
+import { useMessage } from "@/src/src/hooks/useMessage";
 
 const SingleReward = ({ params }) => {
   const [reward, setReward] = React.useState({});
   const [canDeleteReward, setCanDeleteReward] = React.useState(false);
-  const [message, setMessage] = React.useState({
-    msg: "",
-    active: false,
-    type: "info",
-  });
+
+  const { message, setMessageStatus } = useMessage();
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -47,13 +45,9 @@ const SingleReward = ({ params }) => {
     } catch (error) {
       console.log(error);
 
-      setMessage({
-        active: true,
-        msg: error?.response?.data?.msg,
-        type: "error",
-      });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, decodedRewardId]);
+  }, [url, user?.token, decodedRewardId, setMessageStatus]);
 
   React.useEffect(() => {
     if (user) {
@@ -75,7 +69,7 @@ const SingleReward = ({ params }) => {
     <div className="w-full min-h-screen h-screen bg-accntColor p-5 cstm-flex-col gap-5 justify-start">
       <AdminPageHeader subHeader="Reward" mainHeader={reward?.reward_name} />
 
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       {canDeleteReward ? (
         <DeleteData

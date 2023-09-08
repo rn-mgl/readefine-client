@@ -11,13 +11,14 @@ import { useGlobalContext } from "@/src/context";
 import { useRouter } from "next/navigation";
 import Loading from "@/src/src/components/global/Loading";
 import { useLoading } from "@/src/src/hooks/useLoading";
+import { useMessage } from "@/src/src/hooks/useMessage";
 
 const AdminForgotPassword = () => {
   const [keys, setKeys] = React.useState({ candidateEmail: "", candidateUsername: "" });
-  const [message, setMessage] = React.useState({ msg: "", active: false, type: "info" });
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
 
   const { loading, setLoadingState } = useLoading(false);
+  const { message, setMessageStatus } = useMessage();
 
   const { url } = useGlobalContext();
   const router = useRouter();
@@ -54,7 +55,7 @@ const AdminForgotPassword = () => {
       console.log(error);
       setLoadingState(false);
       setHasSubmitted(false);
-      setMessage({ active: true, msg: error?.response?.data?.msg, type: "error" });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
   };
 
@@ -64,7 +65,7 @@ const AdminForgotPassword = () => {
 
   return (
     <div className="w-full min-h-screen p-5 cstm-flex-col bg-prmColor">
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       <p className=" font-extrabold text-2xl text-accntColor relative z-10">Reset Password</p>
 

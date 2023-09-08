@@ -17,14 +17,9 @@ import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import { useAudioControls } from "@/src/src/hooks/useAudioControls";
 import { useRiddleStatus } from "@/src/src/hooks/useRiddleStatus";
+import { useMessage } from "@/src/src/hooks/useMessage";
 
 const ClientRiddles = () => {
-  const [message, setMessage] = React.useState({
-    msg: "",
-    active: false,
-    type: "info",
-  });
-
   const {
     audioRef,
     isMuted,
@@ -58,6 +53,8 @@ const ClientRiddles = () => {
     setNewGuess,
   } = useRiddleStatus();
 
+  const { message, setMessageStatus } = useMessage();
+
   const { data: session } = useSession();
   const { url } = useGlobalContext();
   const user = session?.user?.name;
@@ -80,17 +77,13 @@ const ClientRiddles = () => {
 
       // note user if done recording
       if (data) {
-        setMessage({ active: true, msg: "Your game is noted!", type: "info" });
+        setMessageStatus(true, "Your game is noted!", "info");
       }
     } catch (error) {
       console.log(error);
-      setMessage({
-        active: true,
-        msg: error?.response?.data?.msg,
-        type: "error",
-      });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [entryGuesses, riddleData?.riddle_id, timer, url, user?.token]);
+  }, [entryGuesses, riddleData?.riddle_id, timer, url, user?.token, setMessageStatus]);
 
   // get riddle data and fill in game data
   const getRiddle = async () => {
@@ -113,11 +106,7 @@ const ClientRiddles = () => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({
-        active: true,
-        msg: error?.response?.data?.msg,
-        type: "error",
-      });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
   };
 
@@ -146,7 +135,7 @@ const ClientRiddles = () => {
 
   return (
     <div className="w-full min-h-screen h-screen bg-accntColor p-4 cstm-flex-col justify-start">
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       {canSeeTutorial ? <RiddleTutorial handleCanSeeTutorial={handleCanSeeTutorial} /> : null}
 

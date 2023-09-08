@@ -19,14 +19,9 @@ import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import { useAudioControls } from "@/src/src/hooks/useAudioControls";
 import { useRiddleStatus } from "@/src/src/hooks/useRiddleStatus";
 import Message from "@/src/src/components/global/Message";
+import { useMessage } from "@/src/src/hooks/useMessage";
 
 const PlayRiddles = () => {
-  const [message, setMessage] = React.useState({
-    msg: "",
-    active: false,
-    type: "info",
-  });
-
   const {
     audioRef,
     isMuted,
@@ -60,6 +55,8 @@ const PlayRiddles = () => {
     setNewGuess,
   } = useRiddleStatus();
 
+  const { message, setMessageStatus } = useMessage();
+
   const { data: session } = useSession();
   const { url } = useGlobalContext();
   const user = session?.user?.name;
@@ -86,11 +83,7 @@ const PlayRiddles = () => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({
-        active: true,
-        msg: error?.response?.data?.msg,
-        type: "error",
-      });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
   };
 
@@ -113,7 +106,7 @@ const PlayRiddles = () => {
 
   return (
     <div className="w-full min-h-screen h-screen bg-accntColor p-4 cstm-flex-col justify-start">
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       {canSeeTutorial ? <RiddleTutorial handleCanSeeTutorial={handleCanSeeTutorial} /> : null}
 

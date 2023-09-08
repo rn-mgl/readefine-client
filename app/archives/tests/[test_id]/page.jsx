@@ -19,17 +19,12 @@ import { useReceiveAchievement } from "@/src/src/hooks/useReceiveAchievement";
 import { useTestControls } from "@/src/src/hooks/useTestControls";
 import Loading from "@/src/src/components/global/Loading";
 import { useLoading } from "@/src/src/hooks/useLoading";
+import { useMessage } from "@/src/src/hooks/useMessage";
 
 const SingleTest = ({ params }) => {
   const [userLexile, setUserLexile] = React.useState(-1);
   const [activePage, setActivePage] = React.useState(0);
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
-
-  const [message, setMessage] = React.useState({
-    msg: "",
-    active: false,
-    type: "info",
-  });
 
   const {
     testData,
@@ -47,6 +42,8 @@ const SingleTest = ({ params }) => {
   const { accomplishedAchievement, claimNewAchievement, resetAchievement } = useReceiveAchievement();
 
   const { loading, setLoadingState } = useLoading(true);
+
+  const { message, setMessageStatus } = useMessage();
 
   const { url } = useGlobalContext();
   const { data: session } = useSession();
@@ -95,11 +92,7 @@ const SingleTest = ({ params }) => {
     } catch (error) {
       console.log(error);
       setLoadingState(false);
-      setMessage({
-        active: true,
-        msg: error?.response?.data?.msg,
-        type: "error",
-      });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
   };
 
@@ -122,11 +115,7 @@ const SingleTest = ({ params }) => {
     } catch (error) {
       console.log(error);
       setLoadingState(false);
-      setMessage({
-        active: true,
-        msg: error?.response?.data?.msg,
-        type: "error",
-      });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
   };
 
@@ -141,11 +130,7 @@ const SingleTest = ({ params }) => {
     if (!answeredAll) {
       setHasSubmitted(false);
       setLoadingState(false);
-      setMessage({
-        active: true,
-        msg: "Please answer all items.",
-        type: "warning",
-      });
+      setMessageStatus(true, "Please answer all items.", "warning");
       return;
     }
 
@@ -181,11 +166,7 @@ const SingleTest = ({ params }) => {
 
         // notice if not legible for lexile growth
         if (!legibleForGrowth) {
-          setMessage({
-            active: true,
-            msg: "Your test will be recorded but not graded.",
-            type: "info",
-          });
+          setMessageStatus(true, "Your test will be recorded but not graded.", "info");
         }
 
         // can see result after record
@@ -196,77 +177,74 @@ const SingleTest = ({ params }) => {
       console.log(error);
       setHasSubmitted(false);
       setLoadingState(false);
-      setMessage({
-        active: true,
-        msg: error?.response?.data?.msg,
-        type: "error",
-      });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
   };
 
   // get test data
   const getTestData = React.useCallback(async () => {
-    try {
-      const { data } = await axios.get(`${url}/test/${decodedTestId}`, {
-        headers: { Authorization: user?.token },
-      });
+    if (user?.token) {
+      setLoadingState(true);
+      try {
+        const { data } = await axios.get(`${url}/test/${decodedTestId}`, {
+          headers: { Authorization: user?.token },
+        });
 
-      if (data) {
-        setNewTestData(data);
+        if (data) {
+          setNewTestData(data);
+          setLoadingState(false);
+        }
+      } catch (error) {
+        console.log(error);
+        setLoadingState(false);
+        setMessageStatus(true, error?.response?.data?.msg, "error");
       }
-    } catch (error) {
-      console.log(error);
-
-      setMessage({
-        active: true,
-        msg: error?.response?.data?.msg,
-        type: "error",
-      });
     }
-  }, [url, user?.token, decodedTestId, setNewTestData]);
+  }, [url, user?.token, decodedTestId, setNewTestData, setMessageStatus, setLoadingState]);
 
   // get questions
   const getQuestions = React.useCallback(async () => {
-    try {
-      const { data } = await axios.get(`${url}/test_question`, {
-        params: { testId: decodedTestId },
-        headers: { Authorization: user?.token },
-      });
+    if (user?.token) {
+      setLoadingState(true);
+      try {
+        const { data } = await axios.get(`${url}/test_question`, {
+          params: { testId: decodedTestId },
+          headers: { Authorization: user?.token },
+        });
 
-      if (data) {
-        const shuffledQuestions = shuffleQuestions(data);
-        setNewQuestions(shuffledQuestions);
+        if (data) {
+          const shuffledQuestions = shuffleQuestions(data);
+          setNewQuestions(shuffledQuestions);
+          setLoadingState(false);
+        }
+      } catch (error) {
+        console.log(error);
+        setLoadingState(false);
+        setMessageStatus(true, error?.response?.data?.msg, "error");
       }
-    } catch (error) {
-      console.log(error);
-
-      setMessage({
-        active: true,
-        msg: error?.response?.data?.msg,
-        type: "error",
-      });
     }
-  }, [user?.token, url, decodedTestId, setNewQuestions]);
+  }, [user?.token, url, decodedTestId, setNewQuestions, setMessageStatus, setLoadingState]);
 
   // get user lexile
   const getUserLexile = React.useCallback(async () => {
-    try {
-      const { data } = await axios.get(`${url}/user_lexile`, {
-        headers: { Authorization: user?.token },
-      });
+    if (user?.token) {
+      setLoadingState(true);
+      try {
+        const { data } = await axios.get(`${url}/user_lexile`, {
+          headers: { Authorization: user?.token },
+        });
 
-      if (data) {
-        setUserLexile(data);
+        if (data) {
+          setUserLexile(data);
+          setLoadingState(false);
+        }
+      } catch (error) {
+        console.log(error);
+        setLoadingState(false);
+        setMessageStatus(true, error?.response?.data?.msg, "error");
       }
-    } catch (error) {
-      console.log(error);
-      setMessage({
-        active: true,
-        msg: error?.response?.data?.msg,
-        type: "error",
-      });
     }
-  }, [url, user?.token]);
+  }, [url, user?.token, setMessageStatus, setLoadingState]);
 
   // map questions
   const questionSlides = questions.map((q, index) => {
@@ -322,7 +300,7 @@ const SingleTest = ({ params }) => {
         <ReceiveAchievement achievements={accomplishedAchievement.achievements} resetAchievement={resetAchievement} />
       ) : null}
 
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       {isFinished ? (
         <ScorePopup url="/archives/tests" score={score} handleIsFinished={() => handleIsFinished(false)} />

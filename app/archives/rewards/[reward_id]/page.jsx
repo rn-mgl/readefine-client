@@ -14,15 +14,12 @@ import Message from "@/src/src/components/global/Message";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import Image from "next/image";
+import { useMessage } from "@/src/src/hooks/useMessage";
 
 const SingleReward = ({ params }) => {
   const [rewardData, setRewardData] = React.useState({});
 
-  const [message, setMessage] = React.useState({
-    msg: "",
-    active: false,
-    type: "info",
-  });
+  const { message, setMessageStatus } = useMessage();
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -43,13 +40,9 @@ const SingleReward = ({ params }) => {
     } catch (error) {
       console.log(error);
 
-      setMessage({
-        active: true,
-        msg: error?.response?.data?.msg,
-        type: "error",
-      });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, decodedRewardId]);
+  }, [url, user?.token, decodedRewardId, setMessageStatus]);
 
   React.useEffect(() => {
     if (user) {
@@ -71,7 +64,7 @@ const SingleReward = ({ params }) => {
     <div className="w-full cstm-flex-col p-5 gap-5 t:gap-5 justify-start bg-accntColor max-h-screen h-screen">
       <ClientPageHeader mainHeader="Readefine" subHeader="Your Reward" />
 
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       <div className="cstm-w-limit justify-start cstm-flex-col w-full relative z-10 h-full">
         <div className="cstm-flex-col gap-5 w-full t:w-10/12 l-l:w-8/12 h-full">

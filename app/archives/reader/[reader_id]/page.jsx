@@ -30,16 +30,11 @@ import { TbPlusMinus } from "react-icons/tb";
 import { FaBrain } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
+import { useMessage } from "@/src/src/hooks/useMessage";
 
 const Reader = ({ params }) => {
   const [userData, setUserData] = React.useState({});
   const [userActivities, setUserActivities] = React.useState({});
-
-  const [message, setMessage] = React.useState({
-    msg: "",
-    active: false,
-    type: "info",
-  });
 
   const [canEditMain, setCanEditMain] = React.useState(false);
   const [canEditGradeLevel, setCanEditGradeLevel] = React.useState(false);
@@ -48,6 +43,8 @@ const Reader = ({ params }) => {
   const [showLexileMessage, setShowLexileMessage] = React.useState(false);
   const [selectedBook, setSelectedBook] = React.useState(-1);
   const [seeTestRecord, setSeeTestRecord] = React.useState(null);
+
+  const { message, setMessageStatus } = useMessage();
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -98,13 +95,9 @@ const Reader = ({ params }) => {
     } catch (error) {
       console.log(error);
 
-      setMessage({
-        active: true,
-        msg: error?.response?.data?.msg,
-        type: "error",
-      });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, decipheredId]);
+  }, [url, user?.token, decipheredId, setMessageStatus]);
 
   // get user activities
   const getUserActivities = React.useCallback(async () => {
@@ -119,13 +112,9 @@ const Reader = ({ params }) => {
     } catch (error) {
       console.log(error);
 
-      setMessage({
-        active: true,
-        msg: error?.response?.data?.msg,
-        type: "error",
-      });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, decipheredId]);
+  }, [url, user?.token, decipheredId, setMessageStatus]);
 
   // map answered questions
   const answeredQuestions = userActivities?.questionsData?.map((q) => {
@@ -300,7 +289,7 @@ const Reader = ({ params }) => {
     >
       <ClientPageHeader mainHeader="Readefine" subHeader="Profile" />
 
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       {showLexileMessage ? (
         <LowLexileTestMessage

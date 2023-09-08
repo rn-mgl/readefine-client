@@ -14,15 +14,12 @@ import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
-import ReceiveAchievement from "@/src/src/client/achievements/ReceiveAchievement";
+import { useMessage } from "@/src/src/hooks/useMessage";
 
 const Minigames = () => {
   const [counts, setCounts] = React.useState({});
-  const [message, setMessage] = React.useState({
-    msg: "",
-    active: false,
-    type: "info",
-  });
+
+  const { message, setMessageStatus } = useMessage();
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -40,13 +37,9 @@ const Minigames = () => {
       }
     } catch (error) {
       console.log(error);
-      setMessage({
-        active: true,
-        msg: error?.response?.data?.msg,
-        type: "error",
-      });
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, setCounts]);
+  }, [url, user?.token, setCounts, setMessageStatus]);
 
   React.useEffect(() => {
     if (user) {
@@ -68,7 +61,7 @@ const Minigames = () => {
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <ClientPageHeader mainHeader="Readefine" subHeader="Minigames" />
 
-      {message.active ? <Message message={message} setMessage={setMessage} /> : null}
+      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       <div
         className="cstm-flex-col gap-5 justify-start w-full transition-all
