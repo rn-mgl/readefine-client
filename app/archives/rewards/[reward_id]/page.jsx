@@ -99,7 +99,7 @@ const SingleReward = ({ params }) => {
               <BsTrophyFill className="absolute scale-[7] bottom-5 right-0 opacity-10 t:scale-[12] t:bottom-20 t:right-24 text-prmColor " />
             </div>
 
-            <div className="cstm-flex-col gap-5 max-h-[30vh]">
+            <div className="cstm-flex-col gap-5 h-[30%]">
               {/* name */}
               <p className="font-extrabold text-xl text-prmColor cstm-flex-row">
                 <BsDot className="text-black" />
