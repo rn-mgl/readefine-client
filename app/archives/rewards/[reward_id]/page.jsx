@@ -93,7 +93,7 @@ const SingleReward = ({ params }) => {
                   alt="viewer"
                   width={350}
                   height={350}
-                  className="w-full rounded-2xl"
+                  className="rounded-2xl"
                   draggable={false}
                   priority
                 />
