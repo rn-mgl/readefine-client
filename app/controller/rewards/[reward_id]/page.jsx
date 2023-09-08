@@ -87,7 +87,7 @@ const SingleReward = ({ params }) => {
       ) : null}
 
       <div className="w-full cstm-w-limit cstm-flex-col h-full">
-        <div className="cstm-flex-col gap-5 w-full l-s:w-10/12 l-l:w-8/12 h-full">
+        <div className="cstm-flex-col gap-5 w-full t:w-10/12 l-l:w-8/12 h-full">
           {/* admin actions */}
           <div className="w-full cstm-flex-row">
             <Link href="/controller/rewards" className="cstm-bg-hover mr-auto">
@@ -105,8 +105,8 @@ const SingleReward = ({ params }) => {
 
           {/* reward */}
           <div
-            className="p-5 rounded-2xl gap-5 cstm-flex-col overflow-auto w-full h-full 
-                        justify-start bg-white text-sm shadow-md cstm-scrollbar"
+            className="p-5 rounded-2xl gap-5 cstm-flex-col w-full h-full 
+                        justify-start bg-white text-sm shadow-md"
           >
             <div className="w-full cstm-flex-col bg-accntColor rounded-2xl p-5 h-full">
               <div className="w-fit animate-float drop-shadow-md saturate-150">

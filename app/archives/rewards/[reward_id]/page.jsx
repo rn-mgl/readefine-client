@@ -68,7 +68,7 @@ const SingleReward = ({ params }) => {
   }, [user, router]);
 
   return (
-    <div className="w-full cstm-flex-col p-5 gap-5 t:gap-5 justify-start bg-accntColor max-h-screen h-full">
+    <div className="w-full cstm-flex-col p-5 gap-5 t:gap-5 justify-start bg-accntColor max-h-screen h-screen">
       <ClientPageHeader mainHeader="Readefine" subHeader="Your Reward" />
 
       {message.active ? <Message message={message} setMessage={setMessage} /> : null}
@@ -79,12 +79,15 @@ const SingleReward = ({ params }) => {
             <BsArrowLeft className="text-white scale-125" />
           </Link>
 
-          <div className="cstm-flex-col bg-white rounded-2xl p-5 w-full shadow-solid gap-5 text-center h-full">
+          <div
+            className="cstm-flex-col bg-white rounded-2xl p-5 w-full 
+                        shadow-solid gap-5 text-center h-full justify-start"
+          >
             {/* reward */}
-            <div className="cstm-flex-col p-2 rounded-2xl bg-accntColor w-full relative overflow-hidden h-full">
+            <div className="cstm-flex-col p-5 rounded-2xl bg-accntColor w-full relative overflow-hidden h-full">
               <BiMedal className="absolute scale-[10] top-10 left-0 opacity-10 t:scale-[15] t:top-20 t:left-20 text-prmColor " />
 
-              <div className="animate-float drop-shadow-md relative z-10 saturate-150 cstm-flex-col w-full t:w-60 l-s:w-72">
+              <div className="animate-float drop-shadow-md relative z-10 saturate-150 cstm-flex-col w-fit">
                 <Image
                   src={rewardData?.reward}
                   alt="viewer"
