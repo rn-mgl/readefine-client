@@ -52,7 +52,7 @@ const AddStoryPage = (props) => {
               purpose="Page Image"
               name={props.page?.pageImage?.name}
               src={props.page?.pageImage?.src}
-              clearFiles={(e) => fileFns.removeSelectedPageImage(pageNumber, props.setPages)}
+              clearFiles={() => fileFns.removeSelectedPageImage(pageNumber, props.setPages, `filePage${pageNumber}`)}
             />
           ) : null}
         </div>

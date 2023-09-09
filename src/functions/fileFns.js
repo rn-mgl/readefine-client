@@ -34,7 +34,13 @@ export const selectedPageImageViewer = (pageNumber, e, setState, setMessageStatu
 };
 
 // for add story page because pageNumber is used as variable property
-export const removeSelectedPageImage = (pageNumber, setState) => {
+export const removeSelectedPageImage = (pageNumber, setState, elementId) => {
+  const element = document?.getElementById(elementId);
+
+  if (element) {
+    element.value = null;
+  }
+
   setState((prev) =>
     prev.map((p) => {
       if (p.pageNumber === pageNumber) {
@@ -82,7 +88,13 @@ export const updateUploadedPageImage = (page, e, setState, setMessageStatus) => 
 };
 
 // for edit story page because page is used as variable property
-export const removeUpdatedUploadedPageImage = (page, setState) => {
+export const removeUpdatedUploadedPageImage = (page, setState, elementId) => {
+  const element = document?.getElementById(elementId);
+
+  if (element) {
+    element.value = null;
+  }
+
   setState((prev) =>
     prev.map((p) => {
       if (p.page === page) {

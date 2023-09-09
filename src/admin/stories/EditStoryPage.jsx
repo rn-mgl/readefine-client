@@ -53,7 +53,7 @@ const EditStoryPage = (props) => {
             purpose="Page Image"
             name={props.page?.pageImage?.name}
             src={props.page?.pageImage?.src}
-            clearFiles={() => fileFns.removeUpdatedUploadedPageImage(page, props.setPages)}
+            clearFiles={() => fileFns.removeUpdatedUploadedPageImage(page, props.setPages, `filePage${page}`)}
           />
         ) : props.page?.image ? (
           <div className="w-fit cstm-flex-col rounded-2xl p-2 gap-2">
