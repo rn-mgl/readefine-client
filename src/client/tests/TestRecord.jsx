@@ -18,8 +18,6 @@ const TestRecord = (props) => {
   const { data: session } = useSession();
   const user = session?.user?.name;
 
-  console.log(1);
-
   const questionsAndAnswer = testData?.map((q, i) => {
     const isCorrect = q.choice === q.answer;
     return (
