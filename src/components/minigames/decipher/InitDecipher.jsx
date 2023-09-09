@@ -29,8 +29,8 @@ const InitDecipher = (props) => {
           props.handleIsPlaying();
           props.getWord();
         }}
-        className="bg-prmColor shadow-solid shadow-indigo-900 p-2 rounded-full text-scndColor font-bold w-fit px-10 z-10
-        t:w-40"
+        className="bg-prmColor shadow-solid shadow-indigo-900 p-2 rounded-full text-scndColor font-bold w-fit px-10
+        t:w-40 relative z-20"
       >
         PLAY
       </button>

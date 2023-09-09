@@ -43,7 +43,8 @@ const InitRiddle = (props) => {
           props.handleIsPlaying();
           props.getRiddle();
         }}
-        className="animate-fadeIn bg-prmColor w-fit px-10 font-bold text-scndColor rounded-full p-2 shadow-solid shadow-indigo-900 t:w-40"
+        className="animate-fadeIn bg-prmColor w-fit px-10 font-bold text-scndColor 
+                rounded-full p-2 shadow-solid shadow-indigo-900 t:w-40 relative z-20"
       >
         Play
       </button>

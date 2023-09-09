@@ -24,11 +24,7 @@ const InitDangle = (props) => {
         </button>
       </div>
 
-      <div
-        className={`${
-          props.isPlaying ? "mb-auto" : "mb-0"
-        } cstm-flex-row gap-2 absolute -top-52 t:gap-5`}
-      >
+      <div className={`${props.isPlaying ? "mb-auto" : "mb-0"} cstm-flex-row gap-2 absolute -top-52 t:gap-5`}>
         {dangles}
       </div>
 
@@ -38,7 +34,7 @@ const InitDangle = (props) => {
           props.handleIsPlaying();
         }}
         className="bg-prmColor shadow-solid shadow-indigo-900 p-2 rounded-full text-scndColor font-bold w-fit px-10 mt-auto
-        t:w-40"
+        t:w-40 relative z-20"
       >
         Play
       </button>
