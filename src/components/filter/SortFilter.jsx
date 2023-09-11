@@ -1,4 +1,5 @@
 import React from "react";
+import { BiChevronDown } from "react-icons/bi";
 import { BsArrowUp } from "react-icons/bs";
 
 const SortFilter = (props) => {
@@ -19,14 +20,20 @@ const SortFilter = (props) => {
           <p>{firstOption}</p>
         </div>
       ) : (
-        <select
-          onChange={(e) => props.handleSortFilter(e.target)}
-          value={props.sortFilter.toSort}
-          name="toSort"
-          className="bg-neutral-50 p-1 px-2 rounded-l-md outline-none border-neutral-200 border-2 text-sm"
-        >
-          {mappedOptions}
-        </select>
+        <div className="bg-neutral-50 rounded-l-md outline-none border-neutral-200 border-2 cstm-flex-row">
+          <select
+            onChange={(e) => props.handleSortFilter(e.target)}
+            value={props.sortFilter.toSort}
+            name="toSort"
+            className="p-1 px-2 outline-none bg-transparent text-sm"
+          >
+            {mappedOptions}
+          </select>
+
+          <div className="w-full opacity-50 px-1">
+            <BiChevronDown className="scale-125" />
+          </div>
+        </div>
       )}
 
       <select
@@ -43,11 +50,7 @@ const SortFilter = (props) => {
           Descending
         </option>
       </select>
-      <BsArrowUp
-        className={`${
-          props.sortFilter.sortMode === "ASC" ? "rotate-0" : "rotate-180"
-        } transition-all mx-1`}
-      />
+      <BsArrowUp className={`${props.sortFilter.sortMode === "ASC" ? "rotate-0" : "rotate-180"} transition-all mx-1`} />
     </div>
   );
 };

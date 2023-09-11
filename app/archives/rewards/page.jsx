@@ -21,7 +21,7 @@ const ClientRewards = () => {
 
   const [sortFilter, setSortFilter] = React.useState({ toSort: "reward_name", sortMode: "ASC" });
   const [showFilter, setShowFilter] = React.useState({ toShow: "received" });
-  const [searchFilter, setSearchFilter] = React.useState("");
+  const [searchFilter, setSearchFilter] = React.useState({ toSearch: "reward_name", searchKey: "" });
   const [typeFilter, setTypeFilter] = React.useState("");
 
   const { message, setMessageStatus } = useMessage();
@@ -32,8 +32,13 @@ const ClientRewards = () => {
   const router = useRouter();
 
   // handle onchange on search filter
-  const handleSearchFilter = ({ value }) => {
-    setSearchFilter(value);
+  const handleSearchFilter = ({ name, value }) => {
+    setSearchFilter((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
   };
 
   // handle onchange on sort filter

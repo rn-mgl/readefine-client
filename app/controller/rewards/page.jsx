@@ -24,7 +24,7 @@ const AdminRewards = () => {
 
   const [sortFilter, setSortFilter] = React.useState({ toSort: "reward_name", sortMode: "ASC" });
   const [typeFilter, setTypeFilter] = React.useState("");
-  const [searchFilter, setSearchFilter] = React.useState("");
+  const [searchFilter, setSearchFilter] = React.useState({ toSearch: "reward_name", searchKey: "" });
   const [dateRangeFilter, setDateRangeFilter] = React.useState({
     from: "",
     to: inputDate(new Date().toLocaleDateString()),
@@ -38,8 +38,13 @@ const AdminRewards = () => {
   const router = useRouter();
 
   // handle onchange on search filter
-  const handleSearchFilter = ({ value }) => {
-    setSearchFilter(value);
+  const handleSearchFilter = ({ name, value }) => {
+    setSearchFilter((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
   };
 
   // handle onchange on date range filter

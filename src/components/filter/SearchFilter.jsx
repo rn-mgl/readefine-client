@@ -1,5 +1,5 @@
 import React from "react";
-import { BiSearch } from "react-icons/bi";
+import { BiChevronDown, BiSearch } from "react-icons/bi";
 
 const SearchFilter = (props) => {
   const mappedOptions = props.labelValue.map((data) => {
@@ -19,14 +19,20 @@ const SearchFilter = (props) => {
           <p>{firstOption}</p>
         </div>
       ) : (
-        <select
-          onChange={(e) => props.handleSearchFilter(e.target)}
-          value={props.searchFilter.toSearch}
-          name="toSearch"
-          className="bg-neutral-50 p-1 px-2 rounded-l-md outline-none border-neutral-200 border-2 text-sm"
-        >
-          {mappedOptions}
-        </select>
+        <div className="bg-neutral-50 rounded-l-md outline-none border-neutral-200 border-2 cstm-flex-row">
+          <select
+            onChange={(e) => props.handleSearchFilter(e.target)}
+            value={props.searchFilter.toSearch}
+            name="toSearch"
+            className="px-2 p-1 outline-none bg-transparent text-sm"
+          >
+            {mappedOptions}
+          </select>
+
+          <div className="w-full opacity-50 px-1">
+            <BiChevronDown className="scale-125" />
+          </div>
+        </div>
       )}
 
       <input

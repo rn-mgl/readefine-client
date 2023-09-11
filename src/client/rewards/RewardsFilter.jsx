@@ -2,20 +2,15 @@ import React from "react";
 
 import SortFilter from "../../components/filter/SortFilter";
 import SelectFilter from "../../components/filter/SelectFilter";
-import InputFilter from "../../components/filter/InputFilter";
-import { BiSearch } from "react-icons/bi";
+import SearchFilter from "../../components/filter/SearchFilter";
 
 const RewardsFilter = (props) => {
   return (
     <div className="cstm-flex-row gap-2 justify-start relative w-full overflow-x-auto py-2 cstm-scrollbar-2 min-h-[5rem]">
-      <InputFilter
-        label="Name"
-        placeholder="Search..."
-        name="reward_name"
-        type="text"
-        value={props.searchFilter}
-        icon={<BiSearch className="opacity-50" />}
-        onChange={props.handleSearchFilter}
+      <SearchFilter
+        searchFilter={props.searchFilter}
+        handleSearchFilter={props.handleSearchFilter}
+        labelValue={[{ label: "Name", value: "reward_name" }]}
       />
 
       <SelectFilter
