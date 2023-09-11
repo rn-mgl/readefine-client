@@ -17,19 +17,20 @@ import { cipher } from "@/src/src/functions/security";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import { useMessage } from "@/src/src/hooks/useMessage";
+import { useUserLexile } from "@/src/src/hooks/useUserLexile";
 
 const ClientStories = () => {
   const [stories, setStories] = React.useState([]);
-  const [userLexile, setUserLexile] = React.useState(-1);
   const [showLexileMessage, setShowLexileMessage] = React.useState(false);
 
   const [selectedBook, setSelectedBook] = React.useState(-1);
 
   const [searchFilter, setSearchFilter] = React.useState({ toSearch: "title", searchKey: "" });
-  const [lexileRangeFilter, setLexileRangeFilter] = React.useState({ from: 0, to: 1250 });
+  const [lexileRangeFilter, setLexileRangeFilter] = React.useState({ from: 0, to: 2000 });
   const [sortFilter, setSortFilter] = React.useState({ toSort: "title", sortMode: "ASC" });
 
   const { message, setMessageStatus } = useMessage();
+  const { userLexile } = useUserLexile();
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -97,22 +98,6 @@ const ClientStories = () => {
     }
   }, [url, user?.token, searchFilter, sortFilter, lexileRangeFilter, setMessageStatus]);
 
-  // get user lexile
-  const getUserLexile = React.useCallback(async () => {
-    try {
-      const { data } = await axios.get(`${url}/user_lexile`, {
-        headers: { Authorization: user?.token },
-      });
-      if (data) {
-        setUserLexile(data);
-        setLexileRangeFilter({ from: data.lexile - 100, to: data.lexile + 50 });
-      }
-    } catch (error) {
-      console.log(error);
-      setMessageStatus(true, error?.response?.data?.msg, "error");
-    }
-  }, [url, user?.token, setMessageStatus]);
-
   // map stories
   const storiesCards = stories.map((story) => {
     const cipheredStoryId = cipher(story.story_id);
@@ -124,7 +109,7 @@ const ClientStories = () => {
           image={story.book_cover}
           isRead={story.is_read}
           isTaken={story.is_taken}
-          isLower={userLexile.lexile - 100 > story.lexile}
+          isLower={userLexile - 100 > story.lexile}
           title={story.title}
           author={story.author}
           lexile={story.lexile}
@@ -147,10 +132,8 @@ const ClientStories = () => {
   }, [user, getStories]);
 
   React.useEffect(() => {
-    if (user) {
-      getUserLexile();
-    }
-  }, [user, getUserLexile]);
+    setLexileRangeFilter({ from: userLexile - 100, to: userLexile + 50 });
+  }, [userLexile]);
 
   React.useEffect(() => {
     if (user) {
@@ -169,7 +152,7 @@ const ClientStories = () => {
 
       {showLexileMessage ? (
         <LowLexileTestMessage
-          userLexile={userLexile.lexile}
+          userLexile={userLexile}
           testLink={`/archives/tests/${cipher(selectedBook)}`}
           handleShowLexileMessage={handleShowLexileMessage}
         />

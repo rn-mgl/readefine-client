@@ -20,9 +20,9 @@ import { useTestControls } from "@/src/src/hooks/useTestControls";
 import Loading from "@/src/src/components/global/Loading";
 import { useLoading } from "@/src/src/hooks/useLoading";
 import { useMessage } from "@/src/src/hooks/useMessage";
+import { useUserLexile } from "@/src/src/hooks/useUserLexile";
 
 const SingleTest = ({ params }) => {
-  const [userLexile, setUserLexile] = React.useState(-1);
   const [activePage, setActivePage] = React.useState(0);
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
 
@@ -38,12 +38,10 @@ const SingleTest = ({ params }) => {
     setNewTestData,
     setNewQuestions,
   } = useTestControls();
-
   const { accomplishedAchievement, claimNewAchievement, resetAchievement } = useReceiveAchievement();
-
   const { loading, setLoadingState } = useLoading(true);
-
   const { message, setMessageStatus } = useMessage();
+  const { userLexile } = useUserLexile();
 
   const { url } = useGlobalContext();
   const { data: session } = useSession();
@@ -121,7 +119,7 @@ const SingleTest = ({ params }) => {
 
   // submit test answers and do checkings
   const submitAnswers = async () => {
-    const legibleForGrowth = testData.lexile > userLexile.lexile - 100;
+    const legibleForGrowth = testData.lexile > userLexile - 100;
     const answeredAll = allAreAnswered();
     setHasSubmitted(true);
     setLoadingState(true);
@@ -153,7 +151,7 @@ const SingleTest = ({ params }) => {
           testId: decodedTestId,
           score,
           legibleForGrowth,
-          lexile: userLexile?.lexile,
+          lexile: userLexile,
         },
         { headers: { Authorization: user?.token } }
       );
@@ -225,27 +223,6 @@ const SingleTest = ({ params }) => {
     }
   }, [user?.token, url, decodedTestId, setNewQuestions, setMessageStatus, setLoadingState]);
 
-  // get user lexile
-  const getUserLexile = React.useCallback(async () => {
-    if (user?.token) {
-      setLoadingState(true);
-      try {
-        const { data } = await axios.get(`${url}/user_lexile`, {
-          headers: { Authorization: user?.token },
-        });
-
-        if (data) {
-          setUserLexile(data);
-          setLoadingState(false);
-        }
-      } catch (error) {
-        console.log(error);
-        setLoadingState(false);
-        setMessageStatus(true, error?.response?.data?.msg, "error");
-      }
-    }
-  }, [url, user?.token, setMessageStatus, setLoadingState]);
-
   // map questions
   const questionSlides = questions.map((q, index) => {
     return (
@@ -275,10 +252,6 @@ const SingleTest = ({ params }) => {
   React.useEffect(() => {
     getQuestions();
   }, [getQuestions]);
-
-  React.useEffect(() => {
-    getUserLexile();
-  }, [getUserLexile]);
 
   React.useEffect(() => {
     if (user) {

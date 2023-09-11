@@ -18,12 +18,12 @@ import { cipher } from "@/src/src/functions/security";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import { useMessage } from "@/src/src/hooks/useMessage";
+import { useUserLexile } from "@/src/src/hooks/useUserLexile";
 
 const ClientTests = () => {
   const [tests, setTests] = React.useState([]);
   const [showLexileMessage, setShowLexileMessage] = React.useState(false);
 
-  const [userLexile, setUserLexile] = React.useState(-1);
   const [selectedBook, setSelectedBook] = React.useState(-1);
   const [seeTestRecord, setSeeTestRecord] = React.useState(null);
 
@@ -36,6 +36,7 @@ const ClientTests = () => {
   });
 
   const { message, setMessageStatus } = useMessage();
+  const { userLexile } = useUserLexile();
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -103,7 +104,7 @@ const ClientTests = () => {
           to={`/archives/tests/${cipheredTestId}`}
           testId={t.test_id}
           isTaken={t.is_taken}
-          isLower={userLexile.lexile - 100 > t.lexile}
+          isLower={userLexile - 100 > t.lexile}
           showLexileMessage={showLexileMessage}
           handleShowLexileMessage={handleShowLexileMessage}
           handleSelectedBook={handleSelectedBook}
@@ -133,21 +134,6 @@ const ClientTests = () => {
     }
   }, [url, user?.token, searchFilter, lexileRangeFilter, sortFilter, dateRangeFilter, setMessageStatus]);
 
-  const getUserLexile = React.useCallback(async () => {
-    try {
-      const { data } = await axios.get(`${url}/user_lexile`, {
-        headers: { Authorization: user?.token },
-      });
-      if (data) {
-        setUserLexile(data);
-        setLexileRangeFilter({ from: data.lexile - 100, to: data.lexile + 50 });
-      }
-    } catch (error) {
-      console.log(error);
-      setMessageStatus(true, error?.response?.data?.msg, "error");
-    }
-  }, [url, user?.token, setMessageStatus]);
-
   React.useEffect(() => {
     if (user) {
       getTests();
@@ -155,10 +141,8 @@ const ClientTests = () => {
   }, [user, getTests]);
 
   React.useEffect(() => {
-    if (user) {
-      getUserLexile();
-    }
-  }, [user, getUserLexile]);
+    setLexileRangeFilter({ from: userLexile - 100, to: userLexile + 50 });
+  }, [userLexile]);
 
   React.useEffect(() => {
     if (user) {
@@ -178,7 +162,7 @@ const ClientTests = () => {
 
       {showLexileMessage ? (
         <LowLexileTestMessage
-          userLexile={userLexile.lexile}
+          userLexile={userLexile}
           testLink={`/archives/tests/${cipher(selectedBook)}`}
           handleShowLexileMessage={handleShowLexileMessage}
         />
