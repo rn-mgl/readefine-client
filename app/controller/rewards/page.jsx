@@ -13,64 +13,31 @@ import noReward from "../../../public/profile/NoReward.svg";
 import { IoAddOutline } from "react-icons/io5";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
-import { inputDate } from "@/src/src/functions/localDate";
 import { cipher } from "@/src/src/functions/security";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import { useMessage } from "@/src/src/hooks/useMessage";
+import { useRewardFilters } from "@/src/src/hooks/useRewardFilters";
 
 const AdminRewards = () => {
   const [rewards, setRewards] = React.useState([]);
 
-  const [sortFilter, setSortFilter] = React.useState({ toSort: "reward_name", sortMode: "ASC" });
-  const [typeFilter, setTypeFilter] = React.useState("");
-  const [searchFilter, setSearchFilter] = React.useState({ toSearch: "reward_name", searchKey: "" });
-  const [dateRangeFilter, setDateRangeFilter] = React.useState({
-    from: "",
-    to: inputDate(new Date().toLocaleDateString()),
-  });
-
   const { message, setMessageStatus } = useMessage();
+  const {
+    sortFilter,
+    typeFilter,
+    searchFilter,
+    dateRangeFilter,
+    handleSearchFilter,
+    handleDateRangeFilter,
+    handleSortFilter,
+    handleTypeFilter,
+  } = useRewardFilters();
 
   const { data: session } = useSession({ required: true });
   const user = session?.user?.name;
   const { url } = useGlobalContext();
   const router = useRouter();
-
-  // handle onchange on search filter
-  const handleSearchFilter = ({ name, value }) => {
-    setSearchFilter((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
-  };
-
-  // handle onchange on date range filter
-  const handleDateRangeFilter = ({ name, value }) => {
-    setDateRangeFilter((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
-  };
-
-  // handle onchange on sort filter
-  const handleSortFilter = ({ name, value }) => {
-    setSortFilter((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
-  };
-
-  // handle onchange on type filter
-  const handleTypeFilter = ({ value }) => {
-    setTypeFilter(value);
-  };
 
   // get rewards
   const getRewards = React.useCallback(async () => {

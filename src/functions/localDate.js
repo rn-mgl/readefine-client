@@ -27,9 +27,12 @@ export const localizeDate = (date) => {
 
 export const inputDate = (date) => {
   const splitDate = date.split("/");
-  const month = splitDate[0];
-  const day = splitDate[1];
+  let month = splitDate[0];
+  let day = splitDate[1];
   const year = splitDate[2];
+
+  month = parseInt(month) < 10 ? "0" + month : month;
+  day = parseInt(day) < 10 ? "0" + day : day;
 
   const newDate = `${year}-${month}-${day}`;
 

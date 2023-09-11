@@ -15,62 +15,27 @@ import { typeConversion } from "@/src/src/functions/typeConversion";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import { useMessage } from "@/src/src/hooks/useMessage";
+import { useAchievementFilters } from "@/src/src/hooks/useAchievementFilters";
 
 const ClientAchievements = () => {
   const [achievements, setAchievements] = React.useState([]);
 
-  const [typeFilter, setTypeFilter] = React.useState("");
-  const [goalRangeFilter, setGoalRangeFilter] = React.useState({ from: 0, to: 1250 });
-  const [searchFilter, setSearchFilter] = React.useState({
-    toSearch: "achievement_name",
-    searchKey: "",
-  });
-  const [sortFilter, setSortFilter] = React.useState({
-    toSort: "achievement_name",
-    sortMode: "ASC",
-  });
-
   const { message, setMessageStatus } = useMessage();
+  const {
+    typeFilter,
+    goalRangeFilter,
+    searchFilter,
+    sortFilter,
+    handleSearchFilter,
+    handleGoalRangeFilter,
+    handleSortFilter,
+    handleTypeFilter,
+  } = useAchievementFilters();
 
   const { data: session } = useSession({ required: true });
   const user = session?.user?.name;
   const { url } = useGlobalContext();
   const router = useRouter();
-
-  // handle onchange search filter
-  const handleSearchFilter = ({ name, value }) => {
-    setSearchFilter((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
-  };
-
-  // handle onchange on range filter
-  const handleGoalRangeFilter = ({ name, value }) => {
-    setGoalRangeFilter((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
-  };
-
-  // handle onchange on sort filter
-  const handleSortFilter = ({ name, value }) => {
-    setSortFilter((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
-  };
-
-  // handle onchange on type filter
-  const handleTypeFilter = ({ value }) => {
-    setTypeFilter(value);
-  };
 
   // get achievements
   const getAchievement = React.useCallback(async () => {

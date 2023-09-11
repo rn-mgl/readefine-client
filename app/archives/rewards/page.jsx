@@ -15,56 +15,27 @@ import { cipher } from "@/src/src/functions/security";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import { useMessage } from "@/src/src/hooks/useMessage";
+import { useRewardFilters } from "@/src/src/hooks/useRewardFilters";
 
 const ClientRewards = () => {
   const [rewards, setRewards] = React.useState([]);
 
-  const [sortFilter, setSortFilter] = React.useState({ toSort: "reward_name", sortMode: "ASC" });
-  const [showFilter, setShowFilter] = React.useState({ toShow: "received" });
-  const [searchFilter, setSearchFilter] = React.useState({ toSearch: "reward_name", searchKey: "" });
-  const [typeFilter, setTypeFilter] = React.useState("");
-
   const { message, setMessageStatus } = useMessage();
+  const {
+    sortFilter,
+    typeFilter,
+    searchFilter,
+    showFilter,
+    handleSearchFilter,
+    handleSortFilter,
+    handleTypeFilter,
+    handleShowFilter,
+  } = useRewardFilters();
 
   const { data: session } = useSession({ required: true });
   const user = session?.user?.name;
   const { url } = useGlobalContext();
   const router = useRouter();
-
-  // handle onchange on search filter
-  const handleSearchFilter = ({ name, value }) => {
-    setSearchFilter((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
-  };
-
-  // handle onchange on sort filter
-  const handleSortFilter = ({ name, value }) => {
-    setSortFilter((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
-  };
-
-  // handle onchange on what to show filter
-  const handleShowFilter = ({ name, value }) => {
-    setShowFilter((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
-  };
-
-  // handle onchange on type filter
-  const handleTypeFilter = ({ value }) => {
-    setTypeFilter(value);
-  };
 
   // get rewards
   const getRewards = React.useCallback(async () => {

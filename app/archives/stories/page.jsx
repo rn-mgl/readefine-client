@@ -18,6 +18,7 @@ import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import { useMessage } from "@/src/src/hooks/useMessage";
 import { useUserLexile } from "@/src/src/hooks/useUserLexile";
+import { useStoryFilters } from "@/src/src/hooks/useStoryFilters";
 
 const ClientStories = () => {
   const [stories, setStories] = React.useState([]);
@@ -25,47 +26,22 @@ const ClientStories = () => {
 
   const [selectedBook, setSelectedBook] = React.useState(-1);
 
-  const [searchFilter, setSearchFilter] = React.useState({ toSearch: "title", searchKey: "" });
-  const [lexileRangeFilter, setLexileRangeFilter] = React.useState({ from: 0, to: 2000 });
-  const [sortFilter, setSortFilter] = React.useState({ toSort: "title", sortMode: "ASC" });
-
   const { message, setMessageStatus } = useMessage();
   const { userLexile } = useUserLexile();
+  const {
+    searchFilter,
+    lexileRangeFilter,
+    sortFilter,
+    handleSearchFilter,
+    handleLexileRangeFilter,
+    handleSortFilter,
+    setLexileSweetSpot,
+  } = useStoryFilters();
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
   const user = session?.user?.name;
   const router = useRouter();
-
-  // handle onchange on search filter
-  const handleSearchFilter = ({ name, value }) => {
-    setSearchFilter((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
-  };
-
-  // handle onchange on lexile range filter
-  const handleLexileRangeFilter = ({ name, value }) => {
-    setLexileRangeFilter((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
-  };
-
-  // handle onchange on sort filter
-  const handleSortFilter = ({ name, value }) => {
-    setSortFilter((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
-  };
 
   // show message that the test to be taken has low lexile level for the user
   const handleShowLexileMessage = () => {
@@ -132,8 +108,8 @@ const ClientStories = () => {
   }, [user, getStories]);
 
   React.useEffect(() => {
-    setLexileRangeFilter({ from: userLexile - 100, to: userLexile + 50 });
-  }, [userLexile]);
+    setLexileSweetSpot(userLexile - 100, userLexile + 50);
+  }, [userLexile, setLexileSweetSpot]);
 
   React.useEffect(() => {
     if (user) {

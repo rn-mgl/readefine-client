@@ -9,72 +9,33 @@ import Image from "next/image";
 
 import noTest from "../../../public/profile/NoTest.svg";
 
-import { inputDate } from "@/src/src/functions/localDate";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { cipher } from "@/src/src/functions/security";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import { useMessage } from "@/src/src/hooks/useMessage";
+import { useTestFilters } from "@/src/src/hooks/useTestFilters";
 
 const AdminTests = () => {
   const [tests, setTests] = React.useState([]);
 
-  // filters
-  const [searchFilter, setSearchFilter] = React.useState({ toSearch: "title", searchKey: "" });
-  const [lexileRangeFilter, setLexileRangeFilter] = React.useState({ from: 0, to: 1250 });
-  const [sortFilter, setSortFilter] = React.useState({ toSort: "title", sortMode: "ASC" });
-  const [dateRangeFilter, setDateRangeFilter] = React.useState({
-    from: "",
-    to: inputDate(new Date().toLocaleDateString()),
-  });
-
   const { message, setMessageStatus } = useMessage();
+  const {
+    searchFilter,
+    lexileRangeFilter,
+    sortFilter,
+    dateRangeFilter,
+    handleSearchFilter,
+    handleDateRangeFilter,
+    handleLexileRangeFilter,
+    handleSortFilter,
+  } = useTestFilters();
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
   const user = session?.user?.name;
   const router = useRouter();
-
-  // handle onchange search filter
-  const handleSearchFilter = ({ name, value }) => {
-    setSearchFilter((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
-  };
-
-  // handle date range filter
-  const handleDateRangeFilter = ({ name, value }) => {
-    setDateRangeFilter((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
-  };
-
-  // handle lexile range filter
-  const handleLexileRangeFilter = ({ name, value }) => {
-    setLexileRangeFilter((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
-  };
-
-  // handle sort filter
-  const handleSortFilter = ({ name, value }) => {
-    setSortFilter((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
-  };
 
   // get tests
   const getTests = React.useCallback(async () => {

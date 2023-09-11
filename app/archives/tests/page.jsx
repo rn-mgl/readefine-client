@@ -11,7 +11,6 @@ import Image from "next/image";
 
 import noTest from "../../../public/profile/NoTest.svg";
 
-import { inputDate } from "@/src/src/functions/localDate";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { cipher } from "@/src/src/functions/security";
@@ -19,6 +18,7 @@ import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import { useMessage } from "@/src/src/hooks/useMessage";
 import { useUserLexile } from "@/src/src/hooks/useUserLexile";
+import { useTestFilters } from "@/src/src/hooks/useTestFilters";
 
 const ClientTests = () => {
   const [tests, setTests] = React.useState([]);
@@ -27,57 +27,22 @@ const ClientTests = () => {
   const [selectedBook, setSelectedBook] = React.useState(-1);
   const [seeTestRecord, setSeeTestRecord] = React.useState(null);
 
-  const [searchFilter, setSearchFilter] = React.useState({ toSearch: "title", searchKey: "" });
-  const [lexileRangeFilter, setLexileRangeFilter] = React.useState({ from: 0, to: 1250 });
-  const [sortFilter, setSortFilter] = React.useState({ toSort: "title", sortMode: "ASC" });
-  const [dateRangeFilter, setDateRangeFilter] = React.useState({
-    from: "",
-    to: inputDate(new Date().toLocaleDateString()),
-  });
-
   const { message, setMessageStatus } = useMessage();
   const { userLexile } = useUserLexile();
+  const {
+    searchFilter,
+    lexileRangeFilter,
+    sortFilter,
+    handleSearchFilter,
+    handleLexileRangeFilter,
+    handleSortFilter,
+    setLexileSweetSpot,
+  } = useTestFilters();
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
   const user = session?.user?.name;
   const router = useRouter();
-
-  const handleSearchFilter = ({ name, value }) => {
-    setSearchFilter((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
-  };
-
-  const handleDateRangeFilter = ({ name, value }) => {
-    setDateRangeFilter((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
-  };
-
-  const handleLexileRangeFilter = ({ name, value }) => {
-    setLexileRangeFilter((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
-  };
-
-  const handleSortFilter = ({ name, value }) => {
-    setSortFilter((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
-  };
 
   const handleShowLexileMessage = () => {
     setShowLexileMessage((prev) => !prev);
@@ -121,7 +86,6 @@ const ClientTests = () => {
           searchFilter,
           lexileRangeFilter,
           sortFilter,
-          dateRangeFilter,
         },
         headers: { Authorization: user?.token },
       });
@@ -132,7 +96,7 @@ const ClientTests = () => {
       console.log(error);
       setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, searchFilter, lexileRangeFilter, sortFilter, dateRangeFilter, setMessageStatus]);
+  }, [url, user?.token, searchFilter, lexileRangeFilter, sortFilter, setMessageStatus]);
 
   React.useEffect(() => {
     if (user) {
@@ -141,8 +105,8 @@ const ClientTests = () => {
   }, [user, getTests]);
 
   React.useEffect(() => {
-    setLexileRangeFilter({ from: userLexile - 100, to: userLexile + 50 });
-  }, [userLexile]);
+    setLexileSweetSpot(userLexile - 100, userLexile + 50);
+  }, [userLexile, setLexileSweetSpot]);
 
   React.useEffect(() => {
     if (user) {
@@ -173,13 +137,11 @@ const ClientTests = () => {
       <div className="w-full cstm-w-limit cstm-flex-col gap-5 ">
         <TestsFilter
           handleSearchFilter={handleSearchFilter}
-          handleDateRangeFilter={handleDateRangeFilter}
           handleLexileRangeFilter={handleLexileRangeFilter}
           handleSortFilter={handleSortFilter}
           searchFilter={searchFilter}
           lexileRangeFilter={lexileRangeFilter}
           sortFilter={sortFilter}
-          dateRangeFilter={dateRangeFilter}
         />
 
         <div

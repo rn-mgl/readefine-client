@@ -12,83 +12,35 @@ import noReward from "../../../public/profile/NoReward.svg";
 
 import { IoAddOutline } from "react-icons/io5";
 import { typeConversion } from "@/src/src/functions/typeConversion";
-import { inputDate } from "@/src/src/functions/localDate";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/src/context";
 import { cipher } from "@/src/src/functions/security";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import { useMessage } from "@/src/src/hooks/useMessage";
+import { useAchievementFilters } from "@/src/src/hooks/useAchievementFilters";
 
 const AdminAchievements = () => {
   const [achievements, setAchievements] = React.useState([]);
 
-  const [typeFilter, setTypeFilter] = React.useState("");
-  const [goalRangeFilter, setGoalRangeFilter] = React.useState({ from: 0, to: 1250 });
-  const [searchFilter, setSearchFilter] = React.useState({
-    toSearch: "achievement_name",
-    searchKey: "",
-  });
-  const [sortFilter, setSortFilter] = React.useState({
-    toSort: "achievement_name",
-    sortMode: "ASC",
-  });
-  const [dateRangeFilter, setDateRangeFilter] = React.useState({
-    from: "",
-    to: inputDate(new Date().toLocaleDateString()),
-  });
-
   const { message, setMessageStatus } = useMessage();
+  const {
+    typeFilter,
+    goalRangeFilter,
+    searchFilter,
+    sortFilter,
+    dateRangeFilter,
+    handleSearchFilter,
+    handleDateRangeFilter,
+    handleGoalRangeFilter,
+    handleSortFilter,
+    handleTypeFilter,
+  } = useAchievementFilters();
 
   const { data: session } = useSession({ required: true });
   const user = session?.user?.name;
   const { url } = useGlobalContext();
   const router = useRouter();
-
-  // handle onchange on search filter
-  const handleSearchFilter = ({ name, value }) => {
-    setSearchFilter((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
-  };
-
-  // handle onchange on date range filter
-  const handleDateRangeFilter = ({ name, value }) => {
-    setDateRangeFilter((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
-  };
-
-  // handle onchange on goal range filter
-  const handleGoalRangeFilter = ({ name, value }) => {
-    setGoalRangeFilter((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
-  };
-
-  // handle onchange on sort filter
-  const handleSortFilter = ({ name, value }) => {
-    setSortFilter((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
-  };
-
-  // handle onchange on type filter
-  const handleTypeFilter = ({ value }) => {
-    setTypeFilter(value);
-  };
 
   // get achievement data
   const getAchievement = React.useCallback(async () => {
