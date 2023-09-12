@@ -73,7 +73,7 @@ const Signup = () => {
       }
 
       if (userData.password?.length < 8) {
-        setMessageStatus(true, "Password must not be lower than 8 characters.", "warning");
+        setMessageStatus(true, "Password must not be less than 8 characters.", "warning");
         return false;
       }
     }
