@@ -171,12 +171,12 @@ const SingleStory = ({ params }) => {
   }, [user, router]);
 
   React.useEffect(() => {
-    const cancelSSU = window.speechSynthesis.cancel();
+    const cancelSSU = () => window.speechSynthesis.cancel();
 
-    window.addEventListener("beforeunload", cancelSSU);
+    window.addEventListener("unload", cancelSSU());
 
     return () => {
-      window.removeEventListener("beforeunload", cancelSSU);
+      window.removeEventListener("unload", cancelSSU());
     };
   }, []);
 
