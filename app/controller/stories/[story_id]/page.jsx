@@ -184,6 +184,7 @@ const SingleStory = ({ params }) => {
           viewType={viewType}
           handleViewType={handleViewType}
           handleFontSize={handleFontSize}
+          handleIncrement={handleIncrement}
         />
       ) : null}
 

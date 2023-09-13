@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { BsFillPlayFill, BsFillPauseFill, BsFillStopFill, BsVolumeUpFill, BsQuestionCircle } from "react-icons/bs";
+import { BsFillPlayFill, BsFillPauseFill, BsFillStopFill, BsVolumeUpFill } from "react-icons/bs";
 import { RiSpeedFill } from "react-icons/ri";
 import ActionLabel from "./ActionLabel";
 import { AiFillHighlight } from "react-icons/ai";
@@ -8,13 +8,18 @@ import { AiFillHighlight } from "react-icons/ai";
 const TextToSpeech = (props) => {
   const [utterance, setUtterance] = React.useState("");
   const [highlightedWords, setHighLightedWords] = React.useState("");
+
   const [status, setStatus] = React.useState("init");
   const [volume, setVolume] = React.useState({ display: 100, apply: 1 });
   const [rate, setRate] = React.useState(1);
-  const [SSU, setSSU] = React.useState(null);
+
+  const { SSU, synth } = React.useMemo(() => {
+    if (typeof window !== "undefined" && "speechSynthesis" in window) {
+      return { SSU: new SpeechSynthesisUtterance(), synth: speechSynthesis };
+    }
+  }, []);
 
   const playVoice = (words) => {
-    const synth = speechSynthesis;
     const voices = synth.getVoices();
 
     if (synth.speaking) {
@@ -33,32 +38,34 @@ const TextToSpeech = (props) => {
       steffan: voices[118],
     };
 
-    if (SSU) {
-      SSU.addEventListener("start", () => setStatus("playing"));
-      SSU.addEventListener("end", () => setStatus("init"));
+    SSU.voice = primaryVoices.michelle;
+    SSU.text = words;
+    SSU.volume = volume.apply;
+    SSU.rate = rate;
 
-      SSU.voice = primaryVoices.michelle;
-      SSU.text = words;
-      SSU.rate = rate;
-      SSU.volume = volume.apply;
+    SSU.addEventListener("start", () => setStatus("playing"));
 
-      synth.speak(SSU);
-    }
+    SSU.addEventListener("end", () => {
+      props.handleIncrement();
+      setStatus("init");
+    });
+
+    synth.speak(SSU);
   };
 
   const pause = () => {
     setStatus("paused");
-    speechSynthesis.pause();
+    synth.pause();
   };
 
   const resume = () => {
     setStatus("playing");
-    speechSynthesis.resume();
+    synth.resume();
   };
 
   const cancel = () => {
     setStatus("init");
-    speechSynthesis.cancel();
+    synth.cancel();
   };
 
   const handleRate = ({ value }) => {
@@ -70,23 +77,15 @@ const TextToSpeech = (props) => {
   };
 
   React.useEffect(() => {
-    if (typeof window !== "undefined" && "speechSynthesis" in window) {
-      setSSU(new SpeechSynthesisUtterance());
-    }
-  }, []);
-
-  React.useEffect(() => {
     if (props.utterance) {
       setUtterance(props.utterance);
     }
   }, [setUtterance, props.utterance]);
 
   React.useEffect(() => {
-    if (SSU) {
-      SSU.volume = volume.apply;
-      SSU.rate = rate;
-    }
-  }, [SSU, volume, rate]);
+    SSU.volume = volume.apply;
+    SSU.rate = rate;
+  }, [SSU, rate, volume]);
 
   React.useEffect(() => {
     const highlight = () => {
@@ -103,11 +102,6 @@ const TextToSpeech = (props) => {
   return (
     <div className="cstm-flex-col w-full gap-2 t:cstm-flex-row t:w-fit t:gap-2">
       <div className="cstm-flex-row gap-2 w-full">
-        <button className="relative cstm-bg-hover group" onClick={() => playVoice(highlightedWords)}>
-          <ActionLabel label="Play Highlighted Word" />
-          <AiFillHighlight className="text-prmColor scale-125" />
-        </button>
-
         {status === "init" ? (
           <button className="relative cstm-bg-hover group" onClick={() => playVoice(utterance)}>
             <ActionLabel label="Play" />
@@ -129,6 +123,11 @@ const TextToSpeech = (props) => {
             <BsFillPlayFill className="text-prmColor scale-125" />
           </button>
         )}
+
+        <button className="relative cstm-bg-hover group" onClick={() => playVoice(highlightedWords)}>
+          <ActionLabel label="Play Highlighted Word" />
+          <AiFillHighlight className="text-prmColor scale-125" />
+        </button>
 
         <button className="relative cstm-bg-hover group" onClick={cancel}>
           <ActionLabel label="Stop" />
