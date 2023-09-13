@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 const local = "http://192.168.1.121:9000";
 const prod = "https://readefine-server.onrender.com";
 
-const url = local;
+const url = prod;
 
 export const authOptions = {
   providers: [
