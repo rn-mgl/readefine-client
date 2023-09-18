@@ -18,6 +18,7 @@ import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import { useStoryPageControls } from "@/src/src/hooks/useStoryPageControls";
 import { useReceiveAchievement } from "@/src/src/hooks/useReceiveAchievement";
 import { useMessage } from "@/src/src/hooks/useMessage";
+import { useAudioControls } from "@/src/src/hooks/useAudioControls";
 
 const SingleStory = ({ params }) => {
   const {
@@ -40,6 +41,8 @@ const SingleStory = ({ params }) => {
   const { accomplishedAchievement, claimNewAchievement, resetAchievement } = useReceiveAchievement();
 
   const { message, setMessageStatus } = useMessage();
+
+  const { isMuted, isPlaying, audioRef, handleMuteVolume, handleVolumeChange, handleToggleAudio } = useAudioControls();
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -191,7 +194,16 @@ const SingleStory = ({ params }) => {
       ) : null}
 
       {/* user actions */}
-      <StoryActions to="/archives/stories" story={story} handleCustomizationsVisible={handleCustomizationsVisible} />
+      <StoryActions
+        to="/archives/stories"
+        story={story}
+        isMuted={isMuted}
+        isPlaying={isPlaying}
+        handleCustomizationsVisible={handleCustomizationsVisible}
+        handleMuteVolume={handleMuteVolume}
+        handleVolumeChange={handleVolumeChange}
+        handleToggleAudio={handleToggleAudio}
+      />
 
       {/* can see customizations */}
       {customizationsVisible ? (
@@ -228,6 +240,12 @@ const SingleStory = ({ params }) => {
         handleDecrement={handleDecrement}
         handleActivePage={handleActivePage}
       />
+
+      {story?.audio ? (
+        <audio loop ref={audioRef}>
+          <source src={story?.audio} />
+        </audio>
+      ) : null}
     </div>
   );
 };

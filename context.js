@@ -7,7 +7,7 @@ const local = "http://192.168.1.121:9000";
 const prod = "https://readefine-server.onrender.com";
 
 const AppProvider = ({ children }) => {
-  const url = prod;
+  const url = local;
 
   return <AppContext.Provider value={{ url }}>{children}</AppContext.Provider>;
 };

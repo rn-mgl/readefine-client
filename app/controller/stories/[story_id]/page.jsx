@@ -18,6 +18,7 @@ import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
 import { useStoryPageControls } from "@/src/src/hooks/useStoryPageControls";
 import { useMessage } from "@/src/src/hooks/useMessage";
+import { useAudioControls } from "@/src/src/hooks/useAudioControls";
 
 const SingleStory = ({ params }) => {
   const [canDeleteStory, setCanDeleteStory] = React.useState(false);
@@ -40,6 +41,8 @@ const SingleStory = ({ params }) => {
   } = useStoryPageControls();
 
   const { message, setMessageStatus } = useMessage();
+
+  const { isMuted, isPlaying, audioRef, handleMuteVolume, handleVolumeChange, handleToggleAudio } = useAudioControls();
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -167,6 +170,11 @@ const SingleStory = ({ params }) => {
         story={story}
         handleCanDeleteStory={handleCanDeleteStory}
         handleCustomizationsVisible={handleCustomizationsVisible}
+        isMuted={isMuted}
+        isPlaying={isPlaying}
+        handleMuteVolume={handleMuteVolume}
+        handleVolumeChange={handleVolumeChange}
+        handleToggleAudio={handleToggleAudio}
       />
 
       {/* filter aka customizations  */}
@@ -204,6 +212,12 @@ const SingleStory = ({ params }) => {
         handleDecrement={handleDecrement}
         handleActivePage={handleActivePage}
       />
+
+      {story?.audio ? (
+        <audio loop ref={audioRef}>
+          <source src={story?.audio} />
+        </audio>
+      ) : null}
     </div>
   );
 };

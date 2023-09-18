@@ -1,7 +1,7 @@
 import React from "react";
 
 export const useAudioControls = () => {
-  const [isPlaying, setIsPlaying] = React.useState(true);
+  const [isPlaying, setIsPlaying] = React.useState(false);
   const [isMuted, setIsMuted] = React.useState(false);
   const audioRef = React.useRef(null);
 

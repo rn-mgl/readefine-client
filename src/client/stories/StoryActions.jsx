@@ -5,21 +5,12 @@ import Volume from "../../components/global/Volume";
 
 import { BsArrowLeft, BsFilter } from "react-icons/bs";
 import { RxDividerVertical } from "react-icons/rx";
-import { useAudioControls } from "../../hooks/useAudioControls";
 
 const StoryActions = (props) => {
-  const { isMuted, isPlaying, audioRef, handleMuteVolume, handleVolumeChange, handleToggleAudio } = useAudioControls();
-
   const storyAudio = props.story?.audio;
 
   return (
     <div className="w-full cstm-w-limit cstm-flex-row text-prmColor">
-      {storyAudio ? (
-        <audio loop autoPlay ref={audioRef}>
-          <source src={storyAudio} />
-        </audio>
-      ) : null}
-
       <Link href={props.to} className="w-fit cstm-bg-hover mr-auto">
         <BsArrowLeft className="text-inherit" />
       </Link>
@@ -28,11 +19,11 @@ const StoryActions = (props) => {
         <>
           <div className="cstm-flex-row">
             <Volume
-              isPlaying={isPlaying}
-              isMuted={isMuted}
-              handleMuteVolume={handleMuteVolume}
-              handleVolumeChange={handleVolumeChange}
-              handleToggleAudio={handleToggleAudio}
+              isPlaying={props.isPlaying}
+              isMuted={props.isMuted}
+              handleMuteVolume={props.handleMuteVolume}
+              handleVolumeChange={props.handleVolumeChange}
+              handleToggleAudio={props.handleToggleAudio}
             />
           </div>
 
