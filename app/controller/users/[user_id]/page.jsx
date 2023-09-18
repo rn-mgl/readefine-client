@@ -30,7 +30,6 @@ const SingleUser = ({ params }) => {
   const [quizMonth, setQuizMonth] = React.useState(new Date().getMonth() + 1);
   const [lexileMonth, setLexileMonth] = React.useState(new Date().getMonth() + 1);
   const [readMonth, setReadMonth] = React.useState(new Date().getMonth() + 1);
-  const currYear = React.useMemo(() => new Date().getFullYear(), []);
 
   const { message, setMessageStatus } = useMessage();
 
@@ -379,7 +378,16 @@ const SingleUser = ({ params }) => {
               />
 
               {/* button to change if y axis is lexile or score */}
-              <GraphTypeChoice quizVariable={quizVariable} handleQuizVariable={handleQuizVariable} />
+              <SelectFilter
+                onChange={handleQuizVariable}
+                selectValue={quizVariable}
+                name="quizVariable"
+                label="Type"
+                labelValue={[
+                  { label: "Score", value: "score" },
+                  { label: "Lexile", value: "lexile" },
+                ]}
+              />
             </div>
 
             <div className="cstm-flex-col justify-start w-full h-auto min-h-[30rem]">
