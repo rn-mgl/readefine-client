@@ -5,9 +5,7 @@ const RangeFilter = (props) => {
   return (
     <>
       <div className="p-2 bg-white font-poppins rounded-md shadow-md whitespace-nowrap cstm-flex-row">
-        <div
-          className={`bg-neutral-50 ${cstmRem} px-2 rounded-l-md outline-none border-neutral-200 border-2 text-sm`}
-        >
+        <div className={`bg-neutral-50 ${cstmRem} px-2 rounded-l-md outline-none border-neutral-200 border-2 text-sm`}>
           <p>{props.fromLabel}</p>
         </div>
         <input
@@ -21,9 +19,7 @@ const RangeFilter = (props) => {
       </div>
 
       <div className="p-2 bg-white font-poppins rounded-md shadow-md whitespace-nowrap cstm-flex-row">
-        <div
-          className={`bg-neutral-50 ${cstmRem} px-2 rounded-l-md outline-none border-neutral-200 border-2 text-sm`}
-        >
+        <div className={`bg-neutral-50 ${cstmRem} px-2 rounded-l-md outline-none border-neutral-200 border-2 text-sm`}>
           <p>{props.toLabel}</p>
         </div>
         <input

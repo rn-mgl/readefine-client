@@ -4,6 +4,9 @@ import axios from "axios";
 import AdminPageHeader from "@/src/src/admin/global/PageHeader";
 import Link from "next/link";
 import Message from "@/src/src/components/global/Message";
+import SelectFilter from "@/src/src/components/filter/SelectFilter";
+import UserMainData from "@/src/src/admin/users/UserMainData";
+import GraphTypeChoice from "@/src/src/admin/users/graph/GraphTypeChoice";
 
 // chart.js is needed to view the react charts
 import { Chart as ChartJS } from "chart.js/auto";
@@ -16,8 +19,6 @@ import { BsArrowLeft } from "react-icons/bs";
 import { decipher } from "@/src/src/functions/security";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/src/src/functions/jwtFns";
-import UserMainData from "@/src/src/admin/users/UserMainData";
-import GraphTypeChoice from "@/src/src/admin/users/graph/GraphTypeChoice";
 import { useMessage } from "@/src/src/hooks/useMessage";
 
 const SingleUser = ({ params }) => {
@@ -26,6 +27,10 @@ const SingleUser = ({ params }) => {
   const [userReads, setUserReads] = React.useState([]);
   const [userQuizzes, setUserQuizzes] = React.useState([]);
   const [quizVariable, setQuizVariable] = React.useState("lexile");
+  const [quizMonth, setQuizMonth] = React.useState(new Date().getMonth() + 1);
+  const [lexileMonth, setLexileMonth] = React.useState(new Date().getMonth() + 1);
+  const [readMonth, setReadMonth] = React.useState(new Date().getMonth() + 1);
+  const currYear = React.useMemo(() => new Date().getFullYear(), []);
 
   const { message, setMessageStatus } = useMessage();
 
@@ -44,27 +49,32 @@ const SingleUser = ({ params }) => {
     setQuizVariable(value);
   };
 
+  const handleQuizMonth = ({ value }) => {
+    setQuizMonth(parseInt(value));
+  };
+
+  const handleLexileMonth = ({ value }) => {
+    setLexileMonth(parseInt(value));
+  };
+
+  const handleReadMonth = ({ value }) => {
+    setReadMonth(parseInt(value));
+  };
+
   // map lexile level to the days it changed and remain the same on the days it did not change
   const mapLexileToDays = () => {
     let curr = userLexile[0]?.lexile;
 
-    // set the initial values to be the oldest lexile (curr) record
-    const days = getDaysInMonth(new Date()).map(() => curr);
+    const days = getDaysInMonth(new Date(), lexileMonth).map(() => curr);
 
     for (let i = 0; i < days.length; i++) {
-      // check if i is within the user lexile length to get appropriate matching lexile
       if (i < userLexile.length) {
-        // change the current value to the next latest lexile data
         curr = userLexile[i];
       }
 
-      // check if the current value exists
       if (curr) {
-        // get the day as index
         const dayIdx = new Date(curr.date_added).getDate();
-        // -1 to place in the "today" data
         days[dayIdx - 1] = curr.lexile;
-        // to place in the "tomorrow" data for possibility of no entry
         days[dayIdx] = curr.lexile;
       }
     }
@@ -82,10 +92,10 @@ const SingleUser = ({ params }) => {
 
   // place data to lexile line chart
   const lexileChartData = {
-    labels: getDaysInMonth(new Date()),
+    labels: getDaysInMonth(new Date(), lexileMonth),
     datasets: [
       {
-        label: `Lexile Growth | ${monthMap[new Date().getMonth()]}`,
+        label: `Lexile Growth | ${monthMap[lexileMonth]}`,
         data: mapLexileToDays(),
         backgroundColor: "#542ACA",
         borderColor: "#542ACA",
@@ -97,21 +107,18 @@ const SingleUser = ({ params }) => {
 
   // map read books to the dates it has been read
   const mapBooksReadToDays = () => {
-    let counts = getDaysInMonth(new Date()).map((_, i) => {
-      return {
-        x: i + 1,
-        y: undefined,
-      };
-    });
+    const days = getDaysInMonth(new Date(), readMonth);
+    let counts = [];
 
-    for (let i = 0; i < counts.length; i++) {
+    for (let i = 0; i < days.length; i++) {
       const curr = userReads[i];
+      let data = { x: i, y: undefined };
 
       if (curr) {
         const dayIdx = new Date(curr.date_read).getDate();
-        const data = { x: dayIdx, y: curr.lexile };
-        counts[dayIdx - 1] = data;
+        data = { x: dayIdx, y: curr.lexile };
       }
+      counts.push(data);
     }
 
     return counts;
@@ -121,7 +128,7 @@ const SingleUser = ({ params }) => {
   const booksChartData = {
     datasets: [
       {
-        label: `Lexiles of Books Read | ${monthMap[new Date().getMonth()]}`,
+        label: `Lexiles of Books Read | ${monthMap[readMonth]}`,
         data: mapBooksReadToDays(),
         borderWidth: 1,
         tension: 0.4,
@@ -133,22 +140,19 @@ const SingleUser = ({ params }) => {
 
   // map taken tests to the days in has been taken
   const mapQuizScoresToDays = () => {
-    let counts = getDaysInMonth(new Date()).map((_, i) => {
-      return {
-        x: i + 1,
-        y: undefined,
-      };
-    });
+    const days = getDaysInMonth(new Date(), readMonth);
+    let counts = [];
 
-    for (let i = 0; i < counts.length; i++) {
+    for (let i = 0; i < days.length; i++) {
       const curr = userQuizzes[i];
+      let data = { x: i, y: undefined };
+
       if (curr) {
         const dayIdx = new Date(curr.date_taken).getDate();
-        const data = { x: dayIdx, y: curr[quizVariable] };
-        counts[dayIdx - 1] = data;
+        data = { x: dayIdx, y: curr[quizVariable] };
       }
+      counts.push(data);
     }
-
     return counts;
   };
 
@@ -156,7 +160,7 @@ const SingleUser = ({ params }) => {
   const quizChartData = {
     datasets: [
       {
-        label: `Quizzes Answered | ${monthMap[new Date().getMonth()]}`,
+        label: `Quizzes Answered | ${monthMap[quizMonth]}`,
         data: mapQuizScoresToDays(),
         backgroundColor: "#D498FF",
         borderColor: "#D498FF",
@@ -187,7 +191,7 @@ const SingleUser = ({ params }) => {
   const getUserLexile = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/admin_user_lexile`, {
-        params: { userId: decodedUserId },
+        params: { userId: decodedUserId, lexileMonth },
         headers: { Authorization: user?.token },
       });
 
@@ -198,13 +202,13 @@ const SingleUser = ({ params }) => {
       console.log(error);
       setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, decodedUserId, setMessageStatus]);
+  }, [url, user?.token, decodedUserId, lexileMonth, setMessageStatus]);
 
   // get books read for graph
   const getUserBooksRead = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/admin_read_story`, {
-        params: { userId: decodedUserId },
+        params: { userId: decodedUserId, readMonth },
         headers: { Authorization: user?.token },
       });
 
@@ -215,13 +219,13 @@ const SingleUser = ({ params }) => {
       console.log(error);
       setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, decodedUserId, setMessageStatus]);
+  }, [url, user?.token, decodedUserId, readMonth, setMessageStatus]);
 
   // get quizzes for graph
   const getUserQuizzesAnswered = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/admin_taken_test`, {
-        params: { userId: decodedUserId },
+        params: { userId: decodedUserId, quizMonth },
         headers: { Authorization: user?.token },
       });
 
@@ -232,7 +236,7 @@ const SingleUser = ({ params }) => {
       console.log(error);
       setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, decodedUserId, setMessageStatus]);
+  }, [url, user?.token, decodedUserId, quizMonth, setMessageStatus]);
 
   React.useEffect(() => {
     if (user) {
@@ -285,29 +289,98 @@ const SingleUser = ({ params }) => {
         {/* graphs */}
         <div className="cstm-flex-col gap-5 w-full min-h-screen justify-start">
           {/* graph for lexile */}
-          <div className="cstm-flex-col w-full h-auto min-h-[30rem] p-5 bg-white rounded-2xl">
-            <Line
-              data={lexileChartData}
-              options={{
-                maintainAspectRatio: false,
-              }}
+          <div className="cstm-flex-col p-5 w-full bg-white rounded-2xl gap-5 t:items-start">
+            <SelectFilter
+              onChange={handleLexileMonth}
+              selectValue={lexileMonth}
+              name="lexileMonth"
+              label="Month"
+              labelValue={[
+                { label: "January", value: 1 },
+                { label: "February", value: 2 },
+                { label: "March", value: 3 },
+                { label: "April", value: 4 },
+                { label: "May", value: 5 },
+                { label: "June", value: 6 },
+                { label: "July", value: 7 },
+                { label: "August", value: 8 },
+                { label: "September", value: 9 },
+                { label: "October", value: 10 },
+                { label: "November", value: 11 },
+                { label: "December", value: 12 },
+              ]}
             />
+
+            <div className="cstm-flex-col w-full h-auto min-h-[30rem] p-5 bg-white rounded-2xl">
+              <Line
+                data={lexileChartData}
+                options={{
+                  maintainAspectRatio: false,
+                }}
+              />
+            </div>
           </div>
 
-          {/* graph for books read */}
-          <div className="cstm-flex-col w-full h-auto min-h-[30rem] p-5 bg-white rounded-2xl">
-            <Scatter
-              data={booksChartData}
-              options={{
-                maintainAspectRatio: false,
-              }}
+          <div className="cstm-flex-col p-5 w-full bg-white rounded-2xl gap-5 t:items-start">
+            <SelectFilter
+              onChange={handleReadMonth}
+              selectValue={readMonth}
+              name="readMonth"
+              label="Month"
+              labelValue={[
+                { label: "January", value: 1 },
+                { label: "February", value: 2 },
+                { label: "March", value: 3 },
+                { label: "April", value: 4 },
+                { label: "May", value: 5 },
+                { label: "June", value: 6 },
+                { label: "July", value: 7 },
+                { label: "August", value: 8 },
+                { label: "September", value: 9 },
+                { label: "October", value: 10 },
+                { label: "November", value: 11 },
+                { label: "December", value: 12 },
+              ]}
             />
+
+            {/* graph for books read */}
+            <div className="cstm-flex-col w-full h-auto min-h-[30rem] p-5 bg-white rounded-2xl">
+              <Scatter
+                data={booksChartData}
+                options={{
+                  maintainAspectRatio: false,
+                }}
+              />
+            </div>
           </div>
 
           {/* graph for quizzes taken */}
-          <div className="cstm-flex-col p-5 w-full bg-white rounded-2xl gap-5">
-            {/* button to change if y axis is lexile or score */}
-            <GraphTypeChoice quizVariable={quizVariable} handleQuizVariable={handleQuizVariable} />
+          <div className="cstm-flex-col p-5 w-full bg-white rounded-2xl gap-5 items-start">
+            <div className="cstm-flex-col t:cstm-flex-row w-full t:justify-between gap-5">
+              <SelectFilter
+                onChange={handleQuizMonth}
+                selectValue={quizMonth}
+                name="quizMonth"
+                label="Month"
+                labelValue={[
+                  { label: "January", value: 1 },
+                  { label: "February", value: 2 },
+                  { label: "March", value: 3 },
+                  { label: "April", value: 4 },
+                  { label: "May", value: 5 },
+                  { label: "June", value: 6 },
+                  { label: "July", value: 7 },
+                  { label: "August", value: 8 },
+                  { label: "September", value: 9 },
+                  { label: "October", value: 10 },
+                  { label: "November", value: 11 },
+                  { label: "December", value: 12 },
+                ]}
+              />
+
+              {/* button to change if y axis is lexile or score */}
+              <GraphTypeChoice quizVariable={quizVariable} handleQuizVariable={handleQuizVariable} />
+            </div>
 
             <div className="cstm-flex-col justify-start w-full h-auto min-h-[30rem]">
               <Scatter

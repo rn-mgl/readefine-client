@@ -2,7 +2,7 @@ import React from "react";
 
 const GraphTypeChoice = (props) => {
   return (
-    <div className="cstm-flex-row text-sm gap-5 w-full">
+    <div className="cstm-flex-row text-sm gap-10">
       <label htmlFor="lexile" className="mr-auto t:mr-0 cursor-pointer">
         <input
           type="radio"
@@ -15,7 +15,7 @@ const GraphTypeChoice = (props) => {
         />
 
         <div
-          className="p-2 peer-checked:bg-prmColor peer-checked:text-white w-16 cstm-flex-col
+          className="p-2 peer-checked:bg-prmColor peer-checked:text-white w-20 cstm-flex-col
             bg-accntColor rounded-md font-bold"
         >
           Lexile
@@ -34,7 +34,7 @@ const GraphTypeChoice = (props) => {
         />
 
         <div
-          className="p-2 peer-checked:bg-prmColor peer-checked:text-white w-16 cstm-flex-col
+          className="p-2 peer-checked:bg-prmColor peer-checked:text-white w-20 cstm-flex-col
             bg-accntColor rounded-md font-bold"
         >
           Score
