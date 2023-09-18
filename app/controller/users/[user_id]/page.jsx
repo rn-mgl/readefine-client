@@ -288,7 +288,7 @@ const SingleUser = ({ params }) => {
         {/* graphs */}
         <div className="cstm-flex-col gap-5 w-full min-h-screen justify-start">
           {/* graph for lexile */}
-          <div className="cstm-flex-col p-5 w-full bg-white rounded-2xl gap-5 t:items-start">
+          <div className="cstm-flex-col p-5 w-full bg-white rounded-2xl gap-5 items-start">
             <SelectFilter
               onChange={handleLexileMonth}
               selectValue={lexileMonth}
@@ -320,7 +320,7 @@ const SingleUser = ({ params }) => {
             </div>
           </div>
 
-          <div className="cstm-flex-col p-5 w-full bg-white rounded-2xl gap-5 t:items-start">
+          <div className="cstm-flex-col p-5 w-full bg-white rounded-2xl gap-5 items-start">
             <SelectFilter
               onChange={handleReadMonth}
               selectValue={readMonth}
@@ -355,7 +355,7 @@ const SingleUser = ({ params }) => {
 
           {/* graph for quizzes taken */}
           <div className="cstm-flex-col p-5 w-full bg-white rounded-2xl gap-5 items-start">
-            <div className="cstm-flex-col t:cstm-flex-row w-full t:justify-between gap-5">
+            <div className="cstm-flex-col items-start t:cstm-flex-row w-full t:justify-between gap-2">
               <SelectFilter
                 onChange={handleQuizMonth}
                 selectValue={quizMonth}
