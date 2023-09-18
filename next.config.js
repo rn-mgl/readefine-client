@@ -12,7 +12,7 @@ const nextConfig = {
   },
   env: {
     NEXTAUTH_SECRET: "Zq4t7w!z%C*F-JaNdRgUjXn2r5u8x/A?",
-    NEXTAUTH_URL: local,
+    NEXTAUTH_URL: prod,
   },
   reactStrictMode: true,
 };
