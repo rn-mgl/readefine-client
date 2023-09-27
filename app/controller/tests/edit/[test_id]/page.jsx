@@ -52,10 +52,17 @@ const EditTest = ({ params }) => {
     setLoadingState(true);
 
     for (let i = 0; i < 10; i++) {
-      const answerKey = `answer${q.question_id}`;
       const q = questions[i];
+      const answerKey = `answer${q.question_id}`;
+      const currAnswer = q[answerKey];
 
-      if (!q[answerKey]) {
+      if (
+        !currAnswer ||
+        (currAnswer !== q["choice_1"] &&
+          currAnswer !== q["choice_2"] &&
+          currAnswer !== q["choice_3"] &&
+          currAnswer !== q["choice_4"])
+      ) {
         setLoadingState(false);
         setMessageStatus(true, `You do not have an answer in number ${i + 1}.`, "error");
         return;

@@ -102,8 +102,15 @@ const AddTest = ({ params }) => {
     for (let i = 0; i < 10; i++) {
       const answerKey = `answer${i + 1}`;
       const page = pages[i];
+      const currAnswer = page[answerKey];
 
-      if (!page[answerKey]) {
+      if (
+        !currAnswer ||
+        (currAnswer !== page["choice1"] &&
+          currAnswer !== page["choice2"] &&
+          currAnswer !== page["choice3"] &&
+          currAnswer !== page["choice4"])
+      ) {
         setLoadingState(false);
         setMessageStatus(true, `You do not have an answer in number ${i + 1}.`, "error");
         return;
