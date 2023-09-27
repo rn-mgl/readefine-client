@@ -276,7 +276,13 @@ const SingleTest = ({ params }) => {
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       {isFinished ? (
-        <ScorePopup url="/archives/tests" score={score} handleIsFinished={() => handleIsFinished(false)} />
+        <ScorePopup
+          score={score}
+          handleIsFinished={() => {
+            handleIsFinished(false);
+            window.location.href = "/archives/tests";
+          }}
+        />
       ) : null}
 
       <div className="cstm-w-limit cstm-flex-col gap-5 w-full h-full relative">
