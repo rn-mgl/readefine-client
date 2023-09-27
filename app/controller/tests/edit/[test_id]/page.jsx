@@ -51,8 +51,9 @@ const EditTest = ({ params }) => {
 
     setLoadingState(true);
 
-    questions.forEach((q, i) => {
+    for (let i = 0; i < 10; i++) {
       const answerKey = `answer${q.question_id}`;
+      const q = questions[i];
 
       if (!q[answerKey]) {
         setLoadingState(false);
@@ -65,7 +66,7 @@ const EditTest = ({ params }) => {
         setMessageStatus(true, `You do not have a question in number ${i + 1}.`, "error");
         return;
       }
-    });
+    }
 
     try {
       const { data } = await axios.patch(
