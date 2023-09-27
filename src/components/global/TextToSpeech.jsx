@@ -52,8 +52,6 @@ const TextToSpeech = (props) => {
     } else {
       SSU.voice = voices[0];
     }
-
-    // SSU.voice = voices[primaryVoiceIndex || secondaryVoiceIndex || 0];
     SSU.text = words;
     SSU.volume = volume.apply;
     SSU.rate = rate;
