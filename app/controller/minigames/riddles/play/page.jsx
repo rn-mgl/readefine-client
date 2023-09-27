@@ -155,7 +155,7 @@ const PlayRiddles = () => {
         />
       )}
 
-      <audio autoPlay loop ref={audioRef}>
+      <audio loop ref={audioRef}>
         <source src={happy} type="audio/mp3" />
       </audio>
     </div>

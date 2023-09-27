@@ -16,7 +16,7 @@ export const useAudioControls = () => {
     if (typeof audioRef.current?.volume !== "undefined") {
       setIsMuted((prev) => {
         if (prev) {
-          audioRef.current.volume = 1;
+          audioRef.current.volume = 0.5;
         } else {
           audioRef.current.volume = 0;
         }

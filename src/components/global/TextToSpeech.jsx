@@ -22,25 +22,33 @@ const TextToSpeech = (props) => {
   const playVoice = (words) => {
     const voices = synth.getVoices();
 
-    console.log(voices);
+    const micelleVoiceIndex = voices.findIndex(
+      (voice) => voice.name === "Microsoft Michelle Online (Natural) - English (United States)"
+    );
 
     if (synth.speaking) {
       synth.cancel();
     }
 
     const primaryVoices = {
-      aria: voices[135],
-      ana: voices[136],
-      christopher: voices[137],
-      eric: voices[138],
-      guy: voices[139],
-      jenny: voices[140],
-      michelle: voices[141],
-      roger: voices[142],
-      steffan: voices[143],
+      def: voices[2],
+      aria: voices[110],
+      ana: voices[111],
+      christopher: voices[112],
+      eric: voices[113],
+      guy: voices[114],
+      jenny: voices[115],
+      michelle: voices[116],
+      roger: voices[117],
+      steffan: voices[118],
     };
 
-    SSU.voice = primaryVoices.michelle;
+    if (voices[micelleVoiceIndex].name === "Microsoft Michelle Online (Natural) - English (United States)") {
+      SSU.voice = voices[micelleVoiceIndex];
+    } else {
+      SSU.voice = voices[2];
+    }
+
     SSU.text = words;
     SSU.volume = volume.apply;
     SSU.rate = rate;

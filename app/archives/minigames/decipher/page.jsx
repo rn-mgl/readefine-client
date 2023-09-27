@@ -193,7 +193,7 @@ const Decipher = () => {
         )}
       </div>
 
-      <audio autoPlay loop ref={audioRef}>
+      <audio loop ref={audioRef}>
         <source src={quirky} type="audio/mp3" />
       </audio>
     </div>
