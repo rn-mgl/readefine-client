@@ -10,7 +10,6 @@ const EditInputChoices = (props) => {
           className="hidden peer"
           checked={props.checked}
           name={answerIdentifier}
-          required={true}
           id={answerIdentifier + props.choiceValue}
           value={props.choiceValue}
           onChange={(e) => props.handleQuestions(props.questionId, e.target)}

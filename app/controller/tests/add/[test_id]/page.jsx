@@ -99,8 +99,9 @@ const AddTest = ({ params }) => {
       return;
     }
 
-    pages.forEach((page, i) => {
+    for (let i = 0; i < 10; i++) {
       const answerKey = `answer${i + 1}`;
+      const page = pages[i];
 
       if (!page[answerKey]) {
         setLoadingState(false);
@@ -113,7 +114,7 @@ const AddTest = ({ params }) => {
         setMessageStatus(true, `You do not have a question in number ${i + 1}.`, "error");
         return;
       }
-    });
+    }
 
     try {
       const { data } = await axios.post(
