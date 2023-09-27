@@ -22,9 +22,11 @@ const TextToSpeech = (props) => {
   const playVoice = (words) => {
     const voices = synth.getVoices();
 
-    const micelleVoiceIndex = voices.findIndex(
-      (voice) => voice.name === "Microsoft Michelle Online (Natural) - English (United States)"
+    const primaryVoiceIndex = voices.findIndex(
+      (voice) => voice?.name === "Microsoft Michelle Online (Natural) - English (United States)"
     );
+
+    const secondaryVoiceIndex = voices.findIndex((voice) => voice?.name === "Microsoft Zira - English (United States)");
 
     if (synth.speaking) {
       synth.cancel();
@@ -43,10 +45,10 @@ const TextToSpeech = (props) => {
       steffan: voices[118],
     };
 
-    if (voices[micelleVoiceIndex].name === "Microsoft Michelle Online (Natural) - English (United States)") {
-      SSU.voice = voices[micelleVoiceIndex];
+    if (voices[primaryVoiceIndex]?.name === "Microsoft Michelle Online (Natural) - English (United States)") {
+      SSU.voice = voices[primaryVoiceIndex];
     } else {
-      SSU.voice = voices[2];
+      SSU.voice = voices[secondaryVoiceIndex || 0];
     }
 
     SSU.text = words;
