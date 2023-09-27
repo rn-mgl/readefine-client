@@ -45,7 +45,15 @@ const TextToSpeech = (props) => {
       steffan: voices[118],
     };
 
-    SSU.voice = voices[primaryVoiceIndex || secondaryVoiceIndex || 0];
+    if (voices[primaryVoiceIndex]?.name === "Microsoft Michelle Online (Natural) - English (United States)") {
+      SSU.voice = voices[primaryVoiceIndex];
+    } else if (voices[secondaryVoiceIndex]?.name === "Microsoft Zira - English (United States)") {
+      SSU.voice = voices[secondaryVoiceIndex];
+    } else {
+      SSU.voice = voices[0];
+    }
+
+    // SSU.voice = voices[primaryVoiceIndex || secondaryVoiceIndex || 0];
     SSU.text = words;
     SSU.volume = volume.apply;
     SSU.rate = rate;
