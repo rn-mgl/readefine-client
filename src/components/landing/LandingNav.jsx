@@ -30,12 +30,12 @@ const LandingNav = () => {
 
   return (
     <div
-      className={`fixed top-0 left-0 w-full p-5 z-50 backdrop-blur-md flex flex-row
-                 justify-center items-center gap-5 t:p-7 t:gap-10 l-s:gap-16 transition-all
+      className={`fixed top-0 left-0 w-full p-5 z-50 flex flex-row
+                 justify-center items-center gap-5 l-s:p-7 t:gap-10 l-s:gap-16 transition-all
                   ${
                     resetNav
                       ? "shadow-none bg-transparent text-white"
-                      : "bg-accntColor bg-opacity-80 shadow-md text-prmColor"
+                      : "bg-accntColor bg-opacity-80 shadow-md text-prmColor backdrop-blur-md"
                   }`}
     >
       <Link href="#hero" className="w-fit mr-auto" onClick={() => handleActiveLink("#hero")}>
@@ -46,7 +46,7 @@ const LandingNav = () => {
         href="#about"
         onClick={() => handleActiveLink("#about")}
         className={`w-fit text-xs l-s:text-sm transition-all flex flex-row gap-1 items-center justify-center
-                hover:text-scndColor hover:underline underline-offset-2
+                hover:text-cyan-600 hover:underline underline-offset-2
                 ${activeLink === "#about" ? "text-cyan-600 underline" : "text-inherit"}`}
       >
         <div>

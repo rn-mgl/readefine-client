@@ -9,10 +9,7 @@ const DashboardCards = (props) => {
                   t:w-80
                   l-l:w-[22rem]"
     >
-      <Link
-        href={props.to}
-        className="w-fit overflow-hidden rounded-2xl bg-prmColor bg-opacity-10 p-1"
-      >
+      <Link href={props.to} className="w-fit overflow-hidden rounded-2xl bg-prmColor bg-opacity-10 p-1">
         <Image
           src={props.image}
           priority
@@ -27,9 +24,7 @@ const DashboardCards = (props) => {
                   l-l:items-start"
         >
           <p className="font-bold text-black text-sm mr-auto">{props.label}</p>
-          <p className="opacity-50 text-xs capitalize whitespace-pre-wrap mr-auto">
-            {props.subLabel}
-          </p>
+          <p className="opacity-50 text-xs capitalize whitespace-pre-wrap mr-auto">{props.subLabel}</p>
         </div>
 
         <div className="w-full cstm-flex-row font-poppins">
