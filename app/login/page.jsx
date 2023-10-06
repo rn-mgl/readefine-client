@@ -232,7 +232,7 @@ const Login = () => {
       <Image
         src={intersectST}
         alt="intersect"
-        className="hidden w-full -bottom-10 rotate-180 left-0 fixed t:block l-s:hidden"
+        className="hidden w-full -bottom-40 rotate-180 left-0 fixed t:block l-s:hidden"
         priority
       />
 

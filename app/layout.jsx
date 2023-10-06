@@ -31,7 +31,7 @@ export default function RootLayout({ children, session }) {
     <AppProvider>
       <html
         lang="en"
-        className={`${poppins.variable} ${mukta.variable} ${lato.variable} font-poppins transition-all cstm-scrollbar`}
+        className={`${poppins.variable} ${mukta.variable} ${lato.variable} font-poppins transition-all cstm-scrollbar scroll-smooth`}
       >
         <SessionProvider session={session}>
           <body>{children}</body>

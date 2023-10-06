@@ -1,8 +1,8 @@
 import Definition from "../src/components/landing/Definition";
 import Hero from "../src/components/landing/Hero";
+import LandingNav from "../src/components/landing/LandingNav";
 import Offers from "../src/components/landing/Offers";
 import Purpose from "../src/components/landing/Purpose";
-import LandingLogo from "../src/components/global/LandingLogo";
 
 export const metadata = {
   title: "Readefine",
@@ -12,10 +12,8 @@ export const metadata = {
 
 export default function Home() {
   return (
-    <main className="w-full h-full flex flex-col relative">
-      <div className="text-accntColor">
-        <LandingLogo />
-      </div>
+    <main className="w-full h-full flex flex-col">
+      <LandingNav />
       <Hero />
       <Definition />
       <Offers />

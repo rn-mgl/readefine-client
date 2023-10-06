@@ -4,9 +4,6 @@ const local = "http://localhost:3000";
 const prod = "https://readefine.vercel.app";
 
 const nextConfig = {
-  experimental: {
-    appDir: true,
-  },
   images: {
     domains: ["res.cloudinary.com"],
   },

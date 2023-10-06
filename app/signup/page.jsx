@@ -214,7 +214,7 @@ const Signup = () => {
       <Image
         src={intersectAT}
         alt="intersect"
-        className="hidden w-full -bottom-10 left-0 fixed t:block l-s:hidden"
+        className="hidden w-full -bottom-40 left-0 fixed t:block l-s:hidden"
         priority
       />
 

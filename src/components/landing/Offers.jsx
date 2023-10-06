@@ -14,6 +14,7 @@ const Offers = () => {
       className="min-h-screen w-full bg-prmColor p-5 font-poppins text-white text-center cstm-flex-col gap-5 justify-start overflow-x-hidden
                 t:p-10 t:gap-10
                 l-s:justify-center"
+      id="offers"
     >
       <p
         className=" font-extrabold text-2xl text-scndColor
@@ -35,8 +36,8 @@ const Offers = () => {
                       t:text-lg
                       l-s:text-xl"
           >
-            Readefine offers reading materials that fits your Lexile Level to ensure that you can
-            understand the stories you read while maintaining challenge for efficient growth.
+            Readefine offers reading materials that fits your Lexile Level to ensure that you can understand the stories
+            you read while maintaining challenge for efficient growth.
           </p>
         </div>
 
@@ -71,9 +72,8 @@ const Offers = () => {
                       t:text-lg
                       l-s:text-xl"
           >
-            Readefine provides multiple-choice tests in relation to each stories that you will read
-            to test out if you have understood the reading materials and to increase your Lexile
-            Level for increasing challenges.
+            Readefine provides multiple-choice tests in relation to each stories that you will read to test out if you
+            have understood the reading materials and to increase your Lexile Level for increasing challenges.
           </p>
         </div>
 

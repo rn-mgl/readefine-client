@@ -81,7 +81,7 @@ const Decipher = () => {
           setNewWordData(data.wordData);
           setNewCorrectWord(wordSplit);
           handleGameOverStatus(false, "");
-          setNewLives([1, 1, 1]);
+          setNewLives([1, 1, 1, 1, 1]);
         }
       } catch (error) {
         console.log(error);

@@ -181,7 +181,7 @@ const AdminLogin = () => {
       <Image
         src={intersectST}
         alt="intersect"
-        className="hidden w-full bottom-0 rotate-180 left-0 absolute t:block l-s:hidden"
+        className="hidden w-full -bottom-40 rotate-180 left-0 absolute t:block l-s:hidden"
         priority
       />
 

@@ -35,9 +35,9 @@ const Hero = () => {
   return (
     <section
       className="min-h-screen w-full bg-prmColor p-5 text-center cstm-flex-col font-poppins 
-              text-accntColor gap-4 pt-20 relative
+              text-accntColor gap-4 relative
                 m-m:px-5
-                t:px-10 t:pt-20
+                t:px-10
                 l-s:gap-4"
       id="hero"
     >

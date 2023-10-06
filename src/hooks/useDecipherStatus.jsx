@@ -123,7 +123,7 @@ export const useDecipherStatus = () => {
       const shiftDirection = Math.random() < 0.5 ? -1 : 1;
 
       // number of skips
-      const shiftAmount = Math.floor(Math.random() * 25) + 1;
+      const shiftAmount = Math.floor(Math.random() * 5) + 1;
 
       // new char and skips
       let newChar = char;
