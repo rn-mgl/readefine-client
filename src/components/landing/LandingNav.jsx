@@ -8,9 +8,7 @@ import { TbDiscountCheck } from "react-icons/tb";
 
 const LandingNav = () => {
   const [activeLink, setActiveLink] = React.useState("#");
-  const [showNav, setShowNav] = React.useState(true);
   const [resetNav, setResetNav] = React.useState(true);
-  const [prevScrollPos, setPrevScrollPos] = React.useState(0);
 
   const handleActiveLink = (link) => {
     setActiveLink(link);
@@ -19,10 +17,7 @@ const LandingNav = () => {
   React.useEffect(() => {
     const show = () => {
       const currScrollPos = window.scrollY;
-      const shouldShow = currScrollPos < prevScrollPos || currScrollPos < 50;
 
-      setPrevScrollPos(currScrollPos);
-      setShowNav(shouldShow);
       setResetNav(currScrollPos < 50);
     };
 
@@ -31,15 +26,17 @@ const LandingNav = () => {
     return () => {
       window.removeEventListener("scroll", show);
     };
-  }, [prevScrollPos]);
+  }, []);
 
   return (
     <div
-      className={`fixed top-0 left-0 w-full p-5 z-50 backdrop-blur-md flex 
-                flex-row justify-center items-center gap-5 t:gap-10 l-s:gap-16
-                text-prmColor transition-all bg-accntColor
-                ${showNav ? "translate-y-0" : "-translate-y-full"} 
-                  ${resetNav ? "shadow-none" : "shadow-md"}`}
+      className={`fixed top-0 left-0 w-full p-5 z-50 backdrop-blur-md flex flex-row
+                 justify-center items-center gap-5 t:p-7 t:gap-10 l-s:gap-16 transition-all
+                  ${
+                    resetNav
+                      ? "shadow-none bg-transparent text-white"
+                      : "bg-accntColor bg-opacity-80 shadow-md text-prmColor"
+                  }`}
     >
       <Link href="#hero" className="w-fit mr-auto" onClick={() => handleActiveLink("#hero")}>
         <Image src={logo} alt="logo" width={50} height={50} className="w-10 drop-shadow-md shadow-white" />
@@ -56,7 +53,7 @@ const LandingNav = () => {
           <AiOutlineQuestionCircle />
         </div>
 
-        <p>About</p>
+        <p>Lexile</p>
       </Link>
 
       <Link
