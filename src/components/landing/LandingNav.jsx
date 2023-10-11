@@ -30,57 +30,63 @@ const LandingNav = () => {
 
   return (
     <div
-      className={`fixed top-0 left-0 w-full p-5 z-50 flex flex-row
-                 justify-center items-center gap-5 l-s:p-7 t:gap-10 l-s:gap-16 transition-all
+      className={`fixed top-0 left-0 z-50 w-full transition-all
                   ${
                     resetNav
                       ? "shadow-none bg-transparent text-white"
                       : "bg-accntColor bg-opacity-80 shadow-md text-prmColor backdrop-blur-md"
                   }`}
     >
-      <Link href="#hero" className="w-fit mr-auto" onClick={() => handleActiveLink("#hero")}>
-        <Image src={logo} alt="logo" width={50} height={50} className="w-10 drop-shadow-md shadow-white" />
-      </Link>
+      <div className="bg-accntColor w-full p-2 text-prmColor text-sm text-center">
+        <span className="font-bold">notice:</span> 30 minutes maintenance update on October 15, 2023 at 6:00 AM
+        Philippine Time
+      </div>
 
-      <Link
-        href="#about"
-        onClick={() => handleActiveLink("#about")}
-        className={`w-fit text-xs l-s:text-sm transition-all flex flex-row gap-1 items-center justify-center
+      <div className="w-full flex flex-row justify-center items-center p-5 gap-5 l-s:p-7 t:gap-10 l-s:gap-16 transition-all">
+        <Link href="#hero" className="w-fit mr-auto" onClick={() => handleActiveLink("#hero")}>
+          <Image src={logo} alt="logo" width={50} height={50} className="w-10 drop-shadow-md shadow-white" />
+        </Link>
+
+        <Link
+          href="#about"
+          onClick={() => handleActiveLink("#about")}
+          className={`w-fit text-xs l-s:text-sm transition-all flex flex-row gap-1 items-center justify-center
                 hover:text-cyan-600 hover:underline underline-offset-2
                 ${activeLink === "#about" ? "text-cyan-600 underline" : "text-inherit"}`}
-      >
-        <div>
-          <AiOutlineQuestionCircle />
-        </div>
+        >
+          <div>
+            <AiOutlineQuestionCircle />
+          </div>
 
-        <p>Lexile</p>
-      </Link>
+          <p>Lexile</p>
+        </Link>
 
-      <Link
-        href="#offers"
-        onClick={() => handleActiveLink("#offers")}
-        className={`w-fit text-xs l-s:text-sm transition-all flex flex-row gap-1 items-center justify-center
+        <Link
+          href="#offers"
+          onClick={() => handleActiveLink("#offers")}
+          className={`w-fit text-xs l-s:text-sm transition-all flex flex-row gap-1 items-center justify-center
                 hover:text-cyan-600 hover:underline underline-offset-2
                 ${activeLink === "#offers" ? "text-cyan-600 underline" : "text-inherit"}`}
-      >
-        <div>
-          <TbDiscountCheck />
-        </div>
-        Offers
-      </Link>
+        >
+          <div>
+            <TbDiscountCheck />
+          </div>
+          Offers
+        </Link>
 
-      <Link
-        href="#join"
-        onClick={() => handleActiveLink("#join")}
-        className={`w-fit text-xs l-s:text-sm transition-all flex flex-row gap-1 items-center justify-center
+        <Link
+          href="#join"
+          onClick={() => handleActiveLink("#join")}
+          className={`w-fit text-xs l-s:text-sm transition-all flex flex-row gap-1 items-center justify-center
         hover:text-cyan-600 hover:underline underline-offset-2
         ${activeLink === "#join" ? "text-cyan-600 underline" : "text-inherit"}`}
-      >
-        <div>
-          <AiOutlineTrophy />
-        </div>
-        Join
-      </Link>
+        >
+          <div>
+            <AiOutlineTrophy />
+          </div>
+          Join
+        </Link>
+      </div>
     </div>
   );
 };
