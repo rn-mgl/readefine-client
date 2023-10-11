@@ -37,10 +37,10 @@ const LandingNav = () => {
                       : "bg-accntColor bg-opacity-80 shadow-md text-prmColor backdrop-blur-md"
                   }`}
     >
-      <div className="bg-accntColor w-full p-2 text-prmColor text-sm text-center">
+      {/* <div className="bg-accntColor w-full p-2 text-prmColor text-sm text-center">
         <span className="font-bold">notice:</span> 30 minutes maintenance update on October 15, 2023 at 6:00 AM
         Philippine Time
-      </div>
+      </div> */}
 
       <div className="w-full flex flex-row justify-center items-center p-5 gap-5 l-s:p-7 t:gap-10 l-s:gap-16 transition-all">
         <Link href="#hero" className="w-fit mr-auto" onClick={() => handleActiveLink("#hero")}>
