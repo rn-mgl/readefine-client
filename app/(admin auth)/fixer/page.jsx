@@ -1,17 +1,16 @@
 "use client";
-import React from "react";
-import InputComp from "@/components/input/InputComp";
-import ButtonComp from "@/components/input/ButtonComp";
-import axios from "axios";
 import Message from "@/components/global/Message";
+import InputComp from "@/components/input/InputComp";
+import axios from "axios";
+import React from "react";
 
-import { AiOutlineMail } from "react-icons/ai";
-import { CiUser } from "react-icons/ci";
 import { useGlobalContext } from "@/base/context";
-import { useRouter } from "next/navigation";
 import Loading from "@/components/global/Loading";
 import { useLoading } from "@/hooks/useLoading";
 import { useMessage } from "@/hooks/useMessage";
+import { useRouter } from "next/navigation";
+import { AiOutlineMail } from "react-icons/ai";
+import { CiUser } from "react-icons/ci";
 
 const AdminForgotPassword = () => {
   const [keys, setKeys] = React.useState({ candidateEmail: "", candidateUsername: "" });
@@ -104,14 +103,14 @@ const AdminForgotPassword = () => {
         />
 
         {/* submit form */}
-        <ButtonComp
+        <button
           type="submit"
-          fontColor="text-prmColor"
-          bgColor="bg-accntColor"
-          label="Send Reset Email"
-          css="w-full"
           disabled={hasSubmitted}
-        />
+          className="text-center rounded-md  text-sm font-bold transition-all
+                text-prmColor bg-accntColor w-full disabled:saturate-50 p-2 px-4"
+        >
+          Send Reset Email
+        </button>
       </form>
     </div>
   );

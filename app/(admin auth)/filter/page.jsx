@@ -5,12 +5,11 @@ import React from "react";
 
 import Loading from "@/components/global/Loading";
 import Message from "@/components/global/Message";
-import Link from "next/link";
+import InputComp from "@/components/input/InputComp";
 import intersectSL from "@/public/landing/definition/IntersectSL.svg";
 import intersectSM from "@/public/landing/definition/IntersectSM.svg";
 import intersectST from "@/public/landing/definition/IntersectST.svg";
-import ButtonComp from "@/components/input/ButtonComp";
-import InputComp from "@/components/input/InputComp";
+import Link from "next/link";
 
 import { useGlobalContext } from "@/base/context";
 import { useLoading } from "@/hooks/useLoading";
@@ -27,6 +26,7 @@ const AdminLogin = () => {
   });
   const [visiblePassword, setVisiblePassword] = React.useState(false);
   const [firstLogin, setFirstLogin] = React.useState(false);
+  const [hasSubmitted, setHasSubmitted] = React.useState(false);
 
   const { loading, setLoadingState } = useLoading(false);
   const { message, setMessageStatus } = useMessage();
@@ -58,6 +58,7 @@ const AdminLogin = () => {
     await signOut({ redirect: false });
     setLoadingState(true);
     setFirstLogin(true);
+    setHasSubmitted(true);
 
     try {
       // login on middleware
@@ -70,12 +71,14 @@ const AdminLogin = () => {
       if (!data?.ok) {
         setLoadingState(false);
         setFirstLogin(false);
+        setHasSubmitted(false);
         setMessageStatus(true, "Incorrect login credentials.", "error");
       }
     } catch (error) {
       console.log(error);
       setLoadingState(false);
       setFirstLogin(false);
+      setHasSubmitted(false);
       setMessageStatus(true, error?.response?.data?.msg, "error");
     }
   };
@@ -163,12 +166,20 @@ const AdminLogin = () => {
         />
 
         {/* link if password is forgotten */}
-        <Link className="text-xs text-white underline underline-offset-2" href="/fixer">
+        <Link className="text-xs text-white underline underline-offset-2 l-l:text-prmColor" href="/fixer">
           Forgot Password?
         </Link>
 
         {/* submit form */}
-        <ButtonComp type="submit" fontColor="text-accntColor" bgColor="bg-prmColor" label="Log In" css="w-full" />
+
+        <button
+          type="submit"
+          disabled={hasSubmitted}
+          className="text-center rounded-md  text-sm font-bold transition-all
+                text-accntColor bg-prmColor w-full disabled:saturate-50 p-2 px-4"
+        >
+          Log In
+        </button>
       </form>
 
       {/* render on phone */}

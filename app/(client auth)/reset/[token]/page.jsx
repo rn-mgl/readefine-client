@@ -1,23 +1,22 @@
 "use client";
-import React from "react";
 import axios from "axios";
+import React from "react";
 
+import intersectSL from "@/public/landing/definition/IntersectSL.svg";
 import intersectSM from "@/public/landing/definition/IntersectSM.svg";
 import intersectST from "@/public/landing/definition/IntersectST.svg";
-import intersectSL from "@/public/landing/definition/IntersectSL.svg";
 
-import Image from "next/image";
-import InputComp from "@/components/input/InputComp";
-import ButtonComp from "@/components/input/ButtonComp";
-import Message from "@/components/global/Message";
 import Loading from "@/components/global/Loading";
+import Message from "@/components/global/Message";
+import InputComp from "@/components/input/InputComp";
+import Image from "next/image";
 
 import { useGlobalContext } from "@/base/context";
-import { useRouter } from "next/navigation";
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { signOut } from "next-auth/react";
 import { useLoading } from "@/hooks/useLoading";
 import { useMessage } from "@/hooks/useMessage";
+import { signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 const PasswordReset = ({ params }) => {
   const [password, setPassword] = React.useState({ newPassword: "", retypedPassword: "" });
@@ -150,14 +149,14 @@ const PasswordReset = ({ params }) => {
         />
 
         {/* submit form */}
-        <ButtonComp
+        <button
           type="submit"
-          fontColor="text-accntColor"
-          bgColor="bg-prmColor"
-          label="Change Password"
-          css="w-full"
           disabled={hasSubmitted}
-        />
+          className="text-center rounded-md text-sm font-bold transition-all
+                text-accntColor bg-prmColor w-full disabled:saturate-50 p-2 px-4"
+        >
+          Change Password
+        </button>
       </form>
 
       {/* render on mobile */}

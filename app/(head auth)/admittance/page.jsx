@@ -1,24 +1,23 @@
 "use client";
-import React from "react";
-import Image from "next/image";
 import axios from "axios";
+import Image from "next/image";
+import React from "react";
 
-import intersectAM from "@/public/signup/IntersectAM.svg";
-import intersectAT from "@/public/signup/IntersectAT.svg";
-import intersectAL from "@/public/signup/IntersectAL.svg";
-import InputComp from "@/components/input/InputComp";
-import ButtonComp from "@/components/input/ButtonComp";
 import Loading from "@/components/global/Loading";
 import Message from "@/components/global/Message";
+import InputComp from "@/components/input/InputComp";
+import intersectAL from "@/public/signup/IntersectAL.svg";
+import intersectAM from "@/public/signup/IntersectAM.svg";
+import intersectAT from "@/public/signup/IntersectAT.svg";
 import Link from "next/link";
 
-import { useRouter } from "next/navigation";
-import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
-import { CiUser } from "react-icons/ci";
-import { signIn, signOut, useSession } from "next-auth/react";
 import { useGlobalContext } from "@/base/context";
 import { useLoading } from "@/hooks/useLoading";
 import { useMessage } from "@/hooks/useMessage";
+import { signIn, signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { CiUser } from "react-icons/ci";
 
 const HeadLogin = () => {
   const [loginData, setLoginData] = React.useState({
@@ -27,6 +26,7 @@ const HeadLogin = () => {
   });
   const [visiblePassword, setVisiblePassword] = React.useState(false);
   const [firstLogin, setFirstLogin] = React.useState(false);
+  const [hasSubmitted, setHasSubmitted] = React.useState(false);
 
   const { loading, setLoadingState } = useLoading(false);
   const { message, setMessageStatus } = useMessage();
@@ -58,6 +58,7 @@ const HeadLogin = () => {
     await signOut({ redirect: false });
     setLoadingState(true);
     setFirstLogin(true);
+    setHasSubmitted(true);
 
     try {
       // login on middleware
@@ -70,12 +71,14 @@ const HeadLogin = () => {
       if (!data?.ok) {
         setLoadingState(false);
         setFirstLogin(false);
+        setHasSubmitted(false);
         setMessageStatus(true, "Incorrect login credentials.", "error");
       }
     } catch (error) {
       console.log(error);
       setLoadingState(false);
       setFirstLogin(false);
+      setHasSubmitted(false);
       setMessageStatus(true, error?.response?.data?.msg, "error");
     }
   };
@@ -167,7 +170,15 @@ const HeadLogin = () => {
         </Link>
 
         {/* submit form */}
-        <ButtonComp type="submit" fontColor="text-accntColor" bgColor="bg-prmColor" label="Log In" css="w-full" />
+        <button
+          type="submit"
+          disabled={hasSubmitted}
+          className="text-center rounded-md  text-sm font-bold transition-all
+                text-accntColor bg-prmColor w-full disabled:saturate-50 p-2 px-4
+                  "
+        >
+          Log In
+        </button>
       </form>
 
       {/* render on phone */}
