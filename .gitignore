@@ -15,6 +15,9 @@
 # production
 /build
 /app/(head auth)/create
+context.js
+next.config.js
+/pages
 
 # misc
 .DS_Store
