@@ -5,10 +5,7 @@ import Link from "next/link";
 const RewardsCards = (props) => {
   return (
     <div className="bg-white p-5 rounded-2xl cstm-flex-col gap-4 shadow-md max-h-[25rem] w-72">
-      <Link
-        href={props.to}
-        className="w-full h-full cstm-flex-col overflow-clip bg-accntColor p-2 rounded-2xl"
-      >
+      <Link href={props.to} className="w-full h-full cstm-flex-col overflow-clip bg-accntColor p-2 rounded-2xl">
         <Image
           src={props.image}
           alt="temp"
@@ -20,17 +17,15 @@ const RewardsCards = (props) => {
       </Link>
 
       <div className="cstm-flex-row w-full">
-        <div className="cstm-flex-row gap-1 font-poppins w-full">
-          <p className="font-bold text-black mr-auto text-sm w-44 truncate text-left">
-            {props.title}
-          </p>
+        <div className="cstm-flex-row gap-1  w-full">
+          <p className="font-bold text-black mr-auto text-sm w-44 truncate text-left">{props.title}</p>
           <p className="opacity-50 text-sm capitalize w-4/12 text-right">{props.type}</p>
         </div>
       </div>
 
       <Link
         href={props.to}
-        className="w-full text-center font-poppins text-sm font-normal bg-prmColor text-accntColor rounded-full p-2 mt-auto"
+        className="w-full text-center  text-sm font-normal bg-prmColor text-accntColor rounded-full p-2 mt-auto"
       >
         See More
       </Link>

@@ -15,7 +15,7 @@ import InputComp from "@/components/input/InputComp";
 import { useGlobalContext } from "@/base/context";
 import { useLoading } from "@/hooks/useLoading";
 import { useMessage } from "@/hooks/useMessage";
-import { signIn, useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { CiUser } from "react-icons/ci";
@@ -55,6 +55,7 @@ const AdminLogin = () => {
   const loginAdmin = async (e) => {
     e.preventDefault();
 
+    await signOut({ redirect: false });
     setLoadingState(true);
     setFirstLogin(true);
 
@@ -119,7 +120,7 @@ const AdminLogin = () => {
   }
 
   return (
-    <div className="w-full h-screen bg-prmColor p-5 cstm-flex-col font-poppins overflow-hidden">
+    <div className="w-full h-screen bg-prmColor p-5 cstm-flex-col  overflow-hidden">
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       <p className=" font-extrabold text-2xl text-accntColor">Log In</p>
@@ -127,9 +128,10 @@ const AdminLogin = () => {
       <br />
 
       <form
-        className="w-full rounded-md bg-accntColor bg-opacity-20 backdrop-blur-md border-[1px] border-accntColor border-opacity-40 p-5 cstm-flex-col gap-5 relative z-10 shadow-lg
+        className="w-full rounded-md bg-accntColor bg-opacity-20 backdrop-blur-md border-[1px] 
+                border-accntColor border-opacity-40 p-5 cstm-flex-col gap-5 relative z-10 shadow-lg
                   t:w-96
-                  l-s:w-[26rem"
+                  l-s:w-[26rem]"
         onSubmit={(e) => loginAdmin(e)}
       >
         {/* username or email */}

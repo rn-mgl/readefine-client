@@ -94,7 +94,7 @@ const ConfirmEditGradeLevel = (props) => {
           </p>
 
           <input
-            className="p-2 text-prmColor bg-white font-poppins rounded-md text-sm border-neutral-200 border-2 w-full 
+            className="p-2 text-prmColor bg-white  rounded-md text-sm border-neutral-200 border-2 w-full 
             focus:outline-none"
             placeholder="Confirmation"
             name="title"
@@ -107,7 +107,7 @@ const ConfirmEditGradeLevel = (props) => {
           <button
             type="submit"
             disabled={hasSubmitted}
-            className="w-full text-center font-poppins text-sm bg-prmColor font-bold rounded-full p-2 
+            className="w-full text-center  text-sm bg-prmColor font-bold rounded-full p-2 
                     t:w-fit t:px-10 shadow-solid shadow-indigo-900 text-scndColor disabled:saturate-0"
           >
             Apply Changes

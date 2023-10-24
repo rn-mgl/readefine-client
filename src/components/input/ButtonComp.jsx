@@ -5,7 +5,7 @@ const ButtonComp = (props) => {
     <button
       type={props.type}
       disabled={props.disabled}
-      className={`text-center rounded-full font-poppins text-sm font-bold transition-all
+      className={`text-center rounded-full  text-sm font-bold transition-all
                 ${props.fontColor} ${props.bgColor} ${props.css} disabled:saturate-50 p-2 px-4`}
     >
       {props.label}

@@ -23,15 +23,13 @@ const TestsCards = (props) => {
           <p className="font-bold text-prmColor text-sm">{props.lexile}L</p>
         </div>
         <div className="cstm-flex-row w-full text-xs">
-          <p className="opacity-50 mr-auto w-36 truncate">
-            {props.author ? props.author : "author"}
-          </p>
+          <p className="opacity-50 mr-auto w-36 truncate">{props.author ? props.author : "author"}</p>
         </div>
       </div>
 
       <Link
         href={props.to}
-        className="w-full text-center font-poppins text-sm font-normal bg-prmColor text-accntColor rounded-full p-2"
+        className="w-full text-center  text-sm font-normal bg-prmColor text-accntColor rounded-full p-2"
       >
         Answer
       </Link>

@@ -13,10 +13,7 @@ const AchievementsCards = (props) => {
 
   return (
     <div className="bg-white p-5 rounded-2xl cstm-flex-col gap-4 min-h-[26rem] w-72 min-w-[18rem] transition-all justify-start shadow-md">
-      <Link
-        href={props.to}
-        className="w-full cstm-flex-col overflow-clip bg-accntColor h-full p-5 rounded-2xl"
-      >
+      <Link href={props.to} className="w-full cstm-flex-col overflow-clip bg-accntColor h-full p-5 rounded-2xl">
         <Image
           src={props.image}
           alt="temp"
@@ -27,16 +24,14 @@ const AchievementsCards = (props) => {
         />
       </Link>
       <div className="cstm-flex-col gap-1 w-full">
-        <div className="cstm-flex-row font-poppins mr-auto items-start w-full">
+        <div className="cstm-flex-row  mr-auto items-start w-full">
           <p className="font-bold text-black mr-auto w-44 truncate text-left">{props.title}</p>
           <p className="font-bold text-prmColor w-4/12 text-right">{props.goal}</p>
         </div>
-        <div className="cstm-flex-row w-full font-poppins">
+        <div className="cstm-flex-row w-full ">
           <p className="font-bold text-prmColor mr-auto text-sm">{props.type}</p>
           <button onClick={handleSetActive} className="shadow-none hover:shadow-none">
-            <BiChevronDown
-              className={`${isActive ? "rotate-180" : "rotate-0"} transition-all scale-150`}
-            />
+            <BiChevronDown className={`${isActive ? "rotate-180" : "rotate-0"} transition-all scale-150`} />
           </button>
         </div>
       </div>
@@ -49,7 +44,7 @@ const AchievementsCards = (props) => {
 
       <Link
         href={props.to}
-        className="w-full text-center font-poppins text-sm font-normal bg-prmColor text-accntColor rounded-full p-2 mt-auto"
+        className="w-full text-center  text-sm font-normal bg-prmColor text-accntColor rounded-full p-2 mt-auto"
       >
         Visit
       </Link>

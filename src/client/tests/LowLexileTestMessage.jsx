@@ -26,7 +26,7 @@ const LowLexileTestMessage = (props) => {
           <p className="text-sm italic text-center">{`“Growth begins when we begin to accept our own weakness.” – Jean Vanier`}</p>
           <Link
             href={props.testLink}
-            className="w-full text-center font-poppins text-sm font-normal bg-prmColor text-accntColor rounded-full p-2"
+            className="w-full text-center  text-sm font-normal bg-prmColor text-accntColor rounded-full p-2"
           >
             Proceed to Test
           </Link>

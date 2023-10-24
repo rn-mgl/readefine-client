@@ -9,10 +9,7 @@ const AdminMinigamesCards = (props) => {
                   t:w-80
                   l-l:w-[22rem]"
     >
-      <Link
-        href={props.to}
-        className="w-full overflow-hidden rounded-2xl bg-prmColor bg-opacity-10 p-1"
-      >
+      <Link href={props.to} className="w-full overflow-hidden rounded-2xl bg-prmColor bg-opacity-10 p-1">
         <Image
           src={props.image}
           priority
@@ -29,7 +26,7 @@ const AdminMinigamesCards = (props) => {
       </p>
       <Link
         href={props.to}
-        className="text-center font-poppins text-sm font-normal bg-prmColor text-accntColor rounded-full w-28 p-2 hover:shadow-md "
+        className="text-center  text-sm font-normal bg-prmColor text-accntColor rounded-full w-28 p-2 hover:shadow-md "
       >
         Visit
       </Link>

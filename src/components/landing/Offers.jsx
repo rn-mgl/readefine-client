@@ -11,7 +11,7 @@ import Image from "next/image";
 const Offers = () => {
   return (
     <section
-      className="min-h-screen w-full bg-prmColor p-5 font-poppins text-white text-center cstm-flex-col gap-5 justify-start overflow-x-hidden
+      className="min-h-screen w-full bg-prmColor p-5  text-white text-center cstm-flex-col gap-5 justify-start overflow-x-hidden
                 t:p-10 t:gap-10
                 l-s:justify-center"
       id="offers"

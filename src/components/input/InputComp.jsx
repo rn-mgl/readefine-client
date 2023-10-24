@@ -3,11 +3,9 @@ import React from "react";
 
 const InputComp = (props) => {
   return (
-    <div className="relative font-poppins text-prmColor w-full cstm-flex-col ">
+    <div className="relative  text-prmColor w-full cstm-flex-col ">
       {props.icon ? (
-        <div className="absolute right-0 text-lg transition-all bg-accntColor p-2 rounded-r-full">
-          {props.icon}
-        </div>
+        <div className="absolute right-0 text-lg transition-all bg-accntColor p-2 rounded-r-full">{props.icon}</div>
       ) : null}
       <input
         type={props.type}

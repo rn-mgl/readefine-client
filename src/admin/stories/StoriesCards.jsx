@@ -18,16 +18,14 @@ const StoriesCards = (props) => {
       </div>
 
       <div className="cstm-flex-col w-full mt-auto">
-        <div className="cstm-flex-row font-poppins mr-auto items-start w-full">
+        <div className="cstm-flex-row  mr-auto items-start w-full">
           <p className="font-bold text-black w-44 truncate text-left text-sm mr-auto">
             {props.title ? props.title : "Title"}
           </p>
           <p className="font-bold text-prmColor text-sm text-right">{props.lexile}L</p>
         </div>
-        <div className="cstm-flex-row font-poppins items-end w-full">
-          <p className="opacity-50 text-xs text-left mr-auto w-36 truncate">
-            {props.author ? props.author : "author"}
-          </p>
+        <div className="cstm-flex-row  items-end w-full">
+          <p className="opacity-50 text-xs text-left mr-auto w-36 truncate">{props.author ? props.author : "author"}</p>
           <p className="opacity-50 text-xs text-right">{props.genre ? props.genre : "Genre"}</p>
         </div>
       </div>
@@ -35,17 +33,15 @@ const StoriesCards = (props) => {
       <div className="cstm-flex-col w-full gap-2">
         <Link
           href={props.visit}
-          className="w-full text-center font-poppins text-sm font-normal bg-prmColor text-accntColor rounded-full p-2 "
+          className="w-full text-center  text-sm font-normal bg-prmColor text-accntColor rounded-full p-2 "
         >
           Read
         </Link>
         <Link
           href={props.test}
           className={`${
-            hasTest
-              ? "bg-scndColor text-prmColor"
-              : "border-2 border-scndColor bg-white text-prmColor"
-          } w-full text-center font-poppins text-sm font-normal  rounded-full p-2`}
+            hasTest ? "bg-scndColor text-prmColor" : "border-2 border-scndColor bg-white text-prmColor"
+          } w-full text-center  text-sm font-normal  rounded-full p-2`}
         >
           {hasTest ? "Test" : "Create Test"}
         </Link>

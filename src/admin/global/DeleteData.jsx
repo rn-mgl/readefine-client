@@ -91,7 +91,7 @@ const DeleteData = (props) => {
           </p>
 
           <input
-            className="p-2 text-prmColor bg-white font-poppins rounded-md border-neutral-200 border-2 w-full
+            className="p-2 text-prmColor bg-white  rounded-md border-neutral-200 border-2 w-full
             focus:outline-none"
             placeholder="Confirmation"
             name="title"
@@ -104,7 +104,7 @@ const DeleteData = (props) => {
           <button
             type="submit"
             disabled={hasSubmitted}
-            className="w-full text-center font-poppins text-sm font-normal bg-prmColor text-accntColor rounded-full p-2 disabled:saturate-0"
+            className="w-full text-center  text-sm font-normal bg-prmColor text-accntColor rounded-full p-2 disabled:saturate-0"
           >
             Confirm Deletion
           </button>

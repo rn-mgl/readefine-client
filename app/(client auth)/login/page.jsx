@@ -1,26 +1,25 @@
 "use client";
-import React from "react";
+import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
-import axios from "axios";
+import React from "react";
 
+import ReceiveAchievement from "@/client/achievements/ReceiveAchievement";
 import Loading from "@/components/global/Loading";
 import Message from "@/components/global/Message";
-import ReceiveAchievement from "@/client/achievements/ReceiveAchievement";
+import InputComp from "@/components/input/InputComp";
+import intersectSL from "@/public/landing/definition/IntersectSL.svg";
 import intersectSM from "@/public/landing/definition/IntersectSM.svg";
 import intersectST from "@/public/landing/definition/IntersectST.svg";
-import intersectSL from "@/public/landing/definition/IntersectSL.svg";
-import InputComp from "@/components/input/InputComp";
-import ButtonComp from "@/components/input/ButtonComp";
 
 import { useGlobalContext } from "@/base/context";
-import { useRouter } from "next/navigation";
-import { signIn, useSession } from "next-auth/react";
-import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
-import { CiUser } from "react-icons/ci";
-import { useReceiveAchievement } from "@/hooks/useReceiveAchievement";
 import { useLoading } from "@/hooks/useLoading";
 import { useMessage } from "@/hooks/useMessage";
+import { useReceiveAchievement } from "@/hooks/useReceiveAchievement";
+import { signIn, signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { CiUser } from "react-icons/ci";
 
 const Login = () => {
   const [visiblePassword, setVisiblePassword] = React.useState(false);
@@ -29,6 +28,7 @@ const Login = () => {
     candidatePassword: "",
   });
   const [firstLogin, setFirstLogin] = React.useState(false);
+  const [hasSubmitted, setHasSubmitted] = React.useState(false);
 
   const { accomplishedAchievement, achievementUrl, claimNewAchievement, resetAchievement, setNewAchievementUrl } =
     useReceiveAchievement();
@@ -61,8 +61,11 @@ const Login = () => {
   const loginUser = async (e) => {
     e.preventDefault();
 
+    await signOut({ redirect: false });
+
     setLoadingState(true);
     setFirstLogin(true);
+    setHasSubmitted(true);
 
     try {
       // log in for middleware
@@ -75,12 +78,14 @@ const Login = () => {
       if (!data?.ok) {
         setLoadingState(false);
         setFirstLogin(false);
+        setHasSubmitted(false);
         setMessageStatus(true, "Login credentials do not match.", "error");
       }
     } catch (error) {
       console.log(error);
       setLoadingState(false);
       setFirstLogin(false);
+      setHasSubmitted(false);
       setMessageStatus(true, error?.response?.data?.msg, "error");
     }
   };
@@ -160,7 +165,7 @@ const Login = () => {
   }
 
   return (
-    <div className="w-full h-screen bg-accntColor p-5 cstm-flex-col font-poppins overflow-hidden">
+    <div className="w-full h-screen bg-accntColor p-5 cstm-flex-col  overflow-hidden">
       {/* if achievement is received */}
       {accomplishedAchievement.accomplished ? (
         <ReceiveAchievement
@@ -178,7 +183,8 @@ const Login = () => {
       <br />
 
       <form
-        className="w-full rounded-md bg-prmColor bg-opacity-20 backdrop-blur-md border-[1px] border-prmColor border-opacity-40 p-5 cstm-flex-col gap-5 relative z-10 shadow-lg
+        className="w-full rounded-md bg-prmColor bg-opacity-20 backdrop-blur-md border-[1px] 
+                border-prmColor border-opacity-40 p-5 cstm-flex-col gap-5 relative z-10 shadow-lg
                   t:w-96
                   l-s:w-[26rem]"
         onSubmit={(e) => loginUser(e)}
@@ -191,6 +197,7 @@ const Login = () => {
           spellCheck={false}
           icon={<CiUser />}
           onChange={(e) => handleLoginData(e.target)}
+          required={true}
           value={loginData.candidateIdentifier}
         />
 
@@ -208,16 +215,24 @@ const Login = () => {
             )
           }
           onChange={(e) => handleLoginData(e.target)}
+          required={true}
           value={loginData.candidatePassword}
         />
 
         {/* link if password is forgotten */}
-        <Link className="text-xs text-white underline underline-offset-2" href="/forgot">
+        <Link className="text-xs text-prmColor underline underline-offset-2" href="/forgot">
           Forgot Password?
         </Link>
 
         {/* submit form */}
-        <ButtonComp type="submit" fontColor="text-accntColor" bgColor="bg-prmColor" label="Log In" css="w-full" />
+        <button
+          type="submit"
+          disabled={hasSubmitted}
+          className="text-center rounded-md  text-sm font-bold transition-all
+                text-accntColor bg-prmColor w-full disabled:saturate-50 p-2 px-4"
+        >
+          Log In
+        </button>
       </form>
 
       {/* render on phone */}

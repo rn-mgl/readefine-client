@@ -231,7 +231,7 @@ const EditReward = ({ params }) => {
 
           <button
             type="submit"
-            className="w-fit text-center font-poppins text-sm font-normal bg-prmColor text-accntColor rounded-full p-2 px-4 t:px-10"
+            className="w-fit text-center  text-sm font-normal bg-prmColor text-accntColor rounded-full p-2 px-4 t:px-10"
           >
             Edit Reward
           </button>

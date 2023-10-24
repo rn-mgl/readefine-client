@@ -38,7 +38,7 @@ const AddAchievementFilter = (props) => {
         onChange={props.handleAchievement}
       />
 
-      <div className="p-2 bg-white font-poppins rounded-md shadow-md whitespace-nowrap cstm-flex-row">
+      <div className="p-2 bg-white  rounded-md shadow-md whitespace-nowrap cstm-flex-row">
         <button
           type="button"
           onClick={props.handleCanSelectReward}
@@ -50,7 +50,7 @@ const AddAchievementFilter = (props) => {
         </button>
 
         {hasReward ? (
-          <p className="p-1 px-2  bg-white font-poppins rounded-r-md border-neutral-200 border-2 border-l-0 text-sm">
+          <p className="p-1 px-2  bg-white  rounded-r-md border-neutral-200 border-2 border-l-0 text-sm">
             {props.achievement.reward.name}
           </p>
         ) : null}

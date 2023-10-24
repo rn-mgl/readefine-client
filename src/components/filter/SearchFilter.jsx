@@ -13,7 +13,7 @@ const SearchFilter = (props) => {
   const firstOption = mappedOptions[0]?.props?.children;
 
   return (
-    <div className="p-2 bg-white font-poppins rounded-md shadow-md whitespace-nowrap cstm-flex-row relative">
+    <div className="p-2 bg-white  rounded-md shadow-md whitespace-nowrap cstm-flex-row relative">
       {mappedOptions.length < 2 ? (
         <div className="bg-neutral-50 p-1 px-2 rounded-l-md outline-none border-neutral-200 border-2 text-sm">
           <p>{firstOption}</p>
@@ -40,7 +40,7 @@ const SearchFilter = (props) => {
         value={props.searchFilter.searchKey}
         name="searchKey"
         placeholder={`Search...`}
-        className="p-1 px-2  bg-white font-poppins rounded-r-md border-neutral-200 border-2 border-l-0 text-sm placeholder:capitalize
+        className="p-1 px-2  bg-white  rounded-r-md border-neutral-200 border-2 border-l-0 text-sm placeholder:capitalize
               focus:outline-none "
       />
       <div className="absolute right-4 p-1 bg-white">

@@ -7,7 +7,6 @@ import { CiUser, CiMail } from "react-icons/ci";
 const AuthPos = (props) => {
   return (
     <>
-      {" "}
       {/* email */}
       <InputComp
         id="email"

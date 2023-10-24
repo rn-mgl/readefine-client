@@ -56,6 +56,29 @@ export const authOptions = {
         }
       },
     }),
+
+    CredentialsProvider({
+      id: "head-credentials",
+      name: "Head Credentials",
+
+      credentials: {
+        candidateIdentifier: { label: "Username", type: "text" },
+        candidatePassword: { label: "Password", type: "password" },
+      },
+
+      async authorize(credentials, req) {
+        const { data } = await axios.post(`${url}/auth_head/head_login`, {
+          loginData: credentials,
+        });
+
+        if (data) {
+          const user = { name: data.primary };
+          return user;
+        } else {
+          return null;
+        }
+      },
+    }),
   ],
 
   secret: process.env.NEXTAUTH_SECRET,

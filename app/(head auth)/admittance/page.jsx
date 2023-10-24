@@ -15,7 +15,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { CiUser } from "react-icons/ci";
-import { signIn, useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { useGlobalContext } from "@/base/context";
 import { useLoading } from "@/hooks/useLoading";
 import { useMessage } from "@/hooks/useMessage";
@@ -52,15 +52,16 @@ const HeadLogin = () => {
   };
 
   // login admin
-  const loginAdmin = async (e) => {
+  const loginHead = async (e) => {
     e.preventDefault();
 
+    await signOut({ redirect: false });
     setLoadingState(true);
     setFirstLogin(true);
 
     try {
       // login on middleware
-      const data = await signIn("admin-credentials", {
+      const data = await signIn("head-credentials", {
         candidateIdentifier: loginData.candidateIdentifier,
         candidatePassword: loginData.candidatePassword,
         redirect: false,
@@ -82,33 +83,33 @@ const HeadLogin = () => {
   const recordSession = React.useCallback(async () => {
     try {
       const { data } = await axios.post(
-        `${url}/admin_session`,
-        { type: "in", adminId: user?.adminId },
+        `${url}/head_session`,
+        { type: "in", headId: user?.headId },
         { headers: { Authorization: user?.token } }
       );
 
       if (data) {
-        router.push("/controller");
+        router.push("/head");
       }
     } catch (error) {
       console.log(error);
       setLoadingState(false);
       setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [router, url, user?.token, user?.adminId, setLoadingState, setMessageStatus]);
+  }, [router, url, user?.token, user?.headId, setLoadingState, setMessageStatus]);
 
   const notYetVerified = React.useCallback(() => {
     router.push("/sending?purpose=verify");
   }, [router]);
 
   React.useEffect(() => {
-    if (firstLogin && user && user.adminId && user.isVerified) {
+    if (firstLogin && user && user.headId && user.isVerified) {
       recordSession();
     }
   }, [recordSession, user, firstLogin]);
 
   React.useEffect(() => {
-    if (firstLogin && user && user.adminId && !user.isVerified) {
+    if (firstLogin && user && user.headId && !user.isVerified) {
       notYetVerified();
     }
   }, [notYetVerified, firstLogin, user]);
@@ -119,7 +120,7 @@ const HeadLogin = () => {
   }
 
   return (
-    <div className="w-full h-screen bg-scndColor p-5 cstm-flex-col font-poppins overflow-hidden">
+    <div className="w-full h-screen bg-scndColor p-5 cstm-flex-col  overflow-hidden">
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       <p className=" font-extrabold text-2xl text-prmColor">Log In</p>
@@ -130,7 +131,7 @@ const HeadLogin = () => {
         className="w-full rounded-md bg-prmColor bg-opacity-20 backdrop-blur-md border-[1px] border-prmColor border-opacity-40 p-5 cstm-flex-col gap-5 relative z-10 shadow-lg
                   t:w-96
                   l-s:w-[26rem"
-        onSubmit={(e) => loginAdmin(e)}
+        onSubmit={(e) => loginHead(e)}
       >
         {/* username or email */}
         <InputComp
@@ -161,7 +162,7 @@ const HeadLogin = () => {
         />
 
         {/* link if password is forgotten */}
-        <Link className="text-xs text-white underline underline-offset-2" href="/fixer">
+        <Link className="text-xs text-prmColor underline underline-offset-2" href="/fixer">
           Forgot Password?
         </Link>
 

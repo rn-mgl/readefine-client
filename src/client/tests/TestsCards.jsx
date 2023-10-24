@@ -11,14 +11,14 @@ const TestsCards = (props) => {
         props.handleShowLexileMessage();
         props.handleSelectedBook(props.testId);
       }}
-      className="w-full text-center font-poppins text-sm font-normal bg-prmColor text-accntColor rounded-full p-2"
+      className="w-full text-center  text-sm font-normal bg-prmColor text-accntColor rounded-full p-2"
     >
       Answer
     </button>
   ) : (
     <Link
       href={props.to}
-      className="w-full text-center font-poppins text-sm font-normal bg-prmColor text-accntColor rounded-full p-2"
+      className="w-full text-center  text-sm font-normal bg-prmColor text-accntColor rounded-full p-2"
     >
       Answer
     </Link>
@@ -65,7 +65,7 @@ const TestsCards = (props) => {
       {props.isTaken ? (
         <button
           onClick={() => props.handleSeeTestRecord(props.testId)}
-          className="w-full text-center font-poppins text-sm font-normal bg-prmColor text-accntColor rounded-full p-2"
+          className="w-full text-center  text-sm font-normal bg-prmColor text-accntColor rounded-full p-2"
         >
           See Record
         </button>

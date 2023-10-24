@@ -7,7 +7,7 @@ const LandingLogo = () => {
   return (
     <Link
       href="/"
-      className="select-none font-poppins font-extrabold absolute z-10 my-5 left-2/4 -translate-x-2/4 text-lg
+      className="select-none  font-extrabold absolute z-10 my-5 left-2/4 -translate-x-2/4 text-lg
                 flex flex-row gap-2 items-center justify-center
                 m-l:text-xl
                 t:text-2xl"

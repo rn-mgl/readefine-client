@@ -20,7 +20,7 @@ const ArchivesCards = (props) => {
         />
       </div>
 
-      <div className="w-full cstm-flex-col gap-1 font-poppins">
+      <div className="w-full cstm-flex-col gap-1 ">
         <p className="text-center font-bold text-prmColor group whitespace-nowrap">{props.label}</p>
         <Suspense fallback={<p>Loading...</p>}>
           <p className="text-xs font-medium opacity-50 group-hover:opacity-100 transition-all">

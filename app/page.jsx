@@ -12,7 +12,7 @@ export const metadata = {
 
 export default function Home() {
   return (
-    <main className="w-full h-full flex flex-col">
+    <main className="w-full h-full flex flex-col items-center justify-start">
       <LandingNav />
       <Hero />
       <Definition />

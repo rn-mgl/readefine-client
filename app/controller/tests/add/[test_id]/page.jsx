@@ -189,7 +189,7 @@ const AddTest = ({ params }) => {
 
           <button
             type="submit"
-            className="w-fit text-center font-poppins ml-auto text-sm font-normal bg-prmColor text-accntColor rounded-full p-2 px-4 t:px-10"
+            className="w-fit text-center  ml-auto text-sm font-normal bg-prmColor text-accntColor rounded-full p-2 px-4 t:px-10"
           >
             Create Test
           </button>

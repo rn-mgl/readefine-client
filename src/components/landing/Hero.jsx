@@ -1,12 +1,12 @@
 "use client";
 import { useGlobalContext } from "@/base/context";
+import { useLoading } from "@/hooks/useLoading";
 import book from "@/public/landing/hero/landing book.png";
 import axios from "axios";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import { BiLoader } from "react-icons/bi";
-import { useLoading } from "@/hooks/useLoading";
-import ButtonLink from "../link/ButtonLink";
 
 const Hero = () => {
   const [userCount, setUserCount] = React.useState(0);
@@ -34,7 +34,7 @@ const Hero = () => {
 
   return (
     <section
-      className="min-h-screen w-full bg-prmColor p-5 text-center cstm-flex-col font-poppins 
+      className="min-h-screen w-full bg-prmColor p-5 text-center cstm-flex-col  
               text-accntColor gap-4 relative
                 m-m:px-5
                 t:px-10
@@ -64,20 +64,21 @@ const Hero = () => {
         className="w-full cstm-flex-col gap-4
                   t:cstm-flex-row"
       >
-        <ButtonLink
-          to="login"
-          fontColor="text-prmColor"
-          bgColor="bg-accntColor"
-          label="Log In"
-          css="w-full rounded-md t:w-32"
-        />
-        <ButtonLink
-          to="signup"
-          fontColor="text-prmColor"
-          bgColor="bg-scndColor"
-          label="Sign Up"
-          css="w-full rounded-md t:w-32"
-        />
+        <Link
+          href="/signup"
+          className="text-center  text-sm font-extrabold text-prmColor 
+                    bg-scndColor w-full rounded-md p-2 px-4 t:w-fit t:px-10"
+        >
+          Sign Up
+        </Link>
+
+        <Link
+          href="/login"
+          className="text-center  text-sm font-extrabold text-prmColor 
+                    bg-accntColor w-full rounded-md p-2 px-4 t:w-fit t:px-10"
+        >
+          Log In
+        </Link>
       </div>
 
       <Image
@@ -86,7 +87,7 @@ const Hero = () => {
         priority
         draggable={false}
         className="animate-float drop-shadow-lg w-9/12
-                  t:w-96"
+                  t:w-72"
       />
 
       <p className="text-xs font-light opacity-50 absolute bottom-5 cstm-flex-row gap-1">

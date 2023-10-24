@@ -150,7 +150,7 @@ const Signup = () => {
   }
 
   return (
-    <div className="w-full h-screen bg-prmColor p-5 cstm-flex-col font-poppins ">
+    <div className="w-full h-screen bg-prmColor p-5 cstm-flex-col  ">
       {/* show message pop up */}
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 

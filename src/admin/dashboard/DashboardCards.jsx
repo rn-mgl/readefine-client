@@ -20,18 +20,18 @@ const DashboardCards = (props) => {
 
       <div className="cstm-flex-col w-full gap-2">
         <div
-          className="w-full cstm-flex-col font-poppins
+          className="w-full cstm-flex-col 
                   l-l:items-start"
         >
           <p className="font-bold text-black text-sm mr-auto">{props.label}</p>
           <p className="opacity-50 text-xs capitalize whitespace-pre-wrap mr-auto">{props.subLabel}</p>
         </div>
 
-        <div className="w-full cstm-flex-row font-poppins">
+        <div className="w-full cstm-flex-row ">
           <p className="font-bold text-prmColor text-sm mr-auto">Current count: {props.count}</p>
           <Link
             href={props.to}
-            className="text-center font-poppins text-sm font-normal bg-prmColor 
+            className="text-center  text-sm font-normal bg-prmColor 
                     text-accntColor rounded-full w-fit px-10 p-2 hover:shadow-md"
           >
             Visit

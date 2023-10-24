@@ -5,7 +5,7 @@ const LogoAdmin = () => {
   return (
     <Link
       href="/controller"
-      className="select-none font-poppins font-extrabold absolute z-10 my-5 left-2/4 -translate-x-2/4 text-lg whitespace-nowrap
+      className="select-none  font-extrabold absolute z-10 my-5 left-2/4 -translate-x-2/4 text-lg whitespace-nowrap
                 m-l:text-xl
                 t:text-2xl"
     >

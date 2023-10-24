@@ -98,7 +98,7 @@ const AdminNav = () => {
 
         <Link
           href="/controller"
-          className="select-none font-poppins font-extrabold text-lg whitespace-nowrap text-prmColor
+          className="select-none  font-extrabold text-lg whitespace-nowrap text-prmColor
                 m-l:text-xl"
         >
           Readefine <span className="font-extralight text-black"> | admin</span>
@@ -117,7 +117,7 @@ const AdminNav = () => {
         <AdminLink
           to="/controller/users"
           icon={<HiUser />}
-          label="Users"
+          label="Accounts"
           isActive={path.includes("/controller/users")}
           toggleOpenNav={toggleOpenNav}
         />

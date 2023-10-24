@@ -98,7 +98,7 @@ const ClientNav = () => {
 
         <Link
           href="/archives"
-          className="text-prmColor select-none font-poppins font-extrabold text-lg whitespace-nowrap
+          className="text-prmColor select-none  font-extrabold text-lg whitespace-nowrap
                 m-l:text-xl"
         >
           Readefine
@@ -158,7 +158,7 @@ const ClientNav = () => {
           <Link
             href={`/archives/reader/${cipher(user?.userId)}`}
             onClick={toggleOpenNav}
-            className="font-poppins text-left hover:bg-neutral-100 p-2 rounded-md 
+            className=" text-left hover:bg-neutral-100 p-2 rounded-md 
                 justify-start transition-all cstm-flex-row gap-2 w-full"
           >
             <div

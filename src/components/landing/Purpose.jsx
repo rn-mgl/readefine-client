@@ -1,12 +1,8 @@
-import React from "react";
-import ButtonLink from "../link/ButtonLink";
+import Link from "next/link";
 
 const Purpose = () => {
   return (
-    <section
-      className="min-h-screen bg-accntColor w-full font-poppins text-center cstm-flex-col text-prmColor p-5 gap-5"
-      id="join"
-    >
+    <section className="min-h-screen bg-accntColor w-full  text-center cstm-flex-col text-prmColor p-5 gap-5" id="join">
       <p
         className=" font-extrabold text-2xl
                     m-l:text-3xl
@@ -29,7 +25,13 @@ const Purpose = () => {
         students develop critical reading skills and become lifelong learners.
       </p>
 
-      <ButtonLink to="/signup" label="Start Now" fontColor="text-scndColor" bgColor="bg-prmColor" css="rounded-md" />
+      <Link
+        href="/signup"
+        className="text-center  text-sm font-extrabold text-scndColor 
+                    bg-prmColor w-full rounded-md p-2 px-4 t:w-fit t:px-10"
+      >
+        Start Now
+      </Link>
     </section>
   );
 };

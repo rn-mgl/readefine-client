@@ -14,7 +14,7 @@ const FindRewardCards = (props) => {
       />
 
       <div
-        className="cstm-flex-row font-poppins w-full 
+        className="cstm-flex-row  w-full 
                     t:cstm-flex-col t:text-center"
       >
         <p className="font-bold text-black text-center w-44 truncate">{props.title}</p>
@@ -26,7 +26,7 @@ const FindRewardCards = (props) => {
           props.selectReward();
           props.handleCanSelectReward();
         }}
-        className="w-full text-center font-poppins text-sm font-normal bg-prmColor text-accntColor rounded-full p-2 mt-auto"
+        className="w-full text-center  text-sm font-normal bg-prmColor text-accntColor rounded-full p-2 mt-auto"
       >
         Select
       </button>

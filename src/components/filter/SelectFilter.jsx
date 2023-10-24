@@ -11,7 +11,7 @@ const SelectFilter = (props) => {
   });
 
   return (
-    <div className="p-2 bg-white font-poppins rounded-md shadow-md whitespace-nowrap cstm-flex-row relative">
+    <div className="p-2 bg-white  rounded-md shadow-md whitespace-nowrap cstm-flex-row relative">
       <div
         className="bg-neutral-50 p-1 px-2 rounded-l-md outline-none border-neutral-200 border-2 border-r-[1px] 
                     text-sm cstm-flex-row gap-1"
