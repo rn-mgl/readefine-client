@@ -2,7 +2,7 @@ import React from "react";
 import avatar from "@/public/profile/Avatar.svg";
 import Image from "next/image";
 
-import { localizeDate } from "../../functions/localDate";
+import { localizeDate } from "@/functions/localDate";
 import { BsDot } from "react-icons/bs";
 import { AiFillEdit } from "react-icons/ai";
 

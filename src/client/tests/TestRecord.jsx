@@ -6,8 +6,8 @@ import { useGlobalContext } from "@/base/context";
 import { useSession } from "next-auth/react";
 import { IoClose } from "react-icons/io5";
 import { BsCheck } from "react-icons/bs";
-import Message from "../../components/global/Message";
-import { useMessage } from "../../hooks/useMessage";
+import Message from "@/components/global/Message";
+import { useMessage } from "@/hooks/useMessage";
 
 const TestRecord = (props) => {
   const [testData, setTestData] = React.useState([]);

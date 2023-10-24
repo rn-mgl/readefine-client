@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
-import ActionLabel from "../../components/global/ActionLabel";
-import Volume from "../../components/global/Volume";
+import ActionLabel from "@/components/global/ActionLabel";
+import Volume from "@/components/global/Volume";
 
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { BsArrowLeft, BsFilter } from "react-icons/bs";

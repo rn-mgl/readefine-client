@@ -1,5 +1,5 @@
 import React from "react";
-import { inputDate } from "../functions/localDate";
+import { inputDate } from "@/functions/localDate";
 
 export const useRewardFilters = () => {
   const [sortFilter, setSortFilter] = React.useState({ toSort: "reward_name", sortMode: "ASC" });

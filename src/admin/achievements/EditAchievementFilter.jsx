@@ -1,12 +1,10 @@
 import React from "react";
-import InputFilter from "../../components/filter/InputFilter";
-import SelectFilter from "../../components/filter/SelectFilter";
+import InputFilter from "@/components/filter/InputFilter";
+import SelectFilter from "@/components/filter/SelectFilter";
 
 const EditAchievementFilter = (props) => {
   const hasReward = props.achievement.reward_name || props.achievement?.reward?.id;
-  const rewardName = props.achievement.reward_name
-    ? props.achievement.reward_name
-    : props.achievement.reward?.name;
+  const rewardName = props.achievement.reward_name ? props.achievement.reward_name : props.achievement.reward?.name;
 
   return (
     <div className="cstm-flex-row gap-2  justify-start relative w-full overflow-x-auto py-2 cstm-scrollbar-2 min-h-[5rem]">

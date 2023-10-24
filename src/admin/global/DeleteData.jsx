@@ -6,10 +6,10 @@ import { IoClose } from "react-icons/io5";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useGlobalContext } from "@/base/context";
-import Message from "../../components/global/Message";
-import Loading from "../../components/global/Loading";
-import { useLoading } from "../../hooks/useLoading";
-import { useMessage } from "../../hooks/useMessage";
+import Message from "@/components/global/Message";
+import Loading from "@/components/global/Loading";
+import { useLoading } from "@/hooks/useLoading";
+import { useMessage } from "@/hooks/useMessage";
 
 const DeleteData = (props) => {
   const [confirmation, setConfirmation] = React.useState("");

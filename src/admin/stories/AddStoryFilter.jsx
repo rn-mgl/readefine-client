@@ -1,7 +1,7 @@
 import React from "react";
 
 import { BiImage, BiMusic } from "react-icons/bi";
-import InputFilter from "../../components/filter/InputFilter";
+import InputFilter from "@/components/filter/InputFilter";
 
 const AddStoryFilter = (props) => {
   return (

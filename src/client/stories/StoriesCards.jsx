@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import { BsFillBookmarkCheckFill } from "react-icons/bs";
-import ActionLabel from "../../components/global/ActionLabel";
+import ActionLabel from "@/components/global/ActionLabel";
 import Link from "next/link";
 
 const StoriesCards = (props) => {
@@ -53,9 +53,7 @@ const StoriesCards = (props) => {
           <p className="font-bold text-prmColor text-sm text-right">{props.lexile}L</p>
         </div>
         <div className="cstm-flex-row font-poppins items-end w-full">
-          <p className="opacity-50 text-xs text-left mr-auto w-36 truncate">
-            {props.author ? props.author : "author"}
-          </p>
+          <p className="opacity-50 text-xs text-left mr-auto w-36 truncate">{props.author ? props.author : "author"}</p>
           <p className="opacity-50 text-xs text-right">{props.genre ? props.genre : "Genre"}</p>
         </div>
       </div>

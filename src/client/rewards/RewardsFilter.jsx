@@ -1,8 +1,8 @@
 import React from "react";
 
-import SortFilter from "../../components/filter/SortFilter";
-import SelectFilter from "../../components/filter/SelectFilter";
-import SearchFilter from "../../components/filter/SearchFilter";
+import SortFilter from "@/components/filter/SortFilter";
+import SelectFilter from "@/components/filter/SelectFilter";
+import SearchFilter from "@/components/filter/SearchFilter";
 
 const RewardsFilter = (props) => {
   return (

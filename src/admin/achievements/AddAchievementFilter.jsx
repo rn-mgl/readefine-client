@@ -1,6 +1,6 @@
 import React from "react";
-import InputFilter from "../../components/filter/InputFilter";
-import SelectFilter from "../../components/filter/SelectFilter";
+import InputFilter from "@/components/filter/InputFilter";
+import SelectFilter from "@/components/filter/SelectFilter";
 
 const AddAchievementFilter = (props) => {
   const hasReward = props.achievement?.reward?.id;

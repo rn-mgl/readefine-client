@@ -1,8 +1,8 @@
 import React from "react";
 import { BiImage } from "react-icons/bi";
-import FilePreview from "../../components/global/FilePreview";
+import FilePreview from "@/components/global/FilePreview";
 import * as fileFns from "@/functions/fileFns";
-import { wordCount } from "../../functions/wordCount";
+import { wordCount } from "@/functions/wordCount";
 import { AiFillDelete } from "react-icons/ai";
 import { IoClose } from "react-icons/io5";
 import Image from "next/image";

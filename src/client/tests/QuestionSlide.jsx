@@ -1,6 +1,6 @@
 import React from "react";
-import { choicesStyle } from "../../functions/testFns";
-import TestChoices from "../../components/tests/TestChoices";
+import { choicesStyle } from "@/functions/testFns";
+import TestChoices from "@/components/tests/TestChoices";
 
 const QuestionSlide = (props) => {
   const active = props.index === props.activePage;

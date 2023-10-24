@@ -5,7 +5,7 @@ import axios from "axios";
 import Image from "next/image";
 import React from "react";
 import { BiLoader } from "react-icons/bi";
-import { useLoading } from "../../hooks/useLoading";
+import { useLoading } from "@/hooks/useLoading";
 import ButtonLink from "../link/ButtonLink";
 
 const Hero = () => {

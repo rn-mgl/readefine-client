@@ -2,7 +2,7 @@ import React from "react";
 import { AiFillDelete } from "react-icons/ai";
 import { BiCheck } from "react-icons/bi";
 import { IoClose } from "react-icons/io5";
-import { localizeDate } from "../../functions/localDate";
+import { localizeDate } from "@/functions/localDate";
 
 const EditRow = (props) => {
   return (

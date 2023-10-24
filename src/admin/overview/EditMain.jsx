@@ -2,10 +2,10 @@
 
 import axios from "axios";
 import React from "react";
-import EditInput from "../../components/profile/EditInput";
-import Message from "../../components/global/Message";
-import Loading from "../../components/global/Loading";
-import ActionLabel from "../../components/global/ActionLabel";
+import EditInput from "@/components/profile/EditInput";
+import Message from "@/components/global/Message";
+import Loading from "@/components/global/Loading";
+import ActionLabel from "@/components/global/ActionLabel";
 import avatar from "@/public/profile/Avatar.svg";
 import Image from "next/image";
 
@@ -14,10 +14,10 @@ import { useSession } from "next-auth/react";
 import { IoClose } from "react-icons/io5";
 import { BiImage } from "react-icons/bi";
 import { CiUser } from "react-icons/ci";
-import { useFileControls } from "../../hooks/useFileControls";
-import { avatars } from "../../functions/avatars";
-import { useLoading } from "../../hooks/useLoading";
-import { useMessage } from "../../hooks/useMessage";
+import { useFileControls } from "@/hooks/useFileControls";
+import { avatars } from "@/functions/avatars";
+import { useLoading } from "@/hooks/useLoading";
+import { useMessage } from "@/hooks/useMessage";
 
 const EditMain = (props) => {
   const [adminData, setAdminData] = React.useState({});

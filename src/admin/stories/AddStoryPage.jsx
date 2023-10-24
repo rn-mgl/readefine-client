@@ -1,8 +1,8 @@
 import React from "react";
-import { wordCount } from "../../functions/wordCount";
+import { wordCount } from "@/functions/wordCount";
 import { AiFillDelete } from "react-icons/ai";
 import { BiImage } from "react-icons/bi";
-import FilePreview from "../../components/global/FilePreview";
+import FilePreview from "@/components/global/FilePreview";
 import * as fileFns from "@/functions/fileFns";
 
 const AddStoryPage = (props) => {

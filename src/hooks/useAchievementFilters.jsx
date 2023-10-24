@@ -1,5 +1,5 @@
 import React from "react";
-import { inputDate } from "../functions/localDate";
+import { inputDate } from "@/functions/localDate";
 
 export const useAchievementFilters = () => {
   const [typeFilter, setTypeFilter] = React.useState("");

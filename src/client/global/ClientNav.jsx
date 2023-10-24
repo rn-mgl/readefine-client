@@ -3,7 +3,7 @@ import React from "react";
 import Link from "next/link";
 import ClientLink from "../nav/ClientLink";
 import axios from "axios";
-import Loading from "../../components/global/Loading";
+import Loading from "@/components/global/Loading";
 import avatar from "@/public/profile/Avatar White.svg";
 import Image from "next/image";
 
@@ -16,8 +16,8 @@ import { GiAchievement } from "react-icons/gi";
 import { usePathname } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 import { useGlobalContext } from "@/base/context";
-import { cipher } from "../../functions/security";
-import { useLoading } from "../../hooks/useLoading";
+import { cipher } from "@/functions/security";
+import { useLoading } from "@/hooks/useLoading";
 
 const ClientNav = () => {
   const [userData, setUserData] = React.useState({});

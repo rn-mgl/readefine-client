@@ -2,22 +2,22 @@
 
 import React from "react";
 import axios from "axios";
-import EditInput from "../../components/profile/EditInput";
-import ActionLabel from "../../components/global/ActionLabel";
+import EditInput from "@/components/profile/EditInput";
+import ActionLabel from "@/components/global/ActionLabel";
 import avatar from "@/public/profile/Avatar White.svg";
 import Image from "next/image";
-import Message from "../../components/global/Message";
-import Loading from "../../components/global/Loading";
+import Message from "@/components/global/Message";
+import Loading from "@/components/global/Loading";
 
 import { IoClose } from "react-icons/io5";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/base/context";
 import { BiImage } from "react-icons/bi";
 import { CiUser } from "react-icons/ci";
-import { avatars } from "../../functions/avatars";
-import { useFileControls } from "../../hooks/useFileControls";
-import { useLoading } from "../../hooks/useLoading";
-import { useMessage } from "../../hooks/useMessage";
+import { avatars } from "@/functions/avatars";
+import { useFileControls } from "@/hooks/useFileControls";
+import { useLoading } from "@/hooks/useLoading";
+import { useMessage } from "@/hooks/useMessage";
 
 const EditMain = (props) => {
   const [userData, setUserData] = React.useState({});

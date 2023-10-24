@@ -2,16 +2,16 @@
 
 import React from "react";
 import axios from "axios";
-import EditInput from "../../components/profile/EditInput";
-import Message from "../../components/global/Message";
-import Loading from "../../components/global/Loading";
+import EditInput from "@/components/profile/EditInput";
+import Message from "@/components/global/Message";
+import Loading from "@/components/global/Loading";
 
 import { IoClose } from "react-icons/io5";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/base/context";
-import { useLoading } from "../../hooks/useLoading";
+import { useLoading } from "@/hooks/useLoading";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { useMessage } from "../../hooks/useMessage";
+import { useMessage } from "@/hooks/useMessage";
 
 const ChangePassword = (props) => {
   const [hasSubmitted, setHasSubmitted] = React.useState(false);

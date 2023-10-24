@@ -2,14 +2,14 @@
 
 import axios from "axios";
 import React from "react";
-import Message from "../../components/global/Message";
-import Loading from "../../components/global/Loading";
+import Message from "@/components/global/Message";
+import Loading from "@/components/global/Loading";
 
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/base/context";
 import { IoClose } from "react-icons/io5";
-import { useLoading } from "../../hooks/useLoading";
-import { useMessage } from "../../hooks/useMessage";
+import { useLoading } from "@/hooks/useLoading";
+import { useMessage } from "@/hooks/useMessage";
 
 const ConfirmEditGradeLevel = (props) => {
   const [hasSubmitted, setHasSubmitted] = React.useState(false);

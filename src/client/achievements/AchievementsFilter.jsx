@@ -1,9 +1,9 @@
 import React from "react";
 
-import SearchFilter from "../../components/filter/SearchFilter";
-import SortFilter from "../../components/filter/SortFilter";
-import RangeFilter from "../../components/filter/RangeFilter";
-import SelectFilter from "../../components/filter/SelectFilter";
+import SearchFilter from "@/components/filter/SearchFilter";
+import SortFilter from "@/components/filter/SortFilter";
+import RangeFilter from "@/components/filter/RangeFilter";
+import SelectFilter from "@/components/filter/SelectFilter";
 
 const AchievementsFilter = (props) => {
   return (
@@ -11,10 +11,7 @@ const AchievementsFilter = (props) => {
       <SearchFilter
         searchFilter={props.searchFilter}
         handleSearchFilter={props.handleSearchFilter}
-        labelValue={[
-          { label: "Name", value: "achievement_name" },
-          { label: "Goal", value: "goal" },
-        ]}
+        labelValue={[{ label: "Name", value: "achievement_name" }]}
       />
 
       <SelectFilter

@@ -2,14 +2,14 @@
 import React from "react";
 import Confetti from "react-confetti";
 import Link from "next/link";
-import Volume from "../../components/global/Volume";
+import Volume from "@/components/global/Volume";
 
 import rewardMusic from "@/public/music/reward/Reward Music.mp3";
 import rewardNotice from "@/public/music/reward/Reward Notice.mp3";
 
 import { IoClose } from "react-icons/io5";
 import { BsArrowRight } from "react-icons/bs";
-import { useAudioControls } from "../../hooks/useAudioControls";
+import { useAudioControls } from "@/hooks/useAudioControls";
 import Image from "next/image";
 
 const ReceiveAchievement = (props) => {

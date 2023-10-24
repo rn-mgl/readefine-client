@@ -1,6 +1,6 @@
 import React from "react";
 import { AiFillEdit } from "react-icons/ai";
-import { localizeDate } from "../../functions/localDate";
+import { localizeDate } from "@/functions/localDate";
 
 const RiddleRow = (props) => {
   return (

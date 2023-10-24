@@ -1,5 +1,5 @@
 import React from "react";
-import SelectFilter from "../../components/filter/SelectFilter";
+import SelectFilter from "@/components/filter/SelectFilter";
 import Link from "next/link";
 import { BsArrowLeft } from "react-icons/bs";
 

@@ -1,8 +1,8 @@
-import Definition from "../src/components/landing/Definition";
-import Hero from "../src/components/landing/Hero";
-import LandingNav from "../src/components/landing/LandingNav";
-import Offers from "../src/components/landing/Offers";
-import Purpose from "../src/components/landing/Purpose";
+import Definition from "@/components/landing/Definition";
+import Hero from "@/components/landing/Hero";
+import LandingNav from "@/components/landing/LandingNav";
+import Offers from "@/components/landing/Offers";
+import Purpose from "@/components/landing/Purpose";
 
 export const metadata = {
   title: "Readefine",

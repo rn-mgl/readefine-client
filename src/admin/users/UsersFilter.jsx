@@ -1,7 +1,7 @@
 import React from "react";
-import SearchFilter from "../../components/filter/SearchFilter";
-import SortFilter from "../../components/filter/SortFilter";
-import RangeFilter from "../../components/filter/RangeFilter";
+import SearchFilter from "@/components/filter/SearchFilter";
+import SortFilter from "@/components/filter/SortFilter";
+import RangeFilter from "@/components/filter/RangeFilter";
 
 const UsersFilter = (props) => {
   return (

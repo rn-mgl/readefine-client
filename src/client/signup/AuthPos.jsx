@@ -1,6 +1,6 @@
 import React from "react";
-import InputComp from "../../components/input/InputComp";
-import ButtonComp from "../../components/input/ButtonComp";
+import InputComp from "@/components/input/InputComp";
+import ButtonComp from "@/components/input/ButtonComp";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { CiUser, CiMail } from "react-icons/ci";
 

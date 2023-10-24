@@ -2,7 +2,7 @@ import Image from "next/image";
 import React from "react";
 import Link from "next/link";
 import { IoCheckmarkDoneCircle } from "react-icons/io5";
-import ActionLabel from "../../components/global/ActionLabel";
+import ActionLabel from "@/components/global/ActionLabel";
 
 const TestsCards = (props) => {
   const buttonIfLower = props.isLower ? (
@@ -53,9 +53,7 @@ const TestsCards = (props) => {
         </div>
 
         <div className="cstm-flex-row w-full text-xs">
-          <p className="opacity-50 mr-auto w-36 truncate">
-            {props.author ? props.author : "author"}
-          </p>
+          <p className="opacity-50 mr-auto w-36 truncate">{props.author ? props.author : "author"}</p>
           {props.isTaken ? (
             <p className="text-prmColor">
               <span className="font-bold"> {props.score}</span> / 10

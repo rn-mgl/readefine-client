@@ -1,8 +1,8 @@
 import React from "react";
 
-import SearchFilter from "../../components/filter/SearchFilter";
-import SortFilter from "../../components/filter/SortFilter";
-import RangeFilter from "../../components/filter/RangeFilter";
+import SearchFilter from "@/components/filter/SearchFilter";
+import SortFilter from "@/components/filter/SortFilter";
+import RangeFilter from "@/components/filter/RangeFilter";
 
 const StoriesFilter = (props) => {
   return (
@@ -29,14 +29,14 @@ const StoriesFilter = (props) => {
         ]}
       />
 
-      <RangeFilter
+      {/* <RangeFilter
         fromLabel="Lexile From"
         handleRangeFilter={props.handleLexileRangeFilter}
         fromRange={props.lexileRangeFilter.from}
         type="number"
         toLabel="Lexile To"
         toRange={props.lexileRangeFilter.to}
-      />
+      /> */}
     </div>
   );
 };

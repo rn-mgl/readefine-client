@@ -6,10 +6,10 @@ import FindRewardCards from "./FindRewardCards";
 import { IoClose } from "react-icons/io5";
 import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/base/context";
-import { typeConversion } from "../../functions/typeConversion";
-import { inputDate } from "../../functions/localDate";
-import Message from "../../components/global/Message";
-import { useMessage } from "../../hooks/useMessage";
+import { typeConversion } from "@/functions/typeConversion";
+import { inputDate } from "@/functions/localDate";
+import Message from "@/components/global/Message";
+import { useMessage } from "@/hooks/useMessage";
 
 const FindRewards = (props) => {
   const [rewards, setRewards] = React.useState([]);

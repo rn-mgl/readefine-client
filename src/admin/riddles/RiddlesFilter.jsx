@@ -1,8 +1,8 @@
 import React from "react";
 
-import SortFilter from "../../components/filter/SortFilter";
-import SearchFilter from "../../components/filter/SearchFilter";
-import RangeFilter from "../../components/filter/RangeFilter";
+import SortFilter from "@/components/filter/SortFilter";
+import SearchFilter from "@/components/filter/SearchFilter";
+import RangeFilter from "@/components/filter/RangeFilter";
 
 const RiddlesFilter = (props) => {
   return (

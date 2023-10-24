@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import { localizeDate } from "../../functions/localDate";
+import { localizeDate } from "@/functions/localDate";
 
 const UserRow = (props) => {
   return (

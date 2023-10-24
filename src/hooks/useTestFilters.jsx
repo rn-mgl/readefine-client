@@ -1,5 +1,5 @@
 import React from "react";
-import { inputDate } from "../functions/localDate";
+import { inputDate } from "@/functions/localDate";
 
 export const useTestFilters = () => {
   const [searchFilter, setSearchFilter] = React.useState({ toSearch: "title", searchKey: "" });

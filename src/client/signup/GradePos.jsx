@@ -1,6 +1,6 @@
 import React from "react";
 
-import SelectComp from "../../components/input/SelectComp";
+import SelectComp from "@/components/input/SelectComp";
 
 const GradePos = (props) => {
   return (
