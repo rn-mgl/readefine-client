@@ -6,14 +6,16 @@ import { AiFillStar } from "react-icons/ai";
 
 const AdministratorCards = (props) => {
   return (
-    <div className="w-full p-5 rounded-md bg-white cstm-flex-col gap-5 truncate">
+    <div className="w-full p-5 rounded-lg bg-white cstm-flex-col gap-5 truncate">
       <div className="cstm-flex-row w-full items-center justify-center">
         <div className="relative mr-auto">
           <Image src={props.admin.image} alt="profile" width={50} height={50} className="rounded-full " />
-          <div className="ml-auto cstm-flex-col group absolute right-0 bottom-0">
-            <ActionLabel label="Verified" />
-            <AiFillStar className="text-scndColor scale-125 " />
-          </div>
+          {props.admin.is_verified ? (
+            <div className="ml-auto cstm-flex-col group absolute right-0 bottom-0">
+              <ActionLabel label="Verified" />
+              <AiFillStar className="text-scndColor scale-125 " />
+            </div>
+          ) : null}
         </div>
         <div className="cstm-flex-col items-end">
           <p className="font-light italic text-xs">Date Joined</p>

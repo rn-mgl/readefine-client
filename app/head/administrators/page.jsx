@@ -2,9 +2,11 @@
 
 import { useGlobalContext } from "@/base/context";
 import Message from "@/src/components/global/Message";
+import AddAdministrator from "@/src/head/administrators/AddAdministrator";
 import AdministratorCards from "@/src/head/administrators/AdministratorCards";
 import HeadPageHeader from "@/src/head/global/PageHeader";
 import { useMessage } from "@/src/hooks/useMessage";
+
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import React from "react";
@@ -12,12 +14,17 @@ import { AiOutlinePlus } from "react-icons/ai";
 
 const Administrators = () => {
   const [administrators, setAdministrators] = React.useState([]);
+  const [canAddAdministrators, setCanAddAdministrators] = React.useState(false);
 
   const { message, setMessageStatus } = useMessage();
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
   const user = session?.user?.name;
+
+  const handleCanAddAdministrators = () => {
+    setCanAddAdministrators((prev) => !prev);
+  };
 
   const getAllAdministrators = React.useCallback(async () => {
     try {
@@ -42,15 +49,23 @@ const Administrators = () => {
     return <AdministratorCards key={index} admin={admin} />;
   });
 
+  console.log(canAddAdministrators);
+
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <HeadPageHeader subHeader="Readefine" mainHeader="Administrators" />
 
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
+      {canAddAdministrators ? <AddAdministrator handleCanAddAdministrators={handleCanAddAdministrators} /> : null}
+
       <div className="w-full h-full cstm-flex-col gap-5 justify-start cstm-w-limit">
         <div className="w-full cstm-flex-row">
-          <button className="bg-prmColor p-2 text-sm text-white rounded-md cstm-flex-row gap-1 mr-auto">
+          <button
+            onClick={handleCanAddAdministrators}
+            className="bg-prmColor p-2 text-sm text-white 
+                      rounded-md cstm-flex-row gap-1 mr-auto"
+          >
             <div>
               <AiOutlinePlus />
             </div>
