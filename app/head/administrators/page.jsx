@@ -49,15 +49,18 @@ const Administrators = () => {
     return <AdministratorCards key={index} admin={admin} />;
   });
 
-  console.log(canAddAdministrators);
-
   return (
     <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
       <HeadPageHeader subHeader="Readefine" mainHeader="Administrators" />
 
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
-      {canAddAdministrators ? <AddAdministrator handleCanAddAdministrators={handleCanAddAdministrators} /> : null}
+      {canAddAdministrators ? (
+        <AddAdministrator
+          handleCanAddAdministrators={handleCanAddAdministrators}
+          getAllAdministrators={getAllAdministrators}
+        />
+      ) : null}
 
       <div className="w-full h-full cstm-flex-col gap-5 justify-start cstm-w-limit">
         <div className="w-full cstm-flex-row">

@@ -22,6 +22,7 @@ import { useRouter } from "next/navigation";
 import { BsDot } from "react-icons/bs";
 import { useGlobalContext } from "@/base/context";
 import { IoClose } from "react-icons/io5";
+import { useSession } from "next-auth/react";
 
 const AddAdministrator = (props) => {
   const [userData, setUserData] = React.useState({
@@ -40,8 +41,8 @@ const AddAdministrator = (props) => {
   const { message, setMessageStatus } = useMessage();
 
   const { url } = useGlobalContext();
-
-  const router = useRouter();
+  const { data: session } = useSession();
+  const user = session?.user?.name;
 
   // handle onchange functions in input
   const handleUserData = ({ name, value }) => {
@@ -116,12 +117,17 @@ const AddAdministrator = (props) => {
     userData.image = userAvatar;
 
     try {
-      const { data } = await axios.post(`${url}/auth_admin/admin_signup`, {
-        userData,
-      });
+      const { data } = await axios.post(
+        `${url}/head_admin`,
+        {
+          userData,
+        },
+        { headers: { Authorization: user?.token } }
+      );
 
       // send to the sending page iif successfully registered
       if (data) {
+        props.getAllAdministrators();
         props.handleCanAddAdministrators();
       }
     } catch (error) {
