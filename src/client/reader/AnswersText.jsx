@@ -1,5 +1,5 @@
 import React from "react";
-import avatar from "../../../public/profile/Avatar White.svg";
+import avatar from "@/public/profile/Avatar White.svg";
 import Image from "next/image";
 import { FaChevronRight } from "react-icons/fa";
 
@@ -13,9 +13,7 @@ const AnswersText = (props) => {
           className="w-10 h-10 min-w-[2.5rem] min-h-[2.5rem] bg-center 
                     bg-cover rounded-full bg-gradient-to-br from-prmColor to-scndColor"
         >
-          {!props.userImage ? (
-            <Image src={avatar} alt="avatar" className="saturate-150" width={100} />
-          ) : null}
+          {!props.userImage ? <Image src={avatar} alt="avatar" className="saturate-150" width={100} /> : null}
         </div>
 
         <div>

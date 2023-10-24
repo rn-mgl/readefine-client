@@ -1,24 +1,24 @@
 "use client";
 import React from "react";
-import AdminPageHeader from "@/src/src/admin/global/PageHeader";
-import FilePreview from "@/src/src/components/global/FilePreview";
+import AdminPageHeader from "@/admin/global/PageHeader";
+import FilePreview from "@/components/global/FilePreview";
 import axios from "axios";
-import EditRewardFilter from "@/src/src/admin/rewards/EditRewardFilter";
-import Message from "@/src/src/components/global/Message";
-import Loading from "@/src/src/components/global/Loading";
+import EditRewardFilter from "@/admin/rewards/EditRewardFilter";
+import Message from "@/components/global/Message";
+import Loading from "@/components/global/Loading";
 import Image from "next/image";
 
 import { BiImage } from "react-icons/bi";
-import { wordCount } from "@/src/src/functions/wordCount";
+import { wordCount } from "@/functions/wordCount";
 import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/src/context";
+import { useGlobalContext } from "@/base/context";
 import { useRouter } from "next/navigation";
 import { IoClose } from "react-icons/io5";
-import { decipher } from "@/src/src/functions/security";
-import { isTokenExpired } from "@/src/src/functions/jwtFns";
-import { useFileControls } from "@/src/src/hooks/useFileControls";
-import { useLoading } from "@/src/src/hooks/useLoading";
-import { useMessage } from "@/src/src/hooks/useMessage";
+import { decipher } from "@/functions/security";
+import { isTokenExpired } from "@/functions/jwtFns";
+import { useFileControls } from "@/hooks/useFileControls";
+import { useLoading } from "@/hooks/useLoading";
+import { useMessage } from "@/hooks/useMessage";
 
 const EditReward = ({ params }) => {
   const [reward, setReward] = React.useState({});

@@ -1,20 +1,20 @@
 "use client";
 import React from "react";
-import AdminPageHeader from "@/src/src/admin/global/PageHeader";
+import AdminPageHeader from "@/admin/global/PageHeader";
 import axios from "axios";
 import Link from "next/link";
-import Message from "@/src/src/components/global/Message";
-import DeleteData from "@/src/src/admin/global/DeleteData";
+import Message from "@/components/global/Message";
+import DeleteData from "@/admin/global/DeleteData";
 
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { BsArrowLeft } from "react-icons/bs";
 import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/src/context";
-import { decipher } from "@/src/src/functions/security";
+import { useGlobalContext } from "@/base/context";
+import { decipher } from "@/functions/security";
 import { useRouter } from "next/navigation";
-import { isTokenExpired } from "@/src/src/functions/jwtFns";
+import { isTokenExpired } from "@/functions/jwtFns";
 import Image from "next/image";
-import { useMessage } from "@/src/src/hooks/useMessage";
+import { useMessage } from "@/hooks/useMessage";
 
 const SingleReward = ({ params }) => {
   const [reward, setReward] = React.useState({});

@@ -5,7 +5,7 @@ import { IoClose } from "react-icons/io5";
 import EditInput from "../../components/profile/EditInput";
 import { CiLock } from "react-icons/ci";
 import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/src/context";
+import { useGlobalContext } from "@/base/context";
 import axios from "axios";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import Message from "../../components/global/Message";

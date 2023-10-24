@@ -1,5 +1,5 @@
 import React from "react";
-import avatar from "../../../public/profile/Avatar White.svg";
+import avatar from "@/public/profile/Avatar White.svg";
 import Image from "next/image";
 
 import { BsDot } from "react-icons/bs";

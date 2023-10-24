@@ -1,22 +1,22 @@
 "use client";
 import React from "react";
-import AddStoryFilter from "@/src/src/admin/stories/AddStoryFilter";
-import AdminPageHeader from "@/src/src/admin/global/PageHeader";
-import AddStoryPage from "@/src/src/admin/stories/AddStoryPage";
+import AddStoryFilter from "@/admin/stories/AddStoryFilter";
+import AdminPageHeader from "@/admin/global/PageHeader";
+import AddStoryPage from "@/admin/stories/AddStoryPage";
 import axios from "axios";
-import FilePreview from "@/src/src/components/global/FilePreview";
-import Message from "@/src/src/components/global/Message";
-import Loading from "@/src/src/components/global/Loading";
+import FilePreview from "@/components/global/FilePreview";
+import Message from "@/components/global/Message";
+import Loading from "@/components/global/Loading";
 
 import { IoAddOutline } from "react-icons/io5";
 import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/src/context";
+import { useGlobalContext } from "@/base/context";
 import { useRouter } from "next/navigation";
-import { isTokenExpired } from "@/src/src/functions/jwtFns";
-import AudioPreview from "@/src/src/components/global/AudioPreview";
-import { useFileControls } from "@/src/src/hooks/useFileControls";
-import { useLoading } from "@/src/src/hooks/useLoading";
-import { useMessage } from "@/src/src/hooks/useMessage";
+import { isTokenExpired } from "@/functions/jwtFns";
+import AudioPreview from "@/components/global/AudioPreview";
+import { useFileControls } from "@/hooks/useFileControls";
+import { useLoading } from "@/hooks/useLoading";
+import { useMessage } from "@/hooks/useMessage";
 
 const AddStory = () => {
   const [pages, setPages] = React.useState([

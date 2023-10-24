@@ -4,7 +4,7 @@ import Link from "next/link";
 import AdminLink from "../nav/AdminLink";
 import Loading from "../../components/global/Loading";
 import axios from "axios";
-import avatar from "../../../public/profile/Avatar.svg";
+import avatar from "@/public/profile/Avatar.svg";
 import Image from "next/image";
 
 import { BiMenu, BiTask, BiLogOut } from "react-icons/bi";
@@ -15,7 +15,7 @@ import { HiUser } from "react-icons/hi2";
 import { GiAchievement } from "react-icons/gi";
 import { usePathname } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
-import { useGlobalContext } from "@/src/context";
+import { useGlobalContext } from "@/base/context";
 import { cipher } from "../../functions/security";
 import { useLoading } from "../../hooks/useLoading";
 

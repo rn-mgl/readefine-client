@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import logo from "../../../public/landing/hero/landing book.png";
+import logo from "@/public/landing/hero/landing book.png";
 import Image from "next/image";
 
 const LandingLogoAdmin = () => {

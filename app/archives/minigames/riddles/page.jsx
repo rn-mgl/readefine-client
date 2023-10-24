@@ -1,23 +1,23 @@
 "use client";
 
 import React from "react";
-import InitRiddle from "@/src/src/components/minigames/riddles/InitRiddle";
+import InitRiddle from "@/components/minigames/riddles/InitRiddle";
 import axios from "axios";
-import RiddleGame from "@/src/src/components/minigames/riddles/RiddleGame";
-import Gameover from "@/src/src/components/minigames/Gameover";
-import Message from "@/src/src/components/global/Message";
-import RiddleTutorial from "@/src/src/components/minigames/riddles/RiddleTutorial";
-import Volume from "@/src/src/components/global/Volume";
-import happy from "../../../../public/music/minigames/Happy.mp3";
+import RiddleGame from "@/components/minigames/riddles/RiddleGame";
+import Gameover from "@/components/minigames/Gameover";
+import Message from "@/components/global/Message";
+import RiddleTutorial from "@/components/minigames/riddles/RiddleTutorial";
+import Volume from "@/components/global/Volume";
+import happy from "@/public/music/minigames/Happy.mp3";
 
-import { useGlobalContext } from "@/src/context";
+import { useGlobalContext } from "@/base/context";
 import { useSession } from "next-auth/react";
 import { AiFillHeart } from "react-icons/ai";
 import { useRouter } from "next/navigation";
-import { isTokenExpired } from "@/src/src/functions/jwtFns";
-import { useAudioControls } from "@/src/src/hooks/useAudioControls";
-import { useRiddleStatus } from "@/src/src/hooks/useRiddleStatus";
-import { useMessage } from "@/src/src/hooks/useMessage";
+import { isTokenExpired } from "@/functions/jwtFns";
+import { useAudioControls } from "@/hooks/useAudioControls";
+import { useRiddleStatus } from "@/hooks/useRiddleStatus";
+import { useMessage } from "@/hooks/useMessage";
 
 const ClientRiddles = () => {
   const {

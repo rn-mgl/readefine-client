@@ -1,5 +1,5 @@
 import React from "react";
-import AdminNav from "../../src/admin/global/AdminNav";
+import AdminNav from "@/admin/global/AdminNav";
 
 export const metadata = {
   title: "Readefine | Admin",

@@ -1,24 +1,24 @@
 "use client";
 
 import axios from "axios";
-import StoriesFilter from "@/src/src/client/stories/StoriesFilter";
-import StoriesCards from "@/src/src/client/stories/StoriesCards";
-import ClientPageHeader from "@/src/src/client/global/PageHeader";
-import Message from "@/src/src/components/global/Message";
+import StoriesFilter from "@/client/stories/StoriesFilter";
+import StoriesCards from "@/client/stories/StoriesCards";
+import ClientPageHeader from "@/client/global/PageHeader";
+import Message from "@/components/global/Message";
 import React from "react";
-import LowLexileTestMessage from "@/src/src/client/tests/LowLexileTestMessage";
+import LowLexileTestMessage from "@/client/tests/LowLexileTestMessage";
 import Image from "next/image";
 
-import noReads from "../../../public/profile/NoReads.svg";
+import noReads from "@/public/profile/NoReads.svg";
 
-import { useGlobalContext } from "@/src/context";
+import { useGlobalContext } from "@/base/context";
 import { useSession } from "next-auth/react";
-import { cipher } from "@/src/src/functions/security";
+import { cipher } from "@/functions/security";
 import { useRouter } from "next/navigation";
-import { isTokenExpired } from "@/src/src/functions/jwtFns";
-import { useMessage } from "@/src/src/hooks/useMessage";
-import { useUserLexile } from "@/src/src/hooks/useUserLexile";
-import { useStoryFilters } from "@/src/src/hooks/useStoryFilters";
+import { isTokenExpired } from "@/functions/jwtFns";
+import { useMessage } from "@/hooks/useMessage";
+import { useUserLexile } from "@/hooks/useUserLexile";
+import { useStoryFilters } from "@/hooks/useStoryFilters";
 
 const ClientStories = () => {
   const [stories, setStories] = React.useState([]);

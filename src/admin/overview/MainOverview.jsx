@@ -1,5 +1,5 @@
 import React from "react";
-import avatar from "../../../public/profile/Avatar.svg";
+import avatar from "@/public/profile/Avatar.svg";
 import Image from "next/image";
 
 import { localizeDate } from "../../functions/localDate";

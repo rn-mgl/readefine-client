@@ -4,14 +4,14 @@ import React from "react";
 import axios from "axios";
 import EditInput from "../../components/profile/EditInput";
 import ActionLabel from "../../components/global/ActionLabel";
-import avatar from "../../../public/profile/Avatar White.svg";
+import avatar from "@/public/profile/Avatar White.svg";
 import Image from "next/image";
 import Message from "../../components/global/Message";
 import Loading from "../../components/global/Loading";
 
 import { IoClose } from "react-icons/io5";
 import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/src/context";
+import { useGlobalContext } from "@/base/context";
 import { BiImage } from "react-icons/bi";
 import { CiUser } from "react-icons/ci";
 import { avatars } from "../../functions/avatars";

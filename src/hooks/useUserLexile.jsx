@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { useGlobalContext } from "@/src/context";
+import { useGlobalContext } from "@/base/context";
 import { useSession } from "next-auth/react";
 
 export const useUserLexile = (setMessageStatus) => {

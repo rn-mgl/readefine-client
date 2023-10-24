@@ -1,21 +1,21 @@
 "use client";
 import React from "react";
-import ClientPageHeader from "@/src/src/client/global/PageHeader";
-import RewardsCards from "@/src/src/client/rewards/RewardsCards";
+import ClientPageHeader from "@/client/global/PageHeader";
+import RewardsCards from "@/client/rewards/RewardsCards";
 import axios from "axios";
-import RewardsFilter from "@/src/src/client/rewards/RewardsFilter";
-import Message from "@/src/src/components/global/Message";
+import RewardsFilter from "@/client/rewards/RewardsFilter";
+import Message from "@/components/global/Message";
 import Image from "next/image";
 
-import noReward from "../../../public/profile/NoReward.svg";
+import noReward from "@/public/profile/NoReward.svg";
 
 import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/src/context";
-import { cipher } from "@/src/src/functions/security";
+import { useGlobalContext } from "@/base/context";
+import { cipher } from "@/functions/security";
 import { useRouter } from "next/navigation";
-import { isTokenExpired } from "@/src/src/functions/jwtFns";
-import { useMessage } from "@/src/src/hooks/useMessage";
-import { useRewardFilters } from "@/src/src/hooks/useRewardFilters";
+import { isTokenExpired } from "@/functions/jwtFns";
+import { useMessage } from "@/hooks/useMessage";
+import { useRewardFilters } from "@/hooks/useRewardFilters";
 
 const ClientRewards = () => {
   const [rewards, setRewards] = React.useState([]);

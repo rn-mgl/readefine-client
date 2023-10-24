@@ -1,8 +1,8 @@
 import React from "react";
-import bookLadder from "../../../public/landing/definition/BookLadder.svg";
-import intersectSM from "../../../public/landing/definition/IntersectSM.svg";
-import intersectST from "../../../public/landing/definition/IntersectST.svg";
-import intersectSL from "../../../public/landing/definition/IntersectSL.svg";
+import bookLadder from "@/public/landing/definition/BookLadder.svg";
+import intersectSM from "@/public/landing/definition/IntersectSM.svg";
+import intersectST from "@/public/landing/definition/IntersectST.svg";
+import intersectSL from "@/public/landing/definition/IntersectSL.svg";
 import Image from "next/image";
 
 const Definition = () => {

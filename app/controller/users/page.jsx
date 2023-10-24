@@ -1,21 +1,21 @@
 "use client";
 import React from "react";
-import AdminPageHeader from "@/src/src/admin/global/PageHeader";
-import UsersFilter from "@/src/src/admin/users/UsersFilter";
+import AdminPageHeader from "@/admin/global/PageHeader";
+import UsersFilter from "@/admin/users/UsersFilter";
 import axios from "axios";
-import Message from "@/src/src/components/global/Message";
-import UserRow from "@/src/src/admin/users/UserRow";
+import Message from "@/components/global/Message";
+import UserRow from "@/admin/users/UserRow";
 
-import noUsers from "../../../public/profile/NoTest.svg";
+import noUsers from "@/public/profile/NoTest.svg";
 
-import { useGlobalContext } from "@/src/context";
-import { inputDate } from "@/src/src/functions/localDate";
+import { useGlobalContext } from "@/base/context";
+import { inputDate } from "@/functions/localDate";
 import { useSession } from "next-auth/react";
-import { cipher } from "@/src/src/functions/security";
+import { cipher } from "@/functions/security";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { isTokenExpired } from "@/src/src/functions/jwtFns";
-import { useMessage } from "@/src/src/hooks/useMessage";
+import { isTokenExpired } from "@/functions/jwtFns";
+import { useMessage } from "@/hooks/useMessage";
 
 const AdminUsers = () => {
   const [users, setUsers] = React.useState([]);

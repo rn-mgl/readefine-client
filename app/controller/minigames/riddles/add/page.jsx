@@ -1,17 +1,17 @@
 "use client";
 import React from "react";
-import AdminPageHeader from "@/src/src/admin/global/PageHeader";
-import Message from "@/src/src/components/global/Message";
+import AdminPageHeader from "@/admin/global/PageHeader";
+import Message from "@/components/global/Message";
 import axios from "axios";
 import Link from "next/link";
 
 import { BsArrowLeft } from "react-icons/bs";
 import { useSession } from "next-auth/react";
-import { wordCount } from "@/src/src/functions/wordCount";
-import { useGlobalContext } from "@/src/context";
+import { wordCount } from "@/functions/wordCount";
+import { useGlobalContext } from "@/base/context";
 import { useRouter } from "next/navigation";
-import { isTokenExpired } from "@/src/src/functions/jwtFns";
-import { useMessage } from "@/src/src/hooks/useMessage";
+import { isTokenExpired } from "@/functions/jwtFns";
+import { useMessage } from "@/hooks/useMessage";
 
 const AddRiddle = () => {
   const [riddleData, setRiddleData] = React.useState({ riddle: "", answer: "" });

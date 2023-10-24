@@ -1,24 +1,24 @@
 "use client";
 import React from "react";
-import AdminPageHeader from "../../../src/admin/global/PageHeader";
-import StoriesCards from "@/src/src/admin/stories/StoriesCards";
-import StoriesFilter from "@/src/src/admin/stories/StoriesFilter";
+import AdminPageHeader from "@/admin/global/PageHeader";
+import StoriesCards from "@/admin/stories/StoriesCards";
+import StoriesFilter from "@/admin/stories/StoriesFilter";
 import axios from "axios";
 import Link from "next/link";
-import Message from "@/src/src/components/global/Message";
+import Message from "@/components/global/Message";
 import Image from "next/image";
-import ActionLabel from "@/src/src/components/global/ActionLabel";
+import ActionLabel from "@/components/global/ActionLabel";
 
-import noReads from "../../../public/profile/NoReads.svg";
+import noReads from "@/public/profile/NoReads.svg";
 
 import { IoAddOutline } from "react-icons/io5";
 import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/src/context";
-import { cipher } from "@/src/src/functions/security";
+import { useGlobalContext } from "@/base/context";
+import { cipher } from "@/functions/security";
 import { useRouter } from "next/navigation";
-import { isTokenExpired } from "@/src/src/functions/jwtFns";
-import { useMessage } from "@/src/src/hooks/useMessage";
-import { useStoryFilters } from "@/src/src/hooks/useStoryFilters";
+import { isTokenExpired } from "@/functions/jwtFns";
+import { useMessage } from "@/hooks/useMessage";
+import { useStoryFilters } from "@/hooks/useStoryFilters";
 
 const AdminStories = () => {
   const [stories, setStories] = React.useState([]);

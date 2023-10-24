@@ -3,19 +3,19 @@ import React from "react";
 import Link from "next/link";
 import axios from "axios";
 
-import AdminPageHeader from "@/src/src/admin/global/PageHeader";
-import EditTestPage from "@/src/src/admin/tests/EditTestPage";
-import Message from "@/src/src/components/global/Message";
-import Loading from "@/src/src/components/global/Loading";
+import AdminPageHeader from "@/admin/global/PageHeader";
+import EditTestPage from "@/admin/tests/EditTestPage";
+import Message from "@/components/global/Message";
+import Loading from "@/components/global/Loading";
 
 import { BsArrowLeft } from "react-icons/bs";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/src/context";
-import { decipher } from "@/src/src/functions/security";
-import { isTokenExpired } from "@/src/src/functions/jwtFns";
-import { useLoading } from "@/src/src/hooks/useLoading";
-import { useMessage } from "@/src/src/hooks/useMessage";
+import { useGlobalContext } from "@/base/context";
+import { decipher } from "@/functions/security";
+import { isTokenExpired } from "@/functions/jwtFns";
+import { useLoading } from "@/hooks/useLoading";
+import { useMessage } from "@/hooks/useMessage";
 
 const EditTest = ({ params }) => {
   const [test, setTest] = React.useState({});

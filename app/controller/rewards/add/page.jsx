@@ -1,21 +1,21 @@
 "use client";
 import React from "react";
-import AdminPageHeader from "@/src/src/admin/global/PageHeader";
-import FilePreview from "@/src/src/components/global/FilePreview";
-import AddRewardFilter from "@/src/src/admin/rewards/AddRewardFilter";
-import Message from "@/src/src/components/global/Message";
+import AdminPageHeader from "@/admin/global/PageHeader";
+import FilePreview from "@/components/global/FilePreview";
+import AddRewardFilter from "@/admin/rewards/AddRewardFilter";
+import Message from "@/components/global/Message";
 import axios from "axios";
-import Loading from "@/src/src/components/global/Loading";
+import Loading from "@/components/global/Loading";
 
 import { BiImage } from "react-icons/bi";
 import { useSession } from "next-auth/react";
-import { wordCount } from "@/src/src/functions/wordCount";
-import { useGlobalContext } from "@/src/context";
+import { wordCount } from "@/functions/wordCount";
+import { useGlobalContext } from "@/base/context";
 import { useRouter } from "next/navigation";
-import { isTokenExpired } from "@/src/src/functions/jwtFns";
-import { useFileControls } from "@/src/src/hooks/useFileControls";
-import { useLoading } from "@/src/src/hooks/useLoading";
-import { useMessage } from "@/src/src/hooks/useMessage";
+import { isTokenExpired } from "@/functions/jwtFns";
+import { useFileControls } from "@/hooks/useFileControls";
+import { useLoading } from "@/hooks/useLoading";
+import { useMessage } from "@/hooks/useMessage";
 
 const AddReward = () => {
   const [reward, setReward] = React.useState({

@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/src/context";
+import { useGlobalContext } from "@/base/context";
 
 export const useFileControls = () => {
   const [imageFile, setImageFile] = React.useState({ src: "", name: "" });

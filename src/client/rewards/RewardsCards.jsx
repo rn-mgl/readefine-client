@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import Link from "next/link";
-import question from "../../../public/reward/Question.svg";
+import question from "@/public/reward/Question.svg";
 
 const RewardsCards = (props) => {
   const rewardImage = props.isReceived ? props.image : question;
@@ -41,9 +41,7 @@ const RewardsCards = (props) => {
 
       <div className="cstm-flex-row font-poppins w-full">
         <p className="font-bold text-black text-sm text-left w-44 truncate">{props.title}</p>
-        <p className="opacity-50 text-sm capitalize w-4/12 text-right justify-start">
-          {props.type}
-        </p>
+        <p className="opacity-50 text-sm capitalize w-4/12 text-right justify-start">{props.type}</p>
       </div>
 
       {props.isReceived ? (

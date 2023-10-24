@@ -1,5 +1,5 @@
 import React from "react";
-import ClientNav from "@/src/src/client/global/ClientNav";
+import ClientNav from "@/client/global/ClientNav";
 
 export const metadata = {
   title: "Readefine | Archives",

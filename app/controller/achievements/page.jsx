@@ -1,24 +1,24 @@
 "use client";
 import React from "react";
-import AdminPageHeader from "../../../src/admin/global/PageHeader";
-import AchievementsFilter from "@/src/src/admin/achievements/AchievementsFilter";
+import AdminPageHeader from "@/admin/global/PageHeader";
+import AchievementsFilter from "@/admin/achievements/AchievementsFilter";
 import axios from "axios";
 import Link from "next/link";
-import AchievementsCards from "@/src/src/admin/achievements/AchievementsCards";
-import Message from "@/src/src/components/global/Message";
+import AchievementsCards from "@/admin/achievements/AchievementsCards";
+import Message from "@/components/global/Message";
 import Image from "next/image";
 
-import noReward from "../../../public/profile/NoReward.svg";
+import noReward from "@/public/profile/NoReward.svg";
 
 import { IoAddOutline } from "react-icons/io5";
-import { typeConversion } from "@/src/src/functions/typeConversion";
+import { typeConversion } from "@/functions/typeConversion";
 import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/src/context";
-import { cipher } from "@/src/src/functions/security";
+import { useGlobalContext } from "@/base/context";
+import { cipher } from "@/functions/security";
 import { useRouter } from "next/navigation";
-import { isTokenExpired } from "@/src/src/functions/jwtFns";
-import { useMessage } from "@/src/src/hooks/useMessage";
-import { useAchievementFilters } from "@/src/src/hooks/useAchievementFilters";
+import { isTokenExpired } from "@/functions/jwtFns";
+import { useMessage } from "@/hooks/useMessage";
+import { useAchievementFilters } from "@/hooks/useAchievementFilters";
 
 const AdminAchievements = () => {
   const [achievements, setAchievements] = React.useState([]);

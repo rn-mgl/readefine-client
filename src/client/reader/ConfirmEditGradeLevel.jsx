@@ -6,7 +6,7 @@ import Message from "../../components/global/Message";
 import Loading from "../../components/global/Loading";
 
 import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/src/context";
+import { useGlobalContext } from "@/base/context";
 import { IoClose } from "react-icons/io5";
 import { useLoading } from "../../hooks/useLoading";
 import { useMessage } from "../../hooks/useMessage";

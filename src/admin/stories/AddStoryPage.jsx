@@ -3,7 +3,7 @@ import { wordCount } from "../../functions/wordCount";
 import { AiFillDelete } from "react-icons/ai";
 import { BiImage } from "react-icons/bi";
 import FilePreview from "../../components/global/FilePreview";
-import * as fileFns from "../../../src/functions/fileFns";
+import * as fileFns from "@/functions/fileFns";
 
 const AddStoryPage = (props) => {
   const words = wordCount(props.page?.pageContent);

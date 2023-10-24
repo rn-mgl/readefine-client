@@ -1,20 +1,20 @@
 "use client";
 import React from "react";
-import ArchivesCards from "@/src/src/client/archives/ArchivesCards";
-import stories from "../../public/dashboard/client/Stories.svg";
-import tests from "../../public/dashboard/client/Tests.svg";
-import rewards from "../../public/dashboard/client/Rewards.svg";
-import achievement from "../../public/dashboard/client/Achievements.svg";
-import minigames from "../../public/dashboard/client/Minigames.svg";
-import ClientPageHeader from "@/src/src/client/global/PageHeader";
-import Message from "@/src/src/components/global/Message";
+import ArchivesCards from "@/client/archives/ArchivesCards";
+import stories from "@/public/dashboard/client/Stories.svg";
+import tests from "@/public/dashboard/client/Tests.svg";
+import rewards from "@/public/dashboard/client/Rewards.svg";
+import achievement from "@/public/dashboard/client/Achievements.svg";
+import minigames from "@/public/dashboard/client/Minigames.svg";
+import ClientPageHeader from "@/client/global/PageHeader";
+import Message from "@/components/global/Message";
 import axios from "axios";
 
 import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/src/context";
-import { isTokenExpired } from "@/src/src/functions/jwtFns";
+import { useGlobalContext } from "@/base/context";
+import { isTokenExpired } from "@/functions/jwtFns";
 import { useRouter } from "next/navigation";
-import { useMessage } from "@/src/src/hooks/useMessage";
+import { useMessage } from "@/hooks/useMessage";
 
 const Archives = () => {
   const [countsData, setCountsData] = React.useState({});

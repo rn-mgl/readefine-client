@@ -1,23 +1,23 @@
 "use client";
 import React from "react";
-import AdminPageHeader from "../../../src/admin/global/PageHeader";
-import RewardsFilter from "@/src/src/admin/rewards/RewardsFilter";
-import RewardsCards from "@/src/src/admin/rewards/RewardsCards";
+import AdminPageHeader from "@/admin/global/PageHeader";
+import RewardsFilter from "@/admin/rewards/RewardsFilter";
+import RewardsCards from "@/admin/rewards/RewardsCards";
 import Link from "next/link";
 import axios from "axios";
-import Message from "@/src/src/components/global/Message";
+import Message from "@/components/global/Message";
 import Image from "next/image";
 
-import noReward from "../../../public/profile/NoReward.svg";
+import noReward from "@/public/profile/NoReward.svg";
 
 import { IoAddOutline } from "react-icons/io5";
 import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/src/context";
-import { cipher } from "@/src/src/functions/security";
+import { useGlobalContext } from "@/base/context";
+import { cipher } from "@/functions/security";
 import { useRouter } from "next/navigation";
-import { isTokenExpired } from "@/src/src/functions/jwtFns";
-import { useMessage } from "@/src/src/hooks/useMessage";
-import { useRewardFilters } from "@/src/src/hooks/useRewardFilters";
+import { isTokenExpired } from "@/functions/jwtFns";
+import { useMessage } from "@/hooks/useMessage";
+import { useRewardFilters } from "@/hooks/useRewardFilters";
 
 const AdminRewards = () => {
   const [rewards, setRewards] = React.useState([]);

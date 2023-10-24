@@ -4,8 +4,8 @@ import React from "react";
 import Image from "next/image";
 import TextShuffleAnimation from "../../global/TextShuffleAnimation";
 
-import decipherBgUp from "../../../../public/decipher/DecipherBGUp.svg";
-import decipherBgDown from "../../../../public/decipher/DecipherBGDown.svg";
+import decipherBgUp from "@/public/decipher/DecipherBGUp.svg";
+import decipherBgDown from "@/public/decipher/DecipherBGDown.svg";
 
 import { BsArrowLeft, BsQuestionCircle } from "react-icons/bs";
 

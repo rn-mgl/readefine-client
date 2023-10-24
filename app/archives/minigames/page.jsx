@@ -2,19 +2,19 @@
 import React from "react";
 import axios from "axios";
 
-import riddles from "../../../public/minigames/Riddles.svg";
-import dangle from "../../../public/minigames/Dangle.svg";
-import decipher from "../../../public/minigames/Decipher.svg";
+import riddles from "@/public/minigames/Riddles.svg";
+import dangle from "@/public/minigames/Dangle.svg";
+import decipher from "@/public/minigames/Decipher.svg";
 
-import ClientMinigamesCards from "@/src/src/client/minigames/ClientMinigamesCards";
-import ClientPageHeader from "@/src/src/client/global/PageHeader";
-import Message from "@/src/src/components/global/Message";
+import ClientMinigamesCards from "@/client/minigames/ClientMinigamesCards";
+import ClientPageHeader from "@/client/global/PageHeader";
+import Message from "@/components/global/Message";
 
 import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/src/context";
+import { useGlobalContext } from "@/base/context";
 import { useRouter } from "next/navigation";
-import { isTokenExpired } from "@/src/src/functions/jwtFns";
-import { useMessage } from "@/src/src/hooks/useMessage";
+import { isTokenExpired } from "@/functions/jwtFns";
+import { useMessage } from "@/hooks/useMessage";
 
 const Minigames = () => {
   const [counts, setCounts] = React.useState({});

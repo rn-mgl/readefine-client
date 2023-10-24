@@ -1,22 +1,22 @@
 "use client";
 import React from "react";
-import AdminPageHeader from "@/src/src/admin/global/PageHeader";
-import RiddlesFilter from "@/src/src/admin/riddles/RiddlesFilter";
+import AdminPageHeader from "@/admin/global/PageHeader";
+import RiddlesFilter from "@/admin/riddles/RiddlesFilter";
 import axios from "axios";
 import Link from "next/link";
-import Message from "@/src/src/components/global/Message";
-import RiddleRow from "@/src/src/admin/riddles/RiddleRow";
-import EditRow from "@/src/src/admin/riddles/EditRow";
-import DeleteData from "@/src/src/admin/global/DeleteData";
+import Message from "@/components/global/Message";
+import RiddleRow from "@/admin/riddles/RiddleRow";
+import EditRow from "@/admin/riddles/EditRow";
+import DeleteData from "@/admin/global/DeleteData";
 
 import { IoAddOutline } from "react-icons/io5";
 import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/src/context";
-import { inputDate } from "@/src/src/functions/localDate";
+import { useGlobalContext } from "@/base/context";
+import { inputDate } from "@/functions/localDate";
 import { BsArrowLeft } from "react-icons/bs";
 import { useRouter } from "next/navigation";
-import { isTokenExpired } from "@/src/src/functions/jwtFns";
-import { useMessage } from "@/src/src/hooks/useMessage";
+import { isTokenExpired } from "@/functions/jwtFns";
+import { useMessage } from "@/hooks/useMessage";
 
 const AdminRiddles = () => {
   const [riddles, setRiddles] = React.useState([]);

@@ -8,7 +8,7 @@ import Loading from "../../components/global/Loading";
 
 import { IoClose } from "react-icons/io5";
 import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/src/context";
+import { useGlobalContext } from "@/base/context";
 import { useLoading } from "../../hooks/useLoading";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useMessage } from "../../hooks/useMessage";

@@ -1,21 +1,21 @@
 "use client";
 import React, { Suspense } from "react";
-import AchievementsFilter from "@/src/src/client/achievements/AchievementsFilter";
-import ClientPageHeader from "@/src/src/client/global/PageHeader";
+import AchievementsFilter from "@/client/achievements/AchievementsFilter";
+import ClientPageHeader from "@/client/global/PageHeader";
 import axios from "axios";
-import AchievementPanel from "@/src/src/client/achievements/AchievementPanel";
-import Message from "@/src/src/components/global/Message";
+import AchievementPanel from "@/client/achievements/AchievementPanel";
+import Message from "@/components/global/Message";
 import Image from "next/image";
 
-import noReward from "../../../public/profile/NoReward.svg";
+import noReward from "@/public/profile/NoReward.svg";
 
 import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/src/context";
-import { typeConversion } from "@/src/src/functions/typeConversion";
+import { useGlobalContext } from "@/base/context";
+import { typeConversion } from "@/functions/typeConversion";
 import { useRouter } from "next/navigation";
-import { isTokenExpired } from "@/src/src/functions/jwtFns";
-import { useMessage } from "@/src/src/hooks/useMessage";
-import { useAchievementFilters } from "@/src/src/hooks/useAchievementFilters";
+import { isTokenExpired } from "@/functions/jwtFns";
+import { useMessage } from "@/hooks/useMessage";
+import { useAchievementFilters } from "@/hooks/useAchievementFilters";
 
 const ClientAchievements = () => {
   const [achievements, setAchievements] = React.useState([]);

@@ -1,24 +1,24 @@
 "use client";
 import React from "react";
-import StorySinglePage from "@/src/src/components/stories/StorySinglePage";
+import StorySinglePage from "@/components/stories/StorySinglePage";
 import axios from "axios";
-import Customizations from "@/src/src/components/stories/Customizations";
-import ClientPageHeader from "@/src/src/client/global/PageHeader";
-import Message from "@/src/src/components/global/Message";
-import ReceiveAchievement from "@/src/src/client/achievements/ReceiveAchievement";
-import StoryDoublePage from "@/src/src/components/stories/StoryDoublePage";
-import StoryActions from "@/src/src/client/stories/StoryActions";
-import PageNavigation from "@/src/src/components/stories/PageNavigation";
+import Customizations from "@/components/stories/Customizations";
+import ClientPageHeader from "@/client/global/PageHeader";
+import Message from "@/components/global/Message";
+import ReceiveAchievement from "@/client/achievements/ReceiveAchievement";
+import StoryDoublePage from "@/components/stories/StoryDoublePage";
+import StoryActions from "@/client/stories/StoryActions";
+import PageNavigation from "@/components/stories/PageNavigation";
 
 import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/src/context";
-import { decipher } from "@/src/src/functions/security";
+import { useGlobalContext } from "@/base/context";
+import { decipher } from "@/functions/security";
 import { useRouter } from "next/navigation";
-import { isTokenExpired } from "@/src/src/functions/jwtFns";
-import { useStoryPageControls } from "@/src/src/hooks/useStoryPageControls";
-import { useReceiveAchievement } from "@/src/src/hooks/useReceiveAchievement";
-import { useMessage } from "@/src/src/hooks/useMessage";
-import { useAudioControls } from "@/src/src/hooks/useAudioControls";
+import { isTokenExpired } from "@/functions/jwtFns";
+import { useStoryPageControls } from "@/hooks/useStoryPageControls";
+import { useReceiveAchievement } from "@/hooks/useReceiveAchievement";
+import { useMessage } from "@/hooks/useMessage";
+import { useAudioControls } from "@/hooks/useAudioControls";
 
 const SingleStory = ({ params }) => {
   const {

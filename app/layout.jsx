@@ -2,7 +2,7 @@
 import "./globals.css";
 import React from "react";
 import { Mukta, Poppins, Lato } from "next/font/google";
-import { AppProvider } from "../context";
+import { AppProvider } from "@/base/context";
 import { SessionProvider } from "next-auth/react";
 
 const poppins = Poppins({

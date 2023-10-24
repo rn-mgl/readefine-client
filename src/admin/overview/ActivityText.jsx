@@ -1,5 +1,5 @@
 import React from "react";
-import avatar from "../../../public/profile/Avatar.svg";
+import avatar from "@/public/profile/Avatar.svg";
 import Image from "next/image";
 import { BsDot } from "react-icons/bs";
 
@@ -12,9 +12,7 @@ const ActivityText = (props) => {
           style={{ backgroundImage: props.userImage ? `url(${props.userImage})` : null }}
           className="w-10 h-10 min-w-[2.5rem] min-h-[2.5rem] bg-center bg-cover rounded-full bg-indigo-100"
         >
-          {!props.userImage ? (
-            <Image src={avatar} alt="avatar" className="saturate-150" width={100} />
-          ) : null}
+          {!props.userImage ? <Image src={avatar} alt="avatar" className="saturate-150" width={100} /> : null}
         </div>
         <div className="cstm-flex-col items-start w-full">
           <p>You added</p>

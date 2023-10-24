@@ -1,24 +1,24 @@
 "use client";
 import React from "react";
-import StoryDoublePage from "@/src/src/components/stories/StoryDoublePage";
-import AdminPageHeader from "@/src/src/admin/global/PageHeader";
-import StorySinglePage from "@/src/src/components/stories/StorySinglePage";
+import StoryDoublePage from "@/components/stories/StoryDoublePage";
+import AdminPageHeader from "@/admin/global/PageHeader";
+import StorySinglePage from "@/components/stories/StorySinglePage";
 import axios from "axios";
-import Customizations from "@/src/src/components/stories/Customizations";
-import Message from "@/src/src/components/global/Message";
-import StoryActions from "@/src/src/admin/stories/StoryActions";
-import PageNavigation from "@/src/src/components/stories/PageNavigation";
-import DeleteData from "@/src/src/admin/global/DeleteData";
+import Customizations from "@/components/stories/Customizations";
+import Message from "@/components/global/Message";
+import StoryActions from "@/admin/stories/StoryActions";
+import PageNavigation from "@/components/stories/PageNavigation";
+import DeleteData from "@/admin/global/DeleteData";
 
 import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/src/context";
+import { useGlobalContext } from "@/base/context";
 
-import { decipher } from "@/src/src/functions/security";
+import { decipher } from "@/functions/security";
 import { useRouter } from "next/navigation";
-import { isTokenExpired } from "@/src/src/functions/jwtFns";
-import { useStoryPageControls } from "@/src/src/hooks/useStoryPageControls";
-import { useMessage } from "@/src/src/hooks/useMessage";
-import { useAudioControls } from "@/src/src/hooks/useAudioControls";
+import { isTokenExpired } from "@/functions/jwtFns";
+import { useStoryPageControls } from "@/hooks/useStoryPageControls";
+import { useMessage } from "@/hooks/useMessage";
+import { useAudioControls } from "@/hooks/useAudioControls";
 
 const SingleStory = ({ params }) => {
   const [canDeleteStory, setCanDeleteStory] = React.useState(false);

@@ -1,27 +1,27 @@
 "use client";
 import React from "react";
-import AdminPageHeader from "@/src/src/admin/global/PageHeader";
+import AdminPageHeader from "@/admin/global/PageHeader";
 import axios from "axios";
-import FilePreview from "@/src/src/components/global/FilePreview";
-import Message from "@/src/src/components/global/Message";
-import EditStoryPage from "@/src/src/admin/stories/EditStoryPage";
-import EditStoryFilter from "@/src/src/admin/stories/EditStoryFilter";
+import FilePreview from "@/components/global/FilePreview";
+import Message from "@/components/global/Message";
+import EditStoryPage from "@/admin/stories/EditStoryPage";
+import EditStoryFilter from "@/admin/stories/EditStoryFilter";
 import Link from "next/link";
-import Loading from "@/src/src/components/global/Loading";
+import Loading from "@/components/global/Loading";
 
-import AudioPreview from "@/src/src/components/global/AudioPreview";
+import AudioPreview from "@/components/global/AudioPreview";
 
 import { IoAddOutline, IoClose } from "react-icons/io5";
 import { BsArrowLeft } from "react-icons/bs";
 import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/src/context";
+import { useGlobalContext } from "@/base/context";
 import { useRouter } from "next/navigation";
-import { decipher } from "@/src/src/functions/security";
-import { isTokenExpired } from "@/src/src/functions/jwtFns";
-import { useFileControls } from "@/src/src/hooks/useFileControls";
+import { decipher } from "@/functions/security";
+import { isTokenExpired } from "@/functions/jwtFns";
+import { useFileControls } from "@/hooks/useFileControls";
 import Image from "next/image";
-import { useLoading } from "@/src/src/hooks/useLoading";
-import { useMessage } from "@/src/src/hooks/useMessage";
+import { useLoading } from "@/hooks/useLoading";
+import { useMessage } from "@/hooks/useMessage";
 
 const EditStory = ({ params }) => {
   const [story, setStory] = React.useState({});

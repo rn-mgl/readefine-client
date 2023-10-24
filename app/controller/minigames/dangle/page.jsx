@@ -2,23 +2,23 @@
 
 import axios from "axios";
 import React from "react";
-import InitDangle from "@/src/src/components/minigames/dangle/InitDangle";
-import DangleGame from "@/src/src/components/minigames/dangle/DangleGame";
-import DangleHint from "@/src/src/components/minigames/dangle/DangleHint";
-import Gameover from "@/src/src/components/minigames/Gameover";
-import DangleTutorial from "@/src/src/components/minigames/dangle/DangleTutorial";
-import Volume from "@/src/src/components/global/Volume";
-import Message from "@/src/src/components/global/Message";
-import arcade from "../../../../public/music/minigames/Arcade.mp3";
+import InitDangle from "@/components/minigames/dangle/InitDangle";
+import DangleGame from "@/components/minigames/dangle/DangleGame";
+import DangleHint from "@/components/minigames/dangle/DangleHint";
+import Gameover from "@/components/minigames/Gameover";
+import DangleTutorial from "@/components/minigames/dangle/DangleTutorial";
+import Volume from "@/components/global/Volume";
+import Message from "@/components/global/Message";
+import arcade from "@/public/music/minigames/Arcade.mp3";
 
 import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/src/context";
+import { useGlobalContext } from "@/base/context";
 import { AiFillHeart } from "react-icons/ai";
 import { useRouter } from "next/navigation";
-import { isTokenExpired } from "@/src/src/functions/jwtFns";
-import { useAudioControls } from "@/src/src/hooks/useAudioControls";
-import { useDangleStatus } from "@/src/src/hooks/useDangleStatus";
-import { useMessage } from "@/src/src/hooks/useMessage";
+import { isTokenExpired } from "@/functions/jwtFns";
+import { useAudioControls } from "@/hooks/useAudioControls";
+import { useDangleStatus } from "@/hooks/useDangleStatus";
+import { useMessage } from "@/hooks/useMessage";
 
 const Dangle = () => {
   const {

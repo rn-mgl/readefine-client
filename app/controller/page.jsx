@@ -1,21 +1,21 @@
 "use client";
 import React from "react";
 import axios from "axios";
-import AdminPageHeader from "../../src/admin/global/PageHeader";
-import DashboardCards from "@/src/src/admin/dashboard/DashboardCards";
-import users from "../../public/dashboard/admin/Users.svg";
-import stories from "../../public/dashboard/admin/Stories.svg";
-import tests from "../../public/dashboard/admin/Tests.svg";
-import rewards from "../../public/dashboard/admin/Rewards.svg";
-import achievements from "../../public/dashboard/admin/Achievements.svg";
-import minigames from "../../public/dashboard/admin/Minigames.svg";
-import Message from "@/src/src/components/global/Message";
+import AdminPageHeader from "@/admin/global/PageHeader";
+import DashboardCards from "@/admin/dashboard/DashboardCards";
+import users from "@/public/dashboard/admin/Users.svg";
+import stories from "@/public/dashboard/admin/Stories.svg";
+import tests from "@/public/dashboard/admin/Tests.svg";
+import rewards from "@/public/dashboard/admin/Rewards.svg";
+import achievements from "@/public/dashboard/admin/Achievements.svg";
+import minigames from "@/public/dashboard/admin/Minigames.svg";
+import Message from "@/components/global/Message";
 
-import { useGlobalContext } from "../../context";
+import { useGlobalContext } from "@/base/context";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { isTokenExpired } from "@/src/src/functions/jwtFns";
-import { useMessage } from "@/src/src/hooks/useMessage";
+import { isTokenExpired } from "@/functions/jwtFns";
+import { useMessage } from "@/hooks/useMessage";
 
 const AdminDashboard = () => {
   const [counts, setCounts] = React.useState({});

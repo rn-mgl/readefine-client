@@ -1,24 +1,24 @@
 "use client";
 import React from "react";
-import TestsCards from "@/src/src/client/tests/TestsCards";
-import TestsFilter from "@/src/src/client/tests/TestsFilter";
+import TestsCards from "@/client/tests/TestsCards";
+import TestsFilter from "@/client/tests/TestsFilter";
 import axios from "axios";
-import ClientPageHeader from "@/src/src/client/global/PageHeader";
-import Message from "@/src/src/components/global/Message";
-import LowLexileTestMessage from "@/src/src/client/tests/LowLexileTestMessage";
-import TestRecord from "@/src/src/client/tests/TestRecord";
+import ClientPageHeader from "@/client/global/PageHeader";
+import Message from "@/components/global/Message";
+import LowLexileTestMessage from "@/client/tests/LowLexileTestMessage";
+import TestRecord from "@/client/tests/TestRecord";
 import Image from "next/image";
 
-import noTest from "../../../public/profile/NoTest.svg";
+import noTest from "@/public/profile/NoTest.svg";
 
 import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/src/context";
-import { cipher } from "@/src/src/functions/security";
+import { useGlobalContext } from "@/base/context";
+import { cipher } from "@/functions/security";
 import { useRouter } from "next/navigation";
-import { isTokenExpired } from "@/src/src/functions/jwtFns";
-import { useMessage } from "@/src/src/hooks/useMessage";
-import { useUserLexile } from "@/src/src/hooks/useUserLexile";
-import { useTestFilters } from "@/src/src/hooks/useTestFilters";
+import { isTokenExpired } from "@/functions/jwtFns";
+import { useMessage } from "@/hooks/useMessage";
+import { useUserLexile } from "@/hooks/useUserLexile";
+import { useTestFilters } from "@/hooks/useTestFilters";
 
 const ClientTests = () => {
   const [tests, setTests] = React.useState([]);

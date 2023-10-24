@@ -1,20 +1,20 @@
 "use client";
 import React from "react";
-import AdminPageHeader from "@/src/src/admin/global/PageHeader";
-import AddTestPage from "@/src/src/admin/tests/AddTestPage";
-import ActionLabel from "@/src/src/components/global/ActionLabel";
+import AdminPageHeader from "@/admin/global/PageHeader";
+import AddTestPage from "@/admin/tests/AddTestPage";
+import ActionLabel from "@/components/global/ActionLabel";
 import axios from "axios";
-import Message from "@/src/src/components/global/Message";
-import Loading from "@/src/src/components/global/Loading";
+import Message from "@/components/global/Message";
+import Loading from "@/components/global/Loading";
 
 import { IoAddOutline } from "react-icons/io5";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/src/context";
-import { decipher } from "@/src/src/functions/security";
-import { isTokenExpired } from "@/src/src/functions/jwtFns";
-import { useLoading } from "@/src/src/hooks/useLoading";
-import { useMessage } from "@/src/src/hooks/useMessage";
+import { useGlobalContext } from "@/base/context";
+import { decipher } from "@/functions/security";
+import { isTokenExpired } from "@/functions/jwtFns";
+import { useLoading } from "@/hooks/useLoading";
+import { useMessage } from "@/hooks/useMessage";
 
 const AddTest = ({ params }) => {
   const [pages, setPages] = React.useState([

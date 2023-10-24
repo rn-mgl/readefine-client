@@ -1,9 +1,9 @@
 import React from "react";
-import AdminPageHeader from "@/src/src/admin/global/PageHeader";
-import riddles from "../../../public/minigames/Riddles.svg";
-import dangle from "../../../public/minigames/Dangle.svg";
-import decipher from "../../../public/minigames/Decipher.svg";
-import AdminMinigamesCards from "@/src/src/admin/minigames/AdminMinigamesCards";
+import AdminPageHeader from "@/admin/global/PageHeader";
+import riddles from "@/public/minigames/Riddles.svg";
+import dangle from "@/public/minigames/Dangle.svg";
+import decipher from "@/public/minigames/Decipher.svg";
+import AdminMinigamesCards from "@/admin/minigames/AdminMinigamesCards";
 
 const Minigames = () => {
   return (
@@ -16,11 +16,7 @@ const Minigames = () => {
       >
         <AdminMinigamesCards image={riddles} label="Riddles" to="/controller/minigames/riddles" />
         <AdminMinigamesCards image={dangle} label="Dangle" to="/controller/minigames/dangle" />
-        <AdminMinigamesCards
-          image={decipher}
-          label="Decipher"
-          to="/controller/minigames/decipher"
-        />
+        <AdminMinigamesCards image={decipher} label="Decipher" to="/controller/minigames/decipher" />
       </div>
     </div>
   );

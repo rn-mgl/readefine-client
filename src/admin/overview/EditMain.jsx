@@ -6,10 +6,10 @@ import EditInput from "../../components/profile/EditInput";
 import Message from "../../components/global/Message";
 import Loading from "../../components/global/Loading";
 import ActionLabel from "../../components/global/ActionLabel";
-import avatar from "../../../public/profile/Avatar.svg";
+import avatar from "@/public/profile/Avatar.svg";
 import Image from "next/image";
 
-import { useGlobalContext } from "@/src/context";
+import { useGlobalContext } from "@/base/context";
 import { useSession } from "next-auth/react";
 import { IoClose } from "react-icons/io5";
 import { BiImage } from "react-icons/bi";

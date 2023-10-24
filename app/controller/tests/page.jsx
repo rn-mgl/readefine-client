@@ -1,21 +1,21 @@
 "use client";
 import React from "react";
-import AdminPageHeader from "../../../src/admin/global/PageHeader";
-import TestsCards from "@/src/src/admin/tests/TestsCards";
-import TestsFilter from "@/src/src/admin/tests/TestsFilter";
+import AdminPageHeader from "@/admin/global/PageHeader";
+import TestsCards from "@/admin/tests/TestsCards";
+import TestsFilter from "@/admin/tests/TestsFilter";
 import axios from "axios";
-import Message from "@/src/src/components/global/Message";
+import Message from "@/components/global/Message";
 import Image from "next/image";
 
-import noTest from "../../../public/profile/NoTest.svg";
+import noTest from "@/public/profile/NoTest.svg";
 
 import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/src/context";
-import { cipher } from "@/src/src/functions/security";
+import { useGlobalContext } from "@/base/context";
+import { cipher } from "@/functions/security";
 import { useRouter } from "next/navigation";
-import { isTokenExpired } from "@/src/src/functions/jwtFns";
-import { useMessage } from "@/src/src/hooks/useMessage";
-import { useTestFilters } from "@/src/src/hooks/useTestFilters";
+import { isTokenExpired } from "@/functions/jwtFns";
+import { useMessage } from "@/hooks/useMessage";
+import { useTestFilters } from "@/hooks/useTestFilters";
 
 const AdminTests = () => {
   const [tests, setTests] = React.useState([]);

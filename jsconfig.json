@@ -1,7 +1,15 @@
 {
   "compilerOptions": {
     "paths": {
-      "@/src/*": ["./*"]
+      "@/src/*": ["./src/*"],
+      "@/admin/*": ["./src/admin/*"],
+      "@/client/*": ["./src/client/*"],
+      "@/components/*": ["./src/components/*"],
+      "@/functions/*": ["./src/functions/*"],
+      "@/head/*": ["./src/head/*"],
+      "@/hooks/*": ["./src/hooks/*"],
+      "@/public/*": ["./public/*"],
+      "@/base/*": ["./*"]
     }
   }
 }

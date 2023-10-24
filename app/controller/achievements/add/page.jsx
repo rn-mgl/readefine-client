@@ -1,20 +1,20 @@
 "use client";
 import React from "react";
-import AdminPageHeader from "@/src/src/admin/global/PageHeader";
-import AddAchievementFilter from "@/src/src/admin/achievements/AddAchievementFilter";
-import FindRewards from "@/src/src/admin/rewards/FindRewards";
+import AdminPageHeader from "@/admin/global/PageHeader";
+import AddAchievementFilter from "@/admin/achievements/AddAchievementFilter";
+import FindRewards from "@/admin/rewards/FindRewards";
 import axios from "axios";
 import Link from "next/link";
-import Message from "@/src/src/components/global/Message";
+import Message from "@/components/global/Message";
 
-import { useGlobalContext } from "@/src/context";
+import { useGlobalContext } from "@/base/context";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { BsArrowLeft } from "react-icons/bs";
-import Loading from "@/src/src/components/global/Loading";
-import { isTokenExpired } from "@/src/src/functions/jwtFns";
-import { useLoading } from "@/src/src/hooks/useLoading";
-import { useMessage } from "@/src/src/hooks/useMessage";
+import Loading from "@/components/global/Loading";
+import { isTokenExpired } from "@/functions/jwtFns";
+import { useLoading } from "@/hooks/useLoading";
+import { useMessage } from "@/hooks/useMessage";
 
 const AddAchievement = () => {
   const [hasSubmitted, setHasSubmitted] = React.useState(false);

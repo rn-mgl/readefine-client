@@ -1,5 +1,5 @@
 import React from "react";
-import noGame from "../../../public/profile/NoGame.svg";
+import noGame from "@/public/profile/NoGame.svg";
 import Image from "next/image";
 
 const ActivityCard = (props) => {

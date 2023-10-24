@@ -2,21 +2,21 @@
 
 import React from "react";
 import axios from "axios";
-import AdminPageHeader from "@/src/src/admin/global/PageHeader";
+import AdminPageHeader from "@/admin/global/PageHeader";
 import Link from "next/link";
-import Message from "@/src/src/components/global/Message";
+import Message from "@/components/global/Message";
 
 import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/src/context";
+import { useGlobalContext } from "@/base/context";
 import { BsArrowLeft } from "react-icons/bs";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
-import { typeConversion } from "@/src/src/functions/typeConversion";
-import { decipher } from "@/src/src/functions/security";
+import { typeConversion } from "@/functions/typeConversion";
+import { decipher } from "@/functions/security";
 import { useRouter } from "next/navigation";
-import { isTokenExpired } from "@/src/src/functions/jwtFns";
-import DeleteData from "@/src/src/admin/global/DeleteData";
+import { isTokenExpired } from "@/functions/jwtFns";
+import DeleteData from "@/admin/global/DeleteData";
 import Image from "next/image";
-import { useMessage } from "@/src/src/hooks/useMessage";
+import { useMessage } from "@/hooks/useMessage";
 
 const SingleAchievement = ({ params }) => {
   const [achievement, setAchievement] = React.useState({});

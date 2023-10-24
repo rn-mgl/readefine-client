@@ -1,12 +1,12 @@
 "use client";
-import React from "react";
-import ButtonLink from "../link/ButtonLink";
-import book from "../../../public/landing/hero/landing book.png";
-import Image from "next/image";
+import { useGlobalContext } from "@/base/context";
+import book from "@/public/landing/hero/landing book.png";
 import axios from "axios";
-import { useGlobalContext } from "@/src/context";
+import Image from "next/image";
+import React from "react";
 import { BiLoader } from "react-icons/bi";
 import { useLoading } from "../../hooks/useLoading";
+import ButtonLink from "../link/ButtonLink";
 
 const Hero = () => {
   const [userCount, setUserCount] = React.useState(0);

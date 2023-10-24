@@ -1,26 +1,26 @@
 "use client";
 import axios from "axios";
 import React from "react";
-import ClientPageHeader from "@/src/src/client/global/PageHeader";
-import QuestionSlide from "@/src/src/client/tests/QuestionSlide";
-import ScorePopup from "@/src/src/components/tests/ScorePopup";
-import Message from "@/src/src/components/global/Message";
-import ReceiveAchievement from "@/src/src/client/achievements/ReceiveAchievement";
-import TestActions from "@/src/src/client/tests/TestActions";
-import PageNavigation from "@/src/src/client/tests/PageNavigation";
+import ClientPageHeader from "@/client/global/PageHeader";
+import QuestionSlide from "@/client/tests/QuestionSlide";
+import ScorePopup from "@/components/tests/ScorePopup";
+import Message from "@/components/global/Message";
+import ReceiveAchievement from "@/client/achievements/ReceiveAchievement";
+import TestActions from "@/client/tests/TestActions";
+import PageNavigation from "@/client/tests/PageNavigation";
 
 import { useSession } from "next-auth/react";
-import { shuffleQuestions } from "@/src/src/functions/testFns";
-import { useGlobalContext } from "@/src/context";
-import { decipher } from "@/src/src/functions/security";
+import { shuffleQuestions } from "@/functions/testFns";
+import { useGlobalContext } from "@/base/context";
+import { decipher } from "@/functions/security";
 import { useRouter } from "next/navigation";
-import { isTokenExpired } from "@/src/src/functions/jwtFns";
-import { useReceiveAchievement } from "@/src/src/hooks/useReceiveAchievement";
-import { useTestControls } from "@/src/src/hooks/useTestControls";
-import Loading from "@/src/src/components/global/Loading";
-import { useLoading } from "@/src/src/hooks/useLoading";
-import { useMessage } from "@/src/src/hooks/useMessage";
-import { useUserLexile } from "@/src/src/hooks/useUserLexile";
+import { isTokenExpired } from "@/functions/jwtFns";
+import { useReceiveAchievement } from "@/hooks/useReceiveAchievement";
+import { useTestControls } from "@/hooks/useTestControls";
+import Loading from "@/components/global/Loading";
+import { useLoading } from "@/hooks/useLoading";
+import { useMessage } from "@/hooks/useMessage";
+import { useUserLexile } from "@/hooks/useUserLexile";
 
 const SingleTest = ({ params }) => {
   const [activePage, setActivePage] = React.useState(0);

@@ -1,5 +1,5 @@
 import React from "react";
-import LandingLogo from "@/src/src/components/global/LandingLogo";
+import LandingLogo from "@/components/global/LandingLogo";
 
 export const metadata = {
   title: "Readefine | Sending",

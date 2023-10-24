@@ -2,19 +2,19 @@
 
 import React from "react";
 import axios from "axios";
-import ClientPageHeader from "@/src/src/client/global/PageHeader";
+import ClientPageHeader from "@/client/global/PageHeader";
 import Link from "next/link";
 
-import { decipher } from "@/src/src/functions/security";
+import { decipher } from "@/functions/security";
 import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/src/context";
+import { useGlobalContext } from "@/base/context";
 import { BsArrowLeft, BsDot, BsTrophyFill } from "react-icons/bs";
 import { BiMedal } from "react-icons/bi";
-import Message from "@/src/src/components/global/Message";
+import Message from "@/components/global/Message";
 import { useRouter } from "next/navigation";
-import { isTokenExpired } from "@/src/src/functions/jwtFns";
+import { isTokenExpired } from "@/functions/jwtFns";
 import Image from "next/image";
-import { useMessage } from "@/src/src/hooks/useMessage";
+import { useMessage } from "@/hooks/useMessage";
 
 const SingleReward = ({ params }) => {
   const [rewardData, setRewardData] = React.useState({});

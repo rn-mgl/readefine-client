@@ -1,24 +1,24 @@
 "use client";
 import React from "react";
-import AdminPageHeader from "@/src/src/admin/global/PageHeader";
-import TestChoices from "@/src/src/components/tests/TestChoices";
+import AdminPageHeader from "@/admin/global/PageHeader";
+import TestChoices from "@/components/tests/TestChoices";
 import axios from "axios";
 import Link from "next/link";
-import Message from "@/src/src/components/global/Message";
-import ScorePopup from "@/src/src/components/tests/ScorePopup";
-import TestResult from "@/src/src/client/tests/TestResult";
-import DeleteData from "@/src/src/admin/global/DeleteData";
+import Message from "@/components/global/Message";
+import ScorePopup from "@/components/tests/ScorePopup";
+import TestResult from "@/client/tests/TestResult";
+import DeleteData from "@/admin/global/DeleteData";
 
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { BsArrowLeft } from "react-icons/bs";
-import { useGlobalContext } from "@/src/context";
+import { useGlobalContext } from "@/base/context";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { choicesStyle, shuffleQuestions } from "@/src/src/functions/testFns";
-import { decipher } from "@/src/src/functions/security";
-import { isTokenExpired } from "@/src/src/functions/jwtFns";
-import { useTestControls } from "@/src/src/hooks/useTestControls";
-import { useMessage } from "@/src/src/hooks/useMessage";
+import { choicesStyle, shuffleQuestions } from "@/functions/testFns";
+import { decipher } from "@/functions/security";
+import { isTokenExpired } from "@/functions/jwtFns";
+import { useTestControls } from "@/hooks/useTestControls";
+import { useMessage } from "@/hooks/useMessage";
 
 const SingleTest = ({ params }) => {
   const [canDeleteTest, setCanDeleteTest] = React.useState(false);

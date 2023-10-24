@@ -1,25 +1,25 @@
 "use client";
 import React from "react";
 import axios from "axios";
-import AdminPageHeader from "@/src/src/admin/global/PageHeader";
+import AdminPageHeader from "@/admin/global/PageHeader";
 import Link from "next/link";
-import Message from "@/src/src/components/global/Message";
-import SelectFilter from "@/src/src/components/filter/SelectFilter";
-import UserMainData from "@/src/src/admin/users/UserMainData";
-import GraphTypeChoice from "@/src/src/admin/users/graph/GraphTypeChoice";
+import Message from "@/components/global/Message";
+import SelectFilter from "@/components/filter/SelectFilter";
+import UserMainData from "@/admin/users/UserMainData";
+import GraphTypeChoice from "@/admin/users/graph/GraphTypeChoice";
 
 // chart.js is needed to view the react charts
 import { Chart as ChartJS } from "chart.js/auto";
 import { defaults } from "chart.js";
 import { Line, Scatter } from "react-chartjs-2";
-import { getDaysInMonth, monthMap } from "@/src/src/functions/localDate";
+import { getDaysInMonth, monthMap } from "@/functions/localDate";
 import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/src/context";
+import { useGlobalContext } from "@/base/context";
 import { BsArrowLeft } from "react-icons/bs";
-import { decipher } from "@/src/src/functions/security";
+import { decipher } from "@/functions/security";
 import { useRouter } from "next/navigation";
-import { isTokenExpired } from "@/src/src/functions/jwtFns";
-import { useMessage } from "@/src/src/hooks/useMessage";
+import { isTokenExpired } from "@/functions/jwtFns";
+import { useMessage } from "@/hooks/useMessage";
 
 const SingleUser = ({ params }) => {
   const [userData, setUserData] = React.useState({});

@@ -2,7 +2,7 @@
 import React from "react";
 import axios from "axios";
 
-import { useGlobalContext } from "@/src/context";
+import { useGlobalContext } from "@/base/context";
 import { useSession } from "next-auth/react";
 import { IoClose } from "react-icons/io5";
 import { BsCheck } from "react-icons/bs";

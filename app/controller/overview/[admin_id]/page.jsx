@@ -2,33 +2,33 @@
 
 import axios from "axios";
 import React from "react";
-import EditMain from "@/src/src/admin/overview/EditMain";
+import EditMain from "@/admin/overview/EditMain";
 
-import AdminPageHeader from "@/src/src/admin/global/PageHeader";
-import ActivityCard from "@/src/src/admin/overview/ActivityCard";
-import MainOverview from "@/src/src/admin/overview/MainOverview";
-import ActivityText from "@/src/src/admin/overview/ActivityText";
-import ChangePassword from "@/src/src/admin/overview/ChangePassword";
-import ComplementActivityText from "@/src/src/admin/overview/ComplementActivityText";
-import Message from "@/src/src/components/global/Message";
+import AdminPageHeader from "@/admin/global/PageHeader";
+import ActivityCard from "@/admin/overview/ActivityCard";
+import MainOverview from "@/admin/overview/MainOverview";
+import ActivityText from "@/admin/overview/ActivityText";
+import ChangePassword from "@/admin/overview/ChangePassword";
+import ComplementActivityText from "@/admin/overview/ComplementActivityText";
+import Message from "@/components/global/Message";
 
-import noGame from "../../../../public/profile/NoGame.svg";
-import noReads from "../../../../public/profile/NoReads.svg";
-import noReward from "../../../../public/profile/NoReward.svg";
-import noTest from "../../../../public/profile/NoTest.svg";
+import noGame from "@/public/profile/NoGame.svg";
+import noReads from "@/public/profile/NoReads.svg";
+import noReward from "@/public/profile/NoReward.svg";
+import noTest from "@/public/profile/NoTest.svg";
 
-import { decipher } from "@/src/src/functions/security";
+import { decipher } from "@/functions/security";
 import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/src/context";
-import { localizeDate } from "@/src/src/functions/localDate";
+import { useGlobalContext } from "@/base/context";
+import { localizeDate } from "@/functions/localDate";
 import { GiBrain, GiNotebook, GiSpellBook } from "react-icons/gi";
 import { ImCheckmark } from "react-icons/im";
 import { AiFillTrophy } from "react-icons/ai";
 import { RxActivityLog } from "react-icons/rx";
 import { useRouter } from "next/navigation";
-import { isTokenExpired } from "@/src/src/functions/jwtFns";
-import SessionText from "@/src/src/admin/overview/SessionText";
-import { useMessage } from "@/src/src/hooks/useMessage";
+import { isTokenExpired } from "@/functions/jwtFns";
+import SessionText from "@/admin/overview/SessionText";
+import { useMessage } from "@/hooks/useMessage";
 
 const Overview = ({ params }) => {
   const [adminData, setAdminData] = React.useState({});

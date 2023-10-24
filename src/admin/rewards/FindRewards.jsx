@@ -5,7 +5,7 @@ import FindRewardCards from "./FindRewardCards";
 
 import { IoClose } from "react-icons/io5";
 import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/src/context";
+import { useGlobalContext } from "@/base/context";
 import { typeConversion } from "../../functions/typeConversion";
 import { inputDate } from "../../functions/localDate";
 import Message from "../../components/global/Message";

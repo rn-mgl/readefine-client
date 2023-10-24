@@ -1,5 +1,5 @@
 import React from "react";
-import landing from "../../../public/landing/hero/landing book.png";
+import landing from "@/public/landing/hero/landing book.png";
 import Image from "next/image";
 import { TbLoader } from "react-icons/tb";
 

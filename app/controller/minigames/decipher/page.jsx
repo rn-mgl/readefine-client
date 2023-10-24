@@ -2,24 +2,24 @@
 import React from "react";
 import axios from "axios";
 
-import Message from "@/src/src/components/global/Message";
-import InitDecipher from "@/src/src/components/minigames/decipher/InitDecipher";
-import DecipherGame from "@/src/src/components/minigames/decipher/DecipherGame";
-import Gameover from "@/src/src/components/minigames/Gameover";
-import DecipherTutorial from "@/src/src/components/minigames/decipher/DecipherTutorial";
-import Volume from "@/src/src/components/global/Volume";
+import Message from "@/components/global/Message";
+import InitDecipher from "@/components/minigames/decipher/InitDecipher";
+import DecipherGame from "@/components/minigames/decipher/DecipherGame";
+import Gameover from "@/components/minigames/Gameover";
+import DecipherTutorial from "@/components/minigames/decipher/DecipherTutorial";
+import Volume from "@/components/global/Volume";
 
-import quirky from "../../../../public/music/minigames/Quirky.mp3";
+import quirky from "@/public/music/minigames/Quirky.mp3";
 
 import { AiFillHeart } from "react-icons/ai";
 import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/src/context";
+import { useGlobalContext } from "@/base/context";
 import { useRouter } from "next/navigation";
-import { isTokenExpired } from "@/src/src/functions/jwtFns";
+import { isTokenExpired } from "@/functions/jwtFns";
 
-import { useAudioControls } from "@/src/src/hooks/useAudioControls";
-import { useDecipherStatus } from "@/src/src/hooks/useDecipherStatus";
-import { useMessage } from "@/src/src/hooks/useMessage";
+import { useAudioControls } from "@/hooks/useAudioControls";
+import { useDecipherStatus } from "@/hooks/useDecipherStatus";
+import { useMessage } from "@/hooks/useMessage";
 
 const Decipher = () => {
   const {
