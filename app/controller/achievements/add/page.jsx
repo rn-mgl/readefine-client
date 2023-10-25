@@ -15,6 +15,7 @@ import Loading from "@/components/global/Loading";
 import { isTokenExpired } from "@/functions/jwtFns";
 import { useLoading } from "@/hooks/useLoading";
 import { useMessage } from "@/hooks/useMessage";
+import useAdminActivities from "@/src/hooks/useAdminActivities";
 
 const AddAchievement = () => {
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
@@ -29,6 +30,7 @@ const AddAchievement = () => {
   });
 
   const { message, setMessageStatus } = useMessage();
+  const { createAdminActivity } = useAdminActivities();
 
   const { data: session } = useSession({ required: true });
   const { url } = useGlobalContext();
@@ -85,7 +87,11 @@ const AddAchievement = () => {
 
       // move to main achievement after adding
       if (data) {
-        router.push("/controller/achievements");
+        const activityData = await createAdminActivity("achievement", achievement.name, "C");
+
+        if (activityData) {
+          router.push("/controller/achievements");
+        }
       }
     } catch (error) {
       console.log(error);

@@ -17,6 +17,7 @@ import { BsArrowLeft } from "react-icons/bs";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/functions/jwtFns";
 import { useMessage } from "@/hooks/useMessage";
+import useAdminActivities from "@/src/hooks/useAdminActivities";
 
 const AdminRiddles = () => {
   const [riddles, setRiddles] = React.useState([]);
@@ -32,6 +33,7 @@ const AdminRiddles = () => {
   });
 
   const { message, setMessageStatus } = useMessage();
+  const { createAdminActivity } = useAdminActivities();
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -127,7 +129,16 @@ const AdminRiddles = () => {
       );
 
       if (data) {
-        setRiddleToEdit(-1);
+        // get index of edited riddle
+        const riddleIdx = riddles.findIndex((riddle) => riddle.riddle_id === riddleToEdit);
+        // get riddle using index
+        const riddle = riddles[riddleIdx];
+
+        const activityData = await createAdminActivity("riddle", riddle.answer, "U");
+
+        if (activityData) {
+          setRiddleToEdit(-1);
+        }
       }
     } catch (error) {
       console.log(error);
@@ -174,7 +185,12 @@ const AdminRiddles = () => {
             editRiddle={editRiddle}
           />
         ) : (
-          <RiddleRow isToEdit={isToEdit} riddle={riddle} handleRiddleToEdit={handleRiddleToEdit} />
+          <RiddleRow
+            isToEdit={isToEdit}
+            riddle={riddle}
+            handleRiddleToEdit={handleRiddleToEdit}
+            createAdminActivity={createAdminActivity}
+          />
         )}
       </React.Fragment>
     );
@@ -216,6 +232,7 @@ const AdminRiddles = () => {
             confirmation={riddleToDelete.answer}
             handleCanDeleteData={handleCanDeleteRiddle}
             getData={getRiddles}
+            resourceType="riddle"
           />
         ) : null}
 

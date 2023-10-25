@@ -23,6 +23,7 @@ const UserRow = (props) => {
       <td className="break-words whitespace-pre-wrap cstm-flex-col">{localizeDate(props.user.date_joined)}</td>
       <td className="cstm-flex-col">
         <Link
+          onClick={props.createAdminActivity}
           href={`/controller/users/${props.cipheredUserId}`}
           className="bg-prmColor rounded-full p-2 text-white w-full"
         >

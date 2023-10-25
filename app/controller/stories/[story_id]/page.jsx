@@ -160,6 +160,7 @@ const SingleStory = ({ params }) => {
           returnRoute="/controller/stories"
           confirmation={story?.title}
           handleCanDeleteData={handleCanDeleteStory}
+          resourceType="story"
         />
       ) : null}
 

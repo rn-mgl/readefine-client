@@ -16,6 +16,7 @@ import { decipher } from "@/functions/security";
 import { isTokenExpired } from "@/functions/jwtFns";
 import { useLoading } from "@/hooks/useLoading";
 import { useMessage } from "@/hooks/useMessage";
+import useAdminActivities from "@/src/hooks/useAdminActivities";
 
 const EditAchievement = ({ params }) => {
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
@@ -29,6 +30,7 @@ const EditAchievement = ({ params }) => {
   });
 
   const { loading, setLoadingState } = useLoading(false);
+  const { createAdminActivity } = useAdminActivities();
   const { message, setMessageStatus } = useMessage();
 
   const { data: session } = useSession({ required: true });
@@ -88,7 +90,11 @@ const EditAchievement = ({ params }) => {
 
       // move to view page after editing
       if (data) {
-        router.push(`/controller/achievements/${params?.achievement_id}`);
+        const activityData = await createAdminActivity("achievement", achievement.achievement_name, "U");
+
+        if (activityData) {
+          router.push(`/controller/achievements/${params?.achievement_id}`);
+        }
       }
     } catch (error) {
       console.log(error);

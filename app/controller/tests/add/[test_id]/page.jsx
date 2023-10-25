@@ -15,6 +15,8 @@ import { decipher } from "@/functions/security";
 import { isTokenExpired } from "@/functions/jwtFns";
 import { useLoading } from "@/hooks/useLoading";
 import { useMessage } from "@/hooks/useMessage";
+import useAdminActivities from "@/src/hooks/useAdminActivities";
+import { useStoryPageControls } from "@/src/hooks/useStoryPageControls";
 
 const AddTest = ({ params }) => {
   const [pages, setPages] = React.useState([
@@ -29,12 +31,19 @@ const AddTest = ({ params }) => {
     },
   ]);
 
+  const {
+    story,
+
+    setNewStory,
+  } = useStoryPageControls();
+
   const { loading, setLoadingState } = useLoading(false);
   const { message, setMessageStatus } = useMessage();
+  const { createAdminActivity } = useAdminActivities();
 
   const { data: session } = useSession({ required: true });
   const { url } = useGlobalContext();
-  const decodedTestId = decipher(params?.test_id);
+  const decodedStoryId = decipher(params?.test_id);
   const router = useRouter();
   const user = session?.user?.name;
 
@@ -126,13 +135,17 @@ const AddTest = ({ params }) => {
     try {
       const { data } = await axios.post(
         `${url}/admin_test`,
-        { storyId: decodedTestId, pages },
+        { storyId: decodedStoryId, pages },
         { headers: { Authorization: user.token } }
       );
 
       // move to main test page after making test
       if (data) {
-        router.push("/controller/tests");
+        const adminActivity = await createAdminActivity("test", story.title, "C");
+
+        if (adminActivity) {
+          router.push("/controller/tests");
+        }
       }
     } catch (error) {
       console.log(error);
@@ -140,6 +153,21 @@ const AddTest = ({ params }) => {
       setMessageStatus(true, error?.response?.data?.msg, "error");
     }
   };
+
+  // get story
+  const getStory = React.useCallback(async () => {
+    try {
+      const { data } = await axios.get(`${url}/admin_story/${decodedStoryId}`, {
+        headers: { Authorization: user?.token },
+      });
+      if (data) {
+        setNewStory(data);
+      }
+    } catch (error) {
+      console.log(error);
+      setMessageStatus(true, error?.response?.data?.msg, "error");
+    }
+  }, [url, user?.token, setNewStory, decodedStoryId, setMessageStatus]);
 
   // map test pages
   const testPages = pages?.map((page) => {
@@ -154,6 +182,12 @@ const AddTest = ({ params }) => {
       </React.Fragment>
     );
   });
+
+  React.useEffect(() => {
+    if (user) {
+      getStory();
+    }
+  }, [getStory, user]);
 
   React.useEffect(() => {
     if (user) {

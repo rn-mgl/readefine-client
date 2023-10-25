@@ -28,6 +28,7 @@ const TestsCards = (props) => {
       </div>
 
       <Link
+        onClick={props.createAdminActivity}
         href={props.to}
         className="w-full text-center  text-sm font-normal bg-prmColor text-accntColor rounded-full p-2"
       >

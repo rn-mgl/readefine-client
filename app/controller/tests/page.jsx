@@ -16,6 +16,7 @@ import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/functions/jwtFns";
 import { useMessage } from "@/hooks/useMessage";
 import { useTestFilters } from "@/hooks/useTestFilters";
+import useAdminActivities from "@/src/hooks/useAdminActivities";
 
 const AdminTests = () => {
   const [tests, setTests] = React.useState([]);
@@ -32,6 +33,7 @@ const AdminTests = () => {
     handleSortFilter,
   } = useTestFilters();
 
+  const { createAdminActivity } = useAdminActivities();
   const { data: session } = useSession();
   const { url } = useGlobalContext();
   const user = session?.user?.name;
@@ -62,6 +64,7 @@ const AdminTests = () => {
   // map test cards
   const testCards = tests.map((t) => {
     const cipheredTestId = cipher(t.test_id);
+
     return (
       <React.Fragment key={t.test_id}>
         <TestsCards
@@ -70,6 +73,7 @@ const AdminTests = () => {
           author={t.author}
           lexile={t.lexile}
           to={`/controller/tests/${cipheredTestId}`}
+          createAdminActivity={async () => await createAdminActivity("test", t.title, "R")}
         />
       </React.Fragment>
     );

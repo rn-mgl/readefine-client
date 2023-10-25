@@ -10,11 +10,13 @@ import Message from "@/components/global/Message";
 import Loading from "@/components/global/Loading";
 import { useLoading } from "@/hooks/useLoading";
 import { useMessage } from "@/hooks/useMessage";
+import useAdminActivities from "@/src/hooks/useAdminActivities";
 
 const DeleteData = (props) => {
   const [confirmation, setConfirmation] = React.useState("");
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
 
+  const { createAdminActivity } = useAdminActivities();
   const { loading, setLoadingState } = useLoading(false);
   const { message, setMessageStatus } = useMessage();
 
@@ -46,11 +48,15 @@ const DeleteData = (props) => {
       });
 
       if (data) {
-        if (props.returnRoute) {
-          router.push(props.returnRoute);
-        } else {
-          props.getData();
-          props.handleCanDeleteData();
+        const activityData = await createAdminActivity(props.resourceType, props.confirmation, "D");
+
+        if (activityData) {
+          if (props.returnRoute) {
+            router.push(props.returnRoute);
+          } else {
+            props.getData();
+            props.handleCanDeleteData();
+          }
         }
       }
     } catch (error) {

@@ -77,6 +77,7 @@ const SingleReward = ({ params }) => {
           returnRoute="/controller/rewards"
           confirmation={reward?.reward_name}
           handleCanDeleteData={handleCanDeleteReward}
+          resourceType="reward"
         />
       ) : null}
 

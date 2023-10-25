@@ -19,6 +19,7 @@ import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/functions/jwtFns";
 import { useMessage } from "@/hooks/useMessage";
 import { useStoryFilters } from "@/hooks/useStoryFilters";
+import useAdminActivities from "@/src/hooks/useAdminActivities";
 
 const AdminStories = () => {
   const [stories, setStories] = React.useState([]);
@@ -34,6 +35,8 @@ const AdminStories = () => {
     handleLexileRangeFilter,
     handleSortFilter,
   } = useStoryFilters();
+
+  const { createAdminActivity } = useAdminActivities();
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -84,6 +87,7 @@ const AdminStories = () => {
           genre={story.genre}
           testId={story.test_id}
           visit={`/controller/stories/${cipheredStoryId}`}
+          createAdminActivity={async () => await createAdminActivity("story", story?.title, "R")}
           test={testLink}
         />
       </React.Fragment>

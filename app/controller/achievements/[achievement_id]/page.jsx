@@ -79,6 +79,7 @@ const SingleAchievement = ({ params }) => {
           returnRoute="/controller/achievements"
           confirmation={achievement?.achievement_name}
           handleCanDeleteData={handleCanDeleteAchievement}
+          resourceType="achievement"
         />
       ) : null}
 

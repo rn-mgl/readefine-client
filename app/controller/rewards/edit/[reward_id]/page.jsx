@@ -19,6 +19,7 @@ import { isTokenExpired } from "@/functions/jwtFns";
 import { useFileControls } from "@/hooks/useFileControls";
 import { useLoading } from "@/hooks/useLoading";
 import { useMessage } from "@/hooks/useMessage";
+import useAdminActivities from "@/src/hooks/useAdminActivities";
 
 const EditReward = ({ params }) => {
   const [reward, setReward] = React.useState({});
@@ -26,6 +27,7 @@ const EditReward = ({ params }) => {
   const { imageFile, rawImage, selectedImageViewer, removeSelectedImage, uploadFile, hasRawImage } = useFileControls();
   const { message, setMessageStatus } = useMessage();
   const { loading, setLoadingState } = useLoading(false);
+  const { createAdminActivity } = useAdminActivities();
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -84,7 +86,11 @@ const EditReward = ({ params }) => {
 
       // if uploaded, move to view reward
       if (data) {
-        router.push(`/controller/rewards/${params?.reward_id}`);
+        const activityData = await createAdminActivity("reward", reward?.reward_name, "U");
+
+        if (activityData) {
+          router.push(`/controller/rewards/${params?.reward_id}`);
+        }
       }
     } catch (error) {
       console.log(error);

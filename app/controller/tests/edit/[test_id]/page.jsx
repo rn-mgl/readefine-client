@@ -16,11 +16,13 @@ import { decipher } from "@/functions/security";
 import { isTokenExpired } from "@/functions/jwtFns";
 import { useLoading } from "@/hooks/useLoading";
 import { useMessage } from "@/hooks/useMessage";
+import useAdminActivities from "@/src/hooks/useAdminActivities";
 
 const EditTest = ({ params }) => {
   const [test, setTest] = React.useState({});
   const [questions, setQuestions] = React.useState([]);
 
+  const { createAdminActivity } = useAdminActivities();
   const { loading, setLoadingState } = useLoading(false);
   const { message, setMessageStatus } = useMessage();
 
@@ -83,7 +85,11 @@ const EditTest = ({ params }) => {
       );
 
       if (data) {
-        router.push(`/controller/tests/${params?.test_id}`);
+        const activityData = await createAdminActivity("test", test?.title, "U");
+
+        if (activityData) {
+          router.push(`/controller/tests/${params?.test_id}`);
+        }
       }
     } catch (error) {
       console.log(error);

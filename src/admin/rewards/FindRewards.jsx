@@ -1,78 +1,35 @@
-import React from "react";
-import RewardsFilter from "./RewardsFilter";
 import axios from "axios";
+import React from "react";
 import FindRewardCards from "./FindRewardCards";
+import RewardsFilter from "./RewardsFilter";
 
-import { IoClose } from "react-icons/io5";
-import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/base/context";
-import { typeConversion } from "@/functions/typeConversion";
-import { inputDate } from "@/functions/localDate";
 import Message from "@/components/global/Message";
+import { typeConversion } from "@/functions/typeConversion";
 import { useMessage } from "@/hooks/useMessage";
+import { useRewardFilters } from "@/src/hooks/useRewardFilters";
+import { useSession } from "next-auth/react";
+import { IoClose } from "react-icons/io5";
 
 const FindRewards = (props) => {
   const [rewards, setRewards] = React.useState([]);
 
-  const [searchFilter, setSearchFilter] = React.useState("");
-  const [typeFilter, setTypeFilter] = React.useState("");
-  const [sortFilter, setSortFilter] = React.useState({ toSort: "reward_name", sortMode: "ASC" });
-  const [dateRangeFilter, setDateRangeFilter] = React.useState({
-    from: "",
-    to: inputDate(new Date().toLocaleDateString()),
-  });
+  const {
+    sortFilter,
+    typeFilter,
+    searchFilter,
+    dateRangeFilter,
+    handleSearchFilter,
+    handleDateRangeFilter,
+    handleSortFilter,
+    handleTypeFilter,
+  } = useRewardFilters();
 
   const { message, setMessageStatus } = useMessage();
 
   const { data: session } = useSession({ required: true });
   const user = session?.user?.name;
   const { url } = useGlobalContext();
-
-  const handleSearchFilter = ({ name, value }) => {
-    setSearchFilter((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
-  };
-
-  const handleDateRangeFilter = ({ name, value }) => {
-    setDateRangeFilter((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
-  };
-
-  const handleSortFilter = ({ name, value }) => {
-    setSortFilter((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
-  };
-
-  // handle onchange on type filter
-  const handleTypeFilter = ({ value }) => {
-    setTypeFilter(value);
-  };
-
-  const rewardsCards = rewards.map((reward) => {
-    return (
-      <React.Fragment key={reward.reward_id}>
-        <FindRewardCards
-          image={reward.reward}
-          title={reward.reward_name}
-          type={typeConversion[reward.reward_type]}
-          selectReward={() => props.selectReward(reward.reward_name, reward.reward_id)}
-          handleCanSelectReward={props.handleCanSelectReward}
-        />
-      </React.Fragment>
-    );
-  });
 
   const getRewards = React.useCallback(async () => {
     try {
@@ -89,6 +46,20 @@ const FindRewards = (props) => {
       setMessageStatus(true, error?.response?.data?.msg, "error");
     }
   }, [url, user?.token, setRewards, searchFilter, sortFilter, dateRangeFilter, typeFilter, setMessageStatus]);
+
+  const rewardsCards = rewards.map((reward) => {
+    return (
+      <React.Fragment key={reward.reward_id}>
+        <FindRewardCards
+          image={reward.reward}
+          title={reward.reward_name}
+          type={typeConversion[reward.reward_type]}
+          selectReward={() => props.selectReward(reward.reward_name, reward.reward_id)}
+          handleCanSelectReward={props.handleCanSelectReward}
+        />
+      </React.Fragment>
+    );
+  });
 
   React.useEffect(() => {
     if (user) {

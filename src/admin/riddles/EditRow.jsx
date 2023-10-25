@@ -7,7 +7,7 @@ import { localizeDate } from "@/functions/localDate";
 const EditRow = (props) => {
   return (
     <tr
-      className="p-2 cstm-flex-col justify-start gap-4 text-center w-full rounded-md bg-accntColor
+      className="p-2 cstm-flex-col justify-start gap-5 text-center w-full rounded-md bg-accntColor
         t:bg-white t:cstm-flex-row"
     >
       <td className="t:hidden">
@@ -52,7 +52,7 @@ const EditRow = (props) => {
       </td>
 
       <td className="t:w-[20%]">{localizeDate(props.riddle.date_added)}</td>
-      <td className="t:w-[10%] cstm-flex-row gap-4">
+      <td className="t:w-[10%] cstm-flex-row gap-5">
         <button
           onClick={() => props.handleRiddleToEdit(props.riddle.riddle_id)}
           className="cstm-flex-col cstm-bg-hover text-scndColor"

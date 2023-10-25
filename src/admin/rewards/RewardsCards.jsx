@@ -5,7 +5,11 @@ import Link from "next/link";
 const RewardsCards = (props) => {
   return (
     <div className="bg-white p-5 rounded-2xl cstm-flex-col gap-4 shadow-md max-h-[25rem] w-72">
-      <Link href={props.to} className="w-full h-full cstm-flex-col overflow-clip bg-accntColor p-2 rounded-2xl">
+      <Link
+        onClick={props.createAdminActivity}
+        href={props.to}
+        className="w-full h-full cstm-flex-col overflow-clip bg-accntColor p-2 rounded-2xl"
+      >
         <Image
           src={props.image}
           alt="temp"
@@ -25,6 +29,7 @@ const RewardsCards = (props) => {
 
       <Link
         href={props.to}
+        onClick={props.createAdminActivity}
         className="w-full text-center  text-sm font-normal bg-prmColor text-accntColor rounded-full p-2 mt-auto"
       >
         See More

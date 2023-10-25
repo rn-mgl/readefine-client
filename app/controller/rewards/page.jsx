@@ -18,6 +18,7 @@ import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/functions/jwtFns";
 import { useMessage } from "@/hooks/useMessage";
 import { useRewardFilters } from "@/hooks/useRewardFilters";
+import useAdminActivities from "@/src/hooks/useAdminActivities";
 
 const AdminRewards = () => {
   const [rewards, setRewards] = React.useState([]);
@@ -33,6 +34,8 @@ const AdminRewards = () => {
     handleSortFilter,
     handleTypeFilter,
   } = useRewardFilters();
+
+  const { createAdminActivity } = useAdminActivities();
 
   const { data: session } = useSession({ required: true });
   const user = session?.user?.name;
@@ -60,6 +63,7 @@ const AdminRewards = () => {
   // map rewards
   const rewardsCards = rewards.map((reward) => {
     const cipheredRewardId = cipher(reward.reward_id);
+
     return (
       <React.Fragment key={reward.reward_id}>
         <RewardsCards
@@ -67,6 +71,7 @@ const AdminRewards = () => {
           title={reward.reward_name}
           type={reward.reward_type}
           to={`/controller/rewards/${cipheredRewardId}`}
+          createAdminActivity={async () => await createAdminActivity("reward", reward?.reward_name, "R")}
         />
       </React.Fragment>
     );

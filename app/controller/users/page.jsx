@@ -1,43 +1,38 @@
 "use client";
-import React from "react";
 import AdminPageHeader from "@/admin/global/PageHeader";
-import UsersFilter from "@/admin/users/UsersFilter";
-import axios from "axios";
-import Message from "@/components/global/Message";
 import UserRow from "@/admin/users/UserRow";
+import UsersFilter from "@/admin/users/UsersFilter";
+import Message from "@/components/global/Message";
+import axios from "axios";
+import React from "react";
 
 import noUsers from "@/public/profile/NoTest.svg";
 
 import { useGlobalContext } from "@/base/context";
-import { inputDate } from "@/functions/localDate";
-import { useSession } from "next-auth/react";
+import { isTokenExpired } from "@/functions/jwtFns";
 import { cipher } from "@/functions/security";
+import { useMessage } from "@/hooks/useMessage";
+import useAdminActivities from "@/src/hooks/useAdminActivities";
+import useUserFilters from "@/src/hooks/useUserFilters";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { isTokenExpired } from "@/functions/jwtFns";
-import { useMessage } from "@/hooks/useMessage";
 
 const AdminUsers = () => {
   const [users, setUsers] = React.useState([]);
 
-  // search filters
-  const [searchFilter, setSearchFilter] = React.useState({
-    toSearch: "name",
-    searchKey: "",
-  });
-  const [sortFilter, setSortFilter] = React.useState({
-    toSort: "name",
-    sortMode: "ASC",
-  });
-  const [lexileRangeFilter, setLexileRangeFilter] = React.useState({
-    from: 0,
-    to: 1250,
-  });
-  const [dateRangeFilter, setDateRangeFilter] = React.useState({
-    from: "",
-    to: inputDate(new Date().toLocaleDateString()),
-  });
+  const {
+    searchFilter,
+    sortFilter,
+    lexileRangeFilter,
+    dateRangeFilter,
+    handleSearchFilter,
+    handleSortFilter,
+    handleDateRangeFilter,
+    handleLexileRangeFilter,
+  } = useUserFilters();
 
+  const { createAdminActivity } = useAdminActivities();
   const { message, setMessageStatus } = useMessage();
 
   const { data: session } = useSession({ required: true });
@@ -45,53 +40,18 @@ const AdminUsers = () => {
   const user = session?.user?.name;
   const router = useRouter();
 
-  // handle onchange on search filter
-  const handleSearchFilter = ({ name, value }) => {
-    setSearchFilter((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
-  };
-
-  // handle onchange on sort filter
-  const handleSortFilter = ({ name, value }) => {
-    setSortFilter((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
-  };
-
-  // handle onchange on date range filter
-  const handleDateRangeFilter = ({ name, value }) => {
-    setDateRangeFilter((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
-  };
-
-  // handle onchange on lexile range filter
-  const handleLexileRangeFilter = ({ name, value }) => {
-    setLexileRangeFilter((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
-  };
-
   // map user row
   const userRow = users.map((user) => {
     const email = user.email.split("@");
     const cipheredUserId = cipher(user.user_id);
     return (
-      <React.Fragment key={user.user_id}>
-        <UserRow user={user} email={email} cipheredUserId={cipheredUserId} />
+      <React.Fragment key={user?.user_id}>
+        <UserRow
+          user={user}
+          email={email}
+          cipheredUserId={cipheredUserId}
+          createAdminActivity={async () => await createAdminActivity("user", `${user?.name} ${user?.surname}`, "R")}
+        />
       </React.Fragment>
     );
   });

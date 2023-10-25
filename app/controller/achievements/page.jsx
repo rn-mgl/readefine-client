@@ -19,6 +19,7 @@ import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/functions/jwtFns";
 import { useMessage } from "@/hooks/useMessage";
 import { useAchievementFilters } from "@/hooks/useAchievementFilters";
+import useAdminActivities from "@/src/hooks/useAdminActivities";
 
 const AdminAchievements = () => {
   const [achievements, setAchievements] = React.useState([]);
@@ -36,6 +37,8 @@ const AdminAchievements = () => {
     handleSortFilter,
     handleTypeFilter,
   } = useAchievementFilters();
+
+  const { createAdminActivity } = useAdminActivities();
 
   const { data: session } = useSession({ required: true });
   const user = session?.user?.name;
@@ -68,6 +71,7 @@ const AdminAchievements = () => {
   // map achievement cards
   const achievementCards = achievements.map((a) => {
     const cipheredAchievementId = cipher(a.achievement_id);
+
     return (
       <React.Fragment key={a.achievement_id}>
         <AchievementsCards
@@ -77,6 +81,7 @@ const AdminAchievements = () => {
           task={a.task}
           goal={a.goal}
           to={`/controller/achievements/${cipheredAchievementId}`}
+          createAdminActivity={async () => await createAdminActivity("achievement", a.achievement_name, "R")}
         />
       </React.Fragment>
     );

@@ -35,7 +35,10 @@ const RiddleRow = (props) => {
       <td className="t:w-[20%]">{localizeDate(props.riddle.date_added)}</td>
       <td className="t:w-[10%] cstm-flex-row gap-4">
         <button
-          onClick={() => props.handleRiddleToEdit(props.riddle.riddle_id)}
+          onClick={async () => {
+            props.handleRiddleToEdit(props.riddle.riddle_id);
+            await props.createAdminActivity("riddle", props.riddle.answer, "R");
+          }}
           className="cstm-flex-col cstm-bg-hover  text-prmColor"
         >
           <AiFillEdit className="scale-125" />

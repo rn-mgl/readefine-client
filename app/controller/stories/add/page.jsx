@@ -17,6 +17,7 @@ import AudioPreview from "@/components/global/AudioPreview";
 import { useFileControls } from "@/hooks/useFileControls";
 import { useLoading } from "@/hooks/useLoading";
 import { useMessage } from "@/hooks/useMessage";
+import useAdminActivities from "@/src/hooks/useAdminActivities";
 
 const AddStory = () => {
   const [pages, setPages] = React.useState([
@@ -48,6 +49,8 @@ const AddStory = () => {
     hasRawAudio,
     hasRawImage,
   } = useFileControls();
+
+  const { createAdminActivity } = useAdminActivities();
 
   const { message, setMessageStatus } = useMessage();
 
@@ -157,7 +160,11 @@ const AddStory = () => {
 
       // if uploaded, go to stories page
       if (data) {
-        router.push("/controller/stories");
+        const adminActivity = await createAdminActivity("story", storyFilter.title, "C");
+
+        if (adminActivity) {
+          router.push("/controller/stories");
+        }
       }
     } catch (error) {
       console.log(error);

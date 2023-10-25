@@ -16,6 +16,7 @@ import { isTokenExpired } from "@/functions/jwtFns";
 import { useFileControls } from "@/hooks/useFileControls";
 import { useLoading } from "@/hooks/useLoading";
 import { useMessage } from "@/hooks/useMessage";
+import useAdminActivities from "@/src/hooks/useAdminActivities";
 
 const AddReward = () => {
   const [reward, setReward] = React.useState({
@@ -26,6 +27,7 @@ const AddReward = () => {
 
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
 
+  const { createAdminActivity } = useAdminActivities();
   const { imageFile, rawImage, selectedImageViewer, removeSelectedImage, uploadFile, hasRawImage } = useFileControls();
   const { message, setMessageStatus } = useMessage();
   const { loading, setLoadingState } = useLoading(false);
@@ -76,7 +78,11 @@ const AddReward = () => {
 
       // if added, move to main reward page
       if (data) {
-        router.push("/controller/rewards");
+        const activityData = await createAdminActivity("reward", reward.name, "C");
+
+        if (activityData) {
+          router.push("/controller/rewards");
+        }
       }
     } catch (error) {
       console.log(error);

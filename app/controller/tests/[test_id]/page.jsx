@@ -161,6 +161,7 @@ const SingleTest = ({ params }) => {
           returnRoute="/controller/tests"
           confirmation={testData?.title}
           handleCanDeleteData={handleCanDeleteTest}
+          resourceType="test"
         />
       ) : null}
 

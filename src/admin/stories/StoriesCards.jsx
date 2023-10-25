@@ -33,6 +33,7 @@ const StoriesCards = (props) => {
       <div className="cstm-flex-col w-full gap-2">
         <Link
           href={props.visit}
+          onClick={props.createAdminActivity}
           className="w-full text-center  text-sm font-normal bg-prmColor text-accntColor rounded-full p-2 "
         >
           Read

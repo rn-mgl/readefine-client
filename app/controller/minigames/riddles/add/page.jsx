@@ -1,22 +1,24 @@
 "use client";
-import React from "react";
 import AdminPageHeader from "@/admin/global/PageHeader";
 import Message from "@/components/global/Message";
 import axios from "axios";
 import Link from "next/link";
+import React from "react";
 
-import { BsArrowLeft } from "react-icons/bs";
-import { useSession } from "next-auth/react";
-import { wordCount } from "@/functions/wordCount";
 import { useGlobalContext } from "@/base/context";
-import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/functions/jwtFns";
+import { wordCount } from "@/functions/wordCount";
 import { useMessage } from "@/hooks/useMessage";
+import useAdminActivities from "@/src/hooks/useAdminActivities";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { BsArrowLeft } from "react-icons/bs";
 
 const AddRiddle = () => {
   const [riddleData, setRiddleData] = React.useState({ riddle: "", answer: "" });
 
   const { message, setMessageStatus } = useMessage();
+  const { createAdminActivity } = useAdminActivities();
 
   const { data: session } = useSession({ required: true });
   const user = session?.user?.name;
@@ -47,8 +49,12 @@ const AddRiddle = () => {
 
       // reset if riddle is added
       if (data) {
-        setMessageStatus(true, `Successfully added ${answer}.`, "info");
-        setRiddleData({ riddle: "", answer: "" });
+        const activityData = await createAdminActivity("riddle", riddleData.answer, "C");
+
+        if (activityData) {
+          setMessageStatus(true, `Successfully added ${answer}.`, "info");
+          setRiddleData({ riddle: "", answer: "" });
+        }
       }
     } catch (error) {
       console.log(error);

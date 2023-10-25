@@ -22,6 +22,7 @@ import { useFileControls } from "@/hooks/useFileControls";
 import Image from "next/image";
 import { useLoading } from "@/hooks/useLoading";
 import { useMessage } from "@/hooks/useMessage";
+import useAdminActivities from "@/src/hooks/useAdminActivities";
 
 const EditStory = ({ params }) => {
   const [story, setStory] = React.useState({});
@@ -42,8 +43,8 @@ const EditStory = ({ params }) => {
     hasRawImage,
   } = useFileControls();
 
+  const { createAdminActivity } = useAdminActivities();
   const { message, setMessageStatus } = useMessage();
-
   const { loading, setLoadingState } = useLoading(false);
 
   const { data: session } = useSession({ required: true });
@@ -212,7 +213,11 @@ const EditStory = ({ params }) => {
 
       // if edited, move to stories page
       if (data) {
-        router.push("/controller/stories");
+        const activityData = await createAdminActivity("story", story?.title, "U");
+
+        if (activityData) {
+          router.push("/controller/stories");
+        }
       }
     } catch (error) {
       console.log(error);
