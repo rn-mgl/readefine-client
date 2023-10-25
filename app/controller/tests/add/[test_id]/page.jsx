@@ -170,12 +170,12 @@ const AddTest = ({ params }) => {
   }
 
   return (
-    <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
+    <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-4 justify-start">
       <AdminPageHeader subHeader="Tests" mainHeader="Add Test" />
 
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
-      <form onSubmit={(e) => createTest(e)} className="w-full cstm-flex-col cstm-w-limit border-collapse gap-5">
+      <form onSubmit={(e) => createTest(e)} className="w-full cstm-flex-col cstm-w-limit border-collapse gap-4">
         {testPages}
 
         <div className="cstm-flex-row w-full">

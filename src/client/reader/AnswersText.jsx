@@ -5,7 +5,7 @@ import { FaChevronRight } from "react-icons/fa";
 
 const AnswersText = (props) => {
   return (
-    <div className="cstm-flex-col gap-5 w-full bg-accntColor p-5 rounded-md items-start text-left text-sm">
+    <div className="cstm-flex-col gap-4 w-full bg-accntColor p-5 rounded-md items-start text-left text-sm">
       <p className="font-semibold">{props.dateAnswered}</p>
       <div className="cstm-flex-row gap-2 w-full justify-start">
         <div

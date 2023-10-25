@@ -157,7 +157,7 @@ const AddAdministrator = (props) => {
   return (
     <div
       className="w-full h-full fixed backdrop-blur-md top-0
-                left-0 z-20 p-5 cstm-flex-col gap-5 justify-start"
+                left-0 z-20 p-5 cstm-flex-col gap-4 justify-start"
     >
       <button className="cstm-bg-hover ml-auto" onClick={props.handleCanAddAdministrators}>
         <IoClose className="text-prmColor scale-125" />
@@ -166,11 +166,11 @@ const AddAdministrator = (props) => {
       {/* show message pop up */}
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
-      <div className="cstm-flex-col w-full h-full cstm-w-limit gap-5">
+      <div className="cstm-flex-col w-full h-full cstm-w-limit gap-4">
         <p className="text-prmColor font-bold text-xl">Add Administrator</p>
         <form
           className="w-full rounded-md bg-prmColor bg-opacity-20 backdrop-blur-md border-[1px] 
-                    border-prmColor border-opacity-40 p-5 cstm-flex-col gap-5 relative z-10 shadow-lg
+                    border-prmColor border-opacity-40 p-5 cstm-flex-col gap-4 relative z-10 shadow-lg
                     t:w-96
                     l-s:w-[26rem]"
           onSubmit={signUp}

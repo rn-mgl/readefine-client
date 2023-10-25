@@ -195,12 +195,12 @@ const AdminRiddles = () => {
   }, [user, router]);
 
   return (
-    <div className="p-5 bg-accntColor w-full min-h-screen h-screen cstm-flex-col gap-5 justify-start">
+    <div className="p-5 bg-accntColor w-full min-h-screen h-screen cstm-flex-col gap-4 justify-start">
       <AdminPageHeader subHeader="Readefine" mainHeader="Riddles" />
 
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
-      <div className="cstm-flex-col gap-5 w-full cstm-w-limit">
+      <div className="cstm-flex-col gap-4 w-full cstm-w-limit">
         <RiddlesFilter
           handleSearchFilter={handleSearchFilter}
           handleDateRangeFilter={handleDateRangeFilter}
@@ -219,7 +219,7 @@ const AdminRiddles = () => {
           />
         ) : null}
 
-        <div className="cstm-flex-row w-full gap-5">
+        <div className="cstm-flex-row w-full gap-4">
           <Link href="/controller/minigames" className="cstm-bg-hover">
             <BsArrowLeft className="text-prmColor scale-100 m-l:scale-125" />
           </Link>
@@ -240,10 +240,10 @@ const AdminRiddles = () => {
       <table
         className="table-fixed p-4 rounded-md cstm-flex-col cstm-scrollbar-2 overflow-auto 
                 w-full h-full justify-start items-start bg-white text-sm 
-                t:gap-5 cstm-w-limit border-collapse"
+                t:gap-4 cstm-w-limit border-collapse"
       >
         <thead className="w-full ">
-          <tr className="p-2 cstm-flex-row justify-start gap-5 text-center text-prmColor w-full hidden t:flex">
+          <tr className="p-2 cstm-flex-row justify-start gap-4 text-center text-prmColor w-full hidden t:flex">
             <th className="w-[50%]">Riddle Statement</th>
 
             <th className="w-[20%]">Answer</th>
@@ -254,7 +254,7 @@ const AdminRiddles = () => {
           </tr>
         </thead>
 
-        <tbody className="w-full cstm-flex-col gap-5">{riddleRow}</tbody>
+        <tbody className="w-full cstm-flex-col gap-4">{riddleRow}</tbody>
       </table>
     </div>
   );

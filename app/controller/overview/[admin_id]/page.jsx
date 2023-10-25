@@ -253,7 +253,7 @@ const Overview = ({ params }) => {
   }, [user, router]);
 
   return (
-    <div className="w-full min-h-screen bg-accntColor p-5 cstm-flex-col justify-start cstm-scrollbar gap-5">
+    <div className="w-full min-h-screen bg-accntColor p-5 cstm-flex-col justify-start cstm-scrollbar gap-4">
       <AdminPageHeader mainHeader="Overview" subHeader="Readefine" />
 
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
@@ -262,18 +262,18 @@ const Overview = ({ params }) => {
 
       {canChangePassword ? <ChangePassword handleCanChangePassword={handleCanChangePassword} /> : null}
 
-      <div className="cstm-flex-col cstm-scrollbar cstm-w-limit w-full gap-5">
+      <div className="cstm-flex-col cstm-scrollbar cstm-w-limit w-full gap-4">
         <MainOverview
           adminData={adminData}
           handleCanEditMain={handleCanEditMain}
           handleCanChangePassword={handleCanChangePassword}
         />
 
-        <div className="text-xl font-extrabold t:mr-auto cstm-flex-row gap-5">
+        <div className="text-xl font-extrabold t:mr-auto cstm-flex-row gap-4">
           <RxActivityLog /> Activity Log <RxActivityLog className="-scale-x-100" />
         </div>
 
-        <div className="cstm-flex-col justify-start gap-5 t:gap-10 w-full">
+        <div className="cstm-flex-col justify-start gap-4 t:gap-10 w-full">
           <ActivityCard
             label="Story"
             activity={storyActivity}

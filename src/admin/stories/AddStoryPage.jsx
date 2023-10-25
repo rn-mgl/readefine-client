@@ -15,7 +15,7 @@ const AddStoryPage = (props) => {
       className="p-5 rounded-2xl cstm-flex-col overflow-auto w-full h-screen 
                   justify-start items-start bg-white text-sm gap-2 shadow-md cstm-scrollbar"
     >
-      <div className="cstm-flex-row w-full gap-5">
+      <div className="cstm-flex-row w-full gap-4">
         <textarea
           name="pageHeader"
           id="pageHeader"
@@ -34,7 +34,7 @@ const AddStoryPage = (props) => {
 
       <div className="cstm-separator" />
 
-      <div className="cstm-flex-col w-full t:cstm-flex-row gap-5 h-full">
+      <div className="cstm-flex-col w-full t:cstm-flex-row gap-4 h-full">
         <textarea
           name="pageContent"
           id="pageContent"

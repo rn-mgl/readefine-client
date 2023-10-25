@@ -18,7 +18,7 @@ const DecipherGame = (props) => {
 
   return (
     <>
-      <div className="absolute top-0 right-0 cstm-flex-col gap-5">
+      <div className="absolute top-0 right-0 cstm-flex-col gap-4">
         <button onClick={props.handleIsPlaying} className="cstm-bg-hover ml-auto">
           <BsArrowLeft />
         </button>
@@ -28,7 +28,7 @@ const DecipherGame = (props) => {
         </div>
       </div>
 
-      <div className="cstm-flex-row my-auto m-l:gap-2 t:gap-5">{letterBlocks}</div>
+      <div className="cstm-flex-row my-auto m-l:gap-2 t:gap-4">{letterBlocks}</div>
       <div className="cstm-flex-row w-full ">
         <button
           onClick={props.resetGuesses}

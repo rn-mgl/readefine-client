@@ -61,20 +61,20 @@ const SingleReward = ({ params }) => {
   }, [user, router]);
 
   return (
-    <div className="w-full cstm-flex-col p-5 gap-5 t:gap-5 justify-start bg-accntColor max-h-screen h-screen">
+    <div className="w-full cstm-flex-col p-5 gap-4 t:gap-4 justify-start bg-accntColor max-h-screen h-screen">
       <ClientPageHeader mainHeader="Readefine" subHeader="Your Reward" />
 
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       <div className="cstm-w-limit justify-start cstm-flex-col w-full relative z-10 h-full">
-        <div className="cstm-flex-col gap-5 w-full t:w-10/12 l-l:w-8/12 h-full">
+        <div className="cstm-flex-col gap-4 w-full t:w-10/12 l-l:w-8/12 h-full">
           <Link className="cstm-bg-hover mr-auto" href="/archives/rewards">
             <BsArrowLeft className="text-white scale-125" />
           </Link>
 
           <div
             className="cstm-flex-col bg-white rounded-2xl p-5 w-full 
-                        shadow-solid gap-5 text-center h-full justify-start"
+                        shadow-solid gap-4 text-center h-full justify-start"
           >
             {/* reward */}
             <div className="cstm-flex-col p-5 rounded-2xl bg-accntColor w-full relative overflow-hidden h-full">
@@ -95,7 +95,7 @@ const SingleReward = ({ params }) => {
               <BsTrophyFill className="absolute scale-[7] bottom-5 right-0 opacity-10 t:scale-[12] t:bottom-20 t:right-24 text-prmColor " />
             </div>
 
-            <div className="cstm-flex-col gap-5 h-[30%]">
+            <div className="cstm-flex-col gap-4 h-[30%]">
               {/* name */}
               <p className="font-extrabold text-xl text-prmColor cstm-flex-row">
                 <BsDot className="text-black" />

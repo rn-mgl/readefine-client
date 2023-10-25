@@ -11,7 +11,7 @@ import Image from "next/image";
 const Offers = () => {
   return (
     <section
-      className="min-h-screen w-full bg-prmColor p-5  text-white text-center cstm-flex-col gap-5 justify-start overflow-x-hidden
+      className="min-h-screen w-full bg-prmColor p-5  text-white text-center cstm-flex-col gap-4 justify-start overflow-x-hidden
                 t:p-10 t:gap-10
                 l-s:justify-center"
       id="offers"
@@ -26,7 +26,7 @@ const Offers = () => {
         Boost your <br className="t:hidden" /> Lexile Level !
       </p>
 
-      <div className="cstm-flex-col gap-5 w-full l-s:w-10/12">
+      <div className="cstm-flex-col gap-4 w-full l-s:w-10/12">
         {/*read stories*/}
         <div className="cstm-flex-col w-full gap-2 text-left relative z-10 l-s:w-6/12 l-s:mr-auto">
           <p className="text-white font-bold text-2xl w-full ">Read Stories</p>
@@ -42,7 +42,7 @@ const Offers = () => {
         </div>
 
         <div
-          className="p-5 cstm-flex-col gap-5 overflow-hidden w-full cstm-flex-col border-[1px] backdrop-blur-md relative z-10 t:p-10
+          className="p-5 cstm-flex-col gap-4 overflow-hidden w-full cstm-flex-col border-[1px] backdrop-blur-md relative z-10 t:p-10
             border-white bg-white bg-opacity-50 rounded-lg bg-gradient-to-br from-[#ffffff00] via-[#ffffff9f] to-[#ffffff00]"
         >
           <Image
@@ -78,7 +78,7 @@ const Offers = () => {
         </div>
 
         <div
-          className="p-5 cstm-flex-col gap-5 overflow-hidden w-full cstm-flex-col border-[1px]  backdrop-blur-md t:p-10
+          className="p-5 cstm-flex-col gap-4 overflow-hidden w-full cstm-flex-col border-[1px]  backdrop-blur-md t:p-10
             border-white bg-white bg-opacity-50 rounded-lg bg-gradient-to-br from-[#ffffff00] via-[#ffffff9f] to-[#ffffff00]"
         >
           <Image
@@ -113,7 +113,7 @@ const Offers = () => {
         </div>
 
         <div
-          className="p-5 cstm-flex-col gap-5 overflow-hidden w-full cstm-flex-col border-[1px]  backdrop-blur-md t:p-10
+          className="p-5 cstm-flex-col gap-4 overflow-hidden w-full cstm-flex-col border-[1px]  backdrop-blur-md t:p-10
             border-white bg-white bg-opacity-50 rounded-lg bg-gradient-to-br from-[#ffffff00] via-[#ffffff9f] to-[#ffffff00]"
         >
           <Image

@@ -135,7 +135,7 @@ const EditAchievement = ({ params }) => {
   }
 
   return (
-    <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
+    <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-4 justify-start">
       <AdminPageHeader subHeader="Achievements" mainHeader="Edit Achievement" />
 
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
@@ -144,7 +144,7 @@ const EditAchievement = ({ params }) => {
         <FindRewards selectReward={selectReward} handleCanSelectReward={handleCanSelectReward} />
       ) : null}
 
-      <form onSubmit={(e) => editAchievement(e)} className="w-full cstm-flex-col cstm-w-limit border-collapse gap-5">
+      <form onSubmit={(e) => editAchievement(e)} className="w-full cstm-flex-col cstm-w-limit border-collapse gap-4">
         <Link href="/controller/achievements" className="cstm-bg-hover mr-auto">
           <BsArrowLeft className="text-prmColor cursor-pointer scale-125" />
         </Link>
@@ -157,7 +157,7 @@ const EditAchievement = ({ params }) => {
 
         <div
           className="table-fixed p-5 rounded-2xl cstm-flex-col overflow-auto w-full h-[70vh] 
-                      justify-start items-start bg-white text-sm gap-5 shadow-md cstm-scrollbar"
+                      justify-start items-start bg-white text-sm gap-4 shadow-md cstm-scrollbar"
         >
           <div className="cstm-flex-row w-full">
             <textarea

@@ -30,7 +30,7 @@ const StoryDoublePage = (props) => {
 
   return (
     <>
-      <div className={`cstm-flex-col gap-5 p-5 t:p-10 transition-all absolute ${position} w-6/12 left-0`}>
+      <div className={`cstm-flex-col gap-4 p-5 t:p-10 transition-all absolute ${position} w-6/12 left-0`}>
         {leftPage ? (
           <>
             <p
@@ -64,7 +64,7 @@ const StoryDoublePage = (props) => {
           </>
         ) : null}
       </div>
-      <div className={`cstm-flex-col gap-5 p-5 t:p-10 transition-all absolute ${position} w-6/12 right-0`}>
+      <div className={`cstm-flex-col gap-4 p-5 t:p-10 transition-all absolute ${position} w-6/12 right-0`}>
         {rightPage ? (
           <>
             <p

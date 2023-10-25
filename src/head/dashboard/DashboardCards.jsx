@@ -5,7 +5,7 @@ import Link from "next/link";
 const DashboardCards = (props) => {
   return (
     <div
-      className="bg-white p-5 min-h-80 rounded-2xl min-w-[16rem] cstm-flex-col gap-5 group hover:shadow-md
+      className="bg-white p-5 min-h-80 rounded-2xl min-w-[16rem] cstm-flex-col gap-4 group hover:shadow-md
                   t:w-80
                   l-l:w-[22rem]"
     >
@@ -18,7 +18,7 @@ const DashboardCards = (props) => {
         />
       </Link>
 
-      <div className="cstm-flex-col w-full gap-5">
+      <div className="cstm-flex-col w-full gap-4">
         <div
           className="w-full cstm-flex-col 
                   l-l:items-start"

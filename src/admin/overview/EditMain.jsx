@@ -131,7 +131,7 @@ const EditMain = (props) => {
       <div className="cstm-w-limit  w-full justify-start cstm-flex-col  ">
         <form
           onSubmit={(e) => editMain(e)}
-          className="justify-start cstm-flex-col w-full gap-5 t:w-10/12 l-s:w-8/12 l-l:w-6/12"
+          className="justify-start cstm-flex-col w-full gap-4 t:w-10/12 l-s:w-8/12 l-l:w-6/12"
         >
           <div className="w-full h-fit p-5 rounded-2xl bg-white cstm-flex-col gap-2 shadow-md">
             <div
@@ -180,7 +180,7 @@ const EditMain = (props) => {
             </div>
           </div>
 
-          <div className="w-full h-fit p-5 rounded-2xl bg-white cstm-flex-col gap-5 shadow-md">
+          <div className="w-full h-fit p-5 rounded-2xl bg-white cstm-flex-col gap-4 shadow-md">
             <EditInput
               type="text"
               label="Name"

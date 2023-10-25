@@ -17,7 +17,7 @@ const EditStoryPage = (props) => {
       className="table-fixed p-5 rounded-2xl cstm-flex-col overflow-auto w-full h-screen justify-start 
                     items-start bg-white text-sm gap-2 shadow-md cstm-scrollbar-2"
     >
-      <div className="cstm-flex-row w-full gap-5">
+      <div className="cstm-flex-row w-full gap-4">
         <textarea
           name="header"
           id="header"
@@ -36,7 +36,7 @@ const EditStoryPage = (props) => {
 
       <div className="cstm-separator" />
 
-      <div className="cstm-flex-col w-full t:cstm-flex-row gap-5 h-full">
+      <div className="cstm-flex-col w-full t:cstm-flex-row gap-4 h-full">
         <textarea
           name="content"
           id="content"
@@ -67,7 +67,7 @@ const EditStoryPage = (props) => {
               priority
             />
 
-            <div className="w-full cstm-flex-row gap-5">
+            <div className="w-full cstm-flex-row gap-4">
               <p className="text-sm overflow-x-auto w-full mr-auto p-2 whitespace-nowrap scrollbar-none font-bold">
                 Current Page Image
               </p>
@@ -84,7 +84,7 @@ const EditStoryPage = (props) => {
         ) : null}
       </div>
 
-      <div className="w-full cstm-flex-row gap-5">
+      <div className="w-full cstm-flex-row gap-4">
         <label className=" cstm-bg-hover cursor-pointer" htmlFor={`filePage${page}`}>
           <input
             accept="image/*"

@@ -129,19 +129,19 @@ const EditReward = ({ params }) => {
   }
 
   return (
-    <div className="w-full min-h-screen bg-accntColor p-5 cstm-flex-col gap-5 justify-start">
+    <div className="w-full min-h-screen bg-accntColor p-5 cstm-flex-col gap-4 justify-start">
       <AdminPageHeader subHeader={reward?.reward_name} mainHeader="Edit Reward" />
 
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
-      <form onSubmit={(e) => editReward(e)} className="w-full cstm-flex-col border-collapse gap-5 cstm-w-limit">
+      <form onSubmit={(e) => editReward(e)} className="w-full cstm-flex-col border-collapse gap-4 cstm-w-limit">
         <EditRewardFilter handleReward={handleReward} reward={reward} />
 
         <div
-          className="cstm-flex-col gap-5 w-full
+          className="cstm-flex-col gap-4 w-full
                       l-s:cstm-flex-row"
         >
-          <div className="table-fixed p-5 rounded-2xl cstm-flex-col overflow-auto w-full h-[70vh] justify-start items-start bg-white text-sm gap-5 shadow-md cstm-scrollbar">
+          <div className="table-fixed p-5 rounded-2xl cstm-flex-col overflow-auto w-full h-[70vh] justify-start items-start bg-white text-sm gap-4 shadow-md cstm-scrollbar">
             {/* reward name */}
             <div className="cstm-flex-row w-full">
               <textarea
@@ -176,7 +176,7 @@ const EditReward = ({ params }) => {
             </div>
           </div>
 
-          <div className="table-fixed p-5 rounded-2xl cstm-flex-col overflow-auto w-full h-[70vh] justify-start items-start bg-white text-sm gap-5 shadow-md cstm-scrollbar">
+          <div className="table-fixed p-5 rounded-2xl cstm-flex-col overflow-auto w-full h-[70vh] justify-start items-start bg-white text-sm gap-4 shadow-md cstm-scrollbar">
             <div className="w-full h-full cstm-flex-col bg-accntColor rounded-2xl">
               {/* show selected file first then the current reward if none selected */}
 
@@ -199,7 +199,7 @@ const EditReward = ({ params }) => {
                     priority
                   />
 
-                  <div className="w-full cstm-flex-row gap-5">
+                  <div className="w-full cstm-flex-row gap-4">
                     <p className="text-sm overflow-x-auto w-full mr-auto p-2 whitespace-nowrap scrollbar-none font-bold">
                       Current Reward
                     </p>

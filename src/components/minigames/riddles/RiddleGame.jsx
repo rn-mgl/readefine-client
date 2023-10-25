@@ -8,7 +8,7 @@ import RiddleEntries from "./RiddleEntries";
 const RiddleGame = (props) => {
   return (
     <div className="w-full h-full cstm-w-limit cstm-flex-col relative">
-      <div className="relative ml-auto cstm-flex-col gap-5 z-10">
+      <div className="relative ml-auto cstm-flex-col gap-4 z-10">
         <button onClick={props.handleIsPlaying} className="cstm-bg-hover ml-auto">
           <BsArrowLeft className="scale-125" />
         </button>
@@ -23,7 +23,7 @@ const RiddleGame = (props) => {
         </div>
 
         <div
-          className="cstm-flex-col gap-5 w-full rounded-2xl z-10 
+          className="cstm-flex-col gap-4 w-full rounded-2xl z-10 
                       bg-white p-5 border-accntColor shadow-solid relative"
         >
           <div className="cstm-flex-row gap-2">{props.remainingLives}</div>

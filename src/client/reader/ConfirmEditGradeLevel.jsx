@@ -76,7 +76,7 @@ const ConfirmEditGradeLevel = (props) => {
       <div className="cstm-flex-col w-full cstm-w-limit border-collapse h-screen">
         <form
           onSubmit={(e) => editGrade(e)}
-          className="w-11/12 rounded-2xl bg-white min-h-[15rem] my-auto cstm-flex-col justify-start p-5 text-center gap-5 absolute shadow-solid
+          className="w-11/12 rounded-2xl bg-white min-h-[15rem] my-auto cstm-flex-col justify-start p-5 text-center gap-4 absolute shadow-solid
                     t:w-7/12
                     l-s:w-6/12
                     l-l:w-4/12"

@@ -39,7 +39,7 @@ const DangleGame = (props) => {
         </div>
       </div>
 
-      <div className={`${props.isPlaying ? "mb-auto" : "mb-0"} cstm-flex-row gap-2 absolute -top-52 t:gap-5`}>
+      <div className={`${props.isPlaying ? "mb-auto" : "mb-0"} cstm-flex-row gap-2 absolute -top-52 t:gap-4`}>
         {dangles}
       </div>
 

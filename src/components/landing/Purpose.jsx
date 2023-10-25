@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const Purpose = () => {
   return (
-    <section className="min-h-screen bg-accntColor w-full  text-center cstm-flex-col text-prmColor p-5 gap-5" id="join">
+    <section className="min-h-screen bg-accntColor w-full  text-center cstm-flex-col text-prmColor p-5 gap-4" id="join">
       <p
         className=" font-extrabold text-2xl
                     m-l:text-3xl

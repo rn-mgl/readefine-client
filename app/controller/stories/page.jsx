@@ -107,12 +107,12 @@ const AdminStories = () => {
   }, [user, router]);
 
   return (
-    <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
+    <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-4 justify-start">
       <AdminPageHeader subHeader="Readefine" mainHeader="Stories" />
 
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
-      <div className="w-full cstm-w-limit cstm-flex-col gap-5 ">
+      <div className="w-full cstm-w-limit cstm-flex-col gap-4 ">
         <StoriesFilter
           handleSearchFilter={handleSearchFilter}
           handleDateRangeFilter={handleDateRangeFilter}
@@ -132,7 +132,7 @@ const AdminStories = () => {
         </div>
 
         <div
-          className="cstm-flex-col gap-5 justify-start w-full transition-all relative
+          className="cstm-flex-col gap-4 justify-start w-full transition-all relative
                   t:cstm-flex-row t:flex-wrap"
         >
           {stories.length ? (

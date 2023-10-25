@@ -8,7 +8,7 @@ import { AiFillEdit } from "react-icons/ai";
 
 const MainOverview = (props) => {
   return (
-    <div className="cstm-flex-col justify-start gap-5 w-full t:cstm-flex-row">
+    <div className="cstm-flex-col justify-start gap-4 w-full t:cstm-flex-row">
       <div className="bg-white w-full rounded-2xl h-72 p-5 cstm-flex-col justify-start relative t:w-6/12 t:mr-auto t:h-72">
         <div className="relative w-full h-[40%] rounded-2xl cstm-flex-col bg-gradient-to-r from-prmColor to-scndColor">
           <div

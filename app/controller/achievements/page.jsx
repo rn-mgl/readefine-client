@@ -99,12 +99,12 @@ const AdminAchievements = () => {
   }, [user, router]);
 
   return (
-    <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
+    <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-4 justify-start">
       <AdminPageHeader subHeader="Readefine" mainHeader="Achievements & Tasks" />
 
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
-      <div className="w-full cstm-flex-col gap-5 cstm-w-limit">
+      <div className="w-full cstm-flex-col gap-4 cstm-w-limit">
         <AchievementsFilter
           typeFilter={typeFilter}
           searchFilter={searchFilter}
@@ -122,7 +122,7 @@ const AdminAchievements = () => {
           <IoAddOutline className="text-prmColor cursor-pointer scale-150" />
         </Link>
 
-        <div className="w-full cstm-flex-col flex-wrap gap-5 relative t:items-start t:cstm-flex-row">
+        <div className="w-full cstm-flex-col flex-wrap gap-4 relative t:items-start t:cstm-flex-row">
           {achievements.length ? (
             achievementCards
           ) : (

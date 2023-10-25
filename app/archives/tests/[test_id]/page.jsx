@@ -264,7 +264,7 @@ const SingleTest = ({ params }) => {
   }, [user, router]);
 
   return (
-    <div className="p-5 w-full min-h-screen h-screen bg-accntColor cstm-flex-col gap-5 justify-start overflow-x-hidden">
+    <div className="p-5 w-full min-h-screen h-screen bg-accntColor cstm-flex-col gap-4 justify-start overflow-x-hidden">
       {loading ? <Loading /> : null}
 
       <ClientPageHeader mainHeader={testData?.title} subHeader="Test" />
@@ -285,7 +285,7 @@ const SingleTest = ({ params }) => {
         />
       ) : null}
 
-      <div className="cstm-w-limit cstm-flex-col gap-5 w-full h-full relative">
+      <div className="cstm-w-limit cstm-flex-col gap-4 w-full h-full relative">
         <TestActions activePage={activePage} hasSubmitted={hasSubmitted} submitAnswers={submitAnswers} />
 
         {/* question pane */}

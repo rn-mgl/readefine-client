@@ -96,7 +96,7 @@ const SingleTest = ({ params }) => {
   // map questions
   const mappedQuestions = questions.map((q, i) => {
     return (
-      <div className="p-5 bg-white rounded-md w-full cstm-flex-col gap-5 items-start" key={q.question_id}>
+      <div className="p-5 bg-white rounded-md w-full cstm-flex-col gap-4 items-start" key={q.question_id}>
         <p className="font-bold">{q.question}</p>
 
         <div className="cstm-separator" />
@@ -148,7 +148,7 @@ const SingleTest = ({ params }) => {
   }, [user, router]);
 
   return (
-    <div className="p-5 w-full min-h-screen bg-accntColor cstm-flex-col gap-5">
+    <div className="p-5 w-full min-h-screen bg-accntColor cstm-flex-col gap-4">
       <AdminPageHeader subHeader="Tests" mainHeader={testData?.title} />
 
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
@@ -173,7 +173,7 @@ const SingleTest = ({ params }) => {
           <b>note:</b> admin submissions are <b>not</b> recorded
         </p>
 
-        <div className="cstm-flex-col w-full gap-5 l-s:w-10/12">
+        <div className="cstm-flex-col w-full gap-4 l-s:w-10/12">
           <div className="cstm-flex-row w-full">
             <Link href="/controller/tests" className="w-fit cstm-bg-hover mr-auto">
               <BsArrowLeft className=" text-prmColor" />
@@ -190,7 +190,7 @@ const SingleTest = ({ params }) => {
 
           {mappedQuestions}
 
-          <div className="cstm-flex-col w-full gap-5 t:cstm-flex-row ">
+          <div className="cstm-flex-col w-full gap-4 t:cstm-flex-row ">
             <button
               onClick={() => {
                 computeScore();

@@ -1,6 +1,7 @@
 "use client";
 
 import { useGlobalContext } from "@/base/context";
+import DeleteData from "@/src/admin/global/DeleteData";
 import Message from "@/src/components/global/Message";
 import AddAdministrator from "@/src/head/administrators/AddAdministrator";
 import AdministratorCards from "@/src/head/administrators/AdministratorCards";
@@ -15,6 +16,8 @@ import { AiOutlinePlus } from "react-icons/ai";
 const Administrators = () => {
   const [administrators, setAdministrators] = React.useState([]);
   const [canAddAdministrators, setCanAddAdministrators] = React.useState(false);
+  const [adminToDelete, setAdminToDelete] = React.useState({ id: -1, username: "" });
+  const [canDeleteAdmin, setCanDeleteAdmin] = React.useState(false);
 
   const { message, setMessageStatus } = useMessage();
 
@@ -24,6 +27,14 @@ const Administrators = () => {
 
   const handleCanAddAdministrators = () => {
     setCanAddAdministrators((prev) => !prev);
+  };
+
+  const handleAdminToDelete = (id, username) => {
+    setAdminToDelete({ id, username });
+  };
+
+  const handleCanDeleteAdmin = () => {
+    setCanDeleteAdmin((prev) => !prev);
   };
 
   const getAllAdministrators = React.useCallback(async () => {
@@ -46,11 +57,19 @@ const Administrators = () => {
   }, [user, getAllAdministrators]);
 
   const mappedAdministrators = administrators.map((admin, index) => {
-    return <AdministratorCards key={index} admin={admin} />;
+    return (
+      <AdministratorCards
+        key={index}
+        admin={admin}
+        adminToDelete={adminToDelete}
+        handleAdminToDelete={() => handleAdminToDelete(admin.admin_id, admin.username)}
+        handleCanDeleteAdmin={handleCanDeleteAdmin}
+      />
+    );
   });
 
   return (
-    <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
+    <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-4 justify-start">
       <HeadPageHeader subHeader="Readefine" mainHeader="Administrators" />
 
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
@@ -62,7 +81,16 @@ const Administrators = () => {
         />
       ) : null}
 
-      <div className="w-full h-full cstm-flex-col gap-5 justify-start cstm-w-limit">
+      {canDeleteAdmin ? (
+        <DeleteData
+          apiRoute={`${url}/head_admin/${adminToDelete.id}`}
+          confirmation={adminToDelete.username}
+          handleCanDeleteData={handleCanDeleteAdmin}
+          getData={getAllAdministrators}
+        />
+      ) : null}
+
+      <div className="w-full h-full cstm-flex-col gap-4 justify-start cstm-w-limit">
         <div className="w-full cstm-flex-row">
           <button
             onClick={handleCanAddAdministrators}
@@ -79,8 +107,8 @@ const Administrators = () => {
           </p>
         </div>
         <div
-          className="w-full h-full grid grid-cols-1 t:grid-cols-2 l-s:grid-cols-3 
-                    l-l:grid-cols-4 gap-5 justify-start"
+          className="w-full h-full grid grid-cols-1 t:grid-cols-2 
+                     l-l:grid-cols-4 gap-4 justify-start"
         >
           {mappedAdministrators}
         </div>

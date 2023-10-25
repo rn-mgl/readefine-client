@@ -194,7 +194,7 @@ const AddStory = () => {
   }, [user, router]);
 
   return (
-    <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
+    <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-4 justify-start">
       {loading ? <Loading /> : null}
 
       <AdminPageHeader subHeader="Stories" mainHeader="Add Story" />
@@ -203,7 +203,7 @@ const AddStory = () => {
 
       <form
         action=""
-        className="w-full cstm-flex-col gap-5 cstm-w-limit border-collapse"
+        className="w-full cstm-flex-col gap-4 cstm-w-limit border-collapse"
         onSubmit={(e) => publishBook(e)}
       >
         <AddStoryFilter
@@ -217,7 +217,7 @@ const AddStory = () => {
           setMessageStatus={setMessageStatus}
         />
 
-        <div className="cstm-flex-col gap-5 w-full t:w-96 l-l:w-[30rem]">
+        <div className="cstm-flex-col gap-4 w-full t:w-96 l-l:w-[30rem]">
           {audioFile.src ? (
             <AudioPreview
               src={audioFile.src}

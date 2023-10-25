@@ -22,13 +22,13 @@ const TestRecord = (props) => {
     const isCorrect = q.choice === q.answer;
     return (
       <div
-        className="p-5 bg-white rounded-md w-full cstm-flex-col gap-5 items-start t:w-10/12 l-l:w-8/12 shadow-md"
+        className="p-5 bg-white rounded-md w-full cstm-flex-col gap-4 items-start t:w-10/12 l-l:w-8/12 shadow-md"
         key={q.question_id}
       >
         <p className="font-bold">{q.question}</p>
         <div className="cstm-separator" />
         <div className="cstm-flex-col gap-3 w-full t:cstm-flex-row t:flex-wrap">
-          <div className="w-full h-full cstm-flex-col gap-5 t:cstm-flex-row">
+          <div className="w-full h-full cstm-flex-col gap-4 t:cstm-flex-row">
             <div className="cstm-flex-col w-full gap-2 text-center t:w-full bg-accntColor rounded-md p-2 h-full">
               <div className="cstm-flex-row gap-2  w-full ">
                 <p className="font-bold text-prmColor">Your Answer</p>
@@ -79,7 +79,7 @@ const TestRecord = (props) => {
                   cstm-flex-col justify-start overflow-y-auto cstm-scrollbar-2"
     >
       {message.active ? <Message setMessageStatus={setMessageStatus} /> : null}
-      <div className="w-full h-auto cstm-w-limit cstm-flex-col justify-start gap-5 ">
+      <div className="w-full h-auto cstm-w-limit cstm-flex-col justify-start gap-4 ">
         <button onClick={() => props.handleSeeTestRecord(props.testId)} className="cstm-bg-hover ml-auto">
           <IoClose className="text-prmColor scale-150" />
         </button>

@@ -18,7 +18,7 @@ const Customizations = (props) => {
 
         <div className="cstm-separator" />
 
-        <div className="cstm-flex-col t:cstm-flex-row w-full gap-5 justify-start">
+        <div className="cstm-flex-col t:cstm-flex-row w-full gap-4 justify-start">
           <TextToSpeech utterance={props.utterance} handleIncrement={props.handleIncrement} />
 
           <div className="cstm-separator t:hidden " />

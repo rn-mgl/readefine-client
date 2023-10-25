@@ -58,12 +58,12 @@ const Archives = () => {
   }, [user, router]);
 
   return (
-    <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
+    <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-4 justify-start">
       <ClientPageHeader mainHeader="Readefine" subHeader="Home" />
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       <div
-        className="cstm-flex-col gap-5 w-full transition-all
+        className="cstm-flex-col gap-4 w-full transition-all
         t:cstm-flex-row t:flex-wrap
         cstm-w-limit"
       >

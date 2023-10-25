@@ -14,12 +14,12 @@ const RiddleTutorial = (props) => {
       </button>
 
       <div className="cstm-w-limit cstm-flex-col w-full h-auto">
-        <div className="cstm-flex-col w-full gap-5 t:w-10/12 l-l:w-8/12">
+        <div className="cstm-flex-col w-full gap-4 t:w-10/12 l-l:w-8/12">
           <p className="font-extrabold text-prmColor text-xl t:text-2xl">HOW TO PLAY</p>
 
-          <div className="cstm-flex-col bg-white rounded-2xl shadow-solid p-5 t:p-10 w-full gap-5">
+          <div className="cstm-flex-col bg-white rounded-2xl shadow-solid p-5 t:p-10 w-full gap-4">
             <div
-              className="cstm-flex-col gap-5  bg-prmColor bg-opacity-10 p-5 rounded-md 
+              className="cstm-flex-col gap-4  bg-prmColor bg-opacity-10 p-5 rounded-md 
                     text-center relative w-full shadow-solid shadow-indigo-200"
             >
               <BsDot className="absolute scale-[4] text-scndColor top-0 left-0 -translate-x-1.5 -translate-y-1.5" />
@@ -28,7 +28,7 @@ const RiddleTutorial = (props) => {
             </div>
 
             <div
-              className="cstm-flex-col gap-5 bg-prmColor bg-opacity-10 p-5 rounded-md 
+              className="cstm-flex-col gap-4 bg-prmColor bg-opacity-10 p-5 rounded-md 
                     text-center relative  w-full shadow-solid shadow-indigo-200"
             >
               <BsDot className="absolute scale-[4] text-scndColor top-0 left-0 -translate-x-1.5 -translate-y-1.5" />
@@ -43,7 +43,7 @@ const RiddleTutorial = (props) => {
             </div>
 
             <div
-              className="cstm-flex-col gap-5  bg-prmColor bg-opacity-10 p-5 rounded-md 
+              className="cstm-flex-col gap-4  bg-prmColor bg-opacity-10 p-5 rounded-md 
                     text-center relative w-full shadow-solid shadow-indigo-200"
             >
               <BsDot className="absolute scale-[4] text-scndColor top-0 left-0 -translate-x-1.5 -translate-y-1.5" />

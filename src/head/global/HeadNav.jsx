@@ -87,7 +87,7 @@ const HeadNav = () => {
       <div
         className={`${
           isOpen ? "m-s:translate-x-0" : "m-s:-translate-x-full"
-        } bg-white w-full h-full text-center fixed p-5 transition-all cstm-flex-col justify-start gap-5 z-50
+        } bg-white w-full h-full text-center fixed p-5 transition-all cstm-flex-col justify-start gap-4 z-50
             t:w-[50%]
             l-s:translate-x-0 l-s:left-0 l-s:top-0 l-s:w-[30%]
             l-l:w-[20%]`}
@@ -168,9 +168,9 @@ const HeadNav = () => {
             >
               {!headData?.image ? <Image src={avatar} alt="avatar" className="saturate-150" width={100} /> : null}
             </div>
-            <div className="cstm-flex-col items-start w-full">
+            <div className="cstm-flex-col items-start w-full truncate">
               <p className="text-xs">Welcome</p>
-              <p className="font-bold text-prmColor whitespace-nowrap w-44 truncate">
+              <p className="font-bold text-prmColor whitespace-nowrap w-full">
                 {headData?.name} {headData?.surname}
               </p>
             </div>
@@ -180,7 +180,7 @@ const HeadNav = () => {
 
           <button
             className="text-left hover:bg-neutral-100 hover:shadow-none p-2 rounded-md
-                justify-start transition-all cstm-flex-row gap-5 w-full overflow-x-hidden"
+                justify-start transition-all cstm-flex-row gap-4 w-full overflow-x-hidden"
             onClick={logOut}
           >
             <BiLogOut className="opacity-50" />

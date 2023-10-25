@@ -66,7 +66,7 @@ const SingleReward = ({ params }) => {
   }, [user, router]);
 
   return (
-    <div className="w-full min-h-screen h-screen bg-accntColor p-5 cstm-flex-col gap-5 justify-start">
+    <div className="w-full min-h-screen h-screen bg-accntColor p-5 cstm-flex-col gap-4 justify-start">
       <AdminPageHeader subHeader="Reward" mainHeader={reward?.reward_name} />
 
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
@@ -81,7 +81,7 @@ const SingleReward = ({ params }) => {
       ) : null}
 
       <div className="w-full cstm-w-limit cstm-flex-col h-full">
-        <div className="cstm-flex-col gap-5 w-full t:w-10/12 l-l:w-8/12 h-full">
+        <div className="cstm-flex-col gap-4 w-full t:w-10/12 l-l:w-8/12 h-full">
           {/* admin actions */}
           <div className="w-full cstm-flex-row">
             <Link href="/controller/rewards" className="cstm-bg-hover mr-auto">
@@ -99,7 +99,7 @@ const SingleReward = ({ params }) => {
 
           {/* reward */}
           <div
-            className="p-5 rounded-2xl gap-5 cstm-flex-col w-full h-full 
+            className="p-5 rounded-2xl gap-4 cstm-flex-col w-full h-full 
                         justify-start bg-white text-sm shadow-md"
           >
             <div className="w-full cstm-flex-col bg-accntColor rounded-2xl p-5 h-full">
@@ -108,7 +108,7 @@ const SingleReward = ({ params }) => {
               </div>
             </div>
 
-            <div className="cstm-flex-col gap-5 h-[30%]">
+            <div className="cstm-flex-col gap-4 h-[30%]">
               <p className="text-sm font-bold text-prmColor capitalize">{reward?.reward_type}</p>
               <div className="cstm-separator" />
               <p className="text-sm text-center max-h-28 overflow-y-auto cstm-scrollbar-2">{reward?.description}</p>

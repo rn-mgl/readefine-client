@@ -4,7 +4,7 @@ import { IoAddOutline } from "react-icons/io5";
 const AddTestFilter = (props) => {
   return (
     <div className="cstm-flex-row gap-2  justify-start relative w-full overflow-x-auto p-2 cstm-scrollbar-2 cstm-w-limit min-h-[5rem]">
-      <div className="p-2 bg-white  rounded-md shadow-md whitespace-nowrap cstm-flex-row gap-5">
+      <div className="p-2 bg-white  rounded-md shadow-md whitespace-nowrap cstm-flex-row gap-4">
         <div className="bg-neutral-50 p-1 px-2 rounded-md outline-none border-neutral-200 border-2 text-sm">
           <p>Page</p>
         </div>

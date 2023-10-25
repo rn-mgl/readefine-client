@@ -6,7 +6,7 @@ const FilePreview = (props) => {
   return (
     <div className="w-fit cstm-flex-col rounded-2xl p-2 gap-2">
       <Image src={props.src} alt="preview" className="w-fit rounded-2xl" priority width={300} height={300} />
-      <div className="w-full cstm-flex-row gap-5">
+      <div className="w-full cstm-flex-row gap-4">
         {props.purpose && props.name ? (
           <p className="text-sm overflow-x-auto w-full mr-auto p-2 whitespace-nowrap scrollbar-none">
             <span className="font-bold">{props.purpose}</span> | {props.name}

@@ -92,13 +92,13 @@ const AdminTests = () => {
   }, [user, router]);
 
   return (
-    <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
+    <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-4 justify-start">
       <AdminPageHeader subHeader="Readefine" mainHeader="Tests" />
 
       {/* show if has message pop up */}
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
-      <div className="w-full cstm-w-limit cstm-flex-col gap-5 ">
+      <div className="w-full cstm-w-limit cstm-flex-col gap-4 ">
         {/* test filter */}
         <TestsFilter
           handleSearchFilter={handleSearchFilter}
@@ -113,7 +113,7 @@ const AdminTests = () => {
 
         {/* all tests */}
         <div
-          className="cstm-flex-col gap-5 justify-start w-full transition-all relative 
+          className="cstm-flex-col gap-4 justify-start w-full transition-all relative 
                   t:cstm-flex-row t:flex-wrap"
         >
           {tests.length ? (

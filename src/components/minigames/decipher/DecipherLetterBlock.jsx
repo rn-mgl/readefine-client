@@ -4,7 +4,7 @@ import { BsPlusSlashMinus } from "react-icons/bs";
 
 const DecipherLetterBlock = (props) => {
   return (
-    <div className="animate-slideDown cstm-flex-col gap-5">
+    <div className="animate-slideDown cstm-flex-col gap-4">
       <button
         onClick={props.incrementLetter}
         className="bg-prmColor bg-opacity-20 w-10 h-10 m-l:w-12 m-l:h-12 t:w-16 t:h-16 cstm-flex-col rounded-md shadow-solid shadow-prmColor active:shadow-solidActive "

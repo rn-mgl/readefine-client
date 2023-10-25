@@ -25,8 +25,6 @@ const DeleteData = (props) => {
     setConfirmation(value);
   };
 
-  const { url } = useGlobalContext();
-
   const router = useRouter();
 
   const deleteData = async (e) => {
@@ -58,6 +56,7 @@ const DeleteData = (props) => {
     } catch (error) {
       console.log(error);
       setLoadingState(false);
+      setHasSubmitted(false);
       setMessageStatus(true, error?.response?.data?.msg, "error");
     }
   };
@@ -77,7 +76,7 @@ const DeleteData = (props) => {
       <div className="cstm-flex-col w-full cstm-w-limit border-collapse h-screen">
         <form
           onSubmit={(e) => deleteData(e)}
-          className="w-11/12 rounded-md bg-white min-h-[15rem] shadow-md my-auto cstm-flex-col justify-start p-5 text-center gap-5 absolute
+          className="w-11/12 rounded-md bg-white min-h-[15rem] shadow-md my-auto cstm-flex-col justify-start p-5 text-center gap-4 absolute
                       t:w-96
                       l-s:w-[26rem]"
         >
@@ -91,7 +90,7 @@ const DeleteData = (props) => {
           </p>
 
           <input
-            className="p-2 text-prmColor bg-white  rounded-md border-neutral-200 border-2 w-full
+            className="p-2 text-prmColor bg-white  rounded-md border-neutral-200 border-2 w-full text-sm
             focus:outline-none"
             placeholder="Confirmation"
             name="title"
@@ -104,7 +103,7 @@ const DeleteData = (props) => {
           <button
             type="submit"
             disabled={hasSubmitted}
-            className="w-full text-center  text-sm font-normal bg-prmColor text-accntColor rounded-full p-2 disabled:saturate-0"
+            className="w-full text-center  text-sm font-normal bg-prmColor text-accntColor rounded-md p-2 disabled:saturate-0"
           >
             Confirm Deletion
           </button>

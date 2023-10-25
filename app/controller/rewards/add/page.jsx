@@ -106,15 +106,15 @@ const AddReward = () => {
 
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
-      <form onSubmit={(e) => addReward(e)} className="w-full cstm-flex-col cstm-w-limit border-collapse gap-5">
+      <form onSubmit={(e) => addReward(e)} className="w-full cstm-flex-col cstm-w-limit border-collapse gap-4">
         {/* reward data */}
         <AddRewardFilter handleReward={handleReward} reward={reward} />
 
         <div
-          className="cstm-flex-col gap-5 w-full
+          className="cstm-flex-col gap-4 w-full
                       l-s:cstm-flex-row"
         >
-          <div className="table-fixed p-5 rounded-2xl cstm-flex-col overflow-auto w-full h-[70vh] justify-start items-start bg-white text-sm gap-5 shadow-md cstm-scrollbar">
+          <div className="table-fixed p-5 rounded-2xl cstm-flex-col overflow-auto w-full h-[70vh] justify-start items-start bg-white text-sm gap-4 shadow-md cstm-scrollbar">
             {/* reward name */}
             <div className="cstm-flex-row w-full">
               <textarea
@@ -151,7 +151,7 @@ const AddReward = () => {
 
           <div
             className="table-fixed p-5 rounded-2xl cstm-flex-col overflow-auto w-full h-[70vh] 
-                          justify-start items-start bg-white text-sm gap-5 shadow-md cstm-scrollbar"
+                          justify-start items-start bg-white text-sm gap-4 shadow-md cstm-scrollbar"
           >
             <div className="w-full h-full cstm-flex-col bg-accntColor rounded-2xl">
               {/* show if there is image selected */}

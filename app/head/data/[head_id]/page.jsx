@@ -22,7 +22,7 @@ const Overview = ({ params }) => {
   const decipheredId = decipher(params?.head_id);
   const router = useRouter();
 
-  return <div className="w-full min-h-screen bg-accntColor p-5 cstm-flex-col justify-start cstm-scrollbar gap-5"></div>;
+  return <div className="w-full min-h-screen bg-accntColor p-5 cstm-flex-col justify-start cstm-scrollbar gap-4"></div>;
 };
 
 export default Overview;

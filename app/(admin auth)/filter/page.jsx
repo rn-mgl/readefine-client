@@ -132,7 +132,7 @@ const AdminLogin = () => {
 
       <form
         className="w-full rounded-md bg-accntColor bg-opacity-20 backdrop-blur-md border-[1px] 
-                border-accntColor border-opacity-40 p-5 cstm-flex-col gap-5 relative z-10 shadow-lg
+                border-accntColor border-opacity-40 p-5 cstm-flex-col gap-4 relative z-10 shadow-lg
                   t:w-96
                   l-s:w-[26rem]"
         onSubmit={(e) => loginAdmin(e)}

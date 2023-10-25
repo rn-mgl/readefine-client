@@ -20,7 +20,7 @@ const ReceiveAchievement = (props) => {
       <div
         key={a.achievement_id}
         className="bg-white p-5 rounded-2xl w-full m-s:min-w-full t:min-w-0 shadow-solid cstm-flex-col m-2 
-                    gap-5 animate-slideDown relative z-10 t:w-[25rem] l-l:w-[30rem]"
+                    gap-4 animate-slideDown relative z-10 t:w-[25rem] l-l:w-[30rem]"
       >
         <p className="font-bold">Achievement Unlocked!</p>
 
@@ -45,7 +45,7 @@ const ReceiveAchievement = (props) => {
           {a.achievement_name}
         </p>
 
-        <div className="w-full cstm-scrollbar-2 overflow-y-auto cstm-flex-col gap-5 h-40 justify-start">
+        <div className="w-full cstm-scrollbar-2 overflow-y-auto cstm-flex-col gap-4 h-40 justify-start">
           <p className="text-sm text-center">{a.task}</p>
 
           <p className="text-sm text-center">{a.description}</p>
@@ -67,7 +67,7 @@ const ReceiveAchievement = (props) => {
   return (
     <div
       className="w-full h-screen fixed top-0 left-0 p-5 z-[60]
-                  backdrop-blur-md cstm-flex-col gap-5 justify-start"
+                  backdrop-blur-md cstm-flex-col gap-4 justify-start"
     >
       <div className="cstm-flex-row w-full relative z-20 items-start">
         <div className="cstm-flex-col gap-2 z-10 text-white mr-auto flex-col-reverse">
@@ -94,7 +94,7 @@ const ReceiveAchievement = (props) => {
       </audio>
 
       <div
-        className="cstm-flex-col gap-5 w-full h-full cstm-scrollbar overflow-y-auto overflow-x-hidden
+        className="cstm-flex-col gap-4 w-full h-full cstm-scrollbar overflow-y-auto overflow-x-hidden
                   justify-start t:cstm-flex-row t:justify-center t:items-start t:flex-wrap"
       >
         {achievements}

@@ -119,7 +119,7 @@ const ClientTests = () => {
   }, [user, router]);
 
   return (
-    <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
+    <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-4 justify-start">
       <ClientPageHeader subHeader="Tests" mainHeader="Readefine" />
 
       {seeTestRecord ? <TestRecord testId={seeTestRecord} handleSeeTestRecord={handleSeeTestRecord} /> : null}
@@ -134,7 +134,7 @@ const ClientTests = () => {
 
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
-      <div className="w-full cstm-w-limit cstm-flex-col gap-5 ">
+      <div className="w-full cstm-w-limit cstm-flex-col gap-4 ">
         <TestsFilter
           handleSearchFilter={handleSearchFilter}
           handleLexileRangeFilter={handleLexileRangeFilter}
@@ -145,7 +145,7 @@ const ClientTests = () => {
         />
 
         <div
-          className="cstm-flex-col gap-5 justify-start w-full transition-all relative
+          className="cstm-flex-col gap-4 justify-start w-full transition-all relative
                   t:cstm-flex-row t:flex-wrap"
         >
           {tests.length ? (

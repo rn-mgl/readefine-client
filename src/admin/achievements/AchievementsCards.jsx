@@ -37,7 +37,7 @@ const AchievementsCards = (props) => {
       </div>
 
       {isActive ? (
-        <div className="cstm-flex-col text-sm overflow-auto w-56 text-center gap-5">
+        <div className="cstm-flex-col text-sm overflow-auto w-56 text-center gap-4">
           <p className="font-light w-fit overflow-auto whitespace-pre-wrap">{props.task}</p>
         </div>
       ) : null}

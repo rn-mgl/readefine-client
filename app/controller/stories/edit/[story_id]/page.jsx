@@ -291,14 +291,14 @@ const EditStory = ({ params }) => {
   }, [user, router]);
 
   return (
-    <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-5 justify-start">
+    <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-4 justify-start">
       {loading ? <Loading /> : null}
 
       <AdminPageHeader subHeader="Stories" mainHeader="Edit Story" />
 
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
-      <form className="w-full cstm-flex-col gap-5 cstm-w-limit border-collapse" onSubmit={(e) => editBook(e)}>
+      <form className="w-full cstm-flex-col gap-4 cstm-w-limit border-collapse" onSubmit={(e) => editBook(e)}>
         <Link type="button" href="/controller/stories" className="w-fit cstm-bg-hover mr-auto">
           <BsArrowLeft className=" text-prmColor" />
         </Link>
@@ -314,7 +314,7 @@ const EditStory = ({ params }) => {
           setMessageStatus={setMessageStatus}
         />
 
-        <div className="cstm-flex-col gap-5 w-full t:w-80 l-l:w-[30rem]">
+        <div className="cstm-flex-col gap-4 w-full t:w-80 l-l:w-[30rem]">
           {audioFile.src ? (
             <AudioPreview
               src={audioFile.src}
@@ -345,7 +345,7 @@ const EditStory = ({ params }) => {
                 priority
               />
 
-              <div className="w-full cstm-flex-row gap-5">
+              <div className="w-full cstm-flex-row gap-4">
                 <p className="text-sm overflow-x-auto w-full mr-auto p-2 whitespace-nowrap scrollbar-none font-bold">
                   Current Book Cover
                 </p>

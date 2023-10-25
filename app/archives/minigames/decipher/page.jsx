@@ -159,7 +159,7 @@ const Decipher = () => {
         />
       ) : null}
 
-      <div className="w-full h-full cstm-w-limit cstm-flex-col relative overflow-hidden gap-5 animate-fadeIn">
+      <div className="w-full h-full cstm-w-limit cstm-flex-col relative overflow-hidden gap-4 animate-fadeIn">
         <div className="absolute top-10 left-0 z-20 l-s:top-0 cstm-flex-col flex-col-reverse gap-2">
           <Volume
             isMuted={isMuted}

@@ -15,15 +15,15 @@ const DangleTutorial = (props) => {
       </button>
 
       <div className="cstm-w-limit cstm-flex-col w-full h-auto">
-        <div className="cstm-flex-col justify-start w-full gap-5 t:w-10/12 l-l:w-8/12 ">
+        <div className="cstm-flex-col justify-start w-full gap-4 t:w-10/12 l-l:w-8/12 ">
           <p className="font-extrabold text-prmColor text-xl t:text-2xl">HOW TO PLAY</p>
 
           <div
             className="cstm-flex-col h-auto bg-white rounded-2xl shadow-solid p-5 t:p-10  
-                    w-full gap-5"
+                    w-full gap-4"
           >
             <div
-              className="cstm-flex-col gap-5  bg-prmColor bg-opacity-10 p-5 rounded-md 
+              className="cstm-flex-col gap-4  bg-prmColor bg-opacity-10 p-5 rounded-md 
                     text-center relative w-full shadow-solid shadow-indigo-200"
             >
               <BsDot className="absolute scale-[4] text-scndColor top-0 left-0 -translate-x-1.5 -translate-y-1.5" />
@@ -31,7 +31,7 @@ const DangleTutorial = (props) => {
               <BsPatchQuestionFill className="scale-150 text-prmColor" />
             </div>
 
-            <div className="cstm-flex-col text-sm t:text-base w-full gap-5">
+            <div className="cstm-flex-col text-sm t:text-base w-full gap-4">
               <p className="mr-auto font-bold">Example</p>
 
               <div className="cstm-flex-col w-full gap-2">
@@ -46,14 +46,14 @@ const DangleTutorial = (props) => {
             </div>
 
             <div
-              className="cstm-flex-col gap-5  bg-prmColor bg-opacity-10 p-5 rounded-md 
+              className="cstm-flex-col gap-4  bg-prmColor bg-opacity-10 p-5 rounded-md 
                     text-center relative w-full shadow-solid shadow-indigo-200"
             >
               <BsDot className="absolute scale-[4] text-scndColor top-0 left-0 -translate-x-1.5 -translate-y-1.5" />
               <p className="text-sm t:text-base">Your goal is to guess the word by trying out the letters.</p>
             </div>
 
-            <div className="cstm-flex-col text-sm t:text-base w-full gap-5">
+            <div className="cstm-flex-col text-sm t:text-base w-full gap-4">
               <p className="mr-auto font-bold">Example</p>
 
               <div className="cstm-flex-col w-full gap-2 text-left">
@@ -106,7 +106,7 @@ const DangleTutorial = (props) => {
             </div>
 
             <div
-              className="cstm-flex-col gap-5  bg-prmColor bg-opacity-10 p-5 rounded-md 
+              className="cstm-flex-col gap-4  bg-prmColor bg-opacity-10 p-5 rounded-md 
                     text-center relative w-full shadow-solid shadow-indigo-200"
             >
               <BsDot className="absolute scale-[4] text-scndColor top-0 left-0 -translate-x-1.5 -translate-y-1.5" />
@@ -117,7 +117,7 @@ const DangleTutorial = (props) => {
             </div>
 
             <div
-              className="cstm-flex-col gap-5 bg-prmColor bg-opacity-10 p-5 rounded-md 
+              className="cstm-flex-col gap-4 bg-prmColor bg-opacity-10 p-5 rounded-md 
                     text-center relative  w-full shadow-solid shadow-indigo-200"
             >
               <BsDot className="absolute scale-[4] text-scndColor top-0 left-0 -translate-x-1.5 -translate-y-1.5" />
@@ -132,7 +132,7 @@ const DangleTutorial = (props) => {
             </div>
 
             <div
-              className="cstm-flex-col gap-5  bg-prmColor bg-opacity-10 p-5 rounded-md 
+              className="cstm-flex-col gap-4  bg-prmColor bg-opacity-10 p-5 rounded-md 
                     text-center relative w-full shadow-solid shadow-indigo-200"
             >
               <BsDot className="absolute scale-[4] text-scndColor top-0 left-0 -translate-x-1.5 -translate-y-1.5" />

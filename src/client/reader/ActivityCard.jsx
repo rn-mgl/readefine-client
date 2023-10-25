@@ -4,12 +4,12 @@ import Image from "next/image";
 
 const ActivityCard = (props) => {
   return (
-    <div className="w-full h-96 t:h-[30rem] bg-white rounded-2xl p-5 shadow-solid cstm-flex-col justify-start gap-5 border-2 border-accntColor">
+    <div className="w-full h-96 t:h-[30rem] bg-white rounded-2xl p-5 shadow-solid cstm-flex-col justify-start gap-4 border-2 border-accntColor">
       <div className="w-full rounded-2xl">
         <p className="font-bold text-lg text-left">{props.label}</p>
       </div>
 
-      <div className="h-full overflow-y-auto cstm-flex-col w-full cstm-scrollbar-2 gap-5 justify-start">
+      <div className="h-full overflow-y-auto cstm-flex-col w-full cstm-scrollbar-2 gap-4 justify-start">
         {props.hasContent ? (
           props.activity
         ) : (

@@ -184,7 +184,7 @@ const SingleStory = ({ params }) => {
   }, []);
 
   return (
-    <div className="p-5 cstm-flex-col bg-accntColor w-full min-h-screen h-screen justify-start gap-5">
+    <div className="p-5 cstm-flex-col bg-accntColor w-full min-h-screen h-screen justify-start gap-4">
       <ClientPageHeader subHeader="Stories" mainHeader={story.title} />
 
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
@@ -225,7 +225,7 @@ const SingleStory = ({ params }) => {
 
       {/* pages */}
       <div
-        className="h-full w-full gap-5 bg-white rounded-2xl p-5 relative overflow-x-hidden 
+        className="h-full w-full gap-4 bg-white rounded-2xl p-5 relative overflow-x-hidden 
                   overflow-y-auto cstm-w-limit transition-all  cstm-scrollbar"
       >
         <div className="w-full relative overflow-x-hidden h-full cstm-scrollbar">{storyPages}</div>

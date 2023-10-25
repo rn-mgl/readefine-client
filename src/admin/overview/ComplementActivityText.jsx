@@ -5,10 +5,10 @@ import { BsDot } from "react-icons/bs";
 
 const ComplementActivityText = (props) => {
   return (
-    <div className="cstm-flex-col items-start gap-5 w-full text-sm bg-accntColor p-5 rounded-md relative">
+    <div className="cstm-flex-col items-start gap-4 w-full text-sm bg-accntColor p-5 rounded-md relative">
       <p className="font-semibold">{props.date}</p>
 
-      <div className="cstm-flex-col gap-5 w-full items-start">
+      <div className="cstm-flex-col gap-4 w-full items-start">
         <div className="cstm-flex-row w-full gap-2">
           <div
             style={{ backgroundImage: props.userImage ? `url(${props.userImage})` : null }}

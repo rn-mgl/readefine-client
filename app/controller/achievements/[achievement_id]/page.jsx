@@ -68,7 +68,7 @@ const SingleAchievement = ({ params }) => {
   }, [user, router]);
 
   return (
-    <div className="p-5 bg-accntColor w-full min-h-screen h-full t:h-screen cstm-flex-col justify-start gap-5">
+    <div className="p-5 bg-accntColor w-full min-h-screen h-full t:h-screen cstm-flex-col justify-start gap-4">
       <AdminPageHeader subHeader="Achievement" mainHeader={achievement.achievement_name} />
 
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}

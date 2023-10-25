@@ -285,7 +285,7 @@ const Reader = ({ params }) => {
   return (
     <div
       className="w-full p-5 cstm-flex-col bg-accntColor min-h-screen overflow-y-auto 
-                  cstm-scrollbar justify-start gap-5"
+                  cstm-scrollbar justify-start gap-4"
     >
       <ClientPageHeader mainHeader="Readefine" subHeader="Profile" />
 
@@ -314,7 +314,7 @@ const Reader = ({ params }) => {
 
       {canChangePassword ? <ChangePassword handleCanChangePassword={handleCanChangePassword} /> : null}
 
-      <div className="cstm-w-limit cstm-flex-col gap-5 w-full">
+      <div className="cstm-w-limit cstm-flex-col gap-4 w-full">
         <MainProfile
           handleCanEditGradeLevel={handleCanEditGradeLevel}
           handleCanEditMain={handleCanEditMain}
@@ -350,10 +350,10 @@ const Reader = ({ params }) => {
         />
 
         {/* answers */}
-        <div className="cstm-flex-col gap-5 w-full text-center bg-white p-5 rounded-2xl">
+        <div className="cstm-flex-col gap-4 w-full text-center bg-white p-5 rounded-2xl">
           <p className="text-xl font-extrabold t:mr-auto text-prmColor">Your Answers</p>
 
-          <div className="cstm-flex-col gap-5 w-full">
+          <div className="cstm-flex-col gap-4 w-full">
             <ActivityCard
               label="Test Questions"
               activity={answeredQuestions}
@@ -385,7 +385,7 @@ const Reader = ({ params }) => {
         </div>
 
         {/* session */}
-        <div className="cstm-flex-col gap-5 w-full text-center bg-white p-5 rounded-2xl">
+        <div className="cstm-flex-col gap-4 w-full text-center bg-white p-5 rounded-2xl">
           <p className="text-2xl font-extrabold t:mr-auto text-prmColor">Your Sessions</p>
 
           <ActivityCard

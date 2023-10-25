@@ -4,10 +4,10 @@ import { AiOutlineMail } from "react-icons/ai";
 
 const UserMainData = ({ userData }) => {
   return (
-    <div className="cstm-flex-col gap-5 w-full t:cstm-flex-row">
+    <div className="cstm-flex-col gap-4 w-full t:cstm-flex-row">
       {/* user data */}
       <div className="cstm-flex-col bg-white rounded-2xl p-5 w-full">
-        <div className="cstm-flex-row gap-5 w-full justify-start">
+        <div className="cstm-flex-row gap-4 w-full justify-start">
           {/* user image */}
           <div
             style={{ backgroundImage: userData.image ? `url("${userData.image}")` : null }}
