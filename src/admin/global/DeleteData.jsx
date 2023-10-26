@@ -48,15 +48,15 @@ const DeleteData = (props) => {
       });
 
       if (data) {
-        const activityData = await createAdminActivity(props.resourceType, props.confirmation, "D");
+        if (user?.role === "admin") {
+          await createAdminActivity(props.resourceType, props.confirmation, "D");
+        }
 
-        if (activityData) {
-          if (props.returnRoute) {
-            router.push(props.returnRoute);
-          } else {
-            props.getData();
-            props.handleCanDeleteData();
-          }
+        if (props.returnRoute) {
+          router.push(props.returnRoute);
+        } else {
+          props.getData();
+          props.handleCanDeleteData();
         }
       }
     } catch (error) {
