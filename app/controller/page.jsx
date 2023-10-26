@@ -4,6 +4,7 @@ import axios from "axios";
 import AdminPageHeader from "@/admin/global/PageHeader";
 import DashboardCards from "@/admin/dashboard/DashboardCards";
 import users from "@/public/dashboard/admin/Users.svg";
+import activities from "@/public/dashboard/admin/Activities.svg";
 import stories from "@/public/dashboard/admin/Stories.svg";
 import tests from "@/public/dashboard/admin/Tests.svg";
 import rewards from "@/public/dashboard/admin/Rewards.svg";
@@ -93,6 +94,15 @@ const AdminDashboard = () => {
         t:cstm-flex-row t:flex-wrap
         cstm-w-limit"
       >
+        {/* activities card */}
+        <DashboardCards
+          image={activities}
+          label="Activities"
+          subLabel={`Last Activity by: ${updates.lastActivityBy}`}
+          count={counts.activityCount}
+          to="/controller/activities"
+        />
+
         {/* users card */}
         <DashboardCards
           image={users}

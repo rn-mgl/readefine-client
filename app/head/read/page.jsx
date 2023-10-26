@@ -2,15 +2,14 @@
 
 import { useGlobalContext } from "@/base/context";
 import Message from "@/src/components/global/Message";
+import ActivityLog from "@/src/components/activities/ActivityLog";
 import AdminActivitiesFilter from "@/src/head/activities/AdminActivitiesFilter";
-import ActivityLog from "@/src/head/activities/ActivityLog";
 import HeadPageHeader from "@/src/head/global/PageHeader";
 import useAdminActivityFilters from "@/src/hooks/useAdminActivityFilters";
 import { useMessage } from "@/src/hooks/useMessage";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import React from "react";
-import { AiFillRead } from "react-icons/ai";
 
 const Read = () => {
   const [activities, setActivities] = React.useState([]);
@@ -39,7 +38,7 @@ const Read = () => {
           sortFilter,
           resourceTypeFilter,
           dateRangeFilter,
-          activityType: "R",
+          activityTypeFilter: "R",
         },
       });
       if (data) {
@@ -52,7 +51,7 @@ const Read = () => {
   }, [user?.token, url, searchFilter, sortFilter, resourceTypeFilter, dateRangeFilter, setMessageStatus]);
 
   const mappedActivities = activities.map((activity, index) => {
-    return <ActivityLog icon={<AiFillRead className="scale-125" />} key={index} activity={activity} action="read" />;
+    return <ActivityLog key={index} activity={activity} action="read" />;
   });
 
   React.useEffect(() => {
@@ -79,9 +78,10 @@ const Read = () => {
       />
 
       <div
-        className="w-full grid grid-cols-1 t:grid-cols-2 l-l:grid-cols-3
+        className={`w-full grid grid-cols-1 t:grid-cols-2 l-l:grid-cols-3
                   cstm-w-limit p-4 rounded-2xl bg-white gap-4 
-                  overflow-y-auto cstm-scrollbar-2"
+                  overflow-y-auto cstm-scrollbar-2 
+                  ${activities.length === 0 ? "h-full" : "h-auto"}`}
       >
         {mappedActivities}
       </div>

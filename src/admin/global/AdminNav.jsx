@@ -1,23 +1,23 @@
 "use client";
-import React from "react";
-import Link from "next/link";
-import AdminLink from "../nav/AdminLink";
 import Loading from "@/components/global/Loading";
-import axios from "axios";
 import avatar from "@/public/profile/Avatar.svg";
+import axios from "axios";
 import Image from "next/image";
+import Link from "next/link";
+import React from "react";
+import AdminLink from "../nav/AdminLink";
 
-import { BiMenu, BiTask, BiLogOut } from "react-icons/bi";
-import { BsPenFill, BsPatchQuestionFill } from "react-icons/bs";
-import { IoCloseSharp } from "react-icons/io5";
-import { AiFillHome, AiFillBook } from "react-icons/ai";
-import { HiUser } from "react-icons/hi2";
-import { GiAchievement } from "react-icons/gi";
-import { usePathname } from "next/navigation";
-import { signOut, useSession } from "next-auth/react";
 import { useGlobalContext } from "@/base/context";
 import { cipher } from "@/functions/security";
 import { useLoading } from "@/hooks/useLoading";
+import { signOut, useSession } from "next-auth/react";
+import { usePathname } from "next/navigation";
+import { AiFillBook, AiFillHome } from "react-icons/ai";
+import { BiLogOut, BiMenu, BiTask } from "react-icons/bi";
+import { BsActivity, BsPatchQuestionFill, BsPenFill } from "react-icons/bs";
+import { GiAchievement } from "react-icons/gi";
+import { HiUser } from "react-icons/hi2";
+import { IoCloseSharp } from "react-icons/io5";
 
 const AdminNav = () => {
   const [adminData, setAdminData] = React.useState({});
@@ -87,7 +87,8 @@ const AdminNav = () => {
       <div
         className={`${
           isOpen ? "m-s:translate-x-0" : "m-s:-translate-x-full"
-        } bg-white w-full h-full text-center fixed p-4 transition-all cstm-flex-col justify-start gap-4 z-50
+        } bg-white w-full h-full text-center fixed p-4 transition-all cstm-flex-col justify-start 
+          gap-4 z-50 overflow-y-auto cstm-scrollbar-2
             t:w-[50%]
             l-s:translate-x-0 l-s:left-0 l-s:top-0 l-s:w-[30%]
             l-l:w-[20%]`}
@@ -159,6 +160,14 @@ const AdminNav = () => {
           icon={<BsPatchQuestionFill />}
           label="Minigames"
           isActive={path.includes("/controller/minigames")}
+          toggleOpenNav={toggleOpenNav}
+        />
+
+        <AdminLink
+          to="/controller/activities"
+          icon={<BsActivity />}
+          label="Activities"
+          isActive={path.includes("/controller/activities")}
           toggleOpenNav={toggleOpenNav}
         />
 

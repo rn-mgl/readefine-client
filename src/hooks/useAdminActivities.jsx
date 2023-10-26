@@ -9,11 +9,11 @@ export default function useAdminActivities() {
   const user = session?.user?.name;
 
   const createAdminActivity = React.useCallback(
-    async (resourceType, resourceName, activityType) => {
+    async (resourceType, resourceName, activityTypeFilter) => {
       try {
         const { data } = await axios.post(
           `${url}/admin_activities`,
-          { resourceType, resourceName, activityType },
+          { resourceType, resourceName, activityTypeFilter },
           { headers: { Authorization: user?.token } }
         );
 

@@ -3,16 +3,18 @@
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import React from "react";
+import { AiFillFileAdd } from "react-icons/ai";
 
 import { useGlobalContext } from "@/base/context";
 import Message from "@/src/components/global/Message";
 import ActivityLog from "@/src/components/activities/ActivityLog";
-import AdminActivitiesFilter from "@/src/head/activities/AdminActivitiesFilter";
 import HeadPageHeader from "@/src/head/global/PageHeader";
 import useAdminActivityFilters from "@/src/hooks/useAdminActivityFilters";
 import { useMessage } from "@/src/hooks/useMessage";
+import AdminActivitiesFilter from "@/src/admin/activities/AdminActivitiesFilter";
+import { activityTypeConversion } from "@/src/functions/typeConversion";
 
-const Create = () => {
+const Activities = () => {
   const [activities, setActivities] = React.useState([]);
 
   const {
@@ -20,10 +22,12 @@ const Create = () => {
     sortFilter,
     resourceTypeFilter,
     dateRangeFilter,
+    activityTypeFilter,
     handleSearchFilter,
     handleSortFilter,
     handleDateRangeFilter,
     handleResourceTypeFilter,
+    handleActivityTypeFilter,
   } = useAdminActivityFilters();
 
   const { message, setMessageStatus } = useMessage();
@@ -33,9 +37,15 @@ const Create = () => {
 
   const getAdminCreateActivites = React.useCallback(async () => {
     try {
-      const { data } = await axios.get(`${url}/head_admin_activities`, {
+      const { data } = await axios.get(`${url}/admin_activities`, {
         headers: { Authorization: user?.token },
-        params: { searchFilter, sortFilter, resourceTypeFilter, dateRangeFilter, activityTypeFilter: "C" },
+        params: {
+          searchFilter,
+          sortFilter,
+          resourceTypeFilter,
+          dateRangeFilter,
+          activityTypeFilter,
+        },
       });
       if (data) {
         setActivities(data);
@@ -44,10 +54,19 @@ const Create = () => {
       console.log(error);
       setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [resourceTypeFilter, user?.token, url, searchFilter, sortFilter, dateRangeFilter, setMessageStatus]);
+  }, [
+    resourceTypeFilter,
+    user?.token,
+    url,
+    activityTypeFilter,
+    searchFilter,
+    sortFilter,
+    dateRangeFilter,
+    setMessageStatus,
+  ]);
 
   const mappedActivities = activities.map((activity, index) => {
-    return <ActivityLog key={index} activity={activity} action="created" />;
+    return <ActivityLog key={index} activity={activity} action={activityTypeConversion[activity.activity_type]} />;
   });
 
   React.useEffect(() => {
@@ -67,10 +86,12 @@ const Create = () => {
         sortFilter={sortFilter}
         typeFilter={resourceTypeFilter}
         dateRangeFilter={dateRangeFilter}
+        activityTypeFilter={activityTypeFilter}
         handleSearchFilter={handleSearchFilter}
         handleSortFilter={handleSortFilter}
         handleDateRangeFilter={handleDateRangeFilter}
         handleTypeFilter={handleResourceTypeFilter}
+        handleActivityTypeFilter={handleActivityTypeFilter}
       />
 
       <div
@@ -85,4 +106,4 @@ const Create = () => {
   );
 };
 
-export default Create;
+export default Activities;

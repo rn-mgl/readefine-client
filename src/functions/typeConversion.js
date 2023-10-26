@@ -13,3 +13,5 @@ export const typeConversion = {
   decipher_wins: "Decipher Wins",
   riddle_wins: "Riddle Wins",
 };
+
+export const activityTypeConversion = { C: "created", R: "read", U: "updated", D: "deleted" };

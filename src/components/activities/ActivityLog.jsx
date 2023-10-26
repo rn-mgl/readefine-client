@@ -1,14 +1,21 @@
 import avatar from "@/public/profile/Avatar.svg";
 import { localizeDate, localizeTime } from "@/src/functions/localDate";
 import Image from "next/image";
+import { AiFillDelete, AiFillFileAdd, AiFillRead } from "react-icons/ai";
+import { MdUpdate } from "react-icons/md";
 
 const ACTION_STYLE = {
   created: "bg-gradient-to-br from-green-100 to-green-300",
   read: "bg-gradient-to-br from-cyan-100 to-cyan-300",
-
   updated: "bg-gradient-to-br from-yellow-100 to-yellow-300",
-
   deleted: "bg-gradient-to-br from-red-100 to-red-300",
+};
+
+const ACTION_ICON = {
+  created: <AiFillFileAdd className="scale-125" />,
+  read: <AiFillRead className="scale-125" />,
+  updated: <MdUpdate className="scale-125" />,
+  deleted: <AiFillDelete className="scale-125" />,
 };
 
 const ActivityLog = (props) => {
@@ -45,7 +52,7 @@ const ActivityLog = (props) => {
           className={`w-10 h-10 min-w-[2.5rem] min-h-[2.5rem] cstm-flex-col
                     rounded-full ${ACTION_STYLE[props.action]}`}
         >
-          {props.icon}
+          {ACTION_ICON[props.action]}
         </div>
 
         <p className="w-full text-sm">
