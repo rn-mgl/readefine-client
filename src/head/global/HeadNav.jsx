@@ -115,10 +115,10 @@ const HeadNav = () => {
         />
 
         <HeadLink
-          to="/head/administrators"
+          to="/head/admin"
           icon={<HiUser />}
-          label="Administrators"
-          isActive={path.includes("/head/administrators")}
+          label="Admins"
+          isActive={path.includes("/head/admin")}
           toggleOpenNav={toggleOpenNav}
         />
 

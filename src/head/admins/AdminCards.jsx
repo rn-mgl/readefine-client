@@ -3,7 +3,7 @@ import { localizeDate } from "@/src/functions/localDate";
 import Image from "next/image";
 import { AiFillDelete, AiFillStar } from "react-icons/ai";
 
-const AdministratorCards = (props) => {
+const AdminCards = (props) => {
   const isSelected = props.selectedCard === props.admin.admin_id;
   const isVerified = props.admin.is_verified;
 
@@ -51,4 +51,4 @@ const AdministratorCards = (props) => {
   );
 };
 
-export default AdministratorCards;
+export default AdminCards;

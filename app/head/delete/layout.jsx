@@ -1,7 +1,7 @@
 import React from "react";
 
 export const metadata = {
-  title: "Head | Administrators",
+  title: "Head | Admins",
 };
 
 const RootLayout = ({ children }) => {

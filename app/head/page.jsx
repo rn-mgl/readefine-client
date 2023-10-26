@@ -17,7 +17,6 @@ import { isTokenExpired } from "@/functions/jwtFns";
 import { useMessage } from "@/hooks/useMessage";
 
 const HeadDashboard = () => {
-  const [counts, setCounts] = React.useState({});
   const [updates, setUpdates] = React.useState({});
 
   const { message, setMessageStatus } = useMessage();
@@ -27,27 +26,10 @@ const HeadDashboard = () => {
   const { url } = useGlobalContext();
   const router = useRouter();
 
-  // get dashboard counts
-  const getCounts = React.useCallback(async () => {
-    try {
-      const { data } = await axios.get(`${url}/head_dashboard`, {
-        params: { query: "counts" },
-        headers: { Authorization: user?.token },
-      });
-      if (data) {
-        setCounts(data);
-      }
-    } catch (error) {
-      console.log(error);
-      setMessageStatus(true, error?.response?.data?.msg, "error");
-    }
-  }, [user?.token, url, setMessageStatus]);
-
   // get dashboard updates
   const getUpdates = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/head_dashboard`, {
-        params: { query: "updates" },
         headers: { Authorization: user?.token },
       });
       if (data) {
@@ -58,12 +40,6 @@ const HeadDashboard = () => {
       setMessageStatus(true, error?.response?.data?.msg, "error");
     }
   }, [user?.token, url, setMessageStatus]);
-
-  React.useEffect(() => {
-    if (user) {
-      getCounts();
-    }
-  }, [getCounts, user]);
 
   React.useEffect(() => {
     if (user) {
@@ -93,20 +69,13 @@ const HeadDashboard = () => {
         cstm-w-limit"
       >
         {/* users card */}
-        <DashboardCards
-          image={admins}
-          label="Administrators"
-          subLabel={`New Administrator: ${updates.userName}`}
-          count={counts.userCount}
-          to="/head/administrators"
-        />
+        <DashboardCards image={admins} label="Admins" subLabel={`New Admin: ${updates.lastAdmin}`} to="/head/admin" />
 
         {/* stories card */}
         <DashboardCards
           image={create}
           label="Create Activities"
-          subLabel={`Last Create: ${updates.storyTitle}`}
-          count={counts.storyCount}
+          subLabel={`Last Create: ${updates.lastCreate}`}
           to="/head/create"
         />
 
@@ -114,8 +83,7 @@ const HeadDashboard = () => {
         <DashboardCards
           image={read}
           label="Read Activities"
-          subLabel={`Last Read: ${updates.testTitle}`}
-          count={counts.testCount}
+          subLabel={`Last Read: ${updates.lastRead}`}
           to="/head/read"
         />
 
@@ -123,8 +91,7 @@ const HeadDashboard = () => {
         <DashboardCards
           image={update}
           label="Update Activities"
-          subLabel={`Last Update: ${updates.rewardName}`}
-          count={counts.rewardCount}
+          subLabel={`Last Update: ${updates.lastUpdate}`}
           to="/head/update"
         />
 
@@ -132,8 +99,7 @@ const HeadDashboard = () => {
         <DashboardCards
           image={remove}
           label="Delete Activities"
-          subLabel={`Last Delete: ${updates.achievementName}`}
-          count={counts.achievementCount}
+          subLabel={`Last Delete: ${updates.lastDelete}`}
           to="/head/delete"
         />
       </div>

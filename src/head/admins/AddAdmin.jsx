@@ -24,7 +24,7 @@ import { useGlobalContext } from "@/base/context";
 import { IoClose } from "react-icons/io5";
 import { useSession } from "next-auth/react";
 
-const AddAdministrator = (props) => {
+const AddAdmin = (props) => {
   const [userData, setUserData] = React.useState({
     name: "",
     surname: "",
@@ -127,8 +127,8 @@ const AddAdministrator = (props) => {
 
       // send to the sending page iif successfully registered
       if (data) {
-        props.getAllAdministrators();
-        props.handleCanAddAdministrators();
+        props.getAllAdmins();
+        props.handleCanAddAdmins();
       }
     } catch (error) {
       console.log(error);
@@ -159,7 +159,7 @@ const AddAdministrator = (props) => {
       className="w-full h-full fixed backdrop-blur-md top-0
                 left-0 z-20 p-4 cstm-flex-col gap-4 justify-start"
     >
-      <button className="cstm-bg-hover ml-auto" onClick={props.handleCanAddAdministrators}>
+      <button className="cstm-bg-hover ml-auto" onClick={props.handleCanAddAdmins}>
         <IoClose className="text-prmColor scale-125" />
       </button>
 
@@ -167,7 +167,7 @@ const AddAdministrator = (props) => {
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       <div className="cstm-flex-col w-full h-full cstm-w-limit gap-4">
-        <p className="text-prmColor font-bold text-xl">Add Administrator</p>
+        <p className="text-prmColor font-bold text-xl">Add Admin</p>
         <form
           className="w-full rounded-md bg-prmColor bg-opacity-20 backdrop-blur-md border-[1px] 
                     border-prmColor border-opacity-40 p-4 cstm-flex-col gap-4 relative z-10 shadow-lg
@@ -221,4 +221,4 @@ const AddAdministrator = (props) => {
   );
 };
 
-export default AddAdministrator;
+export default AddAdmin;

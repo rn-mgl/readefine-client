@@ -3,9 +3,11 @@
 import { useGlobalContext } from "@/base/context";
 import DeleteData from "@/src/admin/global/DeleteData";
 import Message from "@/src/components/global/Message";
-import AddAdministrator from "@/src/head/administrators/AddAdministrator";
-import AdministratorCards from "@/src/head/administrators/AdministratorCards";
+import AddAdmin from "@/src/head/Admins/AddAdmin";
+import AdminCards from "@/src/head/Admins/AdminCards";
+import AdminFilters from "@/src/head/Admins/AdminFilters";
 import HeadPageHeader from "@/src/head/global/PageHeader";
+import useAdminFilters from "@/src/hooks/useAdminFilters";
 import { useMessage } from "@/src/hooks/useMessage";
 
 import axios from "axios";
@@ -13,20 +15,22 @@ import { useSession } from "next-auth/react";
 import React from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 
-const Administrators = () => {
-  const [administrators, setAdministrators] = React.useState([]);
-  const [canAddAdministrators, setCanAddAdministrators] = React.useState(false);
+const Admins = () => {
+  const [Admins, setAdmins] = React.useState([]);
+  const [canAddAdmins, setCanAddAdmins] = React.useState(false);
   const [adminToDelete, setAdminToDelete] = React.useState({ id: -1, username: "" });
   const [canDeleteAdmin, setCanDeleteAdmin] = React.useState(false);
 
+  const { searchFilter, sortFilter, dateRangeFilter, handleSearchFilter, handleSortFilter, handleDateRangeFilter } =
+    useAdminFilters();
   const { message, setMessageStatus } = useMessage();
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
   const user = session?.user?.name;
 
-  const handleCanAddAdministrators = () => {
-    setCanAddAdministrators((prev) => !prev);
+  const handleCanAddAdmins = () => {
+    setCanAddAdmins((prev) => !prev);
   };
 
   const handleAdminToDelete = (id, username) => {
@@ -37,28 +41,25 @@ const Administrators = () => {
     setCanDeleteAdmin((prev) => !prev);
   };
 
-  const getAllAdministrators = React.useCallback(async () => {
+  const getAllAdmins = React.useCallback(async () => {
     try {
-      const { data } = await axios.get(`${url}/head_admin`, { headers: { Authorization: user?.token } });
+      const { data } = await axios.get(`${url}/head_admin`, {
+        headers: { Authorization: user?.token },
+        params: { searchFilter, sortFilter, dateRangeFilter },
+      });
 
       if (data) {
-        setAdministrators(data);
+        setAdmins(data);
       }
     } catch (error) {
       console.log(error);
       setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, setMessageStatus]);
+  }, [url, user?.token, searchFilter, sortFilter, dateRangeFilter, setMessageStatus]);
 
-  React.useEffect(() => {
-    if (user) {
-      getAllAdministrators();
-    }
-  }, [user, getAllAdministrators]);
-
-  const mappedAdministrators = administrators.map((admin, index) => {
+  const mappedAdmins = Admins.map((admin, index) => {
     return (
-      <AdministratorCards
+      <AdminCards
         key={index}
         admin={admin}
         adminToDelete={adminToDelete}
@@ -68,53 +69,63 @@ const Administrators = () => {
     );
   });
 
+  React.useEffect(() => {
+    if (user) {
+      getAllAdmins();
+    }
+  }, [user, getAllAdmins]);
+
   return (
     <div className="p-4 bg-accntColor w-full min-h-screen cstm-flex-col gap-4 justify-start">
-      <HeadPageHeader subHeader="Readefine" mainHeader="Administrators" />
+      <HeadPageHeader subHeader="Readefine" mainHeader="Admins" />
 
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
-      {canAddAdministrators ? (
-        <AddAdministrator
-          handleCanAddAdministrators={handleCanAddAdministrators}
-          getAllAdministrators={getAllAdministrators}
-        />
-      ) : null}
+      {canAddAdmins ? <AddAdmin handleCanAddAdmins={handleCanAddAdmins} getAllAdmins={getAllAdmins} /> : null}
 
       {canDeleteAdmin ? (
         <DeleteData
           apiRoute={`${url}/head_admin/${adminToDelete.id}`}
           confirmation={adminToDelete.username}
           handleCanDeleteData={handleCanDeleteAdmin}
-          getData={getAllAdministrators}
+          getData={getAllAdmins}
         />
       ) : null}
+
+      <AdminFilters
+        dateRangeFilter={dateRangeFilter}
+        sortFilter={sortFilter}
+        searchFilter={searchFilter}
+        handleSearchFilter={handleSearchFilter}
+        handleSortFilter={handleSortFilter}
+        handleDateRangeFilter={handleDateRangeFilter}
+      />
 
       <div className="w-full h-full cstm-flex-col gap-4 justify-start cstm-w-limit">
         <div className="w-full cstm-flex-row">
           <button
-            onClick={handleCanAddAdministrators}
+            onClick={handleCanAddAdmins}
             className="bg-prmColor p-2 text-sm text-white 
                       rounded-md cstm-flex-row gap-1 mr-auto"
           >
             <div>
               <AiOutlinePlus />
             </div>
-            <p>Add Administrator</p>
+            <p>Add Admin</p>
           </button>
           <p className="text-prmColor">
-            Count: <span className="font-semibold">{administrators.length}</span>
+            Count: <span className="font-semibold">{Admins.length}</span>
           </p>
         </div>
         <div
           className="w-full h-full grid grid-cols-1 t:grid-cols-2 
                      l-l:grid-cols-4 gap-4 justify-start"
         >
-          {mappedAdministrators}
+          {mappedAdmins}
         </div>
       </div>
     </div>
   );
 };
 
-export default Administrators;
+export default Admins;

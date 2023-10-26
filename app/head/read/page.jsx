@@ -2,8 +2,10 @@
 
 import { useGlobalContext } from "@/base/context";
 import Message from "@/src/components/global/Message";
-import ActivityLog from "@/src/head/actions/ActivityLog";
+import AdminActivitiesFilter from "@/src/head/activities/AdminActivitiesFilter";
+import ActivityLog from "@/src/head/activities/ActivityLog";
 import HeadPageHeader from "@/src/head/global/PageHeader";
+import useAdminActivityFilters from "@/src/hooks/useAdminActivityFilters";
 import { useMessage } from "@/src/hooks/useMessage";
 import axios from "axios";
 import { useSession } from "next-auth/react";
@@ -12,8 +14,17 @@ import { AiFillRead } from "react-icons/ai";
 
 const Read = () => {
   const [activities, setActivities] = React.useState([]);
-  const [typeFilter, setTypeFilter] = React.useState("");
 
+  const {
+    searchFilter,
+    sortFilter,
+    resourceTypeFilter,
+    dateRangeFilter,
+    handleSearchFilter,
+    handleSortFilter,
+    handleDateRangeFilter,
+    handleResourceTypeFilter,
+  } = useAdminActivityFilters();
   const { message, setMessageStatus } = useMessage();
   const { url } = useGlobalContext();
   const { data: session } = useSession();
@@ -23,7 +34,13 @@ const Read = () => {
     try {
       const { data } = await axios.get(`${url}/head_admin_activities`, {
         headers: { Authorization: user?.token },
-        params: { resourceType: typeFilter, activityType: "R" },
+        params: {
+          searchFilter,
+          sortFilter,
+          resourceTypeFilter,
+          dateRangeFilter,
+          activityType: "R",
+        },
       });
       if (data) {
         setActivities(data);
@@ -32,7 +49,7 @@ const Read = () => {
       console.log(error);
       setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [typeFilter, user?.token, url, setMessageStatus]);
+  }, [user?.token, url, searchFilter, sortFilter, resourceTypeFilter, dateRangeFilter, setMessageStatus]);
 
   const mappedActivities = activities.map((activity, index) => {
     return <ActivityLog icon={<AiFillRead className="scale-125" />} key={index} activity={activity} action="read" />;
@@ -50,10 +67,21 @@ const Read = () => {
 
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
+      <AdminActivitiesFilter
+        searchFilter={searchFilter}
+        sortFilter={sortFilter}
+        typeFilter={resourceTypeFilter}
+        dateRangeFilter={dateRangeFilter}
+        handleSearchFilter={handleSearchFilter}
+        handleSortFilter={handleSortFilter}
+        handleDateRangeFilter={handleDateRangeFilter}
+        handleTypeFilter={handleResourceTypeFilter}
+      />
+
       <div
         className="w-full grid grid-cols-1 t:grid-cols-2 l-l:grid-cols-3
                   cstm-w-limit p-4 rounded-2xl bg-white gap-4 
-                  overflow-y-auto cstm-scrollbar"
+                  overflow-y-auto cstm-scrollbar-2"
       >
         {mappedActivities}
       </div>
