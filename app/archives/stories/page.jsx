@@ -28,15 +28,7 @@ const ClientStories = () => {
 
   const { message, setMessageStatus } = useMessage();
   const { userLexile } = useUserLexile();
-  const {
-    searchFilter,
-    lexileRangeFilter,
-    sortFilter,
-    handleSearchFilter,
-    handleLexileRangeFilter,
-    handleSortFilter,
-    setLexileSweetSpot,
-  } = useStoryFilters();
+  const { searchFilter, sortFilter, handleSearchFilter, handleSortFilter } = useStoryFilters();
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -60,7 +52,7 @@ const ClientStories = () => {
         headers: { Authorization: user?.token },
         params: {
           searchFilter,
-          lexileRangeFilter,
+          userLexile,
           sortFilter,
         },
       });
@@ -72,7 +64,7 @@ const ClientStories = () => {
 
       setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, searchFilter, sortFilter, lexileRangeFilter, setMessageStatus]);
+  }, [url, user?.token, searchFilter, sortFilter, userLexile, setMessageStatus]);
 
   // map stories
   const storiesCards = stories.map((story) => {
@@ -102,14 +94,10 @@ const ClientStories = () => {
   });
 
   React.useEffect(() => {
-    if (user) {
+    if (user && userLexile) {
       getStories();
     }
-  }, [user, getStories]);
-
-  React.useEffect(() => {
-    setLexileSweetSpot(userLexile - 100, userLexile + 50);
-  }, [userLexile, setLexileSweetSpot]);
+  }, [user, userLexile, getStories]);
 
   React.useEffect(() => {
     if (user) {
@@ -137,10 +125,8 @@ const ClientStories = () => {
       <div className="w-full cstm-w-limit cstm-flex-col gap-4 ">
         <StoriesFilter
           handleSearchFilter={handleSearchFilter}
-          handleLexileRangeFilter={handleLexileRangeFilter}
           handleSortFilter={handleSortFilter}
           searchFilter={searchFilter}
-          lexileRangeFilter={lexileRangeFilter}
           sortFilter={sortFilter}
         />
 

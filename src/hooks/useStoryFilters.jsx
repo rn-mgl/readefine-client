@@ -40,11 +40,6 @@ export const useStoryFilters = () => {
     });
   };
 
-  // set lexile sweet spot
-  const setLexileSweetSpot = React.useCallback((from, to) => {
-    setLexileRangeFilter({ from, to });
-  }, []);
-
   // handle onchange on sort filter
   const handleSortFilter = ({ name, value }) => {
     setSortFilter((prev) => {
@@ -64,6 +59,5 @@ export const useStoryFilters = () => {
     handleDateRangeFilter,
     handleLexileRangeFilter,
     handleSortFilter,
-    setLexileSweetSpot,
   };
 };

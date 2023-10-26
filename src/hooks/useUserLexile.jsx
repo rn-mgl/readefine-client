@@ -4,7 +4,7 @@ import { useGlobalContext } from "@/base/context";
 import { useSession } from "next-auth/react";
 
 export const useUserLexile = (setMessageStatus) => {
-  const [userLexile, setUserLexile] = React.useState(-1);
+  const [userLexile, setUserLexile] = React.useState(0);
 
   const { url } = useGlobalContext();
   const { data: session } = useSession();

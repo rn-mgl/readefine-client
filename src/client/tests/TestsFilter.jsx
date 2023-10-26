@@ -1,7 +1,6 @@
 import React from "react";
 import SortFilter from "@/components/filter/SortFilter";
 import SearchFilter from "@/components/filter/SearchFilter";
-import RangeFilter from "@/components/filter/RangeFilter";
 
 const TestsFilter = (props) => {
   return (
@@ -25,16 +24,6 @@ const TestsFilter = (props) => {
           { label: "Lexile", value: "lexile" },
         ]}
       />
-
-      {/* 
-      <RangeFilter
-        fromLabel="Lexile From"
-        handleRangeFilter={props.handleLexileRangeFilter}
-        fromRange={props.lexileRangeFilter.from}
-        type="number"
-        toLabel="Lexile To"
-        toRange={props.lexileRangeFilter.to}
-      /> */}
     </div>
   );
 };

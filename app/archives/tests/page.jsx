@@ -29,15 +29,7 @@ const ClientTests = () => {
 
   const { message, setMessageStatus } = useMessage();
   const { userLexile } = useUserLexile();
-  const {
-    searchFilter,
-    lexileRangeFilter,
-    sortFilter,
-    handleSearchFilter,
-    handleLexileRangeFilter,
-    handleSortFilter,
-    setLexileSweetSpot,
-  } = useTestFilters();
+  const { searchFilter, sortFilter, handleSearchFilter, handleSortFilter } = useTestFilters();
 
   const { data: session } = useSession();
   const { url } = useGlobalContext();
@@ -84,7 +76,7 @@ const ClientTests = () => {
       const { data } = await axios.get(`${url}/test`, {
         params: {
           searchFilter,
-          lexileRangeFilter,
+          userLexile,
           sortFilter,
         },
         headers: { Authorization: user?.token },
@@ -96,17 +88,13 @@ const ClientTests = () => {
       console.log(error);
       setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, searchFilter, lexileRangeFilter, sortFilter, setMessageStatus]);
+  }, [url, user?.token, searchFilter, userLexile, sortFilter, setMessageStatus]);
 
   React.useEffect(() => {
-    if (user) {
+    if (user && userLexile) {
       getTests();
     }
-  }, [user, getTests]);
-
-  React.useEffect(() => {
-    setLexileSweetSpot(userLexile - 100, userLexile + 50);
-  }, [userLexile, setLexileSweetSpot]);
+  }, [user, userLexile, getTests]);
 
   React.useEffect(() => {
     if (user) {
@@ -137,10 +125,8 @@ const ClientTests = () => {
       <div className="w-full cstm-w-limit cstm-flex-col gap-4 ">
         <TestsFilter
           handleSearchFilter={handleSearchFilter}
-          handleLexileRangeFilter={handleLexileRangeFilter}
           handleSortFilter={handleSortFilter}
           searchFilter={searchFilter}
-          lexileRangeFilter={lexileRangeFilter}
           sortFilter={sortFilter}
         />
 

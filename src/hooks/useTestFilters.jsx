@@ -40,11 +40,6 @@ export const useTestFilters = () => {
     });
   };
 
-  // set lexile sweet spot
-  const setLexileSweetSpot = React.useCallback((from, to) => {
-    setLexileRangeFilter({ from, to });
-  }, []);
-
   // handle sort filter
   const handleSortFilter = ({ name, value }) => {
     setSortFilter((prev) => {
@@ -63,7 +58,6 @@ export const useTestFilters = () => {
     handleSearchFilter,
     handleDateRangeFilter,
     handleLexileRangeFilter,
-    setLexileSweetSpot,
     handleSortFilter,
   };
 };
