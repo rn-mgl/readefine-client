@@ -25,7 +25,7 @@ const StorySinglePage = (props) => {
   }, [active]);
 
   return (
-    <div className={`cstm-flex-col gap-4 p-5 t:p-10 transition-all absolute ${position} w-full `}>
+    <div className={`cstm-flex-col gap-4 p-4 t:p-10 transition-all absolute ${position} w-full `}>
       <p
         style={{ fontSize: `${props.fontSize}px`, lineHeight: `${props.fontSize + 8}px` }}
         ref={scrollRef}

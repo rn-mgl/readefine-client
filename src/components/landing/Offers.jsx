@@ -11,7 +11,7 @@ import Image from "next/image";
 const Offers = () => {
   return (
     <section
-      className="min-h-screen w-full bg-prmColor p-5  text-white text-center cstm-flex-col gap-4 justify-start overflow-x-hidden
+      className="min-h-screen w-full bg-prmColor p-4  text-white text-center cstm-flex-col gap-4 justify-start overflow-x-hidden
                 t:p-10 t:gap-10
                 l-s:justify-center"
       id="offers"
@@ -42,7 +42,7 @@ const Offers = () => {
         </div>
 
         <div
-          className="p-5 cstm-flex-col gap-4 overflow-hidden w-full cstm-flex-col border-[1px] backdrop-blur-md relative z-10 t:p-10
+          className="p-4 cstm-flex-col gap-4 overflow-hidden w-full cstm-flex-col border-[1px] backdrop-blur-md relative z-10 t:p-10
             border-white bg-white bg-opacity-50 rounded-lg bg-gradient-to-br from-[#ffffff00] via-[#ffffff9f] to-[#ffffff00]"
         >
           <Image
@@ -78,7 +78,7 @@ const Offers = () => {
         </div>
 
         <div
-          className="p-5 cstm-flex-col gap-4 overflow-hidden w-full cstm-flex-col border-[1px]  backdrop-blur-md t:p-10
+          className="p-4 cstm-flex-col gap-4 overflow-hidden w-full cstm-flex-col border-[1px]  backdrop-blur-md t:p-10
             border-white bg-white bg-opacity-50 rounded-lg bg-gradient-to-br from-[#ffffff00] via-[#ffffff9f] to-[#ffffff00]"
         >
           <Image
@@ -113,7 +113,7 @@ const Offers = () => {
         </div>
 
         <div
-          className="p-5 cstm-flex-col gap-4 overflow-hidden w-full cstm-flex-col border-[1px]  backdrop-blur-md t:p-10
+          className="p-4 cstm-flex-col gap-4 overflow-hidden w-full cstm-flex-col border-[1px]  backdrop-blur-md t:p-10
             border-white bg-white bg-opacity-50 rounded-lg bg-gradient-to-br from-[#ffffff00] via-[#ffffff9f] to-[#ffffff00]"
         >
           <Image

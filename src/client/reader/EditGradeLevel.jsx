@@ -49,7 +49,7 @@ const EditGradeLevel = (props) => {
   });
 
   return (
-    <div className="fixed w-full h-auto min-h-full backdrop-blur-md  cstm-flex-col gap-2 p-5 top-0 left-0 z-20 justify-start">
+    <div className="fixed w-full h-auto min-h-full backdrop-blur-md  cstm-flex-col gap-2 p-4 top-0 left-0 z-20 justify-start">
       {canSeeConfirmGradeChange ? (
         <ConfirmEditGradeLevel
           chosenGrade={chosenGrade}
@@ -65,7 +65,7 @@ const EditGradeLevel = (props) => {
       </button>
 
       <div className="cstm-flex-col cstm-w-limit my-auto">
-        <div className="cstm-flex-col w-full h-full gap-4 t:w-8/12 l-s:w-6/12 bg-white shadow-solid rounded-2xl p-5 justify-start ">
+        <div className="cstm-flex-col w-full h-full gap-4 t:w-8/12 l-s:w-6/12 bg-white shadow-solid rounded-2xl p-4 justify-start ">
           <p className="text-xs text-center">
             <span className="font-bold text-prmColor">note:</span> changing your grade level will affect your lexile
             level and reset it to the lowest level in the grade you will choose.

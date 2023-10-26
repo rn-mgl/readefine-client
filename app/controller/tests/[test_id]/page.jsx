@@ -96,7 +96,7 @@ const SingleTest = ({ params }) => {
   // map questions
   const mappedQuestions = questions.map((q, i) => {
     return (
-      <div className="p-5 bg-white rounded-md w-full cstm-flex-col gap-4 items-start" key={q.question_id}>
+      <div className="p-4 bg-white rounded-md w-full cstm-flex-col gap-4 items-start" key={q.question_id}>
         <p className="font-bold">{q.question}</p>
 
         <div className="cstm-separator" />
@@ -148,7 +148,7 @@ const SingleTest = ({ params }) => {
   }, [user, router]);
 
   return (
-    <div className="p-5 w-full min-h-screen bg-accntColor cstm-flex-col gap-4">
+    <div className="p-4 w-full min-h-screen bg-accntColor cstm-flex-col gap-4">
       <AdminPageHeader subHeader="Tests" mainHeader={testData?.title} />
 
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}

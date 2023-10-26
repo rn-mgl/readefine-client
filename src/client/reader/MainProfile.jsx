@@ -8,7 +8,7 @@ import { AiFillEdit } from "react-icons/ai";
 const MainProfile = (props) => {
   return (
     <div className="cstm-flex-col w-full gap-2 t:cstm-flex-row">
-      <div className="w-full h-72 bg-white rounded-2xl p-5 shadow-solid cstm-flex-col justify-start relative t:w-6/12">
+      <div className="w-full h-72 bg-white rounded-2xl p-4 shadow-solid cstm-flex-col justify-start relative t:w-6/12">
         <div className="bg-gradient-to-br from-prmColor via-sky-300 to-scndColor h-[40%] w-full rounded-2xl relative cstm-flex-col">
           <div
             style={{
@@ -50,7 +50,7 @@ const MainProfile = (props) => {
       </div>
 
       <div className="cstm-flex-col gap-2 w-full t:w-6/12 t:h-72 l-l:cstm-flex-row justify-start">
-        <div className="w-full h-full  bg-white rounded-2xl p-5 shadow-solid cstm-flex-col gap-2 relative">
+        <div className="w-full h-full  bg-white rounded-2xl p-4 shadow-solid cstm-flex-col gap-2 relative">
           <p>Grade Level</p>
 
           <p className="text-4xl text-prmColor font-bold">{props.userData?.grade_level}</p>
@@ -60,7 +60,7 @@ const MainProfile = (props) => {
           </button>
         </div>
 
-        <div className="w-full h-full bg-white rounded-2xl p-5 shadow-solid cstm-flex-col gap-2">
+        <div className="w-full h-full bg-white rounded-2xl p-4 shadow-solid cstm-flex-col gap-2">
           <p>Lexile Level</p>
 
           <p className="text-4xl text-prmColor font-bold">{props.userData?.lexile}L</p>

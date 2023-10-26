@@ -42,7 +42,7 @@ const LandingNav = () => {
         Philippine Time
       </div> */}
 
-      <div className="w-full flex flex-row justify-center items-center p-5 gap-4 l-s:p-7 t:gap-10 l-s:gap-16 transition-all">
+      <div className="w-full flex flex-row justify-center items-center p-4 gap-4 l-s:p-7 t:gap-10 l-s:gap-16 transition-all">
         <Link href="#hero" className="w-fit mr-auto" onClick={() => handleActiveLink("#hero")}>
           <Image src={logo} alt="logo" width={50} height={50} className="w-10 drop-shadow-md shadow-white" />
         </Link>

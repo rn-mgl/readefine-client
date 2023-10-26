@@ -32,7 +32,7 @@ const Message = (props) => {
       className={`${
         props.message.active ? "translate-y-0" : "-translate-y-[100rem]"
       } fixed top-3 w-11/12 rounded-md border-[1px] font-medium shadow-md z-50
-        p-5 px-10 text-sm text-center transition-all animate-slideDown duration-100 
+        p-4 px-10 text-sm text-center transition-all animate-slideDown duration-100 
         t:w-6/12 
         l-s:w-5/12 l-s:bottom-5 l-s:top-auto l-s:right-5 ${COLOR_TYPE[props.message.type]}
         l-l:w-4/12`}

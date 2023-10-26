@@ -6,13 +6,11 @@ const AddTestPage = (props) => {
   return (
     <div className=" w-full cstm-flex-col gap-2">
       <div
-        className="table-fixed p-5 rounded-2xl cstm-flex-col overflow-auto w-full h-screen justify-start 
+        className="table-fixed p-4 rounded-2xl cstm-flex-col overflow-auto w-full h-screen justify-start 
                   items-start bg-white text-sm gap-2 shadow-md cstm-scrollbar-2
             t:h-96 l-s:h-72"
       >
-        <p className="resize-none p-2 focus:outline-none font-bold text-prmColor mr-auto">
-          {`${props.testNumber}.)`}
-        </p>
+        <p className="resize-none p-2 focus:outline-none font-bold text-prmColor mr-auto">{`${props.testNumber}.)`}</p>
 
         <div className="cstm-separator" />
 

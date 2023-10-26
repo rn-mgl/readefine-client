@@ -253,7 +253,7 @@ const Overview = ({ params }) => {
   }, [user, router]);
 
   return (
-    <div className="w-full min-h-screen bg-accntColor p-5 cstm-flex-col justify-start cstm-scrollbar gap-4">
+    <div className="w-full min-h-screen bg-accntColor p-4 cstm-flex-col justify-start cstm-scrollbar gap-4">
       <AdminPageHeader mainHeader="Overview" subHeader="Readefine" />
 
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}

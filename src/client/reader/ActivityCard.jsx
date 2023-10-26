@@ -4,7 +4,7 @@ import Image from "next/image";
 
 const ActivityCard = (props) => {
   return (
-    <div className="w-full h-96 t:h-[30rem] bg-white rounded-2xl p-5 shadow-solid cstm-flex-col justify-start gap-4 border-2 border-accntColor">
+    <div className="w-full h-96 t:h-[30rem] bg-white rounded-2xl p-4 shadow-solid cstm-flex-col justify-start gap-4 border-2 border-accntColor">
       <div className="w-full rounded-2xl">
         <p className="font-bold text-lg text-left">{props.label}</p>
       </div>

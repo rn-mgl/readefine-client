@@ -18,7 +18,7 @@ const Gameover = (props) => {
     <div className="fixed w-full h-full backdrop-blur-md z-30 top-0 text-white animate-fadeIn">
       {didWin ? <Confetti width={window.innerWidth} height={window.innerHeight} className="z-50" /> : null}
 
-      <div className="h-3/6 bg-prmColor w-full p-5 cstm-flex-col gap-4 t:gap-10 cstm-w-limit translate-y-full">
+      <div className="h-3/6 bg-prmColor w-full p-4 cstm-flex-col gap-4 t:gap-10 cstm-w-limit translate-y-full">
         <div className="cstm-flex-col gap-2 w-full">
           <p className="font-extrabold text-xl t:text-2xl">{message}</p>
 

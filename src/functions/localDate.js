@@ -25,6 +25,19 @@ export const localizeDate = (date) => {
   return stringedDate;
 };
 
+export const localizeTime = (time) => {
+  const localTime = new Date(time).toLocaleTimeString();
+  const timeSplit = localTime.split(":");
+  const timeOfDaySplit = localTime.split(" ");
+  const hour = timeSplit[0];
+  const minute = timeSplit[1];
+  const timeOfDay = timeOfDaySplit[1];
+
+  const stringedTime = `${hour}:${minute} ${timeOfDay}`;
+
+  return stringedTime;
+};
+
 export const inputDate = (date) => {
   const splitDate = date.split("/");
   let month = splitDate[0];

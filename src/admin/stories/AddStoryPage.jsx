@@ -12,7 +12,7 @@ const AddStoryPage = (props) => {
 
   return (
     <div
-      className="p-5 rounded-2xl cstm-flex-col overflow-auto w-full h-screen 
+      className="p-4 rounded-2xl cstm-flex-col overflow-auto w-full h-screen 
                   justify-start items-start bg-white text-sm gap-2 shadow-md cstm-scrollbar"
     >
       <div className="cstm-flex-row w-full gap-4">

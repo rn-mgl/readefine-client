@@ -7,7 +7,7 @@ import AdminMinigamesCards from "@/admin/minigames/AdminMinigamesCards";
 
 const Minigames = () => {
   return (
-    <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-4 justify-start">
+    <div className="p-4 bg-accntColor w-full min-h-screen cstm-flex-col gap-4 justify-start">
       <AdminPageHeader mainHeader="Minigames" subHeader="Readefine" />
       <div
         className="cstm-flex-col gap-4 justify-start w-full transition-all

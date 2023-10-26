@@ -73,7 +73,7 @@ const AddRiddle = () => {
   }, [user, router]);
 
   return (
-    <div className="p-5 bg-accntColor w-full min-h-screen h-screen cstm-flex-col gap-4 justify-start">
+    <div className="p-4 bg-accntColor w-full min-h-screen h-screen cstm-flex-col gap-4 justify-start">
       <AdminPageHeader subHeader="Riddles" mainHeader="Add Riddle" />
 
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
@@ -84,7 +84,7 @@ const AddRiddle = () => {
         </Link>
 
         <div
-          className="table-fixed p-5 rounded-2xl cstm-flex-col overflow-auto w-full h-full 
+          className="table-fixed p-4 rounded-2xl cstm-flex-col overflow-auto w-full h-full 
                     justify-start items-start bg-white text-sm gap-4 shadow-md cstm-scrollbar"
         >
           <div className="cstm-flex-row w-full">

@@ -4,7 +4,7 @@ import avatar from "@/public/profile/Avatar White.svg";
 
 const SessionText = (props) => {
   return (
-    <div className="p-5 rounded-2xl bg-accntColor text-left text-sm w-full cstm-flex-row gap-4">
+    <div className="p-4 rounded-2xl bg-accntColor text-left text-sm w-full cstm-flex-row gap-4">
       <div
         style={{ backgroundImage: props.userData?.image ? `url(${props.userData?.image})` : null }}
         className="w-10 h-10 min-w-[2.5rem] min-h-[2.5rem] 

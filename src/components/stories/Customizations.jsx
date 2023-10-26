@@ -10,7 +10,7 @@ const Customizations = (props) => {
 
   return (
     <div
-      className="h-fit transition-all w-full bg-white rounded-2xl p-5 cstm-w-limit cstm-flex-col justify-start
+      className="h-fit transition-all w-full bg-white rounded-2xl p-4 cstm-w-limit cstm-flex-col justify-start
       t:cstm-flex-row"
     >
       <div className="cstm-flex-col w-full gap-2">

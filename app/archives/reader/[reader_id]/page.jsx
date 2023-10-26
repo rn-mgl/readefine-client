@@ -284,7 +284,7 @@ const Reader = ({ params }) => {
 
   return (
     <div
-      className="w-full p-5 cstm-flex-col bg-accntColor min-h-screen overflow-y-auto 
+      className="w-full p-4 cstm-flex-col bg-accntColor min-h-screen overflow-y-auto 
                   cstm-scrollbar justify-start gap-4"
     >
       <ClientPageHeader mainHeader="Readefine" subHeader="Profile" />
@@ -350,7 +350,7 @@ const Reader = ({ params }) => {
         />
 
         {/* answers */}
-        <div className="cstm-flex-col gap-4 w-full text-center bg-white p-5 rounded-2xl">
+        <div className="cstm-flex-col gap-4 w-full text-center bg-white p-4 rounded-2xl">
           <p className="text-xl font-extrabold t:mr-auto text-prmColor">Your Answers</p>
 
           <div className="cstm-flex-col gap-4 w-full">
@@ -385,7 +385,7 @@ const Reader = ({ params }) => {
         </div>
 
         {/* session */}
-        <div className="cstm-flex-col gap-4 w-full text-center bg-white p-5 rounded-2xl">
+        <div className="cstm-flex-col gap-4 w-full text-center bg-white p-4 rounded-2xl">
           <p className="text-2xl font-extrabold t:mr-auto text-prmColor">Your Sessions</p>
 
           <ActivityCard

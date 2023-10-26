@@ -5,7 +5,7 @@ import Link from "next/link";
 const StoriesCards = (props) => {
   const hasTest = props.testId;
   return (
-    <div className="bg-white p-5 rounded-2xl cstm-flex-col gap-4 t:w-72 shadow-md max-h-[30rem] h-[30rem]">
+    <div className="bg-white p-4 rounded-2xl cstm-flex-col gap-4 t:w-72 shadow-md max-h-[30rem] h-[30rem]">
       <div className="w-full h-full cstm-flex-col overflow-clip bg-white rounded-2xl justify-start">
         <Image
           priority

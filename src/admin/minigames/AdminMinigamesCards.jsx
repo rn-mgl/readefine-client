@@ -5,7 +5,7 @@ import Link from "next/link";
 const AdminMinigamesCards = (props) => {
   return (
     <div
-      className="bg-white p-5 rounded-2xl min-w-[16rem] cstm-flex-col gap-4 group hover:shadow-md
+      className="bg-white p-4 rounded-2xl min-w-[16rem] cstm-flex-col gap-4 group hover:shadow-md
                   t:w-80
                   l-l:w-[22rem]"
     >

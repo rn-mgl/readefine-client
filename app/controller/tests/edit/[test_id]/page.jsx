@@ -176,7 +176,7 @@ const EditTest = ({ params }) => {
   }
 
   return (
-    <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-4 justify-start">
+    <div className="p-4 bg-accntColor w-full min-h-screen cstm-flex-col gap-4 justify-start">
       <AdminPageHeader subHeader={test?.title} mainHeader="Edit Test" />
 
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}

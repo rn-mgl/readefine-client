@@ -107,7 +107,7 @@ const AddReward = () => {
   }
 
   return (
-    <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col justify-start">
+    <div className="p-4 bg-accntColor w-full min-h-screen cstm-flex-col justify-start">
       <AdminPageHeader subHeader="Rewards" mainHeader="Add Reward" />
 
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
@@ -120,7 +120,7 @@ const AddReward = () => {
           className="cstm-flex-col gap-4 w-full
                       l-s:cstm-flex-row"
         >
-          <div className="table-fixed p-5 rounded-2xl cstm-flex-col overflow-auto w-full h-[70vh] justify-start items-start bg-white text-sm gap-4 shadow-md cstm-scrollbar">
+          <div className="table-fixed p-4 rounded-2xl cstm-flex-col overflow-auto w-full h-[70vh] justify-start items-start bg-white text-sm gap-4 shadow-md cstm-scrollbar">
             {/* reward name */}
             <div className="cstm-flex-row w-full">
               <textarea
@@ -156,7 +156,7 @@ const AddReward = () => {
           </div>
 
           <div
-            className="table-fixed p-5 rounded-2xl cstm-flex-col overflow-auto w-full h-[70vh] 
+            className="table-fixed p-4 rounded-2xl cstm-flex-col overflow-auto w-full h-[70vh] 
                           justify-start items-start bg-white text-sm gap-4 shadow-md cstm-scrollbar"
           >
             <div className="w-full h-full cstm-flex-col bg-accntColor rounded-2xl">

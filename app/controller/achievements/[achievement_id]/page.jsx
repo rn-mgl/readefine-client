@@ -68,7 +68,7 @@ const SingleAchievement = ({ params }) => {
   }, [user, router]);
 
   return (
-    <div className="p-5 bg-accntColor w-full min-h-screen h-full t:h-screen cstm-flex-col justify-start gap-4">
+    <div className="p-4 bg-accntColor w-full min-h-screen h-full t:h-screen cstm-flex-col justify-start gap-4">
       <AdminPageHeader subHeader="Achievement" mainHeader={achievement.achievement_name} />
 
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
@@ -100,7 +100,7 @@ const SingleAchievement = ({ params }) => {
       <div className="cstm-flex-col cstm-w-limit w-full gap-2 h-full">
         {/* task */}
         <div className="w-full cstm-flex-col h-full">
-          <div className="w-full p-5 bg-white rounded-2xl cstm-flex-col gap-2 h-full">
+          <div className="w-full p-4 bg-white rounded-2xl cstm-flex-col gap-2 h-full">
             <p className=" text-sm">Task</p>
 
             <p className="text-center text-prmColor font-bold text-lg">{achievement?.task}</p>
@@ -110,7 +110,7 @@ const SingleAchievement = ({ params }) => {
         {/* achievement type */}
         <div className="cstm-flex-col t:cstm-flex-row w-full gap-2 h-full">
           <div className="w-full cstm-flex-col h-full">
-            <div className="w-full p-5 bg-white rounded-2xl cstm-flex-col gap-2 h-full">
+            <div className="w-full p-4 bg-white rounded-2xl cstm-flex-col gap-2 h-full">
               <p className="text-sm">Achievement Type</p>
 
               <p className="text-justify font-bold text-prmColor text-lg">
@@ -121,7 +121,7 @@ const SingleAchievement = ({ params }) => {
 
           {/* goal */}
           <div className="w-full cstm-flex-col h-full">
-            <div className="w-full p-5 bg-white rounded-2xl cstm-flex-col gap-2 h-full">
+            <div className="w-full p-4 bg-white rounded-2xl cstm-flex-col gap-2 h-full">
               <p className="text-sm">Goal</p>
 
               <p className="text-justify font-bold text-prmColor text-lg">{achievement?.goal}</p>
@@ -132,7 +132,7 @@ const SingleAchievement = ({ params }) => {
         {/* reward name */}
         <div className="cstm-flex-col t:cstm-flex-row w-full gap-2 h-full">
           <div className="w-full cstm-flex-col h-full">
-            <div className="w-full p-5 bg-white rounded-2xl cstm-flex-col gap-2 h-full">
+            <div className="w-full p-4 bg-white rounded-2xl cstm-flex-col gap-2 h-full">
               <p className="text-sm">Reward Name</p>
 
               <p className="text-justify font-bold text-prmColor text-lg">{achievement?.reward_name}</p>
@@ -141,7 +141,7 @@ const SingleAchievement = ({ params }) => {
 
           {/* reward */}
           <div className="w-full cstm-flex-col h-full">
-            <div className="w-full p-5 bg-white rounded-2xl cstm-flex-col gap-2 h-full ">
+            <div className="w-full p-4 bg-white rounded-2xl cstm-flex-col gap-2 h-full ">
               <div className="drop-shadow-lg w-full animate-float t:w-60 saturate-150">
                 <Image
                   src={achievement?.reward}

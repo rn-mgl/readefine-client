@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const RewardsCards = (props) => {
   return (
-    <div className="bg-white p-5 rounded-2xl cstm-flex-col gap-4 shadow-md max-h-[25rem] w-72">
+    <div className="bg-white p-4 rounded-2xl cstm-flex-col gap-4 shadow-md max-h-[25rem] w-72">
       <Link
         onClick={props.createAdminActivity}
         href={props.to}

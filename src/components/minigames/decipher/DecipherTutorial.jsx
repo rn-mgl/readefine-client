@@ -8,7 +8,7 @@ const DecipherTutorial = (props) => {
   return (
     <div
       className="w-full fixed top-0 left-0 min-h-screen h-full backdrop-blur-md z-30 cstm-flex-col 
-                  justify-start p-5 animate-[fadeIn_200ms] overflow-y-auto cstm-scrollbar-2"
+                  justify-start p-4 animate-[fadeIn_200ms] overflow-y-auto cstm-scrollbar-2"
     >
       <button className="cstm-bg-hover ml-auto absolute top-3 right-3" onClick={props.handleCanSeeTutorial}>
         <IoClose className="scale-150" />
@@ -19,11 +19,11 @@ const DecipherTutorial = (props) => {
           <p className="font-extrabold text-prmColor text-xl t:text-2xl">HOW TO PLAY</p>
 
           <div
-            className="cstm-flex-col h-auto bg-white rounded-2xl shadow-solid p-5 t:p-10  
+            className="cstm-flex-col h-auto bg-white rounded-2xl shadow-solid p-4 t:p-10  
                     w-full gap-4"
           >
             <div
-              className="cstm-flex-col gap-4  bg-prmColor bg-opacity-10 p-5 rounded-md 
+              className="cstm-flex-col gap-4  bg-prmColor bg-opacity-10 p-4 rounded-md 
                     text-center relative w-full shadow-solid shadow-indigo-200"
             >
               <BsDot className="absolute scale-[4] text-scndColor top-0 left-0 -translate-x-1.5 -translate-y-1.5" />
@@ -76,7 +76,7 @@ const DecipherTutorial = (props) => {
             </div>
 
             <div
-              className="cstm-flex-col gap-4  bg-prmColor bg-opacity-10 p-5 rounded-md 
+              className="cstm-flex-col gap-4  bg-prmColor bg-opacity-10 p-4 rounded-md 
                     text-center relative w-full shadow-solid shadow-indigo-200"
             >
               <BsDot className="absolute scale-[4] text-scndColor top-0 left-0 -translate-x-1.5 -translate-y-1.5" />
@@ -112,7 +112,7 @@ const DecipherTutorial = (props) => {
             </div>
 
             <div
-              className="cstm-flex-col gap-4 bg-prmColor bg-opacity-10 p-5 rounded-md 
+              className="cstm-flex-col gap-4 bg-prmColor bg-opacity-10 p-4 rounded-md 
                     text-center relative  w-full shadow-solid shadow-indigo-200"
             >
               <BsDot className="absolute scale-[4] text-scndColor top-0 left-0 -translate-x-1.5 -translate-y-1.5" />
@@ -127,7 +127,7 @@ const DecipherTutorial = (props) => {
             </div>
 
             <div
-              className="cstm-flex-col gap-4  bg-prmColor bg-opacity-10 p-5 rounded-md 
+              className="cstm-flex-col gap-4  bg-prmColor bg-opacity-10 p-4 rounded-md 
                     text-center relative w-full shadow-solid shadow-indigo-200"
             >
               <BsDot className="absolute scale-[4] text-scndColor top-0 left-0 -translate-x-1.5 -translate-y-1.5" />

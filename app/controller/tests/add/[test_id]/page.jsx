@@ -204,7 +204,7 @@ const AddTest = ({ params }) => {
   }
 
   return (
-    <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-4 justify-start">
+    <div className="p-4 bg-accntColor w-full min-h-screen cstm-flex-col gap-4 justify-start">
       <AdminPageHeader subHeader="Tests" mainHeader="Add Test" />
 
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}

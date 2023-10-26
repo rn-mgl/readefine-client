@@ -3,11 +3,11 @@ import React from "react";
 
 const FindRewardCards = (props) => {
   return (
-    <div className="bg-white shadow-md p-5 rounded-2xl cstm-flex-col gap-4 w-72 min-h-[24rem] h-[24rem] justify-start">
+    <div className="bg-white shadow-md p-4 rounded-2xl cstm-flex-col gap-4 w-72 min-h-[24rem] h-[24rem] justify-start">
       <Image
         src={props.image}
         alt="temp"
-        className="rounded-2xl bg-accntColor p-5 h-full saturate-150"
+        className="rounded-2xl bg-accntColor p-4 h-full saturate-150"
         width={250}
         height={250}
         priority

@@ -9,7 +9,7 @@ const TestChoices = (props) => {
       value={props.choice}
       name={props.name}
       type="button"
-      className={`w-full p-5 ${
+      className={`w-full p-4 ${
         props.bgColor
       } rounded-md text-white text-left cstm-flex-row t:w-full t:h-44 l-s:h-52 relative ${
         clicked

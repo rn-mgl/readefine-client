@@ -141,7 +141,7 @@ const EditAchievement = ({ params }) => {
   }
 
   return (
-    <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-4 justify-start">
+    <div className="p-4 bg-accntColor w-full min-h-screen cstm-flex-col gap-4 justify-start">
       <AdminPageHeader subHeader="Achievements" mainHeader="Edit Achievement" />
 
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
@@ -162,7 +162,7 @@ const EditAchievement = ({ params }) => {
         />
 
         <div
-          className="table-fixed p-5 rounded-2xl cstm-flex-col overflow-auto w-full h-[70vh] 
+          className="table-fixed p-4 rounded-2xl cstm-flex-col overflow-auto w-full h-[70vh] 
                       justify-start items-start bg-white text-sm gap-4 shadow-md cstm-scrollbar"
         >
           <div className="cstm-flex-row w-full">

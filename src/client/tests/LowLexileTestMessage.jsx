@@ -4,9 +4,9 @@ import { IoClose } from "react-icons/io5";
 
 const LowLexileTestMessage = (props) => {
   return (
-    <div className="w-full h-full backdrop-blur-md fixed top-0 left-0 z-10 p-5">
+    <div className="w-full h-full backdrop-blur-md fixed top-0 left-0 z-10 p-4">
       <div className="cstm-flex-col w-full h-full cstm-w-limit">
-        <div className="bg-white rounded-2xl shadow-md w-full h-fit p-5 cstm-flex-col gap-4 text-justify text-sm relative t:w-6/12 l-s:w-5/12">
+        <div className="bg-white rounded-2xl shadow-md w-full h-fit p-4 cstm-flex-col gap-4 text-justify text-sm relative t:w-6/12 l-s:w-5/12">
           <button onClick={props.handleShowLexileMessage} className="cstm-bg-hover ml-auto absolute top-3 right-3">
             <IoClose className="scale-110" />
           </button>

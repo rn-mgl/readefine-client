@@ -264,7 +264,7 @@ const SingleTest = ({ params }) => {
   }, [user, router]);
 
   return (
-    <div className="p-5 w-full min-h-screen h-screen bg-accntColor cstm-flex-col gap-4 justify-start overflow-x-hidden">
+    <div className="p-4 w-full min-h-screen h-screen bg-accntColor cstm-flex-col gap-4 justify-start overflow-x-hidden">
       {loading ? <Loading /> : null}
 
       <ClientPageHeader mainHeader={testData?.title} subHeader="Test" />

@@ -61,7 +61,7 @@ const SingleReward = ({ params }) => {
   }, [user, router]);
 
   return (
-    <div className="w-full cstm-flex-col p-5 gap-4 t:gap-4 justify-start bg-accntColor max-h-screen h-screen">
+    <div className="w-full cstm-flex-col p-4 gap-4 t:gap-4 justify-start bg-accntColor max-h-screen h-screen">
       <ClientPageHeader mainHeader="Readefine" subHeader="Your Reward" />
 
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
@@ -73,11 +73,11 @@ const SingleReward = ({ params }) => {
           </Link>
 
           <div
-            className="cstm-flex-col bg-white rounded-2xl p-5 w-full 
+            className="cstm-flex-col bg-white rounded-2xl p-4 w-full 
                         shadow-solid gap-4 text-center h-full justify-start"
           >
             {/* reward */}
-            <div className="cstm-flex-col p-5 rounded-2xl bg-accntColor w-full relative overflow-hidden h-full">
+            <div className="cstm-flex-col p-4 rounded-2xl bg-accntColor w-full relative overflow-hidden h-full">
               <BiMedal className="absolute scale-[10] top-10 left-0 opacity-10 t:scale-[15] t:top-20 t:left-20 text-prmColor " />
 
               <div className="animate-float drop-shadow-md relative z-10 saturate-150 cstm-flex-col w-fit">

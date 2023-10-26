@@ -83,7 +83,7 @@ const AdminDashboard = () => {
   }, [user, router]);
 
   return (
-    <div className="p-5 bg-accntColor w-full min-h-screen cstm-flex-col gap-4 justify-start">
+    <div className="p-4 bg-accntColor w-full min-h-screen cstm-flex-col gap-4 justify-start">
       <AdminPageHeader subHeader="Counts" mainHeader="Main Dashboard" />
 
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}

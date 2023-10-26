@@ -272,13 +272,13 @@ const SingleUser = ({ params }) => {
   }, [user, router]);
 
   return (
-    <div className="w-full min-h-screen bg-accntColor cstm-flex-col justify-start p-5 gap-5">
+    <div className="w-full min-h-screen bg-accntColor cstm-flex-col justify-start p-4 gap-4">
       <AdminPageHeader subHeader="User" mainHeader="Dashboard" />
 
       {/* show if has message pop up */}
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
-      <div className="cstm-flex-col gap-5 w-full cstm-w-limit">
+      <div className="cstm-flex-col gap-4 w-full cstm-w-limit">
         <Link href="/controller/users" className="cstm-bg-hover text-prmColor mr-auto">
           <BsArrowLeft />
         </Link>
@@ -286,9 +286,9 @@ const SingleUser = ({ params }) => {
         <UserMainData userData={userData} />
 
         {/* graphs */}
-        <div className="cstm-flex-col gap-5 w-full min-h-screen justify-start">
+        <div className="cstm-flex-col gap-4 w-full min-h-screen justify-start">
           {/* graph for lexile */}
-          <div className="cstm-flex-col p-5 w-full bg-white rounded-2xl gap-5 items-start">
+          <div className="cstm-flex-col p-4 w-full bg-white rounded-2xl gap-4 items-start">
             <SelectFilter
               onChange={handleLexileMonth}
               selectValue={lexileMonth}
@@ -310,7 +310,7 @@ const SingleUser = ({ params }) => {
               ]}
             />
 
-            <div className="cstm-flex-col w-full h-auto min-h-[30rem] p-5 bg-white rounded-2xl">
+            <div className="cstm-flex-col w-full h-auto min-h-[30rem] p-4 bg-white rounded-2xl">
               <Line
                 data={lexileChartData}
                 options={{
@@ -320,7 +320,7 @@ const SingleUser = ({ params }) => {
             </div>
           </div>
 
-          <div className="cstm-flex-col p-5 w-full bg-white rounded-2xl gap-5 items-start">
+          <div className="cstm-flex-col p-4 w-full bg-white rounded-2xl gap-4 items-start">
             <SelectFilter
               onChange={handleReadMonth}
               selectValue={readMonth}
@@ -343,7 +343,7 @@ const SingleUser = ({ params }) => {
             />
 
             {/* graph for books read */}
-            <div className="cstm-flex-col w-full h-auto min-h-[30rem] p-5 bg-white rounded-2xl">
+            <div className="cstm-flex-col w-full h-auto min-h-[30rem] p-4 bg-white rounded-2xl">
               <Scatter
                 data={booksChartData}
                 options={{
@@ -354,7 +354,7 @@ const SingleUser = ({ params }) => {
           </div>
 
           {/* graph for quizzes taken */}
-          <div className="cstm-flex-col p-5 w-full bg-white rounded-2xl gap-5 items-start">
+          <div className="cstm-flex-col p-4 w-full bg-white rounded-2xl gap-4 items-start">
             <div className="cstm-flex-col items-start t:cstm-flex-row w-full t:justify-between gap-2">
               <SelectFilter
                 onChange={handleQuizMonth}

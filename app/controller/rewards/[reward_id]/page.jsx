@@ -66,7 +66,7 @@ const SingleReward = ({ params }) => {
   }, [user, router]);
 
   return (
-    <div className="w-full min-h-screen h-screen bg-accntColor p-5 cstm-flex-col gap-4 justify-start">
+    <div className="w-full min-h-screen h-screen bg-accntColor p-4 cstm-flex-col gap-4 justify-start">
       <AdminPageHeader subHeader="Reward" mainHeader={reward?.reward_name} />
 
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
@@ -100,10 +100,10 @@ const SingleReward = ({ params }) => {
 
           {/* reward */}
           <div
-            className="p-5 rounded-2xl gap-4 cstm-flex-col w-full h-full 
+            className="p-4 rounded-2xl gap-4 cstm-flex-col w-full h-full 
                         justify-start bg-white text-sm shadow-md"
           >
-            <div className="w-full cstm-flex-col bg-accntColor rounded-2xl p-5 h-full">
+            <div className="w-full cstm-flex-col bg-accntColor rounded-2xl p-4 h-full">
               <div className="w-fit animate-float drop-shadow-md saturate-150">
                 <Image src={reward?.reward} alt="reward" width={300} height={300} className="rounded-2xl" />
               </div>

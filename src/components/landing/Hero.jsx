@@ -34,7 +34,7 @@ const Hero = () => {
 
   return (
     <section
-      className="min-h-screen w-full bg-prmColor p-5 text-center cstm-flex-col  
+      className="min-h-screen w-full bg-prmColor p-4 text-center cstm-flex-col  
               text-accntColor gap-4 relative
                 m-m:px-5
                 t:px-10

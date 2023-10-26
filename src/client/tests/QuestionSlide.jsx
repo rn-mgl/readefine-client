@@ -35,7 +35,7 @@ const QuestionSlide = (props) => {
 
   return (
     <div
-      className={`${position} transition-all bg-white p-5 rounded-md cstm-flex-col gap-4 
+      className={`${position} transition-all bg-white p-4 rounded-md cstm-flex-col gap-4 
                 absolute w-full h-full justify-start overflow-y-auto`}
     >
       <p className="font-bold text-prmColor mr-auto">{props.index + 1}.</p>

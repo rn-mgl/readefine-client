@@ -35,7 +35,7 @@ const DangleHint = (props) => {
           <IoClose className="scale-150 text-prmColor" />
         </button>
 
-        <div className="cstm-flex-col gap-4 shadow-md w-full t:w-10/12 bg-white p-5 rounded-md l-l:w-8/12">
+        <div className="cstm-flex-col gap-4 shadow-md w-full t:w-10/12 bg-white p-4 rounded-md l-l:w-8/12">
           <p className="text-prmColor font-bold cstm-flex-row gap-4">
             <BsLightbulb className="animate-fadeIn" /> Hint
             <BsLightbulb className="animate-fadeIn" />

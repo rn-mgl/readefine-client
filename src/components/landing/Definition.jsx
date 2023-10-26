@@ -8,7 +8,7 @@ import Image from "next/image";
 const Definition = () => {
   return (
     <section
-      className="h-screen p-5  relative text-center text-prmColor bg-accntColor cstm-flex-col justify-start overflow-hidden
+      className="h-screen p-4  relative text-center text-prmColor bg-accntColor cstm-flex-col justify-start overflow-hidden
                 t:p-10"
       id="about"
     >

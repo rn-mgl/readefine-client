@@ -6,7 +6,7 @@ const UserMainData = ({ userData }) => {
   return (
     <div className="cstm-flex-col gap-4 w-full t:cstm-flex-row">
       {/* user data */}
-      <div className="cstm-flex-col bg-white rounded-2xl p-5 w-full">
+      <div className="cstm-flex-col bg-white rounded-2xl p-4 w-full">
         <div className="cstm-flex-row gap-4 w-full justify-start">
           {/* user image */}
           <div
@@ -31,7 +31,7 @@ const UserMainData = ({ userData }) => {
       </div>
 
       {/* user lexile level*/}
-      <div className="cstm-flex-col bg-white rounded-2xl p-5 w-full t:w-4/12">
+      <div className="cstm-flex-col bg-white rounded-2xl p-4 w-full t:w-4/12">
         <p className="font-bold text-prmColor text-xl">{userData?.lexile}</p>
 
         <p className="text-sm">Lexile Level</p>

@@ -120,7 +120,7 @@ const EditMain = (props) => {
   return (
     <div
       className="w-full h-full overflow-y-auto cstm-scrollbar-2 fixed top-0 left-0 
-                  backdrop-blur-md z-20 p-5 cstm-flex-col justify-start"
+                  backdrop-blur-md z-20 p-4 cstm-flex-col justify-start"
     >
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
@@ -133,7 +133,7 @@ const EditMain = (props) => {
           onSubmit={(e) => editMain(e)}
           className="justify-start cstm-flex-col w-full gap-4 t:w-10/12 l-s:w-8/12 l-l:w-6/12"
         >
-          <div className="w-full h-fit p-5 rounded-2xl bg-white cstm-flex-col gap-2 shadow-md">
+          <div className="w-full h-fit p-4 rounded-2xl bg-white cstm-flex-col gap-2 shadow-md">
             <div
               style={{
                 backgroundImage: imageFile.src
@@ -180,7 +180,7 @@ const EditMain = (props) => {
             </div>
           </div>
 
-          <div className="w-full h-fit p-5 rounded-2xl bg-white cstm-flex-col gap-4 shadow-md">
+          <div className="w-full h-fit p-4 rounded-2xl bg-white cstm-flex-col gap-4 shadow-md">
             <EditInput
               type="text"
               label="Name"

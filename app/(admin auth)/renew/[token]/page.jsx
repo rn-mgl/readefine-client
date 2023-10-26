@@ -101,7 +101,7 @@ const AdminPasswordReset = ({ params }) => {
   }
 
   return (
-    <div className="p-5 cstm-flex-col w-full min-h-screen bg-gradient-to-b bg-prmColor ">
+    <div className="p-4 cstm-flex-col w-full min-h-screen bg-gradient-to-b bg-prmColor ">
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       <p className=" font-extrabold text-2xl text-accntColor">Enter New Password</p>
@@ -110,7 +110,7 @@ const AdminPasswordReset = ({ params }) => {
 
       <form
         className="w-full rounded-md bg-accntColor bg-opacity-20 backdrop-blur-md border-[1px] 
-                    border-accntColor border-opacity-40 p-5 cstm-flex-col gap-4 relative z-10 shadow-lg
+                    border-accntColor border-opacity-40 p-4 cstm-flex-col gap-4 relative z-10 shadow-lg
                     t:w-96
                     l-s:w-[26rem]"
         onSubmit={(e) => changePassword(e)}

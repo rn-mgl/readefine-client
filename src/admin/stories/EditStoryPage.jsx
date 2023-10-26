@@ -14,7 +14,7 @@ const EditStoryPage = (props) => {
 
   return (
     <div
-      className="table-fixed p-5 rounded-2xl cstm-flex-col overflow-auto w-full h-screen justify-start 
+      className="table-fixed p-4 rounded-2xl cstm-flex-col overflow-auto w-full h-screen justify-start 
                     items-start bg-white text-sm gap-2 shadow-md cstm-scrollbar-2"
     >
       <div className="cstm-flex-row w-full gap-4">

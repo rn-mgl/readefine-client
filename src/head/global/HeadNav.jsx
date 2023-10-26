@@ -15,7 +15,7 @@ import { usePathname } from "next/navigation";
 import { AiFillBook, AiFillDelete, AiFillHome } from "react-icons/ai";
 import { BiLogOut, BiMenu } from "react-icons/bi";
 import { BsPenFill } from "react-icons/bs";
-import { GrUpdate } from "react-icons/gr";
+import { MdUpdate } from "react-icons/md";
 import { HiUser } from "react-icons/hi2";
 import { IoCloseSharp } from "react-icons/io5";
 
@@ -87,7 +87,7 @@ const HeadNav = () => {
       <div
         className={`${
           isOpen ? "m-s:translate-x-0" : "m-s:-translate-x-full"
-        } bg-white w-full h-full text-center fixed p-5 transition-all cstm-flex-col justify-start gap-4 z-50
+        } bg-white w-full h-full text-center fixed p-4 transition-all cstm-flex-col justify-start gap-4 z-50
             t:w-[50%]
             l-s:translate-x-0 l-s:left-0 l-s:top-0 l-s:w-[30%]
             l-l:w-[20%]`}
@@ -140,7 +140,7 @@ const HeadNav = () => {
 
         <HeadLink
           to="/head/update"
-          icon={<GrUpdate />}
+          icon={<MdUpdate />}
           label="Update Activities"
           isActive={path.includes("/head/update")}
           toggleOpenNav={toggleOpenNav}

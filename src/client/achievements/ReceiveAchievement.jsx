@@ -19,12 +19,12 @@ const ReceiveAchievement = (props) => {
     return (
       <div
         key={a.achievement_id}
-        className="bg-white p-5 rounded-2xl w-full m-s:min-w-full t:min-w-0 shadow-solid cstm-flex-col m-2 
+        className="bg-white p-4 rounded-2xl w-full m-s:min-w-full t:min-w-0 shadow-solid cstm-flex-col m-2 
                     gap-4 animate-slideDown relative z-10 t:w-[25rem] l-l:w-[30rem]"
       >
         <p className="font-bold">Achievement Unlocked!</p>
 
-        <div className="cstm-flex-col p-5 bg-accntColor rounded-2xl">
+        <div className="cstm-flex-col p-4 bg-accntColor rounded-2xl">
           <div className="animate-float drop-shadow-lg w-full cstm-flex-col">
             <Image
               src={a.reward}
@@ -66,7 +66,7 @@ const ReceiveAchievement = (props) => {
 
   return (
     <div
-      className="w-full h-screen fixed top-0 left-0 p-5 z-[60]
+      className="w-full h-screen fixed top-0 left-0 p-4 z-[60]
                   backdrop-blur-md cstm-flex-col gap-4 justify-start"
     >
       <div className="cstm-flex-row w-full relative z-20 items-start">

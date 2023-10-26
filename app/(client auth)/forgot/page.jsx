@@ -62,7 +62,7 @@ const ForgotPassword = () => {
   }
 
   return (
-    <div className="w-full min-h-screen p-5 cstm-flex-col bg-accntColor">
+    <div className="w-full min-h-screen p-4 cstm-flex-col bg-accntColor">
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       <p className=" font-extrabold text-2xl text-prmColor relative z-10">Reset Password</p>
@@ -70,7 +70,7 @@ const ForgotPassword = () => {
       <br />
 
       <form
-        className="w-full rounded-md bg-prmColor bg-opacity-10 backdrop-blur-md border-[1px] border-prmColor border-opacity-30 p-5 cstm-flex-col gap-4 relative z-10 shadow-lg
+        className="w-full rounded-md bg-prmColor bg-opacity-10 backdrop-blur-md border-[1px] border-prmColor border-opacity-30 p-4 cstm-flex-col gap-4 relative z-10 shadow-lg
                     t:w-96
                     l-s:w-[26rem]"
         onSubmit={(e) => sendResetEmail(e)}

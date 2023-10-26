@@ -8,7 +8,7 @@ const AdministratorCards = (props) => {
   const isVerified = props.admin.is_verified;
 
   return (
-    <div className="w-full h-fit p-5 rounded-lg bg-white cstm-flex-col gap-4 justify-start transition-all">
+    <div className="w-full h-fit p-4 rounded-lg bg-white cstm-flex-col gap-4 justify-start transition-all">
       <div className="cstm-flex-row w-full items-center justify-center">
         <div className="relative mr-auto">
           <Image src={props.admin.image} alt="profile" width={50} height={50} className="rounded-full " />

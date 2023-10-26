@@ -85,7 +85,7 @@ const ChangePassword = (props) => {
   }
 
   return (
-    <div className="fixed w-full h-full cstm-flex-col backdrop-blur-md z-20 p-5 top-0 left-0 gap-4 cstm-scrollbar-2 overflow-y-auto">
+    <div className="fixed w-full h-full cstm-flex-col backdrop-blur-md z-20 p-4 top-0 left-0 gap-4 cstm-scrollbar-2 overflow-y-auto">
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       <button onClick={props.handleCanChangePassword} className="cstm-bg-hover ml-auto">
@@ -95,7 +95,7 @@ const ChangePassword = (props) => {
       <div className="cstm-w-limit cstm-flex-col w-full my-auto">
         <form
           onSubmit={(e) => changePassword(e)}
-          className="cstm-flex-col bg-white rounded-2xl p-5 w-full gap-4 shadow-md t:w-8/12 l-l:w-6/12"
+          className="cstm-flex-col bg-white rounded-2xl p-4 w-full gap-4 shadow-md t:w-8/12 l-l:w-6/12"
         >
           <EditInput
             label="Old Password"

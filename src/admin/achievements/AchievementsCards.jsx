@@ -12,11 +12,11 @@ const AchievementsCards = (props) => {
   };
 
   return (
-    <div className="bg-white p-5 rounded-2xl cstm-flex-col gap-4 min-h-[26rem] w-72 min-w-[18rem] transition-all justify-start shadow-md">
+    <div className="bg-white p-4 rounded-2xl cstm-flex-col gap-4 min-h-[26rem] w-72 min-w-[18rem] transition-all justify-start shadow-md">
       <Link
         onClick={props.createAdminActivity}
         href={props.to}
-        className="w-full cstm-flex-col overflow-clip bg-accntColor h-full p-5 rounded-2xl"
+        className="w-full cstm-flex-col overflow-clip bg-accntColor h-full p-4 rounded-2xl"
       >
         <Image
           src={props.image}

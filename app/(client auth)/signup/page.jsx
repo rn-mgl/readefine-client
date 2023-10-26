@@ -150,14 +150,14 @@ const Signup = () => {
   }
 
   return (
-    <div className="w-full h-screen bg-prmColor p-5 cstm-flex-col  ">
+    <div className="w-full h-screen bg-prmColor p-4 cstm-flex-col  ">
       {/* show message pop up */}
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       <p className=" font-extrabold text-2xl text-accntColor">Sign Up</p>
       <br />
       <form
-        className="w-full rounded-md bg-scndColor bg-opacity-20 backdrop-blur-md border-[1px] border-scndColor border-opacity-40 p-5 cstm-flex-col gap-4 relative z-10 shadow-lg
+        className="w-full rounded-md bg-scndColor bg-opacity-20 backdrop-blur-md border-[1px] border-scndColor border-opacity-40 p-4 cstm-flex-col gap-4 relative z-10 shadow-lg
                     t:w-96
                     l-s:w-[26rem]"
         onSubmit={signUp}

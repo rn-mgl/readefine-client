@@ -6,7 +6,7 @@ const ClientMinigamesCards = (props) => {
   return (
     <div
       style={{ animationDuration: `${props.delay}s` }}
-      className="bg-white p-5 rounded-2xl min-w-[16rem] cstm-flex-col gap-2 group shadow-solid group
+      className="bg-white p-4 rounded-2xl min-w-[16rem] cstm-flex-col gap-2 group shadow-solid group
                   t:w-80 animate-fadeIn
                   l-l:w-[22rem]"
     >

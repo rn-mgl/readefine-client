@@ -26,7 +26,7 @@ const StoriesCards = (props) => {
   );
 
   return (
-    <div className="bg-white p-5 rounded-2xl cstm-flex-col h-[30rem] gap-4 w-72 shadow-solid max-h-[30rem] relative border-2 border-accntColor">
+    <div className="bg-white p-4 rounded-2xl cstm-flex-col h-[30rem] gap-4 w-72 shadow-solid max-h-[30rem] relative border-2 border-accntColor">
       {props.isRead ? (
         <div className="group absolute top-2 right-5 z-10">
           <ActionLabel label="Finished Reading" />

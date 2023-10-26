@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const TestsCards = (props) => {
   return (
-    <div className="bg-white p-5 rounded-2xl cstm-flex-col gap-4  t:w-72 shadow-md  max-h-[28rem] h-[28rem]">
+    <div className="bg-white p-4 rounded-2xl cstm-flex-col gap-4  t:w-72 shadow-md  max-h-[28rem] h-[28rem]">
       <div className="w-full h-fit cstm-flex-col overflow-clip  bg-white rounded-2xl justify-start">
         <Image
           priority

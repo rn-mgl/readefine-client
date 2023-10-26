@@ -22,7 +22,7 @@ const TestRecord = (props) => {
     const isCorrect = q.choice === q.answer;
     return (
       <div
-        className="p-5 bg-white rounded-md w-full cstm-flex-col gap-4 items-start t:w-10/12 l-l:w-8/12 shadow-md"
+        className="p-4 bg-white rounded-md w-full cstm-flex-col gap-4 items-start t:w-10/12 l-l:w-8/12 shadow-md"
         key={q.question_id}
       >
         <p className="font-bold">{q.question}</p>
@@ -75,7 +75,7 @@ const TestRecord = (props) => {
 
   return (
     <div
-      className="fixed w-full top-0 left-0 h-full backdrop-blur-md z-30 p-5 
+      className="fixed w-full top-0 left-0 h-full backdrop-blur-md z-30 p-4 
                   cstm-flex-col justify-start overflow-y-auto cstm-scrollbar-2"
     >
       {message.active ? <Message setMessageStatus={setMessageStatus} /> : null}

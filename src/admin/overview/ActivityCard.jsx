@@ -6,7 +6,7 @@ const ActivityCard = (props) => {
     <div
       className={`${
         props.isEmpty ? "justify-center" : "justify-start"
-      } bg-white w-full h-80 p-5 rounded-2xl cstm-flex-col gap-4 t:h-[30rem]`}
+      } bg-white w-full h-80 p-4 rounded-2xl cstm-flex-col gap-4 t:h-[30rem]`}
     >
       <div className="cstm-flex-col w-full">
         <p className="text-black font-bold t:text-left w-full">{props.label}</p>

@@ -24,7 +24,7 @@ const RiddleGame = (props) => {
 
         <div
           className="cstm-flex-col gap-4 w-full rounded-2xl z-10 
-                      bg-white p-5 border-accntColor shadow-solid relative"
+                      bg-white p-4 border-accntColor shadow-solid relative"
         >
           <div className="cstm-flex-row gap-2">{props.remainingLives}</div>
 
