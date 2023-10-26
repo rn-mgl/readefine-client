@@ -3,9 +3,9 @@
 import { useGlobalContext } from "@/base/context";
 import DeleteData from "@/src/admin/global/DeleteData";
 import Message from "@/src/components/global/Message";
-import AddAdmin from "@/src/head/Admins/AddAdmin";
-import AdminCards from "@/src/head/Admins/AdminCards";
-import AdminFilters from "@/src/head/Admins/AdminFilters";
+import AddAdmin from "@/src/head/admins/AddAdmin";
+import AdminCards from "@/src/head/admins/AdminCards";
+import AdminFilters from "@/src/head/admins/AdminFilters";
 import HeadPageHeader from "@/src/head/global/PageHeader";
 import useAdminFilters from "@/src/hooks/useAdminFilters";
 import { useMessage } from "@/src/hooks/useMessage";
