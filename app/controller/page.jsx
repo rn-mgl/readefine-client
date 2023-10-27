@@ -97,7 +97,7 @@ const AdminDashboard = () => {
         {/* activities card */}
         <DashboardCards
           image={activities}
-          label="Activities"
+          label="All Activities"
           subLabel={`Last Activity by: ${updates.lastActivityBy}`}
           count={counts.activityCount}
           to="/controller/activities"

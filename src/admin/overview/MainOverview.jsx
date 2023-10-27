@@ -46,9 +46,14 @@ const MainOverview = (props) => {
         </button>
       </div>
 
-      <div className="bg-white h-48 w-full p-2 rounded-2xl cstm-flex-col gap-2 t:w-6/12 t:h-72">
+      <div className="bg-white h-48 w-full p-2 rounded-2xl cstm-flex-col gap-2 t:w-3/12 t:h-72">
         <p className="text-black font-light text-sm">Date Joined</p>
         <p className="font-bold text-lg text-prmColor">{localizeDate(props.adminData?.date_joined)}</p>
+      </div>
+
+      <div className="bg-white h-48 w-full p-2 rounded-2xl cstm-flex-col gap-2 t:w-3/12 t:h-72">
+        <p className="text-black font-light text-sm">Total Activity</p>
+        <p className="font-bold text-lg text-prmColor">{props.totalActivity}</p>
       </div>
     </div>
   );

@@ -4,9 +4,14 @@ import React from "react";
 const ActivityInCard = (props) => {
   return (
     <div className="cstm-flex-col gap-4 w-full text-center bg-white p-4 rounded-2xl">
-      <p className="text-xl font-extrabold t:mr-auto text-prmColor">{props.header}</p>
+      <div
+        className="cstm-flex-col w-full bg-prmColor p-2 
+                        rounded-md t:w-fit t:px-10 t:mr-auto"
+      >
+        <p className="font-medium text-white text-sm">{props.label}</p>
+      </div>
 
-      <div className="cstm-flex-row gap-4 w-full overflow-x-auto cstm-scrollbar justify-start p-4">
+      <div className="cstm-flex-row gap-4 w-full overflow-x-auto cstm-scrollbar-2 justify-start p-4">
         {props.hasActivities ? (
           props.activities
         ) : (

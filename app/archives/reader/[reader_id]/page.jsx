@@ -1,36 +1,36 @@
 "use client";
 
-import React from "react";
 import ClientPageHeader from "@/client/global/PageHeader";
-import MainProfile from "@/client/reader/MainProfile";
-import axios from "axios";
-import EditMain from "@/client/reader/EditMain";
-import EditGradeLevel from "@/client/reader/EditGradeLevel";
-import AnswersText from "@/client/reader/AnswersText";
 import ActivityCard from "@/client/reader/ActivityCard";
-import StoriesCards from "@/client/stories/StoriesCards";
-import TestsCards from "@/client/tests/TestsCards";
-import LowLexileTestMessage from "@/client/tests/LowLexileTestMessage";
-import RewardsCards from "@/client/rewards/RewardsCards";
-import TestRecord from "@/client/tests/TestRecord";
-import ChangePassword from "@/client/reader/ChangePassword";
-import SessionText from "@/client/reader/SessionText";
 import ActivityInCard from "@/client/reader/ActivityInCard";
-import noReads from "@/public/profile/NoReads.svg";
-import noTest from "@/public/profile/NoTest.svg";
+import AnswersText from "@/client/reader/AnswersText";
+import ChangePassword from "@/client/reader/ChangePassword";
+import EditGradeLevel from "@/client/reader/EditGradeLevel";
+import EditMain from "@/client/reader/EditMain";
+import MainProfile from "@/client/reader/MainProfile";
+import SessionText from "@/client/reader/SessionText";
+import RewardsCards from "@/client/rewards/RewardsCards";
+import StoriesCards from "@/client/stories/StoriesCards";
+import LowLexileTestMessage from "@/client/tests/LowLexileTestMessage";
+import TestRecord from "@/client/tests/TestRecord";
+import TestsCards from "@/client/tests/TestsCards";
 import Message from "@/components/global/Message";
+import noReads from "@/public/profile/NoReads.svg";
 import noReward from "@/public/profile/NoReward.svg";
+import noTest from "@/public/profile/NoTest.svg";
+import axios from "axios";
+import React from "react";
 
-import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/base/context";
+import { isTokenExpired } from "@/functions/jwtFns";
 import { localizeDate } from "@/functions/localDate";
 import { cipher, decipher } from "@/functions/security";
-import { BsFillPenFill, BsFillSquareFill } from "react-icons/bs";
-import { TbPlusMinus } from "react-icons/tb";
-import { FaBrain } from "react-icons/fa";
-import { useRouter } from "next/navigation";
-import { isTokenExpired } from "@/functions/jwtFns";
 import { useMessage } from "@/hooks/useMessage";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { BsFillPenFill, BsFillSquareFill } from "react-icons/bs";
+import { FaBrain } from "react-icons/fa";
+import { TbPlusMinus } from "react-icons/tb";
 
 const Reader = ({ params }) => {
   const [userData, setUserData] = React.useState({});
@@ -322,9 +322,16 @@ const Reader = ({ params }) => {
           userData={userData}
         />
 
+        <div
+          className="cstm-flex-col w-full bg-gradient-to-br
+                    from-prmColor to-scndColor p-2 rounded-md"
+        >
+          <p className="font-semibold text-white">Activity Log</p>
+        </div>
+
         {/* read stories cards */}
         <ActivityInCard
-          header="Stories Read"
+          label="Stories Read"
           placeholder="You haven't read any books yet."
           tempImage={noReads}
           hasActivities={userActivities?.readStoryData?.length}
@@ -333,7 +340,7 @@ const Reader = ({ params }) => {
 
         {/* taken tests cards */}
         <ActivityInCard
-          header="Tests Taken"
+          label="Tests Taken"
           placeholder="You haven't taken any tests yet."
           tempImage={noTest}
           hasActivities={userActivities?.takenTestData?.length}
@@ -342,7 +349,7 @@ const Reader = ({ params }) => {
 
         {/* achievement cards */}
         <ActivityInCard
-          header="Achievements & Rewards"
+          label="Achievements & Rewards"
           placeholder=" You haven't received any rewards yet."
           tempImage={noReward}
           hasActivities={userActivities?.achievementData?.length}
@@ -351,7 +358,12 @@ const Reader = ({ params }) => {
 
         {/* answers */}
         <div className="cstm-flex-col gap-4 w-full text-center bg-white p-4 rounded-2xl">
-          <p className="text-xl font-extrabold t:mr-auto text-prmColor">Your Answers</p>
+          <div
+            className="cstm-flex-col w-full bg-gradient-to-br t:w-fit t:px-10 t:mr-auto
+                    from-prmColor to-scndColor p-2 rounded-md"
+          >
+            <p className="font-semibold text-white">Your Answers</p>
+          </div>
 
           <div className="cstm-flex-col gap-4 w-full">
             <ActivityCard
@@ -386,7 +398,12 @@ const Reader = ({ params }) => {
 
         {/* session */}
         <div className="cstm-flex-col gap-4 w-full text-center bg-white p-4 rounded-2xl">
-          <p className="text-2xl font-extrabold t:mr-auto text-prmColor">Your Sessions</p>
+          <div
+            className="cstm-flex-col w-full bg-gradient-to-br t:w-fit t:px-10 t:mr-auto
+                    from-prmColor to-scndColor p-2 rounded-md"
+          >
+            <p className="font-semibold text-white">Your Sessions</p>
+          </div>
 
           <ActivityCard
             label="Logs"

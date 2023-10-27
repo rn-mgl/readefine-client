@@ -229,6 +229,9 @@ const Overview = ({ params }) => {
       <div className="cstm-flex-col cstm-scrollbar cstm-w-limit w-full gap-4">
         <MainOverview
           adminData={adminData}
+          totalActivity={
+            createActivities.length + readActivities.length + updateActivities.length + deleteActivities.length
+          }
           handleCanEditMain={handleCanEditMain}
           handleCanChangePassword={handleCanChangePassword}
         />
