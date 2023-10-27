@@ -23,7 +23,8 @@ const TestRecord = (props) => {
     return (
       <div
         className="p-4 bg-white rounded-2xl w-full h-full border-2 border-neutral-300 
-                  cstm-flex-col gap-4 justify-start shadow-solid"
+                  cstm-flex-col gap-4 justify-start shadow-solid animate-fadeIn"
+        style={{ animationDuration: `${i * 0.1}s` }}
         key={q.question_id}
       >
         <div className="w-full h-44 overflow-y-auto cstm-scrollbar">
@@ -83,7 +84,7 @@ const TestRecord = (props) => {
 
   return (
     <div
-      className="fixed w-full top-0 left-0 h-full bg-accntColor z-30
+      className="fixed w-full top-0 left-0 h-full bg-accntColor z-30 
                   cstm-flex-col justify-start overflow-y-auto cstm-scrollbar-2"
     >
       {message.active ? <Message setMessageStatus={setMessageStatus} /> : null}

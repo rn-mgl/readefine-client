@@ -65,7 +65,7 @@ module.exports = {
         poppins: ["var(--font-poppins)"],
       },
       animation: {
-        float: "float 8s ease-in-out infinite alternate",
+        float: "float 6s ease-in-out infinite alternate",
         fadeIn: "fadeIn 0.5s ease-in-out",
         slideDown: "slideDown 1s ease-in-out",
         dangle: "dangle 2s ease-in-out infinite alternate",
