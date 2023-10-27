@@ -326,7 +326,7 @@ const Reader = ({ params }) => {
           className="cstm-flex-col w-full bg-gradient-to-br
                     from-prmColor to-scndColor p-2 rounded-md"
         >
-          <p className="font-semibold text-white">Activity Log</p>
+          <p className="font-semibold text-accntColor">Activity Log</p>
         </div>
 
         {/* read stories cards */}
@@ -362,7 +362,7 @@ const Reader = ({ params }) => {
             className="cstm-flex-col w-full bg-gradient-to-br t:w-fit t:px-10 t:mr-auto
                     from-prmColor to-scndColor p-2 rounded-md"
           >
-            <p className="font-semibold text-white">Your Answers</p>
+            <p className="font-semibold text-accntColor">Your Answers</p>
           </div>
 
           <div className="cstm-flex-col gap-4 w-full">
@@ -402,7 +402,7 @@ const Reader = ({ params }) => {
             className="cstm-flex-col w-full bg-gradient-to-br t:w-fit t:px-10 t:mr-auto
                     from-prmColor to-scndColor p-2 rounded-md"
           >
-            <p className="font-semibold text-white">Your Sessions</p>
+            <p className="font-semibold text-accntColor">Your Sessions</p>
           </div>
 
           <ActivityCard

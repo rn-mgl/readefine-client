@@ -69,7 +69,7 @@ const SingleReward = ({ params }) => {
       <div className="cstm-w-limit justify-start cstm-flex-col w-full relative z-10 h-full">
         <div className="cstm-flex-col gap-4 w-full t:w-10/12 l-l:w-8/12 h-full">
           <Link className="cstm-bg-hover mr-auto" href="/archives/rewards">
-            <BsArrowLeft className="text-white scale-125" />
+            <BsArrowLeft className="text-accntColor scale-125" />
           </Link>
 
           <div

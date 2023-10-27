@@ -68,8 +68,8 @@ const AdminStories = () => {
   // map stories
   const storiesCards = stories.map((story) => {
     // temporarily use story_id if no test to cater the condition in suddenly checking test with no content
-    const testId = story?.test_id ? story?.test_id : story.story_id;
-    const cipheredStoryId = cipher(story.story_id);
+    const testId = story?.has_test ? story?.test_id : story?.story_id;
+    const cipheredStoryId = cipher(story?.story_id);
     const cipheredTestId = cipher(testId);
 
     // if story has no test, redirect to add

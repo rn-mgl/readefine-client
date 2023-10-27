@@ -166,7 +166,7 @@ const AdminLogin = () => {
         />
 
         {/* link if password is forgotten */}
-        <Link className="text-xs text-white underline underline-offset-2 l-l:text-prmColor" href="/fixer">
+        <Link className="text-xs text-accntColor underline underline-offset-2 l-l:text-prmColor" href="/fixer">
           Forgot Password?
         </Link>
 

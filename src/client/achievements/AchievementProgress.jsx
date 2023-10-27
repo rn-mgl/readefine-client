@@ -7,7 +7,7 @@ const AchievementProgress = (props) => {
     <div className="relative w-full cstm-flex-col items-start transition-all mb-1 t:w-72">
       <p
         className={`relative z-20 mx-auto text-xs font-semibold transition-all ${
-          percentage >= 50 ? "text-white" : "text-black"
+          percentage >= 50 ? "text-accntColor" : "text-black"
         }`}
       >
         {percentage}%

@@ -6,7 +6,7 @@ import axios from "axios";
 import Link from "next/link";
 import Message from "@/components/global/Message";
 import ScorePopup from "@/components/tests/ScorePopup";
-import TestResult from "@/client/tests/TestResult";
+import TestResult from "@/src/admin/tests/TestResult";
 import DeleteData from "@/admin/global/DeleteData";
 
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
@@ -55,43 +55,47 @@ const SingleTest = ({ params }) => {
     setCanSeeResult((prev) => !prev);
   };
 
-  // get questions
-  const getQuestions = React.useCallback(async () => {
-    try {
-      const { data } = await axios.get(`${url}/admin_test_question`, {
-        params: { testId: decodedTestId },
-        headers: { Authorization: user?.token },
-      });
-
-      if (data) {
-        shuffleQuestions(data);
-        setNewQuestions(data);
-      }
-    } catch (error) {
-      console.log(error);
-      setMessageStatus(true, error?.response?.data?.msg, "error");
-    }
-  }, [url, user?.token, decodedTestId, setNewQuestions, setMessageStatus]);
-
   // get test
   const getTest = React.useCallback(async () => {
-    try {
-      const { data } = await axios.get(`${url}/admin_test/${decodedTestId}`, {
-        headers: { Authorization: user?.token },
-      });
+    if (user?.token) {
+      try {
+        const { data } = await axios.get(`${url}/admin_test/${decodedTestId}`, {
+          headers: { Authorization: user?.token },
+        });
 
-      // if no test, move to add test page
-      if (data) {
-        setNewTestData(data);
-      } else {
+        // if no test, move to add test page
+        if (data) {
+          setNewTestData(data);
+        } else {
+          router.push(`/controller/tests/add/${params?.test_id}`);
+        }
+      } catch (error) {
+        console.log(error);
+        setMessageStatus(true, error?.response?.data?.msg, "error");
         router.push(`/controller/tests/add/${params?.test_id}`);
       }
-    } catch (error) {
-      console.log(error);
-      setMessageStatus(true, error?.response?.data?.msg, "error");
-      router.push(`/controller/tests/add/${params?.test_id}`);
     }
   }, [url, user?.token, decodedTestId, router, params?.test_id, setNewTestData, setMessageStatus]);
+
+  // get questions
+  const getQuestions = React.useCallback(async () => {
+    if (user?.token) {
+      try {
+        const { data } = await axios.get(`${url}/admin_test_question`, {
+          params: { testId: decodedTestId },
+          headers: { Authorization: user?.token },
+        });
+
+        if (data) {
+          shuffleQuestions(data);
+          setNewQuestions(data);
+        }
+      } catch (error) {
+        console.log(error);
+        setMessageStatus(true, error?.response?.data?.msg, "error");
+      }
+    }
+  }, [url, user?.token, decodedTestId, setNewQuestions, setMessageStatus]);
 
   // map questions
   const mappedQuestions = questions.map((q, i) => {
@@ -126,16 +130,12 @@ const SingleTest = ({ params }) => {
   });
 
   React.useEffect(() => {
-    if (user) {
-      getTest();
-    }
-  }, [user, getTest]);
+    getTest();
+  }, [getTest]);
 
   React.useEffect(() => {
-    if (user) {
-      getQuestions();
-    }
-  }, [user, getQuestions]);
+    getQuestions();
+  }, [getQuestions]);
 
   React.useEffect(() => {
     if (user) {

@@ -8,7 +8,7 @@ const PageNavigation = (props) => {
         {props.activePage > 0 ? (
           <button
             onClick={props.handleDecrement}
-            className="bg-prmColor mr-auto p-2 w-16 rounded-md cstm-flex-col font-medium text-white shadow-solid shadow-indigo-950"
+            className="bg-prmColor mr-auto p-2 w-16 rounded-md cstm-flex-col font-medium text-accntColor shadow-solid shadow-indigo-950"
           >
             <AiFillCaretLeft />
           </button>
@@ -17,7 +17,7 @@ const PageNavigation = (props) => {
         {props.activePage < 9 ? (
           <button
             onClick={props.handleIncrement}
-            className="bg-prmColor ml-auto p-2 w-16 rounded-md cstm-flex-col font-medium text-white shadow-solid shadow-indigo-950"
+            className="bg-prmColor ml-auto p-2 w-16 rounded-md cstm-flex-col font-medium text-accntColor shadow-solid shadow-indigo-950"
           >
             <AiFillCaretRight />
           </button>

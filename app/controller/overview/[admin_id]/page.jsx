@@ -240,7 +240,7 @@ const Overview = ({ params }) => {
           className="cstm-flex-col w-full bg-gradient-to-br
                     from-prmColor to-scndColor p-2 rounded-md"
         >
-          <p className="font-semibold text-white">Activity Log</p>
+          <p className="font-semibold text-accntColor">Activity Log</p>
         </div>
 
         <div className="cstm-flex-col justify-start gap-4 w-full">

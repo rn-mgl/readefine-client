@@ -33,7 +33,7 @@ const LandingNav = () => {
       className={`fixed top-0 left-0 z-50 w-full transition-all
                   ${
                     resetNav
-                      ? "shadow-none bg-transparent text-white"
+                      ? "shadow-none bg-transparent text-accntColor"
                       : "bg-accntColor bg-opacity-80 shadow-md text-prmColor backdrop-blur-md"
                   }`}
     >

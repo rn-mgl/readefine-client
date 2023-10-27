@@ -11,7 +11,7 @@ const TestChoices = (props) => {
       type="button"
       className={`w-full p-4 ${
         props.bgColor
-      } rounded-md text-white text-left cstm-flex-row t:w-full t:h-44 l-s:h-52 relative ${
+      } rounded-md text-accntColor text-left cstm-flex-row t:w-full t:h-44 l-s:h-52 relative ${
         clicked
           ? `${props.shadowActive} border-8 border-double border-scndColor 
               t:-translate-y-4 transition-all`

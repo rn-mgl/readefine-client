@@ -76,7 +76,7 @@ const AdminForgotPassword = () => {
                     l-s:w-[26rem]"
         onSubmit={(e) => sendResetEmail(e)}
       >
-        <p className="text-xs text-white">
+        <p className="text-xs text-accntColor">
           Enter your account&apos;s email address and we will send you a password reset link.
         </p>
 

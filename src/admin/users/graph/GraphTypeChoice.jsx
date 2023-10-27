@@ -15,7 +15,7 @@ const GraphTypeChoice = (props) => {
         />
 
         <div
-          className="p-2 peer-checked:bg-prmColor peer-checked:text-white w-20 cstm-flex-col
+          className="p-2 peer-checked:bg-prmColor peer-checked:text-accntColor w-20 cstm-flex-col
             bg-accntColor rounded-md font-bold"
         >
           Lexile
@@ -34,7 +34,7 @@ const GraphTypeChoice = (props) => {
         />
 
         <div
-          className="p-2 peer-checked:bg-prmColor peer-checked:text-white w-20 cstm-flex-col
+          className="p-2 peer-checked:bg-prmColor peer-checked:text-accntColor w-20 cstm-flex-col
             bg-accntColor rounded-md font-bold"
         >
           Score

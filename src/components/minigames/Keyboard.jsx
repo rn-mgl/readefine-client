@@ -4,14 +4,8 @@ import { AiOutlineEnter } from "react-icons/ai";
 import { BsBackspaceFill } from "react-icons/bs";
 
 const Keyboard = (props) => {
-  const line1 = React.useMemo(
-    () => ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
-    []
-  );
-  const line2 = React.useMemo(
-    () => ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
-    []
-  );
+  const line1 = React.useMemo(() => ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"], []);
+  const line2 = React.useMemo(() => ["A", "S", "D", "F", "G", "H", "J", "K", "L"], []);
   const line3 = React.useMemo(() => ["Z", "X", "C", "V", "B", "N", "M"], []);
   const gameOver = props.gameOver?.over;
 
@@ -25,7 +19,7 @@ const Keyboard = (props) => {
                  m-l:text-sm m-l:w-8 
                 t:text-base t:w-14 t:h-10 
                 hover:shadow-solid hover:shadow-indigo-400 hover:bg-opacity-10 transition-all
-                disabled:bg-neutral-400 disabled:shadow-neutral-700 disabled:text-white"
+                disabled:bg-neutral-400 disabled:shadow-neutral-700 disabled:text-accntColor"
         value={c}
         key={c}
       >
@@ -44,7 +38,7 @@ const Keyboard = (props) => {
                     m-l:text-sm m-l:w-8
                     t:text-base t:w-14 t:h-10 
                     hover:shadow-solid hover:shadow-indigo-400 hover:bg-opacity-10 transition-all
-                    disabled:bg-neutral-400 disabled:shadow-neutral-700 disabled:text-white"
+                    disabled:bg-neutral-400 disabled:shadow-neutral-700 disabled:text-accntColor"
         value={c}
         key={c}
       >
@@ -63,7 +57,7 @@ const Keyboard = (props) => {
                     m-l:text-sm m-l:w-8 
                     t:text-base t:w-14 t:h-10 
                     hover:shadow-solid hover:shadow-indigo-400 hover:bg-opacity-10 transition-all
-                    disabled:bg-neutral-400 disabled:shadow-neutral-700 disabled:text-white"
+                    disabled:bg-neutral-400 disabled:shadow-neutral-700 disabled:text-accntColor"
         value={c}
         key={c}
       >
@@ -125,7 +119,7 @@ const Keyboard = (props) => {
                     m-l:text-sm 
                     t:w-20 t:h-10 
                     hover:shadow-solid hover:shadow-indigo-400 hover:bg-opacity-10 transition-all
-                    disabled:bg-neutral-400 disabled:shadow-neutral-700 disabled:text-white"
+                    disabled:bg-neutral-400 disabled:shadow-neutral-700 disabled:text-accntColor"
         >
           <BsBackspaceFill />
         </button>
@@ -137,7 +131,7 @@ const Keyboard = (props) => {
                     m-l:text-sm 
                     t:w-20 t:h-10 
                     hover:shadow-solid hover:shadow-indigo-400 hover:bg-opacity-10 transition-all
-                    disabled:bg-neutral-400 disabled:shadow-neutral-700 disabled:text-white"
+                    disabled:bg-neutral-400 disabled:shadow-neutral-700 disabled:text-accntColor"
         >
           <AiOutlineEnter />
         </button>

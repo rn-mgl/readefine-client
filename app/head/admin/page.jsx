@@ -105,7 +105,7 @@ const Admins = () => {
         <div className="w-full cstm-flex-row">
           <button
             onClick={handleCanAddAdmins}
-            className="bg-prmColor p-2 text-sm text-white 
+            className="bg-prmColor p-2 text-sm text-accntColor 
                       rounded-md cstm-flex-row gap-1 mr-auto"
           >
             <div>

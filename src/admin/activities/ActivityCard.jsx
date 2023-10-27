@@ -8,7 +8,7 @@ const ActivityCard = (props) => {
         className="cstm-flex-col w-full bg-prmColor p-2 
                         rounded-md t:w-fit t:px-10 t:mr-auto"
       >
-        <p className="font-medium text-white text-sm">{props.activityLabel}</p>
+        <p className="font-medium text-accntColor text-sm">{props.activityLabel}</p>
       </div>
       <div
         className="w-full grid grid-cols-1 t:grid-cols-2 l-l:grid-cols-3 gap-2 

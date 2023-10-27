@@ -25,7 +25,7 @@ const UserRow = (props) => {
         <Link
           onClick={props.createAdminActivity}
           href={`/controller/users/${props.cipheredUserId}`}
-          className="bg-prmColor rounded-full p-2 text-white w-full"
+          className="bg-prmColor rounded-full p-2 text-accntColor w-full"
         >
           Visit
         </Link>

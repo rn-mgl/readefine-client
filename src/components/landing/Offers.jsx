@@ -11,7 +11,7 @@ import Image from "next/image";
 const Offers = () => {
   return (
     <section
-      className="min-h-screen w-full bg-prmColor p-4  text-white text-center cstm-flex-col gap-4 justify-start overflow-x-hidden
+      className="min-h-screen w-full bg-prmColor p-4  text-accntColor text-center cstm-flex-col gap-4 justify-start overflow-x-hidden
                 t:p-10 t:gap-10
                 l-s:justify-center"
       id="offers"
@@ -29,7 +29,7 @@ const Offers = () => {
       <div className="cstm-flex-col gap-4 w-full l-s:w-10/12">
         {/*read stories*/}
         <div className="cstm-flex-col w-full gap-2 text-left relative z-10 l-s:w-6/12 l-s:mr-auto">
-          <p className="text-white font-bold text-2xl w-full ">Read Stories</p>
+          <p className="text-accntColor font-bold text-2xl w-full ">Read Stories</p>
           <p
             className="text-sm text-neutral-200
                       m-l:text-base
@@ -65,7 +65,7 @@ const Offers = () => {
       {/*take tests*/}
       <div className="cstm-flex-col w-full gap-2 text-right relative z-10 l-s:w-10/12">
         <div className="cstm-flex-col w-full gap-2 text-right l-s:w-6/12 l-s:ml-auto">
-          <p className="text-white font-bold text-2xl w-full ">Take Tests</p>
+          <p className="text-accntColor font-bold text-2xl w-full ">Take Tests</p>
           <p
             className="text-sm text-neutral-200 relative z-10
                       m-l:text-base
@@ -101,7 +101,7 @@ const Offers = () => {
       {/*play minigames*/}
       <div className="cstm-flex-col w-full gap-2 relative z-10 l-s:w-10/12">
         <div className="cstm-flex-col w-full gap-2 text-left l-s:w-6/12 l-s:mr-auto">
-          <p className="text-white font-bold text-2xl w-full">Play Minigames</p>
+          <p className="text-accntColor font-bold text-2xl w-full">Play Minigames</p>
           <p
             className="text-sm opacity-80 w-full
                       m-l:text-base

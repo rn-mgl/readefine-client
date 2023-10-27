@@ -88,16 +88,16 @@ const DangleTutorial = (props) => {
                   change. The letter will also show in the dangling box.
                 </p>
                 <div className="cstm-flex-row gap-2 w-full">
-                  <p className="p-2 w-8 h-8 rounded-md cstm-flex-col font-bold bg-prmColor text-white">P</p>
-                  <p className=" p-2 w-8 h-8 rounded-md cstm-flex-col font-bold bg-prmColor text-white">A</p>
+                  <p className="p-2 w-8 h-8 rounded-md cstm-flex-col font-bold bg-prmColor text-accntColor">P</p>
+                  <p className=" p-2 w-8 h-8 rounded-md cstm-flex-col font-bold bg-prmColor text-accntColor">A</p>
                   <p className="bg-neutral-200 p-2 w-8 h-8 rounded-md cstm-flex-col font-bold">I</p>
                   <p className="bg-neutral-200 p-2 w-8 h-8 rounded-md cstm-flex-col font-bold">N</p>
                   <p className="bg-neutral-200 p-2 w-8 h-8 rounded-md cstm-flex-col font-bold">T</p>
                 </div>
 
                 <div className="cstm-flex-row gap-2 w-full">
-                  <p className="bg-black p-2 w-8 h-8 rounded-md cstm-flex-col font-bold text-white">P</p>
-                  <p className="bg-black p-2 w-8 h-8 rounded-md cstm-flex-col font-bold text-white">A</p>
+                  <p className="bg-black p-2 w-8 h-8 rounded-md cstm-flex-col font-bold text-accntColor">P</p>
+                  <p className="bg-black p-2 w-8 h-8 rounded-md cstm-flex-col font-bold text-accntColor">A</p>
                   <p className="bg-black p-2 w-8 h-8 rounded-md cstm-flex-col font-bold">P</p>
                   <p className="bg-black p-2 w-8 h-8 rounded-md cstm-flex-col font-bold">E</p>
                   <p className="bg-black p-2 w-8 h-8 rounded-md cstm-flex-col font-bold">R</p>

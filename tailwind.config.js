@@ -66,7 +66,7 @@ module.exports = {
       },
       animation: {
         float: "float 6s ease-in-out infinite alternate",
-        fadeIn: "fadeIn 0.5s ease-in-out",
+        fadeIn: "fadeIn 250ms ease-in-out",
         slideDown: "slideDown 1s ease-in-out",
         dangle: "dangle 2s ease-in-out infinite alternate",
         shake: "shake 200ms ease-in-out",

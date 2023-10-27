@@ -14,14 +14,14 @@ const ScorePopup = (props) => {
 
   const buttonAction = props.url ? (
     <Link href={props.url} className="p-2 hover:bg-black hover:bg-opacity-10 rounded-full w-fit ml-auto ">
-      <IoClose className="scale-150 text-white" />
+      <IoClose className="scale-150 text-accntColor" />
     </Link>
   ) : (
     <button
       onClick={props.handleIsFinished}
       className="p-2 hover:bg-black hover:bg-opacity-10 rounded-full w-fit ml-auto "
     >
-      <IoClose className="scale-150 text-white" />
+      <IoClose className="scale-150 text-accntColor" />
     </button>
   );
 
@@ -33,7 +33,7 @@ const ScorePopup = (props) => {
           className={`w-full h-3/6 p-4 pb-12 cstm-flex-col ${background} absolute gap-2 animate-slideDown top-0 right-0 shadow-md cstm-w-limit`}
         >
           {buttonAction}
-          <div className="my-auto text-white text-center cstm-flex-col gap-2">
+          <div className="my-auto text-accntColor text-center cstm-flex-col gap-2">
             <p className="text-sm font-extralight">you got</p>
             <p className="text-6xl font-bold">{score}</p>
             <p className="font-light">{message}</p>

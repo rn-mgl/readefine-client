@@ -53,7 +53,7 @@ const TestRecord = (props) => {
 
             <div className="cstm-flex-col w-full gap-2 text-center t:w-full bg-prmColor p-2 rounded-md h-full">
               <p className="font-bold text-scndColor">Answer</p>
-              <p className="text-white">{q.answer}</p>
+              <p className="text-accntColor">{q.answer}</p>
             </div>
           </div>
         </div>

@@ -1,10 +1,12 @@
 import React from "react";
+import { BsCheck, BsCheckLg } from "react-icons/bs";
+import { IoClose } from "react-icons/io5";
 
 const InputChoices = (props) => {
   const answerIdentifier = `answer${props.testNumber}`;
   return (
-    <div className="cstm-flex-row gap-2 w-full">
-      <label htmlFor={answerIdentifier + props.choiceValue}>
+    <div className="cstm-flex-row gap-2 w-full h-full">
+      <label htmlFor={answerIdentifier + props.choiceValue} className="h-full">
         <input
           type="radio"
           className="hidden peer"
@@ -15,10 +17,11 @@ const InputChoices = (props) => {
           onChange={(e) => props.handlePages(props.testNumber, e.target)}
         />
         <div
-          className=" p-3.5 rounded-md bg-white transition-all font-light text-sm cursor-pointer
-                    peer-checked:bg-prmColor peer-checked:text-scndColor peer-checked:font-semibold"
+          className={`p-3.5 rounded-md  cstm-flex-col transition-all 
+                    font-light text-sm cursor-pointer h-full w-14
+                    ${props.checked ? " bg-prmColor text-scndColor font-semibold" : "bg-scndColor text-prmColor"}`}
         >
-          Answer
+          {props.checked ? <BsCheckLg className="scale-125" /> : <IoClose className="scale-125" />}
         </div>
       </label>
 

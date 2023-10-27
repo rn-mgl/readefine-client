@@ -9,7 +9,7 @@ const ActivityCard = (props) => {
         className="cstm-flex-col w-full bg-prmColor p-2 
                         rounded-md t:w-fit t:px-10 t:mr-auto"
       >
-        <p className="font-medium text-white text-sm">{props.label}</p>
+        <p className="font-medium text-accntColor text-sm">{props.label}</p>
       </div>
 
       <div className="h-full overflow-y-auto cstm-flex-col w-full cstm-scrollbar-2 gap-4 justify-start">

@@ -12,7 +12,7 @@ const DecipherLetterBlock = (props) => {
         <BiChevronUp className="scale-150" />
       </button>
       <div className="cstm-flex-col p-2 animate-fadeIn gap-2">
-        <p className="text-sm font-bold text-white bg-black rounded-md w-10 h-10 m-l:w-12 m-l:h-12 cstm-flex-col t:w-16 t:h-16 t:text-lg">
+        <p className="text-sm font-bold text-accntColor bg-black rounded-md w-10 h-10 m-l:w-12 m-l:h-12 cstm-flex-col t:w-16 t:h-16 t:text-lg">
           {props.letter}
         </p>
         <div className="cstm-flex-row font-medium text-xs text-black bg-neutral-200 rounded-md w-10 h-10 m-l:w-12 m-l:h-12 t:w-16 t:h-16 cstm-flex-col gap-1 t:text-sm t:gap-2">

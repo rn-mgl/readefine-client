@@ -41,7 +41,7 @@ const EditGradeLevel = (props) => {
         }}
         value={g.grade}
         key={g.grade}
-        className="cstm-flex-row w-full bg-prmColor p-2 rounded-md text-white text-sm t:text-base"
+        className="cstm-flex-row w-full bg-prmColor p-2 rounded-md text-accntColor text-sm t:text-base"
       >
         <p className="mr-auto text-scndColor font-bold">Grade {g.grade}</p> <p>{g.lexile}L</p>
       </button>

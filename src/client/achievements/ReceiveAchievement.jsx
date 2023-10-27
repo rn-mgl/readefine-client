@@ -56,11 +56,11 @@ const ReceiveAchievement = (props) => {
 
   const buttonAction = props.url ? (
     <Link href={props.url} className="cstm-bg-hover top-3 right-3 z-10">
-      <BsArrowRight className="scale-150  text-white" />
+      <BsArrowRight className="scale-150  text-accntColor" />
     </Link>
   ) : (
     <button onClick={props.resetAchievement} className="cstm-bg-hover top-3 right-3 z-10">
-      <IoClose className="scale-150  text-white " />
+      <IoClose className="scale-150  text-accntColor " />
     </button>
   );
 
@@ -70,7 +70,7 @@ const ReceiveAchievement = (props) => {
                   backdrop-blur-md cstm-flex-col gap-4 justify-start"
     >
       <div className="cstm-flex-row w-full relative z-20 items-start">
-        <div className="cstm-flex-col gap-2 z-10 text-white mr-auto flex-col-reverse">
+        <div className="cstm-flex-col gap-2 z-10 text-accntColor mr-auto flex-col-reverse">
           <Volume
             isMuted={isMuted}
             isPlaying={isPlaying}

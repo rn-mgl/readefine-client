@@ -17,6 +17,7 @@ import { useLoading } from "@/hooks/useLoading";
 import { useMessage } from "@/hooks/useMessage";
 import useAdminActivities from "@/src/hooks/useAdminActivities";
 import { useStoryPageControls } from "@/src/hooks/useStoryPageControls";
+import AddTestCard from "@/src/admin/tests/AddTestCard";
 
 const AddTest = ({ params }) => {
   const [pages, setPages] = React.useState([
@@ -29,13 +30,100 @@ const AddTest = ({ params }) => {
       choice4: "choice 4",
       answer1: "",
     },
+
+    {
+      testNumber: 2,
+      testQuestion: "",
+      choice1: "choice 1",
+      choice2: "choice 2",
+      choice3: "choice 3",
+      choice4: "choice 4",
+      answer2: "",
+    },
+
+    {
+      testNumber: 3,
+      testQuestion: "",
+      choice1: "choice 1",
+      choice2: "choice 2",
+      choice3: "choice 3",
+      choice4: "choice 4",
+      answer3: "",
+    },
+
+    {
+      testNumber: 4,
+      testQuestion: "",
+      choice1: "choice 1",
+      choice2: "choice 2",
+      choice3: "choice 3",
+      choice4: "choice 4",
+      answer4: "",
+    },
+
+    {
+      testNumber: 5,
+      testQuestion: "",
+      choice1: "choice 1",
+      choice2: "choice 2",
+      choice3: "choice 3",
+      choice4: "choice 4",
+      answer5: "",
+    },
+
+    {
+      testNumber: 6,
+      testQuestion: "",
+      choice1: "choice 1",
+      choice2: "choice 2",
+      choice3: "choice 3",
+      choice4: "choice 4",
+      answer6: "",
+    },
+
+    {
+      testNumber: 7,
+      testQuestion: "",
+      choice1: "choice 1",
+      choice2: "choice 2",
+      choice3: "choice 3",
+      choice4: "choice 4",
+      answer7: "",
+    },
+
+    {
+      testNumber: 8,
+      testQuestion: "",
+      choice1: "choice 1",
+      choice2: "choice 2",
+      choice3: "choice 3",
+      choice4: "choice 4",
+      answer8: "",
+    },
+
+    {
+      testNumber: 9,
+      testQuestion: "",
+      choice1: "choice 1",
+      choice2: "choice 2",
+      choice3: "choice 3",
+      choice4: "choice 4",
+      answer9: "",
+    },
+
+    {
+      testNumber: 10,
+      testQuestion: "",
+      choice1: "choice 1",
+      choice2: "choice 2",
+      choice3: "choice 3",
+      choice4: "choice 4",
+      answer10: "",
+    },
   ]);
+  const [selectedCard, setSelectedCard] = React.useState(0);
 
-  const {
-    story,
-
-    setNewStory,
-  } = useStoryPageControls();
+  const { story, setNewStory } = useStoryPageControls();
 
   const { loading, setLoadingState } = useLoading(false);
   const { message, setMessageStatus } = useMessage();
@@ -62,37 +150,8 @@ const AddTest = ({ params }) => {
     );
   };
 
-  // add page function
-  const addPage = () => {
-    const pageLen = pages ? pages.length + 1 : 1;
-    const answer = `answer${pageLen}`;
-
-    if (pageLen > 10) {
-      setMessageStatus(true, "You can only put 10 questions.", "warning");
-      return;
-    }
-
-    setPages((prev) => {
-      const newPage = {
-        testNumber: pageLen,
-        testQuestion: "",
-        choice1: "choice 1",
-        choice2: "choice 2",
-        choice3: "choice 3",
-        choice4: "choice 4",
-        [answer]: null,
-      };
-
-      // if alread has page
-      if (prev) {
-        return [...prev, newPage];
-      }
-
-      // if there are no pages
-      else {
-        return [newPage];
-      }
-    });
+  const handleSelectedCard = (testNumber) => {
+    setSelectedCard((prev) => (prev === testNumber ? 0 : testNumber));
   };
 
   // create test
@@ -170,14 +229,15 @@ const AddTest = ({ params }) => {
   }, [url, user?.token, setNewStory, decodedStoryId, setMessageStatus]);
 
   // map test pages
-  const testPages = pages?.map((page) => {
+  const testCards = pages?.map((page) => {
+    const answer = `answer${page.testNumber}`;
     return (
       <React.Fragment key={page.testNumber}>
-        <AddTestPage
+        <AddTestCard
+          answer={page[answer]}
           testNumber={page.testNumber}
-          page={page}
-          handlePages={handlePages}
-          deletePage={() => deletePage(page.testNumber)}
+          question={page.testQuestion}
+          handleSelectedCard={() => handleSelectedCard(page.testNumber)}
         />
       </React.Fragment>
     );
@@ -209,21 +269,23 @@ const AddTest = ({ params }) => {
 
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
-      <form onSubmit={(e) => createTest(e)} className="w-full cstm-flex-col cstm-w-limit border-collapse gap-4">
-        {testPages}
+      {selectedCard ? (
+        <AddTestPage
+          testNumber={selectedCard}
+          page={pages[selectedCard - 1]}
+          handlePages={handlePages}
+          handleSelectedCard={() => handleSelectedCard(selectedCard)}
+        />
+      ) : null}
+
+      <form onSubmit={(e) => createTest(e)} className="w-full cstm-flex-col cstm-w-limit gap-4">
+        <div className="w-full cstm-flex-col gap-4 grid grid-cols-1 t:grid-cols-2 l-l:grid-cols-3">{testCards}</div>
 
         <div className="cstm-flex-row w-full">
-          {pages.length < 10 ? (
-            <button type="button" onClick={addPage} className="cstm-bg-hover mr-auto relative group">
-              <ActionLabel label="Add Page" />
-
-              <IoAddOutline className="cursor-pointer text-prmColor scale-150" />
-            </button>
-          ) : null}
-
           <button
             type="submit"
-            className="w-fit text-center  ml-auto text-sm font-normal bg-prmColor text-accntColor rounded-full p-2 px-4 t:px-10"
+            className="w-fit text-center  ml-auto text-sm font-semibold 
+                    bg-prmColor text-accntColor rounded-full p-2 px-4 t:px-10"
           >
             Create Test
           </button>

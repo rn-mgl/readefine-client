@@ -214,7 +214,7 @@ const AdminRiddles = () => {
 
           <Link
             href="/controller/minigames/riddles/play"
-            className="bg-prmColor rounded-full p-2 text-sm w-fit px-10 text-white"
+            className="bg-prmColor rounded-full p-2 text-sm w-fit px-10 text-accntColor"
           >
             Play
           </Link>

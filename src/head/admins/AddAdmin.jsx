@@ -179,10 +179,10 @@ const AddAdmin = (props) => {
 
           <div className="cstm-flex-row">
             <BsDot
-              className={`${activePos === 1 ? "text-prmColor scale-150" : "text-white scale-125"} transition-all`}
+              className={`${activePos === 1 ? "text-prmColor scale-150" : "text-accntColor scale-125"} transition-all`}
             />
             <BsDot
-              className={`${activePos === 2 ? "text-prmColor scale-150" : "text-white scale-125"} transition-all`}
+              className={`${activePos === 2 ? "text-prmColor scale-150" : "text-accntColor scale-125"} transition-all`}
             />
           </div>
 

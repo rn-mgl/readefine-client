@@ -12,7 +12,7 @@ const DangleEntries = (props) => {
 
           return (
             <p
-              className={`${isCorrect ? "bg-prmColor text-white font-bold" : "bg-neutral-200"} ${
+              className={`${isCorrect ? "bg-prmColor text-accntColor font-bold" : "bg-neutral-200"} ${
                 isIncluded && "text-prmColor underline underline-offset-2"
               } font-medium text-xs w-8 h-8 rounded-md cstm-flex-col bg`}
               key={j}
