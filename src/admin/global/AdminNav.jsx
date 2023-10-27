@@ -166,7 +166,7 @@ const AdminNav = () => {
         <AdminLink
           to="/controller/activities"
           icon={<BsActivity />}
-          label="Activities"
+          label="All Activities"
           isActive={path.includes("/controller/activities")}
           toggleOpenNav={toggleOpenNav}
         />

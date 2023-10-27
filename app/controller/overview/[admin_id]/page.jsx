@@ -1,38 +1,30 @@
 "use client";
 
+import EditMain from "@/admin/overview/EditMain";
 import axios from "axios";
 import React from "react";
-import EditMain from "@/admin/overview/EditMain";
 
 import AdminPageHeader from "@/admin/global/PageHeader";
-import ActivityCard from "@/admin/overview/ActivityCard";
-import MainOverview from "@/admin/overview/MainOverview";
-import ActivityText from "@/admin/overview/ActivityText";
 import ChangePassword from "@/admin/overview/ChangePassword";
-import ComplementActivityText from "@/admin/overview/ComplementActivityText";
+import MainOverview from "@/admin/overview/MainOverview";
 import Message from "@/components/global/Message";
 
-import noGame from "@/public/profile/NoGame.svg";
-import noReads from "@/public/profile/NoReads.svg";
-import noReward from "@/public/profile/NoReward.svg";
-import noTest from "@/public/profile/NoTest.svg";
-
-import { decipher } from "@/functions/security";
-import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/base/context";
-import { localizeDate } from "@/functions/localDate";
-import { GiBrain, GiNotebook, GiSpellBook } from "react-icons/gi";
-import { ImCheckmark } from "react-icons/im";
-import { AiFillTrophy } from "react-icons/ai";
-import { RxActivityLog } from "react-icons/rx";
-import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/functions/jwtFns";
-import SessionText from "@/admin/overview/SessionText";
+import { decipher } from "@/functions/security";
 import { useMessage } from "@/hooks/useMessage";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import ActivityLog from "@/src/components/activities/ActivityLog";
+import ActivityCard from "@/src/admin/activities/ActivityCard";
 
 const Overview = ({ params }) => {
   const [adminData, setAdminData] = React.useState({});
-  const [adminActivities, setAdminActivities] = React.useState({});
+  const [createActivities, setCreateActivities] = React.useState([]);
+  const [readActivities, setReadActivities] = React.useState([]);
+  const [updateActivities, setUpdateActivities] = React.useState([]);
+  const [deleteActivities, setDeleteActivities] = React.useState([]);
+  const [sessionActivities, setSessionActivities] = React.useState([]);
 
   const [canEditMain, setCanEditMain] = React.useState(false);
   const [canChangePassword, setCanChangePassword] = React.useState(false);
@@ -71,15 +63,16 @@ const Overview = ({ params }) => {
     }
   }, [url, user?.token, decipheredId, setMessageStatus]);
 
-  // get admin activities
-  const getAdminActivies = React.useCallback(async () => {
+  // get create activities
+  const getCreateActivies = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/admin_activities/${decipheredId}`, {
         headers: { Authorization: user?.token },
+        params: { activityTypeFilter: "C" },
       });
 
       if (data) {
-        setAdminActivities(data);
+        setCreateActivities(data);
       }
     } catch (error) {
       console.log(error);
@@ -87,147 +80,94 @@ const Overview = ({ params }) => {
     }
   }, [url, user?.token, decipheredId, setMessageStatus]);
 
-  // map story activity
-  const storyActivity = adminActivities?.storyData?.map((d, i) => {
-    return (
-      <React.Fragment key={i}>
-        <ActivityText addedData={d.title} dateAdded={localizeDate(d.date_added)} userImage={adminData?.image} />
-      </React.Fragment>
-    );
-  });
+  // get read activities
+  const getReadActivies = React.useCallback(async () => {
+    try {
+      const { data } = await axios.get(`${url}/admin_activities/${decipheredId}`, {
+        headers: { Authorization: user?.token },
+        params: { activityTypeFilter: "R" },
+      });
 
-  // map story content
-  const storyContentActivity = adminActivities?.storyContentData?.map((d, i) => {
-    let text = "";
-
-    // check the types of content the admin added
-    if (d.content && d.header && d.image) {
-      text = `content, header, and image`;
-    } else if (d.content && d.header) {
-      text = `content and header`;
-    } else if (d.content) {
-      text = `content`;
-    } else if (d.header) {
-      text = `header`;
-    } else if (d.image) {
-      text = `image`;
+      if (data) {
+        setReadActivities(data);
+      }
+    } catch (error) {
+      console.log(error);
+      setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-    return (
-      <React.Fragment key={i}>
-        <ComplementActivityText
-          date={localizeDate(d.date_added)}
-          youAddedLabel={`You added ${text === "image" ? "an" : "a"}`}
-          addedContent={text}
-          complementaryLabel="On the story"
-          complementaryContent={`${d.title} at page ${d.page}`}
-          userImage={adminData?.image}
-          complementaryIcon={<GiSpellBook className="scale-150" />}
-        />
-      </React.Fragment>
-    );
+  }, [url, user?.token, decipheredId, setMessageStatus]);
+
+  // get update activities
+  const getUpdateActivies = React.useCallback(async () => {
+    try {
+      const { data } = await axios.get(`${url}/admin_activities/${decipheredId}`, {
+        headers: { Authorization: user?.token },
+        params: { activityTypeFilter: "U" },
+      });
+
+      if (data) {
+        setUpdateActivities(data);
+      }
+    } catch (error) {
+      console.log(error);
+      setMessageStatus(true, error?.response?.data?.msg, "error");
+    }
+  }, [url, user?.token, decipheredId, setMessageStatus]);
+
+  // get delete activities
+  const getDeleteActivies = React.useCallback(async () => {
+    try {
+      const { data } = await axios.get(`${url}/admin_activities/${decipheredId}`, {
+        headers: { Authorization: user?.token },
+        params: { activityTypeFilter: "D" },
+      });
+
+      if (data) {
+        setDeleteActivities(data);
+      }
+    } catch (error) {
+      console.log(error);
+      setMessageStatus(true, error?.response?.data?.msg, "error");
+    }
+  }, [url, user?.token, decipheredId, setMessageStatus]);
+
+  // get session activities
+  const getSessionActivies = React.useCallback(async () => {
+    try {
+      const { data } = await axios.get(`${url}/admin_session/${decipheredId}`, {
+        headers: { Authorization: user?.token },
+      });
+
+      if (data) {
+        setSessionActivities(data);
+      }
+    } catch (error) {
+      console.log(error);
+      setMessageStatus(true, error?.response?.data?.msg, "error");
+    }
+  }, [url, user?.token, decipheredId, setMessageStatus]);
+
+  const mappedCreateActivities = createActivities.map((activity, index) => {
+    return <ActivityLog key={index} activity={activity} action="created" />;
   });
 
-  // map test activity
-  const testActivity = adminActivities?.testData?.map((d, i) => {
-    return (
-      <React.Fragment key={i}>
-        <ActivityText addedData={d.title} dateAdded={localizeDate(d.date_added)} userImage={adminData?.image} />
-      </React.Fragment>
-    );
+  const mappedReadActivities = readActivities.map((activity, index) => {
+    return <ActivityLog key={index} activity={activity} action="read" />;
   });
 
-  // map test questions
-  const testQuestionsActivity = adminActivities?.testQuestionData?.map((q, i) => {
-    return (
-      <React.Fragment key={i}>
-        <ComplementActivityText
-          date={localizeDate(q.date_added)}
-          youAddedLabel="You added the question"
-          addedContent={q.question}
-          complementaryLabel="On the test"
-          complementaryContent={q.title}
-          userImage={adminData?.image}
-          complementaryIcon={<GiNotebook className="scale-150" />}
-        />
-      </React.Fragment>
-    );
+  const mappedUpdateActivities = updateActivities.map((activity, index) => {
+    return <ActivityLog key={index} activity={activity} action="updated" />;
   });
 
-  // map test answer
-  const testAnswer = adminActivities?.testAnswerData?.map((a, i) => {
-    return (
-      <React.Fragment key={i}>
-        <ComplementActivityText
-          date={localizeDate(a.date_added)}
-          youAddedLabel="You added the answer"
-          addedContent={a.answer}
-          complementaryLabel="On the question"
-          complementaryContent={a.question}
-          userImage={adminData?.image}
-          complementaryIcon={<ImCheckmark className="scale-150" />}
-        />
-      </React.Fragment>
-    );
+  const mappedDeleteActivities = deleteActivities.map((activity, index) => {
+    return <ActivityLog key={index} activity={activity} action="deleted" />;
   });
 
-  // map achievement activity
-  const achievementActivity = adminActivities?.achievementData?.map((d, i) => {
-    return (
-      <React.Fragment key={i}>
-        <ActivityText
-          addedData={d.achievement_name}
-          dateAdded={localizeDate(d.date_added)}
-          userImage={adminData?.image}
-        />
-      </React.Fragment>
-    );
-  });
+  const mappedSessionActivities = sessionActivities.map((activity, index) => {
+    activity.resource_type = "Readefine";
+    activity.resource_name = "session";
 
-  // map reward activity
-  const rewardActivity = adminActivities?.rewardData?.map((r, i) => {
-    return (
-      <React.Fragment key={i}>
-        <ComplementActivityText
-          date={localizeDate(r.date_added)}
-          youAddedLabel="You added the reward"
-          addedContent={r.reward_name}
-          complementaryLabel="For the achievement"
-          complementaryContent={r.achievement_name}
-          userImage={adminData?.image}
-          complementaryIcon={<AiFillTrophy className="scale-150" />}
-        />
-      </React.Fragment>
-    );
-  });
-
-  // map riddles activity
-  const riddlesActivity = adminActivities?.riddlesData?.map((r, i) => {
-    return (
-      <React.Fragment key={i}>
-        <ComplementActivityText
-          date={localizeDate(r.date_added)}
-          youAddedLabel="You added the riddle"
-          addedContent={r.riddle}
-          complementaryLabel="With the answer"
-          complementaryContent={r.answer}
-          userImage={adminData?.image}
-          complementaryIcon={<GiBrain className="scale-150" />}
-        />
-      </React.Fragment>
-    );
-  });
-
-  // map session activity
-  const sessionActivity = adminActivities?.sessionData?.map((s, i) => {
-    return (
-      <React.Fragment key={s.session_id}>
-        <SessionText
-          sessionType={s.type === "in" ? "logged in" : "logged out"}
-          adminData={adminData}
-          dateLogged={localizeDate(s.date_logged)}
-        />
-      </React.Fragment>
-    );
+    return <ActivityLog key={index} activity={activity} action={activity.type === "in" ? "logged in" : "logged out"} />;
   });
 
   React.useEffect(() => {
@@ -238,9 +178,33 @@ const Overview = ({ params }) => {
 
   React.useEffect(() => {
     if (user) {
-      getAdminActivies();
+      getCreateActivies();
     }
-  }, [user, getAdminActivies]);
+  }, [user, getCreateActivies]);
+
+  React.useEffect(() => {
+    if (user) {
+      getReadActivies();
+    }
+  }, [user, getReadActivies]);
+
+  React.useEffect(() => {
+    if (user) {
+      getUpdateActivies();
+    }
+  }, [user, getUpdateActivies]);
+
+  React.useEffect(() => {
+    if (user) {
+      getDeleteActivies();
+    }
+  }, [user, getDeleteActivies]);
+
+  React.useEffect(() => {
+    if (user) {
+      getSessionActivies();
+    }
+  }, [user, getSessionActivies]);
 
   React.useEffect(() => {
     if (user) {
@@ -269,82 +233,23 @@ const Overview = ({ params }) => {
           handleCanChangePassword={handleCanChangePassword}
         />
 
-        <div className="text-xl font-extrabold t:mr-auto cstm-flex-row gap-4">
-          <RxActivityLog /> Activity Log <RxActivityLog className="-scale-x-100" />
+        <div
+          className="cstm-flex-col w-full bg-gradient-to-br
+                    from-prmColor to-scndColor p-2 rounded-md"
+        >
+          <p className="font-semibold text-white">Activity Log</p>
         </div>
 
-        <div className="cstm-flex-col justify-start gap-4 t:gap-10 w-full">
-          <ActivityCard
-            label="Story"
-            activity={storyActivity}
-            isEmpty={adminActivities?.storyData?.length === 0}
-            fillerImage={noReads}
-            fillerText="No activities found on stories."
-          />
+        <div className="cstm-flex-col justify-start gap-4 w-full">
+          <ActivityCard mappedActivities={mappedCreateActivities} activityLabel="Create Actions" />
 
-          <ActivityCard
-            label="Story Content"
-            activity={storyContentActivity}
-            isEmpty={adminActivities?.storyData?.length === 0}
-            fillerImage={noReads}
-            fillerText="No activities found on story content."
-          />
+          <ActivityCard mappedActivities={mappedReadActivities} activityLabel="Read Actions" />
 
-          <ActivityCard
-            label="Test"
-            activity={testActivity}
-            isEmpty={adminActivities?.testData?.length === 0}
-            fillerImage={noTest}
-            fillerText="No activities found on tests."
-          />
+          <ActivityCard mappedActivities={mappedUpdateActivities} activityLabel="Update Actions" />
 
-          <ActivityCard
-            label="Test Questions"
-            activity={testQuestionsActivity}
-            isEmpty={adminActivities?.testQuestionData?.length === 0}
-            fillerImage={noTest}
-            fillerText="No activities found on test questions."
-          />
+          <ActivityCard mappedActivities={mappedDeleteActivities} activityLabel="Delete Actions" />
 
-          <ActivityCard
-            label="Test Answers"
-            activity={testAnswer}
-            isEmpty={adminActivities?.testAnswerData?.length === 0}
-            fillerImage={noTest}
-            fillerText="No activities found on test answers."
-          />
-
-          <ActivityCard
-            label="Achievements"
-            activity={achievementActivity}
-            isEmpty={adminActivities?.achievementData?.length === 0}
-            fillerImage={noReward}
-            fillerText="No activities found on achievements."
-          />
-
-          <ActivityCard
-            label="Rewards"
-            activity={rewardActivity}
-            isEmpty={adminActivities?.rewardData?.length === 0}
-            fillerImage={noReward}
-            fillerText="No activities found on rewards."
-          />
-
-          <ActivityCard
-            label="Riddles"
-            activity={riddlesActivity}
-            isEmpty={adminActivities?.riddlesData?.length === 0}
-            fillerImage={noGame}
-            fillerText="No activities found on riddles."
-          />
-
-          <ActivityCard
-            label="Sessions"
-            activity={sessionActivity}
-            isEmpty={adminActivities?.sessionData?.length === 0}
-            fillerImage={noGame}
-            fillerText="No sessions found."
-          />
+          <ActivityCard mappedActivities={mappedSessionActivities} activityLabel="Sessions" />
         </div>
       </div>
     </div>

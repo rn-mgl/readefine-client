@@ -1,7 +1,7 @@
 import avatar from "@/public/profile/Avatar.svg";
 import { localizeDate, localizeTime } from "@/src/functions/localDate";
 import Image from "next/image";
-import { AiFillDelete, AiFillFileAdd, AiFillRead } from "react-icons/ai";
+import { AiFillDelete, AiFillFileAdd, AiFillRead, AiOutlineLogin, AiOutlineLogout } from "react-icons/ai";
 import { MdUpdate } from "react-icons/md";
 
 const ACTION_STYLE = {
@@ -9,6 +9,8 @@ const ACTION_STYLE = {
   read: "bg-gradient-to-br from-cyan-100 to-cyan-300",
   updated: "bg-gradient-to-br from-yellow-100 to-yellow-300",
   deleted: "bg-gradient-to-br from-red-100 to-red-300",
+  "logged in": "bg-gradient-to-br from-[#542ACA22] to-[#542ACA88]",
+  "logged out": "bg-gradient-to-br from-[#4BFCE122] to-[#4BFCE188]",
 };
 
 const ACTION_ICON = {
@@ -16,6 +18,8 @@ const ACTION_ICON = {
   read: <AiFillRead className="scale-125" />,
   updated: <MdUpdate className="scale-125" />,
   deleted: <AiFillDelete className="scale-125" />,
+  "logged in": <AiOutlineLogin className="scale-125" />,
+  "logged out": <AiOutlineLogout className="scale-125 rotate-180" />,
 };
 
 const ActivityLog = (props) => {

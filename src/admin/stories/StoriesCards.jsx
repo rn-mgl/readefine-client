@@ -13,7 +13,7 @@ const StoriesCards = (props) => {
           alt="temp"
           width={240}
           height={200}
-          className="w-fit hover:scale-105 transition-all saturate-150"
+          className="w-full hover:scale-105 transition-all saturate-150"
         />
       </div>
 
