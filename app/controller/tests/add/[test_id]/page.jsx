@@ -264,7 +264,7 @@ const AddTest = ({ params }) => {
   }
 
   return (
-    <div className="p-4 bg-accntColor w-full min-h-screen cstm-flex-col gap-4 justify-start">
+    <div className="p-4 bg-accntColor w-full cstm-flex-col min-h-screen h-screen gap-4 justify-start">
       <AdminPageHeader subHeader="Tests" mainHeader="Add Test" />
 
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
@@ -278,18 +278,20 @@ const AddTest = ({ params }) => {
         />
       ) : null}
 
-      <form onSubmit={(e) => createTest(e)} className="w-full cstm-flex-col cstm-w-limit gap-4">
-        <div className="w-full cstm-flex-col gap-4 grid grid-cols-1 t:grid-cols-2 l-l:grid-cols-3">{testCards}</div>
+      <form
+        onSubmit={(e) => createTest(e)}
+        className="w-full cstm-flex-col cstm-w-limit gap-4 bg-white justify-start
+                  p-4 rounded-2xl h-full overflow-y-auto cstm-scrollbar-2"
+      >
+        <div className="w-full mb-auto gap-4 grid grid-cols-1 t:grid-cols-2 l-l:grid-cols-3">{testCards}</div>
 
-        <div className="cstm-flex-row w-full">
-          <button
-            type="submit"
-            className="w-fit text-center  ml-auto text-sm font-semibold 
+        <button
+          type="submit"
+          className="w-fit text-center  ml-auto text-sm font-semibold 
                     bg-prmColor text-accntColor rounded-full p-2 px-4 t:px-10"
-          >
-            Create Test
-          </button>
-        </div>
+        >
+          Create Test
+        </button>
       </form>
     </div>
   );

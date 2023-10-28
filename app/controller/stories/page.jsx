@@ -128,12 +128,14 @@ const AdminStories = () => {
           dateRangeFilter={dateRangeFilter}
         />
 
-        <div className="relative group cstm-flex-col mr-auto">
-          <ActionLabel label="Add Story" />
-          <Link href="/controller/stories/add" className="cstm-bg-hover p-2 w-fit">
-            <IoAddOutline className="text-prmColor cursor-pointer scale-150" />
-          </Link>
-        </div>
+        <Link
+          href="/controller/stories/add"
+          className="p-2 w-fit cstm-flex-row px-4  gap-1 mr-auto hover:shadow-md
+                  bg-prmColor rounded-md text-accntColor text-sm"
+        >
+          <IoAddOutline className="cursor-pointer scale-125" />
+          <p>Add Story</p>
+        </Link>
 
         <div
           className="cstm-flex-col gap-4 justify-start w-full transition-all relative

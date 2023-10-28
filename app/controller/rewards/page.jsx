@@ -111,8 +111,13 @@ const AdminRewards = () => {
           handleTypeFilter={handleTypeFilter}
         />
 
-        <Link href="/controller/rewards/add" className="cstm-bg-hover mr-auto p-2 w-fit">
-          <IoAddOutline className="text-prmColor cursor-pointer scale-150" />
+        <Link
+          href="/controller/rewards/add"
+          className="p-2 w-fit cstm-flex-row px-4  gap-1 mr-auto hover:shadow-md
+                  bg-prmColor rounded-md text-accntColor text-sm"
+        >
+          <IoAddOutline className="cursor-pointer scale-125" />
+          <p>Add Reward</p>
         </Link>
 
         <div

@@ -123,8 +123,13 @@ const AdminAchievements = () => {
           handleTypeFilter={handleTypeFilter}
         />
 
-        <Link href="/controller/achievements/add" className="cstm-bg-hover mr-auto p-2 w-fit">
-          <IoAddOutline className="text-prmColor cursor-pointer scale-150" />
+        <Link
+          href="/controller/achievements/add"
+          className="p-2 w-fit cstm-flex-row px-4  gap-1 mr-auto hover:shadow-md
+                  bg-prmColor rounded-md text-accntColor text-sm"
+        >
+          <IoAddOutline className="cursor-pointer scale-125" />
+          <p>Add Achievement</p>
         </Link>
 
         <div className="w-full cstm-flex-col flex-wrap gap-4 relative t:items-start t:cstm-flex-row">

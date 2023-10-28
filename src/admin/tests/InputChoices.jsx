@@ -18,8 +18,12 @@ const InputChoices = (props) => {
         />
         <div
           className={`p-3.5 rounded-md  cstm-flex-col transition-all 
-                    font-light text-sm cursor-pointer h-full w-14
-                    ${props.checked ? " bg-prmColor text-scndColor font-semibold" : "bg-scndColor text-prmColor"}`}
+                    font-light text-sm cursor-pointer h-full w-14 shadow-solid
+                    ${
+                      props.checked
+                        ? " bg-prmColor text-scndColor font-semibold shadow-indigo-950"
+                        : "bg-scndColor text-prmColor shadow-cyan-800"
+                    }`}
         >
           {props.checked ? <BsCheckLg className="scale-125" /> : <IoClose className="scale-125" />}
         </div>
