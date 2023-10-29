@@ -9,7 +9,7 @@ const AddTestFilter = (props) => {
           <p>Page</p>
         </div>
         <div className="hover:bg-black hover:bg-opacity-10 transition-all rounded-full p-2">
-          <IoAddOutline onClick={props.addPage} className="cursor-pointer text-prmColor scale-150" />
+          <IoAddOutline onClick={props.addPage} className="cursor-pointer text-prmColor scale-125" />
         </div>
       </div>
     </div>

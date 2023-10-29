@@ -7,7 +7,7 @@ const PageNavigation = (props) => {
     <div className="cstm-flex-row w-full cstm-w-limit">
       <button disabled={props.activePage === 1} className="cstm-bg-hover disabled:opacity-50">
         <BiChevronLeft
-          className={`scale-150 text-black  cursor-pointer t:scale-[2]`}
+          className={`scale-125 text-black  cursor-pointer t:scale-[2]`}
           onClick={() => props.handleDecrement()}
         />
       </button>
@@ -23,7 +23,7 @@ const PageNavigation = (props) => {
 
       <button disabled={props.activePage === props.pages.length} className="cstm-bg-hover disabled:opacity-50">
         <BiChevronRight
-          className={`scale-150 text-black  cursor-pointer t:scale-[2]`}
+          className={`scale-125 text-black  cursor-pointer t:scale-[2]`}
           onClick={() => props.handleIncrement()}
         />
       </button>

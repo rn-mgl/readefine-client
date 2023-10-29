@@ -95,7 +95,7 @@ const ChangePassword = (props) => {
   return (
     <div className="fixed w-full h-full cstm-flex-col backdrop-blur-md z-20 p-4 top-0 left-0 gap-4 cstm-scrollbar-2 overflow-y-auto">
       <button onClick={props.handleCanChangePassword} className="cstm-bg-hover ml-auto">
-        <IoClose className="scale-150 text-prmColor" />
+        <IoClose className="scale-125 text-prmColor" />
       </button>
 
       {/* if message has popped up */}

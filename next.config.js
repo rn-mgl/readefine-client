@@ -5,7 +5,7 @@ const prod = "https://readefine.vercel.app";
 
 const nextConfig = {
   images: {
-    domains: ["res.cloudinary.com"],
+    remotePatterns: [{ hostname: "res.cloudinary.com" }],
   },
   env: {
     NEXTAUTH_SECRET: "Zq4t7w!z%C*F-JaNdRgUjXn2r5u8x/A?",

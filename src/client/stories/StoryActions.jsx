@@ -28,14 +28,14 @@ const StoryActions = (props) => {
           </div>
 
           <div className="opacity-20">
-            <RxDividerVertical className="scale-150 text-black" />
+            <RxDividerVertical className="scale-125 text-black" />
           </div>
         </>
       ) : null}
 
       <button onClick={props.handleCustomizationsVisible} className="cstm-bg-hover relative group">
         <ActionLabel label="Filter" />
-        <BsFilter className="text-inherit scale-150" />
+        <BsFilter className="text-inherit scale-125" />
       </button>
     </div>
   );

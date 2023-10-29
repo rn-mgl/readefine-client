@@ -90,7 +90,7 @@ const TestRecord = (props) => {
       {message.active ? <Message setMessageStatus={setMessageStatus} /> : null}
       <div className="w-full h-auto cstm-w-limit cstm-flex-col justify-start gap-4 p-4">
         <button onClick={() => props.handleSeeTestRecord(props.testId)} className="cstm-bg-hover ml-auto">
-          <IoClose className="text-prmColor scale-150" />
+          <IoClose className="text-prmColor scale-125" />
         </button>
 
         <div className="w-full h-full grid grid-cols-1 t:grid-cols-2 l-l:grid-cols-3 gap-4">{questionsAndAnswer}</div>

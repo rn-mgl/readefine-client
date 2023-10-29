@@ -1,33 +1,35 @@
 "use client";
-import React from "react";
 import AdminPageHeader from "@/admin/global/PageHeader";
-import axios from "axios";
-import FilePreview from "@/components/global/FilePreview";
-import Message from "@/components/global/Message";
-import EditStoryPage from "@/admin/stories/EditStoryPage";
 import EditStoryFilter from "@/admin/stories/EditStoryFilter";
-import Link from "next/link";
+import EditStoryPage from "@/admin/stories/EditStoryPage";
 import Loading from "@/components/global/Loading";
+import Message from "@/components/global/Message";
+import axios from "axios";
+import Link from "next/link";
+import React from "react";
 
-import AudioPreview from "@/components/global/AudioPreview";
-
-import { IoAddOutline, IoClose } from "react-icons/io5";
-import { BsArrowLeft } from "react-icons/bs";
-import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/base/context";
-import { useRouter } from "next/navigation";
-import { decipher } from "@/functions/security";
 import { isTokenExpired } from "@/functions/jwtFns";
+import { decipher } from "@/functions/security";
 import { useFileControls } from "@/hooks/useFileControls";
-import Image from "next/image";
 import { useLoading } from "@/hooks/useLoading";
 import { useMessage } from "@/hooks/useMessage";
+import EditStoryCard from "@/src/admin/stories/EditStoryCard";
+import StoryRequirementIndicator from "@/src/admin/stories/StoryRequirementIndicator";
 import useAdminActivities from "@/src/hooks/useAdminActivities";
+import { useSession } from "next-auth/react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
+import { BsArrowLeft } from "react-icons/bs";
+import { IoAddOutline, IoClose } from "react-icons/io5";
 
 const EditStory = ({ params }) => {
   const [story, setStory] = React.useState({});
   const [pages, setPages] = React.useState([]);
   const [toDelete, setToDelete] = React.useState([]);
+  const [selectedCard, setSelectedCard] = React.useState(0);
+  const [slidePage, setSlidePage] = React.useState(0);
 
   const {
     imageFile,
@@ -52,6 +54,7 @@ const EditStory = ({ params }) => {
   const user = session?.user?.name;
   const decodedStoryId = decipher(params?.story_id);
   const router = useRouter();
+  const pagePerSlide = 9;
 
   // handle onchange function on pages
   const handlePage = (page, { name, value }) => {
@@ -68,6 +71,27 @@ const EditStory = ({ params }) => {
     );
   };
 
+  // handle selected card
+  const handleSelectedCard = (page) => {
+    setSelectedCard((prev) => (prev === page ? 0 : page));
+  };
+
+  // handle slide page
+  const handleSlidePage = (page) => {
+    setSlidePage(page);
+  };
+
+  // handle next slide page
+  const handleNextSlidePage = () => {
+    const lastPage = Math.floor(pages.length / pagePerSlide);
+    setSlidePage((prev) => (prev + 1 > lastPage ? lastPage : prev + 1));
+  };
+
+  // handle prev slide page
+  const handlePrevSlidePage = () => {
+    setSlidePage((prev) => (prev - 1 < 0 ? 0 : prev - 1));
+  };
+
   // handle story data
   const handleStory = ({ name, value }) => {
     setStory((prev) => {
@@ -80,7 +104,7 @@ const EditStory = ({ params }) => {
   };
 
   // add page function
-  const addPage = () => {
+  const handleAddPage = () => {
     setPages((prev) => {
       const newPage = {
         page: pages.length + 1,
@@ -95,7 +119,7 @@ const EditStory = ({ params }) => {
   };
 
   // handle delete page
-  const deletePage = (contentId, pageNumber) => {
+  const handleDeletePage = (contentId, pageNumber) => {
     const updatedPages = pages.filter((page) => page.page !== pageNumber);
     const updatedToDelete = [...toDelete];
 
@@ -261,19 +285,34 @@ const EditStory = ({ params }) => {
   }, [url, user?.token, decodedStoryId, setMessageStatus]);
 
   // map pages
-  const allPages = pages.map((page, i) => {
+  const mappedPages = pages.slice(slidePage * pagePerSlide, slidePage * pagePerSlide + pagePerSlide).map((page, i) => {
+    const pageImage = page.pageImage?.name ? page.pageImage?.name : page.image ? "has page image" : null;
     return (
       <React.Fragment key={page.page}>
-        <EditStoryPage
-          page={page}
-          index={i}
-          maxPages={pages.length}
-          handlePage={handlePage}
-          setPages={setPages}
-          deletePage={() => deletePage(page.content_id, page.page)}
-          setMessageStatus={setMessageStatus}
+        <EditStoryCard
+          pageNumber={page.page}
+          pageHeader={page.header}
+          pageContent={page.content}
+          pageFileName={pageImage}
+          handleDeletePage={() => handleDeletePage(page.content_id, page.page)}
+          handleSelectedCard={() => handleSelectedCard(page.page)}
         />
       </React.Fragment>
+    );
+  });
+
+  const mappedSlidePages = new Array(Math.ceil(pages.length / pagePerSlide)).fill(0).map((page, index) => {
+    return (
+      <button
+        type="button"
+        onClick={() => handleSlidePage(index)}
+        className={` p-2 rounded-md w-10 border-2
+                    min-w-[2.5rem] text-xs font-medium 
+                    ${slidePage === index ? "bg-prmColor text-white" : "bg-white"} `}
+        key={index}
+      >
+        {index}
+      </button>
     );
   });
 
@@ -303,6 +342,18 @@ const EditStory = ({ params }) => {
 
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
+      {selectedCard ? (
+        <EditStoryPage
+          selectedCard={selectedCard}
+          pages={pages}
+          handlePage={handlePage}
+          setPages={setPages}
+          handleSelectedCard={handleSelectedCard}
+          handleDeletePage={handleDeletePage}
+          setMessageStatus={setMessageStatus}
+        />
+      ) : null}
+
       <form className="w-full cstm-flex-col gap-4 cstm-w-limit border-collapse" onSubmit={(e) => editBook(e)}>
         <Link type="button" href="/controller/stories" className="w-fit cstm-bg-hover mr-auto">
           <BsArrowLeft className=" text-prmColor" />
@@ -312,67 +363,130 @@ const EditStory = ({ params }) => {
           story={story}
           rawAudio={rawAudio}
           rawImage={rawImage}
-          addPage={addPage}
+          handleAddPage={handleAddPage}
           handleStory={handleStory}
           selectedImageViewer={selectedImageViewer}
           selectedAudioViewer={selectedAudioViewer}
           setMessageStatus={setMessageStatus}
         />
 
-        <div className="cstm-flex-col gap-4 w-full t:w-80 l-l:w-[30rem]">
-          {audioFile.src ? (
-            <AudioPreview
-              src={audioFile.src}
-              name={audioFile.name}
-              clearAudio={removeSelectedAudio}
-              purpose="Book Audio"
-            />
-          ) : story?.audio ? (
-            <AudioPreview src={story?.audio} clearAudio={clearBookAudio} purpose="Current Book Audio" />
-          ) : null}
-
+        <div
+          className={`grid grid-cols-1 gap-4 max-w-screen-lg w-full ${
+            (audioFile.src || story?.audio) && (imageFile.src || story?.book_cover) && "t:grid-cols-2"
+          }`}
+        >
           {imageFile.src ? (
-            <FilePreview
-              src={imageFile.src}
-              name={imageFile.name}
-              clearFiles={removeSelectedImage}
-              purpose="Book Cover"
-            />
+            <div className="w-full bg-white cstm-flex-row rounded-lg p-2 gap-2 ">
+              <Image src={imageFile.src} alt="preview" className="h-full rounded-md" priority width={80} height={80} />
+
+              <p
+                className="text-xs overflow-x-auto w-full mr-auto 
+                           p-2 truncate"
+              >
+                {imageFile.name}
+              </p>
+
+              <button type="button" onClick={removeSelectedImage} className="cstm-bg-hover ">
+                <IoClose className="text-prmColor scale-125 cursor-pointer " />
+              </button>
+            </div>
           ) : story?.book_cover ? (
-            <div className="w-full cstm-flex-col rounded-2xl p-2 gap-2">
+            <div className="w-full bg-white cstm-flex-row rounded-lg p-2 gap-2 ">
               <Image
                 src={story?.book_cover}
-                alt="viewer"
-                width={350}
-                height={350}
-                className="w-full rounded-2xl"
-                draggable={false}
+                alt="preview"
+                className="h-full rounded-md"
                 priority
+                width={80}
+                height={80}
               />
 
-              <div className="w-full cstm-flex-row gap-4">
-                <p className="text-sm overflow-x-auto w-full mr-auto p-2 whitespace-nowrap scrollbar-none font-bold">
-                  Current Book Cover
-                </p>
+              <p
+                className="text-xs overflow-x-auto w-full mr-auto 
+                        p-2 truncate"
+              >
+                Current Book Cover
+              </p>
 
-                <button type="button" onClick={clearBookCover} className="cstm-bg-hover ">
-                  <IoClose className="text-prmColor scale-125 cursor-pointer " />
-                </button>
+              <button type="button" onClick={clearBookCover} className="cstm-bg-hover ">
+                <IoClose className="text-prmColor scale-125 cursor-pointer " />
+              </button>
+            </div>
+          ) : null}
+
+          {audioFile.src ? (
+            <div className="w-full h-full cstm-flex-row p-2 gap-2 bg-white rounded-lg">
+              <div className="w-full cstm-flex-col gap-2 items-start">
+                <audio controls className="w-full mx-auto">
+                  <source src={audioFile.src} />
+                </audio>
+
+                <p className="text-xs w-[30ch] truncate">{audioFile.name}</p>
               </div>
+
+              <button type="button" onClick={removeSelectedAudio} className="cstm-bg-hover">
+                <IoClose className="text-prmColor scale-125 cursor-pointer " />
+              </button>
+            </div>
+          ) : story?.audio ? (
+            <div className="w-full h-full cstm-flex-row p-2 gap-2 bg-white rounded-lg">
+              <div className="w-full cstm-flex-col gap-2 items-start">
+                <audio controls className="w-full mx-auto">
+                  <source src={story?.audio} />
+                </audio>
+
+                <p className="text-xs truncate">Current Book Audio</p>
+              </div>
+
+              <button type="button" onClick={clearBookAudio} className="cstm-bg-hover">
+                <IoClose className="text-prmColor scale-125 cursor-pointer " />
+              </button>
             </div>
           ) : null}
         </div>
 
-        {allPages}
+        <StoryRequirementIndicator
+          cover={imageFile.src || story?.book_cover}
+          title={story.title}
+          author={story.author}
+          genre={story.genre}
+          lexile={story.lexile}
+        />
+
+        <div className="w-full cstm-flex-row gap-2 overflow-x-auto p-2">
+          <button type="button" className="hover:shadow-none" onClick={handlePrevSlidePage}>
+            <BiChevronLeft />
+          </button>
+
+          {mappedSlidePages}
+
+          <button type="button" className="hover:shadow-none" onClick={handleNextSlidePage}>
+            <BiChevronRight />
+          </button>
+        </div>
+
+        <div
+          className="w-full h-full grid grid-cols-1 gap-4 
+                    t:grid-cols-2 p-4 rounded-2xl l-l:grid-cols-3 mb-auto bg-white"
+        >
+          {mappedPages}
+        </div>
 
         <div className="cstm-flex-row w-full ">
-          <button type="button" onClick={addPage} className="cstm-bg-hover mr-auto">
-            <IoAddOutline className="cursor-pointer text-prmColor scale-150" />
+          <button
+            type="button"
+            onClick={handleAddPage}
+            className="mr-auto cstm-flex-row gap-1 text-prmColor 
+                  hover:underline hover:underline-offset-2 text-sm hover:shadow-none"
+          >
+            <IoAddOutline className="cursor-pointer scale-125" />
+            <p>Add Page</p>
           </button>
 
           <button
             type="submit"
-            className="w-fit text-center  ml-auto text-sm font-normal bg-scndColor text-prmColor rounded-full p-2 px-4 t:px-10"
+            className="w-fit text-center  ml-auto text-sm font-semibold
+                    bg-scndColor text-prmColor rounded-full p-2 px-4 t:px-10"
           >
             Edit Book
           </button>

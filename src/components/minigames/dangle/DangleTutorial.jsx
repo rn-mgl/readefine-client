@@ -11,7 +11,7 @@ const DangleTutorial = (props) => {
                   justify-start p-4 animate-[fadeIn_200ms] overflow-y-auto cstm-scrollbar-2"
     >
       <button className="cstm-bg-hover ml-auto absolute top-3 right-3" onClick={props.handleCanSeeTutorial}>
-        <IoClose className="scale-150" />
+        <IoClose className="scale-125" />
       </button>
 
       <div className="cstm-w-limit cstm-flex-col w-full h-auto">
@@ -28,7 +28,7 @@ const DangleTutorial = (props) => {
             >
               <BsDot className="absolute scale-[4] text-scndColor top-0 left-0 -translate-x-1.5 -translate-y-1.5" />
               <p className="text-sm t:text-base">You will be given a random hidden word.</p>
-              <BsPatchQuestionFill className="scale-150 text-prmColor" />
+              <BsPatchQuestionFill className="scale-125 text-prmColor" />
             </div>
 
             <div className="cstm-flex-col text-sm t:text-base w-full gap-4">

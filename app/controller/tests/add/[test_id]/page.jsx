@@ -1,23 +1,23 @@
 "use client";
-import React from "react";
 import AdminPageHeader from "@/admin/global/PageHeader";
 import AddTestPage from "@/admin/tests/AddTestPage";
-import ActionLabel from "@/components/global/ActionLabel";
-import axios from "axios";
-import Message from "@/components/global/Message";
 import Loading from "@/components/global/Loading";
+import Message from "@/components/global/Message";
+import axios from "axios";
+import React from "react";
 
-import { IoAddOutline } from "react-icons/io5";
-import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/base/context";
-import { decipher } from "@/functions/security";
 import { isTokenExpired } from "@/functions/jwtFns";
+import { decipher } from "@/functions/security";
 import { useLoading } from "@/hooks/useLoading";
 import { useMessage } from "@/hooks/useMessage";
+import AddTestCard from "@/src/admin/tests/AddTestCard";
 import useAdminActivities from "@/src/hooks/useAdminActivities";
 import { useStoryPageControls } from "@/src/hooks/useStoryPageControls";
-import AddTestCard from "@/src/admin/tests/AddTestCard";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { BsArrowLeft } from "react-icons/bs";
 
 const AddTest = ({ params }) => {
   const [pages, setPages] = React.useState([
@@ -277,6 +277,12 @@ const AddTest = ({ params }) => {
           handleSelectedCard={() => handleSelectedCard(selectedCard)}
         />
       ) : null}
+
+      <div className="w-full cstm-flex-row cstm-w-limit">
+        <Link href="/controller/tests" className="w-fit cstm-bg-hover mr-auto">
+          <BsArrowLeft className=" text-prmColor" />
+        </Link>
+      </div>
 
       <form
         onSubmit={(e) => createTest(e)}

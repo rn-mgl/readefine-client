@@ -81,7 +81,7 @@ const HeadNav = () => {
   return (
     <>
       <button onClick={toggleOpenNav} className="cstm-bg-hover absolute top-4 left-4 z-10">
-        <BiMenu className="scale-150 cursor-pointer l-s:hidden" />
+        <BiMenu className="scale-125 cursor-pointer l-s:hidden" />
       </button>
 
       <div
@@ -93,7 +93,7 @@ const HeadNav = () => {
             l-l:w-[20%]`}
       >
         <button onClick={toggleOpenNav} className="cstm-bg-hover absolute top-4 left-4 l-s:hidden">
-          <IoCloseSharp className="scale-150 cursor-pointer" />
+          <IoCloseSharp className="scale-125 cursor-pointer" />
         </button>
 
         <Link

@@ -14,14 +14,14 @@ const ScorePopup = (props) => {
 
   const buttonAction = props.url ? (
     <Link href={props.url} className="p-2 hover:bg-black hover:bg-opacity-10 rounded-full w-fit ml-auto ">
-      <IoClose className="scale-150 text-accntColor" />
+      <IoClose className="scale-125 text-accntColor" />
     </Link>
   ) : (
     <button
       onClick={props.handleIsFinished}
       className="p-2 hover:bg-black hover:bg-opacity-10 rounded-full w-fit ml-auto "
     >
-      <IoClose className="scale-150 text-accntColor" />
+      <IoClose className="scale-125 text-accntColor" />
     </button>
   );
 

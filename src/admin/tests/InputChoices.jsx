@@ -18,7 +18,7 @@ const InputChoices = (props) => {
         />
         <div
           className={`p-3.5 rounded-md  cstm-flex-col transition-all 
-                    font-light text-sm cursor-pointer h-full w-14 shadow-solid
+                    font-light text-sm cursor-pointer h-full w-14 shadow-solid active:shadow-solidActive
                     ${
                       props.checked
                         ? " bg-prmColor text-scndColor font-semibold shadow-indigo-950"

@@ -27,12 +27,12 @@ const Volume = (props) => {
       {props.isPlaying ? (
         <button onClick={props.handleToggleAudio} className="text-inherit cstm-bg-hover relative group cstm-flex-col">
           {/* <ActionLabel label="Pause Music" /> */}
-          <BsFillPauseFill className="scale-150" />
+          <BsFillPauseFill className="scale-125" />
         </button>
       ) : (
         <button onClick={props.handleToggleAudio} className="text-inherit cstm-bg-hover relative group cstm-flex-col">
           {/* <ActionLabel label="Play Music" /> */}
-          <BsFillPlayFill className="scale-150" />
+          <BsFillPlayFill className="scale-125" />
         </button>
       )}
     </>

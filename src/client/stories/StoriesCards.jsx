@@ -30,7 +30,7 @@ const StoriesCards = (props) => {
       {props.isRead ? (
         <div className="group absolute top-2 right-5 z-10">
           <ActionLabel label="Finished Reading" />
-          <BsFillBookmarkCheckFill className="text-prmColor absolute scale-150 top-3 right-0 drop-shadow-md shadow-prmColor" />
+          <BsFillBookmarkCheckFill className="text-prmColor absolute scale-125 top-3 right-0 drop-shadow-md shadow-prmColor" />
         </div>
       ) : null}
 

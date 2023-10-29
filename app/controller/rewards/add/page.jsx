@@ -1,22 +1,22 @@
 "use client";
-import React from "react";
 import AdminPageHeader from "@/admin/global/PageHeader";
-import FilePreview from "@/components/global/FilePreview";
 import AddRewardFilter from "@/admin/rewards/AddRewardFilter";
+import FilePreview from "@/components/global/FilePreview";
+import Loading from "@/components/global/Loading";
 import Message from "@/components/global/Message";
 import axios from "axios";
-import Loading from "@/components/global/Loading";
+import React from "react";
 
-import { BiImage } from "react-icons/bi";
-import { useSession } from "next-auth/react";
-import { wordCount } from "@/functions/wordCount";
 import { useGlobalContext } from "@/base/context";
-import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/functions/jwtFns";
+import { wordCount } from "@/functions/wordCount";
 import { useFileControls } from "@/hooks/useFileControls";
 import { useLoading } from "@/hooks/useLoading";
 import { useMessage } from "@/hooks/useMessage";
 import useAdminActivities from "@/src/hooks/useAdminActivities";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { BiImage } from "react-icons/bi";
 
 const AddReward = () => {
   const [reward, setReward] = React.useState({
@@ -116,11 +116,11 @@ const AddReward = () => {
         {/* reward data */}
         <AddRewardFilter handleReward={handleReward} reward={reward} />
 
-        <div
-          className="cstm-flex-col gap-4 w-full
-                      l-s:cstm-flex-row"
-        >
-          <div className="table-fixed p-4 rounded-2xl cstm-flex-col overflow-auto w-full h-[70vh] justify-start items-start bg-white text-sm gap-4 shadow-md cstm-scrollbar">
+        <div className="cstm-flex-col gap-4 w-full l-s:cstm-flex-row">
+          <div
+            className="table-fixed p-4 rounded-2xl cstm-flex-col overflow-auto w-full h-[70vh] justify-start 
+                      items-start bg-white text-sm gap-4 shadow-md cstm-scrollbar"
+          >
             {/* reward name */}
             <div className="cstm-flex-row w-full">
               <textarea
@@ -132,7 +132,8 @@ const AddReward = () => {
                 onChange={(e) => handleReward(e.target)}
                 required={true}
                 value={reward.name}
-                className="resize-none w-full p-2 focus:outline-none font-bold text-prmColor mr-auto placeholder:opacity-50"
+                className="resize-none w-full p-2 focus:outline-none font-bold 
+                          text-prmColor mr-auto placeholder:opacity-50"
               />
             </div>
 
@@ -159,16 +160,18 @@ const AddReward = () => {
             className="table-fixed p-4 rounded-2xl cstm-flex-col overflow-auto w-full h-[70vh] 
                           justify-start items-start bg-white text-sm gap-4 shadow-md cstm-scrollbar"
           >
-            <div className="w-full h-full cstm-flex-col bg-accntColor rounded-2xl">
+            <div className="w-full h-full cstm-flex-col bg-accntColor rounded-2xl p-4">
               {/* show if there is image selected */}
-              {imageFile.src ? (
-                <FilePreview
-                  src={imageFile.src}
-                  name={imageFile.name}
-                  purpose="Reward"
-                  clearFiles={removeSelectedImage}
-                />
-              ) : null}
+              <div className="w-full t:w-72">
+                {imageFile.src ? (
+                  <FilePreview
+                    src={imageFile.src}
+                    name={imageFile.name}
+                    purpose="Reward"
+                    clearFiles={removeSelectedImage}
+                  />
+                ) : null}
+              </div>
             </div>
           </div>
         </div>
@@ -188,7 +191,7 @@ const AddReward = () => {
               ref={rawImage}
             />
 
-            <BiImage className="scale-150 text-prmColor peer-checked" />
+            <BiImage className="scale-125 text-prmColor peer-checked" />
           </label>
 
           <button

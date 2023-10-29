@@ -75,7 +75,7 @@ const FindRewards = (props) => {
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       <button onClick={props.handleCanSelectReward} className="ml-auto cstm-flex-col w-fit z-20 cstm-bg-hover">
-        <IoClose className="text-prmColor scale-150 cursor-pointer" />
+        <IoClose className="text-prmColor scale-125 cursor-pointer" />
       </button>
 
       <div className="w-full cstm-flex-col gap-4 cstm-w-limit">

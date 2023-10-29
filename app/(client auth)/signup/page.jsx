@@ -166,13 +166,13 @@ const Signup = () => {
 
         <div className="cstm-flex-row">
           <BsDot
-            className={`${activePos === 1 ? "text-scndColor scale-150" : "text-black scale-125"} transition-all`}
+            className={`${activePos === 1 ? "text-scndColor scale-125" : "text-black scale-125"} transition-all`}
           />
           <BsDot
-            className={`${activePos === 2 ? "text-scndColor scale-150" : "text-black scale-125"} transition-all`}
+            className={`${activePos === 2 ? "text-scndColor scale-125" : "text-black scale-125"} transition-all`}
           />
           <BsDot
-            className={`${activePos === 3 ? "text-scndColor scale-150" : "text-black scale-125"} transition-all`}
+            className={`${activePos === 3 ? "text-scndColor scale-125" : "text-black scale-125"} transition-all`}
           />
         </div>
 

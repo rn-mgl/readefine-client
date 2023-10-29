@@ -1,9 +1,11 @@
 import React from "react";
+import { BsCheckLg } from "react-icons/bs";
+import { IoClose } from "react-icons/io5";
 
 const EditInputChoices = (props) => {
   const answerIdentifier = `answer${props.questionId}`;
   return (
-    <div className="cstm-flex-row gap-2 w-full">
+    <div className="cstm-flex-row gap-2 w-full h-ful">
       <label htmlFor={answerIdentifier + props.choiceValue}>
         <input
           type="radio"
@@ -16,10 +18,15 @@ const EditInputChoices = (props) => {
         />
 
         <div
-          className=" p-3.5 rounded-md bg-white transition-all font-light text-sm cursor-pointer
-                    peer-checked:bg-prmColor peer-checked:text-scndColor peer-checked:font-semibold"
+          className={`p-3.5 rounded-md  cstm-flex-col transition-all 
+          font-light text-sm cursor-pointer h-full w-14 shadow-solid active:shadow-solidActive
+          ${
+            props.checked
+              ? " bg-prmColor text-scndColor font-semibold shadow-indigo-950"
+              : "bg-scndColor text-prmColor shadow-cyan-800"
+          }`}
         >
-          Answer
+          {props.checked ? <BsCheckLg className="scale-125" /> : <IoClose className="scale-125" />}
         </div>
       </label>
 

@@ -23,7 +23,7 @@ const Customizations = (props) => {
 
           <div className="cstm-separator t:hidden " />
 
-          <div className="cstm-flex-row gap-3 t:ml-auto">
+          <div className="hidden cstm-flex-row gap-3 t:ml-auto t:flex">
             <button
               onClick={() => props.handleViewType("single")}
               value="single"
@@ -32,9 +32,9 @@ const Customizations = (props) => {
             >
               <ActionLabel label="Single Page" />
               {isSingleView ? (
-                <TbRectangleFilled className="scale-150 rotate-90 text-prmColor" />
+                <TbRectangleFilled className="scale-125 rotate-90 text-prmColor" />
               ) : (
-                <TbRectangle className="scale-150 rotate-90 text-prmColor" />
+                <TbRectangle className="scale-125 rotate-90 text-prmColor" />
               )}
             </button>
 
@@ -47,19 +47,19 @@ const Customizations = (props) => {
               <ActionLabel label="Double Page" />
               {isSingleView ? (
                 <>
-                  <TbRectangle className="scale-150 rotate-90 text-prmColor" />
-                  <TbRectangle className="scale-150 rotate-90 text-prmColor" />
+                  <TbRectangle className="scale-125 rotate-90 text-prmColor" />
+                  <TbRectangle className="scale-125 rotate-90 text-prmColor" />
                 </>
               ) : (
                 <>
-                  <TbRectangleFilled className="scale-150 rotate-90 text-prmColor" />
-                  <TbRectangleFilled className="scale-150 rotate-90 text-prmColor" />
+                  <TbRectangleFilled className="scale-125 rotate-90 text-prmColor" />
+                  <TbRectangleFilled className="scale-125 rotate-90 text-prmColor" />
                 </>
               )}
             </button>
-          </div>
 
-          <div className="cstm-separator t:hidden " />
+            <div className="cstm-separator t:hidden " />
+          </div>
 
           <div className="cstm-flex-col gap-2 ">
             <div className="cstm-flex-row gap-2 relative group">

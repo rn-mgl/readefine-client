@@ -89,7 +89,7 @@ const ChangePassword = (props) => {
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       <button onClick={props.handleCanChangePassword} className="cstm-bg-hover ml-auto">
-        <IoClose className="scale-150 text-prmColor" />
+        <IoClose className="scale-125 text-prmColor" />
       </button>
 
       <div className="cstm-w-limit cstm-flex-col w-full my-auto">

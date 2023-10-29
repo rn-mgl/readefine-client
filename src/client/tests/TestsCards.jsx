@@ -29,7 +29,7 @@ const TestsCards = (props) => {
       {props.isTaken ? (
         <div className="group absolute top-4 right-4 z-10">
           <ActionLabel label="Test Taken" />
-          <IoCheckmarkDoneCircle className="text-prmColor scale-150" />
+          <IoCheckmarkDoneCircle className="text-prmColor scale-125" />
         </div>
       ) : null}
 

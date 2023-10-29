@@ -29,7 +29,7 @@ const StoryActions = (props) => {
       {storyAudio ? (
         <>
           <div className="opacity-20">
-            <RxDividerVertical className="scale-150" />
+            <RxDividerVertical className="scale-125" />
           </div>
 
           <div className="cstm-flex-row text-prmColor">
@@ -45,12 +45,12 @@ const StoryActions = (props) => {
       ) : null}
 
       <div className="opacity-20">
-        <RxDividerVertical className="scale-150" />
+        <RxDividerVertical className="scale-125" />
       </div>
 
       <button onClick={props.handleCustomizationsVisible} className="cstm-bg-hover relative group">
         <ActionLabel label="Filter" />
-        <BsFilter className="text-prmColor scale-150" />
+        <BsFilter className="text-prmColor scale-125" />
       </button>
     </div>
   );

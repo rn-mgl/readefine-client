@@ -32,7 +32,7 @@ const DangleHint = (props) => {
     >
       <div className=" cstm-flex-col cstm-w-limit justify-start w-full gap-4">
         <button onClick={props.handleCanSeeHint} className="cstm-bg-hover ml-auto">
-          <IoClose className="scale-150 text-prmColor" />
+          <IoClose className="scale-125 text-prmColor" />
         </button>
 
         <div className="cstm-flex-col gap-4 shadow-md w-full t:w-10/12 bg-white p-4 rounded-md l-l:w-8/12">

@@ -81,7 +81,7 @@ const ClientNav = () => {
   return (
     <>
       <button onClick={toggleOpenNav} className="absolute cstm-bg-hover z-20 top-4 left-4 l-s:hidden">
-        <BiMenu className="scale-150 cursor-pointer" />
+        <BiMenu className="scale-125 cursor-pointer" />
       </button>
 
       <div
@@ -93,7 +93,7 @@ const ClientNav = () => {
             l-l:w-[20%]`}
       >
         <button onClick={toggleOpenNav} className="cstm-bg-hover absolute top-4 left-4 l-s:hidden">
-          <IoCloseSharp className="scale-150 cursor-pointer text-prmColor" />
+          <IoCloseSharp className="scale-125 cursor-pointer text-prmColor" />
         </button>
 
         <Link

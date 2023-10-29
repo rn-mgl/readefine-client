@@ -1,24 +1,23 @@
 "use client";
-import React from "react";
+import DeleteData from "@/admin/global/DeleteData";
 import AdminPageHeader from "@/admin/global/PageHeader";
+import EditRow from "@/admin/riddles/EditRow";
+import RiddleRow from "@/admin/riddles/RiddleRow";
 import RiddlesFilter from "@/admin/riddles/RiddlesFilter";
+import Message from "@/components/global/Message";
 import axios from "axios";
 import Link from "next/link";
-import Message from "@/components/global/Message";
-import RiddleRow from "@/admin/riddles/RiddleRow";
-import EditRow from "@/admin/riddles/EditRow";
-import DeleteData from "@/admin/global/DeleteData";
+import React from "react";
 
-import { IoAddOutline } from "react-icons/io5";
-import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/base/context";
-import { inputDate } from "@/functions/localDate";
-import { BsArrowLeft } from "react-icons/bs";
-import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/functions/jwtFns";
 import { useMessage } from "@/hooks/useMessage";
 import useAdminActivities from "@/src/hooks/useAdminActivities";
 import useRiddleFilters from "@/src/hooks/useRiddleFilters";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { BsArrowLeft } from "react-icons/bs";
+import { IoAddOutline } from "react-icons/io5";
 
 const AdminRiddles = () => {
   const [riddles, setRiddles] = React.useState([]);
@@ -209,7 +208,7 @@ const AdminRiddles = () => {
           </Link>
 
           <Link href="/controller/minigames/riddles/add" className="cstm-bg-hover mr-auto p-2">
-            <IoAddOutline className="text-prmColor cursor-pointer scale-150" />
+            <IoAddOutline className="text-prmColor cursor-pointer scale-125" />
           </Link>
 
           <Link

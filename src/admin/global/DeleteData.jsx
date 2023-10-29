@@ -76,7 +76,7 @@ const DeleteData = (props) => {
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       <button onClick={props.handleCanDeleteData} className="cstm-bg-hover ml-auto">
-        <IoClose className="text-prmColor scale-150 " />
+        <IoClose className="text-prmColor scale-125 " />
       </button>
 
       <div className="cstm-flex-col w-full cstm-w-limit border-collapse h-screen">

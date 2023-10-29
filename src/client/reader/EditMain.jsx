@@ -120,7 +120,7 @@ const EditMain = (props) => {
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       <button onClick={props.handleCanEditMain} className="cstm-bg-hover ml-auto">
-        <IoClose className="scale-150 text-prmColor" />
+        <IoClose className="scale-125 text-prmColor" />
       </button>
 
       <form onSubmit={(e) => editMain(e)} className="cstm-w-limit cstm-flex-col gap-4 w-full h-auto justify-start">
@@ -155,18 +155,18 @@ const EditMain = (props) => {
                   ref={rawImage}
                 />
                 <ActionLabel label="Add Profile Picture" />
-                <BiImage className="scale-150 text-prmColor peer-checked" />
+                <BiImage className="scale-125 text-prmColor peer-checked" />
               </label>
 
               {imageFile.src ? (
                 <button type="button" onClick={removeSelectedImage} className="cstm-bg-hover group relative">
                   <ActionLabel label="Remove Image" />
-                  <IoClose className="scale-150 text-prmColor" />
+                  <IoClose className="scale-125 text-prmColor" />
                 </button>
               ) : userData?.image ? (
                 <button type="button" onClick={clearUpload} className="cstm-bg-hover group relative">
                   <ActionLabel label="Remove Image" />
-                  <IoClose className="scale-150 text-prmColor" />
+                  <IoClose className="scale-125 text-prmColor" />
                 </button>
               ) : null}
             </div>

@@ -126,7 +126,7 @@ const Reader = ({ params }) => {
           correctAnswer={q.correct_answer}
           dateAnswered={localizeDate(q.date_answered)}
           userImage={userData?.image}
-          complementaryIcon={<BsFillPenFill className="scale-150" />}
+          complementaryIcon={<BsFillPenFill className="scale-125" />}
         />
       </React.Fragment>
     );
@@ -142,7 +142,7 @@ const Reader = ({ params }) => {
           correctAnswer={q.word.toUpperCase()}
           dateAnswered={localizeDate(q.date_answered)}
           userImage={userData?.image}
-          complementaryIcon={<BsFillSquareFill className="scale-150" />}
+          complementaryIcon={<BsFillSquareFill className="scale-125" />}
         />
       </React.Fragment>
     );
@@ -158,7 +158,7 @@ const Reader = ({ params }) => {
           correctAnswer={q.word.toUpperCase()}
           dateAnswered={localizeDate(q.date_answered)}
           userImage={userData?.image}
-          complementaryIcon={<TbPlusMinus className="scale-150" />}
+          complementaryIcon={<TbPlusMinus className="scale-125" />}
         />
       </React.Fragment>
     );
@@ -174,7 +174,7 @@ const Reader = ({ params }) => {
           correctAnswer={q.correct_answer.toUpperCase()}
           dateAnswered={localizeDate(q.date_answered)}
           userImage={userData?.image}
-          complementaryIcon={<FaBrain className="scale-150" />}
+          complementaryIcon={<FaBrain className="scale-125" />}
         />
       </React.Fragment>
     );

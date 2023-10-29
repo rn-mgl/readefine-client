@@ -1,26 +1,28 @@
 "use client";
-import React from "react";
-import Link from "next/link";
 import axios from "axios";
+import Link from "next/link";
+import React from "react";
 
 import AdminPageHeader from "@/admin/global/PageHeader";
 import EditTestPage from "@/admin/tests/EditTestPage";
-import Message from "@/components/global/Message";
 import Loading from "@/components/global/Loading";
+import Message from "@/components/global/Message";
 
-import { BsArrowLeft } from "react-icons/bs";
-import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
 import { useGlobalContext } from "@/base/context";
-import { decipher } from "@/functions/security";
 import { isTokenExpired } from "@/functions/jwtFns";
+import { decipher } from "@/functions/security";
 import { useLoading } from "@/hooks/useLoading";
 import { useMessage } from "@/hooks/useMessage";
+import EditTestCard from "@/src/admin/tests/EdiTestCard";
 import useAdminActivities from "@/src/hooks/useAdminActivities";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { BsArrowLeft } from "react-icons/bs";
 
 const EditTest = ({ params }) => {
   const [test, setTest] = React.useState({});
   const [questions, setQuestions] = React.useState([]);
+  const [selectedCard, setSelectedCard] = React.useState(0);
 
   const { createAdminActivity } = useAdminActivities();
   const { loading, setLoadingState } = useLoading(false);
@@ -45,6 +47,10 @@ const EditTest = ({ params }) => {
         return q;
       })
     );
+  };
+
+  const handleSelectedCard = (id) => {
+    setSelectedCard((prev) => (prev === id ? 0 : id));
   };
 
   //handle edit test
@@ -145,10 +151,16 @@ const EditTest = ({ params }) => {
   }, [url, user?.token, decodedTestId, setMessageStatus]);
 
   // map questions
-  const testQuestions = questions.map((q, idx) => {
+  const testQuestions = questions.map((q, index) => {
+    const answer = `answer${q.question_id}`;
     return (
       <React.Fragment key={q?.question_id}>
-        <EditTestPage handleQuestions={handleQuestions} questionId={q?.question_id} question={q} testNumber={idx + 1} />
+        <EditTestCard
+          answer={q[answer]}
+          testNumber={index + 1}
+          question={q.question}
+          handleSelectedCard={() => handleSelectedCard(q.question_id)}
+        />
       </React.Fragment>
     );
   });
@@ -181,16 +193,31 @@ const EditTest = ({ params }) => {
 
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
-      <form onSubmit={(e) => editTest(e)} className="w-full cstm-flex-col cstm-w-limit border-collapse gap-4">
-        <Link type="button" href={`/controller/tests/${params?.test_id}`} className="w-fit cstm-bg-hover mr-auto">
+      {selectedCard ? (
+        <EditTestPage
+          questions={questions}
+          selectedCard={selectedCard}
+          handleSelectedCard={handleSelectedCard}
+          handleQuestions={handleQuestions}
+        />
+      ) : null}
+
+      <div className="w-full cstm-flex-row cstm-w-limit">
+        <Link href={`/controller/tests/${params?.test_id}`} className="w-fit cstm-bg-hover mr-auto">
           <BsArrowLeft className=" text-prmColor" />
         </Link>
+      </div>
 
-        {testQuestions}
+      <form
+        onSubmit={(e) => editTest(e)}
+        className="w-full cstm-flex-col cstm-w-limit border-collapse gap-4 bg-white rounded-2xl p-4"
+      >
+        <div className="w-full mb-auto gap-4 grid grid-cols-1 t:grid-cols-2 l-l:grid-cols-3">{testQuestions}</div>
 
         <button
           type="submit"
-          className="w-fit text-center  ml-auto text-sm font-normal bg-scndColor text-prmColor rounded-full p-2 px-4 t:px-10"
+          className="w-fit text-center  ml-auto text-sm font-semibold
+                  bg-scndColor text-prmColor rounded-full p-2 px-4 t:px-10"
         >
           Edit Test
         </button>

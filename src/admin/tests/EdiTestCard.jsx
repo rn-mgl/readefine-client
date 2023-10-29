@@ -1,7 +1,7 @@
-import { AiFillCheckCircle, AiFillCloseCircle } from "react-icons/ai";
+import { AiFillCloseCircle } from "react-icons/ai";
 import { BsArrowRight } from "react-icons/bs";
 
-const AddTestCard = (props) => {
+const EditTestCard = (props) => {
   return (
     <div
       style={{ animationDuration: `${props.testNumber * 0.1}s` }}
@@ -40,4 +40,4 @@ const AddTestCard = (props) => {
   );
 };
 
-export default AddTestCard;
+export default EditTestCard;
