@@ -156,7 +156,7 @@ const HeadNav = () => {
 
         <div className="cstm-flex-col gap-2 w-full justify-start mt-auto">
           <Link
-            href={`/head/data/${cipher(user?.headId)}`}
+            href={`/head/account/${cipher(user?.headId)}`}
             onClick={toggleOpenNav}
             className="text-left hover:bg-neutral-100 p-2 rounded-md 
             justify-start transition-all cstm-flex-row gap-2 w-full"

@@ -71,7 +71,7 @@ const ChangePassword = (props) => {
 
     try {
       const { data } = await axios.patch(
-        `${url}/admin/${user?.adminId}`,
+        `${url}/head/${user?.headId}`,
         { oldPassword: oldPassword.text, newPassword: newPassword.text, type: "password" },
         { headers: { Authorization: user?.token } }
       );
@@ -93,8 +93,8 @@ const ChangePassword = (props) => {
 
   return (
     <div
-      className="fixed w-full h-full cstm-flex-col  backdrop-blur-md bg-gradient-to-br 
-            from-[#552aca32] to-[#4bfce132] z-20 p-4 top-0 left-0 gap-4 cstm-scrollbar-2 overflow-y-auto"
+      className="fixed w-full h-full cstm-flex-col backdrop-blur-md bg-gradient-to-br 
+                from-[#552aca32] to-[#4bfce132] z-20 p-4 top-0 left-0 gap-4 cstm-scrollbar-2 overflow-y-auto"
     >
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 

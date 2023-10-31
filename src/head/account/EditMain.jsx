@@ -20,7 +20,7 @@ import { useLoading } from "@/hooks/useLoading";
 import { useMessage } from "@/hooks/useMessage";
 
 const EditMain = (props) => {
-  const [adminData, setAdminData] = React.useState({});
+  const [headData, setHeadData] = React.useState({});
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
 
   const { imageFile, rawImage, removeSelectedImage, selectedImageViewer, uploadFile, hasRawImage } = useFileControls();
@@ -31,8 +31,8 @@ const EditMain = (props) => {
   const { url } = useGlobalContext();
   const user = session?.user?.name;
 
-  const handleAdminData = ({ name, value }) => {
-    setAdminData((prev) => {
+  const handleHeadData = ({ name, value }) => {
+    setHeadData((prev) => {
       return {
         ...prev,
         [name]: value,
@@ -41,7 +41,7 @@ const EditMain = (props) => {
   };
 
   const clearUpload = () => {
-    setAdminData((prev) => {
+    setHeadData((prev) => {
       return {
         ...prev,
         image: null,
@@ -54,9 +54,9 @@ const EditMain = (props) => {
     setHasSubmitted(true);
     setLoadingState(true);
 
-    const { name, surname, username } = adminData;
+    const { name, surname, username } = headData;
 
-    let profileImage = adminData?.image;
+    let profileImage = headData?.image;
 
     if (!name || !surname || !username) {
       setLoadingState(false);
@@ -66,7 +66,7 @@ const EditMain = (props) => {
     }
 
     if (hasRawImage()) {
-      profileImage = await uploadFile("readefine_admin_file", rawImage.current?.files);
+      profileImage = await uploadFile("readefine_head_file", rawImage.current?.files);
     }
 
     const randomIndex = Math.floor(Math.random() * avatars.length);
@@ -76,7 +76,7 @@ const EditMain = (props) => {
 
     try {
       const { data } = await axios.patch(
-        `${url}/admin/${props.adminId}`,
+        `${url}/head/${props.headId}`,
         { image: profileImage, name, surname, username, type: "main" },
         { headers: { Authorization: user?.token } }
       );
@@ -92,26 +92,26 @@ const EditMain = (props) => {
     }
   };
 
-  const getAdminData = React.useCallback(async () => {
+  const getHeadData = React.useCallback(async () => {
     try {
-      const { data } = await axios.get(`${url}/admin/${props.adminId}`, {
+      const { data } = await axios.get(`${url}/head/${props.headId}`, {
         headers: { Authorization: user?.token },
       });
 
       if (data) {
-        setAdminData(data);
+        setHeadData(data);
       }
     } catch (error) {
       console.log(error);
       setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, props.adminId, setAdminData, setMessageStatus]);
+  }, [url, user?.token, props.headId, setHeadData, setMessageStatus]);
 
   React.useEffect(() => {
     if (user) {
-      getAdminData();
+      getHeadData();
     }
-  }, [user, getAdminData]);
+  }, [user, getHeadData]);
 
   if (loading) {
     return <Loading />;
@@ -120,8 +120,8 @@ const EditMain = (props) => {
   return (
     <div
       className="w-full h-full overflow-y-auto cstm-scrollbar-2 fixed top-0 left-0 
-               backdrop-blur-md bg-gradient-to-br from-[#552aca32] to-[#4bfce132] 
-               z-20 p-4 cstm-flex-col justify-start"
+                backdrop-blur-md bg-gradient-to-br from-[#552aca32] to-[#4bfce132]
+                 z-20 p-4 cstm-flex-col justify-start"
     >
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
@@ -139,15 +139,15 @@ const EditMain = (props) => {
               style={{
                 backgroundImage: imageFile.src
                   ? `url(${imageFile.src})`
-                  : adminData?.image
-                  ? `url(${adminData?.image})`
+                  : headData?.image
+                  ? `url(${headData?.image})`
                   : null,
               }}
               className="w-40 h-40 min-w-[10rem] min-h-[10rem] bg-prmColor bg-opacity-10 cstm-flex-col
                         bg-center bg-cover rounded-full border-4 border-prmColor
                         l-l:w-60 l-l:h-60 l-l:min-w-[15rem] l-l:min-h-[15rem] "
             >
-              {!imageFile.src && !adminData?.image ? (
+              {!imageFile.src && !headData?.image ? (
                 <Image src={avatar} alt="avatar" className="w-full" width={320} />
               ) : null}
             </div>
@@ -172,7 +172,7 @@ const EditMain = (props) => {
                   <ActionLabel label="Remove Image" />
                   <IoClose className="scale-125 text-prmColor" />
                 </button>
-              ) : adminData?.image ? (
+              ) : headData?.image ? (
                 <button type="button" onClick={clearUpload} className="cstm-bg-hover group relative">
                   <ActionLabel label="Remove Image" />
                   <IoClose className="scale-125 text-prmColor" />
@@ -188,8 +188,8 @@ const EditMain = (props) => {
               placeholder="Name"
               name="name"
               required={true}
-              value={adminData?.name}
-              onChange={handleAdminData}
+              value={headData?.name}
+              onChange={handleHeadData}
               icon={<CiUser />}
             />
 
@@ -199,8 +199,8 @@ const EditMain = (props) => {
               placeholder="Surname"
               name="surname"
               required={true}
-              value={adminData?.surname}
-              onChange={handleAdminData}
+              value={headData?.surname}
+              onChange={handleHeadData}
               icon={<CiUser />}
             />
 
@@ -210,8 +210,8 @@ const EditMain = (props) => {
               placeholder="Username"
               name="username"
               required={true}
-              value={adminData?.username}
-              onChange={handleAdminData}
+              value={headData?.username}
+              onChange={handleHeadData}
               icon={<CiUser />}
             />
           </div>

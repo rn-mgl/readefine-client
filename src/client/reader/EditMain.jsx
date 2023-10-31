@@ -114,8 +114,9 @@ const EditMain = (props) => {
 
   return (
     <div
-      className="fixed w-full h-full cstm-flex-col backdrop-blur-md z-20 
-                justify-start p-4 top-0 left-0 gap-4 cstm-scrollbar-2 overflow-y-auto"
+      className="fixed w-full h-full cstm-flex-col  backdrop-blur-md bg-gradient-to-br 
+                from-[#552aca32] to-[#4bfce132] z-20  justify-start p-4 top-0 left-0 
+                gap-4 cstm-scrollbar-2 overflow-y-auto"
     >
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 

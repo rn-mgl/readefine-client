@@ -72,7 +72,10 @@ const DeleteData = (props) => {
   }
 
   return (
-    <div className="w-full min-h-screen h-full backdrop-blur-md fixed z-30 top-0 left-0 p-4 cstm-flex-col justify-start">
+    <div
+      className="w-full min-h-screen h-full  backdrop-blur-md bg-gradient-to-br 
+              from-[#552aca32] to-[#4bfce132] fixed z-30 top-0 left-0 p-4 cstm-flex-col justify-start"
+    >
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       <button onClick={props.handleCanDeleteData} className="cstm-bg-hover ml-auto">

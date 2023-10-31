@@ -64,8 +64,8 @@ const ConfirmEditGradeLevel = (props) => {
 
   return (
     <div
-      className="w-full min-h-screen h-full backdrop-blur-md bg-prmColor bg-opacity-10 fixed 
-                  z-30 top-0 left-0 p-4 cstm-flex-col justify-start"
+      className="w-full min-h-screen h-full  backdrop-blur-md bg-gradient-to-br 
+                from-[#552aca32] to-[#4bfce132] fixed z-30 top-0 left-0 p-4 cstm-flex-col justify-start"
     >
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 

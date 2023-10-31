@@ -49,7 +49,10 @@ const EditGradeLevel = (props) => {
   });
 
   return (
-    <div className="fixed w-full h-auto min-h-full backdrop-blur-md  cstm-flex-col gap-2 p-4 top-0 left-0 z-20 justify-start">
+    <div
+      className="fixed w-full h-auto min-h-full  backdrop-blur-md bg-gradient-to-br 
+                from-[#552aca32] to-[#4bfce132] cstm-flex-col gap-2 p-4 top-0 left-0 z-20 justify-start"
+    >
       {canSeeConfirmGradeChange ? (
         <ConfirmEditGradeLevel
           chosenGrade={chosenGrade}
