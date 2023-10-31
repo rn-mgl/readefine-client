@@ -1,18 +1,18 @@
 "use client";
-import Loading from "@/components/global/Loading";
 import Message from "@/components/global/Message";
 import InputComp from "@/components/input/InputComp";
 import axios from "axios";
 import React from "react";
 
 import { useGlobalContext } from "@/base/context";
+import Loading from "@/components/global/Loading";
 import { useLoading } from "@/hooks/useLoading";
 import { useMessage } from "@/hooks/useMessage";
 import { useRouter } from "next/navigation";
 import { AiOutlineMail } from "react-icons/ai";
 import { CiUser } from "react-icons/ci";
 
-const ForgotPassword = () => {
+const HeadForgotPassword = () => {
   const [keys, setKeys] = React.useState({ candidateEmail: "", candidateUsername: "" });
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
 
@@ -35,12 +35,13 @@ const ForgotPassword = () => {
   // send email
   const sendResetEmail = async (e) => {
     e.preventDefault();
-    setHasSubmitted(true);
     setLoadingState(true);
+    setHasSubmitted(true);
 
     const { candidateEmail, candidateUsername } = keys;
+
     try {
-      const { data } = await axios.post(`${url}/auth_client_password_reset`, {
+      const { data } = await axios.post(`${url}/auth_head_password_reset`, {
         candidateEmail,
         candidateUsername,
       });
@@ -51,8 +52,8 @@ const ForgotPassword = () => {
       }
     } catch (error) {
       console.log(error);
-      setHasSubmitted(false);
       setLoadingState(false);
+      setHasSubmitted(false);
       setMessageStatus(true, error?.response?.data?.msg, "error");
     }
   };
@@ -62,7 +63,7 @@ const ForgotPassword = () => {
   }
 
   return (
-    <div className="w-full min-h-screen p-4 cstm-flex-col bg-accntColor">
+    <div className="w-full min-h-screen p-4 cstm-flex-col bg-scndColor">
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       <p className=" font-extrabold text-2xl text-prmColor relative z-10">Reset Password</p>
@@ -70,7 +71,7 @@ const ForgotPassword = () => {
       <br />
 
       <form
-        className="w-full rounded-md bg-prmColor bg-opacity-10 backdrop-blur-md border-[1px] border-prmColor border-opacity-30 p-4 cstm-flex-col gap-4 relative z-10 shadow-lg
+        className="w-full rounded-md bg-prmColor bg-opacity-20 backdrop-blur-md border-[1px] border-prmColor border-opacity-40 p-4 cstm-flex-col gap-4 relative z-10 shadow-lg
                     t:w-96
                     l-s:w-[26rem]"
         onSubmit={(e) => sendResetEmail(e)}
@@ -106,7 +107,7 @@ const ForgotPassword = () => {
           type="submit"
           disabled={hasSubmitted}
           className="text-center rounded-md  text-sm font-bold transition-all
-                text-scndColor bg-prmColor w-full disabled:saturate-50 p-2 px-4"
+                text-accntColor bg-prmColor w-full disabled:saturate-50 p-2 px-4"
         >
           Send Reset Email
         </button>
@@ -115,4 +116,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+export default HeadForgotPassword;

@@ -165,7 +165,7 @@ const HeadLogin = () => {
         />
 
         {/* link if password is forgotten */}
-        <Link className="text-xs text-prmColor underline underline-offset-2" href="/fixer">
+        <Link className="text-xs text-prmColor underline underline-offset-2" href="/overlook">
           Forgot Password?
         </Link>
 
