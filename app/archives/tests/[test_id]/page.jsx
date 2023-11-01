@@ -285,7 +285,7 @@ const SingleTest = ({ params }) => {
         />
       ) : null}
 
-      <div className="cstm-w-limit cstm-flex-col gap-4 w-full h-full relative">
+      <div className=" cstm-flex-col gap-4 w-full h-full relative">
         <TestActions activePage={activePage} hasSubmitted={hasSubmitted} submitAnswers={submitAnswers} />
 
         {/* question pane */}

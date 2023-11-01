@@ -6,12 +6,7 @@ export const metadata = {
 };
 
 const RootLayout = ({ children }) => {
-  return (
-    <main className="l-s:cstm-flex-row w-full">
-      <AdminNav />
-      {children}
-    </main>
-  );
+  return <AdminNav> {children}</AdminNav>;
 };
 
 export default RootLayout;

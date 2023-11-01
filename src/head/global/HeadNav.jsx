@@ -1,5 +1,6 @@
 "use client";
 import Loading from "@/components/global/Loading";
+import logo from "@/public/landing/hero/landing book.png";
 import avatar from "@/public/profile/Avatar.svg";
 import HeadLink from "@/src/head/nav/HeadLink";
 import axios from "axios";
@@ -15,13 +16,12 @@ import { usePathname } from "next/navigation";
 import { AiFillBook, AiFillDelete, AiFillHome } from "react-icons/ai";
 import { BiLogOut, BiMenu } from "react-icons/bi";
 import { BsPenFill } from "react-icons/bs";
-import { MdUpdate } from "react-icons/md";
 import { HiUser } from "react-icons/hi2";
-import { IoCloseSharp } from "react-icons/io5";
+import { MdUpdate } from "react-icons/md";
 
-const HeadNav = () => {
+const HeadNav = ({ children }) => {
   const [headData, setHeadData] = React.useState({});
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [navIsOpen, setNavIsOpen] = React.useState(false);
 
   const { loading, setLoadingState } = useLoading(false);
 
@@ -49,9 +49,21 @@ const HeadNav = () => {
       console.log(error);
     }
   };
+  const toggleOpenNav = (using) => {
+    setNavIsOpen((prev) => {
+      if (using === "button") {
+        return !prev;
+      } else if (using === "link") {
+        // will not close if on laptop view if nav is not closed
+        if (window.innerWidth >= 1024) {
+          return prev && true;
+        } else {
+          return false;
+        }
+      }
 
-  const toggleOpenNav = () => {
-    setIsOpen((prev) => !prev);
+      return !prev;
+    });
   };
 
   const getHeadData = React.useCallback(async () => {
@@ -79,30 +91,33 @@ const HeadNav = () => {
   }
 
   return (
-    <>
-      <button onClick={toggleOpenNav} className="cstm-bg-hover absolute top-4 left-4 z-10">
-        <BiMenu className="scale-125 cursor-pointer l-s:hidden" />
+    <div className="w-full h-full flex flex-row justify-start ">
+      <button onClick={() => toggleOpenNav("button")} className="cstm-bg-hover absolute top-4 left-4 z-10">
+        <BiMenu className="text-xl cursor-pointer l-s:hidden" />
       </button>
 
       <div
         className={`${
-          isOpen ? "m-s:translate-x-0" : "m-s:-translate-x-full"
-        } bg-white w-full h-full text-center fixed p-4 transition-all cstm-flex-col justify-start gap-4 z-50
-            t:w-[50%]
-            l-s:translate-x-0 l-s:left-0 l-s:top-0 l-s:w-[30%]
-            l-l:w-[20%]`}
+          navIsOpen ? "m-s:translate-x-0 l-s:w-[30%] l-l:w-[20%]" : "m-s:-translate-x-full l-s:w-[8%] l-l:w-[5%]"
+        } bg-white w-10/12 h-full text-center fixed p-4 transition-all 
+            cstm-flex-col justify-start gap-4 z-50 t:w-[50%]
+            l-s:translate-x-0 l-s:left-0 l-s:top-0 l-s:w-[25%] l-s:sticky l-s:h-screen`}
       >
-        <button onClick={toggleOpenNav} className="cstm-bg-hover absolute top-4 left-4 l-s:hidden">
-          <IoCloseSharp className="scale-125 cursor-pointer" />
-        </button>
+        <div className={`${navIsOpen ? "justify-between" : "justify-center"} w-full flex flex-row `}>
+          <button onClick={() => toggleOpenNav("button")} className="cursor-pointer">
+            <BiMenu className="text-xl " />
+          </button>
 
-        <Link
-          href="/head"
-          className="select-none  font-extrabold text-lg whitespace-nowrap text-prmColor
-                m-l:text-xl"
-        >
-          Readefine <span className="font-extralight text-black"> | head</span>
-        </Link>
+          <Link
+            href="/head"
+            onClick={() => toggleOpenNav("link")}
+            className={`${navIsOpen ? "flex" : "l-s:hidden"}
+                    text-prmColor select-none  font-extrabold text-lg whitespace-nowrap
+                      m-l:text-xl `}
+          >
+            <Image src={logo} alt="logo" width={30} height={30} />
+          </Link>
+        </div>
 
         <div className="cstm-separator" />
 
@@ -111,7 +126,8 @@ const HeadNav = () => {
           icon={<AiFillHome />}
           label="Dashboard"
           isActive={path === "/head"}
-          toggleOpenNav={toggleOpenNav}
+          toggleOpenNav={() => toggleOpenNav("link")}
+          navIsOpen={navIsOpen}
         />
 
         <HeadLink
@@ -119,7 +135,8 @@ const HeadNav = () => {
           icon={<HiUser />}
           label="Admins"
           isActive={path.includes("/head/admin")}
-          toggleOpenNav={toggleOpenNav}
+          toggleOpenNav={() => toggleOpenNav("link")}
+          navIsOpen={navIsOpen}
         />
 
         <HeadLink
@@ -127,7 +144,8 @@ const HeadNav = () => {
           icon={<BsPenFill />}
           label="Create Activities"
           isActive={path.includes("/head/create")}
-          toggleOpenNav={toggleOpenNav}
+          toggleOpenNav={() => toggleOpenNav("link")}
+          navIsOpen={navIsOpen}
         />
 
         <HeadLink
@@ -135,7 +153,8 @@ const HeadNav = () => {
           icon={<AiFillBook />}
           label="Read Activities"
           isActive={path.includes("/head/read")}
-          toggleOpenNav={toggleOpenNav}
+          toggleOpenNav={() => toggleOpenNav("link")}
+          navIsOpen={navIsOpen}
         />
 
         <HeadLink
@@ -143,7 +162,8 @@ const HeadNav = () => {
           icon={<MdUpdate />}
           label="Update Activities"
           isActive={path.includes("/head/update")}
-          toggleOpenNav={toggleOpenNav}
+          toggleOpenNav={() => toggleOpenNav("link")}
+          navIsOpen={navIsOpen}
         />
 
         <HeadLink
@@ -151,15 +171,17 @@ const HeadNav = () => {
           icon={<AiFillDelete />}
           label="Delete Activities"
           isActive={path.includes("/head/delete")}
-          toggleOpenNav={toggleOpenNav}
+          toggleOpenNav={() => toggleOpenNav("link")}
+          navIsOpen={navIsOpen}
         />
 
         <div className="cstm-flex-col gap-2 w-full justify-start mt-auto">
           <Link
             href={`/head/account/${cipher(user?.headId)}`}
-            onClick={toggleOpenNav}
-            className="text-left hover:bg-neutral-100 p-2 rounded-md 
-            justify-start transition-all cstm-flex-row gap-2 w-full"
+            onClick={() => toggleOpenNav("link")}
+            className={`${navIsOpen ? "p-2" : "l-s:p-0 l-s:justify-center"}
+                text-left hover:bg-neutral-100 rounded-md 
+                justify-start transition-all cstm-flex-row gap-2 w-full`}
           >
             <div
               style={{ backgroundImage: headData?.image ? `url(${headData?.image})` : null }}
@@ -168,7 +190,7 @@ const HeadNav = () => {
             >
               {!headData?.image ? <Image src={avatar} alt="avatar" className="saturate-150" width={100} /> : null}
             </div>
-            <div className="cstm-flex-col items-start w-full truncate">
+            <div className={`${navIsOpen ? "l-s:flex" : "l-s:hidden"} cstm-flex-col items-start w-full`}>
               <p className="text-xs">Welcome</p>
               <p className="font-bold text-prmColor whitespace-nowrap w-full">
                 {headData?.name} {headData?.surname}
@@ -183,18 +205,29 @@ const HeadNav = () => {
                 justify-start transition-all cstm-flex-row gap-4 w-full overflow-x-hidden"
             onClick={logOut}
           >
-            <BiLogOut className="opacity-50" />
-            <p className="mr-auto text-sm opacity-50">Log Out</p>
+            <span className={` ${navIsOpen ? "justify-start" : "l-s:w-10 l-s:h-6 l-s:justify-center"} cstm-flex-col`}>
+              <BiLogOut className="opacity-50" />
+            </span>
+            <span className={`${navIsOpen ? "flex" : "l-s:hidden"} cstm-flex-col`}>
+              <p className="mr-auto text-sm opacity-50">Log Out</p>
+            </span>
           </button>
         </div>
       </div>
 
       <div
+        className="w-full flex flex-col overflow-y-auto relative
+                  justify-start cstm-scrollbar-2 bg-accntColor"
+      >
+        {children}
+      </div>
+
+      <div
         className={`${
-          isOpen ? "block" : "hidden"
+          navIsOpen ? "block" : "hidden"
         } fixed z-40 bg-black bg-opacity-20 w-full h-full top-0 left-0 l-s:hidden`}
       />
-    </>
+    </div>
   );
 };
 

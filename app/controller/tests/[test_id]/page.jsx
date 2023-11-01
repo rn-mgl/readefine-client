@@ -169,7 +169,7 @@ const SingleTest = ({ params }) => {
         <TestResult selectedChoices={selectedChoices} questions={questions} handleCanSeeResult={handleCanSeeResult} />
       ) : null}
 
-      <div className="cstm-flex-col w-full cstm-w-limit">
+      <div className="cstm-flex-col w-full ">
         <p className="text-sm text-center">
           <b>note:</b> admin submissions are <b>not</b> recorded
         </p>

@@ -96,7 +96,7 @@ const Dangle = () => {
   // map lives
   const remainingLives = lives.status.map((alive, i) => {
     return (
-      <AiFillHeart key={i} className={` ${alive ? "text-prmColor" : "text-neutral-400 animate-shake"} t:scale-125`} />
+      <AiFillHeart key={i} className={` ${alive ? "text-prmColor" : "text-neutral-400 animate-shake"} t:text-xl`} />
     );
   });
 
@@ -136,7 +136,7 @@ const Dangle = () => {
         />
       ) : null}
 
-      <div className="w-full h-full cstm-w-limit cstm-flex-col relative">
+      <div className="w-full h-full  cstm-flex-col relative">
         <div className="absolute top-10 left-0 z-20 l-s:top-0 cstm-flex-col flex-col-reverse gap-2">
           <Volume
             isMuted={isMuted}

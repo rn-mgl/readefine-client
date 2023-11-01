@@ -118,34 +118,34 @@ const TextToSpeech = (props) => {
         {status === "init" ? (
           <button className="relative cstm-bg-hover group" onClick={() => playVoice(utterance)}>
             <ActionLabel label="Play" />
-            <BsFillPlayFill className="text-prmColor scale-125" />
+            <BsFillPlayFill className="text-prmColor text-xl" />
           </button>
         ) : status === "playing" ? (
           <button className="relative cstm-bg-hover group" onClick={pause}>
             <ActionLabel label="Pause" />
-            <BsFillPauseFill className="text-prmColor scale-125" />
+            <BsFillPauseFill className="text-prmColor text-xl" />
           </button>
         ) : status === "paused" ? (
           <button className="relative cstm-bg-hover group" onClick={resume}>
             <ActionLabel label="Resume" />
-            <BsFillPlayFill className="text-prmColor scale-125" />
+            <BsFillPlayFill className="text-prmColor text-xl" />
           </button>
         ) : (
           <button className="relative cstm-bg-hover group" onClick={() => playVoice(utterance)}>
             <ActionLabel label="Play" />
-            <BsFillPlayFill className="text-prmColor scale-125" />
+            <BsFillPlayFill className="text-prmColor text-xl" />
           </button>
         )}
 
         <button className="relative cstm-bg-hover group" onClick={() => playVoice(highlightedWords)}>
           <ActionLabel label="Play Highlighted Word" />
-          <AiFillHighlight className="text-prmColor scale-125" />
+          <AiFillHighlight className="text-prmColor text-xl" />
         </button>
 
         <button className="relative cstm-bg-hover group" onClick={cancel}>
           <ActionLabel label="Stop" />
 
-          <BsFillStopFill className="text-prmColor scale-125" />
+          <BsFillStopFill className="text-prmColor text-xl" />
         </button>
 
         <div className="relative group p-2">

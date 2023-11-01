@@ -78,7 +78,7 @@ const AddRiddle = () => {
 
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
-      <form onSubmit={(e) => addRiddle(e)} className="w-full cstm-flex-col h-full cstm-w-limit border-collapse gap-4">
+      <form onSubmit={(e) => addRiddle(e)} className="w-full cstm-flex-col h-full  border-collapse gap-4">
         <Link href="/controller/minigames/riddles" className="cstm-bg-hover mr-auto text-prmColor" type="button">
           <BsArrowLeft />
         </Link>

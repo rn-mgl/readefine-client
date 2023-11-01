@@ -13,11 +13,11 @@ const AddStoryPage = (props) => {
   return (
     <div
       className=" w-full h-full cstm-flex-col gap-2 fixed animate-fadeIn
-                top-0 left-0 bg-prmColor bg-opacity-10 backdrop-blur-md z-20 p-4"
+                top-0 left-0 bg-prmColor bg-opacity-10 backdrop-blur-md z-[60] p-4"
     >
-      <div className="w-full h-full cstm-flex-col gap-2 cstm-w-limit">
+      <div className="w-full h-full cstm-flex-col gap-2 ">
         <button onClick={() => props.handleSelectedCard(props.selectedCard)} className="cstm-bg-hover ml-auto">
-          <IoClose className="text-prmColor scale-125" />
+          <IoClose className="text-prmColor text-xl" />
         </button>
 
         <div className="w-full h-full cstm-flex-col gap-2 bg-white p-4 rounded-2xl l-s:w-10/12">
@@ -78,7 +78,7 @@ const AddStoryPage = (props) => {
                 onChange={(e) => fileFns.selectedPageImageViewer(pageNumber, e, props.setPages, props.setMessageStatus)}
               />
 
-              <BiImage className="scale-125 text-prmColor peer-checked" />
+              <BiImage className="text-xl text-prmColor peer-checked" />
             </label>
 
             <p className="mr-auto">
@@ -93,7 +93,7 @@ const AddStoryPage = (props) => {
               type="button"
               className="cstm-bg-hover"
             >
-              <AiFillDelete className="text-prmColor scale-125" />
+              <AiFillDelete className="text-prmColor text-xl" />
             </button>
           </div>
         </div>

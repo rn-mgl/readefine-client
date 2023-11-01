@@ -101,7 +101,7 @@ const Admins = () => {
         handleDateRangeFilter={handleDateRangeFilter}
       />
 
-      <div className="w-full h-full cstm-flex-col gap-4 justify-start cstm-w-limit">
+      <div className="w-full h-full cstm-flex-col gap-4 justify-start ">
         <div className="w-full cstm-flex-row">
           <button
             onClick={handleCanAddAdmins}

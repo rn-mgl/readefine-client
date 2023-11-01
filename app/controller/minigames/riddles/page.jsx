@@ -182,7 +182,7 @@ const AdminRiddles = () => {
 
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
-      <div className="cstm-flex-col gap-4 w-full cstm-w-limit">
+      <div className="cstm-flex-col gap-4 w-full ">
         <RiddlesFilter
           handleSearchFilter={handleSearchFilter}
           handleDateRangeFilter={handleDateRangeFilter}
@@ -204,11 +204,11 @@ const AdminRiddles = () => {
 
         <div className="cstm-flex-row w-full gap-4">
           <Link href="/controller/minigames" className="cstm-bg-hover">
-            <BsArrowLeft className="text-prmColor scale-100 m-l:scale-125" />
+            <BsArrowLeft className="text-prmColor scale-100 m-l:text-xl" />
           </Link>
 
           <Link href="/controller/minigames/riddles/add" className="cstm-bg-hover mr-auto p-2">
-            <IoAddOutline className="text-prmColor cursor-pointer scale-125" />
+            <IoAddOutline className="text-prmColor cursor-pointer text-xl" />
           </Link>
 
           <Link
@@ -223,7 +223,7 @@ const AdminRiddles = () => {
       <table
         className="table-fixed p-4 rounded-md cstm-flex-col cstm-scrollbar-2 overflow-auto 
                 w-full h-full justify-start items-start bg-white text-sm 
-                t:gap-4 cstm-w-limit border-collapse"
+                t:gap-4  border-collapse"
       >
         <thead className="w-full ">
           <tr className="p-2 cstm-flex-row justify-start gap-4 text-center text-prmColor w-full hidden t:flex">

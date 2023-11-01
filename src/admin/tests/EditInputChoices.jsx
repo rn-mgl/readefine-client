@@ -26,7 +26,7 @@ const EditInputChoices = (props) => {
               : "bg-scndColor text-prmColor shadow-cyan-800"
           }`}
         >
-          {props.checked ? <BsCheckLg className="scale-125" /> : <IoClose className="scale-125" />}
+          {props.checked ? <BsCheckLg className="text-xl" /> : <IoClose className="text-xl" />}
         </div>
       </label>
 

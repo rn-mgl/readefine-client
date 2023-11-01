@@ -32,16 +32,6 @@
   }
 }
 
-@layer utilities {
-  .cstm-w-limit {
-    @apply l-s:w-[70%] l-s:ml-auto l-l:w-[80%];
-  }
-}
-
-button:hover {
-  box-shadow: 0rem 0.2rem 0.2rem 0.05rem rgba(0, 0, 0, 0.1);
-}
-
 select {
   -webkit-appearance: none;
   -moz-appearance: none;

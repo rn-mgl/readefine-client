@@ -14,12 +14,12 @@ const ACTION_STYLE = {
 };
 
 const ACTION_ICON = {
-  created: <AiFillFileAdd className="scale-125" />,
-  read: <AiFillRead className="scale-125" />,
-  updated: <MdUpdate className="scale-125" />,
-  deleted: <AiFillDelete className="scale-125" />,
-  "logged in": <AiOutlineLogin className="scale-125" />,
-  "logged out": <AiOutlineLogout className="scale-125 rotate-180" />,
+  created: <AiFillFileAdd className="text-xl" />,
+  read: <AiFillRead className="text-xl" />,
+  updated: <MdUpdate className="text-xl" />,
+  deleted: <AiFillDelete className="text-xl" />,
+  "logged in": <AiOutlineLogin className="text-xl" />,
+  "logged out": <AiOutlineLogout className="text-xl rotate-180" />,
 };
 
 const ActivityLog = (props) => {

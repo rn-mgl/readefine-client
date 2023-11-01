@@ -66,7 +66,7 @@ const Minigames = () => {
       <div
         className="cstm-flex-col gap-4 justify-start w-full transition-all
         t:cstm-flex-row t:flex-wrap
-        cstm-w-limit"
+        "
       >
         {/* riddles */}
         <ClientMinigamesCards

@@ -35,7 +35,7 @@ const AchievementsCards = (props) => {
         <div className="cstm-flex-row w-full ">
           <p className="font-bold text-prmColor mr-auto text-sm">{props.type}</p>
           <button onClick={handleSetActive} className="shadow-none hover:shadow-none">
-            <BiChevronDown className={`${isActive ? "rotate-180" : "rotate-0"} transition-all scale-125`} />
+            <BiChevronDown className={`${isActive ? "rotate-180" : "rotate-0"} transition-all text-xl`} />
           </button>
         </div>
       </div>

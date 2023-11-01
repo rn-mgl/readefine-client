@@ -109,7 +109,7 @@ const ClientAchievements = () => {
         handleTypeFilter={handleTypeFilter}
       />
 
-      <div className="w-full cstm-flex-col gap-4 cstm-w-limit relative ">
+      <div className="w-full cstm-flex-col gap-4  relative ">
         {achievements.length ? (
           <div
             className="w-full overflow-y-auto cstm-scrollbar cstm-flex-col gap-4 justify-start 

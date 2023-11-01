@@ -5,7 +5,7 @@ import RangeFilter from "@/components/filter/RangeFilter";
 
 const AdminsFilter = (props) => {
   return (
-    <div className="cstm-flex-row gap-2  justify-start relative w-full overflow-x-auto p-2 cstm-scrollbar-2 cstm-w-limit min-h-[5rem]">
+    <div className="cstm-flex-row gap-2  justify-start relative w-full overflow-x-auto p-2 cstm-scrollbar-2  min-h-[5rem]">
       <SearchFilter
         handleSearchFilter={props.handleSearchFilter}
         searchFilter={props.searchFilter}

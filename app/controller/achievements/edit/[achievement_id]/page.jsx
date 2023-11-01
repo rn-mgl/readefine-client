@@ -150,9 +150,9 @@ const EditAchievement = ({ params }) => {
         <FindRewards selectReward={selectReward} handleCanSelectReward={handleCanSelectReward} />
       ) : null}
 
-      <form onSubmit={(e) => editAchievement(e)} className="w-full cstm-flex-col cstm-w-limit border-collapse gap-4">
+      <form onSubmit={(e) => editAchievement(e)} className="w-full cstm-flex-col  border-collapse gap-4">
         <Link href="/controller/achievements" className="cstm-bg-hover mr-auto">
-          <BsArrowLeft className="text-prmColor cursor-pointer scale-125" />
+          <BsArrowLeft className="text-prmColor cursor-pointer text-xl" />
         </Link>
 
         <EditAchievementFilter

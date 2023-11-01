@@ -89,11 +89,7 @@ const AdminDashboard = () => {
 
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
-      <div
-        className="cstm-flex-col gap-4 justify-start w-full transition-all
-        t:cstm-flex-row t:flex-wrap
-        cstm-w-limit"
-      >
+      <div className="flex flex-col items-center gap-4 w-full t:flex-wrap t:flex-row t:justify-center">
         {/* activities card */}
         <DashboardCards
           image={activities}

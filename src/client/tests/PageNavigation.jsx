@@ -3,7 +3,7 @@ import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 
 const PageNavigation = (props) => {
   return (
-    <div className="cstm-flex-col w-full mt-auto cstm-w-limit gap-4 t:gap-4">
+    <div className="cstm-flex-col w-full mt-auto gap-4 t:gap-4">
       <div className="cstm-flex-row w-full">
         {props.activePage > 0 ? (
           <button

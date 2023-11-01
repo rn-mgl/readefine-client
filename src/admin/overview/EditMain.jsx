@@ -119,20 +119,20 @@ const EditMain = (props) => {
 
   return (
     <div
-      className="w-full h-full overflow-y-auto cstm-scrollbar-2 fixed top-0 left-0 
+      className="w-full h-full overflow-y-auto cstm-scrollbar-2 fixed top-0 left-0 animate-fadeIn
                backdrop-blur-md bg-gradient-to-br from-[#552aca32] to-[#4bfce132] 
-               z-20 p-4 cstm-flex-col justify-start"
+               z-[60] p-4 cstm-flex-col justify-start"
     >
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       <button onClick={props.handleCanEditMain} className="cstm-bg-hover ml-auto">
-        <IoClose className="scale-125 text-prmColor" />
+        <IoClose className="text-xl text-prmColor" />
       </button>
 
-      <div className="cstm-w-limit  w-full justify-start cstm-flex-col  ">
+      <div className="  w-full justify-start cstm-flex-col  ">
         <form
           onSubmit={(e) => editMain(e)}
-          className="justify-start cstm-flex-col w-full gap-4 t:w-10/12 l-s:w-8/12 l-l:w-6/12"
+          className="justify-start cstm-flex-col w-full gap-4 t:w-8/12 l-s:w-6/12 l-l:w-4/12 "
         >
           <div className="w-full h-fit p-4 rounded-2xl bg-white cstm-flex-col gap-2 shadow-md">
             <div
@@ -164,18 +164,18 @@ const EditMain = (props) => {
                   ref={rawImage}
                 />
                 <ActionLabel label="Add Profile Picture" />
-                <BiImage className="scale-125 text-prmColor peer-checked" />
+                <BiImage className="text-xl text-prmColor peer-checked" />
               </label>
 
               {imageFile.src ? (
                 <button type="button" onClick={removeSelectedImage} className="cstm-bg-hover group relative">
                   <ActionLabel label="Remove Image" />
-                  <IoClose className="scale-125 text-prmColor" />
+                  <IoClose className="text-xl text-prmColor" />
                 </button>
               ) : adminData?.image ? (
                 <button type="button" onClick={clearUpload} className="cstm-bg-hover group relative">
                   <ActionLabel label="Remove Image" />
-                  <IoClose className="scale-125 text-prmColor" />
+                  <IoClose className="text-xl text-prmColor" />
                 </button>
               ) : null}
             </div>

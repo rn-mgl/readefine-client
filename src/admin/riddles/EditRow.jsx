@@ -55,9 +55,9 @@ const EditRow = (props) => {
       <td className="t:w-[10%] cstm-flex-row gap-4">
         <button
           onClick={() => props.handleRiddleToEdit(props.riddle.riddle_id)}
-          className="cstm-flex-col cstm-bg-hover text-scndColor"
+          className="cstm-flex-col cstm-bg-hover text-cyan-700"
         >
-          <IoClose className="scale-125" />
+          <IoClose className="text-xl" />
         </button>
 
         <button
@@ -65,16 +65,16 @@ const EditRow = (props) => {
             props.handleCanDeleteRiddle();
             props.handleRiddleToDelete(props.riddle.riddle_id, props.riddle.answer);
           }}
-          className="cstm-flex-col cstm-bg-hover text-scndColor"
+          className="cstm-flex-col cstm-bg-hover text-cyan-700"
         >
-          <AiFillDelete className="scale-125" />
+          <AiFillDelete className="text-xl" />
         </button>
 
         <button
           onClick={() => props.editRiddle(props.riddle.riddle_id)}
-          className="cstm-flex-col cstm-bg-hover text-scndColor"
+          className="cstm-flex-col cstm-bg-hover text-cyan-700"
         >
-          <BiCheck className="scale-125" />
+          <BiCheck className="text-xl" />
         </button>
       </td>
     </tr>

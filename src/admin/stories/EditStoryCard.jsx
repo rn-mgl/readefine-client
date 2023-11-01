@@ -39,7 +39,7 @@ const EditStoryCard = (props) => {
       </div>
 
       <button onClick={props.handleDeletePage} type="button" className="cstm-bg-hover ml-auto">
-        <AiFillDelete className="text-prmColor scale-125" />
+        <AiFillDelete className="text-prmColor text-xl" />
       </button>
     </div>
   );

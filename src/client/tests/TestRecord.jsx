@@ -84,13 +84,13 @@ const TestRecord = (props) => {
 
   return (
     <div
-      className="fixed w-full top-0 left-0 h-full bg-accntColor z-30 
-                  cstm-flex-col justify-start overflow-y-auto cstm-scrollbar-2"
+      className="fixed w-full top-0 left-0 h-full backdrop-blur-md bg-gradient-to-br 
+                from-[#552aca32] to-[#4bfce132] z-[60] cstm-flex-col justify-start overflow-y-auto cstm-scrollbar-2"
     >
       {message.active ? <Message setMessageStatus={setMessageStatus} /> : null}
-      <div className="w-full h-auto cstm-w-limit cstm-flex-col justify-start gap-4 p-4">
+      <div className="w-full h-auto  cstm-flex-col justify-start gap-4 p-4">
         <button onClick={() => props.handleSeeTestRecord(props.testId)} className="cstm-bg-hover ml-auto">
-          <IoClose className="text-prmColor scale-125" />
+          <IoClose className="text-prmColor text-xl" />
         </button>
 
         <div className="w-full h-full grid grid-cols-1 t:grid-cols-2 l-l:grid-cols-3 gap-4">{questionsAndAnswer}</div>

@@ -8,11 +8,16 @@ const ClientLink = (props) => {
       onClick={props.toggleOpenNav}
       className={`${
         props.isActive
-          ? "text-accntColor bg-gradient-to-br from-prmColor  to-scndColor font-medium shadow-solid shadow-indigo-900"
+          ? `text-accntColor bg-gradient-to-br from-prmColor  
+              to-scndColor font-medium shadow-solid shadow-indigo-900`
           : "text-black opacity-50 font-light"
-      } cstm-flex-row gap-4 w-full justify-start p-2   hover:bg-black hover:bg-opacity-10 rounded-md transition-all`}
+      }     
+        ${props.navIsOpen ? "w-full justify-start" : "l-s:w-10 l-s:h-9 l-s:justify-center"}
+            cstm-flex-row gap-4  p-2 hover:bg-black 
+            hover:bg-opacity-10 rounded-md transition-all`}
     >
-      {props.icon} {props.label}
+      <span>{props.icon}</span>
+      <span className={`${props.navIsOpen ? "l-s:flex" : "l-s:hidden"}`}>{props.label}</span>
     </Link>
   );
 };

@@ -11,8 +11,7 @@ const Minigames = () => {
       <AdminPageHeader mainHeader="Minigames" subHeader="Readefine" />
       <div
         className="cstm-flex-col gap-4 justify-start w-full transition-all
-        t:cstm-flex-row t:flex-wrap
-        cstm-w-limit"
+        t:cstm-flex-row t:flex-wrap"
       >
         <AdminMinigamesCards image={riddles} label="Riddles" to="/controller/minigames/riddles" />
         <AdminMinigamesCards image={dangle} label="Dangle" to="/controller/minigames/dangle" />

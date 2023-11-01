@@ -1,27 +1,28 @@
 "use client";
-import React from "react";
-import Link from "next/link";
-import ClientLink from "../nav/ClientLink";
-import axios from "axios";
 import Loading from "@/components/global/Loading";
 import avatar from "@/public/profile/Avatar White.svg";
-import Image from "next/image";
+import logo from "@/public/landing/hero/landing book.png";
 
-import { BiMenu, BiTask, BiLogOut } from "react-icons/bi";
-import { BsPenFill } from "react-icons/bs";
-import { IoCloseSharp } from "react-icons/io5";
-import { AiFillHome, AiFillBook } from "react-icons/ai";
-import { TbGoGame } from "react-icons/tb";
-import { GiAchievement } from "react-icons/gi";
-import { usePathname } from "next/navigation";
-import { signOut, useSession } from "next-auth/react";
+import axios from "axios";
+import Image from "next/image";
+import Link from "next/link";
+import React from "react";
+import ClientLink from "../nav/ClientLink";
+
 import { useGlobalContext } from "@/base/context";
 import { cipher } from "@/functions/security";
 import { useLoading } from "@/hooks/useLoading";
+import { signOut, useSession } from "next-auth/react";
+import { usePathname } from "next/navigation";
+import { AiFillBook, AiFillHome } from "react-icons/ai";
+import { BiLogOut, BiMenu, BiTask } from "react-icons/bi";
+import { BsPenFill } from "react-icons/bs";
+import { GiAchievement } from "react-icons/gi";
+import { TbGoGame } from "react-icons/tb";
 
-const ClientNav = () => {
+const ClientNav = ({ children }) => {
   const [userData, setUserData] = React.useState({});
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [navIsOpen, setNavIsOpen] = React.useState(false);
 
   const { loading, setLoadingState } = useLoading(false);
 
@@ -48,8 +49,21 @@ const ClientNav = () => {
     }
   };
 
-  const toggleOpenNav = () => {
-    setIsOpen((prev) => !prev);
+  const toggleOpenNav = (using) => {
+    setNavIsOpen((prev) => {
+      if (using === "button") {
+        return !prev;
+      } else if (using === "link") {
+        // will not close if on laptop view if nav is not closed
+        if (window.innerWidth >= 1024) {
+          return prev && true;
+        } else {
+          return false;
+        }
+      }
+
+      return !prev;
+    });
   };
 
   const path = usePathname();
@@ -79,87 +93,97 @@ const ClientNav = () => {
   }
 
   return (
-    <>
-      <button onClick={toggleOpenNav} className="absolute cstm-bg-hover z-20 top-4 left-4 l-s:hidden">
-        <BiMenu className="scale-125 cursor-pointer" />
+    <div className="w-full h-full flex flex-row justify-start ">
+      <button onClick={() => toggleOpenNav("button")} className="absolute z-20 top-5 left-5 cursor-pointer l-s:hidden">
+        <BiMenu className="text-xl " />
       </button>
 
       <div
         className={`${
-          isOpen ? "m-s:translate-x-0" : "m-s:-translate-x-full"
-        } bg-white w-full h-full text-center fixed p-4 transition-all cstm-flex-col justify-start gap-4 z-50
-            t:w-[50%]
-            l-s:translate-x-0 l-s:left-0 l-s:top-0 l-s:w-[30%]
-            l-l:w-[20%]`}
+          navIsOpen ? "m-s:translate-x-0 l-s:w-[30%] l-l:w-[20%]" : "m-s:-translate-x-full l-s:w-[8%] l-l:w-[5%]"
+        } bg-white w-10/12 h-full text-center fixed p-4 transition-all 
+            cstm-flex-col justify-start gap-4 z-50 t:w-[50%]
+            l-s:translate-x-0 l-s:left-0 l-s:top-0 l-s:w-[25%] l-s:sticky l-s:h-screen`}
       >
-        <button onClick={toggleOpenNav} className="cstm-bg-hover absolute top-4 left-4 l-s:hidden">
-          <IoCloseSharp className="scale-125 cursor-pointer text-prmColor" />
-        </button>
+        <div className={`${navIsOpen ? "justify-between" : "justify-center"} w-full flex flex-row `}>
+          <button onClick={() => toggleOpenNav("button")} className="cursor-pointer">
+            <BiMenu className="text-xl " />
+          </button>
 
-        <Link
-          href="/archives"
-          className="text-prmColor select-none  font-extrabold text-lg whitespace-nowrap
-                m-l:text-xl"
-        >
-          Readefine
-        </Link>
+          <Link
+            href="/archives"
+            onClick={() => toggleOpenNav("link")}
+            className={`${navIsOpen ? "flex" : "l-s:hidden"}
+                    text-prmColor select-none  font-extrabold text-lg whitespace-nowrap
+                      m-l:text-xl `}
+          >
+            <Image src={logo} alt="logo" width={30} height={30} />
+          </Link>
+        </div>
 
         <div className="cstm-separator" />
 
         <ClientLink
           to="/archives"
-          toggleOpenNav={toggleOpenNav}
+          toggleOpenNav={() => toggleOpenNav("link")}
           isActive={path === "/archives"}
           icon={<AiFillHome />}
           label="Home"
+          navIsOpen={navIsOpen}
         />
 
         <ClientLink
           to="/archives/stories"
-          toggleOpenNav={toggleOpenNav}
+          toggleOpenNav={() => toggleOpenNav("link")}
           isActive={path.includes("/archives/stories")}
           icon={<AiFillBook />}
           label="Stories"
+          navIsOpen={navIsOpen}
         />
 
         <ClientLink
           to="/archives/tests"
-          toggleOpenNav={toggleOpenNav}
+          toggleOpenNav={() => toggleOpenNav("link")}
           isActive={path.includes("/archives/tests")}
           icon={<BsPenFill />}
           label="Tests"
+          navIsOpen={navIsOpen}
         />
 
         <ClientLink
           to="/archives/rewards"
-          toggleOpenNav={toggleOpenNav}
+          toggleOpenNav={() => toggleOpenNav("link")}
           isActive={path.includes("/archives/rewards")}
           icon={<GiAchievement />}
           label="Rewards"
+          navIsOpen={navIsOpen}
         />
 
         <ClientLink
           to="/archives/achievements"
-          toggleOpenNav={toggleOpenNav}
+          toggleOpenNav={() => toggleOpenNav("link")}
           isActive={path.includes("/archives/achievements")}
           icon={<BiTask />}
           label="Achievements"
+          navIsOpen={navIsOpen}
         />
 
         <ClientLink
           to="/archives/minigames"
-          toggleOpenNav={toggleOpenNav}
+          toggleOpenNav={() => toggleOpenNav("link")}
           isActive={path.includes("/archives/minigames")}
           icon={<TbGoGame />}
           label="Minigames"
+          navIsOpen={navIsOpen}
         />
 
         <div className="cstm-flex-col gap-2 w-full justify-start mt-auto">
           <Link
             href={`/archives/reader/${cipher(user?.userId)}`}
-            onClick={toggleOpenNav}
-            className=" text-left hover:bg-neutral-100 p-2 rounded-md 
-                justify-start transition-all cstm-flex-row gap-2 w-full"
+            onClick={() => toggleOpenNav("link")}
+            className={`${navIsOpen ? "p-2" : "l-s:p-0 l-s:justify-center"}
+                text-left hover:bg-neutral-100 rounded-md 
+                justify-start transition-all cstm-flex-row gap-2 w-full`}
           >
             <div
               style={{ backgroundImage: userData?.image ? `url(${userData?.image})` : null }}
@@ -168,7 +192,7 @@ const ClientNav = () => {
             >
               {!userData?.image ? <Image src={avatar} alt="avatar" width={100} /> : null}
             </div>
-            <div className="cstm-flex-col items-start w-full">
+            <div className={`${navIsOpen ? "l-s:flex" : "l-s:hidden"} cstm-flex-col items-start w-full`}>
               <p className="text-sm font-semibold">{userData?.lexile}L</p>
               <p className="font-bold text-prmColor whitespace-nowrap w-44 truncate">
                 {userData?.name} {userData?.surname}
@@ -179,22 +203,33 @@ const ClientNav = () => {
           <div className="cstm-separator" />
 
           <button
-            className="text-left hover:bg-neutral-100 hover:shadow-none p-2 rounded-md
+            className="text-left hover:bg-neutral-100 hover:shadow-none p-2 rounded-md 
                 justify-start transition-all cstm-flex-row gap-4 w-full overflow-x-hidden"
             onClick={logOut}
           >
-            <BiLogOut className="opacity-50" />
-            <p className="mr-auto text-sm opacity-50">Log Out</p>
+            <span className={` ${navIsOpen ? "justify-start" : "l-s:w-10 l-s:h-6 l-s:justify-center"} cstm-flex-col`}>
+              <BiLogOut className="opacity-50" />
+            </span>
+            <span className={`${navIsOpen ? "flex" : "l-s:hidden"} cstm-flex-col`}>
+              <p className="mr-auto text-sm opacity-50">Log Out</p>
+            </span>
           </button>
         </div>
       </div>
 
       <div
+        className="w-full flex flex-col overflow-y-auto relative
+                  justify-start cstm-scrollbar-2 bg-accntColor"
+      >
+        {children}
+      </div>
+
+      <div
         className={`${
-          isOpen ? "block" : "hidden"
+          navIsOpen ? "block" : "hidden"
         } fixed z-40 bg-black bg-opacity-20 w-full h-full top-0 left-0 l-s:hidden`}
       />
-    </>
+    </div>
   );
 };
 

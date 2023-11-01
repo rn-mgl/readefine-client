@@ -52,9 +52,9 @@ const TestResult = (props) => {
       className="fixed w-full top-0 left-0 h-full bg-accntColor 
                   z-30 p-4 cstm-flex-col justify-start overflow-y-auto cstm-scrollbar-2"
     >
-      <div className="w-full h-auto cstm-w-limit cstm-flex-col justify-start gap-4">
+      <div className="w-full h-auto  cstm-flex-col justify-start gap-4">
         <button onClick={props.handleCanSeeResult} className="cstm-bg-hover ml-auto">
-          <IoClose className="text-prmColor scale-125" />
+          <IoClose className="text-prmColor text-xl" />
         </button>
 
         <div className="w-full h-full grid grid-cols-1 t:grid-cols-2 l-l:grid-cols-3 gap-4 p-4">{mappedQuestions}</div>

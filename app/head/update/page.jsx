@@ -73,7 +73,7 @@ const Update = () => {
 
       <div
         className={`w-full grid grid-cols-1 t:grid-cols-2 l-l:grid-cols-3
-                  cstm-w-limit p-4 rounded-2xl bg-white gap-4 
+                   p-4 rounded-2xl bg-white gap-4 
                   overflow-y-auto cstm-scrollbar-2 
                   ${activities.length === 0 ? "h-full" : "h-auto"}`}
       >

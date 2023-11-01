@@ -15,7 +15,7 @@ const AdminCards = (props) => {
           {isVerified ? (
             <div className="ml-auto cstm-flex-col group absolute right-0 bottom-0">
               <ActionLabel label="Verified" />
-              <AiFillStar className="text-scndColor scale-125 " />
+              <AiFillStar className="text-scndColor text-xl " />
             </div>
           ) : null}
         </div>

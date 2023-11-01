@@ -7,15 +7,16 @@ import { IoClose } from "react-icons/io5";
 const DecipherTutorial = (props) => {
   return (
     <div
-      className="w-full fixed top-0 left-0 min-h-screen h-full backdrop-blur-md z-30 cstm-flex-col 
+      className="w-full fixed top-0 left-0 min-h-screen h-full backdrop-blur-md bg-gradient-to-br 
+                from-[#552aca32] to-[#4bfce132] z-[60] cstm-flex-col 
                   justify-start p-4 animate-[fadeIn_200ms] overflow-y-auto cstm-scrollbar-2"
     >
       <button className="cstm-bg-hover ml-auto absolute top-3 right-3" onClick={props.handleCanSeeTutorial}>
-        <IoClose className="scale-125" />
+        <IoClose className="text-xl" />
       </button>
 
-      <div className="cstm-w-limit cstm-flex-col w-full h-auto">
-        <div className="cstm-flex-col justify-start w-full gap-4 t:w-10/12 l-l:w-8/12 ">
+      <div className="cstm-flex-col w-full h-full">
+        <div className="cstm-flex-col h-full w-full gap-4 t:w-10/12 l-s:w-8/12 l-l:w-6/12 ">
           <p className="font-extrabold text-prmColor text-xl t:text-2xl">HOW TO PLAY</p>
 
           <div
@@ -28,7 +29,7 @@ const DecipherTutorial = (props) => {
             >
               <BsDot className="absolute scale-[4] text-scndColor top-0 left-0 -translate-x-1.5 -translate-y-1.5" />
               <p className="text-sm t:text-base">You will be given a word with shuffled letters.</p>
-              <BsPatchQuestionFill className="scale-125 text-prmColor" />
+              <BsPatchQuestionFill className="text-xl text-prmColor" />
             </div>
 
             <div className="cstm-flex-col text-sm w-full gap-4">
@@ -53,7 +54,7 @@ const DecipherTutorial = (props) => {
                   </p>
                 </div>
 
-                <BiChevronDown className="scale-125" />
+                <BiChevronDown className="text-xl" />
 
                 <div className="cstm-flex-row gap-2 w-full">
                   <p className="bg-prmColor p-2 w-8 h-8 rounded-md bg-opacity-10 cstm-flex-col font-bold text-prmColor">

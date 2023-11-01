@@ -102,7 +102,7 @@ const AdminTests = () => {
       {/* show if has message pop up */}
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
-      <div className="w-full cstm-w-limit cstm-flex-col gap-4 ">
+      <div className="w-full  cstm-flex-col gap-4 ">
         {/* test filter */}
         <TestsFilter
           handleSearchFilter={handleSearchFilter}

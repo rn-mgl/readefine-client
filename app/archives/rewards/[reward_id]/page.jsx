@@ -61,12 +61,12 @@ const SingleReward = ({ params }) => {
   }, [user, router]);
 
   return (
-    <div className="w-full cstm-flex-col p-4 gap-4 t:gap-4 justify-start bg-accntColor max-h-screen h-screen">
+    <div className="w-full cstm-flex-col p-4 gap-4 t:gap-4 justify-start h-full">
       <ClientPageHeader mainHeader="Readefine" subHeader="Your Reward" />
 
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
-      <div className="cstm-w-limit justify-start cstm-flex-col w-full relative z-10 h-full">
+      <div className=" justify-start cstm-flex-col w-full relative z-10 h-full ">
         <div className="cstm-flex-col gap-4 w-full t:w-10/12 l-l:w-8/12 h-full">
           <Link className="cstm-bg-hover mr-auto" href="/archives/rewards">
             <BsArrowLeft className="text-accntColor scale-125" />
@@ -115,7 +115,7 @@ const SingleReward = ({ params }) => {
       </div>
 
       {/* animating background */}
-      <div className="cstm-w-limit cstm-light-rays" />
+      <div className=" cstm-light-rays" />
     </div>
   );
 };

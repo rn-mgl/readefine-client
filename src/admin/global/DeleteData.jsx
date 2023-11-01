@@ -73,21 +73,21 @@ const DeleteData = (props) => {
 
   return (
     <div
-      className="w-full min-h-screen h-full  backdrop-blur-md bg-gradient-to-br 
-              from-[#552aca32] to-[#4bfce132] fixed z-30 top-0 left-0 p-4 cstm-flex-col justify-start"
+      className="w-full min-h-screen h-full  backdrop-blur-md bg-gradient-to-br animate-fadeIn
+              from-[#552aca32] to-[#4bfce132] fixed z-[60] top-0 left-0 p-4 cstm-flex-col justify-start"
     >
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       <button onClick={props.handleCanDeleteData} className="cstm-bg-hover ml-auto">
-        <IoClose className="text-prmColor scale-125 " />
+        <IoClose className="text-prmColor text-xl " />
       </button>
 
-      <div className="cstm-flex-col w-full cstm-w-limit border-collapse h-screen">
+      <div className="cstm-flex-col w-full  border-collapse h-screen">
         <form
           onSubmit={(e) => deleteData(e)}
-          className="w-11/12 rounded-md bg-white min-h-[15rem] shadow-md my-auto cstm-flex-col justify-start p-4 text-center gap-4 absolute
-                      t:w-96
-                      l-s:w-[26rem]"
+          className="w-11/12 rounded-2xl bg-white min-h-[15rem] shadow-md my-auto 
+                    cstm-flex-col justify-start p-4 text-center gap-4 absolute
+                    t:w-8/12 l-s:w-6/12 l-l:w-4/12 "
         >
           <div className="w-full">
             <p className="text-prmColor font-bold">Notice</p>
@@ -99,7 +99,7 @@ const DeleteData = (props) => {
           </p>
 
           <input
-            className="p-2 text-prmColor bg-white  rounded-md border-neutral-200 border-2 w-full text-sm
+            className="p-2 text-prmColor bg-white  rounded-md border-neutral-200 border-2 w-full text-sm mb-auto
             focus:outline-none"
             placeholder="Confirmation"
             name="title"

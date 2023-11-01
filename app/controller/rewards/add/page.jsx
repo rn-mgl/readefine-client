@@ -112,7 +112,7 @@ const AddReward = () => {
 
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
-      <form onSubmit={(e) => addReward(e)} className="w-full cstm-flex-col cstm-w-limit border-collapse gap-4">
+      <form onSubmit={(e) => addReward(e)} className="w-full cstm-flex-col  border-collapse gap-4">
         {/* reward data */}
         <AddRewardFilter handleReward={handleReward} reward={reward} />
 
@@ -191,7 +191,7 @@ const AddReward = () => {
               ref={rawImage}
             />
 
-            <BiImage className="scale-125 text-prmColor peer-checked" />
+            <BiImage className="text-xl text-prmColor peer-checked" />
           </label>
 
           <button

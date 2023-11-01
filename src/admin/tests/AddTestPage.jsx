@@ -7,11 +7,11 @@ const AddTestPage = (props) => {
   return (
     <div
       className=" w-full h-full cstm-flex-col gap-2 fixed animate-fadeIn
-                  top-0 left-0 bg-prmColor bg-opacity-10 backdrop-blur-md z-20 p-4"
+                  top-0 left-0 bg-prmColor bg-opacity-10 backdrop-blur-md z-[60] p-4"
     >
-      <div className="w-full h-full cstm-flex-col gap-2 cstm-w-limit">
+      <div className="w-full h-full cstm-flex-col gap-2 ">
         <button onClick={props.handleSelectedCard} className="cstm-bg-hover ml-auto">
-          <IoClose className="text-prmColor scale-125" />
+          <IoClose className="text-prmColor text-xl" />
         </button>
 
         <div className="w-full h-full cstm-flex-col gap-2 l-s:w-10/12">

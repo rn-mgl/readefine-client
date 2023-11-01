@@ -81,7 +81,7 @@ const Account = ({ params }) => {
 
       {canChangePassword ? <ChangePassword handleCanChangePassword={handleCanChangePassword} /> : null}
 
-      <div className="cstm-flex-col cstm-scrollbar cstm-w-limit w-full gap-4">
+      <div className="cstm-flex-col cstm-scrollbar  w-full gap-4">
         <MainAccount
           headData={headData}
           handleCanEditMain={handleCanEditMain}

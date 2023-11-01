@@ -202,7 +202,7 @@ const EditTest = ({ params }) => {
         />
       ) : null}
 
-      <div className="w-full cstm-flex-row cstm-w-limit">
+      <div className="w-full cstm-flex-row ">
         <Link href={`/controller/tests/${params?.test_id}`} className="w-fit cstm-bg-hover mr-auto">
           <BsArrowLeft className=" text-prmColor" />
         </Link>
@@ -210,7 +210,7 @@ const EditTest = ({ params }) => {
 
       <form
         onSubmit={(e) => editTest(e)}
-        className="w-full cstm-flex-col cstm-w-limit border-collapse gap-4 bg-white rounded-2xl p-4"
+        className="w-full cstm-flex-col  border-collapse gap-4 bg-white rounded-2xl p-4"
       >
         <div className="w-full mb-auto gap-4 grid grid-cols-1 t:grid-cols-2 l-l:grid-cols-3">{testQuestions}</div>
 

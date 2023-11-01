@@ -122,7 +122,7 @@ const ClientTests = () => {
 
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
-      <div className="w-full cstm-w-limit cstm-flex-col gap-4 ">
+      <div className="w-full h-full cstm-flex-col gap-4 justify-start ">
         <TestsFilter
           handleSearchFilter={handleSearchFilter}
           handleSortFilter={handleSortFilter}

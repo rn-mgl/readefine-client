@@ -83,7 +83,7 @@ const SingleAchievement = ({ params }) => {
         />
       ) : null}
 
-      <div className="cstm-w-limit cstm-flex-row text-prmColor w-full">
+      <div className=" cstm-flex-row text-prmColor w-full">
         <Link href="/controller/achievements" className="cstm-bg-hover mr-auto">
           <BsArrowLeft />
         </Link>
@@ -97,7 +97,7 @@ const SingleAchievement = ({ params }) => {
         </button>
       </div>
 
-      <div className="cstm-flex-col cstm-w-limit w-full gap-2 h-full">
+      <div className="cstm-flex-col  w-full gap-2 h-full">
         {/* task */}
         <div className="w-full cstm-flex-col h-full">
           <div className="w-full p-4 bg-white rounded-2xl cstm-flex-col gap-2 h-full">

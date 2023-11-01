@@ -1,5 +1,6 @@
 "use client";
 import Loading from "@/components/global/Loading";
+import logo from "@/public/landing/hero/landing book.png";
 import avatar from "@/public/profile/Avatar.svg";
 import axios from "axios";
 import Image from "next/image";
@@ -17,11 +18,10 @@ import { BiLogOut, BiMenu, BiTask } from "react-icons/bi";
 import { BsActivity, BsPatchQuestionFill, BsPenFill } from "react-icons/bs";
 import { GiAchievement } from "react-icons/gi";
 import { HiUser } from "react-icons/hi2";
-import { IoCloseSharp } from "react-icons/io5";
 
-const AdminNav = () => {
+const AdminNav = ({ children }) => {
   const [adminData, setAdminData] = React.useState({});
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [navIsOpen, setNavIsOpen] = React.useState(false);
 
   const { loading, setLoadingState } = useLoading(false);
 
@@ -50,8 +50,21 @@ const AdminNav = () => {
     }
   };
 
-  const toggleOpenNav = () => {
-    setIsOpen((prev) => !prev);
+  const toggleOpenNav = (using) => {
+    setNavIsOpen((prev) => {
+      if (using === "button") {
+        return !prev;
+      } else if (using === "link") {
+        // will not close if on laptop view if nav is not closed
+        if (window.innerWidth >= 1024) {
+          return prev && true;
+        } else {
+          return false;
+        }
+      }
+
+      return !prev;
+    });
   };
 
   const getAdminData = React.useCallback(async () => {
@@ -79,31 +92,33 @@ const AdminNav = () => {
   }
 
   return (
-    <>
-      <button onClick={toggleOpenNav} className="cstm-bg-hover absolute top-4 left-4 z-10">
-        <BiMenu className="scale-125 cursor-pointer l-s:hidden" />
+    <div className="w-full h-full flex flex-row justify-start ">
+      <button onClick={() => toggleOpenNav("button")} className="absolute z-20 top-5 left-5 cursor-pointer l-s:hidden">
+        <BiMenu className="text-xl " />
       </button>
 
       <div
         className={`${
-          isOpen ? "m-s:translate-x-0" : "m-s:-translate-x-full"
-        } bg-white w-full h-full text-center fixed p-4 transition-all cstm-flex-col justify-start 
-          gap-4 z-50 overflow-y-auto cstm-scrollbar-2
-            t:w-[50%]
-            l-s:translate-x-0 l-s:left-0 l-s:top-0 l-s:w-[30%]
-            l-l:w-[20%]`}
+          navIsOpen ? "m-s:translate-x-0 l-s:w-[30%] l-l:w-[20%]" : "m-s:-translate-x-full l-s:w-[8%] l-l:w-[5%]"
+        } bg-white w-10/12 h-full text-center fixed p-4 transition-all 
+            cstm-flex-col justify-start gap-4 z-50 t:w-[50%]
+            l-s:translate-x-0 l-s:left-0 l-s:top-0 l-s:w-[25%] l-s:sticky l-s:h-screen`}
       >
-        <button onClick={toggleOpenNav} className="cstm-bg-hover absolute top-4 left-4 l-s:hidden">
-          <IoCloseSharp className="scale-125 cursor-pointer" />
-        </button>
+        <div className={`${navIsOpen ? "justify-between" : "justify-center"} w-full flex flex-row `}>
+          <button onClick={() => toggleOpenNav("button")} className="cursor-pointer">
+            <BiMenu className="text-xl " />
+          </button>
 
-        <Link
-          href="/controller"
-          className="select-none  font-extrabold text-lg whitespace-nowrap text-prmColor
-                m-l:text-xl"
-        >
-          Readefine <span className="font-extralight text-black"> | admin</span>
-        </Link>
+          <Link
+            href="/controller"
+            onClick={() => toggleOpenNav("link")}
+            className={`${navIsOpen ? "flex" : "l-s:hidden"}
+                    text-prmColor select-none  font-extrabold text-lg whitespace-nowrap
+                      m-l:text-xl `}
+          >
+            <Image src={logo} alt="logo" width={30} height={30} />
+          </Link>
+        </div>
 
         <div className="cstm-separator" />
 
@@ -112,7 +127,8 @@ const AdminNav = () => {
           icon={<AiFillHome />}
           label="Dashboard"
           isActive={path === "/controller"}
-          toggleOpenNav={toggleOpenNav}
+          toggleOpenNav={() => toggleOpenNav("link")}
+          navIsOpen={navIsOpen}
         />
 
         <AdminLink
@@ -120,7 +136,8 @@ const AdminNav = () => {
           icon={<HiUser />}
           label="Accounts"
           isActive={path.includes("/controller/users")}
-          toggleOpenNav={toggleOpenNav}
+          toggleOpenNav={() => toggleOpenNav("link")}
+          navIsOpen={navIsOpen}
         />
 
         <AdminLink
@@ -128,7 +145,8 @@ const AdminNav = () => {
           icon={<AiFillBook />}
           label="Stories"
           isActive={path.includes("/controller/stories")}
-          toggleOpenNav={toggleOpenNav}
+          toggleOpenNav={() => toggleOpenNav("link")}
+          navIsOpen={navIsOpen}
         />
 
         <AdminLink
@@ -136,7 +154,8 @@ const AdminNav = () => {
           icon={<BsPenFill />}
           label="Tests"
           isActive={path.includes("/controller/tests")}
-          toggleOpenNav={toggleOpenNav}
+          toggleOpenNav={() => toggleOpenNav("link")}
+          navIsOpen={navIsOpen}
         />
 
         <AdminLink
@@ -144,7 +163,8 @@ const AdminNav = () => {
           icon={<GiAchievement />}
           label="Rewards"
           isActive={path.includes("/controller/rewards")}
-          toggleOpenNav={toggleOpenNav}
+          toggleOpenNav={() => toggleOpenNav("link")}
+          navIsOpen={navIsOpen}
         />
 
         <AdminLink
@@ -152,7 +172,8 @@ const AdminNav = () => {
           icon={<BiTask />}
           label="Achievements & Tasks"
           isActive={path.includes("/controller/achievements")}
-          toggleOpenNav={toggleOpenNav}
+          toggleOpenNav={() => toggleOpenNav("link")}
+          navIsOpen={navIsOpen}
         />
 
         <AdminLink
@@ -160,7 +181,8 @@ const AdminNav = () => {
           icon={<BsPatchQuestionFill />}
           label="Minigames"
           isActive={path.includes("/controller/minigames")}
-          toggleOpenNav={toggleOpenNav}
+          toggleOpenNav={() => toggleOpenNav("link")}
+          navIsOpen={navIsOpen}
         />
 
         <AdminLink
@@ -168,15 +190,17 @@ const AdminNav = () => {
           icon={<BsActivity />}
           label="All Activities"
           isActive={path.includes("/controller/activities")}
-          toggleOpenNav={toggleOpenNav}
+          toggleOpenNav={() => toggleOpenNav("link")}
+          navIsOpen={navIsOpen}
         />
 
         <div className="cstm-flex-col gap-2 w-full justify-start mt-auto">
           <Link
             href={`/controller/overview/${cipher(user?.adminId)}`}
-            onClick={toggleOpenNav}
-            className="text-left hover:bg-neutral-100 p-2 rounded-md 
-            justify-start transition-all cstm-flex-row gap-2 w-full"
+            toggleOpenNav={() => toggleOpenNav("link")}
+            className={`${navIsOpen ? "p-2" : "l-s:p-0 l-s:justify-center"}
+                text-left hover:bg-neutral-100 rounded-md 
+                justify-start transition-all cstm-flex-row gap-2 w-full`}
           >
             <div
               style={{ backgroundImage: adminData?.image ? `url(${adminData?.image})` : null }}
@@ -185,7 +209,7 @@ const AdminNav = () => {
             >
               {!adminData?.image ? <Image src={avatar} alt="avatar" className="saturate-150" width={100} /> : null}
             </div>
-            <div className="cstm-flex-col items-start w-full">
+            <div className={`${navIsOpen ? "l-s:flex" : "l-s:hidden"} cstm-flex-col items-start w-full`}>
               <p className="text-xs">Welcome</p>
               <p className="font-bold text-prmColor whitespace-nowrap w-44 truncate">
                 {adminData?.name} {adminData?.surname}
@@ -200,18 +224,29 @@ const AdminNav = () => {
                 justify-start transition-all cstm-flex-row gap-4 w-full overflow-x-hidden"
             onClick={logOut}
           >
-            <BiLogOut className="opacity-50" />
-            <p className="mr-auto text-sm opacity-50">Log Out</p>
+            <span className={` ${navIsOpen ? "justify-start" : "l-s:w-10 l-s:h-6 l-s:justify-center"} cstm-flex-col`}>
+              <BiLogOut className="opacity-50" />
+            </span>
+            <span className={`${navIsOpen ? "flex" : "l-s:hidden"} cstm-flex-col`}>
+              <p className="mr-auto text-sm opacity-50">Log Out</p>
+            </span>
           </button>
         </div>
       </div>
 
       <div
+        className="w-full flex flex-col overflow-y-auto relative
+                  justify-start cstm-scrollbar-2 bg-accntColor"
+      >
+        {children}
+      </div>
+
+      <div
         className={`${
-          isOpen ? "block" : "hidden"
+          navIsOpen ? "block" : "hidden"
         } fixed z-40 bg-black bg-opacity-20 w-full h-full top-0 left-0 l-s:hidden`}
       />
-    </>
+    </div>
   );
 };
 

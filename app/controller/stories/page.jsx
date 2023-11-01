@@ -116,7 +116,7 @@ const AdminStories = () => {
 
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
-      <div className="w-full cstm-w-limit cstm-flex-col gap-4 ">
+      <div className="w-full cstm-flex-col gap-4 ">
         <StoriesFilter
           handleSearchFilter={handleSearchFilter}
           handleDateRangeFilter={handleDateRangeFilter}
@@ -133,7 +133,7 @@ const AdminStories = () => {
           className="p-2 w-fit cstm-flex-row px-4  gap-1 mr-auto hover:shadow-md
                   bg-prmColor rounded-md text-accntColor text-sm"
         >
-          <IoAddOutline className="cursor-pointer scale-125" />
+          <IoAddOutline className="cursor-pointer text-xl" />
           <p>Add Story</p>
         </Link>
 

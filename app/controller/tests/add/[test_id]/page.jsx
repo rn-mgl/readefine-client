@@ -278,7 +278,7 @@ const AddTest = ({ params }) => {
         />
       ) : null}
 
-      <div className="w-full cstm-flex-row cstm-w-limit">
+      <div className="w-full cstm-flex-row ">
         <Link href="/controller/tests" className="w-fit cstm-bg-hover mr-auto">
           <BsArrowLeft className=" text-prmColor" />
         </Link>
@@ -286,7 +286,7 @@ const AddTest = ({ params }) => {
 
       <form
         onSubmit={(e) => createTest(e)}
-        className="w-full cstm-flex-col cstm-w-limit gap-4 bg-white justify-start
+        className="w-full cstm-flex-col  gap-4 bg-white justify-start
                   p-4 rounded-2xl h-full overflow-y-auto cstm-scrollbar-2"
       >
         <div className="w-full mb-auto gap-4 grid grid-cols-1 t:grid-cols-2 l-l:grid-cols-3">{testCards}</div>

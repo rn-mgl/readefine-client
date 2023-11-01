@@ -69,16 +69,16 @@ const FindRewards = (props) => {
 
   return (
     <div
-      className="p-4 h-full overflow-y-auto cstm-scrollbar-2 backdrop-blur-md fixed top-0 
-                  left-0 w-full min-h-screen cstm-flex-col gap-4 justify-start  z-20"
+      className="p-4 h-full overflow-y-auto cstm-scrollbar-2 backdrop-blur-md bg-prmColor bg-opacity-10 fixed top-0 
+                  left-0 w-full min-h-screen cstm-flex-col gap-4 justify-start z-[60] animate-fadeIn"
     >
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       <button onClick={props.handleCanSelectReward} className="ml-auto cstm-flex-col w-fit z-20 cstm-bg-hover">
-        <IoClose className="text-prmColor scale-125 cursor-pointer" />
+        <IoClose className="text-prmColor text-xl cursor-pointer" />
       </button>
 
-      <div className="w-full cstm-flex-col gap-4 cstm-w-limit">
+      <div className="w-full cstm-flex-col gap-4 ">
         <RewardsFilter
           typeFilter={typeFilter}
           searchFilter={searchFilter}

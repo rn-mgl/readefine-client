@@ -42,7 +42,7 @@ const Message = (props) => {
       {messageInfo}
 
       <button onClick={() => setMessageStatus(false, "", "info")} className="cstm-bg-hover absolute top-0 right-0">
-        <IoCloseCircleOutline className="text-inherit scale-125 " />
+        <IoCloseCircleOutline className="text-inherit text-xl " />
       </button>
     </div>
   );

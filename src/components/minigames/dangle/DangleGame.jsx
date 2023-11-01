@@ -21,7 +21,7 @@ const DangleGame = (props) => {
   return (
     <>
       <button className="cstm-bg-hover ml-auto absolute top-0 right-0" onClick={props.handleIsPlaying}>
-        <BsArrowLeft className="text-black scale-125" />
+        <BsArrowLeft className="text-black text-xl" />
       </button>
 
       <div className="cstm-flex-col gap-2 absolute right-0 top-12 t:gap-3">

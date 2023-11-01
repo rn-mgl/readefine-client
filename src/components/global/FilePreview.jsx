@@ -14,7 +14,7 @@ const FilePreview = (props) => {
         ) : null}
 
         <button type="button" onClick={props.clearFiles} className="cstm-bg-hover ">
-          <IoClose className="text-prmColor scale-125 cursor-pointer " />
+          <IoClose className="text-prmColor text-xl cursor-pointer " />
         </button>
       </div>
     </div>

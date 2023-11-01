@@ -64,16 +64,16 @@ const ConfirmEditGradeLevel = (props) => {
 
   return (
     <div
-      className="w-full min-h-screen h-full  backdrop-blur-md bg-gradient-to-br 
+      className="w-full min-h-screen h-full  backdrop-blur-md bg-gradient-to-br animate-fadeIn
                 from-[#552aca32] to-[#4bfce132] fixed z-30 top-0 left-0 p-4 cstm-flex-col justify-start"
     >
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       <button onClick={props.handleCanSeeConfirmGradeChange} className="cstm-bg-hover ml-auto">
-        <IoClose className="text-prmColor scale-125" />
+        <IoClose className="text-prmColor text-xl" />
       </button>
 
-      <div className="cstm-flex-col w-full cstm-w-limit border-collapse h-screen">
+      <div className="cstm-flex-col w-full  border-collapse h-screen">
         <form
           onSubmit={(e) => editGrade(e)}
           className="w-11/12 rounded-2xl bg-white min-h-[15rem] my-auto cstm-flex-col justify-start p-4 text-center gap-4 absolute shadow-solid

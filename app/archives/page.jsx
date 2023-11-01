@@ -62,11 +62,7 @@ const Archives = () => {
       <ClientPageHeader mainHeader="Readefine" subHeader="Home" />
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
-      <div
-        className="cstm-flex-col gap-4 w-full transition-all
-        t:cstm-flex-row t:flex-wrap
-        cstm-w-limit"
-      >
+      <div className="flex flex-col items-center gap-4 w-full t:flex-wrap t:flex-row t:justify-center">
         {/* stories */}
         <ArchivesCards
           label="Read Stories"

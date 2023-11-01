@@ -140,7 +140,7 @@ const EditReward = ({ params }) => {
 
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
-      <form onSubmit={(e) => editReward(e)} className="w-full cstm-flex-col border-collapse gap-4 cstm-w-limit">
+      <form onSubmit={(e) => editReward(e)} className="w-full cstm-flex-col border-collapse gap-4 ">
         <EditRewardFilter handleReward={handleReward} reward={reward} />
 
         <div
@@ -213,7 +213,7 @@ const EditReward = ({ params }) => {
                     </p>
 
                     <button type="button" onClick={clearUploadedReward} className="cstm-bg-hover ">
-                      <IoClose className="text-prmColor scale-125 cursor-pointer " />
+                      <IoClose className="text-prmColor text-xl cursor-pointer " />
                     </button>
                   </div>
                 </div>
@@ -234,7 +234,7 @@ const EditReward = ({ params }) => {
               onChange={(e) => selectedImageViewer(e, setMessageStatus)}
               ref={rawImage}
             />
-            <BiImage className="scale-125 text-prmColor peer-checked" />
+            <BiImage className="text-xl text-prmColor peer-checked" />
           </label>
 
           <button

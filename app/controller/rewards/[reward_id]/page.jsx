@@ -81,7 +81,7 @@ const SingleReward = ({ params }) => {
         />
       ) : null}
 
-      <div className="w-full cstm-w-limit cstm-flex-col h-full">
+      <div className="w-full  cstm-flex-col h-full">
         <div className="cstm-flex-col gap-4 w-full t:w-10/12 l-l:w-8/12 h-full">
           {/* admin actions */}
           <div className="w-full cstm-flex-row">

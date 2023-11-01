@@ -126,7 +126,7 @@ const Reader = ({ params }) => {
           correctAnswer={q.correct_answer}
           dateAnswered={localizeDate(q.date_answered)}
           userImage={userData?.image}
-          complementaryIcon={<BsFillPenFill className="scale-125" />}
+          complementaryIcon={<BsFillPenFill className="text-xl" />}
         />
       </React.Fragment>
     );
@@ -142,7 +142,7 @@ const Reader = ({ params }) => {
           correctAnswer={q.word.toUpperCase()}
           dateAnswered={localizeDate(q.date_answered)}
           userImage={userData?.image}
-          complementaryIcon={<BsFillSquareFill className="scale-125" />}
+          complementaryIcon={<BsFillSquareFill className="text-xl" />}
         />
       </React.Fragment>
     );
@@ -158,7 +158,7 @@ const Reader = ({ params }) => {
           correctAnswer={q.word.toUpperCase()}
           dateAnswered={localizeDate(q.date_answered)}
           userImage={userData?.image}
-          complementaryIcon={<TbPlusMinus className="scale-125" />}
+          complementaryIcon={<TbPlusMinus className="text-xl" />}
         />
       </React.Fragment>
     );
@@ -174,7 +174,7 @@ const Reader = ({ params }) => {
           correctAnswer={q.correct_answer.toUpperCase()}
           dateAnswered={localizeDate(q.date_answered)}
           userImage={userData?.image}
-          complementaryIcon={<FaBrain className="scale-125" />}
+          complementaryIcon={<FaBrain className="text-xl" />}
         />
       </React.Fragment>
     );
@@ -314,7 +314,7 @@ const Reader = ({ params }) => {
 
       {canChangePassword ? <ChangePassword handleCanChangePassword={handleCanChangePassword} /> : null}
 
-      <div className="cstm-w-limit cstm-flex-col gap-4 w-full">
+      <div className=" cstm-flex-col gap-4 w-full">
         <MainProfile
           handleCanEditGradeLevel={handleCanEditGradeLevel}
           handleCanEditMain={handleCanEditMain}

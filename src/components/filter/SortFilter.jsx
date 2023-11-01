@@ -31,7 +31,7 @@ const SortFilter = (props) => {
           </select>
 
           <div className="w-full opacity-50 px-1">
-            <BiChevronDown className="scale-125" />
+            <BiChevronDown className="text-xl" />
           </div>
         </div>
       )}

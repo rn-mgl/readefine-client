@@ -354,7 +354,7 @@ const EditStory = ({ params }) => {
         />
       ) : null}
 
-      <form className="w-full cstm-flex-col gap-4 cstm-w-limit border-collapse" onSubmit={(e) => editBook(e)}>
+      <form className="w-full cstm-flex-col gap-4  border-collapse" onSubmit={(e) => editBook(e)}>
         <Link type="button" href="/controller/stories" className="w-fit cstm-bg-hover mr-auto">
           <BsArrowLeft className=" text-prmColor" />
         </Link>
@@ -387,7 +387,7 @@ const EditStory = ({ params }) => {
               </p>
 
               <button type="button" onClick={removeSelectedImage} className="cstm-bg-hover ">
-                <IoClose className="text-prmColor scale-125 cursor-pointer " />
+                <IoClose className="text-prmColor text-xl cursor-pointer " />
               </button>
             </div>
           ) : story?.book_cover ? (
@@ -409,7 +409,7 @@ const EditStory = ({ params }) => {
               </p>
 
               <button type="button" onClick={clearBookCover} className="cstm-bg-hover ">
-                <IoClose className="text-prmColor scale-125 cursor-pointer " />
+                <IoClose className="text-prmColor text-xl cursor-pointer " />
               </button>
             </div>
           ) : null}
@@ -425,7 +425,7 @@ const EditStory = ({ params }) => {
               </div>
 
               <button type="button" onClick={removeSelectedAudio} className="cstm-bg-hover">
-                <IoClose className="text-prmColor scale-125 cursor-pointer " />
+                <IoClose className="text-prmColor text-xl cursor-pointer " />
               </button>
             </div>
           ) : story?.audio ? (
@@ -439,7 +439,7 @@ const EditStory = ({ params }) => {
               </div>
 
               <button type="button" onClick={clearBookAudio} className="cstm-bg-hover">
-                <IoClose className="text-prmColor scale-125 cursor-pointer " />
+                <IoClose className="text-prmColor text-xl cursor-pointer " />
               </button>
             </div>
           ) : null}
@@ -479,7 +479,7 @@ const EditStory = ({ params }) => {
             className="mr-auto cstm-flex-row gap-1 text-prmColor 
                   hover:underline hover:underline-offset-2 text-sm hover:shadow-none"
           >
-            <IoAddOutline className="cursor-pointer scale-125" />
+            <IoAddOutline className="cursor-pointer text-xl" />
             <p>Add Page</p>
           </button>
 

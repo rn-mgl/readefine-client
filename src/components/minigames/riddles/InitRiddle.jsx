@@ -17,14 +17,14 @@ const InitRiddle = (props) => {
   });
 
   return (
-    <div className="w-full h-full cstm-w-limit cstm-flex-col relative overflow-hidden">
+    <div className="w-full h-full  cstm-flex-col relative overflow-hidden">
       <div className="absolute top-0 right-0 cstm-flex-col gap-2 z-10">
         <Link href={props.to} className="cstm-bg-hover ">
-          <BsArrowLeft className="scale-125" />
+          <BsArrowLeft className="text-xl" />
         </Link>
 
         <button onClick={props.handleCanSeeTutorial} className="cstm-bg-hover">
-          <BsQuestionCircle className="scale-125" />
+          <BsQuestionCircle className="text-xl" />
         </button>
       </div>
 

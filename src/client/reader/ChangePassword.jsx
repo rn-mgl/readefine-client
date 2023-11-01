@@ -94,20 +94,21 @@ const ChangePassword = (props) => {
 
   return (
     <div
-      className="fixed w-full h-full cstm-flex-col  backdrop-blur-md bg-gradient-to-br 
-              from-[#552aca32] to-[#4bfce132] z-20 p-4 top-0 left-0 gap-4 cstm-scrollbar-2 overflow-y-auto"
+      className="fixed w-full h-full cstm-flex-col  backdrop-blur-md bg-gradient-to-br animate-fadeIn
+              from-[#552aca32] to-[#4bfce132] z-[60] p-4 top-0 left-0 gap-4 cstm-scrollbar-2 overflow-y-auto"
     >
       <button onClick={props.handleCanChangePassword} className="cstm-bg-hover ml-auto">
-        <IoClose className="scale-125 text-prmColor" />
+        <IoClose className="text-xl text-prmColor" />
       </button>
 
       {/* if message has popped up */}
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
-      <div className="cstm-w-limit cstm-flex-col w-full my-auto">
+      <div className=" cstm-flex-col w-full my-auto">
         <form
           onSubmit={(e) => changePassword(e)}
-          className="cstm-flex-col bg-white rounded-2xl p-4 w-full gap-4 shadow-solid t:w-8/12 l-l:w-6/12"
+          className="cstm-flex-col bg-white rounded-2xl p-4 w-full 
+          gap-4 shadow-solid t:w-8/12 l-s:w-6/12 l-l:w-4/12 "
         >
           <EditInput
             label="Old Password"

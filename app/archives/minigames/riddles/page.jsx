@@ -113,7 +113,7 @@ const ClientRiddles = () => {
   // map lives
   const remainingLives = lives.status.map((alive, i) => {
     return (
-      <AiFillHeart key={i} className={` ${alive ? "text-prmColor" : "text-neutral-400 animate-shake"} t:scale-125`} />
+      <AiFillHeart key={i} className={` ${alive ? "text-prmColor" : "text-neutral-400 animate-shake"} t:text-xl`} />
     );
   });
 
@@ -134,7 +134,7 @@ const ClientRiddles = () => {
   }, [user, router]);
 
   return (
-    <div className="w-full min-h-screen h-screen bg-accntColor p-4 cstm-flex-col justify-start">
+    <div className="w-full min-h-screen h-screen p-4 cstm-flex-col justify-start">
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
       {canSeeTutorial ? <RiddleTutorial handleCanSeeTutorial={handleCanSeeTutorial} /> : null}
@@ -150,8 +150,8 @@ const ClientRiddles = () => {
         />
       ) : null}
 
-      <div className="w-full cstm-w-limit cstm-flex-col relative">
-        <div className="absolute top-10 left-0 z-20 l-s:top-0 cstm-flex-col flex-col-reverse gap-2">
+      <div className="w-full cstm-flex-col relative">
+        <div className="absolute top-8 -left-1 z-20 l-s:top-0 cstm-flex-col flex-col-reverse gap-0">
           <Volume
             isMuted={isMuted}
             isPlaying={audioIsPlaying}

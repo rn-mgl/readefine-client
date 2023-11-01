@@ -261,14 +261,14 @@ const AddStory = () => {
         />
       ) : null}
 
-      <div className="w-full cstm-flex-row cstm-w-limit">
+      <div className="w-full cstm-flex-row ">
         <Link href="/controller/stories" className="w-fit cstm-bg-hover mr-auto">
           <BsArrowLeft className=" text-prmColor" />
         </Link>
       </div>
 
       <form
-        className="w-full cstm-flex-col gap-4 cstm-w-limit border-collapse 
+        className="w-full cstm-flex-col gap-4  border-collapse 
                 h-full overflow-y-auto justify-start cstm-scrollbar"
         onSubmit={(e) => publishBook(e)}
       >
@@ -299,7 +299,7 @@ const AddStory = () => {
               </p>
 
               <button type="button" onClick={removeSelectedImage} className="cstm-bg-hover ">
-                <IoClose className="text-prmColor scale-125 cursor-pointer " />
+                <IoClose className="text-prmColor text-xl cursor-pointer " />
               </button>
             </div>
           ) : null}
@@ -315,7 +315,7 @@ const AddStory = () => {
               </div>
 
               <button type="button" onClick={removeSelectedAudio} className="cstm-bg-hover">
-                <IoClose className="text-prmColor scale-125 cursor-pointer " />
+                <IoClose className="text-prmColor text-xl cursor-pointer " />
               </button>
             </div>
           ) : null}
@@ -355,7 +355,7 @@ const AddStory = () => {
             className="mr-auto cstm-flex-row gap-1 text-prmColor 
                   hover:underline hover:underline-offset-2 text-sm hover:shadow-none"
           >
-            <IoAddOutline className="cursor-pointer scale-125" />
+            <IoAddOutline className="cursor-pointer text-xl" />
             <p>Add Page</p>
           </button>
 

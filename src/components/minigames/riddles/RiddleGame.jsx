@@ -7,10 +7,10 @@ import RiddleEntries from "./RiddleEntries";
 
 const RiddleGame = (props) => {
   return (
-    <div className="w-full h-full cstm-w-limit cstm-flex-col relative">
-      <div className="relative ml-auto cstm-flex-col gap-4 z-10">
+    <div className="w-full h-full  cstm-flex-col relative">
+      <div className="relative ml-auto cstm-flex-col gap-2 z-10">
         <button onClick={props.handleIsPlaying} className="cstm-bg-hover ml-auto">
-          <BsArrowLeft className="scale-125" />
+          <BsArrowLeft className="text-xl" />
         </button>
         <div className="p-2 rounded-full border-2 border-prmColor w-8 h-8 cstm-flex-col">
           <p className="text-prmColor text-xs">{props.timer}</p>

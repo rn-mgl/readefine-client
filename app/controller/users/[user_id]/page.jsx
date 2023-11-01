@@ -278,7 +278,7 @@ const SingleUser = ({ params }) => {
       {/* show if has message pop up */}
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
-      <div className="cstm-flex-col gap-4 w-full cstm-w-limit">
+      <div className="cstm-flex-col gap-4 w-full">
         <Link href="/controller/users" className="cstm-bg-hover text-prmColor mr-auto">
           <BsArrowLeft />
         </Link>

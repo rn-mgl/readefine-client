@@ -10,7 +10,7 @@ const Customizations = (props) => {
 
   return (
     <div
-      className="h-fit transition-all w-full bg-white rounded-2xl p-4 cstm-w-limit cstm-flex-col justify-start
+      className="h-fit transition-all w-full bg-white rounded-2xl p-4 cstm-flex-col justify-start
       t:cstm-flex-row"
     >
       <div className="cstm-flex-col w-full gap-2">
@@ -32,9 +32,9 @@ const Customizations = (props) => {
             >
               <ActionLabel label="Single Page" />
               {isSingleView ? (
-                <TbRectangleFilled className="scale-125 rotate-90 text-prmColor" />
+                <TbRectangleFilled className="text-xl rotate-90 text-prmColor" />
               ) : (
-                <TbRectangle className="scale-125 rotate-90 text-prmColor" />
+                <TbRectangle className="text-xl rotate-90 text-prmColor" />
               )}
             </button>
 
@@ -47,13 +47,13 @@ const Customizations = (props) => {
               <ActionLabel label="Double Page" />
               {isSingleView ? (
                 <>
-                  <TbRectangle className="scale-125 rotate-90 text-prmColor" />
-                  <TbRectangle className="scale-125 rotate-90 text-prmColor" />
+                  <TbRectangle className="text-xl rotate-90 text-prmColor" />
+                  <TbRectangle className="text-xl rotate-90 text-prmColor" />
                 </>
               ) : (
                 <>
-                  <TbRectangleFilled className="scale-125 rotate-90 text-prmColor" />
-                  <TbRectangleFilled className="scale-125 rotate-90 text-prmColor" />
+                  <TbRectangleFilled className="text-xl rotate-90 text-prmColor" />
+                  <TbRectangleFilled className="text-xl rotate-90 text-prmColor" />
                 </>
               )}
             </button>

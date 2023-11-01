@@ -110,7 +110,7 @@ const ClientStories = () => {
   }, [user, router]);
 
   return (
-    <div className="p-4 bg-accntColor w-full min-h-screen cstm-flex-col gap-4 justify-start">
+    <div className="p-4 w-full min-h-screen cstm-flex-col gap-4 justify-start">
       <ClientPageHeader mainHeader="Readefine" subHeader="Stories" />
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
@@ -122,7 +122,7 @@ const ClientStories = () => {
         />
       ) : null}
 
-      <div className="w-full cstm-w-limit cstm-flex-col gap-4 ">
+      <div className="w-full h-full cstm-flex-col gap-4 justify-start">
         <StoriesFilter
           handleSearchFilter={handleSearchFilter}
           handleSortFilter={handleSortFilter}

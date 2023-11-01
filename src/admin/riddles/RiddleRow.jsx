@@ -41,7 +41,7 @@ const RiddleRow = (props) => {
           }}
           className="cstm-flex-col cstm-bg-hover  text-prmColor"
         >
-          <AiFillEdit className="scale-125" />
+          <AiFillEdit className="text-xl" />
         </button>
       </td>
     </tr>

@@ -25,7 +25,7 @@ const UserMainData = ({ userData }) => {
 
           {/* send email button */}
           <Link className="cstm-bg-hover ml-auto" href={`mailto:${userData.email}`}>
-            <AiOutlineMail className=" scale-125 text-prmColor" />
+            <AiOutlineMail className=" text-xl text-prmColor" />
           </Link>
         </div>
       </div>

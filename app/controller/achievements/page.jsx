@@ -109,7 +109,7 @@ const AdminAchievements = () => {
 
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
-      <div className="w-full cstm-flex-col gap-4 cstm-w-limit">
+      <div className="w-full cstm-flex-col gap-4 ">
         <AchievementsFilter
           typeFilter={typeFilter}
           searchFilter={searchFilter}
@@ -128,7 +128,7 @@ const AdminAchievements = () => {
           className="p-2 w-fit cstm-flex-row px-4  gap-1 mr-auto hover:shadow-md
                   bg-prmColor rounded-md text-accntColor text-sm"
         >
-          <IoAddOutline className="cursor-pointer scale-125" />
+          <IoAddOutline className="cursor-pointer text-xl" />
           <p>Add Achievement</p>
         </Link>
 

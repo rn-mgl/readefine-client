@@ -1,28 +1,21 @@
 "use client";
 import axios from "axios";
-import Image from "next/image";
 import React from "react";
-
-import intersectAL from "@/public/signup/IntersectAL.svg";
-import intersectAM from "@/public/signup/IntersectAM.svg";
-import intersectAT from "@/public/signup/IntersectAT.svg";
 
 import Loading from "@/components/global/Loading";
 import Message from "@/components/global/Message";
 
 import AuthPos from "@/client/signup/AuthPos";
-import GradePos from "@/client/signup/GradePos";
 import NamePos from "@/client/signup/NamePos";
 import validator from "validator";
 
+import { useGlobalContext } from "@/base/context";
 import { avatars } from "@/functions/avatars";
 import { useLoading } from "@/hooks/useLoading";
 import { useMessage } from "@/hooks/useMessage";
-import { useRouter } from "next/navigation";
-import { BsDot } from "react-icons/bs";
-import { useGlobalContext } from "@/base/context";
-import { IoClose } from "react-icons/io5";
 import { useSession } from "next-auth/react";
+import { BsDot } from "react-icons/bs";
+import { IoClose } from "react-icons/io5";
 
 const AddAdmin = (props) => {
   const [userData, setUserData] = React.useState({
@@ -156,33 +149,33 @@ const AddAdmin = (props) => {
 
   return (
     <div
-      className="w-full h-full fixed backdrop-blur-md top-0
-                left-0 z-20 p-4 cstm-flex-col gap-4 justify-start"
+      className="w-full h-full fixed backdrop-blur-md top-0 
+                left-0 bg-gradient-to-br animate-fadeIn
+                from-[#552aca32] to-[#4bfce132] z-[60] p-4 cstm-flex-col gap-4 justify-start"
     >
       <button className="cstm-bg-hover ml-auto" onClick={props.handleCanAddAdmins}>
-        <IoClose className="text-prmColor scale-125" />
+        <IoClose className="text-prmColor text-xl" />
       </button>
 
       {/* show message pop up */}
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
-      <div className="cstm-flex-col w-full h-full cstm-w-limit gap-4">
+      <div className="cstm-flex-col w-full h-full  gap-4">
         <p className="text-prmColor font-bold text-xl">Add Admin</p>
         <form
           className="w-full rounded-md bg-prmColor bg-opacity-20 backdrop-blur-md border-[1px] 
                     border-prmColor border-opacity-40 p-4 cstm-flex-col gap-4 relative z-10 shadow-lg
-                    t:w-96
-                    l-s:w-[26rem]"
+                    t:w-8/12 l-s:w-6/12 l-l:w-4/12"
           onSubmit={signUp}
         >
           {activeForm}
 
           <div className="cstm-flex-row">
             <BsDot
-              className={`${activePos === 1 ? "text-prmColor scale-125" : "text-accntColor scale-125"} transition-all`}
+              className={`${activePos === 1 ? "text-prmColor text-xl" : "text-accntColor text-xl"} transition-all`}
             />
             <BsDot
-              className={`${activePos === 2 ? "text-prmColor scale-125" : "text-accntColor scale-125"} transition-all`}
+              className={`${activePos === 2 ? "text-prmColor text-xl" : "text-accntColor text-xl"} transition-all`}
             />
           </div>
 

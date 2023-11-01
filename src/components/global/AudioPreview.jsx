@@ -22,7 +22,7 @@ const AudioPreview = (props) => {
         </p>
 
         <button type="button" onClick={props.clearAudio} className="cstm-bg-hover ">
-          <IoClose className="text-prmColor scale-125 cursor-pointer " />
+          <IoClose className="text-prmColor text-xl cursor-pointer " />
         </button>
       </div>
     </div>

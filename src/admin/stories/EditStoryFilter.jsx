@@ -20,7 +20,7 @@ const EditStoryFilter = (props) => {
             onChange={(e) => props.selectedImageViewer(e, props.setMessageStatus)}
             ref={props.rawImage}
           />
-          <BiImage className="scale-125 text-prmColor peer-checked" />
+          <BiImage className="text-xl text-prmColor peer-checked" />
         </label>
       </div>
 
@@ -38,7 +38,7 @@ const EditStoryFilter = (props) => {
             onChange={(e) => props.selectedAudioViewer(e, props.setMessageStatus)}
             ref={props.rawAudio}
           />
-          <BiMusic className="scale-125 text-prmColor peer-checked" />
+          <BiMusic className="text-xl text-prmColor peer-checked" />
         </label>
       </div>
 

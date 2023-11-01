@@ -28,14 +28,18 @@ const DangleHint = (props) => {
   return (
     <div
       className="fixed top-0 left-0 w-full h-screen cstm-scrollbar-2 overflow-y-auto 
-                  backdrop-blur-md z-30 p-2 cstm-flex-col justify-start"
+                backdrop-blur-md bg-gradient-to-br animate-fadeIn
+                from-[#552aca32] to-[#4bfce132] z-[60] p-2 cstm-flex-col justify-start"
     >
-      <div className=" cstm-flex-col cstm-w-limit justify-start w-full gap-4">
+      <div className="cstm-flex-col justify-start w-full gap-4">
         <button onClick={props.handleCanSeeHint} className="cstm-bg-hover ml-auto">
-          <IoClose className="scale-125 text-prmColor" />
+          <IoClose className="text-xl" />
         </button>
 
-        <div className="cstm-flex-col gap-4 shadow-md w-full t:w-10/12 bg-white p-4 rounded-md l-l:w-8/12">
+        <div
+          className="cstm-flex-col gap-4 shadow-md w-full t:w-10/12 
+                  bg-white p-4 rounded-2xl l-s:w-8/12 l-l:w-6/12"
+        >
           <p className="text-prmColor font-bold cstm-flex-row gap-4">
             <BsLightbulb className="animate-fadeIn" /> Hint
             <BsLightbulb className="animate-fadeIn" />

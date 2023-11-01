@@ -7,7 +7,7 @@ import SelectFilter from "@/components/filter/SelectFilter";
 
 const AdminActivitiesFilter = (props) => {
   return (
-    <div className="cstm-flex-row cstm-w-limit gap-2 justify-start relative w-full overflow-x-auto p-2 cstm-scrollbar-2 min-h-[5rem]">
+    <div className="cstm-flex-row  gap-2 justify-start relative w-full overflow-x-auto p-2 cstm-scrollbar-2 min-h-[5rem]">
       <SearchFilter
         searchFilter={props.searchFilter}
         handleSearchFilter={props.handleSearchFilter}
