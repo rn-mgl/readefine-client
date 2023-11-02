@@ -26,7 +26,8 @@ const AdminMinigamesCards = (props) => {
       </p>
       <Link
         href={props.to}
-        className="text-center  text-sm font-normal bg-prmColor text-accntColor rounded-full w-28 p-2 hover:shadow-md "
+        className="text-center  text-sm font-normal bg-prmColor 
+                  text-accntColor rounded-full w-full p-2 hover:shadow-md "
       >
         Visit
       </Link>

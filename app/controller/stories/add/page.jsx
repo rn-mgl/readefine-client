@@ -329,7 +329,10 @@ const AddStory = () => {
           lexile={storyFilter.lexile}
         />
 
-        <div className="w-full cstm-flex-row gap-2 overflow-x-auto p-2">
+        <div
+          className="w-full cstm-flex-row gap-2 overflow-x-auto p-2 
+                    min-h-[3.5rem] justify-start t:justify-center"
+        >
           <button type="button" className="hover:shadow-none" onClick={handlePrevSlidePage}>
             <BiChevronLeft />
           </button>
