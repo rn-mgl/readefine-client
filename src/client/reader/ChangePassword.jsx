@@ -6,12 +6,12 @@ import Message from "@/components/global/Message";
 import EditInput from "@/components/profile/EditInput";
 import { useLoading } from "@/hooks/useLoading";
 import { useMessage } from "@/hooks/useMessage";
+import PasswordStrength from "@/src/components/global/PasswordStrength";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import React from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { IoClose } from "react-icons/io5";
-import validator from "validator";
 
 const ChangePassword = (props) => {
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
@@ -143,6 +143,8 @@ const ChangePassword = (props) => {
             }
             value={passwordData.newPassword.text}
           />
+
+          <PasswordStrength password={passwordData.newPassword.text} />
 
           <EditInput
             label="Repeat New Password"

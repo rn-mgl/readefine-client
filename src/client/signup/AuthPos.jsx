@@ -1,4 +1,5 @@
 import InputComp from "@/components/input/InputComp";
+import PasswordStrength from "@/src/components/global/PasswordStrength";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { CiMail, CiUser } from "react-icons/ci";
 
@@ -44,6 +45,10 @@ const AuthPos = (props) => {
         required={true}
         onChange={(e) => props.handleUserData(e.target)}
       />
+
+      <div className="bg-accntColor p-2 rounded-md w-full">
+        <PasswordStrength password={props.userData.password} />
+      </div>
     </>
   );
 };

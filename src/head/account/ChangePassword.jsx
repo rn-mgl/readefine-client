@@ -12,6 +12,7 @@ import { useGlobalContext } from "@/base/context";
 import { useLoading } from "@/hooks/useLoading";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useMessage } from "@/hooks/useMessage";
+import PasswordStrength from "@/src/components/global/PasswordStrength";
 
 const ChangePassword = (props) => {
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
@@ -140,6 +141,8 @@ const ChangePassword = (props) => {
             }
             value={passwordData.newPassword.text}
           />
+
+          <PasswordStrength password={passwordData.newPassword.text} />
 
           <EditInput
             label="Repeat New Password"
