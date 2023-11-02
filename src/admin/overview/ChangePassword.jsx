@@ -13,6 +13,7 @@ import { useLoading } from "@/hooks/useLoading";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useMessage } from "@/hooks/useMessage";
 import PasswordStrength from "@/src/components/global/PasswordStrength";
+import zxcvbn from "zxcvbn";
 
 const ChangePassword = (props) => {
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
@@ -55,6 +56,7 @@ const ChangePassword = (props) => {
     setLoadingState(true);
 
     const { oldPassword, newPassword, repeatNewPassword } = passwordData;
+    const result = zxcvbn(newPassword.text);
 
     if (newPassword.text !== repeatNewPassword.text) {
       setHasSubmitted(false);
@@ -67,6 +69,13 @@ const ChangePassword = (props) => {
       setHasSubmitted(false);
       setLoadingState(false);
       setMessageStatus(true, "Password should not be lower than 8 characters.", "error");
+      return;
+    }
+
+    if (result.score < 2) {
+      setHasSubmitted(false);
+      setLoadingState(false);
+      setMessageStatus(true, "Password strength should not be below Medium Level.", "error");
       return;
     }
 
