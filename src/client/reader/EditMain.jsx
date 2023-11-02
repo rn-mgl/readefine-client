@@ -124,9 +124,15 @@ const EditMain = (props) => {
         <IoClose className="text-xl text-prmColor" />
       </button>
 
-      <form onSubmit={(e) => editMain(e)} className=" cstm-flex-col gap-4 w-full h-auto justify-start">
-        <div className="cstm-flex-col gap-4 justify-start w-full t:w-8/12 l-s:w-6/12 l-l:w-4/12 ">
-          <div className="cstm-flex-col p-4 bg-white w-full rounded-2xl shadow-solid gap-2">
+      <form
+        onSubmit={(e) => editMain(e)}
+        className=" cstm-flex-col gap-4 w-full t:w-8/12 l-s:w-6/12 l-l:w-4/12 h-auto justify-start"
+      >
+        <div className="cstm-flex-col gap-4 justify-start w-full  ">
+          <div
+            className="cstm-flex-col p-4 bg-white w-full rounded-2xl gap-2
+                        shadow-solid shadow-prmColor  border-2 border-prmColor"
+          >
             <div
               style={{
                 backgroundImage: imageFile.src
@@ -173,7 +179,10 @@ const EditMain = (props) => {
             </div>
           </div>
 
-          <div className="w-full rounded-2xl p-4 bg-white shadow-solid  cstm-flex-col gap-4">
+          <div
+            className="w-full rounded-2xl p-4 bg-white  shadow-solid shadow-prmColor 
+                    border-2 border-prmColor  cstm-flex-col gap-4"
+          >
             <EditInput
               type="text"
               label="Name"
@@ -206,18 +215,18 @@ const EditMain = (props) => {
               required={true}
               icon={<CiUser />}
             />
+
+            <button
+              type="submit"
+              disabled={hasSubmitted}
+              className="w-full rounded-md bg-prmColor p-2 text-sm 
+                  text-scndColor font-semibold shadow-solid shadow-indigo-900 
+                  disabled:saturate-0"
+            >
+              Save Changes
+            </button>
           </div>
         </div>
-
-        <button
-          type="submit"
-          disabled={hasSubmitted}
-          className="w-full rounded-full bg-prmColor p-2 text-sm 
-                  text-scndColor font-bold t:w-40 shadow-solid shadow-indigo-900 
-                  disabled:saturate-0"
-        >
-          Save Changes
-        </button>
       </form>
     </div>
   );

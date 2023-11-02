@@ -70,7 +70,7 @@ const EditGradeLevel = (props) => {
       <div className="cstm-flex-col  my-auto w-full">
         <div
           className="cstm-flex-col w-full h-full gap-4 t:w-8/12 l-s:w-6/12 l-l:w-4/12 
-                    bg-white shadow-solid rounded-2xl p-4 justify-start "
+                    bg-white  shadow-solid shadow-prmColor border-2 border-prmColor rounded-2xl p-4 justify-start "
         >
           <p className="text-xs text-center">
             <span className="font-bold text-prmColor">note:</span> changing your grade level will affect your lexile
