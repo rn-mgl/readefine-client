@@ -177,12 +177,16 @@ const AdminRiddles = () => {
   }, [user, router]);
 
   return (
-    <div className="p-4 bg-accntColor w-full min-h-screen h-screen cstm-flex-col gap-4 justify-start">
+    <div className="p-4 bg-accntColor w-full min-h-screen h-screen cstm-flex-col gap-2 justify-start">
       <AdminPageHeader subHeader="Readefine" mainHeader="Riddles" />
 
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
-      <div className="cstm-flex-col gap-4 w-full ">
+      <div className="cstm-flex-col gap-2 w-full ">
+        <Link href="/controller/minigames" className="cstm-bg-hover mr-auto">
+          <BsArrowLeft className="text-prmColor text-xl" />
+        </Link>
+
         <RiddlesFilter
           handleSearchFilter={handleSearchFilter}
           handleDateRangeFilter={handleDateRangeFilter}
@@ -203,12 +207,13 @@ const AdminRiddles = () => {
         ) : null}
 
         <div className="cstm-flex-row w-full gap-4">
-          <Link href="/controller/minigames" className="cstm-bg-hover">
-            <BsArrowLeft className="text-prmColor scale-100 m-l:text-xl" />
-          </Link>
-
-          <Link href="/controller/minigames/riddles/add" className="cstm-bg-hover mr-auto p-2">
-            <IoAddOutline className="text-prmColor cursor-pointer text-xl" />
+          <Link
+            href="/controller/minigames/riddles/add"
+            className="p-2 w-fit cstm-flex-row gap-1 mr-auto
+                  text-prmColor rounded-md text-sm hover:underline hover:underline-offset-2"
+          >
+            <IoAddOutline className=" text-xl" />
+            <p>Add Riddles</p>
           </Link>
 
           <Link

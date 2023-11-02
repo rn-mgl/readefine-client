@@ -197,7 +197,7 @@ const AddReward = () => {
           <button
             type="submit"
             disabled={hasSubmitted}
-            className="w-fit text-center  text-sm font-normal bg-prmColor 
+            className="w-fit text-center  text-sm font-semibold bg-prmColor 
                       text-accntColor rounded-full p-2 px-4 t:px-10 disabled:saturate-50"
           >
             Add Reward

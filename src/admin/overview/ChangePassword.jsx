@@ -105,7 +105,8 @@ const ChangePassword = (props) => {
       <div className=" cstm-flex-col w-full my-auto">
         <form
           onSubmit={(e) => changePassword(e)}
-          className="cstm-flex-col bg-white rounded-2xl p-4 w-full gap-4 shadow-md t:w-8/12 l-s:w-6/12 l-l:w-4/12 "
+          className="cstm-flex-col bg-white rounded-2xl p-4 w-full gap-4 shadow-solid
+                     shadow-prmColor border-2 border-prmColor t:w-8/12 l-s:w-6/12 l-l:w-4/12 "
         >
           <EditInput
             label="Old Password"
@@ -161,8 +162,8 @@ const ChangePassword = (props) => {
           <button
             type="submit"
             disabled={hasSubmitted}
-            className="bg-prmColor p-2 rounded-full w-full 
-                    text-accntColor t:w-fit t:px-10 text-sm disabled:saturate-0"
+            className="bg-prmColor p-2 rounded-md w-full font-semibold
+                    text-accntColor  text-sm disabled:saturate-0"
           >
             Save Changes
           </button>

@@ -491,7 +491,7 @@ const EditStory = ({ params }) => {
             className="w-fit text-center  ml-auto text-sm font-semibold
                     bg-scndColor text-prmColor rounded-full p-2 px-4 t:px-10"
           >
-            Edit Book
+            Edit Story
           </button>
         </div>
       </form>

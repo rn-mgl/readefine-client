@@ -129,12 +129,12 @@ const EditMain = (props) => {
         <IoClose className="text-xl text-prmColor" />
       </button>
 
-      <div className="  w-full justify-start cstm-flex-col  ">
-        <form
-          onSubmit={(e) => editMain(e)}
-          className="justify-start cstm-flex-col w-full gap-4 t:w-8/12 l-s:w-6/12 l-l:w-4/12 "
-        >
-          <div className="w-full h-fit p-4 rounded-2xl bg-white cstm-flex-col gap-2 shadow-md">
+      <div className="  w-full justify-start cstm-flex-col t:w-8/12 l-s:w-6/12 l-l:w-4/12 ">
+        <form onSubmit={(e) => editMain(e)} className="justify-start cstm-flex-col w-full gap-4  ">
+          <div
+            className="w-full h-fit p-4 rounded-2xl bg-white cstm-flex-col 
+                      gap-2 shadow-solid shadow-prmColor border-2 border-prmColor"
+          >
             <div
               style={{
                 backgroundImage: imageFile.src
@@ -181,7 +181,10 @@ const EditMain = (props) => {
             </div>
           </div>
 
-          <div className="w-full h-fit p-4 rounded-2xl bg-white cstm-flex-col gap-4 shadow-md">
+          <div
+            className="w-full h-fit p-4 rounded-2xl bg-white cstm-flex-col gap-4 
+                    shadow-solid shadow-prmColor border-2 border-prmColor"
+          >
             <EditInput
               type="text"
               label="Name"
@@ -214,16 +217,16 @@ const EditMain = (props) => {
               onChange={handleAdminData}
               icon={<CiUser />}
             />
-          </div>
 
-          <button
-            type="submit"
-            disabled={hasSubmitted}
-            className="w-full rounded-full bg-prmColor p-2 text-scndColor 
-                      font-bold t:w-fit t:px-10 text-sm disabled:saturate-0"
-          >
-            Save Changes
-          </button>
+            <button
+              type="submit"
+              disabled={hasSubmitted}
+              className="w-full rounded-md bg-prmColor p-2 text-accntColor 
+                      font-semibold text-sm disabled:saturate-0"
+            >
+              Save Changes
+            </button>
+          </div>
         </form>
       </div>
     </div>

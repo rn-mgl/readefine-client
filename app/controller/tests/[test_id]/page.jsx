@@ -197,16 +197,16 @@ const SingleTest = ({ params }) => {
                 computeScore();
                 handleIsFinished(true);
               }}
-              className={`p-2 bg-prmColor text-scndColor text-sm rounded-full w-full mt-5 t:mt-0 
-                      t:w-fit t:px-10 t:mr-auto shadow-solid shadow-indigo-900`}
+              className={`p-2 bg-prmColor text-scndColor text-sm rounded-full font-semibold 
+                        w-full mt-5 t:mt-0 t:w-fit t:px-10 t:mr-auto`}
             >
               Submit Answers
             </button>
 
             <button
               onClick={handleCanSeeResult}
-              className="bg-scndColor p-2 w-full t:w-fit t:px-10 t:ml-auto rounded-full 
-                    text-sm text-prmColor shadow-solid shadow-cyan-600"
+              className="bg-scndColor p-2 w-full t:w-fit t:px-10 t:ml-auto rounded-full font-semibold 
+                    text-sm text-prmColor "
             >
               See Mistakes
             </button>

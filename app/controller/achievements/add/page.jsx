@@ -176,7 +176,7 @@ const AddAchievement = () => {
           <button
             type="submit"
             disabled={hasSubmitted}
-            className="w-fit text-center  ml-auto text-sm font-normal disabled:saturate-0
+            className="w-fit text-center  ml-auto text-sm font-semibold disabled:saturate-0
                    bg-prmColor text-accntColor rounded-full p-2 px-4"
           >
             Add Achievement

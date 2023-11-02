@@ -197,7 +197,7 @@ const AdminNav = ({ children }) => {
         <div className="cstm-flex-col gap-2 w-full justify-start mt-auto">
           <Link
             href={`/controller/overview/${cipher(user?.adminId)}`}
-            toggleOpenNav={() => toggleOpenNav("link")}
+            onClick={() => toggleOpenNav("link")}
             className={`${navIsOpen ? "p-2" : "l-s:p-0 l-s:justify-center"}
                 text-left hover:bg-neutral-100 rounded-md 
                 justify-start transition-all cstm-flex-row gap-2 w-full`}
