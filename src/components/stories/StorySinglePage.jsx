@@ -25,7 +25,7 @@ const StorySinglePage = (props) => {
   }, [active]);
 
   return (
-    <div className={`cstm-flex-col gap-4 p-4 t:p-10 transition-all absolute ${position} w-full `}>
+    <div className={`cstm-flex-col gap-4 p-4 t:p-10 transition-all absolute ${position} w-full animate-fadeIn`}>
       <p
         style={{ fontSize: `${props.fontSize}px`, lineHeight: `${props.fontSize + 8}px` }}
         ref={scrollRef}
@@ -40,7 +40,7 @@ const StorySinglePage = (props) => {
           alt="viewer"
           width={350}
           height={350}
-          className="w-full rounded-2xl t:w-96"
+          className="w-full rounded-2xl t:w-64 animate-float"
           draggable={false}
           priority
         />

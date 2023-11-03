@@ -30,7 +30,9 @@ const StoryDoublePage = (props) => {
 
   return (
     <>
-      <div className={`cstm-flex-col gap-4 p-4 t:p-10 transition-all absolute ${position} w-6/12 left-0`}>
+      <div
+        className={`cstm-flex-col gap-4 p-4 t:p-10 transition-all absolute ${position} w-6/12 left-0 animate-fadeIn`}
+      >
         {leftPage ? (
           <>
             <p
@@ -47,7 +49,7 @@ const StoryDoublePage = (props) => {
                 alt="viewer"
                 width={350}
                 height={350}
-                className="w-full rounded-2xl t:w-96"
+                className="w-full rounded-2xl t:w-64 animate-float"
                 draggable={false}
                 priority
               />
@@ -64,7 +66,9 @@ const StoryDoublePage = (props) => {
           </>
         ) : null}
       </div>
-      <div className={`cstm-flex-col gap-4 p-4 t:p-10 transition-all absolute ${position} w-6/12 right-0`}>
+      <div
+        className={`cstm-flex-col gap-4 p-4 t:p-10 transition-all absolute ${position} w-6/12 right-0 animate-fadeIn`}
+      >
         {rightPage ? (
           <>
             <p
@@ -81,7 +85,7 @@ const StoryDoublePage = (props) => {
                 alt="viewer"
                 width={350}
                 height={350}
-                className="w-full rounded-2xl t:w-96"
+                className="w-full rounded-2xl t:w-64 animate-float"
                 draggable={false}
                 priority
               />
