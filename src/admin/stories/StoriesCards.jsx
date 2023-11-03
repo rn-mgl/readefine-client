@@ -41,7 +41,7 @@ const StoriesCards = (props) => {
         <Link
           href={props.test}
           className={`${
-            hasTest ? "bg-scndColor text-prmColor" : "border-2 border-scndColor bg-white text-prmColor"
+            hasTest ? "bg-scndColor text-prmColor" : "border-2 border-prmColor bg-white text-prmColor"
           } w-full text-center  text-sm font-normal  rounded-full p-2`}
         >
           {hasTest ? "Test" : "Create Test"}
