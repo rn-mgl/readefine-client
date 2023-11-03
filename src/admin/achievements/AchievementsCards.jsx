@@ -23,7 +23,7 @@ const AchievementsCards = (props) => {
           alt="temp"
           width={250}
           height={250}
-          className="h-full saturate-150 hover:scale-110 transition-all"
+          className="h-[14rem] saturate-150 hover:scale-110 transition-all"
           priority
         />
       </Link>

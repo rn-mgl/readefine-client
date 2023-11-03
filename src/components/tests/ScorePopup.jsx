@@ -26,7 +26,7 @@ const ScorePopup = (props) => {
   );
 
   return (
-    <div className="fixed top-0 left-0 w-full h-full backdrop-blur-md z-20">
+    <div className="fixed top-0 left-0 w-full h-full backdrop-blur-md z-[60]">
       {passed ? <Confetti width={window.innerWidth} height={window.innerHeight} /> : null}
       <div className="w-full h-full relative">
         <div

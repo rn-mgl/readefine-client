@@ -13,7 +13,7 @@ const TestResult = (props) => {
         style={{ animationDuration: `${i * 0.1}s` }}
         key={q.question_id}
       >
-        <div className="w-full h-14 max-h-44 overflow-y-auto cstm-scrollbar">
+        <div className="w-full h-44 overflow-y-auto cstm-scrollbar">
           <p className="font-semibold">{q.question}</p>
         </div>
 
@@ -49,15 +49,16 @@ const TestResult = (props) => {
 
   return (
     <div
-      className="fixed w-full top-0 left-0 h-full bg-accntColor 
-                  z-30 p-4 cstm-flex-col justify-start overflow-y-auto cstm-scrollbar-2"
+      className="fixed w-full top-0 left-0 h-full backdrop-blur-md bg-gradient-to-br 
+              from-[#552aca32] to-[#4bfce132] z-[60]
+                p-4 cstm-flex-col justify-start overflow-y-auto cstm-scrollbar-2"
     >
       <div className="w-full h-auto  cstm-flex-col justify-start gap-4">
         <button onClick={props.handleCanSeeResult} className="cstm-bg-hover ml-auto">
           <IoClose className="text-prmColor text-xl" />
         </button>
 
-        <div className="w-full h-full grid grid-cols-1 t:grid-cols-2 l-l:grid-cols-3 gap-4 p-4">{mappedQuestions}</div>
+        <div className="w-full h-full grid grid-cols-1 t:grid-cols-2 l-l:grid-cols-3 gap-4">{mappedQuestions}</div>
       </div>
     </div>
   );

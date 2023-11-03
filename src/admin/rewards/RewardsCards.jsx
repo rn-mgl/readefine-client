@@ -13,7 +13,7 @@ const RewardsCards = (props) => {
         <Image
           src={props.image}
           alt="temp"
-          className="drop-shadow-md w-fit saturate-150 hover:scale-110 transition-all"
+          className="drop-shadow-md h-[14rem] w-fit saturate-150 hover:scale-110 transition-all"
           width={250}
           priority
           height={250}
