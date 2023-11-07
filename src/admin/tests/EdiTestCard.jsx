@@ -21,9 +21,9 @@ const EditTestCard = (props) => {
         className="cstm-flex-row w-full p-2 
                     rounded-md gap-4 justify-between text-sm"
       >
-        <p className="text-prmColor font-bold">Answer:</p>
-        <p className={`font-medium truncate ${props.answer ? "opacity-100" : "opacity-50"}`}>
-          {props.answer ? props.answer : "no answer"}
+        <p className="text-prmColor font-bold">Question:</p>
+        <p className={`font-medium truncate ${props.question ? "opacity-100" : "opacity-50"}`}>
+          {props.question ? props.question : "no question"}
         </p>
       </div>
 
@@ -31,9 +31,9 @@ const EditTestCard = (props) => {
         className="cstm-flex-row w-full p-2 
                     rounded-md gap-4 justify-between text-sm"
       >
-        <p className="text-prmColor font-bold">Question:</p>
-        <p className={`font-medium truncate ${props.question ? "opacity-100" : "opacity-50"}`}>
-          {props.question ? props.question : "no question"}
+        <p className="text-prmColor font-bold">Answer:</p>
+        <p className={`font-medium truncate ${props.answer ? "opacity-100" : "opacity-50"}`}>
+          {props.answer ? props.answer : "no answer"}
         </p>
       </div>
     </div>
