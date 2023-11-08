@@ -13,10 +13,10 @@ const EditGradeLevel = (props) => {
   });
   const gradeLevels = React.useMemo(
     () => [
-      { grade: 3, lexile: 530 },
-      { grade: 4, lexile: 735 },
-      { grade: 5, lexile: 900 },
-      { grade: 6, lexile: 990 },
+      { grade: 3, lexile: 415 },
+      { grade: 4, lexile: 635 },
+      { grade: 5, lexile: 770 },
+      { grade: 6, lexile: 855 },
     ],
     []
   );
