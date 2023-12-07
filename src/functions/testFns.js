@@ -10,9 +10,9 @@ export const shuffleQuestions = (arr) => {
 
 export const choicesStyle = {
   1: {
-    bgColor: "bg-indigo-300",
-    shadow: "shadow-[0_4px_rgba(129,140,248,1)]",
-    shadowActive: "shadow-[inset_0_4px_rgba(129,140,248,1)]",
+    bgColor: "bg-indigo-400",
+    shadow: "shadow-[0_4px_rgba(99,102,241,1)]",
+    shadowActive: "shadow-[inset_0_4px_rgba(99,102,241,1)]",
   },
   2: {
     bgColor: "bg-indigo-500",

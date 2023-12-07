@@ -55,12 +55,20 @@ const ReceiveAchievement = (props) => {
   });
 
   const buttonAction = props.url ? (
-    <Link href={props.url} className="cstm-bg-hover top-3 right-3 z-10">
-      <BsArrowRight className="text-xl  text-accntColor" />
+    <Link
+      href={props.url}
+      className="top-3 right-3 z-10 bg-prmColor p-2 rounded-md 
+                shadow-solid shadow-indigo-900 active:shadow-solidActive"
+    >
+      <BsArrowRight className="text-xl  text-scndColor" />
     </Link>
   ) : (
-    <button onClick={props.resetAchievement} className="cstm-bg-hover top-3 right-3 z-10">
-      <IoClose className="text-xl  text-accntColor " />
+    <button
+      onClick={props.resetAchievement}
+      className="top-3 right-3 z-10 bg-prmColor p-2 rounded-md 
+                shadow-solid shadow-indigo-900 active:shadow-solidActive"
+    >
+      <IoClose className="text-xl  text-scndColor" />
     </button>
   );
 
