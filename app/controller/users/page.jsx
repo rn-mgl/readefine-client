@@ -95,7 +95,7 @@ const AdminUsers = () => {
   }, [user, router]);
 
   return (
-    <div className="p-4 bg-accntColor w-full min-h-screen h-screen cstm-flex-col gap-4 justify-start">
+    <div className="p-4 bg-accntColor w-full min-h-screen h-screen overflow-hidden cstm-flex-col gap-4 justify-start">
       <AdminPageHeader subHeader="Readefine" mainHeader="Users" />
 
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
@@ -113,10 +113,10 @@ const AdminUsers = () => {
       />
 
       {/* users container */}
-      <div className="w-full cstm-flex-col gap-4 relative h-full">
+      <div className="w-full cstm-flex-col gap-4 relative h-full overflow-hidden">
         {users.length ? (
           <table
-            className="table-fixed p-4 h-full min-h-full cstm-scrollbar-2 rounded-md cstm-flex-col  
+            className="table-fixed p-4 h-full min-h-full cstm-scrollbar rounded-md cstm-flex-col  
                   overflow-auto w-full justify-start items-start bg-white text-sm gap-4 border-collapse"
           >
             <thead className="w-full text-sm">
