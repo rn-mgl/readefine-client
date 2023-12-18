@@ -126,7 +126,7 @@ const HeadLogin = () => {
     <div className="w-full h-screen bg-scndColor p-4 cstm-flex-col  overflow-hidden">
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 
-      <p className=" font-extrabold text-2xl text-prmColor">Log In</p>
+      <p className=" font-extrabold text-2xl text-prmColor relative z-20">Log In</p>
 
       <br />
 
