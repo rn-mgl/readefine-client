@@ -118,7 +118,7 @@ const Admins = () => {
           </p>
         </div>
         <div
-          className="w-full h-full grid grid-cols-1 t:grid-cols-2 
+          className="w-full h-fit grid grid-cols-1 t:grid-cols-2 
                      l-l:grid-cols-4 gap-4 justify-start"
         >
           {mappedAdmins}
