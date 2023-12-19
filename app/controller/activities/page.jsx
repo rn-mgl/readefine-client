@@ -13,6 +13,7 @@ import useAdminActivityFilters from "@/src/hooks/useAdminActivityFilters";
 import { useMessage } from "@/src/hooks/useMessage";
 import AdminActivitiesFilter from "@/src/admin/activities/AdminActivitiesFilter";
 import { activityTypeConversion } from "@/src/functions/typeConversion";
+import AdminPageHeader from "@/src/admin/global/PageHeader";
 
 const Activities = () => {
   const [activities, setActivities] = React.useState([]);
@@ -77,7 +78,7 @@ const Activities = () => {
 
   return (
     <div className="p-4 bg-accntColor w-full min-h-screen h-screen cstm-flex-col gap-4 justify-start">
-      <HeadPageHeader mainHeader="Create" subHeader="Readefine" />
+      <AdminPageHeader mainHeader="Create" subHeader="Readefine" />
 
       {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
 

@@ -47,7 +47,7 @@ const ActivityLog = (props) => {
           <p className="font-medium">
             {props.activity.name} {props.activity.surname}
           </p>
-          <p className="text-xs">{props.activity.email}</p>
+          <p className="text-xs max-w-[20ch] truncate t:max-w-[30ch]">{props.activity.email}</p>
         </div>
       </div>
 
