@@ -135,9 +135,13 @@ const SingleTest = ({ params }) => {
     // get score
     const score = computeScore();
 
+    console.log(score);
+
     // check if passed, do not record if not
     if (score < 7) {
       handleIsFinished(true);
+      setHasSubmitted(false);
+      setLoadingState(false);
       return;
     }
 
