@@ -16,6 +16,7 @@ import { useMessage } from "@/hooks/useMessage";
 import { useSession } from "next-auth/react";
 import { BsDot } from "react-icons/bs";
 import { IoClose } from "react-icons/io5";
+import zxcvbn from "zxcvbn";
 
 const AddAdmin = (props) => {
   const [userData, setUserData] = React.useState({
@@ -108,6 +109,14 @@ const AddAdmin = (props) => {
     const randomIndex = Math.floor(Math.random() * avatars.length);
     const userAvatar = avatars[randomIndex];
     userData.image = userAvatar;
+
+    const result = zxcvbn(userData.password);
+
+    if (result.score < 2) {
+      setLoadingState(false);
+      setMessageStatus(true, "Password strength should not be below Medium Level.", "error");
+      return;
+    }
 
     try {
       const { data } = await axios.post(
