@@ -17,6 +17,8 @@ import { useMessage } from "@/hooks/useMessage";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import PasswordStrength from "@/src/components/global/PasswordStrength";
+import zxcvbn from "zxcvbn";
 
 const HeadPasswordReset = ({ params }) => {
   const [password, setPassword] = React.useState({ newPassword: "", retypedPassword: "" });
@@ -59,12 +61,12 @@ const HeadPasswordReset = ({ params }) => {
     setHasSubmitted(true);
     setLoadingState(true);
     const { newPassword, retypedPassword } = password;
+    const result = zxcvbn(newPassword);
 
     if (newPassword !== retypedPassword) {
       setMessageStatus(true, "The new password and retyped password does not match.", "warning");
       setHasSubmitted(false);
       setLoadingState(false);
-
       return;
     }
 
@@ -72,7 +74,13 @@ const HeadPasswordReset = ({ params }) => {
       setMessageStatus(true, "Password must not be lower than 8 characters.", "warning");
       setHasSubmitted(false);
       setLoadingState(false);
+      return;
+    }
 
+    if (result.score < 2) {
+      setMessageStatus(true, "Password strength must not be below Medium.", "warning");
+      setHasSubmitted(false);
+      setLoadingState(false);
       return;
     }
 
@@ -148,6 +156,10 @@ const HeadPasswordReset = ({ params }) => {
           onChange={(e) => handleNewPassword(e.target)}
           value={password.retypedPassword}
         />
+
+        <div className="bg-accntColor p-2 rounded-md w-full">
+          <PasswordStrength password={password.newPassword} />
+        </div>
 
         {/* submit form */}
         <button

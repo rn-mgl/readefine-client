@@ -17,6 +17,7 @@ import { useMessage } from "@/hooks/useMessage";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import PasswordStrength from "@/src/components/global/PasswordStrength";
 
 const PasswordReset = ({ params }) => {
   const [password, setPassword] = React.useState({ newPassword: "", retypedPassword: "" });
@@ -147,6 +148,10 @@ const PasswordReset = ({ params }) => {
           onChange={(e) => handleNewPassword(e.target)}
           value={password.retypedPassword}
         />
+
+        <div className="bg-accntColor p-2 rounded-md w-full">
+          <PasswordStrength password={password.newPassword} />
+        </div>
 
         {/* submit form */}
         <button
