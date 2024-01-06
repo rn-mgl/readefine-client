@@ -1,7 +1,6 @@
 import axios from "axios";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { redirect } from "next/navigation";
 
 const local = "http://192.168.1.121:9000";
 const prod = "https://readefine-server.onrender.com";
