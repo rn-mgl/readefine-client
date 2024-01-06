@@ -8,7 +8,7 @@ const nextConfig = {
     remotePatterns: [{ hostname: "res.cloudinary.com" }],
   },
   env: {
-    NEXTAUTH_SECRET: "Zq4t7w!z%C*F-JaNdRgUjXn2r5u8x/A?",
+    NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     NEXTAUTH_URL: prod,
   },
   reactStrictMode: true,
