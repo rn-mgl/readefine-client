@@ -8,7 +8,7 @@ import EditAchievementFilter from "@/admin/achievements/EditAchievementFilter";
 import Message from "@/components/global/Message";
 import Loading from "@/components/global/Loading";
 
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 
 import { BsArrowLeft } from "react-icons/bs";
@@ -18,7 +18,7 @@ import { useLoading } from "@/hooks/useLoading";
 import { useMessage } from "@/hooks/useMessage";
 import useAdminActivities from "@/src/hooks/useAdminActivities";
 
-const EditAchievement = ({ params }) => {
+const EditAchievement = () => {
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
   const [canSelectReward, setCanSelectReward] = React.useState(false);
   const [achievement, setAchievement] = React.useState({
@@ -37,6 +37,7 @@ const EditAchievement = ({ params }) => {
   const url = process.env.NEXT_PUBLIC_API_URL;
   const user = session?.user?.name;
   const router = useRouter();
+  const params = useParams();
   const decodedAchievementId = decipher(params?.achievement_id);
 
   // toggle can select reward
