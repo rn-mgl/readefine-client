@@ -17,11 +17,11 @@ import { useSession } from "next-auth/react";
 
 import { BsArrowLeft } from "react-icons/bs";
 
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { isTokenExpired } from "@/functions/jwtFns";
 import { useMessage } from "@/hooks/useMessage";
 
-const SingleUser = ({ params }) => {
+const SingleUser = () => {
   const [userData, setUserData] = React.useState({});
   const [userLexile, setUserLexile] = React.useState([]);
   const [userReads, setUserReads] = React.useState([]);
@@ -37,6 +37,7 @@ const SingleUser = ({ params }) => {
 
   const { data: session } = useSession({ required: true });
   const url = process.env.NEXT_PUBLIC_API_URL;
+  const params = useParams();
   const decodedUserId = params?.user_id;
   const user = session?.user?.name;
   const router = useRouter();

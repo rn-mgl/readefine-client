@@ -23,7 +23,6 @@ import React from "react";
 
 import { isTokenExpired } from "@/functions/jwtFns";
 import { localizeDate } from "@/functions/localDate";
-import { cipher, decipher } from "@/functions/security";
 import { useMessage } from "@/hooks/useMessage";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
