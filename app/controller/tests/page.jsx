@@ -10,7 +10,7 @@ import Image from "next/image";
 import noTest from "@/public/profile/NoTest.svg";
 
 import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/base/context";
+
 import { cipher } from "@/functions/security";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/functions/jwtFns";
@@ -35,7 +35,7 @@ const AdminTests = () => {
 
   const { createAdminActivity } = useAdminActivities();
   const { data: session } = useSession();
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const user = session?.user?.name;
   const router = useRouter();
 
@@ -59,7 +59,15 @@ const AdminTests = () => {
       console.log(error);
       setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, searchFilter, lexileRangeFilter, sortFilter, dateRangeFilter, setMessageStatus]);
+  }, [
+    url,
+    user?.token,
+    searchFilter,
+    lexileRangeFilter,
+    sortFilter,
+    dateRangeFilter,
+    setMessageStatus,
+  ]);
 
   // map test cards
   const testCards = tests.map((t) => {
@@ -73,7 +81,9 @@ const AdminTests = () => {
           author={t.author}
           lexile={t.lexile}
           to={`/controller/tests/${cipheredTestId}`}
-          createAdminActivity={async () => await createAdminActivity("test", t.title, "R")}
+          createAdminActivity={async () =>
+            await createAdminActivity("test", t.title, "R")
+          }
         />
       </React.Fragment>
     );
@@ -100,7 +110,9 @@ const AdminTests = () => {
       <AdminPageHeader subHeader="Readefine" mainHeader="Tests" />
 
       {/* show if has message pop up */}
-      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
+      {message.active ? (
+        <Message message={message} setMessageStatus={setMessageStatus} />
+      ) : null}
 
       <div className="w-full  cstm-flex-col gap-4 ">
         {/* test filter */}
@@ -124,7 +136,13 @@ const AdminTests = () => {
             testCards
           ) : (
             <div className="cstm-flex-col absolute top-2/4 translate-y-2/4 left-2/4 -translate-x-2/4 w-full">
-              <Image src={noTest} alt="empty" priority width={220} draggable={false} />
+              <Image
+                src={noTest}
+                alt="empty"
+                priority
+                width={220}
+                draggable={false}
+              />
               <p className="text-xs opacity-80">No Tests Found</p>
             </div>
           )}

@@ -11,7 +11,7 @@ import PageNavigation from "@/client/tests/PageNavigation";
 
 import { useSession } from "next-auth/react";
 import { shuffleQuestions } from "@/functions/testFns";
-import { useGlobalContext } from "@/base/context";
+
 import { decipher } from "@/functions/security";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/functions/jwtFns";
@@ -38,12 +38,13 @@ const SingleTest = ({ params }) => {
     setNewTestData,
     setNewQuestions,
   } = useTestControls();
-  const { accomplishedAchievement, claimNewAchievement, resetAchievement } = useReceiveAchievement();
+  const { accomplishedAchievement, claimNewAchievement, resetAchievement } =
+    useReceiveAchievement();
   const { loading, setLoadingState } = useLoading(true);
   const { message, setMessageStatus } = useMessage();
   const { userLexile } = useUserLexile();
 
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const { data: session } = useSession();
   const decodedTestId = decipher(params?.test_id);
   const user = session?.user?.name;
@@ -168,7 +169,11 @@ const SingleTest = ({ params }) => {
 
         // notice if not legible for lexile growth
         if (!legibleForGrowth) {
-          setMessageStatus(true, "Your test will be recorded but not graded.", "info");
+          setMessageStatus(
+            true,
+            "Your test will be recorded but not graded.",
+            "info"
+          );
         }
 
         // can see result after record
@@ -202,7 +207,14 @@ const SingleTest = ({ params }) => {
         setMessageStatus(true, error?.response?.data?.msg, "error");
       }
     }
-  }, [url, user?.token, decodedTestId, setNewTestData, setMessageStatus, setLoadingState]);
+  }, [
+    url,
+    user?.token,
+    decodedTestId,
+    setNewTestData,
+    setMessageStatus,
+    setLoadingState,
+  ]);
 
   // get questions
   const getQuestions = React.useCallback(async () => {
@@ -225,7 +237,14 @@ const SingleTest = ({ params }) => {
         setMessageStatus(true, error?.response?.data?.msg, "error");
       }
     }
-  }, [user?.token, url, decodedTestId, setNewQuestions, setMessageStatus, setLoadingState]);
+  }, [
+    user?.token,
+    url,
+    decodedTestId,
+    setNewQuestions,
+    setMessageStatus,
+    setLoadingState,
+  ]);
 
   // map questions
   const questionSlides = questions.map((q, index) => {
@@ -274,10 +293,15 @@ const SingleTest = ({ params }) => {
       <ClientPageHeader mainHeader={testData?.title} subHeader="Test" />
 
       {accomplishedAchievement.accomplished ? (
-        <ReceiveAchievement achievements={accomplishedAchievement.achievements} resetAchievement={resetAchievement} />
+        <ReceiveAchievement
+          achievements={accomplishedAchievement.achievements}
+          resetAchievement={resetAchievement}
+        />
       ) : null}
 
-      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
+      {message.active ? (
+        <Message message={message} setMessageStatus={setMessageStatus} />
+      ) : null}
 
       {isFinished ? (
         <ScorePopup
@@ -290,15 +314,27 @@ const SingleTest = ({ params }) => {
       ) : null}
 
       <div className=" cstm-flex-col gap-4 w-full h-full relative">
-        <TestActions activePage={activePage} hasSubmitted={hasSubmitted} submitAnswers={submitAnswers} />
+        <TestActions
+          activePage={activePage}
+          hasSubmitted={hasSubmitted}
+          submitAnswers={submitAnswers}
+        />
 
         {/* question pane */}
         <div className="cstm-flex-row items-start w-full relative h-full">
-          {questions.length ? questionSlides : <p>There is no test content for this story yet.</p>}
+          {questions.length ? (
+            questionSlides
+          ) : (
+            <p>There is no test content for this story yet.</p>
+          )}
         </div>
       </div>
 
-      <PageNavigation activePage={activePage} handleDecrement={handleDecrement} handleIncrement={handleIncrement} />
+      <PageNavigation
+        activePage={activePage}
+        handleDecrement={handleDecrement}
+        handleIncrement={handleIncrement}
+      />
     </div>
   );
 };

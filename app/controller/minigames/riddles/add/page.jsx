@@ -5,7 +5,6 @@ import axios from "axios";
 import Link from "next/link";
 import React from "react";
 
-import { useGlobalContext } from "@/base/context";
 import { isTokenExpired } from "@/functions/jwtFns";
 import { wordCount } from "@/functions/wordCount";
 import { useMessage } from "@/hooks/useMessage";
@@ -15,14 +14,17 @@ import { useRouter } from "next/navigation";
 import { BsArrowLeft } from "react-icons/bs";
 
 const AddRiddle = () => {
-  const [riddleData, setRiddleData] = React.useState({ riddle: "", answer: "" });
+  const [riddleData, setRiddleData] = React.useState({
+    riddle: "",
+    answer: "",
+  });
 
   const { message, setMessageStatus } = useMessage();
   const { createAdminActivity } = useAdminActivities();
 
   const { data: session } = useSession({ required: true });
   const user = session?.user?.name;
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const router = useRouter();
 
   // handle on change of riddle
@@ -49,7 +51,11 @@ const AddRiddle = () => {
 
       // reset if riddle is added
       if (data) {
-        const activityData = await createAdminActivity("riddle", riddleData.answer, "C");
+        const activityData = await createAdminActivity(
+          "riddle",
+          riddleData.answer,
+          "C"
+        );
 
         if (activityData) {
           setMessageStatus(true, `Successfully added ${answer}.`, "info");
@@ -76,10 +82,19 @@ const AddRiddle = () => {
     <div className="p-4 bg-accntColor w-full min-h-screen h-screen cstm-flex-col gap-4 justify-start">
       <AdminPageHeader subHeader="Riddles" mainHeader="Add Riddle" />
 
-      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
+      {message.active ? (
+        <Message message={message} setMessageStatus={setMessageStatus} />
+      ) : null}
 
-      <form onSubmit={(e) => addRiddle(e)} className="w-full cstm-flex-col h-full  border-collapse gap-4">
-        <Link href="/controller/minigames/riddles" className="cstm-bg-hover mr-auto text-prmColor" type="button">
+      <form
+        onSubmit={(e) => addRiddle(e)}
+        className="w-full cstm-flex-col h-full  border-collapse gap-4"
+      >
+        <Link
+          href="/controller/minigames/riddles"
+          className="cstm-bg-hover mr-auto text-prmColor"
+          type="button"
+        >
           <BsArrowLeft />
         </Link>
 

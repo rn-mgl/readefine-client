@@ -13,7 +13,7 @@ import noReward from "@/public/profile/NoReward.svg";
 import { IoAddOutline } from "react-icons/io5";
 import { typeConversion } from "@/functions/typeConversion";
 import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/base/context";
+
 import { cipher } from "@/functions/security";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/functions/jwtFns";
@@ -42,7 +42,7 @@ const AdminAchievements = () => {
 
   const { data: session } = useSession({ required: true });
   const user = session?.user?.name;
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const router = useRouter();
 
   // get achievement data
@@ -66,7 +66,16 @@ const AdminAchievements = () => {
       console.log(error);
       setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, searchFilter, goalRangeFilter, sortFilter, dateRangeFilter, typeFilter, setMessageStatus]);
+  }, [
+    url,
+    user?.token,
+    searchFilter,
+    goalRangeFilter,
+    sortFilter,
+    dateRangeFilter,
+    typeFilter,
+    setMessageStatus,
+  ]);
 
   // map achievement cards
   const achievementCards = achievements.map((a) => {
@@ -81,7 +90,9 @@ const AdminAchievements = () => {
           task={a.task}
           goal={a.goal}
           to={`/controller/achievements/${cipheredAchievementId}`}
-          createAdminActivity={async () => await createAdminActivity("achievement", a.achievement_name, "R")}
+          createAdminActivity={async () =>
+            await createAdminActivity("achievement", a.achievement_name, "R")
+          }
         />
       </React.Fragment>
     );
@@ -105,9 +116,14 @@ const AdminAchievements = () => {
 
   return (
     <div className="p-4 bg-accntColor w-full min-h-screen cstm-flex-col gap-4 justify-start">
-      <AdminPageHeader subHeader="Readefine" mainHeader="Achievements & Tasks" />
+      <AdminPageHeader
+        subHeader="Readefine"
+        mainHeader="Achievements & Tasks"
+      />
 
-      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
+      {message.active ? (
+        <Message message={message} setMessageStatus={setMessageStatus} />
+      ) : null}
 
       <div className="w-full cstm-flex-col gap-4 ">
         <AchievementsFilter
@@ -137,7 +153,13 @@ const AdminAchievements = () => {
             achievementCards
           ) : (
             <div className="cstm-flex-col absolute top-2/4 translate-y-2/4 left-2/4 -translate-x-2/4 w-full">
-              <Image src={noReward} alt="empty" priority width={220} draggable={false} />
+              <Image
+                src={noReward}
+                alt="empty"
+                priority
+                width={220}
+                draggable={false}
+              />
               <p className="text-xs opacity-80">No Achievements Found</p>
             </div>
           )}

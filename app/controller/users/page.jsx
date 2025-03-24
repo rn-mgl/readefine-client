@@ -8,7 +8,6 @@ import React from "react";
 
 import noUsers from "@/public/profile/NoTest.svg";
 
-import { useGlobalContext } from "@/base/context";
 import { isTokenExpired } from "@/functions/jwtFns";
 import { cipher } from "@/functions/security";
 import { useMessage } from "@/hooks/useMessage";
@@ -36,7 +35,7 @@ const AdminUsers = () => {
   const { message, setMessageStatus } = useMessage();
 
   const { data: session } = useSession({ required: true });
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const user = session?.user?.name;
   const router = useRouter();
 
@@ -50,7 +49,13 @@ const AdminUsers = () => {
           user={user}
           email={email}
           cipheredUserId={cipheredUserId}
-          createAdminActivity={async () => await createAdminActivity("user", `${user?.name} ${user?.surname}`, "R")}
+          createAdminActivity={async () =>
+            await createAdminActivity(
+              "user",
+              `${user?.name} ${user?.surname}`,
+              "R"
+            )
+          }
         />
       </React.Fragment>
     );
@@ -76,7 +81,15 @@ const AdminUsers = () => {
       console.log(error);
       setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, searchFilter, sortFilter, dateRangeFilter, lexileRangeFilter, setMessageStatus]);
+  }, [
+    url,
+    user?.token,
+    searchFilter,
+    sortFilter,
+    dateRangeFilter,
+    lexileRangeFilter,
+    setMessageStatus,
+  ]);
 
   React.useEffect(() => {
     if (user) {
@@ -98,7 +111,9 @@ const AdminUsers = () => {
     <div className="p-4 bg-accntColor w-full min-h-screen h-screen overflow-hidden cstm-flex-col gap-4 justify-start">
       <AdminPageHeader subHeader="Readefine" mainHeader="Users" />
 
-      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
+      {message.active ? (
+        <Message message={message} setMessageStatus={setMessageStatus} />
+      ) : null}
 
       {/* filters */}
       <UsersFilter
@@ -137,7 +152,13 @@ const AdminUsers = () => {
           </table>
         ) : (
           <div className="cstm-flex-col absolute left-2/4 -translate-x-2/4 w-full">
-            <Image src={noUsers} alt="empty" priority width={220} draggable={false} />
+            <Image
+              src={noUsers}
+              alt="empty"
+              priority
+              width={220}
+              draggable={false}
+            />
             <p className="text-xs opacity-80">No Users Found</p>
           </div>
         )}

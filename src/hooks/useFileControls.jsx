@@ -1,7 +1,6 @@
 import React from "react";
 import axios from "axios";
 import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/base/context";
 
 export const useFileControls = () => {
   const [imageFile, setImageFile] = React.useState({ src: "", name: "" });
@@ -10,7 +9,7 @@ export const useFileControls = () => {
   const [audioFile, setAudioFile] = React.useState({ src: "", name: "" });
   const rawAudio = React.useRef(null);
 
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const { data: session } = useSession();
   const user = session?.user?.name;
 
@@ -27,8 +26,14 @@ export const useFileControls = () => {
     const src = URL.createObjectURL(details);
 
     if (size > 10000000) {
-      setMessageStatus(true, "The selected file is too large. Please choose below 10MB.", "error");
-      throw new Error("The selected file is too large. Please choose below 10mb.");
+      setMessageStatus(
+        true,
+        "The selected file is too large. Please choose below 10MB.",
+        "error"
+      );
+      throw new Error(
+        "The selected file is too large. Please choose below 10mb."
+      );
     }
 
     setImageFile({ src, name });
@@ -50,8 +55,14 @@ export const useFileControls = () => {
     const src = URL.createObjectURL(details);
 
     if (size > 10000000) {
-      setMessageStatus("The selected file is too large. Please choose below 10MB.", true, "error");
-      throw new Error("The selected file is too large. Please choose below 10mb.");
+      setMessageStatus(
+        "The selected file is too large. Please choose below 10MB.",
+        true,
+        "error"
+      );
+      throw new Error(
+        "The selected file is too large. Please choose below 10mb."
+      );
     }
 
     setAudioFile({ src, name });
@@ -108,14 +119,18 @@ export const useFileControls = () => {
     const size = currFile.size;
 
     if (size > 10000000) {
-      throw new Error("The selected file is too large. Please choose below 10mb.");
+      throw new Error(
+        "The selected file is too large. Please choose below 10mb."
+      );
     }
 
     const formData = new FormData();
     formData.append("file", currFile);
 
     try {
-      const { data } = await axios.post(`${url}/${path}`, formData, { headers: { Authorization: user?.token } });
+      const { data } = await axios.post(`${url}/${path}`, formData, {
+        headers: { Authorization: user?.token },
+      });
       if (data) {
         return data.url;
       } else {

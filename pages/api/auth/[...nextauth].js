@@ -2,10 +2,10 @@ import axios from "axios";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-const local = "http://192.168.1.121:9000";
+const local = "http://192.168.1.30:9000";
 const prod = "https://readefine-server.onrender.com";
 
-const url = prod;
+const url = local;
 
 export const authOptions = {
   providers: [

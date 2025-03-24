@@ -9,7 +9,6 @@ import ActionLabel from "@/components/global/ActionLabel";
 import avatar from "@/public/profile/Avatar.svg";
 import Image from "next/image";
 
-import { useGlobalContext } from "@/base/context";
 import { useSession } from "next-auth/react";
 import { IoClose } from "react-icons/io5";
 import { BiImage } from "react-icons/bi";
@@ -23,12 +22,19 @@ const EditMain = (props) => {
   const [headData, setHeadData] = React.useState({});
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
 
-  const { imageFile, rawImage, removeSelectedImage, selectedImageViewer, uploadFile, hasRawImage } = useFileControls();
+  const {
+    imageFile,
+    rawImage,
+    removeSelectedImage,
+    selectedImageViewer,
+    uploadFile,
+    hasRawImage,
+  } = useFileControls();
   const { message, setMessageStatus } = useMessage();
   const { loading, setLoadingState } = useLoading(false);
 
   const { data: session } = useSession();
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const user = session?.user?.name;
 
   const handleHeadData = ({ name, value }) => {
@@ -66,7 +72,10 @@ const EditMain = (props) => {
     }
 
     if (hasRawImage()) {
-      profileImage = await uploadFile("readefine_head_file", rawImage.current?.files);
+      profileImage = await uploadFile(
+        "readefine_head_file",
+        rawImage.current?.files
+      );
     }
 
     const randomIndex = Math.floor(Math.random() * avatars.length);
@@ -123,14 +132,22 @@ const EditMain = (props) => {
                 backdrop-blur-md bg-gradient-to-br from-[#552aca32] to-[#4bfce132]
                  z-[60] p-4 cstm-flex-col justify-start"
     >
-      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
+      {message.active ? (
+        <Message message={message} setMessageStatus={setMessageStatus} />
+      ) : null}
 
-      <button onClick={props.handleCanEditMain} className="cstm-bg-hover ml-auto">
+      <button
+        onClick={props.handleCanEditMain}
+        className="cstm-bg-hover ml-auto"
+      >
         <IoClose className="text-xl text-prmColor" />
       </button>
 
       <div className="  w-full justify-start cstm-flex-col  t:w-8/12 l-s:w-6/12 l-l:w-4/12">
-        <form onSubmit={(e) => editMain(e)} className="justify-start cstm-flex-col w-full gap-4 ">
+        <form
+          onSubmit={(e) => editMain(e)}
+          className="justify-start cstm-flex-col w-full gap-4 "
+        >
           <div className="w-full h-fit p-4 rounded-2xl bg-white cstm-flex-col gap-2 shadow-md">
             <div
               style={{
@@ -145,7 +162,12 @@ const EditMain = (props) => {
                         l-l:w-60 l-l:h-60 l-l:min-w-[15rem] l-l:min-h-[15rem] "
             >
               {!imageFile.src && !headData?.image ? (
-                <Image src={avatar} alt="avatar" className="w-full" width={320} />
+                <Image
+                  src={avatar}
+                  alt="avatar"
+                  className="w-full"
+                  width={320}
+                />
               ) : null}
             </div>
 
@@ -165,12 +187,20 @@ const EditMain = (props) => {
               </label>
 
               {imageFile.src ? (
-                <button type="button" onClick={removeSelectedImage} className="cstm-bg-hover group relative">
+                <button
+                  type="button"
+                  onClick={removeSelectedImage}
+                  className="cstm-bg-hover group relative"
+                >
                   <ActionLabel label="Remove Image" />
                   <IoClose className="text-xl text-prmColor" />
                 </button>
               ) : headData?.image ? (
-                <button type="button" onClick={clearUpload} className="cstm-bg-hover group relative">
+                <button
+                  type="button"
+                  onClick={clearUpload}
+                  className="cstm-bg-hover group relative"
+                >
                   <ActionLabel label="Remove Image" />
                   <IoClose className="text-xl text-prmColor" />
                 </button>

@@ -10,7 +10,7 @@ import Loading from "@/components/global/Loading";
 
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/base/context";
+
 import { BsArrowLeft } from "react-icons/bs";
 import { decipher } from "@/functions/security";
 import { isTokenExpired } from "@/functions/jwtFns";
@@ -34,7 +34,7 @@ const EditAchievement = ({ params }) => {
   const { message, setMessageStatus } = useMessage();
 
   const { data: session } = useSession({ required: true });
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const user = session?.user?.name;
   const router = useRouter();
   const decodedAchievementId = decipher(params?.achievement_id);
@@ -72,12 +72,30 @@ const EditAchievement = ({ params }) => {
     setHasSubmitted(true);
     setLoadingState(true);
 
-    const { goal, achievement_name, reward_id, reward_name, task, achievement_type } = achievement;
+    const {
+      goal,
+      achievement_name,
+      reward_id,
+      reward_name,
+      task,
+      achievement_type,
+    } = achievement;
 
-    if (!goal || !achievement_name || !reward_id || !reward_name || !task || !achievement_type) {
+    if (
+      !goal ||
+      !achievement_name ||
+      !reward_id ||
+      !reward_name ||
+      !task ||
+      !achievement_type
+    ) {
       setHasSubmitted(false);
       setLoadingState(false);
-      setMessageStatus(true, "Please fill in all achievement information.", "error");
+      setMessageStatus(
+        true,
+        "Please fill in all achievement information.",
+        "error"
+      );
       return;
     }
 
@@ -90,7 +108,11 @@ const EditAchievement = ({ params }) => {
 
       // move to view page after editing
       if (data) {
-        const activityData = await createAdminActivity("achievement", achievement.achievement_name, "U");
+        const activityData = await createAdminActivity(
+          "achievement",
+          achievement.achievement_name,
+          "U"
+        );
 
         if (activityData) {
           router.push(`/controller/achievements/${params?.achievement_id}`);
@@ -108,9 +130,12 @@ const EditAchievement = ({ params }) => {
   const getAchievement = React.useCallback(async () => {
     if (user?.token) {
       try {
-        const { data } = await axios.get(`${url}/admin_achievement/${decodedAchievementId}`, {
-          headers: { Authorization: user?.token },
-        });
+        const { data } = await axios.get(
+          `${url}/admin_achievement/${decodedAchievementId}`,
+          {
+            headers: { Authorization: user?.token },
+          }
+        );
 
         if (data) {
           setAchievement(data);
@@ -144,13 +169,21 @@ const EditAchievement = ({ params }) => {
     <div className="p-4 bg-accntColor w-full min-h-screen cstm-flex-col gap-4 justify-start">
       <AdminPageHeader subHeader="Achievements" mainHeader="Edit Achievement" />
 
-      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
-
-      {canSelectReward ? (
-        <FindRewards selectReward={selectReward} handleCanSelectReward={handleCanSelectReward} />
+      {message.active ? (
+        <Message message={message} setMessageStatus={setMessageStatus} />
       ) : null}
 
-      <form onSubmit={(e) => editAchievement(e)} className="w-full cstm-flex-col  border-collapse gap-4">
+      {canSelectReward ? (
+        <FindRewards
+          selectReward={selectReward}
+          handleCanSelectReward={handleCanSelectReward}
+        />
+      ) : null}
+
+      <form
+        onSubmit={(e) => editAchievement(e)}
+        className="w-full cstm-flex-col  border-collapse gap-4"
+      >
         <Link href="/controller/achievements" className="cstm-bg-hover mr-auto">
           <BsArrowLeft className="text-prmColor cursor-pointer text-xl" />
         </Link>

@@ -9,7 +9,6 @@ import ChangePassword from "@/head/account/ChangePassword";
 import MainAccount from "@/head/account/MainOverview";
 import Message from "@/components/global/Message";
 
-import { useGlobalContext } from "@/base/context";
 import { isTokenExpired } from "@/functions/jwtFns";
 import { decipher } from "@/functions/security";
 import { useMessage } from "@/hooks/useMessage";
@@ -23,7 +22,7 @@ const Account = ({ params }) => {
 
   const { message, setMessageStatus } = useMessage();
   const { data: session } = useSession();
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const user = session?.user?.name;
   const decipheredId = decipher(params?.head_id);
   const router = useRouter();
@@ -75,11 +74,17 @@ const Account = ({ params }) => {
     <div className="w-full min-h-screen bg-accntColor p-4 cstm-flex-col justify-start cstm-scrollbar gap-4">
       <HeadPageHeader mainHeader="Account" subHeader="Readefine" />
 
-      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
+      {message.active ? (
+        <Message message={message} setMessageStatus={setMessageStatus} />
+      ) : null}
 
-      {canEditMain ? <EditMain headId={user?.headId} handleCanEditMain={handleCanEditMain} /> : null}
+      {canEditMain ? (
+        <EditMain headId={user?.headId} handleCanEditMain={handleCanEditMain} />
+      ) : null}
 
-      {canChangePassword ? <ChangePassword handleCanChangePassword={handleCanChangePassword} /> : null}
+      {canChangePassword ? (
+        <ChangePassword handleCanChangePassword={handleCanChangePassword} />
+      ) : null}
 
       <div className="cstm-flex-col cstm-scrollbar  w-full gap-4">
         <MainAccount

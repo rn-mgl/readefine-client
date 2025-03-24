@@ -1,6 +1,5 @@
 "use client";
 
-import { useGlobalContext } from "@/base/context";
 import Message from "@/src/components/global/Message";
 import ActivityLog from "@/src/components/activities/ActivityLog";
 import AdminActivitiesFilter from "@/src/head/activities/AdminActivitiesFilter";
@@ -25,7 +24,7 @@ const Update = () => {
     handleResourceTypeFilter,
   } = useAdminActivityFilters();
   const { message, setMessageStatus } = useMessage();
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const { data: session } = useSession();
   const user = session?.user?.name;
 
@@ -33,7 +32,13 @@ const Update = () => {
     try {
       const { data } = await axios.get(`${url}/head_admin_activities`, {
         headers: { Authorization: user?.token },
-        params: { searchFilter, sortFilter, resourceTypeFilter, dateRangeFilter, activityTypeFilter: "U" },
+        params: {
+          searchFilter,
+          sortFilter,
+          resourceTypeFilter,
+          dateRangeFilter,
+          activityTypeFilter: "U",
+        },
       });
       if (data) {
         setActivities(data);
@@ -42,7 +47,15 @@ const Update = () => {
       console.log(error);
       setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [user?.token, url, searchFilter, sortFilter, resourceTypeFilter, dateRangeFilter, setMessageStatus]);
+  }, [
+    user?.token,
+    url,
+    searchFilter,
+    sortFilter,
+    resourceTypeFilter,
+    dateRangeFilter,
+    setMessageStatus,
+  ]);
 
   const mappedActivities = activities.map((activity, index) => {
     return <ActivityLog key={index} activity={activity} action="updated" />;
@@ -58,7 +71,9 @@ const Update = () => {
     <div className="p-4 bg-accntColor w-full min-h-screen h-screen cstm-flex-col gap-4 justify-start">
       <HeadPageHeader mainHeader="Update" subHeader="Readefine" />
 
-      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
+      {message.active ? (
+        <Message message={message} setMessageStatus={setMessageStatus} />
+      ) : null}
 
       <AdminActivitiesFilter
         searchFilter={searchFilter}

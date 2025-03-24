@@ -11,7 +11,6 @@ import intersectAM from "@/public/signup/IntersectAM.svg";
 import intersectAT from "@/public/signup/IntersectAT.svg";
 import Link from "next/link";
 
-import { useGlobalContext } from "@/base/context";
 import { useLoading } from "@/hooks/useLoading";
 import { useMessage } from "@/hooks/useMessage";
 import { signIn, signOut, useSession } from "next-auth/react";
@@ -31,7 +30,7 @@ const HeadLogin = () => {
   const { loading, setLoadingState } = useLoading(false);
   const { message, setMessageStatus } = useMessage();
 
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const { data: session } = useSession();
   const user = session?.user?.name;
   const router = useRouter();
@@ -99,7 +98,14 @@ const HeadLogin = () => {
       setLoadingState(false);
       setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [router, url, user?.token, user?.headId, setLoadingState, setMessageStatus]);
+  }, [
+    router,
+    url,
+    user?.token,
+    user?.headId,
+    setLoadingState,
+    setMessageStatus,
+  ]);
 
   const notYetVerified = React.useCallback(() => {
     router.push("/sending?purpose=verify");
@@ -124,9 +130,13 @@ const HeadLogin = () => {
 
   return (
     <div className="w-full h-screen bg-scndColor p-4 cstm-flex-col  overflow-hidden">
-      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
+      {message.active ? (
+        <Message message={message} setMessageStatus={setMessageStatus} />
+      ) : null}
 
-      <p className=" font-extrabold text-2xl text-prmColor relative z-20">Log In</p>
+      <p className=" font-extrabold text-2xl text-prmColor relative z-20">
+        Log In
+      </p>
 
       <br />
 
@@ -165,7 +175,10 @@ const HeadLogin = () => {
         />
 
         {/* link if password is forgotten */}
-        <Link className="text-xs text-prmColor underline underline-offset-2" href="/overlook">
+        <Link
+          className="text-xs text-prmColor underline underline-offset-2"
+          href="/overlook"
+        >
           Forgot Password?
         </Link>
 
@@ -182,7 +195,12 @@ const HeadLogin = () => {
       </form>
 
       {/* render on phone */}
-      <Image src={intersectAM} alt="intersect" className="w-full bottom-0 left-0 absolute t:hidden" priority />
+      <Image
+        src={intersectAM}
+        alt="intersect"
+        className="w-full bottom-0 left-0 absolute t:hidden"
+        priority
+      />
 
       {/* render on tablet */}
       <Image
@@ -193,7 +211,12 @@ const HeadLogin = () => {
       />
 
       {/* render on laptop */}
-      <Image src={intersectAL} alt="intersect" className="hidden w-full bottom-0 left-0 absolute l-s:block" priority />
+      <Image
+        src={intersectAL}
+        alt="intersect"
+        className="hidden w-full bottom-0 left-0 absolute l-s:block"
+        priority
+      />
     </div>
   );
 };

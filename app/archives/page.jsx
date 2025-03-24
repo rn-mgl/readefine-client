@@ -11,7 +11,7 @@ import Message from "@/components/global/Message";
 import axios from "axios";
 
 import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/base/context";
+
 import { isTokenExpired } from "@/functions/jwtFns";
 import { useRouter } from "next/navigation";
 import { useMessage } from "@/hooks/useMessage";
@@ -21,7 +21,7 @@ const Archives = () => {
   const { message, setMessageStatus } = useMessage();
 
   const { data: session } = useSession({ required: true });
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const user = session?.user?.name;
   const router = useRouter();
 
@@ -60,7 +60,9 @@ const Archives = () => {
   return (
     <div className="p-4 bg-accntColor w-full min-h-screen cstm-flex-col gap-4 justify-start">
       <ClientPageHeader mainHeader="Readefine" subHeader="Home" />
-      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
+      {message.active ? (
+        <Message message={message} setMessageStatus={setMessageStatus} />
+      ) : null}
 
       <div className="flex flex-col items-center gap-4 w-full t:flex-wrap t:flex-row t:justify-center">
         {/* stories */}

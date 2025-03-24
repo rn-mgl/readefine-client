@@ -11,7 +11,6 @@ import Image from "next/image";
 
 import noReads from "@/public/profile/NoReads.svg";
 
-import { useGlobalContext } from "@/base/context";
 import { useSession } from "next-auth/react";
 import { cipher } from "@/functions/security";
 import { useRouter } from "next/navigation";
@@ -28,10 +27,11 @@ const ClientStories = () => {
 
   const { message, setMessageStatus } = useMessage();
   const { userLexile } = useUserLexile();
-  const { searchFilter, sortFilter, handleSearchFilter, handleSortFilter } = useStoryFilters();
+  const { searchFilter, sortFilter, handleSearchFilter, handleSortFilter } =
+    useStoryFilters();
 
   const { data: session } = useSession();
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const user = session?.user?.name;
   const router = useRouter();
 
@@ -64,7 +64,14 @@ const ClientStories = () => {
 
       setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, searchFilter, sortFilter, userLexile, setMessageStatus]);
+  }, [
+    url,
+    user?.token,
+    searchFilter,
+    sortFilter,
+    userLexile,
+    setMessageStatus,
+  ]);
 
   // map stories
   const storiesCards = stories.map((story) => {
@@ -112,7 +119,9 @@ const ClientStories = () => {
   return (
     <div className="p-4 w-full min-h-screen cstm-flex-col gap-4 justify-start">
       <ClientPageHeader mainHeader="Readefine" subHeader="Stories" />
-      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
+      {message.active ? (
+        <Message message={message} setMessageStatus={setMessageStatus} />
+      ) : null}
 
       {showLexileMessage ? (
         <LowLexileTestMessage
@@ -138,7 +147,13 @@ const ClientStories = () => {
             storiesCards
           ) : (
             <div className="cstm-flex-col absolute top-2/4 translate-y-2/4 left-2/4 -translate-x-2/4 w-full">
-              <Image src={noReads} alt="empty" priority width={220} draggable={false} />
+              <Image
+                src={noReads}
+                alt="empty"
+                priority
+                width={220}
+                draggable={false}
+              />
               <p className="text-xs opacity-80">No Stories Found</p>
             </div>
           )}

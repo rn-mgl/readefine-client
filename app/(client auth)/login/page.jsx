@@ -12,7 +12,6 @@ import intersectSL from "@/public/landing/definition/IntersectSL.svg";
 import intersectSM from "@/public/landing/definition/IntersectSM.svg";
 import intersectST from "@/public/landing/definition/IntersectST.svg";
 
-import { useGlobalContext } from "@/base/context";
 import { useLoading } from "@/hooks/useLoading";
 import { useMessage } from "@/hooks/useMessage";
 import { useReceiveAchievement } from "@/hooks/useReceiveAchievement";
@@ -30,14 +29,19 @@ const Login = () => {
   const [firstLogin, setFirstLogin] = React.useState(false);
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
 
-  const { accomplishedAchievement, achievementUrl, claimNewAchievement, resetAchievement, setNewAchievementUrl } =
-    useReceiveAchievement();
+  const {
+    accomplishedAchievement,
+    achievementUrl,
+    claimNewAchievement,
+    resetAchievement,
+    setNewAchievementUrl,
+  } = useReceiveAchievement();
 
   const { message, setMessageStatus } = useMessage();
 
   const { loading, setLoadingState } = useLoading(false);
 
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const router = useRouter();
   const { data: session } = useSession();
   const user = session?.user?.name;
@@ -103,7 +107,9 @@ const Login = () => {
       if (achievementData.length) {
         setLoadingState(false);
         claimNewAchievement(achievementData);
-        setNewAchievementUrl(user?.isVerified ? "/archives" : "/sending?purpose=verify");
+        setNewAchievementUrl(
+          user?.isVerified ? "/archives" : "/sending?purpose=verify"
+        );
       } else {
         router.push("/archives");
       }
@@ -176,7 +182,9 @@ const Login = () => {
       ) : null}
 
       {/* if message has popped up */}
-      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
+      {message.active ? (
+        <Message message={message} setMessageStatus={setMessageStatus} />
+      ) : null}
 
       <p className=" font-extrabold text-2xl text-prmColor">Log In</p>
 
@@ -220,7 +228,10 @@ const Login = () => {
         />
 
         {/* link if password is forgotten */}
-        <Link className="text-xs text-prmColor underline underline-offset-2" href="/forgot">
+        <Link
+          className="text-xs text-prmColor underline underline-offset-2"
+          href="/forgot"
+        >
           Forgot Password?
         </Link>
 

@@ -7,7 +7,7 @@ import axios from "axios";
 import Message from "@/components/global/Message";
 
 import { signOut } from "next-auth/react";
-import { useGlobalContext } from "@/base/context";
+
 import { useMessage } from "@/hooks/useMessage";
 
 const Verify = ({ params }) => {
@@ -15,13 +15,15 @@ const Verify = ({ params }) => {
 
   const { message, setMessageStatus } = useMessage();
 
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const token = params?.token;
 
   // verify user
   const verifyUser = React.useCallback(async () => {
     try {
-      const { data } = await axios.patch(`${url}/auth_client/client_verify`, { token });
+      const { data } = await axios.patch(`${url}/auth_client/client_verify`, {
+        token,
+      });
 
       await signOut({ redirect: false });
 
@@ -43,7 +45,9 @@ const Verify = ({ params }) => {
 
   return (
     <div className="cstm-flex-col w-full min-h-screen bg-accntColor">
-      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
+      {message.active ? (
+        <Message message={message} setMessageStatus={setMessageStatus} />
+      ) : null}
 
       {/* render image depending on verification status */}
 

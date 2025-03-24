@@ -9,7 +9,6 @@ import axios from "axios";
 import Link from "next/link";
 import React from "react";
 
-import { useGlobalContext } from "@/base/context";
 import { isTokenExpired } from "@/functions/jwtFns";
 import { useMessage } from "@/hooks/useMessage";
 import useAdminActivities from "@/src/hooks/useAdminActivities";
@@ -24,15 +23,24 @@ const AdminRiddles = () => {
   const [canDeleteRiddle, setCanDeleteRiddle] = React.useState(false);
   const [riddleToEdit, setRiddleToEdit] = React.useState(-1);
 
-  const [riddleToDelete, setRiddleToDelete] = React.useState({ id: -1, answer: "" });
+  const [riddleToDelete, setRiddleToDelete] = React.useState({
+    id: -1,
+    answer: "",
+  });
 
   const { message, setMessageStatus } = useMessage();
-  const { searchFilter, sortFilter, dateRangeFilter, handleSearchFilter, handleDateRangeFilter, handleSortFilter } =
-    useRiddleFilters();
+  const {
+    searchFilter,
+    sortFilter,
+    dateRangeFilter,
+    handleSearchFilter,
+    handleDateRangeFilter,
+    handleSortFilter,
+  } = useRiddleFilters();
   const { createAdminActivity } = useAdminActivities();
 
   const { data: session } = useSession();
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const user = session?.user?.name;
   const router = useRouter();
 
@@ -96,11 +104,17 @@ const AdminRiddles = () => {
 
       if (data) {
         // get index of edited riddle
-        const riddleIdx = riddles.findIndex((riddle) => riddle.riddle_id === riddleToEdit);
+        const riddleIdx = riddles.findIndex(
+          (riddle) => riddle.riddle_id === riddleToEdit
+        );
         // get riddle using index
         const riddle = riddles[riddleIdx];
 
-        const activityData = await createAdminActivity("riddle", riddle.answer, "U");
+        const activityData = await createAdminActivity(
+          "riddle",
+          riddle.answer,
+          "U"
+        );
 
         if (activityData) {
           setRiddleToEdit(-1);
@@ -134,7 +148,14 @@ const AdminRiddles = () => {
         setMessageStatus(true, error?.response?.data?.msg, "error");
       }
     }
-  }, [url, user?.token, searchFilter, sortFilter, dateRangeFilter, setMessageStatus]);
+  }, [
+    url,
+    user?.token,
+    searchFilter,
+    sortFilter,
+    dateRangeFilter,
+    setMessageStatus,
+  ]);
 
   // map riddle rows
   const riddleRow = riddles.map((riddle) => {
@@ -180,7 +201,9 @@ const AdminRiddles = () => {
     <div className="p-4 bg-accntColor w-full min-h-screen h-screen cstm-flex-col gap-2 justify-start">
       <AdminPageHeader subHeader="Readefine" mainHeader="Riddles" />
 
-      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
+      {message.active ? (
+        <Message message={message} setMessageStatus={setMessageStatus} />
+      ) : null}
 
       <div className="cstm-flex-col gap-2 w-full ">
         <Link href="/controller/minigames" className="cstm-bg-hover mr-auto">

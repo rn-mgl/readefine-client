@@ -11,7 +11,7 @@ import StoryActions from "@/client/stories/StoryActions";
 import PageNavigation from "@/components/stories/PageNavigation";
 
 import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/base/context";
+
 import { decipher } from "@/functions/security";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/functions/jwtFns";
@@ -38,14 +38,22 @@ const SingleStory = ({ params }) => {
     setNewPages,
   } = useStoryPageControls();
 
-  const { accomplishedAchievement, claimNewAchievement, resetAchievement } = useReceiveAchievement();
+  const { accomplishedAchievement, claimNewAchievement, resetAchievement } =
+    useReceiveAchievement();
 
   const { message, setMessageStatus } = useMessage();
 
-  const { isMuted, isPlaying, audioRef, handleMuteVolume, handleVolumeChange, handleToggleAudio } = useAudioControls();
+  const {
+    isMuted,
+    isPlaying,
+    audioRef,
+    handleMuteVolume,
+    handleVolumeChange,
+    handleToggleAudio,
+  } = useAudioControls();
 
   const { data: session } = useSession();
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const user = session?.user?.name;
   const decodedStoryId = decipher(params?.story_id);
   const router = useRouter();
@@ -122,7 +130,10 @@ const SingleStory = ({ params }) => {
   // map pages
   const storyPages = pages?.map((page, index, arr) => {
     return (
-      <div className="absolute left-2/4 -translate-x-2/4 w-full z-10 justify-start " key={page.content_id}>
+      <div
+        className="absolute left-2/4 -translate-x-2/4 w-full z-10 justify-start "
+        key={page.content_id}
+      >
         {viewType === "single" ? (
           <StorySinglePage
             title={story?.title}
@@ -187,10 +198,15 @@ const SingleStory = ({ params }) => {
     <div className="p-4 cstm-flex-col w-full min-h-screen h-screen justify-start gap-4">
       <ClientPageHeader subHeader="Stories" mainHeader={story.title} />
 
-      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
+      {message.active ? (
+        <Message message={message} setMessageStatus={setMessageStatus} />
+      ) : null}
 
       {accomplishedAchievement.accomplished ? (
-        <ReceiveAchievement achievements={accomplishedAchievement.achievements} resetAchievement={resetAchievement} />
+        <ReceiveAchievement
+          achievements={accomplishedAchievement.achievements}
+          resetAchievement={resetAchievement}
+        />
       ) : null}
 
       {/* user actions */}
@@ -228,7 +244,9 @@ const SingleStory = ({ params }) => {
         className="h-full w-full gap-4 bg-white rounded-2xl p-4 relative overflow-x-hidden 
                   overflow-y-auto transition-all  cstm-scrollbar"
       >
-        <div className="w-full relative overflow-x-hidden h-full cstm-scrollbar">{storyPages}</div>
+        <div className="w-full relative overflow-x-hidden h-full cstm-scrollbar">
+          {storyPages}
+        </div>
       </div>
 
       {/* left right button */}

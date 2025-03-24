@@ -11,7 +11,7 @@ import ClientPageHeader from "@/client/global/PageHeader";
 import Message from "@/components/global/Message";
 
 import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/base/context";
+
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/functions/jwtFns";
 import { useMessage } from "@/hooks/useMessage";
@@ -22,7 +22,7 @@ const Minigames = () => {
   const { message, setMessageStatus } = useMessage();
 
   const { data: session } = useSession();
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const user = session?.user?.name;
   const router = useRouter();
 
@@ -61,7 +61,9 @@ const Minigames = () => {
     <div className="p-4 bg-accntColor w-full min-h-screen cstm-flex-col gap-4 justify-start">
       <ClientPageHeader mainHeader="Readefine" subHeader="Minigames" />
 
-      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
+      {message.active ? (
+        <Message message={message} setMessageStatus={setMessageStatus} />
+      ) : null}
 
       <div
         className="cstm-flex-col gap-4 justify-start w-full transition-all

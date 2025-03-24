@@ -21,7 +21,6 @@ import noTest from "@/public/profile/NoTest.svg";
 import axios from "axios";
 import React from "react";
 
-import { useGlobalContext } from "@/base/context";
 import { isTokenExpired } from "@/functions/jwtFns";
 import { localizeDate } from "@/functions/localDate";
 import { cipher, decipher } from "@/functions/security";
@@ -47,7 +46,7 @@ const Reader = ({ params }) => {
   const { message, setMessageStatus } = useMessage();
 
   const { data: session } = useSession();
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const user = session?.user?.name;
   const decipheredId = decipher(params?.reader_id);
   const router = useRouter();
@@ -232,20 +231,22 @@ const Reader = ({ params }) => {
   });
 
   // map achievements and rewards
-  const achievementsAndRewards = userActivities?.achievementData?.map((reward) => {
-    const cipheredRewardId = cipher(reward.reward_id);
-    return (
-      <React.Fragment key={reward.reward_id}>
-        <RewardsCards
-          image={reward.reward}
-          title={reward.reward_name}
-          type={reward.reward_type}
-          isReceived={reward.is_received}
-          to={`/archives/rewards/${cipheredRewardId}`}
-        />
-      </React.Fragment>
-    );
-  });
+  const achievementsAndRewards = userActivities?.achievementData?.map(
+    (reward) => {
+      const cipheredRewardId = cipher(reward.reward_id);
+      return (
+        <React.Fragment key={reward.reward_id}>
+          <RewardsCards
+            image={reward.reward}
+            title={reward.reward_name}
+            type={reward.reward_type}
+            isReceived={reward.is_received}
+            to={`/archives/rewards/${cipheredRewardId}`}
+          />
+        </React.Fragment>
+      );
+    }
+  );
 
   // map logged sessions
   const loggedSessions = userActivities?.sessionsData?.map((session) => {
@@ -289,7 +290,9 @@ const Reader = ({ params }) => {
     >
       <ClientPageHeader mainHeader="Readefine" subHeader="Profile" />
 
-      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
+      {message.active ? (
+        <Message message={message} setMessageStatus={setMessageStatus} />
+      ) : null}
 
       {showLexileMessage ? (
         <LowLexileTestMessage
@@ -299,7 +302,12 @@ const Reader = ({ params }) => {
         />
       ) : null}
 
-      {seeTestRecord ? <TestRecord testId={seeTestRecord} handleSeeTestRecord={handleSeeTestRecord} /> : null}
+      {seeTestRecord ? (
+        <TestRecord
+          testId={seeTestRecord}
+          handleSeeTestRecord={handleSeeTestRecord}
+        />
+      ) : null}
 
       {canEditGradeLevel ? (
         <EditGradeLevel
@@ -312,7 +320,9 @@ const Reader = ({ params }) => {
 
       {canEditMain ? <EditMain handleCanEditMain={handleCanEditMain} /> : null}
 
-      {canChangePassword ? <ChangePassword handleCanChangePassword={handleCanChangePassword} /> : null}
+      {canChangePassword ? (
+        <ChangePassword handleCanChangePassword={handleCanChangePassword} />
+      ) : null}
 
       <div className=" cstm-flex-col gap-4 w-full">
         <MainProfile

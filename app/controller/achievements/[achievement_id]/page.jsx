@@ -7,7 +7,7 @@ import Link from "next/link";
 import Message from "@/components/global/Message";
 
 import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/base/context";
+
 import { BsArrowLeft } from "react-icons/bs";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { typeConversion } from "@/functions/typeConversion";
@@ -25,7 +25,7 @@ const SingleAchievement = ({ params }) => {
   const { message, setMessageStatus } = useMessage();
 
   const { data: session } = useSession();
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const user = session?.user?.name;
   const decodedAchievementId = decipher(params?.achievement_id);
   const router = useRouter();
@@ -38,9 +38,12 @@ const SingleAchievement = ({ params }) => {
   // get achievement
   const getAchievement = React.useCallback(async () => {
     try {
-      const { data } = await axios.get(`${url}/admin_achievement/${decodedAchievementId}`, {
-        headers: { Authorization: user?.token },
-      });
+      const { data } = await axios.get(
+        `${url}/admin_achievement/${decodedAchievementId}`,
+        {
+          headers: { Authorization: user?.token },
+        }
+      );
 
       if (data) {
         setAchievement(data);
@@ -69,9 +72,14 @@ const SingleAchievement = ({ params }) => {
 
   return (
     <div className="p-4 bg-accntColor w-full min-h-screen h-full t:h-screen cstm-flex-col justify-start gap-4">
-      <AdminPageHeader subHeader="Achievement" mainHeader={achievement.achievement_name} />
+      <AdminPageHeader
+        subHeader="Achievement"
+        mainHeader={achievement.achievement_name}
+      />
 
-      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
+      {message.active ? (
+        <Message message={message} setMessageStatus={setMessageStatus} />
+      ) : null}
 
       {canDeleteAchievement ? (
         <DeleteData
@@ -88,7 +96,10 @@ const SingleAchievement = ({ params }) => {
           <BsArrowLeft />
         </Link>
 
-        <Link href={`/controller/achievements/edit/${params?.achievement_id}`} className="cstm-bg-hover">
+        <Link
+          href={`/controller/achievements/edit/${params?.achievement_id}`}
+          className="cstm-bg-hover"
+        >
           <AiFillEdit />
         </Link>
 
@@ -103,7 +114,9 @@ const SingleAchievement = ({ params }) => {
           <div className="w-full p-4 bg-white rounded-2xl cstm-flex-col gap-2 h-full">
             <p className=" text-sm">Task</p>
 
-            <p className="text-center text-prmColor font-bold text-lg">{achievement?.task}</p>
+            <p className="text-center text-prmColor font-bold text-lg">
+              {achievement?.task}
+            </p>
           </div>
         </div>
 
@@ -124,7 +137,9 @@ const SingleAchievement = ({ params }) => {
             <div className="w-full p-4 bg-white rounded-2xl cstm-flex-col gap-2 h-full">
               <p className="text-sm">Goal</p>
 
-              <p className="text-justify font-bold text-prmColor text-lg">{achievement?.goal}</p>
+              <p className="text-justify font-bold text-prmColor text-lg">
+                {achievement?.goal}
+              </p>
             </div>
           </div>
         </div>
@@ -135,7 +150,9 @@ const SingleAchievement = ({ params }) => {
             <div className="w-full p-4 bg-white rounded-2xl cstm-flex-col gap-2 h-full">
               <p className="text-sm">Reward Name</p>
 
-              <p className="text-justify font-bold text-prmColor text-lg">{achievement?.reward_name}</p>
+              <p className="text-justify font-bold text-prmColor text-lg">
+                {achievement?.reward_name}
+              </p>
             </div>
           </div>
 

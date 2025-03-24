@@ -13,7 +13,7 @@ import quirky from "@/public/music/minigames/Quirky.mp3";
 
 import { AiFillHeart } from "react-icons/ai";
 import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/base/context";
+
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/functions/jwtFns";
 
@@ -59,7 +59,7 @@ const Decipher = () => {
   const { message, setMessageStatus } = useMessage();
 
   const { data: session } = useSession();
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const user = session?.user?.name;
   const router = useRouter();
 
@@ -93,7 +93,12 @@ const Decipher = () => {
   // map remaining lives
   const remainingLives = lives.status.map((alive, i) => {
     return (
-      <AiFillHeart key={i} className={` ${alive ? "text-prmColor" : "text-neutral-400 animate-shake"} t:text-xl`} />
+      <AiFillHeart
+        key={i}
+        className={` ${
+          alive ? "text-prmColor" : "text-neutral-400 animate-shake"
+        } t:text-xl`}
+      />
     );
   });
 
@@ -109,7 +114,9 @@ const Decipher = () => {
 
   return (
     <div className="bg-accntColor p-4 cstm-flex-col justify-start w-full min-h-screen h-screen">
-      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
+      {message.active ? (
+        <Message message={message} setMessageStatus={setMessageStatus} />
+      ) : null}
 
       {gameOver.over ? (
         <Gameover
@@ -122,7 +129,9 @@ const Decipher = () => {
         />
       ) : null}
 
-      {canSeeTutorial ? <DecipherTutorial handleCanSeeTutorial={handleCanSeeTutorial} /> : null}
+      {canSeeTutorial ? (
+        <DecipherTutorial handleCanSeeTutorial={handleCanSeeTutorial} />
+      ) : null}
 
       <div
         className="w-full h-full  cstm-flex-col relative 

@@ -11,7 +11,6 @@ import intersectSM from "@/public/landing/definition/IntersectSM.svg";
 import intersectST from "@/public/landing/definition/IntersectST.svg";
 import Link from "next/link";
 
-import { useGlobalContext } from "@/base/context";
 import { useLoading } from "@/hooks/useLoading";
 import { useMessage } from "@/hooks/useMessage";
 import { signIn, signOut, useSession } from "next-auth/react";
@@ -31,7 +30,7 @@ const AdminLogin = () => {
   const { loading, setLoadingState } = useLoading(false);
   const { message, setMessageStatus } = useMessage();
 
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const { data: session } = useSession();
   const user = session?.user?.name;
   const router = useRouter();
@@ -99,7 +98,14 @@ const AdminLogin = () => {
       setLoadingState(false);
       setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [router, url, user?.token, user?.adminId, setLoadingState, setMessageStatus]);
+  }, [
+    router,
+    url,
+    user?.token,
+    user?.adminId,
+    setLoadingState,
+    setMessageStatus,
+  ]);
 
   const notYetVerified = React.useCallback(() => {
     router.push("/sending?purpose=verify");
@@ -124,7 +130,9 @@ const AdminLogin = () => {
 
   return (
     <div className="w-full h-screen bg-prmColor p-4 cstm-flex-col  overflow-hidden">
-      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
+      {message.active ? (
+        <Message message={message} setMessageStatus={setMessageStatus} />
+      ) : null}
 
       <p className=" font-extrabold text-2xl text-accntColor">Log In</p>
 
@@ -166,7 +174,10 @@ const AdminLogin = () => {
         />
 
         {/* link if password is forgotten */}
-        <Link className="text-xs text-accntColor underline underline-offset-2 l-l:text-prmColor" href="/fixer">
+        <Link
+          className="text-xs text-accntColor underline underline-offset-2 l-l:text-prmColor"
+          href="/fixer"
+        >
           Forgot Password?
         </Link>
 

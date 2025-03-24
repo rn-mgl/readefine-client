@@ -13,7 +13,7 @@ import noReads from "@/public/profile/NoReads.svg";
 
 import { IoAddOutline } from "react-icons/io5";
 import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/base/context";
+
 import { cipher } from "@/functions/security";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/functions/jwtFns";
@@ -39,7 +39,7 @@ const AdminStories = () => {
   const { createAdminActivity } = useAdminActivities();
 
   const { data: session } = useSession();
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const user = session?.user?.name;
   const router = useRouter();
 
@@ -63,7 +63,15 @@ const AdminStories = () => {
       console.log(error);
       setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, searchFilter, lexileRangeFilter, sortFilter, dateRangeFilter, setMessageStatus]);
+  }, [
+    url,
+    user?.token,
+    searchFilter,
+    lexileRangeFilter,
+    sortFilter,
+    dateRangeFilter,
+    setMessageStatus,
+  ]);
 
   // map stories
   const storiesCards = stories.map((story) => {
@@ -87,7 +95,9 @@ const AdminStories = () => {
           genre={story.genre}
           testId={story.test_id}
           visit={`/controller/stories/${cipheredStoryId}`}
-          createAdminActivity={async () => await createAdminActivity("story", story?.title, "R")}
+          createAdminActivity={async () =>
+            await createAdminActivity("story", story?.title, "R")
+          }
           test={testLink}
         />
       </React.Fragment>
@@ -114,7 +124,9 @@ const AdminStories = () => {
     <div className="p-4 bg-accntColor w-full min-h-screen cstm-flex-col gap-4 justify-start">
       <AdminPageHeader subHeader="Readefine" mainHeader="Stories" />
 
-      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
+      {message.active ? (
+        <Message message={message} setMessageStatus={setMessageStatus} />
+      ) : null}
 
       <div className="w-full cstm-flex-col gap-4 ">
         <StoriesFilter
@@ -145,7 +157,13 @@ const AdminStories = () => {
             storiesCards
           ) : (
             <div className="cstm-flex-col absolute top-2/4 translate-y-2/4 left-2/4 -translate-x-2/4 w-full">
-              <Image src={noReads} alt="empty" priority width={220} draggable={false} />
+              <Image
+                src={noReads}
+                alt="empty"
+                priority
+                width={220}
+                draggable={false}
+              />
               <p className="text-xs opacity-80">No Stories Found</p>
             </div>
           )}

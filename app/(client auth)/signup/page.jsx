@@ -20,7 +20,6 @@ import { useLoading } from "@/hooks/useLoading";
 import { useMessage } from "@/hooks/useMessage";
 import { useRouter } from "next/navigation";
 import { BsDot } from "react-icons/bs";
-import { useGlobalContext } from "@/base/context";
 
 const Signup = () => {
   const [userData, setUserData] = React.useState({
@@ -38,7 +37,7 @@ const Signup = () => {
   const { loading, setLoadingState } = useLoading(false);
   const { message, setMessageStatus } = useMessage();
 
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
 
   const router = useRouter();
 
@@ -68,12 +67,20 @@ const Signup = () => {
       }
 
       if (!validator.isEmail(userData.email)) {
-        setMessageStatus(true, "The email you entered is not valid.", "warning");
+        setMessageStatus(
+          true,
+          "The email you entered is not valid.",
+          "warning"
+        );
         return false;
       }
 
       if (userData.password?.length < 8) {
-        setMessageStatus(true, "Password must not be less than 8 characters.", "warning");
+        setMessageStatus(
+          true,
+          "Password must not be less than 8 characters.",
+          "warning"
+        );
         return false;
       }
     }
@@ -152,7 +159,9 @@ const Signup = () => {
   return (
     <div className="w-full h-screen bg-prmColor p-4 cstm-flex-col  ">
       {/* show message pop up */}
-      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
+      {message.active ? (
+        <Message message={message} setMessageStatus={setMessageStatus} />
+      ) : null}
 
       <p className=" font-extrabold text-2xl text-accntColor">Sign Up</p>
       <br />
@@ -166,9 +175,21 @@ const Signup = () => {
         {activeForm}
 
         <div className="cstm-flex-row">
-          <BsDot className={`${activePos === 1 ? "text-scndColor text-xl" : "text-black text-xl"} transition-all`} />
-          <BsDot className={`${activePos === 2 ? "text-scndColor text-xl" : "text-black text-xl"} transition-all`} />
-          <BsDot className={`${activePos === 3 ? "text-scndColor text-xl" : "text-black text-xl"} transition-all`} />
+          <BsDot
+            className={`${
+              activePos === 1 ? "text-scndColor text-xl" : "text-black text-xl"
+            } transition-all`}
+          />
+          <BsDot
+            className={`${
+              activePos === 2 ? "text-scndColor text-xl" : "text-black text-xl"
+            } transition-all`}
+          />
+          <BsDot
+            className={`${
+              activePos === 3 ? "text-scndColor text-xl" : "text-black text-xl"
+            } transition-all`}
+          />
         </div>
 
         <div className="cstm-flex-row w-full">
@@ -195,7 +216,10 @@ const Signup = () => {
           ) : null}
 
           {activePos === 3 ? (
-            <button type="submit" className="text-sm bg-scndColor text-prmColor p-2 w-24 rounded-md font-bold">
+            <button
+              type="submit"
+              className="text-sm bg-scndColor text-prmColor p-2 w-24 rounded-md font-bold"
+            >
               Sign Up
             </button>
           ) : null}
@@ -203,7 +227,12 @@ const Signup = () => {
       </form>
 
       {/* render on mobile view*/}
-      <Image src={intersectAM} alt="intersect" className="w-full bottom-0 left-0 fixed t:hidden" priority />
+      <Image
+        src={intersectAM}
+        alt="intersect"
+        className="w-full bottom-0 left-0 fixed t:hidden"
+        priority
+      />
 
       {/* render on tablet */}
       <Image
@@ -214,7 +243,12 @@ const Signup = () => {
       />
 
       {/* render on laptop */}
-      <Image src={intersectAL} alt="intersect" className="hidden w-full -bottom-10 left-0 fixed l-s:block" priority />
+      <Image
+        src={intersectAL}
+        alt="intersect"
+        className="hidden w-full -bottom-10 left-0 fixed l-s:block"
+        priority
+      />
     </div>
   );
 };

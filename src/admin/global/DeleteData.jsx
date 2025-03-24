@@ -5,7 +5,7 @@ import axios from "axios";
 import { IoClose } from "react-icons/io5";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useGlobalContext } from "@/base/context";
+
 import Message from "@/components/global/Message";
 import Loading from "@/components/global/Loading";
 import { useLoading } from "@/hooks/useLoading";
@@ -49,7 +49,11 @@ const DeleteData = (props) => {
 
       if (data) {
         if (user?.role === "admin") {
-          await createAdminActivity(props.resourceType, props.confirmation, "D");
+          await createAdminActivity(
+            props.resourceType,
+            props.confirmation,
+            "D"
+          );
         }
 
         if (props.returnRoute) {
@@ -76,9 +80,14 @@ const DeleteData = (props) => {
       className="w-full min-h-screen h-full  backdrop-blur-md bg-gradient-to-br animate-fadeIn
               from-[#552aca32] to-[#4bfce132] fixed z-[60] top-0 left-0 p-4 cstm-flex-col justify-start"
     >
-      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
+      {message.active ? (
+        <Message message={message} setMessageStatus={setMessageStatus} />
+      ) : null}
 
-      <button onClick={props.handleCanDeleteData} className="cstm-bg-hover ml-auto">
+      <button
+        onClick={props.handleCanDeleteData}
+        className="cstm-bg-hover ml-auto"
+      >
         <IoClose className="text-prmColor text-xl " />
       </button>
 
@@ -91,11 +100,17 @@ const DeleteData = (props) => {
         >
           <div className="w-full">
             <p className="text-prmColor font-bold">Notice</p>
-            <p className="text-xs font-light">once you delete a data, it cannot be retrieved.</p>
+            <p className="text-xs font-light">
+              once you delete a data, it cannot be retrieved.
+            </p>
           </div>
 
           <p className="text-xs font-ligt ">
-            Type <span className="font-bold text-prmColor">{props.confirmation}</span> to confirm deletion.
+            Type{" "}
+            <span className="font-bold text-prmColor">
+              {props.confirmation}
+            </span>{" "}
+            to confirm deletion.
           </p>
 
           <input

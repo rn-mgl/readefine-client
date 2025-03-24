@@ -11,7 +11,7 @@ import DeleteData from "@/admin/global/DeleteData";
 
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { BsArrowLeft } from "react-icons/bs";
-import { useGlobalContext } from "@/base/context";
+
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { choicesStyle, shuffleQuestions } from "@/functions/testFns";
@@ -39,7 +39,7 @@ const SingleTest = ({ params }) => {
 
   const { message, setMessageStatus } = useMessage();
 
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const { data: session } = useSession({ required: true });
   const decodedTestId = decipher(params?.test_id);
   const user = session?.user?.name;
@@ -75,7 +75,15 @@ const SingleTest = ({ params }) => {
         router.push(`/controller/tests/add/${params?.test_id}`);
       }
     }
-  }, [url, user?.token, decodedTestId, router, params?.test_id, setNewTestData, setMessageStatus]);
+  }, [
+    url,
+    user?.token,
+    decodedTestId,
+    router,
+    params?.test_id,
+    setNewTestData,
+    setMessageStatus,
+  ]);
 
   // get questions
   const getQuestions = React.useCallback(async () => {
@@ -100,7 +108,10 @@ const SingleTest = ({ params }) => {
   // map questions
   const mappedQuestions = questions.map((q, i) => {
     return (
-      <div className="p-4 bg-white rounded-md w-full cstm-flex-col gap-4 items-start" key={q.question_id}>
+      <div
+        className="p-4 bg-white rounded-md w-full cstm-flex-col gap-4 items-start"
+        key={q.question_id}
+      >
         <p className="font-bold">{q.question}</p>
 
         <div className="cstm-separator" />
@@ -151,9 +162,16 @@ const SingleTest = ({ params }) => {
     <div className="p-4 w-full min-h-screen bg-accntColor cstm-flex-col gap-4">
       <AdminPageHeader subHeader="Tests" mainHeader={testData?.title} />
 
-      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
+      {message.active ? (
+        <Message message={message} setMessageStatus={setMessageStatus} />
+      ) : null}
 
-      {isFinished ? <ScorePopup score={score} handleIsFinished={() => handleIsFinished(false)} /> : null}
+      {isFinished ? (
+        <ScorePopup
+          score={score}
+          handleIsFinished={() => handleIsFinished(false)}
+        />
+      ) : null}
 
       {canDeleteTest ? (
         <DeleteData
@@ -166,7 +184,11 @@ const SingleTest = ({ params }) => {
       ) : null}
 
       {canSeeResult ? (
-        <TestResult selectedChoices={selectedChoices} questions={questions} handleCanSeeResult={handleCanSeeResult} />
+        <TestResult
+          selectedChoices={selectedChoices}
+          questions={questions}
+          handleCanSeeResult={handleCanSeeResult}
+        />
       ) : null}
 
       <div className="cstm-flex-col w-full ">
@@ -176,11 +198,17 @@ const SingleTest = ({ params }) => {
 
         <div className="cstm-flex-col w-full gap-4 l-s:w-10/12">
           <div className="cstm-flex-row w-full">
-            <Link href="/controller/tests" className="w-fit cstm-bg-hover mr-auto">
+            <Link
+              href="/controller/tests"
+              className="w-fit cstm-bg-hover mr-auto"
+            >
               <BsArrowLeft className=" text-prmColor" />
             </Link>
 
-            <Link href={`/controller/tests/edit/${params.test_id}`} className="cstm-bg-hover">
+            <Link
+              href={`/controller/tests/edit/${params.test_id}`}
+              className="cstm-bg-hover"
+            >
               <AiFillEdit className=" text-prmColor cursor-pointer" />
             </Link>
 

@@ -8,7 +8,6 @@ import axios from "axios";
 import Link from "next/link";
 import React from "react";
 
-import { useGlobalContext } from "@/base/context";
 import { isTokenExpired } from "@/functions/jwtFns";
 import { decipher } from "@/functions/security";
 import { useFileControls } from "@/hooks/useFileControls";
@@ -50,7 +49,7 @@ const EditStory = ({ params }) => {
   const { loading, setLoadingState } = useLoading(false);
 
   const { data: session } = useSession({ required: true });
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const user = session?.user?.name;
   const decodedStoryId = decipher(params?.story_id);
   const router = useRouter();
@@ -169,7 +168,10 @@ const EditStory = ({ params }) => {
 
     if (hasRawImage()) {
       try {
-        bookCover = await uploadFile("readefine_admin_file", rawImage.current?.files);
+        bookCover = await uploadFile(
+          "readefine_admin_file",
+          rawImage.current?.files
+        );
       } catch (error) {
         uploadErrors.push(error);
       }
@@ -188,7 +190,10 @@ const EditStory = ({ params }) => {
 
     if (hasRawAudio()) {
       try {
-        bookAudio = await uploadFile("readefine_admin_file", rawAudio.current?.files);
+        bookAudio = await uploadFile(
+          "readefine_admin_file",
+          rawAudio.current?.files
+        );
       } catch (error) {
         uploadErrors.push(error);
       }
@@ -203,7 +208,10 @@ const EditStory = ({ params }) => {
 
       if (page.rawPageImage) {
         try {
-          pageImage = await uploadFile("readefine_admin_file", page.rawPageImage);
+          pageImage = await uploadFile(
+            "readefine_admin_file",
+            page.rawPageImage
+          );
         } catch (error) {
           uploadErrors.push(error);
         }
@@ -237,7 +245,11 @@ const EditStory = ({ params }) => {
 
       // if edited, move to stories page
       if (data) {
-        const activityData = await createAdminActivity("story", story?.title, "U");
+        const activityData = await createAdminActivity(
+          "story",
+          story?.title,
+          "U"
+        );
 
         if (activityData) {
           router.push("/controller/stories");
@@ -271,9 +283,12 @@ const EditStory = ({ params }) => {
   const getStory = React.useCallback(async () => {
     if (user?.token) {
       try {
-        const { data } = await axios.get(`${url}/admin_story/${decodedStoryId}`, {
-          headers: { Authorization: user?.token },
-        });
+        const { data } = await axios.get(
+          `${url}/admin_story/${decodedStoryId}`,
+          {
+            headers: { Authorization: user?.token },
+          }
+        );
         if (data) {
           setStory(data);
         }
@@ -285,36 +300,50 @@ const EditStory = ({ params }) => {
   }, [url, user?.token, decodedStoryId, setMessageStatus]);
 
   // map pages
-  const mappedPages = pages.slice(slidePage * pagePerSlide, slidePage * pagePerSlide + pagePerSlide).map((page, i) => {
-    const pageImage = page.pageImage?.name ? page.pageImage?.name : page.image ? "has page image" : null;
-    return (
-      <React.Fragment key={page.page}>
-        <EditStoryCard
-          pageNumber={page.page}
-          pageHeader={page.header}
-          pageContent={page.content}
-          pageFileName={pageImage}
-          handleDeletePage={() => handleDeletePage(page.content_id, page.page)}
-          handleSelectedCard={() => handleSelectedCard(page.page)}
-        />
-      </React.Fragment>
-    );
-  });
+  const mappedPages = pages
+    .slice(slidePage * pagePerSlide, slidePage * pagePerSlide + pagePerSlide)
+    .map((page, i) => {
+      const pageImage = page.pageImage?.name
+        ? page.pageImage?.name
+        : page.image
+        ? "has page image"
+        : null;
+      return (
+        <React.Fragment key={page.page}>
+          <EditStoryCard
+            pageNumber={page.page}
+            pageHeader={page.header}
+            pageContent={page.content}
+            pageFileName={pageImage}
+            handleDeletePage={() =>
+              handleDeletePage(page.content_id, page.page)
+            }
+            handleSelectedCard={() => handleSelectedCard(page.page)}
+          />
+        </React.Fragment>
+      );
+    });
 
-  const mappedSlidePages = new Array(Math.ceil(pages.length / pagePerSlide)).fill(0).map((page, index) => {
-    return (
-      <button
-        type="button"
-        onClick={() => handleSlidePage(index)}
-        className={` p-2 rounded-md w-10 border-2
+  const mappedSlidePages = new Array(Math.ceil(pages.length / pagePerSlide))
+    .fill(0)
+    .map((page, index) => {
+      return (
+        <button
+          type="button"
+          onClick={() => handleSlidePage(index)}
+          className={` p-2 rounded-md w-10 border-2
                     min-w-[2.5rem] text-xs font-medium 
-                    ${slidePage === index ? "bg-prmColor text-white" : "bg-white"} `}
-        key={index}
-      >
-        {index}
-      </button>
-    );
-  });
+                    ${
+                      slidePage === index
+                        ? "bg-prmColor text-white"
+                        : "bg-white"
+                    } `}
+          key={index}
+        >
+          {index}
+        </button>
+      );
+    });
 
   React.useEffect(() => {
     getStory();
@@ -340,7 +369,9 @@ const EditStory = ({ params }) => {
 
       <AdminPageHeader subHeader="Stories" mainHeader="Edit Story" />
 
-      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
+      {message.active ? (
+        <Message message={message} setMessageStatus={setMessageStatus} />
+      ) : null}
 
       {selectedCard ? (
         <EditStoryPage
@@ -354,8 +385,15 @@ const EditStory = ({ params }) => {
         />
       ) : null}
 
-      <form className="w-full cstm-flex-col gap-4  border-collapse" onSubmit={(e) => editBook(e)}>
-        <Link type="button" href="/controller/stories" className="w-fit cstm-bg-hover mr-auto">
+      <form
+        className="w-full cstm-flex-col gap-4  border-collapse"
+        onSubmit={(e) => editBook(e)}
+      >
+        <Link
+          type="button"
+          href="/controller/stories"
+          className="w-fit cstm-bg-hover mr-auto"
+        >
           <BsArrowLeft className=" text-prmColor" />
         </Link>
 
@@ -372,12 +410,21 @@ const EditStory = ({ params }) => {
 
         <div
           className={`grid grid-cols-1 gap-4 max-w-screen-lg w-full ${
-            (audioFile.src || story?.audio) && (imageFile.src || story?.book_cover) && "t:grid-cols-2"
+            (audioFile.src || story?.audio) &&
+            (imageFile.src || story?.book_cover) &&
+            "t:grid-cols-2"
           }`}
         >
           {imageFile.src ? (
             <div className="w-full bg-white cstm-flex-row rounded-lg p-2 gap-2 ">
-              <Image src={imageFile.src} alt="preview" className="h-full rounded-md" priority width={80} height={80} />
+              <Image
+                src={imageFile.src}
+                alt="preview"
+                className="h-full rounded-md"
+                priority
+                width={80}
+                height={80}
+              />
 
               <p
                 className="text-xs overflow-x-auto w-full mr-auto 
@@ -386,7 +433,11 @@ const EditStory = ({ params }) => {
                 {imageFile.name}
               </p>
 
-              <button type="button" onClick={removeSelectedImage} className="cstm-bg-hover ">
+              <button
+                type="button"
+                onClick={removeSelectedImage}
+                className="cstm-bg-hover "
+              >
                 <IoClose className="text-prmColor text-xl cursor-pointer " />
               </button>
             </div>
@@ -408,7 +459,11 @@ const EditStory = ({ params }) => {
                 Current Book Cover
               </p>
 
-              <button type="button" onClick={clearBookCover} className="cstm-bg-hover ">
+              <button
+                type="button"
+                onClick={clearBookCover}
+                className="cstm-bg-hover "
+              >
                 <IoClose className="text-prmColor text-xl cursor-pointer " />
               </button>
             </div>
@@ -424,7 +479,11 @@ const EditStory = ({ params }) => {
                 <p className="text-xs w-[30ch] truncate">{audioFile.name}</p>
               </div>
 
-              <button type="button" onClick={removeSelectedAudio} className="cstm-bg-hover">
+              <button
+                type="button"
+                onClick={removeSelectedAudio}
+                className="cstm-bg-hover"
+              >
                 <IoClose className="text-prmColor text-xl cursor-pointer " />
               </button>
             </div>
@@ -438,7 +497,11 @@ const EditStory = ({ params }) => {
                 <p className="text-xs truncate">Current Book Audio</p>
               </div>
 
-              <button type="button" onClick={clearBookAudio} className="cstm-bg-hover">
+              <button
+                type="button"
+                onClick={clearBookAudio}
+                className="cstm-bg-hover"
+              >
                 <IoClose className="text-prmColor text-xl cursor-pointer " />
               </button>
             </div>
@@ -457,13 +520,21 @@ const EditStory = ({ params }) => {
           className="w-full cstm-flex-row gap-2 overflow-x-auto p-2
                     min-h-[3.5rem] justify-start t:justify-center"
         >
-          <button type="button" className="hover:shadow-none" onClick={handlePrevSlidePage}>
+          <button
+            type="button"
+            className="hover:shadow-none"
+            onClick={handlePrevSlidePage}
+          >
             <BiChevronLeft />
           </button>
 
           {mappedSlidePages}
 
-          <button type="button" className="hover:shadow-none" onClick={handleNextSlidePage}>
+          <button
+            type="button"
+            className="hover:shadow-none"
+            onClick={handleNextSlidePage}
+          >
             <BiChevronRight />
           </button>
         </div>

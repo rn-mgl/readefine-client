@@ -10,7 +10,6 @@ import RiddleTutorial from "@/components/minigames/riddles/RiddleTutorial";
 import Volume from "@/components/global/Volume";
 import happy from "@/public/music/minigames/Happy.mp3";
 
-import { useGlobalContext } from "@/base/context";
 import { useSession } from "next-auth/react";
 import { AiFillHeart } from "react-icons/ai";
 import { useRouter } from "next/navigation";
@@ -56,7 +55,7 @@ const ClientRiddles = () => {
   const { message, setMessageStatus } = useMessage();
 
   const { data: session } = useSession();
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const user = session?.user?.name;
   const router = useRouter();
 
@@ -83,7 +82,14 @@ const ClientRiddles = () => {
       console.log(error);
       setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [entryGuesses, riddleData?.riddle_id, timer, url, user?.token, setMessageStatus]);
+  }, [
+    entryGuesses,
+    riddleData?.riddle_id,
+    timer,
+    url,
+    user?.token,
+    setMessageStatus,
+  ]);
 
   // get riddle data and fill in game data
   const getRiddle = async () => {
@@ -113,7 +119,12 @@ const ClientRiddles = () => {
   // map lives
   const remainingLives = lives.status.map((alive, i) => {
     return (
-      <AiFillHeart key={i} className={` ${alive ? "text-prmColor" : "text-neutral-400 animate-shake"} t:text-xl`} />
+      <AiFillHeart
+        key={i}
+        className={` ${
+          alive ? "text-prmColor" : "text-neutral-400 animate-shake"
+        } t:text-xl`}
+      />
     );
   });
 
@@ -135,9 +146,13 @@ const ClientRiddles = () => {
 
   return (
     <div className="w-full min-h-screen h-screen p-4 cstm-flex-col justify-start">
-      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
+      {message.active ? (
+        <Message message={message} setMessageStatus={setMessageStatus} />
+      ) : null}
 
-      {canSeeTutorial ? <RiddleTutorial handleCanSeeTutorial={handleCanSeeTutorial} /> : null}
+      {canSeeTutorial ? (
+        <RiddleTutorial handleCanSeeTutorial={handleCanSeeTutorial} />
+      ) : null}
 
       {gameOver.over ? (
         <Gameover

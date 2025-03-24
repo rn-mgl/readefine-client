@@ -1,6 +1,5 @@
 "use client";
 
-import { useGlobalContext } from "@/base/context";
 import DeleteData from "@/src/admin/global/DeleteData";
 import Message from "@/src/components/global/Message";
 import AddAdmin from "@/src/head/admins/AddAdmin";
@@ -18,15 +17,24 @@ import { AiOutlinePlus } from "react-icons/ai";
 const Admins = () => {
   const [Admins, setAdmins] = React.useState([]);
   const [canAddAdmins, setCanAddAdmins] = React.useState(false);
-  const [adminToDelete, setAdminToDelete] = React.useState({ id: -1, username: "" });
+  const [adminToDelete, setAdminToDelete] = React.useState({
+    id: -1,
+    username: "",
+  });
   const [canDeleteAdmin, setCanDeleteAdmin] = React.useState(false);
 
-  const { searchFilter, sortFilter, dateRangeFilter, handleSearchFilter, handleSortFilter, handleDateRangeFilter } =
-    useAdminFilters();
+  const {
+    searchFilter,
+    sortFilter,
+    dateRangeFilter,
+    handleSearchFilter,
+    handleSortFilter,
+    handleDateRangeFilter,
+  } = useAdminFilters();
   const { message, setMessageStatus } = useMessage();
 
   const { data: session } = useSession();
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const user = session?.user?.name;
 
   const handleCanAddAdmins = () => {
@@ -55,7 +63,14 @@ const Admins = () => {
       console.log(error);
       setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, searchFilter, sortFilter, dateRangeFilter, setMessageStatus]);
+  }, [
+    url,
+    user?.token,
+    searchFilter,
+    sortFilter,
+    dateRangeFilter,
+    setMessageStatus,
+  ]);
 
   const mappedAdmins = Admins.map((admin, index) => {
     return (
@@ -63,7 +78,9 @@ const Admins = () => {
         key={index}
         admin={admin}
         adminToDelete={adminToDelete}
-        handleAdminToDelete={() => handleAdminToDelete(admin.admin_id, admin.username)}
+        handleAdminToDelete={() =>
+          handleAdminToDelete(admin.admin_id, admin.username)
+        }
         handleCanDeleteAdmin={handleCanDeleteAdmin}
       />
     );
@@ -79,9 +96,16 @@ const Admins = () => {
     <div className="p-4 bg-accntColor w-full min-h-screen cstm-flex-col gap-4 justify-start">
       <HeadPageHeader subHeader="Readefine" mainHeader="Admins" />
 
-      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
+      {message.active ? (
+        <Message message={message} setMessageStatus={setMessageStatus} />
+      ) : null}
 
-      {canAddAdmins ? <AddAdmin handleCanAddAdmins={handleCanAddAdmins} getAllAdmins={getAllAdmins} /> : null}
+      {canAddAdmins ? (
+        <AddAdmin
+          handleCanAddAdmins={handleCanAddAdmins}
+          getAllAdmins={getAllAdmins}
+        />
+      ) : null}
 
       {canDeleteAdmin ? (
         <DeleteData

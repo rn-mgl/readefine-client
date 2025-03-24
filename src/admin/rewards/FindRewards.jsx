@@ -3,7 +3,6 @@ import React from "react";
 import FindRewardCards from "./FindRewardCards";
 import RewardsFilter from "./RewardsFilter";
 
-import { useGlobalContext } from "@/base/context";
 import Message from "@/components/global/Message";
 import { typeConversion } from "@/functions/typeConversion";
 import { useMessage } from "@/hooks/useMessage";
@@ -29,7 +28,7 @@ const FindRewards = (props) => {
 
   const { data: session } = useSession({ required: true });
   const user = session?.user?.name;
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
 
   const getRewards = React.useCallback(async () => {
     try {
@@ -45,7 +44,16 @@ const FindRewards = (props) => {
       console.log(error);
       setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, setRewards, searchFilter, sortFilter, dateRangeFilter, typeFilter, setMessageStatus]);
+  }, [
+    url,
+    user?.token,
+    setRewards,
+    searchFilter,
+    sortFilter,
+    dateRangeFilter,
+    typeFilter,
+    setMessageStatus,
+  ]);
 
   const rewardsCards = rewards.map((reward) => {
     return (
@@ -54,7 +62,9 @@ const FindRewards = (props) => {
           image={reward.reward}
           title={reward.reward_name}
           type={typeConversion[reward.reward_type]}
-          selectReward={() => props.selectReward(reward.reward_name, reward.reward_id)}
+          selectReward={() =>
+            props.selectReward(reward.reward_name, reward.reward_id)
+          }
           handleCanSelectReward={props.handleCanSelectReward}
         />
       </React.Fragment>
@@ -72,9 +82,14 @@ const FindRewards = (props) => {
       className="p-4 h-full overflow-y-auto cstm-scrollbar-2 backdrop-blur-md bg-prmColor bg-opacity-10 fixed top-0 
                   left-0 w-full min-h-screen cstm-flex-col gap-4 justify-start z-[60] animate-fadeIn"
     >
-      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
+      {message.active ? (
+        <Message message={message} setMessageStatus={setMessageStatus} />
+      ) : null}
 
-      <button onClick={props.handleCanSelectReward} className="ml-auto cstm-flex-col w-fit z-20 cstm-bg-hover">
+      <button
+        onClick={props.handleCanSelectReward}
+        className="ml-auto cstm-flex-col w-fit z-20 cstm-bg-hover"
+      >
         <IoClose className="text-prmColor text-xl cursor-pointer" />
       </button>
 

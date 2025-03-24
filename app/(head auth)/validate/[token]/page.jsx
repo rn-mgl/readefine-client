@@ -6,7 +6,6 @@ import VerifyingImage from "@/components/verify/VerifyingImage";
 import axios from "axios";
 import React from "react";
 
-import { useGlobalContext } from "@/base/context";
 import { useMessage } from "@/hooks/useMessage";
 import { signOut } from "next-auth/react";
 
@@ -15,13 +14,15 @@ const HeadVerify = ({ params }) => {
 
   const { message, setMessageStatus } = useMessage();
 
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const token = params?.token;
 
   // verify user
   const verifyUser = React.useCallback(async () => {
     try {
-      const { data } = await axios.patch(`${url}/auth_head/head_verify`, { token });
+      const { data } = await axios.patch(`${url}/auth_head/head_verify`, {
+        token,
+      });
 
       await signOut({ redirect: false });
 
@@ -44,7 +45,9 @@ const HeadVerify = ({ params }) => {
 
   return (
     <div className="cstm-flex-col w-full min-h-screen bg-accntColor">
-      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
+      {message.active ? (
+        <Message message={message} setMessageStatus={setMessageStatus} />
+      ) : null}
 
       {/* render image depending on verification status */}
 

@@ -8,7 +8,6 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-import { useGlobalContext } from "@/base/context";
 import { cipher } from "@/functions/security";
 import { useLoading } from "@/hooks/useLoading";
 import { signOut, useSession } from "next-auth/react";
@@ -26,7 +25,7 @@ const HeadNav = ({ children }) => {
   const { loading, setLoadingState } = useLoading(false);
 
   const { data: session } = useSession();
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const user = session?.user?.name;
 
   const path = usePathname();
@@ -92,19 +91,31 @@ const HeadNav = ({ children }) => {
 
   return (
     <div className="w-full h-full flex flex-row justify-start ">
-      <button onClick={() => toggleOpenNav("button")} className="cstm-bg-hover absolute top-4 left-4 z-10">
+      <button
+        onClick={() => toggleOpenNav("button")}
+        className="cstm-bg-hover absolute top-4 left-4 z-10"
+      >
         <BiMenu className="text-xl cursor-pointer l-s:hidden" />
       </button>
 
       <div
         className={`${
-          navIsOpen ? "m-s:translate-x-0 l-s:w-[30%] l-l:w-[20%]" : "m-s:-translate-x-full l-s:w-[8%] l-l:w-[5%]"
+          navIsOpen
+            ? "m-s:translate-x-0 l-s:w-[30%] l-l:w-[20%]"
+            : "m-s:-translate-x-full l-s:w-[8%] l-l:w-[5%]"
         } bg-white w-10/12 h-full text-center fixed p-4 transition-all 
             cstm-flex-col justify-start gap-4 z-50 t:w-[50%]
             l-s:translate-x-0 l-s:left-0 l-s:top-0 l-s:w-[25%] l-s:sticky l-s:h-screen`}
       >
-        <div className={`${navIsOpen ? "justify-between" : "justify-center"} w-full flex flex-row `}>
-          <button onClick={() => toggleOpenNav("button")} className="cursor-pointer">
+        <div
+          className={`${
+            navIsOpen ? "justify-between" : "justify-center"
+          } w-full flex flex-row `}
+        >
+          <button
+            onClick={() => toggleOpenNav("button")}
+            className="cursor-pointer"
+          >
             <BiMenu className="text-xl " />
           </button>
 
@@ -184,13 +195,28 @@ const HeadNav = ({ children }) => {
                 justify-start transition-all cstm-flex-row gap-2 w-full`}
           >
             <div
-              style={{ backgroundImage: headData?.image ? `url(${headData?.image})` : null }}
+              style={{
+                backgroundImage: headData?.image
+                  ? `url(${headData?.image})`
+                  : null,
+              }}
               className="w-12 min-w-[3rem] h-12 min-h-[3rem] rounded-full
                       bg-indigo-100 bg-cover bg-center"
             >
-              {!headData?.image ? <Image src={avatar} alt="avatar" className="saturate-150" width={100} /> : null}
+              {!headData?.image ? (
+                <Image
+                  src={avatar}
+                  alt="avatar"
+                  className="saturate-150"
+                  width={100}
+                />
+              ) : null}
             </div>
-            <div className={`${navIsOpen ? "l-s:flex" : "l-s:hidden"} cstm-flex-col items-start w-full`}>
+            <div
+              className={`${
+                navIsOpen ? "l-s:flex" : "l-s:hidden"
+              } cstm-flex-col items-start w-full`}
+            >
               <p className="text-xs">Welcome</p>
               <p className="font-bold text-prmColor whitespace-nowrap w-full">
                 {headData?.name} {headData?.surname}
@@ -205,10 +231,18 @@ const HeadNav = ({ children }) => {
                 justify-start transition-all cstm-flex-row gap-4 w-full overflow-x-hidden"
             onClick={logOut}
           >
-            <span className={` ${navIsOpen ? "justify-start" : "l-s:w-10 l-s:h-6 l-s:justify-center"} cstm-flex-col`}>
+            <span
+              className={` ${
+                navIsOpen
+                  ? "justify-start"
+                  : "l-s:w-10 l-s:h-6 l-s:justify-center"
+              } cstm-flex-col`}
+            >
               <BiLogOut className="opacity-50" />
             </span>
-            <span className={`${navIsOpen ? "flex" : "l-s:hidden"} cstm-flex-col`}>
+            <span
+              className={`${navIsOpen ? "flex" : "l-s:hidden"} cstm-flex-col`}
+            >
               <p className="mr-auto text-sm opacity-50">Log Out</p>
             </span>
           </button>

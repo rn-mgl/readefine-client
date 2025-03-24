@@ -7,7 +7,6 @@ import Message from "@/components/global/Message";
 import axios from "axios";
 import React from "react";
 
-import { useGlobalContext } from "@/base/context";
 import { isTokenExpired } from "@/functions/jwtFns";
 import { wordCount } from "@/functions/wordCount";
 import { useFileControls } from "@/hooks/useFileControls";
@@ -28,12 +27,19 @@ const AddReward = () => {
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
 
   const { createAdminActivity } = useAdminActivities();
-  const { imageFile, rawImage, selectedImageViewer, removeSelectedImage, uploadFile, hasRawImage } = useFileControls();
+  const {
+    imageFile,
+    rawImage,
+    selectedImageViewer,
+    removeSelectedImage,
+    uploadFile,
+    hasRawImage,
+  } = useFileControls();
   const { message, setMessageStatus } = useMessage();
   const { loading, setLoadingState } = useLoading(false);
 
   const { data: session } = useSession();
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const user = session?.user?.name;
   const router = useRouter();
 
@@ -61,7 +67,10 @@ const AddReward = () => {
 
     // check for reward image
     if (hasRawImage()) {
-      rewardImage = await uploadFile("readefine_admin_file", rawImage.current?.files);
+      rewardImage = await uploadFile(
+        "readefine_admin_file",
+        rawImage.current?.files
+      );
     } else {
       setLoadingState(false);
       setHasSubmitted(false);
@@ -78,7 +87,11 @@ const AddReward = () => {
 
       // if added, move to main reward page
       if (data) {
-        const activityData = await createAdminActivity("reward", reward.name, "C");
+        const activityData = await createAdminActivity(
+          "reward",
+          reward.name,
+          "C"
+        );
 
         if (activityData) {
           router.push("/controller/rewards");
@@ -110,9 +123,14 @@ const AddReward = () => {
     <div className="p-4 bg-accntColor w-full min-h-screen cstm-flex-col justify-start">
       <AdminPageHeader subHeader="Rewards" mainHeader="Add Reward" />
 
-      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
+      {message.active ? (
+        <Message message={message} setMessageStatus={setMessageStatus} />
+      ) : null}
 
-      <form onSubmit={(e) => addReward(e)} className="w-full cstm-flex-col  border-collapse gap-4">
+      <form
+        onSubmit={(e) => addReward(e)}
+        className="w-full cstm-flex-col  border-collapse gap-4"
+      >
         {/* reward data */}
         <AddRewardFilter handleReward={handleReward} reward={reward} />
 

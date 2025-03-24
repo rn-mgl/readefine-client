@@ -1,10 +1,9 @@
-import { useGlobalContext } from "@/base/context";
 import { useSession } from "next-auth/react";
 import axios from "axios";
 import React from "react";
 
 export default function useAdminActivities() {
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const { data: session } = useSession();
   const user = session?.user?.name;
 

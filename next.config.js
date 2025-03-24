@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 
-const local = "http://localhost:3000";
+const local = "http://192.168.1.30:3000";
 const prod = "https://readefine.vercel.app";
 
 const nextConfig = {
@@ -9,7 +9,7 @@ const nextConfig = {
   },
   env: {
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
-    NEXTAUTH_URL: prod,
+    NEXTAUTH_URL: local,
   },
   reactStrictMode: true,
 };

@@ -7,7 +7,6 @@ import Message from "@/components/global/Message";
 import axios from "axios";
 import React from "react";
 
-import { useGlobalContext } from "@/base/context";
 import { isTokenExpired } from "@/functions/jwtFns";
 import { useFileControls } from "@/hooks/useFileControls";
 import { useLoading } from "@/hooks/useLoading";
@@ -61,7 +60,7 @@ const AddStory = () => {
   const { loading, setLoadingState } = useLoading(false);
 
   const { data: session } = useSession({ required: true });
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const user = session?.user?.name;
   const router = useRouter();
   const pagePerSlide = 9;
@@ -148,7 +147,10 @@ const AddStory = () => {
     let bookCover = null;
 
     if (hasRawImage()) {
-      bookCover = await uploadFile("readefine_admin_file", rawImage.current?.files);
+      bookCover = await uploadFile(
+        "readefine_admin_file",
+        rawImage.current?.files
+      );
     } else {
       setLoadingState(false);
       setMessageStatus(true, "You did not add a book cover.", "error");
@@ -161,7 +163,10 @@ const AddStory = () => {
     let bookAudio = null;
 
     if (hasRawAudio()) {
-      bookAudio = await uploadFile("readefine_admin_file", rawAudio.current?.files);
+      bookAudio = await uploadFile(
+        "readefine_admin_file",
+        rawAudio.current?.files
+      );
     }
 
     storyFilter.bookAudio = bookAudio;
@@ -186,7 +191,11 @@ const AddStory = () => {
 
       // if uploaded, go to stories page
       if (data) {
-        const adminActivity = await createAdminActivity("story", storyFilter.title, "C");
+        const adminActivity = await createAdminActivity(
+          "story",
+          storyFilter.title,
+          "C"
+        );
 
         if (adminActivity) {
           router.push("/controller/stories");
@@ -200,35 +209,43 @@ const AddStory = () => {
   };
 
   // map pages
-  const mappedPages = pages.slice(slidePage * pagePerSlide, slidePage * pagePerSlide + pagePerSlide).map((page, i) => {
-    return (
-      <React.Fragment key={page.pageNumber}>
-        <AddStoryCard
-          pageNumber={page.pageNumber}
-          pageHeader={page.pageHeader}
-          pageContent={page.pageContent}
-          pageFileName={page.pageImage.name}
-          handleDeletePage={() => handleDeletePage(page.pageNumber)}
-          handleSelectedCard={() => handleSelectedCard(page.pageNumber)}
-        />
-      </React.Fragment>
-    );
-  });
+  const mappedPages = pages
+    .slice(slidePage * pagePerSlide, slidePage * pagePerSlide + pagePerSlide)
+    .map((page, i) => {
+      return (
+        <React.Fragment key={page.pageNumber}>
+          <AddStoryCard
+            pageNumber={page.pageNumber}
+            pageHeader={page.pageHeader}
+            pageContent={page.pageContent}
+            pageFileName={page.pageImage.name}
+            handleDeletePage={() => handleDeletePage(page.pageNumber)}
+            handleSelectedCard={() => handleSelectedCard(page.pageNumber)}
+          />
+        </React.Fragment>
+      );
+    });
 
-  const mappedSlidePages = new Array(Math.ceil(pages.length / pagePerSlide)).fill(0).map((page, index) => {
-    return (
-      <button
-        type="button"
-        onClick={() => handleSlidePage(index)}
-        className={` p-2 rounded-md w-10 border-2
+  const mappedSlidePages = new Array(Math.ceil(pages.length / pagePerSlide))
+    .fill(0)
+    .map((page, index) => {
+      return (
+        <button
+          type="button"
+          onClick={() => handleSlidePage(index)}
+          className={` p-2 rounded-md w-10 border-2
                     min-w-[2.5rem] text-xs font-medium 
-                    ${slidePage === index ? "bg-prmColor text-white" : "bg-white"} `}
-        key={index}
-      >
-        {index}
-      </button>
-    );
-  });
+                    ${
+                      slidePage === index
+                        ? "bg-prmColor text-white"
+                        : "bg-white"
+                    } `}
+          key={index}
+        >
+          {index}
+        </button>
+      );
+    });
 
   React.useEffect(() => {
     if (user) {
@@ -246,7 +263,9 @@ const AddStory = () => {
 
       <AdminPageHeader subHeader="Stories" mainHeader="Add Story" />
 
-      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
+      {message.active ? (
+        <Message message={message} setMessageStatus={setMessageStatus} />
+      ) : null}
 
       {selectedCard ? (
         <AddStoryPage
@@ -262,7 +281,10 @@ const AddStory = () => {
       ) : null}
 
       <div className="w-full cstm-flex-row ">
-        <Link href="/controller/stories" className="w-fit cstm-bg-hover mr-auto">
+        <Link
+          href="/controller/stories"
+          className="w-fit cstm-bg-hover mr-auto"
+        >
           <BsArrowLeft className=" text-prmColor" />
         </Link>
       </div>
@@ -289,7 +311,14 @@ const AddStory = () => {
         >
           {imageFile.src ? (
             <div className="w-full bg-white cstm-flex-row rounded-lg p-2 gap-2 ">
-              <Image src={imageFile.src} alt="preview" className="h-full rounded-md" priority width={80} height={80} />
+              <Image
+                src={imageFile.src}
+                alt="preview"
+                className="h-full rounded-md"
+                priority
+                width={80}
+                height={80}
+              />
 
               <p
                 className="text-xs overflow-x-auto w-full mr-auto 
@@ -298,7 +327,11 @@ const AddStory = () => {
                 {imageFile.name}
               </p>
 
-              <button type="button" onClick={removeSelectedImage} className="cstm-bg-hover ">
+              <button
+                type="button"
+                onClick={removeSelectedImage}
+                className="cstm-bg-hover "
+              >
                 <IoClose className="text-prmColor text-xl cursor-pointer " />
               </button>
             </div>
@@ -314,7 +347,11 @@ const AddStory = () => {
                 <p className="text-xs w-[30ch] truncate">{audioFile.name}</p>
               </div>
 
-              <button type="button" onClick={removeSelectedAudio} className="cstm-bg-hover">
+              <button
+                type="button"
+                onClick={removeSelectedAudio}
+                className="cstm-bg-hover"
+              >
                 <IoClose className="text-prmColor text-xl cursor-pointer " />
               </button>
             </div>
@@ -333,13 +370,21 @@ const AddStory = () => {
           className="w-full cstm-flex-row gap-2 overflow-x-auto p-2 
                     min-h-[3.5rem] justify-start t:justify-center"
         >
-          <button type="button" className="hover:shadow-none" onClick={handlePrevSlidePage}>
+          <button
+            type="button"
+            className="hover:shadow-none"
+            onClick={handlePrevSlidePage}
+          >
             <BiChevronLeft />
           </button>
 
           {mappedSlidePages}
 
-          <button type="button" className="hover:shadow-none" onClick={handleNextSlidePage}>
+          <button
+            type="button"
+            className="hover:shadow-none"
+            onClick={handleNextSlidePage}
+          >
             <BiChevronRight />
           </button>
         </div>

@@ -8,7 +8,6 @@ import axios from "axios";
 import Image from "next/image";
 import React from "react";
 
-import { useGlobalContext } from "@/base/context";
 import { isTokenExpired } from "@/functions/jwtFns";
 import { decipher } from "@/functions/security";
 import { wordCount } from "@/functions/wordCount";
@@ -24,13 +23,20 @@ import { IoClose } from "react-icons/io5";
 const EditReward = ({ params }) => {
   const [reward, setReward] = React.useState({});
 
-  const { imageFile, rawImage, selectedImageViewer, removeSelectedImage, uploadFile, hasRawImage } = useFileControls();
+  const {
+    imageFile,
+    rawImage,
+    selectedImageViewer,
+    removeSelectedImage,
+    uploadFile,
+    hasRawImage,
+  } = useFileControls();
   const { message, setMessageStatus } = useMessage();
   const { loading, setLoadingState } = useLoading(false);
   const { createAdminActivity } = useAdminActivities();
 
   const { data: session } = useSession();
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const user = session?.user?.name;
   const decodedRewardId = decipher(params?.reward_id);
   const router = useRouter();
@@ -68,7 +74,10 @@ const EditReward = ({ params }) => {
 
     // check for uploaded reward
     if (hasRawImage()) {
-      rewardImage = await uploadFile("readefine_admin_file", rawImage.current?.files);
+      rewardImage = await uploadFile(
+        "readefine_admin_file",
+        rawImage.current?.files
+      );
     }
 
     if (!rewardImage) {
@@ -86,7 +95,11 @@ const EditReward = ({ params }) => {
 
       // if uploaded, move to view reward
       if (data) {
-        const activityData = await createAdminActivity("reward", reward?.reward_name, "U");
+        const activityData = await createAdminActivity(
+          "reward",
+          reward?.reward_name,
+          "U"
+        );
 
         if (activityData) {
           router.push(`/controller/rewards/${params?.reward_id}`);
@@ -103,9 +116,12 @@ const EditReward = ({ params }) => {
   const getReward = React.useCallback(async () => {
     if (user?.token) {
       try {
-        const { data } = await axios.get(`${url}/admin_reward/${decodedRewardId}`, {
-          headers: { Authorization: user?.token },
-        });
+        const { data } = await axios.get(
+          `${url}/admin_reward/${decodedRewardId}`,
+          {
+            headers: { Authorization: user?.token },
+          }
+        );
         if (data) {
           setReward(data);
         }
@@ -136,11 +152,19 @@ const EditReward = ({ params }) => {
 
   return (
     <div className="w-full min-h-screen bg-accntColor p-4 cstm-flex-col gap-4 justify-start">
-      <AdminPageHeader subHeader={reward?.reward_name} mainHeader="Edit Reward" />
+      <AdminPageHeader
+        subHeader={reward?.reward_name}
+        mainHeader="Edit Reward"
+      />
 
-      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
+      {message.active ? (
+        <Message message={message} setMessageStatus={setMessageStatus} />
+      ) : null}
 
-      <form onSubmit={(e) => editReward(e)} className="w-full cstm-flex-col border-collapse gap-4 ">
+      <form
+        onSubmit={(e) => editReward(e)}
+        className="w-full cstm-flex-col border-collapse gap-4 "
+      >
         <EditRewardFilter handleReward={handleReward} reward={reward} />
 
         <div
@@ -212,7 +236,11 @@ const EditReward = ({ params }) => {
                       Current Reward
                     </p>
 
-                    <button type="button" onClick={clearUploadedReward} className="cstm-bg-hover ">
+                    <button
+                      type="button"
+                      onClick={clearUploadedReward}
+                      className="cstm-bg-hover "
+                    >
                       <IoClose className="text-prmColor text-xl cursor-pointer " />
                     </button>
                   </div>

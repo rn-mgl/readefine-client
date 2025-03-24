@@ -12,7 +12,7 @@ import Message from "@/components/global/Message";
 import arcade from "@/public/music/minigames/Arcade.mp3";
 
 import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/base/context";
+
 import { AiFillHeart } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/functions/jwtFns";
@@ -61,7 +61,7 @@ const Dangle = () => {
   const { message, setMessageStatus } = useMessage();
 
   const { data: session } = useSession({ required: true });
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const user = session?.user?.name;
   const router = useRouter();
 
@@ -96,7 +96,12 @@ const Dangle = () => {
   // map lives
   const remainingLives = lives.status.map((alive, i) => {
     return (
-      <AiFillHeart key={i} className={` ${alive ? "text-prmColor" : "text-neutral-400 animate-shake"} t:text-xl`} />
+      <AiFillHeart
+        key={i}
+        className={` ${
+          alive ? "text-prmColor" : "text-neutral-400 animate-shake"
+        } t:text-xl`}
+      />
     );
   });
 
@@ -112,9 +117,13 @@ const Dangle = () => {
 
   return (
     <div className="w-full min-h-screen h-screen bg-accntColor p-4 cstm-flex-col justify-start">
-      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
+      {message.active ? (
+        <Message message={message} setMessageStatus={setMessageStatus} />
+      ) : null}
 
-      {canSeeTutorial ? <DangleTutorial handleCanSeeTutorial={handleCanSeeTutorial} /> : null}
+      {canSeeTutorial ? (
+        <DangleTutorial handleCanSeeTutorial={handleCanSeeTutorial} />
+      ) : null}
 
       {canSeeHint ? (
         <DangleHint

@@ -8,7 +8,6 @@ import EditTestPage from "@/admin/tests/EditTestPage";
 import Loading from "@/components/global/Loading";
 import Message from "@/components/global/Message";
 
-import { useGlobalContext } from "@/base/context";
 import { isTokenExpired } from "@/functions/jwtFns";
 import { decipher } from "@/functions/security";
 import { useLoading } from "@/hooks/useLoading";
@@ -29,7 +28,7 @@ const EditTest = ({ params }) => {
   const { message, setMessageStatus } = useMessage();
 
   const { data: session } = useSession({ required: true });
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const user = session?.user?.name;
   const router = useRouter();
   const decodedTestId = decipher(params?.test_id);
@@ -72,13 +71,21 @@ const EditTest = ({ params }) => {
           currAnswer !== q["choice_4"])
       ) {
         setLoadingState(false);
-        setMessageStatus(true, `You do not have an answer in number ${i + 1}.`, "error");
+        setMessageStatus(
+          true,
+          `You do not have an answer in number ${i + 1}.`,
+          "error"
+        );
         return;
       }
 
       if (!q.question) {
         setLoadingState(false);
-        setMessageStatus(true, `You do not have a question in number ${i + 1}.`, "error");
+        setMessageStatus(
+          true,
+          `You do not have a question in number ${i + 1}.`,
+          "error"
+        );
         return;
       }
     }
@@ -91,7 +98,11 @@ const EditTest = ({ params }) => {
       );
 
       if (data) {
-        const activityData = await createAdminActivity("test", test?.title, "U");
+        const activityData = await createAdminActivity(
+          "test",
+          test?.title,
+          "U"
+        );
 
         if (activityData) {
           router.push(`/controller/tests/${params?.test_id}`);
@@ -191,7 +202,9 @@ const EditTest = ({ params }) => {
     <div className="p-4 bg-accntColor w-full min-h-screen cstm-flex-col gap-4 justify-start">
       <AdminPageHeader subHeader={test?.title} mainHeader="Edit Test" />
 
-      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
+      {message.active ? (
+        <Message message={message} setMessageStatus={setMessageStatus} />
+      ) : null}
 
       {selectedCard ? (
         <EditTestPage
@@ -203,7 +216,10 @@ const EditTest = ({ params }) => {
       ) : null}
 
       <div className="w-full cstm-flex-row ">
-        <Link href={`/controller/tests/${params?.test_id}`} className="w-fit cstm-bg-hover mr-auto">
+        <Link
+          href={`/controller/tests/${params?.test_id}`}
+          className="w-fit cstm-bg-hover mr-auto"
+        >
           <BsArrowLeft className=" text-prmColor" />
         </Link>
       </div>
@@ -212,7 +228,9 @@ const EditTest = ({ params }) => {
         onSubmit={(e) => editTest(e)}
         className="w-full cstm-flex-col  border-collapse gap-4 bg-white rounded-2xl p-4"
       >
-        <div className="w-full mb-auto gap-4 grid grid-cols-1 t:grid-cols-2 l-l:grid-cols-3">{testQuestions}</div>
+        <div className="w-full mb-auto gap-4 grid grid-cols-1 t:grid-cols-2 l-l:grid-cols-3">
+          {testQuestions}
+        </div>
 
         <button
           type="submit"

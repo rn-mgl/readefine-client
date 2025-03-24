@@ -1,5 +1,5 @@
 "use client";
-import { useGlobalContext } from "@/base/context";
+
 import { useLoading } from "@/hooks/useLoading";
 import book from "@/public/landing/hero/landing book.png";
 import axios from "axios";
@@ -12,7 +12,7 @@ const Hero = () => {
   const [userCount, setUserCount] = React.useState(0);
   const { loading, setLoadingState } = useLoading(false);
 
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
 
   const getUserCount = React.useCallback(async () => {
     setLoadingState(true);
@@ -57,8 +57,9 @@ const Hero = () => {
                   l-s:text-xl l-s:w-10/12
                   l-l:w-7/12"
       >
-        <span className="font-bold">Readefine</span>: Enhancing Elementary Students&apos; Comprehension Skills in
-        English Language Through Gamification
+        <span className="font-bold">Readefine</span>: Enhancing Elementary
+        Students&apos; Comprehension Skills in English Language Through
+        Gamification
       </p>
       <div
         className="w-full cstm-flex-col gap-4
@@ -92,7 +93,9 @@ const Hero = () => {
 
       <p className="text-xs font-light opacity-50 absolute bottom-5 cstm-flex-row gap-1">
         Readefine Users:{" "}
-        <span className="font-bold">{loading ? <BiLoader className="animate-spin" /> : userCount}</span>
+        <span className="font-bold">
+          {loading ? <BiLoader className="animate-spin" /> : userCount}
+        </span>
       </p>
     </section>
   );

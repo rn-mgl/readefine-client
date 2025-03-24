@@ -5,7 +5,6 @@ import InputComp from "@/components/input/InputComp";
 import axios from "axios";
 import React from "react";
 
-import { useGlobalContext } from "@/base/context";
 import { useLoading } from "@/hooks/useLoading";
 import { useMessage } from "@/hooks/useMessage";
 import { useRouter } from "next/navigation";
@@ -13,13 +12,16 @@ import { AiOutlineMail } from "react-icons/ai";
 import { CiUser } from "react-icons/ci";
 
 const ForgotPassword = () => {
-  const [keys, setKeys] = React.useState({ candidateEmail: "", candidateUsername: "" });
+  const [keys, setKeys] = React.useState({
+    candidateEmail: "",
+    candidateUsername: "",
+  });
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
 
   const { loading, setLoadingState } = useLoading(false);
   const { message, setMessageStatus } = useMessage();
 
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const router = useRouter();
 
   // handle onchange function on email and username
@@ -63,9 +65,13 @@ const ForgotPassword = () => {
 
   return (
     <div className="w-full min-h-screen p-4 cstm-flex-col bg-accntColor">
-      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
+      {message.active ? (
+        <Message message={message} setMessageStatus={setMessageStatus} />
+      ) : null}
 
-      <p className=" font-extrabold text-2xl text-prmColor relative z-10">Reset Password</p>
+      <p className=" font-extrabold text-2xl text-prmColor relative z-10">
+        Reset Password
+      </p>
 
       <br />
 
@@ -76,7 +82,8 @@ const ForgotPassword = () => {
         onSubmit={(e) => sendResetEmail(e)}
       >
         <p className="text-xs text-prmColor font-medium">
-          Enter your account&apos;s email address and we will send you a password reset link.
+          Enter your account&apos;s email address and we will send you a
+          password reset link.
         </p>
 
         {/* email */}

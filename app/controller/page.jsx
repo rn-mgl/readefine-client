@@ -12,7 +12,6 @@ import achievements from "@/public/dashboard/admin/Achievements.svg";
 import minigames from "@/public/dashboard/admin/Minigames.svg";
 import Message from "@/components/global/Message";
 
-import { useGlobalContext } from "@/base/context";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/functions/jwtFns";
@@ -26,7 +25,7 @@ const AdminDashboard = () => {
 
   const { data: session } = useSession({ required: true });
   const user = session?.user?.name;
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const router = useRouter();
 
   // get dashboard counts
@@ -87,7 +86,9 @@ const AdminDashboard = () => {
     <div className="p-4 bg-accntColor w-full min-h-screen cstm-flex-col gap-4 justify-start">
       <AdminPageHeader subHeader="Counts" mainHeader="Main Dashboard" />
 
-      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
+      {message.active ? (
+        <Message message={message} setMessageStatus={setMessageStatus} />
+      ) : null}
 
       <div className="flex flex-col items-center gap-4 w-full t:flex-wrap t:flex-row t:justify-center">
         {/* activities card */}
@@ -145,7 +146,13 @@ const AdminDashboard = () => {
         />
 
         {/* minigames card */}
-        <DashboardCards image={minigames} label="Minigames" subLabel="Extras" count={3} to="/controller/minigames" />
+        <DashboardCards
+          image={minigames}
+          label="Minigames"
+          subLabel="Extras"
+          count={3}
+          to="/controller/minigames"
+        />
       </div>
     </div>
   );

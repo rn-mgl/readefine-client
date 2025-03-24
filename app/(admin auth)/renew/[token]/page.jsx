@@ -11,7 +11,6 @@ import Message from "@/components/global/Message";
 import InputComp from "@/components/input/InputComp";
 import Image from "next/image";
 
-import { useGlobalContext } from "@/base/context";
 import { useLoading } from "@/hooks/useLoading";
 import { useMessage } from "@/hooks/useMessage";
 import { signOut } from "next-auth/react";
@@ -21,7 +20,10 @@ import PasswordStrength from "@/src/components/global/PasswordStrength";
 import zxcvbn from "zxcvbn";
 
 const AdminPasswordReset = ({ params }) => {
-  const [password, setPassword] = React.useState({ newPassword: "", retypedPassword: "" });
+  const [password, setPassword] = React.useState({
+    newPassword: "",
+    retypedPassword: "",
+  });
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
   const [visiblePassword, setVisiblePassword] = React.useState({
     newPassword: false,
@@ -31,7 +33,7 @@ const AdminPasswordReset = ({ params }) => {
   const { loading, setLoadingState } = useLoading(false);
   const { message, setMessageStatus } = useMessage();
 
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const router = useRouter();
   const token = params?.token;
 
@@ -64,31 +66,46 @@ const AdminPasswordReset = ({ params }) => {
     const result = zxcvbn(password.newPassword);
 
     if (newPassword !== retypedPassword) {
-      setMessageStatus(true, "The new password and retyped password does not match.", "warning");
+      setMessageStatus(
+        true,
+        "The new password and retyped password does not match.",
+        "warning"
+      );
       setHasSubmitted(false);
       setLoadingState(false);
       return;
     }
 
     if (newPassword.length < 8) {
-      setMessageStatus(true, "Password must not be lower than 8 characters.", "warning");
+      setMessageStatus(
+        true,
+        "Password must not be lower than 8 characters.",
+        "warning"
+      );
       setHasSubmitted(false);
       setLoadingState(false);
       return;
     }
 
     if (result.score < 2) {
-      setMessageStatus(true, "Password strength must not be below Medium.", "warning");
+      setMessageStatus(
+        true,
+        "Password strength must not be below Medium.",
+        "warning"
+      );
       setHasSubmitted(false);
       setLoadingState(false);
       return;
     }
 
     try {
-      const { data } = await axios.post(`${url}/auth_admin_password_reset/${token}`, {
-        newPassword,
-        retypedPassword,
-      });
+      const { data } = await axios.post(
+        `${url}/auth_admin_password_reset/${token}`,
+        {
+          newPassword,
+          retypedPassword,
+        }
+      );
 
       await signOut({ redirect: false });
 
@@ -110,9 +127,13 @@ const AdminPasswordReset = ({ params }) => {
 
   return (
     <div className="p-4 cstm-flex-col w-full min-h-screen bg-gradient-to-b bg-prmColor ">
-      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
+      {message.active ? (
+        <Message message={message} setMessageStatus={setMessageStatus} />
+      ) : null}
 
-      <p className=" font-extrabold text-2xl text-accntColor">Enter New Password</p>
+      <p className=" font-extrabold text-2xl text-accntColor">
+        Enter New Password
+      </p>
 
       <br />
 
@@ -131,9 +152,13 @@ const AdminPasswordReset = ({ params }) => {
           spellCheck={false}
           icon={
             visiblePassword.newPassword ? (
-              <AiOutlineEyeInvisible onClick={() => handleVisiblePassword("newPassword")} />
+              <AiOutlineEyeInvisible
+                onClick={() => handleVisiblePassword("newPassword")}
+              />
             ) : (
-              <AiOutlineEye onClick={() => handleVisiblePassword("newPassword")} />
+              <AiOutlineEye
+                onClick={() => handleVisiblePassword("newPassword")}
+              />
             )
           }
           onChange={(e) => handleNewPassword(e.target)}
@@ -148,9 +173,13 @@ const AdminPasswordReset = ({ params }) => {
           spellCheck={false}
           icon={
             visiblePassword.retypedPassword ? (
-              <AiOutlineEyeInvisible onClick={() => handleVisiblePassword("retypedPassword")} />
+              <AiOutlineEyeInvisible
+                onClick={() => handleVisiblePassword("retypedPassword")}
+              />
             ) : (
-              <AiOutlineEye onClick={() => handleVisiblePassword("retypedPassword")} />
+              <AiOutlineEye
+                onClick={() => handleVisiblePassword("retypedPassword")}
+              />
             )
           }
           onChange={(e) => handleNewPassword(e.target)}

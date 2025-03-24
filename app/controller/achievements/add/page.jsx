@@ -7,7 +7,6 @@ import axios from "axios";
 import Link from "next/link";
 import Message from "@/components/global/Message";
 
-import { useGlobalContext } from "@/base/context";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { BsArrowLeft } from "react-icons/bs";
@@ -33,7 +32,7 @@ const AddAchievement = () => {
   const { createAdminActivity } = useAdminActivities();
 
   const { data: session } = useSession({ required: true });
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const user = session?.user?.name;
   const router = useRouter();
 
@@ -74,7 +73,11 @@ const AddAchievement = () => {
     if (!goal || !name || !reward.id || !task || !type) {
       setHasSubmitted(false);
       setLoadingState(false);
-      setMessageStatus(true, "Please fill in all achievement information.", "error");
+      setMessageStatus(
+        true,
+        "Please fill in all achievement information.",
+        "error"
+      );
       return;
     }
 
@@ -87,7 +90,11 @@ const AddAchievement = () => {
 
       // move to main achievement after adding
       if (data) {
-        const activityData = await createAdminActivity("achievement", achievement.name, "C");
+        const activityData = await createAdminActivity(
+          "achievement",
+          achievement.name,
+          "C"
+        );
 
         if (activityData) {
           router.push("/controller/achievements");
@@ -119,14 +126,26 @@ const AddAchievement = () => {
     <div className="p-4 bg-accntColor w-full min-h-screen cstm-flex-col gap-4 justify-start">
       <AdminPageHeader subHeader="Achievements" mainHeader="Add Achievement" />
 
-      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
-
-      {canSelectReward ? (
-        <FindRewards selectReward={selectReward} handleCanSelectReward={handleCanSelectReward} />
+      {message.active ? (
+        <Message message={message} setMessageStatus={setMessageStatus} />
       ) : null}
 
-      <form onSubmit={(e) => addAchievement(e)} className="w-full cstm-flex-col  border-collapse gap-4">
-        <Link type="button" href="/controller/achievements" className="cstm-bg-hover mr-auto">
+      {canSelectReward ? (
+        <FindRewards
+          selectReward={selectReward}
+          handleCanSelectReward={handleCanSelectReward}
+        />
+      ) : null}
+
+      <form
+        onSubmit={(e) => addAchievement(e)}
+        className="w-full cstm-flex-col  border-collapse gap-4"
+      >
+        <Link
+          type="button"
+          href="/controller/achievements"
+          className="cstm-bg-hover mr-auto"
+        >
           <BsArrowLeft className="text-prmColor cursor-pointer text-xl" />
         </Link>
 

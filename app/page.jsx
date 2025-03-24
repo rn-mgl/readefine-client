@@ -14,7 +14,10 @@ export const metadata = {
 export default function Home() {
   return (
     <main className="w-full h-full flex flex-col items-center justify-start">
-      <Script async src="https://www.googletagmanager.com/gtag/js?id=G-0WXLXZD691"></Script>
+      <Script
+        async
+        src="https://www.googletagmanager.com/gtag/js?id=G-0WXLXZD691"
+      ></Script>
       <Script id="google-analytics">
         {`  window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}

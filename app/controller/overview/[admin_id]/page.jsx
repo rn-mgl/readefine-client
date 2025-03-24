@@ -9,7 +9,6 @@ import ChangePassword from "@/admin/overview/ChangePassword";
 import MainOverview from "@/admin/overview/MainOverview";
 import Message from "@/components/global/Message";
 
-import { useGlobalContext } from "@/base/context";
 import { isTokenExpired } from "@/functions/jwtFns";
 import { decipher } from "@/functions/security";
 import { useMessage } from "@/hooks/useMessage";
@@ -31,7 +30,7 @@ const Overview = ({ params }) => {
 
   const { message, setMessageStatus } = useMessage();
   const { data: session } = useSession();
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const user = session?.user?.name;
   const decipheredId = decipher(params?.admin_id);
   const router = useRouter();
@@ -66,10 +65,13 @@ const Overview = ({ params }) => {
   // get create activities
   const getCreateActivies = React.useCallback(async () => {
     try {
-      const { data } = await axios.get(`${url}/admin_activities/${decipheredId}`, {
-        headers: { Authorization: user?.token },
-        params: { activityTypeFilter: "C" },
-      });
+      const { data } = await axios.get(
+        `${url}/admin_activities/${decipheredId}`,
+        {
+          headers: { Authorization: user?.token },
+          params: { activityTypeFilter: "C" },
+        }
+      );
 
       if (data) {
         setCreateActivities(data);
@@ -83,10 +85,13 @@ const Overview = ({ params }) => {
   // get read activities
   const getReadActivies = React.useCallback(async () => {
     try {
-      const { data } = await axios.get(`${url}/admin_activities/${decipheredId}`, {
-        headers: { Authorization: user?.token },
-        params: { activityTypeFilter: "R" },
-      });
+      const { data } = await axios.get(
+        `${url}/admin_activities/${decipheredId}`,
+        {
+          headers: { Authorization: user?.token },
+          params: { activityTypeFilter: "R" },
+        }
+      );
 
       if (data) {
         setReadActivities(data);
@@ -100,10 +105,13 @@ const Overview = ({ params }) => {
   // get update activities
   const getUpdateActivies = React.useCallback(async () => {
     try {
-      const { data } = await axios.get(`${url}/admin_activities/${decipheredId}`, {
-        headers: { Authorization: user?.token },
-        params: { activityTypeFilter: "U" },
-      });
+      const { data } = await axios.get(
+        `${url}/admin_activities/${decipheredId}`,
+        {
+          headers: { Authorization: user?.token },
+          params: { activityTypeFilter: "U" },
+        }
+      );
 
       if (data) {
         setUpdateActivities(data);
@@ -117,10 +125,13 @@ const Overview = ({ params }) => {
   // get delete activities
   const getDeleteActivies = React.useCallback(async () => {
     try {
-      const { data } = await axios.get(`${url}/admin_activities/${decipheredId}`, {
-        headers: { Authorization: user?.token },
-        params: { activityTypeFilter: "D" },
-      });
+      const { data } = await axios.get(
+        `${url}/admin_activities/${decipheredId}`,
+        {
+          headers: { Authorization: user?.token },
+          params: { activityTypeFilter: "D" },
+        }
+      );
 
       if (data) {
         setDeleteActivities(data);
@@ -167,7 +178,13 @@ const Overview = ({ params }) => {
     activity.resource_type = "Readefine";
     activity.resource_name = "session";
 
-    return <ActivityLog key={index} activity={activity} action={activity.type === "in" ? "logged in" : "logged out"} />;
+    return (
+      <ActivityLog
+        key={index}
+        activity={activity}
+        action={activity.type === "in" ? "logged in" : "logged out"}
+      />
+    );
   });
 
   React.useEffect(() => {
@@ -220,17 +237,29 @@ const Overview = ({ params }) => {
     <div className="w-full min-h-screen bg-accntColor p-4 cstm-flex-col justify-start cstm-scrollbar gap-4">
       <AdminPageHeader mainHeader="Overview" subHeader="Readefine" />
 
-      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
+      {message.active ? (
+        <Message message={message} setMessageStatus={setMessageStatus} />
+      ) : null}
 
-      {canEditMain ? <EditMain adminId={user?.adminId} handleCanEditMain={handleCanEditMain} /> : null}
+      {canEditMain ? (
+        <EditMain
+          adminId={user?.adminId}
+          handleCanEditMain={handleCanEditMain}
+        />
+      ) : null}
 
-      {canChangePassword ? <ChangePassword handleCanChangePassword={handleCanChangePassword} /> : null}
+      {canChangePassword ? (
+        <ChangePassword handleCanChangePassword={handleCanChangePassword} />
+      ) : null}
 
       <div className="cstm-flex-col cstm-scrollbar  w-full gap-4">
         <MainOverview
           adminData={adminData}
           totalActivity={
-            createActivities.length + readActivities.length + updateActivities.length + deleteActivities.length
+            createActivities.length +
+            readActivities.length +
+            updateActivities.length +
+            deleteActivities.length
           }
           handleCanEditMain={handleCanEditMain}
           handleCanChangePassword={handleCanChangePassword}
@@ -244,15 +273,30 @@ const Overview = ({ params }) => {
         </div>
 
         <div className="cstm-flex-col justify-start gap-4 w-full">
-          <ActivityCard mappedActivities={mappedCreateActivities} activityLabel="Create Actions" />
+          <ActivityCard
+            mappedActivities={mappedCreateActivities}
+            activityLabel="Create Actions"
+          />
 
-          <ActivityCard mappedActivities={mappedReadActivities} activityLabel="Read Actions" />
+          <ActivityCard
+            mappedActivities={mappedReadActivities}
+            activityLabel="Read Actions"
+          />
 
-          <ActivityCard mappedActivities={mappedUpdateActivities} activityLabel="Update Actions" />
+          <ActivityCard
+            mappedActivities={mappedUpdateActivities}
+            activityLabel="Update Actions"
+          />
 
-          <ActivityCard mappedActivities={mappedDeleteActivities} activityLabel="Delete Actions" />
+          <ActivityCard
+            mappedActivities={mappedDeleteActivities}
+            activityLabel="Delete Actions"
+          />
 
-          <ActivityCard mappedActivities={mappedSessionActivities} activityLabel="Sessions" />
+          <ActivityCard
+            mappedActivities={mappedSessionActivities}
+            activityLabel="Sessions"
+          />
         </div>
       </div>
     </div>

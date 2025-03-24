@@ -1,12 +1,12 @@
 import React from "react";
 import axios from "axios";
-import { useGlobalContext } from "@/base/context";
+
 import { useSession } from "next-auth/react";
 
 export const useUserLexile = (setMessageStatus) => {
   const [userLexile, setUserLexile] = React.useState(0);
 
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const { data: session } = useSession();
   const user = session?.user?.name;
 

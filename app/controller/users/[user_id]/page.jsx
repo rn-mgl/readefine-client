@@ -14,7 +14,7 @@ import { defaults } from "chart.js";
 import { Line, Scatter } from "react-chartjs-2";
 import { getDaysInMonth, monthMap } from "@/functions/localDate";
 import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/base/context";
+
 import { BsArrowLeft } from "react-icons/bs";
 import { decipher } from "@/functions/security";
 import { useRouter } from "next/navigation";
@@ -28,13 +28,15 @@ const SingleUser = ({ params }) => {
   const [userQuizzes, setUserQuizzes] = React.useState([]);
   const [quizVariable, setQuizVariable] = React.useState("lexile");
   const [quizMonth, setQuizMonth] = React.useState(new Date().getMonth() + 1);
-  const [lexileMonth, setLexileMonth] = React.useState(new Date().getMonth() + 1);
+  const [lexileMonth, setLexileMonth] = React.useState(
+    new Date().getMonth() + 1
+  );
   const [readMonth, setReadMonth] = React.useState(new Date().getMonth() + 1);
 
   const { message, setMessageStatus } = useMessage();
 
   const { data: session } = useSession({ required: true });
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const decodedUserId = decipher(params?.user_id);
   const user = session?.user?.name;
   const router = useRouter();
@@ -276,10 +278,15 @@ const SingleUser = ({ params }) => {
       <AdminPageHeader subHeader="User" mainHeader="Dashboard" />
 
       {/* show if has message pop up */}
-      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
+      {message.active ? (
+        <Message message={message} setMessageStatus={setMessageStatus} />
+      ) : null}
 
       <div className="cstm-flex-col gap-4 w-full">
-        <Link href="/controller/users" className="cstm-bg-hover text-prmColor mr-auto">
+        <Link
+          href="/controller/users"
+          className="cstm-bg-hover text-prmColor mr-auto"
+        >
           <BsArrowLeft />
         </Link>
 

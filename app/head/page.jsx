@@ -10,7 +10,6 @@ import update from "@/public/dashboard/head/Update.svg";
 import remove from "@/public/dashboard/head/Delete.svg";
 import Message from "@/components/global/Message";
 
-import { useGlobalContext } from "@/base/context";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/functions/jwtFns";
@@ -23,7 +22,7 @@ const HeadDashboard = () => {
 
   const { data: session } = useSession({ required: true });
   const user = session?.user?.name;
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const router = useRouter();
 
   // get dashboard updates
@@ -61,11 +60,18 @@ const HeadDashboard = () => {
     <div className="p-4 bg-accntColor w-full min-h-screen cstm-flex-col gap-4 justify-start">
       <HeadPageHeader subHeader="Activities" mainHeader="Main Dashboard" />
 
-      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
+      {message.active ? (
+        <Message message={message} setMessageStatus={setMessageStatus} />
+      ) : null}
 
       <div className="flex flex-col items-center gap-4 w-full t:flex-wrap t:flex-row t:justify-center">
         {/* users card */}
-        <DashboardCards image={admins} label="Admins" subLabel={`New Admin: ${updates.lastAdmin}`} to="/head/admin" />
+        <DashboardCards
+          image={admins}
+          label="Admins"
+          subLabel={`New Admin: ${updates.lastAdmin}`}
+          to="/head/admin"
+        />
 
         {/* stories card */}
         <DashboardCards

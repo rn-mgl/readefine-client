@@ -12,7 +12,7 @@ import noReward from "@/public/profile/NoReward.svg";
 
 import { IoAddOutline } from "react-icons/io5";
 import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/base/context";
+
 import { cipher } from "@/functions/security";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/functions/jwtFns";
@@ -39,7 +39,7 @@ const AdminRewards = () => {
 
   const { data: session } = useSession({ required: true });
   const user = session?.user?.name;
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const router = useRouter();
 
   // get rewards
@@ -58,7 +58,15 @@ const AdminRewards = () => {
 
       setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, searchFilter, sortFilter, dateRangeFilter, typeFilter, setMessageStatus]);
+  }, [
+    url,
+    user?.token,
+    searchFilter,
+    sortFilter,
+    dateRangeFilter,
+    typeFilter,
+    setMessageStatus,
+  ]);
 
   // map rewards
   const rewardsCards = rewards.map((reward) => {
@@ -71,7 +79,9 @@ const AdminRewards = () => {
           title={reward.reward_name}
           type={reward.reward_type}
           to={`/controller/rewards/${cipheredRewardId}`}
-          createAdminActivity={async () => await createAdminActivity("reward", reward?.reward_name, "R")}
+          createAdminActivity={async () =>
+            await createAdminActivity("reward", reward?.reward_name, "R")
+          }
         />
       </React.Fragment>
     );
@@ -97,7 +107,9 @@ const AdminRewards = () => {
     <div className="p-4 bg-accntColor w-full min-h-screen cstm-flex-col gap-4 justify-start">
       <AdminPageHeader subHeader="Readefine" mainHeader="Rewards" />
 
-      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
+      {message.active ? (
+        <Message message={message} setMessageStatus={setMessageStatus} />
+      ) : null}
 
       <div className="w-full  cstm-flex-col gap-4">
         <RewardsFilter
@@ -128,7 +140,13 @@ const AdminRewards = () => {
             rewardsCards
           ) : (
             <div className="cstm-flex-col absolute top-2/4 translate-y-2/4 left-2/4 -translate-x-2/4 w-full">
-              <Image src={noReward} alt="empty" priority width={220} draggable={false} />
+              <Image
+                src={noReward}
+                alt="empty"
+                priority
+                width={220}
+                draggable={false}
+              />
               <p className="text-xs opacity-80">No Rewards Found</p>
             </div>
           )}

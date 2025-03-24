@@ -9,7 +9,6 @@ import AuthPos from "@/client/signup/AuthPos";
 import NamePos from "@/client/signup/NamePos";
 import validator from "validator";
 
-import { useGlobalContext } from "@/base/context";
 import { avatars } from "@/functions/avatars";
 import { useLoading } from "@/hooks/useLoading";
 import { useMessage } from "@/hooks/useMessage";
@@ -34,7 +33,7 @@ const AddAdmin = (props) => {
   const { loading, setLoadingState } = useLoading(false);
   const { message, setMessageStatus } = useMessage();
 
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const { data: session } = useSession();
   const user = session?.user?.name;
 
@@ -64,12 +63,20 @@ const AddAdmin = (props) => {
       }
 
       if (!validator.isEmail(userData.email)) {
-        setMessageStatus(true, "The email you entered is not valid.", "warning");
+        setMessageStatus(
+          true,
+          "The email you entered is not valid.",
+          "warning"
+        );
         return false;
       }
 
       if (userData.password?.length < 8) {
-        setMessageStatus(true, "Password must not be less than 8 characters.", "warning");
+        setMessageStatus(
+          true,
+          "Password must not be less than 8 characters.",
+          "warning"
+        );
         return false;
       }
     }
@@ -114,7 +121,11 @@ const AddAdmin = (props) => {
 
     if (result.score < 2) {
       setLoadingState(false);
-      setMessageStatus(true, "Password strength should not be below Medium Level.", "error");
+      setMessageStatus(
+        true,
+        "Password strength should not be below Medium Level.",
+        "error"
+      );
       return;
     }
 
@@ -162,12 +173,17 @@ const AddAdmin = (props) => {
                 left-0 bg-gradient-to-br animate-fadeIn
                 from-[#552aca32] to-[#4bfce132] z-[60] p-4 cstm-flex-col gap-4 justify-start"
     >
-      <button className="cstm-bg-hover ml-auto" onClick={props.handleCanAddAdmins}>
+      <button
+        className="cstm-bg-hover ml-auto"
+        onClick={props.handleCanAddAdmins}
+      >
         <IoClose className="text-prmColor text-xl" />
       </button>
 
       {/* show message pop up */}
-      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
+      {message.active ? (
+        <Message message={message} setMessageStatus={setMessageStatus} />
+      ) : null}
 
       <div className="cstm-flex-col w-full h-full  gap-4">
         <p className="text-prmColor font-bold text-xl">Add Admin</p>
@@ -181,10 +197,18 @@ const AddAdmin = (props) => {
 
           <div className="cstm-flex-row">
             <BsDot
-              className={`${activePos === 1 ? "text-prmColor text-xl" : "text-accntColor text-xl"} transition-all`}
+              className={`${
+                activePos === 1
+                  ? "text-prmColor text-xl"
+                  : "text-accntColor text-xl"
+              } transition-all`}
             />
             <BsDot
-              className={`${activePos === 2 ? "text-prmColor text-xl" : "text-accntColor text-xl"} transition-all`}
+              className={`${
+                activePos === 2
+                  ? "text-prmColor text-xl"
+                  : "text-accntColor text-xl"
+              } transition-all`}
             />
           </div>
 
@@ -212,7 +236,10 @@ const AddAdmin = (props) => {
             ) : null}
 
             {activePos === 2 ? (
-              <button type="submit" className="text-sm bg-scndColor text-prmColor p-2 w-24 rounded-md font-bold">
+              <button
+                type="submit"
+                className="text-sm bg-scndColor text-prmColor p-2 w-24 rounded-md font-bold"
+              >
                 Register
               </button>
             ) : null}

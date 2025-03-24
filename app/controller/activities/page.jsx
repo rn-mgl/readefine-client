@@ -5,7 +5,6 @@ import { useSession } from "next-auth/react";
 import React from "react";
 import { AiFillFileAdd } from "react-icons/ai";
 
-import { useGlobalContext } from "@/base/context";
 import Message from "@/src/components/global/Message";
 import ActivityLog from "@/src/components/activities/ActivityLog";
 import HeadPageHeader from "@/src/head/global/PageHeader";
@@ -32,7 +31,7 @@ const Activities = () => {
   } = useAdminActivityFilters();
 
   const { message, setMessageStatus } = useMessage();
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const { data: session } = useSession();
   const user = session?.user?.name;
 
@@ -67,7 +66,13 @@ const Activities = () => {
   ]);
 
   const mappedActivities = activities.map((activity, index) => {
-    return <ActivityLog key={index} activity={activity} action={activityTypeConversion[activity.activity_type]} />;
+    return (
+      <ActivityLog
+        key={index}
+        activity={activity}
+        action={activityTypeConversion[activity.activity_type]}
+      />
+    );
   });
 
   React.useEffect(() => {
@@ -80,7 +85,9 @@ const Activities = () => {
     <div className="p-4 bg-accntColor w-full min-h-screen h-screen cstm-flex-col gap-4 justify-start">
       <AdminPageHeader mainHeader="Create" subHeader="Readefine" />
 
-      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
+      {message.active ? (
+        <Message message={message} setMessageStatus={setMessageStatus} />
+      ) : null}
 
       <AdminActivitiesFilter
         searchFilter={searchFilter}

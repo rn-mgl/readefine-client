@@ -11,7 +11,7 @@ import Loading from "@/components/global/Loading";
 
 import { IoClose } from "react-icons/io5";
 import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/base/context";
+
 import { BiImage } from "react-icons/bi";
 import { CiUser } from "react-icons/ci";
 import { avatars } from "@/functions/avatars";
@@ -23,12 +23,19 @@ const EditMain = (props) => {
   const [userData, setUserData] = React.useState({});
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
 
-  const { imageFile, rawImage, removeSelectedImage, selectedImageViewer, uploadFile, hasRawImage } = useFileControls();
+  const {
+    imageFile,
+    rawImage,
+    removeSelectedImage,
+    selectedImageViewer,
+    uploadFile,
+    hasRawImage,
+  } = useFileControls();
   const { message, setMessageStatus } = useMessage();
   const { loading, setLoadingState } = useLoading(false);
 
   const { data: session } = useSession();
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const user = session?.user?.name;
 
   const clearUpload = () => {
@@ -60,7 +67,10 @@ const EditMain = (props) => {
     let profileImage = userData?.image;
 
     if (hasRawImage()) {
-      profileImage = await uploadFile("readefine_client_file", rawImage.current?.files);
+      profileImage = await uploadFile(
+        "readefine_client_file",
+        rawImage.current?.files
+      );
     }
 
     const randomIndex = Math.floor(Math.random() * avatars.length);
@@ -118,9 +128,14 @@ const EditMain = (props) => {
                 from-[#552aca32] to-[#4bfce132] z-[60] animate-fadeIn justify-start p-4 top-0 left-0 
                 gap-4 cstm-scrollbar-2 overflow-y-auto"
     >
-      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
+      {message.active ? (
+        <Message message={message} setMessageStatus={setMessageStatus} />
+      ) : null}
 
-      <button onClick={props.handleCanEditMain} className="cstm-bg-hover ml-auto">
+      <button
+        onClick={props.handleCanEditMain}
+        className="cstm-bg-hover ml-auto"
+      >
         <IoClose className="text-xl text-prmColor" />
       </button>
 
@@ -146,7 +161,12 @@ const EditMain = (props) => {
                         l-l:w-60 l-l:h-60 l-l:min-w-[15rem] l-l:min-h-[15rem] "
             >
               {!imageFile.src && !userData?.image ? (
-                <Image src={avatar} alt="avatar" className="w-full" width={320} />
+                <Image
+                  src={avatar}
+                  alt="avatar"
+                  className="w-full"
+                  width={320}
+                />
               ) : null}
             </div>
 
@@ -166,12 +186,20 @@ const EditMain = (props) => {
               </label>
 
               {imageFile.src ? (
-                <button type="button" onClick={removeSelectedImage} className="cstm-bg-hover group relative">
+                <button
+                  type="button"
+                  onClick={removeSelectedImage}
+                  className="cstm-bg-hover group relative"
+                >
                   <ActionLabel label="Remove Image" />
                   <IoClose className="text-xl text-prmColor" />
                 </button>
               ) : userData?.image ? (
-                <button type="button" onClick={clearUpload} className="cstm-bg-hover group relative">
+                <button
+                  type="button"
+                  onClick={clearUpload}
+                  className="cstm-bg-hover group relative"
+                >
                   <ActionLabel label="Remove Image" />
                   <IoClose className="text-xl text-prmColor" />
                 </button>

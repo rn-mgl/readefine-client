@@ -8,7 +8,7 @@ import Loading from "@/components/global/Loading";
 
 import { IoClose } from "react-icons/io5";
 import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/base/context";
+
 import { useLoading } from "@/hooks/useLoading";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useMessage } from "@/hooks/useMessage";
@@ -27,7 +27,7 @@ const ChangePassword = (props) => {
   const { message, setMessageStatus } = useMessage();
 
   const { data: session } = useSession();
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const user = session?.user?.name;
 
   const handlePasswordData = ({ name, value }) => {
@@ -61,28 +61,44 @@ const ChangePassword = (props) => {
     if (newPassword.text !== repeatNewPassword.text) {
       setHasSubmitted(false);
       setLoadingState(false);
-      setMessageStatus(true, "The new password and retyped password does not match.", "error");
+      setMessageStatus(
+        true,
+        "The new password and retyped password does not match.",
+        "error"
+      );
       return;
     }
 
     if (newPassword.text.length < 8) {
       setHasSubmitted(false);
       setLoadingState(false);
-      setMessageStatus(true, "Password should not be lower than 8 characters.", "error");
+      setMessageStatus(
+        true,
+        "Password should not be lower than 8 characters.",
+        "error"
+      );
       return;
     }
 
     if (result.score < 2) {
       setHasSubmitted(false);
       setLoadingState(false);
-      setMessageStatus(true, "Password strength should not be below Medium Level.", "error");
+      setMessageStatus(
+        true,
+        "Password strength should not be below Medium Level.",
+        "error"
+      );
       return;
     }
 
     try {
       const { data } = await axios.patch(
         `${url}/admin/${user?.adminId}`,
-        { oldPassword: oldPassword.text, newPassword: newPassword.text, type: "password" },
+        {
+          oldPassword: oldPassword.text,
+          newPassword: newPassword.text,
+          type: "password",
+        },
         { headers: { Authorization: user?.token } }
       );
 
@@ -106,9 +122,14 @@ const ChangePassword = (props) => {
       className="fixed w-full h-full cstm-flex-col  backdrop-blur-md bg-gradient-to-br animate-fadeIn
             from-[#552aca32] to-[#4bfce132] z-[60] p-4 top-0 left-0 gap-4 cstm-scrollbar-2 overflow-y-auto"
     >
-      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
+      {message.active ? (
+        <Message message={message} setMessageStatus={setMessageStatus} />
+      ) : null}
 
-      <button onClick={props.handleCanChangePassword} className="cstm-bg-hover ml-auto">
+      <button
+        onClick={props.handleCanChangePassword}
+        className="cstm-bg-hover ml-auto"
+      >
         <IoClose className="text-xl text-prmColor" />
       </button>
 
@@ -127,9 +148,13 @@ const ChangePassword = (props) => {
             required={true}
             icon={
               passwordData.oldPassword.type === "password" ? (
-                <AiOutlineEye onClick={() => handlePasswordType("oldPassword")} />
+                <AiOutlineEye
+                  onClick={() => handlePasswordType("oldPassword")}
+                />
               ) : (
-                <AiOutlineEyeInvisible onClick={() => handlePasswordType("oldPassword")} />
+                <AiOutlineEyeInvisible
+                  onClick={() => handlePasswordType("oldPassword")}
+                />
               )
             }
             value={passwordData.oldPassword.text}
@@ -144,9 +169,13 @@ const ChangePassword = (props) => {
             required={true}
             icon={
               passwordData.newPassword.type === "password" ? (
-                <AiOutlineEye onClick={() => handlePasswordType("newPassword")} />
+                <AiOutlineEye
+                  onClick={() => handlePasswordType("newPassword")}
+                />
               ) : (
-                <AiOutlineEyeInvisible onClick={() => handlePasswordType("newPassword")} />
+                <AiOutlineEyeInvisible
+                  onClick={() => handlePasswordType("newPassword")}
+                />
               )
             }
             value={passwordData.newPassword.text}
@@ -163,9 +192,13 @@ const ChangePassword = (props) => {
             required={true}
             icon={
               passwordData.repeatNewPassword.type === "password" ? (
-                <AiOutlineEye onClick={() => handlePasswordType("repeatNewPassword")} />
+                <AiOutlineEye
+                  onClick={() => handlePasswordType("repeatNewPassword")}
+                />
               ) : (
-                <AiOutlineEyeInvisible onClick={() => handlePasswordType("repeatNewPassword")} />
+                <AiOutlineEyeInvisible
+                  onClick={() => handlePasswordType("repeatNewPassword")}
+                />
               )
             }
             value={passwordData.repeatNewPassword.text}

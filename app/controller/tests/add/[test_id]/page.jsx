@@ -6,7 +6,6 @@ import Message from "@/components/global/Message";
 import axios from "axios";
 import React from "react";
 
-import { useGlobalContext } from "@/base/context";
 import { isTokenExpired } from "@/functions/jwtFns";
 import { decipher } from "@/functions/security";
 import { useLoading } from "@/hooks/useLoading";
@@ -130,7 +129,7 @@ const AddTest = ({ params }) => {
   const { createAdminActivity } = useAdminActivities();
 
   const { data: session } = useSession({ required: true });
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const decodedStoryId = decipher(params?.test_id);
   const router = useRouter();
   const user = session?.user?.name;
@@ -180,13 +179,21 @@ const AddTest = ({ params }) => {
           currAnswer !== page["choice4"])
       ) {
         setLoadingState(false);
-        setMessageStatus(true, `You do not have an answer in number ${i + 1}.`, "error");
+        setMessageStatus(
+          true,
+          `You do not have an answer in number ${i + 1}.`,
+          "error"
+        );
         return;
       }
 
       if (!page.testQuestion) {
         setLoadingState(false);
-        setMessageStatus(true, `You do not have a question in number ${i + 1}.`, "error");
+        setMessageStatus(
+          true,
+          `You do not have a question in number ${i + 1}.`,
+          "error"
+        );
         return;
       }
     }
@@ -200,7 +207,11 @@ const AddTest = ({ params }) => {
 
       // move to main test page after making test
       if (data) {
-        const adminActivity = await createAdminActivity("test", story.title, "C");
+        const adminActivity = await createAdminActivity(
+          "test",
+          story.title,
+          "C"
+        );
 
         if (adminActivity) {
           router.push("/controller/tests");
@@ -267,7 +278,9 @@ const AddTest = ({ params }) => {
     <div className="p-4 bg-accntColor w-full cstm-flex-col min-h-screen h-screen gap-4 justify-start">
       <AdminPageHeader subHeader="Tests" mainHeader="Add Test" />
 
-      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
+      {message.active ? (
+        <Message message={message} setMessageStatus={setMessageStatus} />
+      ) : null}
 
       {selectedCard ? (
         <AddTestPage
@@ -289,7 +302,9 @@ const AddTest = ({ params }) => {
         className="w-full cstm-flex-col  gap-4 bg-white justify-start
                   p-4 rounded-2xl h-full overflow-y-auto cstm-scrollbar-2"
       >
-        <div className="w-full mb-auto gap-4 grid grid-cols-1 t:grid-cols-2 l-l:grid-cols-3">{testCards}</div>
+        <div className="w-full mb-auto gap-4 grid grid-cols-1 t:grid-cols-2 l-l:grid-cols-3">
+          {testCards}
+        </div>
 
         <button
           type="submit"

@@ -2,7 +2,6 @@
 import React from "react";
 import axios from "axios";
 
-import { useGlobalContext } from "@/base/context";
 import { useSession } from "next-auth/react";
 import { IoClose } from "react-icons/io5";
 import { BsCheck } from "react-icons/bs";
@@ -14,7 +13,7 @@ const TestRecord = (props) => {
 
   const { message, setMessageStatus } = useMessage();
 
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const { data: session } = useSession();
   const user = session?.user?.name;
 
@@ -37,16 +36,28 @@ const TestRecord = (props) => {
           <div className="w-full h-full cstm-flex-col gap-4">
             <div
               className={`cstm-flex-col w-full gap-2 text-center t:w-full 
-                rounded-md p-2 h-full ${isCorrect ? "bg-green-100" : "bg-red-100"}`}
+                rounded-md p-2 h-full ${
+                  isCorrect ? "bg-green-100" : "bg-red-100"
+                }`}
             >
               <div className="cstm-flex-row gap-2  w-full ">
                 <p className="font-bold text-prmColor">Your Answer</p>
-                <div className={`${isCorrect ? "bg-prmColor" : "bg-scndColor"} rounded-full cstm-flex-col`}>
-                  {isCorrect ? <BsCheck className="text-scndColor" /> : <IoClose className="text-prmColor " />}
+                <div
+                  className={`${
+                    isCorrect ? "bg-prmColor" : "bg-scndColor"
+                  } rounded-full cstm-flex-col`}
+                >
+                  {isCorrect ? (
+                    <BsCheck className="text-scndColor" />
+                  ) : (
+                    <IoClose className="text-prmColor " />
+                  )}
                 </div>
               </div>
 
-              <p className={`${q.choice ? "opacity-100" : "opacity-50"}`}>{q.choice ? q.choice : "No Answer"}</p>
+              <p className={`${q.choice ? "opacity-100" : "opacity-50"}`}>
+                {q.choice ? q.choice : "No Answer"}
+              </p>
             </div>
 
             <div className="cstm-separator" />
@@ -89,11 +100,16 @@ const TestRecord = (props) => {
     >
       {message.active ? <Message setMessageStatus={setMessageStatus} /> : null}
       <div className="w-full h-auto  cstm-flex-col justify-start gap-4 p-4">
-        <button onClick={() => props.handleSeeTestRecord(props.testId)} className="cstm-bg-hover ml-auto">
+        <button
+          onClick={() => props.handleSeeTestRecord(props.testId)}
+          className="cstm-bg-hover ml-auto"
+        >
           <IoClose className="text-prmColor text-xl" />
         </button>
 
-        <div className="w-full h-full grid grid-cols-1 t:grid-cols-2 l-l:grid-cols-3 gap-4">{questionsAndAnswer}</div>
+        <div className="w-full h-full grid grid-cols-1 t:grid-cols-2 l-l:grid-cols-3 gap-4">
+          {questionsAndAnswer}
+        </div>
       </div>
     </div>
   );

@@ -7,7 +7,7 @@ import Link from "next/link";
 
 import { decipher } from "@/functions/security";
 import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/base/context";
+
 import { BsArrowLeft, BsDot, BsTrophyFill } from "react-icons/bs";
 import { BiMedal } from "react-icons/bi";
 import Message from "@/components/global/Message";
@@ -22,7 +22,7 @@ const SingleReward = ({ params }) => {
   const { message, setMessageStatus } = useMessage();
 
   const { data: session } = useSession();
-  const { url } = useGlobalContext();
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const user = session?.user?.name;
   const decodedRewardId = decipher(params.reward_id);
   const router = useRouter();
@@ -64,7 +64,9 @@ const SingleReward = ({ params }) => {
     <div className="w-full cstm-flex-col p-4 gap-4 t:gap-4 justify-start h-full">
       <ClientPageHeader mainHeader="Readefine" subHeader="Your Reward" />
 
-      {message.active ? <Message message={message} setMessageStatus={setMessageStatus} /> : null}
+      {message.active ? (
+        <Message message={message} setMessageStatus={setMessageStatus} />
+      ) : null}
 
       <div className=" justify-start cstm-flex-col w-full relative z-10 h-full ">
         <div className="cstm-flex-col gap-4 w-full t:w-10/12 l-l:w-8/12 h-full">
@@ -108,7 +110,9 @@ const SingleReward = ({ params }) => {
               <div className="cstm-separator" />
 
               {/* description */}
-              <p className="text-sm overflow-y-auto cstm-scrollbar-2 ">{rewardData?.description}</p>
+              <p className="text-sm overflow-y-auto cstm-scrollbar-2 ">
+                {rewardData?.description}
+              </p>
             </div>
           </div>
         </div>
