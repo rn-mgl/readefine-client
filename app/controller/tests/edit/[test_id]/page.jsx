@@ -15,10 +15,10 @@ import { useMessage } from "@/hooks/useMessage";
 import EditTestCard from "@/src/admin/tests/EdiTestCard";
 import useAdminActivities from "@/src/hooks/useAdminActivities";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { BsArrowLeft } from "react-icons/bs";
 
-const EditTest = ({ params }) => {
+const EditTest = () => {
   const [test, setTest] = React.useState({});
   const [questions, setQuestions] = React.useState([]);
   const [selectedCard, setSelectedCard] = React.useState(0);
@@ -31,7 +31,8 @@ const EditTest = ({ params }) => {
   const url = process.env.NEXT_PUBLIC_API_URL;
   const user = session?.user?.name;
   const router = useRouter();
-  const decodedTestId = params?.test_id;
+  const params = useParams();
+  const testId = params?.test_id;
 
   // handle onchange on questions
   const handleQuestions = (questionId, { name, value }) => {
@@ -92,8 +93,8 @@ const EditTest = ({ params }) => {
 
     try {
       const { data } = await axios.patch(
-        `${url}/admin_test/${decodedTestId}`,
-        { questions, testId: decodedTestId },
+        `${url}/admin_test/${testId}`,
+        { questions, testId: testId },
         { headers: { Authorization: user.token } }
       );
 
@@ -120,7 +121,7 @@ const EditTest = ({ params }) => {
     if (user?.token) {
       try {
         const { data } = await axios.get(`${url}/admin_test_question`, {
-          params: { testId: decodedTestId },
+          params: { testId: testId },
           headers: { Authorization: user?.token },
         });
 
@@ -141,13 +142,13 @@ const EditTest = ({ params }) => {
         setMessageStatus(true, error?.response?.data?.msg, "error");
       }
     }
-  }, [url, user?.token, decodedTestId, setMessageStatus]);
+  }, [url, user?.token, testId, setMessageStatus]);
 
   // get test
   const getTest = React.useCallback(async () => {
     if (user?.token) {
       try {
-        const { data } = await axios.get(`${url}/admin_test/${decodedTestId}`, {
+        const { data } = await axios.get(`${url}/admin_test/${testId}`, {
           headers: { Authorization: user?.token },
         });
 
@@ -159,7 +160,7 @@ const EditTest = ({ params }) => {
         setMessageStatus(true, error?.response?.data?.msg, "error");
       }
     }
-  }, [url, user?.token, decodedTestId, setMessageStatus]);
+  }, [url, user?.token, testId, setMessageStatus]);
 
   // map questions
   const testQuestions = questions.map((q, index) => {

@@ -10,12 +10,12 @@ import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { BsArrowLeft } from "react-icons/bs";
 import { useSession } from "next-auth/react";
 
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { isTokenExpired } from "@/functions/jwtFns";
 import Image from "next/image";
 import { useMessage } from "@/hooks/useMessage";
 
-const SingleReward = ({ params }) => {
+const SingleReward = () => {
   const [reward, setReward] = React.useState({});
   const [canDeleteReward, setCanDeleteReward] = React.useState(false);
 
@@ -24,7 +24,8 @@ const SingleReward = ({ params }) => {
   const { data: session } = useSession();
   const url = process.env.NEXT_PUBLIC_API_URL;
   const user = session?.user?.name;
-  const decodedRewardId = params?.reward_id;
+  const params = useParams();
+  const rewardId = params?.reward_id;
   const router = useRouter();
 
   // toggle can delete reward
@@ -35,12 +36,9 @@ const SingleReward = ({ params }) => {
   // get reward data
   const getReward = React.useCallback(async () => {
     try {
-      const { data } = await axios.get(
-        `${url}/admin_reward/${decodedRewardId}`,
-        {
-          headers: { Authorization: user?.token },
-        }
-      );
+      const { data } = await axios.get(`${url}/admin_reward/${rewardId}`, {
+        headers: { Authorization: user?.token },
+      });
       if (data) {
         setReward(data);
       }
@@ -49,7 +47,7 @@ const SingleReward = ({ params }) => {
 
       setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, decodedRewardId, setMessageStatus]);
+  }, [url, user?.token, rewardId, setMessageStatus]);
 
   React.useEffect(() => {
     if (user) {
@@ -77,7 +75,7 @@ const SingleReward = ({ params }) => {
 
       {canDeleteReward ? (
         <DeleteData
-          apiRoute={`${url}/admin_reward/${decodedRewardId}`}
+          apiRoute={`${url}/admin_reward/${rewardId}`}
           returnRoute="/controller/rewards"
           confirmation={reward?.reward_name}
           handleCanDeleteData={handleCanDeleteReward}

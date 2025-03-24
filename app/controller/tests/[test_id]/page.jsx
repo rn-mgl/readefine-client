@@ -13,14 +13,14 @@ import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { BsArrowLeft } from "react-icons/bs";
 
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { choicesStyle, shuffleQuestions } from "@/functions/testFns";
 
 import { isTokenExpired } from "@/functions/jwtFns";
 import { useTestControls } from "@/hooks/useTestControls";
 import { useMessage } from "@/hooks/useMessage";
 
-const SingleTest = ({ params }) => {
+const SingleTest = () => {
   const [canDeleteTest, setCanDeleteTest] = React.useState(false);
   const [canSeeResult, setCanSeeResult] = React.useState(false); // see result
 
@@ -41,7 +41,8 @@ const SingleTest = ({ params }) => {
 
   const url = process.env.NEXT_PUBLIC_API_URL;
   const { data: session } = useSession({ required: true });
-  const decodedTestId = params?.test_id;
+  const params = useParams();
+  const testId = params?.test_id;
   const user = session?.user?.name;
   const router = useRouter();
 
@@ -59,7 +60,7 @@ const SingleTest = ({ params }) => {
   const getTest = React.useCallback(async () => {
     if (user?.token) {
       try {
-        const { data } = await axios.get(`${url}/admin_test/${decodedTestId}`, {
+        const { data } = await axios.get(`${url}/admin_test/${testId}`, {
           headers: { Authorization: user?.token },
         });
 
@@ -78,7 +79,7 @@ const SingleTest = ({ params }) => {
   }, [
     url,
     user?.token,
-    decodedTestId,
+    testId,
     router,
     params?.test_id,
     setNewTestData,
@@ -90,7 +91,7 @@ const SingleTest = ({ params }) => {
     if (user?.token) {
       try {
         const { data } = await axios.get(`${url}/admin_test_question`, {
-          params: { testId: decodedTestId },
+          params: { testId: testId },
           headers: { Authorization: user?.token },
         });
 
@@ -103,7 +104,7 @@ const SingleTest = ({ params }) => {
         setMessageStatus(true, error?.response?.data?.msg, "error");
       }
     }
-  }, [url, user?.token, decodedTestId, setNewQuestions, setMessageStatus]);
+  }, [url, user?.token, testId, setNewQuestions, setMessageStatus]);
 
   // map questions
   const mappedQuestions = questions.map((q, i) => {
@@ -175,7 +176,7 @@ const SingleTest = ({ params }) => {
 
       {canDeleteTest ? (
         <DeleteData
-          apiRoute={`${url}/admin_test/${decodedTestId}`}
+          apiRoute={`${url}/admin_test/${testId}`}
           returnRoute="/controller/tests"
           confirmation={testData?.title}
           handleCanDeleteData={handleCanDeleteTest}

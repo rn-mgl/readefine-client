@@ -12,13 +12,13 @@ import DeleteData from "@/admin/global/DeleteData";
 
 import { useSession } from "next-auth/react";
 
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { isTokenExpired } from "@/functions/jwtFns";
 import { useStoryPageControls } from "@/hooks/useStoryPageControls";
 import { useMessage } from "@/hooks/useMessage";
 import { useAudioControls } from "@/hooks/useAudioControls";
 
-const SingleStory = ({ params }) => {
+const SingleStory = () => {
   const [canDeleteStory, setCanDeleteStory] = React.useState(false);
 
   const {
@@ -51,7 +51,8 @@ const SingleStory = ({ params }) => {
 
   const { data: session } = useSession();
   const url = process.env.NEXT_PUBLIC_API_URL;
-  const decodedStoryId = params?.story_id;
+  const params = useParams();
+  const storyId = params?.story_id;
   const user = session?.user?.name;
   const router = useRouter(null);
 
@@ -68,7 +69,7 @@ const SingleStory = ({ params }) => {
   const getPages = React.useCallback(async () => {
     try {
       const { data } = await axios.get(`${url}/admin_story_content`, {
-        params: { storyId: decodedStoryId },
+        params: { storyId: storyId },
         headers: { Authorization: user?.token },
       });
       if (data) {
@@ -78,12 +79,12 @@ const SingleStory = ({ params }) => {
       console.log(error);
       setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, setNewPages, decodedStoryId, setMessageStatus]);
+  }, [url, user?.token, setNewPages, storyId, setMessageStatus]);
 
   // get story
   const getStory = React.useCallback(async () => {
     try {
-      const { data } = await axios.get(`${url}/admin_story/${decodedStoryId}`, {
+      const { data } = await axios.get(`${url}/admin_story/${storyId}`, {
         headers: { Authorization: user?.token },
       });
       if (data) {
@@ -93,7 +94,7 @@ const SingleStory = ({ params }) => {
       console.log(error);
       setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, setNewStory, decodedStoryId, setMessageStatus]);
+  }, [url, user?.token, setNewStory, storyId, setMessageStatus]);
 
   // map story pages
   const storyPages = pages?.map((page, index, arr) => {
@@ -166,7 +167,7 @@ const SingleStory = ({ params }) => {
 
       {canDeleteStory ? (
         <DeleteData
-          apiRoute={`${url}/admin_story/${decodedStoryId}`}
+          apiRoute={`${url}/admin_story/${storyId}`}
           returnRoute="/controller/stories"
           confirmation={story?.title}
           handleCanDeleteData={handleCanDeleteStory}

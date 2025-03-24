@@ -14,12 +14,12 @@ import Image from "next/image";
 import { useLoading } from "@/hooks/useLoading";
 import { useMessage } from "@/hooks/useMessage";
 import { signOut } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import PasswordStrength from "@/src/components/global/PasswordStrength";
 import zxcvbn from "zxcvbn";
 
-const HeadPasswordReset = ({ params }) => {
+const HeadPasswordReset = () => {
   const [password, setPassword] = React.useState({
     newPassword: "",
     retypedPassword: "",
@@ -35,6 +35,7 @@ const HeadPasswordReset = ({ params }) => {
 
   const url = process.env.NEXT_PUBLIC_API_URL;
   const router = useRouter();
+  const params = useParams();
   const token = params?.token;
 
   // handle onchange function on newpassword

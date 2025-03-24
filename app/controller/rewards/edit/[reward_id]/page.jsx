@@ -16,11 +16,11 @@ import { useLoading } from "@/hooks/useLoading";
 import { useMessage } from "@/hooks/useMessage";
 import useAdminActivities from "@/src/hooks/useAdminActivities";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { BiImage } from "react-icons/bi";
 import { IoClose } from "react-icons/io5";
 
-const EditReward = ({ params }) => {
+const EditReward = () => {
   const [reward, setReward] = React.useState({});
 
   const {
@@ -38,7 +38,8 @@ const EditReward = ({ params }) => {
   const { data: session } = useSession();
   const url = process.env.NEXT_PUBLIC_API_URL;
   const user = session?.user?.name;
-  const decodedRewardId = params?.reward_id;
+  const params = useParams();
+  const rewardId = params?.reward_id;
   const router = useRouter();
 
   // get word count in description
@@ -88,7 +89,7 @@ const EditReward = ({ params }) => {
 
     try {
       const { data } = await axios.patch(
-        `${url}/admin_reward/${decodedRewardId}`,
+        `${url}/admin_reward/${rewardId}`,
         { reward_name, reward_type, reward: rewardImage, description },
         { headers: { Authorization: user.token } }
       );
@@ -116,12 +117,9 @@ const EditReward = ({ params }) => {
   const getReward = React.useCallback(async () => {
     if (user?.token) {
       try {
-        const { data } = await axios.get(
-          `${url}/admin_reward/${decodedRewardId}`,
-          {
-            headers: { Authorization: user?.token },
-          }
-        );
+        const { data } = await axios.get(`${url}/admin_reward/${rewardId}`, {
+          headers: { Authorization: user?.token },
+        });
         if (data) {
           setReward(data);
         }
@@ -130,7 +128,7 @@ const EditReward = ({ params }) => {
         setMessageStatus(true, error?.response?.data?.msg, "error");
       }
     }
-  }, [url, user?.token, decodedRewardId, setMessageStatus]);
+  }, [url, user?.token, rewardId, setMessageStatus]);
 
   React.useEffect(() => {
     getReward();

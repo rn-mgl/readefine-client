@@ -4,9 +4,9 @@ import React from "react";
 
 import { useMessage } from "@/hooks/useMessage";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
-const Overview = ({ params }) => {
+const Overview = () => {
   const [headData, setHeadData] = React.useState({});
   const [headActivities, setHeadActivities] = React.useState({});
 
@@ -17,6 +17,7 @@ const Overview = ({ params }) => {
   const { data: session } = useSession();
   const url = process.env.NEXT_PUBLIC_API_URL;
   const user = session?.user?.name;
+  const params = useParams();
   const decipheredId = params?.head_id;
   const router = useRouter();
 

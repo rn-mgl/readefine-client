@@ -13,9 +13,9 @@ import { isTokenExpired } from "@/functions/jwtFns";
 
 import { useMessage } from "@/hooks/useMessage";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
-const Account = ({ params }) => {
+const Account = () => {
   const [headData, setHeadData] = React.useState({});
   const [canEditMain, setCanEditMain] = React.useState(false);
   const [canChangePassword, setCanChangePassword] = React.useState(false);
@@ -24,7 +24,8 @@ const Account = ({ params }) => {
   const { data: session } = useSession();
   const url = process.env.NEXT_PUBLIC_API_URL;
   const user = session?.user?.name;
-  const decipheredId = params?.head_id;
+  const params = useParams();
+  const headId = params?.head_id;
   const router = useRouter();
 
   // toggle can edit main data
@@ -40,7 +41,7 @@ const Account = ({ params }) => {
   // get head data
   const getHeadData = React.useCallback(async () => {
     try {
-      const { data } = await axios.get(`${url}/head/${decipheredId}`, {
+      const { data } = await axios.get(`${url}/head/${headId}`, {
         headers: { Authorization: user?.token },
       });
 
@@ -52,7 +53,7 @@ const Account = ({ params }) => {
 
       setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, decipheredId, setMessageStatus]);
+  }, [url, user?.token, headId, setMessageStatus]);
 
   React.useEffect(() => {
     if (user) {

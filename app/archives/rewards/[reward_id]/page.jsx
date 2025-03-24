@@ -10,12 +10,12 @@ import { useSession } from "next-auth/react";
 import { BsArrowLeft, BsDot, BsTrophyFill } from "react-icons/bs";
 import { BiMedal } from "react-icons/bi";
 import Message from "@/components/global/Message";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { isTokenExpired } from "@/functions/jwtFns";
 import Image from "next/image";
 import { useMessage } from "@/hooks/useMessage";
 
-const SingleReward = ({ params }) => {
+const SingleReward = () => {
   const [rewardData, setRewardData] = React.useState({});
 
   const { message, setMessageStatus } = useMessage();
@@ -23,6 +23,7 @@ const SingleReward = ({ params }) => {
   const { data: session } = useSession();
   const url = process.env.NEXT_PUBLIC_API_URL;
   const user = session?.user?.name;
+  const params = useParams();
   const decodedRewardId = params.reward_id;
   const router = useRouter();
 

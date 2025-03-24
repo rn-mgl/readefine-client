@@ -15,10 +15,10 @@ import useAdminActivities from "@/src/hooks/useAdminActivities";
 import { useStoryPageControls } from "@/src/hooks/useStoryPageControls";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { BsArrowLeft } from "react-icons/bs";
 
-const AddTest = ({ params }) => {
+const AddTest = () => {
   const [pages, setPages] = React.useState([
     {
       testNumber: 1,
@@ -130,7 +130,8 @@ const AddTest = ({ params }) => {
 
   const { data: session } = useSession({ required: true });
   const url = process.env.NEXT_PUBLIC_API_URL;
-  const decodedStoryId = params?.test_id;
+  const params = useParams();
+  const storyId = params?.test_id;
   const router = useRouter();
   const user = session?.user?.name;
 
@@ -201,7 +202,7 @@ const AddTest = ({ params }) => {
     try {
       const { data } = await axios.post(
         `${url}/admin_test`,
-        { storyId: decodedStoryId, pages },
+        { storyId: storyId, pages },
         { headers: { Authorization: user.token } }
       );
 
@@ -227,7 +228,7 @@ const AddTest = ({ params }) => {
   // get story
   const getStory = React.useCallback(async () => {
     try {
-      const { data } = await axios.get(`${url}/admin_story/${decodedStoryId}`, {
+      const { data } = await axios.get(`${url}/admin_story/${storyId}`, {
         headers: { Authorization: user?.token },
       });
       if (data) {
@@ -237,7 +238,7 @@ const AddTest = ({ params }) => {
       console.log(error);
       setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, setNewStory, decodedStoryId, setMessageStatus]);
+  }, [url, user?.token, setNewStory, storyId, setMessageStatus]);
 
   // map test pages
   const testCards = pages?.map((page) => {

@@ -5,7 +5,7 @@ import Link from "next/link";
 const TestsCards = (props) => {
   return (
     <div className="bg-white p-4 rounded-2xl cstm-flex-col gap-4  t:w-72 shadow-md  max-h-[28rem] h-[28rem]">
-      <div className="w-full h-fit cstm-flex-col overflow-clip  bg-white rounded-2xl justify-start">
+      <div className="w-full h-fit cstm-flex-col overflow-clip  bg-white rounded-2xl justify-start max-h-72">
         <Image
           priority
           src={props.image}
@@ -23,7 +23,9 @@ const TestsCards = (props) => {
           <p className="font-bold text-prmColor text-sm">{props.lexile}L</p>
         </div>
         <div className="cstm-flex-row w-full text-xs">
-          <p className="opacity-50 mr-auto w-36 truncate">{props.author ? props.author : "author"}</p>
+          <p className="opacity-50 mr-auto w-36 truncate">
+            {props.author ? props.author : "author"}
+          </p>
         </div>
       </div>
 

@@ -33,7 +33,7 @@ const TestsCards = (props) => {
         </div>
       ) : null}
 
-      <div className="w-full h-fit cstm-flex-col overflow-clip  bg-white rounded-2xl justify-start">
+      <div className="w-full h-fit cstm-flex-col overflow-clip  bg-white rounded-2xl justify-start max-h-72">
         <Image
           src={props.image}
           alt="temp"
@@ -53,7 +53,9 @@ const TestsCards = (props) => {
         </div>
 
         <div className="cstm-flex-row w-full text-xs">
-          <p className="opacity-50 mr-auto w-36 truncate">{props.author ? props.author : "author"}</p>
+          <p className="opacity-50 mr-auto w-36 truncate">
+            {props.author ? props.author : "author"}
+          </p>
           {props.isTaken ? (
             <p className="text-prmColor">
               <span className="font-bold"> {props.score}</span> / 10

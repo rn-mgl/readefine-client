@@ -18,12 +18,12 @@ import StoryRequirementIndicator from "@/src/admin/stories/StoryRequirementIndic
 import useAdminActivities from "@/src/hooks/useAdminActivities";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import { BsArrowLeft } from "react-icons/bs";
 import { IoAddOutline, IoClose } from "react-icons/io5";
 
-const EditStory = ({ params }) => {
+const EditStory = () => {
   const [story, setStory] = React.useState({});
   const [pages, setPages] = React.useState([]);
   const [toDelete, setToDelete] = React.useState([]);
@@ -51,7 +51,8 @@ const EditStory = ({ params }) => {
   const { data: session } = useSession({ required: true });
   const url = process.env.NEXT_PUBLIC_API_URL;
   const user = session?.user?.name;
-  const decodedStoryId = params?.story_id;
+  const params = useParams();
+  const storyId = params?.story_id;
   const router = useRouter();
   const pagePerSlide = 9;
 
@@ -238,7 +239,7 @@ const EditStory = ({ params }) => {
 
     try {
       const { data } = await axios.patch(
-        `${url}/admin_story/${decodedStoryId}`,
+        `${url}/admin_story/${storyId}`,
         { pages, story, toDelete },
         { headers: { Authorization: user.token } }
       );
@@ -267,7 +268,7 @@ const EditStory = ({ params }) => {
     if (user?.token) {
       try {
         const { data } = await axios.get(`${url}/admin_story_content`, {
-          params: { storyId: decodedStoryId },
+          params: { storyId: storyId },
           headers: { Authorization: user?.token },
         });
         if (data) {
@@ -278,17 +279,14 @@ const EditStory = ({ params }) => {
         setMessageStatus(true, error?.response?.data?.msg, "error");
       }
     }
-  }, [url, user?.token, decodedStoryId, setMessageStatus]);
+  }, [url, user?.token, storyId, setMessageStatus]);
   // get story
   const getStory = React.useCallback(async () => {
     if (user?.token) {
       try {
-        const { data } = await axios.get(
-          `${url}/admin_story/${decodedStoryId}`,
-          {
-            headers: { Authorization: user?.token },
-          }
-        );
+        const { data } = await axios.get(`${url}/admin_story/${storyId}`, {
+          headers: { Authorization: user?.token },
+        });
         if (data) {
           setStory(data);
         }
@@ -297,7 +295,7 @@ const EditStory = ({ params }) => {
         setMessageStatus(true, error?.response?.data?.msg, "error");
       }
     }
-  }, [url, user?.token, decodedStoryId, setMessageStatus]);
+  }, [url, user?.token, storyId, setMessageStatus]);
 
   // map pages
   const mappedPages = pages

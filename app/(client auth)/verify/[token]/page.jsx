@@ -9,13 +9,15 @@ import Message from "@/components/global/Message";
 import { signOut } from "next-auth/react";
 
 import { useMessage } from "@/hooks/useMessage";
+import { useParams } from "next/navigation";
 
-const Verify = ({ params }) => {
+const Verify = () => {
   const [status, setStatus] = React.useState("verifying");
 
   const { message, setMessageStatus } = useMessage();
 
   const url = process.env.NEXT_PUBLIC_API_URL;
+  const params = useParams();
   const token = params?.token;
 
   // verify user

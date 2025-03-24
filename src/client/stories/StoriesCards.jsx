@@ -34,7 +34,7 @@ const StoriesCards = (props) => {
         </div>
       ) : null}
 
-      <div className="w-full h-full cstm-flex-col overflow-clip bg-white rounded-2xl justify-start ">
+      <div className="w-full h-full cstm-flex-col overflow-clip bg-white rounded-2xl justify-start max-h-72">
         <Image
           priority
           src={props.image}
@@ -50,11 +50,17 @@ const StoriesCards = (props) => {
           <p className="font-bold text-black w-44 truncate text-left text-sm mr-auto">
             {props.title ? props.title : "Title"}
           </p>
-          <p className="font-bold text-prmColor text-sm text-right">{props.lexile}L</p>
+          <p className="font-bold text-prmColor text-sm text-right">
+            {props.lexile}L
+          </p>
         </div>
         <div className="cstm-flex-row  items-end w-full">
-          <p className="opacity-50 text-xs text-left mr-auto w-36 truncate">{props.author ? props.author : "author"}</p>
-          <p className="opacity-50 text-xs text-right">{props.genre ? props.genre : "Genre"}</p>
+          <p className="opacity-50 text-xs text-left mr-auto w-36 truncate">
+            {props.author ? props.author : "author"}
+          </p>
+          <p className="opacity-50 text-xs text-right">
+            {props.genre ? props.genre : "Genre"}
+          </p>
         </div>
       </div>
 

@@ -13,11 +13,11 @@ import { isTokenExpired } from "@/functions/jwtFns";
 
 import { useMessage } from "@/hooks/useMessage";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import ActivityLog from "@/src/components/activities/ActivityLog";
 import ActivityCard from "@/src/admin/activities/ActivityCard";
 
-const Overview = ({ params }) => {
+const Overview = () => {
   const [adminData, setAdminData] = React.useState({});
   const [createActivities, setCreateActivities] = React.useState([]);
   const [readActivities, setReadActivities] = React.useState([]);
@@ -32,7 +32,8 @@ const Overview = ({ params }) => {
   const { data: session } = useSession();
   const url = process.env.NEXT_PUBLIC_API_URL;
   const user = session?.user?.name;
-  const decipheredId = params?.admin_id;
+  const params = useParams();
+  const adminId = params?.admin_id;
   const router = useRouter();
 
   // toggle can edit main data
@@ -48,7 +49,7 @@ const Overview = ({ params }) => {
   // get admin data
   const getAdminData = React.useCallback(async () => {
     try {
-      const { data } = await axios.get(`${url}/admin/${decipheredId}`, {
+      const { data } = await axios.get(`${url}/admin/${adminId}`, {
         headers: { Authorization: user?.token },
       });
 
@@ -60,18 +61,15 @@ const Overview = ({ params }) => {
 
       setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, decipheredId, setMessageStatus]);
+  }, [url, user?.token, adminId, setMessageStatus]);
 
   // get create activities
   const getCreateActivies = React.useCallback(async () => {
     try {
-      const { data } = await axios.get(
-        `${url}/admin_activities/${decipheredId}`,
-        {
-          headers: { Authorization: user?.token },
-          params: { activityTypeFilter: "C" },
-        }
-      );
+      const { data } = await axios.get(`${url}/admin_activities/${adminId}`, {
+        headers: { Authorization: user?.token },
+        params: { activityTypeFilter: "C" },
+      });
 
       if (data) {
         setCreateActivities(data);
@@ -80,18 +78,15 @@ const Overview = ({ params }) => {
       console.log(error);
       setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, decipheredId, setMessageStatus]);
+  }, [url, user?.token, adminId, setMessageStatus]);
 
   // get read activities
   const getReadActivies = React.useCallback(async () => {
     try {
-      const { data } = await axios.get(
-        `${url}/admin_activities/${decipheredId}`,
-        {
-          headers: { Authorization: user?.token },
-          params: { activityTypeFilter: "R" },
-        }
-      );
+      const { data } = await axios.get(`${url}/admin_activities/${adminId}`, {
+        headers: { Authorization: user?.token },
+        params: { activityTypeFilter: "R" },
+      });
 
       if (data) {
         setReadActivities(data);
@@ -100,18 +95,15 @@ const Overview = ({ params }) => {
       console.log(error);
       setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, decipheredId, setMessageStatus]);
+  }, [url, user?.token, adminId, setMessageStatus]);
 
   // get update activities
   const getUpdateActivies = React.useCallback(async () => {
     try {
-      const { data } = await axios.get(
-        `${url}/admin_activities/${decipheredId}`,
-        {
-          headers: { Authorization: user?.token },
-          params: { activityTypeFilter: "U" },
-        }
-      );
+      const { data } = await axios.get(`${url}/admin_activities/${adminId}`, {
+        headers: { Authorization: user?.token },
+        params: { activityTypeFilter: "U" },
+      });
 
       if (data) {
         setUpdateActivities(data);
@@ -120,18 +112,15 @@ const Overview = ({ params }) => {
       console.log(error);
       setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, decipheredId, setMessageStatus]);
+  }, [url, user?.token, adminId, setMessageStatus]);
 
   // get delete activities
   const getDeleteActivies = React.useCallback(async () => {
     try {
-      const { data } = await axios.get(
-        `${url}/admin_activities/${decipheredId}`,
-        {
-          headers: { Authorization: user?.token },
-          params: { activityTypeFilter: "D" },
-        }
-      );
+      const { data } = await axios.get(`${url}/admin_activities/${adminId}`, {
+        headers: { Authorization: user?.token },
+        params: { activityTypeFilter: "D" },
+      });
 
       if (data) {
         setDeleteActivities(data);
@@ -140,12 +129,12 @@ const Overview = ({ params }) => {
       console.log(error);
       setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, decipheredId, setMessageStatus]);
+  }, [url, user?.token, adminId, setMessageStatus]);
 
   // get session activities
   const getSessionActivies = React.useCallback(async () => {
     try {
-      const { data } = await axios.get(`${url}/admin_session/${decipheredId}`, {
+      const { data } = await axios.get(`${url}/admin_session/${adminId}`, {
         headers: { Authorization: user?.token },
       });
 
@@ -156,7 +145,7 @@ const Overview = ({ params }) => {
       console.log(error);
       setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, decipheredId, setMessageStatus]);
+  }, [url, user?.token, adminId, setMessageStatus]);
 
   const mappedCreateActivities = createActivities.map((activity, index) => {
     return <ActivityLog key={index} activity={activity} action="created" />;

@@ -25,12 +25,12 @@ import { isTokenExpired } from "@/functions/jwtFns";
 import { localizeDate } from "@/functions/localDate";
 import { useMessage } from "@/hooks/useMessage";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { BsFillPenFill, BsFillSquareFill } from "react-icons/bs";
 import { FaBrain } from "react-icons/fa";
 import { TbPlusMinus } from "react-icons/tb";
 
-const Reader = ({ params }) => {
+const Reader = () => {
   const [userData, setUserData] = React.useState({});
   const [userActivities, setUserActivities] = React.useState({});
 
@@ -47,7 +47,8 @@ const Reader = ({ params }) => {
   const { data: session } = useSession();
   const url = process.env.NEXT_PUBLIC_API_URL;
   const user = session?.user?.name;
-  const decipheredId = params?.reader_id;
+  const params = useParams();
+  const readerId = params?.reader_id;
   const router = useRouter();
 
   // toggle can edit maini
@@ -83,7 +84,7 @@ const Reader = ({ params }) => {
   // get user data
   const getUserData = React.useCallback(async () => {
     try {
-      const { data } = await axios.get(`${url}/user/${decipheredId}`, {
+      const { data } = await axios.get(`${url}/user/${readerId}`, {
         headers: { Authorization: user?.token },
       });
 
@@ -95,12 +96,12 @@ const Reader = ({ params }) => {
 
       setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, decipheredId, setMessageStatus]);
+  }, [url, user?.token, readerId, setMessageStatus]);
 
   // get user activities
   const getUserActivities = React.useCallback(async () => {
     try {
-      const { data } = await axios.get(`${url}/activities/${decipheredId}`, {
+      const { data } = await axios.get(`${url}/activities/${readerId}`, {
         headers: { Authorization: user?.token },
       });
 
@@ -112,7 +113,7 @@ const Reader = ({ params }) => {
 
       setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, decipheredId, setMessageStatus]);
+  }, [url, user?.token, readerId, setMessageStatus]);
 
   // map answered questions
   const answeredQuestions = userActivities?.questionsData?.map((q) => {

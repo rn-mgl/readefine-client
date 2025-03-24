@@ -12,7 +12,7 @@ import PageNavigation from "@/client/tests/PageNavigation";
 import { useSession } from "next-auth/react";
 import { shuffleQuestions } from "@/functions/testFns";
 
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { isTokenExpired } from "@/functions/jwtFns";
 import { useReceiveAchievement } from "@/hooks/useReceiveAchievement";
 import { useTestControls } from "@/hooks/useTestControls";
@@ -21,7 +21,7 @@ import { useLoading } from "@/hooks/useLoading";
 import { useMessage } from "@/hooks/useMessage";
 import { useUserLexile } from "@/hooks/useUserLexile";
 
-const SingleTest = ({ params }) => {
+const SingleTest = () => {
   const [activePage, setActivePage] = React.useState(0);
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
 
@@ -45,7 +45,8 @@ const SingleTest = ({ params }) => {
 
   const url = process.env.NEXT_PUBLIC_API_URL;
   const { data: session } = useSession();
-  const decodedTestId = params?.test_id;
+  const params = useParams();
+  const testId = params?.test_id;
   const user = session?.user?.name;
   const router = useRouter();
 
@@ -152,7 +153,7 @@ const SingleTest = ({ params }) => {
         `${url}/taken_test`,
         {
           selectedChoices,
-          testId: decodedTestId,
+          testId: testId,
           score,
           legibleForGrowth,
           lexile: userLexile,
@@ -192,7 +193,7 @@ const SingleTest = ({ params }) => {
     if (user?.token) {
       setLoadingState(true);
       try {
-        const { data } = await axios.get(`${url}/test/${decodedTestId}`, {
+        const { data } = await axios.get(`${url}/test/${testId}`, {
           headers: { Authorization: user?.token },
         });
 
@@ -209,7 +210,7 @@ const SingleTest = ({ params }) => {
   }, [
     url,
     user?.token,
-    decodedTestId,
+    testId,
     setNewTestData,
     setMessageStatus,
     setLoadingState,
@@ -221,7 +222,7 @@ const SingleTest = ({ params }) => {
       setLoadingState(true);
       try {
         const { data } = await axios.get(`${url}/test_question`, {
-          params: { testId: decodedTestId },
+          params: { testId: testId },
           headers: { Authorization: user?.token },
         });
 
@@ -239,7 +240,7 @@ const SingleTest = ({ params }) => {
   }, [
     user?.token,
     url,
-    decodedTestId,
+    testId,
     setNewQuestions,
     setMessageStatus,
     setLoadingState,
