@@ -5,7 +5,6 @@ import axios from "axios";
 import ClientPageHeader from "@/client/global/PageHeader";
 import Link from "next/link";
 
-import { decipher } from "@/functions/security";
 import { useSession } from "next-auth/react";
 
 import { BsArrowLeft, BsDot, BsTrophyFill } from "react-icons/bs";
@@ -24,7 +23,7 @@ const SingleReward = ({ params }) => {
   const { data: session } = useSession();
   const url = process.env.NEXT_PUBLIC_API_URL;
   const user = session?.user?.name;
-  const decodedRewardId = decipher(params.reward_id);
+  const decodedRewardId = params.reward_id;
   const router = useRouter();
 
   // get reward

@@ -12,7 +12,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 
 import { BsArrowLeft } from "react-icons/bs";
-import { decipher } from "@/functions/security";
+
 import { isTokenExpired } from "@/functions/jwtFns";
 import { useLoading } from "@/hooks/useLoading";
 import { useMessage } from "@/hooks/useMessage";
@@ -38,7 +38,7 @@ const EditAchievement = () => {
   const user = session?.user?.name;
   const router = useRouter();
   const params = useParams();
-  const decodedAchievementId = decipher(params?.achievement_id);
+  const decodedAchievementId = params?.achievement_id;
 
   // toggle can select reward
   const handleCanSelectReward = () => {

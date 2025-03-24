@@ -12,7 +12,6 @@ import PageNavigation from "@/components/stories/PageNavigation";
 
 import { useSession } from "next-auth/react";
 
-import { decipher } from "@/functions/security";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/functions/jwtFns";
 import { useStoryPageControls } from "@/hooks/useStoryPageControls";
@@ -55,7 +54,7 @@ const SingleStory = ({ params }) => {
   const { data: session } = useSession();
   const url = process.env.NEXT_PUBLIC_API_URL;
   const user = session?.user?.name;
-  const decodedStoryId = decipher(params?.story_id);
+  const decodedStoryId = params?.story_id;
   const router = useRouter();
 
   // text to speech content

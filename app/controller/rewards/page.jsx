@@ -13,7 +13,6 @@ import noReward from "@/public/profile/NoReward.svg";
 import { IoAddOutline } from "react-icons/io5";
 import { useSession } from "next-auth/react";
 
-import { cipher } from "@/functions/security";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/functions/jwtFns";
 import { useMessage } from "@/hooks/useMessage";
@@ -70,7 +69,7 @@ const AdminRewards = () => {
 
   // map rewards
   const rewardsCards = rewards.map((reward) => {
-    const cipheredRewardId = cipher(reward.reward_id);
+    const cipheredRewardId = reward.reward_id;
 
     return (
       <React.Fragment key={reward.reward_id}>

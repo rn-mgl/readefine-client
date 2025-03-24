@@ -11,7 +11,6 @@ import noReward from "@/public/profile/NoReward.svg";
 
 import { useSession } from "next-auth/react";
 
-import { cipher } from "@/functions/security";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/functions/jwtFns";
 import { useMessage } from "@/hooks/useMessage";
@@ -65,7 +64,7 @@ const ClientRewards = () => {
 
   // map rewards
   const rewardsCards = rewards.map((reward) => {
-    const cipheredId = cipher(reward.reward_id);
+    const cipheredId = reward.reward_id;
 
     return (
       <React.Fragment key={reward.reward_id}>

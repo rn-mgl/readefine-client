@@ -9,7 +9,7 @@ import React from "react";
 import noUsers from "@/public/profile/NoTest.svg";
 
 import { isTokenExpired } from "@/functions/jwtFns";
-import { cipher } from "@/functions/security";
+
 import { useMessage } from "@/hooks/useMessage";
 import useAdminActivities from "@/src/hooks/useAdminActivities";
 import useUserFilters from "@/src/hooks/useUserFilters";
@@ -42,7 +42,7 @@ const AdminUsers = () => {
   // map user row
   const userRow = users.map((user) => {
     const email = user.email.split("@");
-    const cipheredUserId = cipher(user.user_id);
+    const cipheredUserId = user.user_id;
     return (
       <React.Fragment key={user?.user_id}>
         <UserRow

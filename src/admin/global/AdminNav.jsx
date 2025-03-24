@@ -8,7 +8,6 @@ import Link from "next/link";
 import React from "react";
 import AdminLink from "../nav/AdminLink";
 
-import { cipher } from "@/functions/security";
 import { useLoading } from "@/hooks/useLoading";
 import { signOut, useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
@@ -207,7 +206,7 @@ const AdminNav = ({ children }) => {
 
         <div className="cstm-flex-col gap-2 w-full justify-start mt-auto">
           <Link
-            href={`/controller/overview/${cipher(user?.adminId)}`}
+            href={`/controller/overview/${user?.adminId}`}
             onClick={() => toggleOpenNav("link")}
             className={`${navIsOpen ? "p-2" : "l-s:p-0 l-s:justify-center"}
                 text-left hover:bg-neutral-100 rounded-md 

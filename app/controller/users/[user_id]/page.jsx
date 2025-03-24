@@ -16,7 +16,7 @@ import { getDaysInMonth, monthMap } from "@/functions/localDate";
 import { useSession } from "next-auth/react";
 
 import { BsArrowLeft } from "react-icons/bs";
-import { decipher } from "@/functions/security";
+
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/functions/jwtFns";
 import { useMessage } from "@/hooks/useMessage";
@@ -37,7 +37,7 @@ const SingleUser = ({ params }) => {
 
   const { data: session } = useSession({ required: true });
   const url = process.env.NEXT_PUBLIC_API_URL;
-  const decodedUserId = decipher(params?.user_id);
+  const decodedUserId = params?.user_id;
   const user = session?.user?.name;
   const router = useRouter();
 

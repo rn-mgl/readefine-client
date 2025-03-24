@@ -48,7 +48,7 @@ const Reader = ({ params }) => {
   const { data: session } = useSession();
   const url = process.env.NEXT_PUBLIC_API_URL;
   const user = session?.user?.name;
-  const decipheredId = decipher(params?.reader_id);
+  const decipheredId = params?.reader_id;
   const router = useRouter();
 
   // toggle can edit maini
@@ -181,9 +181,9 @@ const Reader = ({ params }) => {
 
   // map read stories
   const storiesRead = userActivities?.readStoryData?.map((story) => {
-    const cipheredStoryId = cipher(story.story_id);
+    const cipheredStoryId = story.story_id;
     const testId = story?.test_id ? story?.test_id : story.story_id;
-    const cipheredTestId = cipher(testId);
+    const cipheredTestId = testId;
     return (
       <React.Fragment key={story.story_id}>
         <StoriesCards
@@ -208,7 +208,7 @@ const Reader = ({ params }) => {
 
   // map taken tests
   const testsTaken = userActivities?.takenTestData?.map((t) => {
-    const cipheredTestId = cipher(t.test_id);
+    const cipheredTestId = t.test_id;
     return (
       <React.Fragment key={t.test_id}>
         <TestsCards
@@ -233,7 +233,7 @@ const Reader = ({ params }) => {
   // map achievements and rewards
   const achievementsAndRewards = userActivities?.achievementData?.map(
     (reward) => {
-      const cipheredRewardId = cipher(reward.reward_id);
+      const cipheredRewardId = reward.reward_id;
       return (
         <React.Fragment key={reward.reward_id}>
           <RewardsCards
@@ -297,7 +297,7 @@ const Reader = ({ params }) => {
       {showLexileMessage ? (
         <LowLexileTestMessage
           userLexile={userData.lexile}
-          testLink={`/archives/tests/${cipher(selectedBook)}`}
+          testLink={`/archives/tests/${selectedBook}`}
           handleShowLexileMessage={handleShowLexileMessage}
         />
       ) : null}

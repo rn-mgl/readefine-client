@@ -9,7 +9,7 @@ import Link from "next/link";
 import React from "react";
 
 import { isTokenExpired } from "@/functions/jwtFns";
-import { decipher } from "@/functions/security";
+
 import { useFileControls } from "@/hooks/useFileControls";
 import { useLoading } from "@/hooks/useLoading";
 import { useMessage } from "@/hooks/useMessage";
@@ -51,7 +51,7 @@ const EditStory = ({ params }) => {
   const { data: session } = useSession({ required: true });
   const url = process.env.NEXT_PUBLIC_API_URL;
   const user = session?.user?.name;
-  const decodedStoryId = decipher(params?.story_id);
+  const decodedStoryId = params?.story_id;
   const router = useRouter();
   const pagePerSlide = 9;
 

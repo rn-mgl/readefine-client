@@ -9,7 +9,7 @@ import Loading from "@/components/global/Loading";
 import Message from "@/components/global/Message";
 
 import { isTokenExpired } from "@/functions/jwtFns";
-import { decipher } from "@/functions/security";
+
 import { useLoading } from "@/hooks/useLoading";
 import { useMessage } from "@/hooks/useMessage";
 import EditTestCard from "@/src/admin/tests/EdiTestCard";
@@ -31,7 +31,7 @@ const EditTest = ({ params }) => {
   const url = process.env.NEXT_PUBLIC_API_URL;
   const user = session?.user?.name;
   const router = useRouter();
-  const decodedTestId = decipher(params?.test_id);
+  const decodedTestId = params?.test_id;
 
   // handle onchange on questions
   const handleQuestions = (questionId, { name, value }) => {

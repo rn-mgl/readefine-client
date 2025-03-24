@@ -14,7 +14,6 @@ import { IoAddOutline } from "react-icons/io5";
 import { typeConversion } from "@/functions/typeConversion";
 import { useSession } from "next-auth/react";
 
-import { cipher } from "@/functions/security";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/functions/jwtFns";
 import { useMessage } from "@/hooks/useMessage";
@@ -79,7 +78,7 @@ const AdminAchievements = () => {
 
   // map achievement cards
   const achievementCards = achievements.map((a) => {
-    const cipheredAchievementId = cipher(a.achievement_id);
+    const cipheredAchievementId = a.achievement_id;
 
     return (
       <React.Fragment key={a.achievement_id}>

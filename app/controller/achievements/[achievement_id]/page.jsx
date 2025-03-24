@@ -11,7 +11,7 @@ import { useSession } from "next-auth/react";
 import { BsArrowLeft } from "react-icons/bs";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { typeConversion } from "@/functions/typeConversion";
-import { decipher } from "@/functions/security";
+
 import { useParams, useRouter } from "next/navigation";
 import { isTokenExpired } from "@/functions/jwtFns";
 import DeleteData from "@/admin/global/DeleteData";
@@ -28,7 +28,7 @@ const SingleAchievement = () => {
   const url = process.env.NEXT_PUBLIC_API_URL;
   const user = session?.user?.name;
   const params = useParams();
-  const decodedAchievementId = decipher(params?.achievement_id);
+  const decodedAchievementId = params?.achievement_id;
   const router = useRouter();
 
   // toggle can delete achievement

@@ -14,7 +14,6 @@ import noReads from "@/public/profile/NoReads.svg";
 import { IoAddOutline } from "react-icons/io5";
 import { useSession } from "next-auth/react";
 
-import { cipher } from "@/functions/security";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/functions/jwtFns";
 import { useMessage } from "@/hooks/useMessage";
@@ -77,8 +76,8 @@ const AdminStories = () => {
   const storiesCards = stories.map((story) => {
     // temporarily use story_id if no test to cater the condition in suddenly checking test with no content
     const testId = story?.has_test ? story?.test_id : story?.story_id;
-    const cipheredStoryId = cipher(story?.story_id);
-    const cipheredTestId = cipher(testId);
+    const cipheredStoryId = story?.story_id;
+    const cipheredTestId = testId;
 
     // if story has no test, redirect to add
     const testLink = story?.has_test

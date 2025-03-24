@@ -1,15 +1,12 @@
 /** @type {import('next').NextConfig} */
 
-const local = "http://192.168.1.30:3000";
-const prod = "https://readefine.vercel.app";
-
 const nextConfig = {
   images: {
     remotePatterns: [{ hostname: "res.cloudinary.com" }],
   },
   env: {
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
-    NEXTAUTH_URL: local,
+    NEXTAUTH_URL: process.env.NEXT_PUBLIC_API_URL,
   },
   reactStrictMode: true,
 };

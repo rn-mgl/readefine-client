@@ -15,7 +15,7 @@ import { BsArrowLeft } from "react-icons/bs";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { choicesStyle, shuffleQuestions } from "@/functions/testFns";
-import { decipher } from "@/functions/security";
+
 import { isTokenExpired } from "@/functions/jwtFns";
 import { useTestControls } from "@/hooks/useTestControls";
 import { useMessage } from "@/hooks/useMessage";
@@ -41,7 +41,7 @@ const SingleTest = ({ params }) => {
 
   const url = process.env.NEXT_PUBLIC_API_URL;
   const { data: session } = useSession({ required: true });
-  const decodedTestId = decipher(params?.test_id);
+  const decodedTestId = params?.test_id;
   const user = session?.user?.name;
   const router = useRouter();
 

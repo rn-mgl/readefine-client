@@ -10,7 +10,6 @@ import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { BsArrowLeft } from "react-icons/bs";
 import { useSession } from "next-auth/react";
 
-import { decipher } from "@/functions/security";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/functions/jwtFns";
 import Image from "next/image";
@@ -25,7 +24,7 @@ const SingleReward = ({ params }) => {
   const { data: session } = useSession();
   const url = process.env.NEXT_PUBLIC_API_URL;
   const user = session?.user?.name;
-  const decodedRewardId = decipher(params?.reward_id);
+  const decodedRewardId = params?.reward_id;
   const router = useRouter();
 
   // toggle can delete reward

@@ -12,7 +12,7 @@ import Image from "next/image";
 import noReads from "@/public/profile/NoReads.svg";
 
 import { useSession } from "next-auth/react";
-import { cipher } from "@/functions/security";
+
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/functions/jwtFns";
 import { useMessage } from "@/hooks/useMessage";
@@ -75,9 +75,9 @@ const ClientStories = () => {
 
   // map stories
   const storiesCards = stories.map((story) => {
-    const cipheredStoryId = cipher(story.story_id);
+    const cipheredStoryId = story.story_id;
     const testId = story?.test_id ? story?.test_id : story.story_id;
-    const cipheredTestId = cipher(testId);
+    const cipheredTestId = testId;
     return (
       <React.Fragment key={story.story_id}>
         <StoriesCards
@@ -126,7 +126,7 @@ const ClientStories = () => {
       {showLexileMessage ? (
         <LowLexileTestMessage
           userLexile={userLexile}
-          testLink={`/archives/tests/${cipher(selectedBook)}`}
+          testLink={`/archives/tests/${selectedBook}`}
           handleShowLexileMessage={handleShowLexileMessage}
         />
       ) : null}

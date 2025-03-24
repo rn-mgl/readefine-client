@@ -11,7 +11,6 @@ import noTest from "@/public/profile/NoTest.svg";
 
 import { useSession } from "next-auth/react";
 
-import { cipher } from "@/functions/security";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/functions/jwtFns";
 import { useMessage } from "@/hooks/useMessage";
@@ -71,7 +70,7 @@ const AdminTests = () => {
 
   // map test cards
   const testCards = tests.map((t) => {
-    const cipheredTestId = cipher(t.test_id);
+    const cipheredTestId = t.test_id;
 
     return (
       <React.Fragment key={t.test_id}>

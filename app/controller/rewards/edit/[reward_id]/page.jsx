@@ -9,7 +9,7 @@ import Image from "next/image";
 import React from "react";
 
 import { isTokenExpired } from "@/functions/jwtFns";
-import { decipher } from "@/functions/security";
+
 import { wordCount } from "@/functions/wordCount";
 import { useFileControls } from "@/hooks/useFileControls";
 import { useLoading } from "@/hooks/useLoading";
@@ -38,7 +38,7 @@ const EditReward = ({ params }) => {
   const { data: session } = useSession();
   const url = process.env.NEXT_PUBLIC_API_URL;
   const user = session?.user?.name;
-  const decodedRewardId = decipher(params?.reward_id);
+  const decodedRewardId = params?.reward_id;
   const router = useRouter();
 
   // get word count in description

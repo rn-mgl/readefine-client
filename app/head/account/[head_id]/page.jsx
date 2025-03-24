@@ -10,7 +10,7 @@ import MainAccount from "@/head/account/MainOverview";
 import Message from "@/components/global/Message";
 
 import { isTokenExpired } from "@/functions/jwtFns";
-import { decipher } from "@/functions/security";
+
 import { useMessage } from "@/hooks/useMessage";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -24,7 +24,7 @@ const Account = ({ params }) => {
   const { data: session } = useSession();
   const url = process.env.NEXT_PUBLIC_API_URL;
   const user = session?.user?.name;
-  const decipheredId = decipher(params?.head_id);
+  const decipheredId = params?.head_id;
   const router = useRouter();
 
   // toggle can edit main data

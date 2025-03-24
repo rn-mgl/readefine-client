@@ -12,7 +12,6 @@ import PageNavigation from "@/client/tests/PageNavigation";
 import { useSession } from "next-auth/react";
 import { shuffleQuestions } from "@/functions/testFns";
 
-import { decipher } from "@/functions/security";
 import { useRouter } from "next/navigation";
 import { isTokenExpired } from "@/functions/jwtFns";
 import { useReceiveAchievement } from "@/hooks/useReceiveAchievement";
@@ -46,7 +45,7 @@ const SingleTest = ({ params }) => {
 
   const url = process.env.NEXT_PUBLIC_API_URL;
   const { data: session } = useSession();
-  const decodedTestId = decipher(params?.test_id);
+  const decodedTestId = params?.test_id;
   const user = session?.user?.name;
   const router = useRouter();
 

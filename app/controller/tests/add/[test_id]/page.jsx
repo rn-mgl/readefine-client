@@ -7,7 +7,7 @@ import axios from "axios";
 import React from "react";
 
 import { isTokenExpired } from "@/functions/jwtFns";
-import { decipher } from "@/functions/security";
+
 import { useLoading } from "@/hooks/useLoading";
 import { useMessage } from "@/hooks/useMessage";
 import AddTestCard from "@/src/admin/tests/AddTestCard";
@@ -130,7 +130,7 @@ const AddTest = ({ params }) => {
 
   const { data: session } = useSession({ required: true });
   const url = process.env.NEXT_PUBLIC_API_URL;
-  const decodedStoryId = decipher(params?.test_id);
+  const decodedStoryId = params?.test_id;
   const router = useRouter();
   const user = session?.user?.name;
 
