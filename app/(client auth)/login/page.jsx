@@ -15,7 +15,7 @@ import intersectST from "@/public/landing/definition/IntersectST.svg";
 import { useLoading } from "@/hooks/useLoading";
 import { useMessage } from "@/hooks/useMessage";
 import { useReceiveAchievement } from "@/hooks/useReceiveAchievement";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { CiUser } from "react-icons/ci";
@@ -26,7 +26,6 @@ const Login = () => {
     candidateIdentifier: "",
     candidatePassword: "",
   });
-  const [firstLogin, setFirstLogin] = React.useState(false);
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
 
   const {
@@ -46,6 +45,7 @@ const Login = () => {
   const { data: session } = useSession();
   const user = session?.user;
 
+  console.log(user);
   // toggle if password can be seen
   const handleVisiblePassword = () => {
     setVisiblePassword((prev) => !prev);
@@ -65,8 +65,7 @@ const Login = () => {
   const loginUser = async (e) => {
     e.preventDefault();
 
-    // setLoadingState(true);
-    setFirstLogin(true);
+    setLoadingState(true);
     setHasSubmitted(true);
 
     try {
@@ -77,25 +76,29 @@ const Login = () => {
       });
 
       if (data.primary) {
-        const creds = await signIn("client-credentials", {
-          ...data.primary,
-          redirect: false,
-        });
+        if (!data.primary.isVerified) {
+          router.push("/sending?purpose=verify");
+        } else {
+          const creds = await signIn("credentials", {
+            ...data.primary,
+            redirect: false,
+          });
 
-        if (creds.ok) {
-          router.push("/archives");
+          if (creds.ok) {
+            addSession(data.primary);
+            checkAchievement(data.primary);
+          }
         }
       }
     } catch (error) {
       console.log(error);
       setLoadingState(false);
-      setFirstLogin(false);
       setHasSubmitted(false);
       setMessageStatus(true, error?.response?.data?.msg, "error");
     }
   };
 
-  const checkAchievement = React.useCallback(async () => {
+  const checkAchievement = async (user) => {
     try {
       // update session achievement points and return if achievement is met
       const { data: achievementData } = await axios.patch(
@@ -119,18 +122,9 @@ const Login = () => {
       setLoadingState(false);
       setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [
-    router,
-    url,
-    user?.token,
-    user?.isVerified,
-    claimNewAchievement,
-    setNewAchievementUrl,
-    setLoadingState,
-    setMessageStatus,
-  ]);
+  };
 
-  const addSession = React.useCallback(async () => {
+  const addSession = async (user) => {
     try {
       // add session in db
       const { data: sessionData } = await axios.post(
@@ -143,29 +137,7 @@ const Login = () => {
       setLoadingState(false);
       setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [url, user?.token, user?.userId, setLoadingState, setMessageStatus]);
-
-  const notYetVerified = React.useCallback(async () => {
-    router.push("/sending?purpose=verify");
-  }, [router]);
-
-  // React.useEffect(() => {
-  //   if (firstLogin && user && user.userId && user.isVerified) {
-  //     addSession();
-  //   }
-  // }, [user, firstLogin, addSession]);
-
-  // React.useEffect(() => {
-  //   if (firstLogin && user && user.userId && user.isVerified) {
-  //     checkAchievement();
-  //   }
-  // }, [user, firstLogin, checkAchievement]);
-
-  // React.useEffect(() => {
-  //   if (firstLogin && user && user.userId && !user.isVerified) {
-  //     notYetVerified();
-  //   }
-  // }, [user, firstLogin, notYetVerified]);
+  };
 
   if (loading) {
     return <Loading />;

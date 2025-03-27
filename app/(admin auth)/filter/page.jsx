@@ -24,7 +24,7 @@ const AdminLogin = () => {
     candidatePassword: "",
   });
   const [visiblePassword, setVisiblePassword] = React.useState(false);
-  const [firstLogin, setFirstLogin] = React.useState(false);
+
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
 
   const { loading, setLoadingState } = useLoading(false);
@@ -53,75 +53,52 @@ const AdminLogin = () => {
   // login admin
   const loginAdmin = async (e) => {
     e.preventDefault();
-
-    await signOut({ redirect: false });
     setLoadingState(true);
-    setFirstLogin(true);
     setHasSubmitted(true);
 
     try {
-      // login on middleware
-      const data = await signIn("admin-credentials", {
-        candidateIdentifier: loginData.candidateIdentifier,
-        candidatePassword: loginData.candidatePassword,
-        redirect: false,
+      const { data } = await axios.post(`${url}/auth_admin/admin_login`, {
+        loginData,
       });
 
-      if (!data?.ok) {
-        setLoadingState(false);
-        setFirstLogin(false);
-        setHasSubmitted(false);
-        setMessageStatus(true, "Incorrect login credentials.", "error");
+      if (data.primary) {
+        if (!data.primary.isVerified) {
+          router.push("/sending?purpose=verify");
+        } else {
+          recordSession();
+          const creds = await signIn("credentials", {
+            ...data.primary,
+            redirect: false,
+          });
+
+          if (creds?.ok) {
+            recordSession(data.primary);
+            router.push("/controller");
+          }
+        }
       }
     } catch (error) {
       console.log(error);
       setLoadingState(false);
-      setFirstLogin(false);
+
       setHasSubmitted(false);
       setMessageStatus(true, error?.response?.data?.msg, "error");
     }
   };
 
-  const recordSession = React.useCallback(async () => {
+  const recordSession = async (user) => {
     try {
       const { data } = await axios.post(
         `${url}/admin_session`,
         { type: "in", adminId: user?.adminId },
         { headers: { Authorization: user?.token } }
       );
-
-      if (data) {
-        router.push("/controller");
-      }
     } catch (error) {
       console.log(error);
       setLoadingState(false);
       setMessageStatus(true, error?.response?.data?.msg, "error");
     }
-  }, [
-    router,
-    url,
-    user?.token,
-    user?.adminId,
-    setLoadingState,
-    setMessageStatus,
-  ]);
-
-  const notYetVerified = React.useCallback(() => {
-    router.push("/sending?purpose=verify");
-  }, [router]);
-
-  React.useEffect(() => {
-    if (firstLogin && user && user.adminId && user.isVerified) {
-      recordSession();
-    }
-  }, [recordSession, user, firstLogin]);
-
-  React.useEffect(() => {
-    if (firstLogin && user && user.adminId && !user.isVerified) {
-      notYetVerified();
-    }
-  }, [notYetVerified, firstLogin, user]);
+  };
 
   // return if loading
   if (loading) {
