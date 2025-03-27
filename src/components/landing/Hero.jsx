@@ -14,10 +14,14 @@ const Hero = () => {
 
   const url = process.env.NEXT_PUBLIC_API_URL;
 
+  console.log(url);
+
   const getUserCount = React.useCallback(async () => {
     setLoadingState(true);
     try {
-      const { data } = await axios.get(`${url}/warmer`);
+      const { data } = await axios.get(
+        `https://readefine-server.onrender.com/warmer`
+      );
       if (data) {
         setUserCount(data?.user_count);
         setLoadingState(false);
