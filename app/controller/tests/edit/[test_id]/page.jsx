@@ -29,7 +29,7 @@ const EditTest = () => {
 
   const { data: session } = useSession({ required: true });
   const url = process.env.NEXT_PUBLIC_API_URL;
-  const user = session?.user?.name;
+  const user = session?.user;
   const router = useRouter();
   const params = useParams();
   const testId = params?.test_id;

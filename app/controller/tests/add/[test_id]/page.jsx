@@ -133,7 +133,7 @@ const AddTest = () => {
   const params = useParams();
   const storyId = params?.test_id;
   const router = useRouter();
-  const user = session?.user?.name;
+  const user = session?.user;
 
   // handle onchange on page
   const handlePages = (number, { name, value }) => {

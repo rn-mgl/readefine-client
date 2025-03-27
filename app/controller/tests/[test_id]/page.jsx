@@ -43,7 +43,7 @@ const SingleTest = () => {
   const { data: session } = useSession({ required: true });
   const params = useParams();
   const testId = params?.test_id;
-  const user = session?.user?.name;
+  const user = session?.user;
   const router = useRouter();
 
   // toggle can delete

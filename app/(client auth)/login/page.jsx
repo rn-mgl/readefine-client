@@ -44,7 +44,7 @@ const Login = () => {
   const url = process.env.NEXT_PUBLIC_API_URL;
   const router = useRouter();
   const { data: session } = useSession();
-  const user = session?.user?.name;
+  const user = session?.user;
 
   // toggle if password can be seen
   const handleVisiblePassword = () => {
@@ -65,25 +65,26 @@ const Login = () => {
   const loginUser = async (e) => {
     e.preventDefault();
 
-    await signOut({ redirect: false });
-
-    setLoadingState(true);
+    // setLoadingState(true);
     setFirstLogin(true);
     setHasSubmitted(true);
 
     try {
       // log in for middleware
-      const data = await signIn("client-credentials", {
-        candidateIdentifier: loginData.candidateIdentifier,
-        candidatePassword: loginData.candidatePassword,
-        redirect: false,
+
+      const { data } = await axios.post(`${url}/auth_client/client_login`, {
+        loginData,
       });
 
-      if (!data?.ok) {
-        setLoadingState(false);
-        setFirstLogin(false);
-        setHasSubmitted(false);
-        setMessageStatus(true, "Login credentials do not match.", "error");
+      if (data.primary) {
+        const creds = await signIn("client-credentials", {
+          ...data.primary,
+          redirect: false,
+        });
+
+        if (creds.ok) {
+          router.push("/archives");
+        }
       }
     } catch (error) {
       console.log(error);
@@ -148,23 +149,23 @@ const Login = () => {
     router.push("/sending?purpose=verify");
   }, [router]);
 
-  React.useEffect(() => {
-    if (firstLogin && user && user.userId && user.isVerified) {
-      addSession();
-    }
-  }, [user, firstLogin, addSession]);
+  // React.useEffect(() => {
+  //   if (firstLogin && user && user.userId && user.isVerified) {
+  //     addSession();
+  //   }
+  // }, [user, firstLogin, addSession]);
 
-  React.useEffect(() => {
-    if (firstLogin && user && user.userId && user.isVerified) {
-      checkAchievement();
-    }
-  }, [user, firstLogin, checkAchievement]);
+  // React.useEffect(() => {
+  //   if (firstLogin && user && user.userId && user.isVerified) {
+  //     checkAchievement();
+  //   }
+  // }, [user, firstLogin, checkAchievement]);
 
-  React.useEffect(() => {
-    if (firstLogin && user && user.userId && !user.isVerified) {
-      notYetVerified();
-    }
-  }, [user, firstLogin, notYetVerified]);
+  // React.useEffect(() => {
+  //   if (firstLogin && user && user.userId && !user.isVerified) {
+  //     notYetVerified();
+  //   }
+  // }, [user, firstLogin, notYetVerified]);
 
   if (loading) {
     return <Loading />;

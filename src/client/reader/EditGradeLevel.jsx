@@ -6,7 +6,8 @@ import { useSession } from "next-auth/react";
 import { IoClose } from "react-icons/io5";
 
 const EditGradeLevel = (props) => {
-  const [canSeeConfirmGradeChange, setCanSeeConfirmGradeChange] = React.useState(false);
+  const [canSeeConfirmGradeChange, setCanSeeConfirmGradeChange] =
+    React.useState(false);
   const [chosenGrade, setChosenGrade] = React.useState({
     grade: props.gradeLevel,
     lexile: props.lexile,
@@ -22,7 +23,7 @@ const EditGradeLevel = (props) => {
   );
 
   const { data: session } = useSession();
-  const user = session?.user?.name;
+  const user = session?.user;
 
   const handleChosenGrade = (grade, lexile) => {
     setChosenGrade({ grade, lexile });
@@ -43,7 +44,8 @@ const EditGradeLevel = (props) => {
         key={g.grade}
         className="cstm-flex-row w-full bg-prmColor p-2 rounded-md text-accntColor text-sm t:text-base"
       >
-        <p className="mr-auto text-scndColor font-bold">Grade {g.grade}</p> <p>{g.lexile}L</p>
+        <p className="mr-auto text-scndColor font-bold">Grade {g.grade}</p>{" "}
+        <p>{g.lexile}L</p>
       </button>
     );
   });
@@ -63,7 +65,10 @@ const EditGradeLevel = (props) => {
         />
       ) : null}
 
-      <button onClick={props.handleCanEditGradeLevel} className="cstm-bg-hover ml-auto">
+      <button
+        onClick={props.handleCanEditGradeLevel}
+        className="cstm-bg-hover ml-auto"
+      >
         <IoClose className="text-prmColor text-xl" />
       </button>
 
@@ -73,18 +78,21 @@ const EditGradeLevel = (props) => {
                     bg-white  shadow-solid shadow-prmColor border-2 border-prmColor rounded-2xl p-4 justify-start "
         >
           <p className="text-xs text-center">
-            <span className="font-bold text-prmColor">note:</span> changing your grade level will affect your lexile
-            level and reset it to the lowest level in the grade you will choose.
+            <span className="font-bold text-prmColor">note:</span> changing your
+            grade level will affect your lexile level and reset it to the lowest
+            level in the grade you will choose.
           </p>
 
           <p className="font-bold">Grade and Lexile</p>
 
           <div className="cstm-flex-row w-full text-xs">
             <p className="mr-auto">
-              Your Grade: <span className="font-semibold">{props.gradeLevel}</span>{" "}
+              Your Grade:{" "}
+              <span className="font-semibold">{props.gradeLevel}</span>{" "}
             </p>{" "}
             <p>
-              Your Lexile: <span className="font-semibold">{props.lexile}L</span>{" "}
+              Your Lexile:{" "}
+              <span className="font-semibold">{props.lexile}L</span>{" "}
             </p>
           </div>
 

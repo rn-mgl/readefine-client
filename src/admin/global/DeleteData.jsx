@@ -21,7 +21,7 @@ const DeleteData = (props) => {
   const { message, setMessageStatus } = useMessage();
 
   const { data: session } = useSession();
-  const user = session?.user?.name;
+  const user = session?.user;
 
   const handleConfirmation = ({ value }) => {
     setConfirmation(value);

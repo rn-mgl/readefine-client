@@ -37,7 +37,7 @@ const EditReward = () => {
 
   const { data: session } = useSession();
   const url = process.env.NEXT_PUBLIC_API_URL;
-  const user = session?.user?.name;
+  const user = session?.user;
   const params = useParams();
   const rewardId = params?.reward_id;
   const router = useRouter();

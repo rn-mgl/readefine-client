@@ -35,7 +35,7 @@ const AddAdmin = (props) => {
 
   const url = process.env.NEXT_PUBLIC_API_URL;
   const { data: session } = useSession();
-  const user = session?.user?.name;
+  const user = session?.user;
 
   // handle onchange functions in input
   const handleUserData = ({ name, value }) => {

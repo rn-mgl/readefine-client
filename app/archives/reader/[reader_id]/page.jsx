@@ -46,7 +46,7 @@ const Reader = () => {
 
   const { data: session } = useSession();
   const url = process.env.NEXT_PUBLIC_API_URL;
-  const user = session?.user?.name;
+  const user = session?.user;
   const params = useParams();
   const readerId = params?.reader_id;
   const router = useRouter();

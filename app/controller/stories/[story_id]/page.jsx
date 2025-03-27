@@ -53,7 +53,7 @@ const SingleStory = () => {
   const url = process.env.NEXT_PUBLIC_API_URL;
   const params = useParams();
   const storyId = params?.story_id;
-  const user = session?.user?.name;
+  const user = session?.user;
   const router = useRouter(null);
 
   // text to speech content

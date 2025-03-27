@@ -39,7 +39,7 @@ const AdminStories = () => {
 
   const { data: session } = useSession();
   const url = process.env.NEXT_PUBLIC_API_URL;
-  const user = session?.user?.name;
+  const user = session?.user;
   const router = useRouter();
 
   // get all stories

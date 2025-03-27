@@ -27,7 +27,7 @@ const FindRewards = (props) => {
   const { message, setMessageStatus } = useMessage();
 
   const { data: session } = useSession({ required: true });
-  const user = session?.user?.name;
+  const user = session?.user;
   const url = process.env.NEXT_PUBLIC_API_URL;
 
   const getRewards = React.useCallback(async () => {

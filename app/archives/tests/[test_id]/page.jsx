@@ -47,7 +47,7 @@ const SingleTest = () => {
   const { data: session } = useSession();
   const params = useParams();
   const testId = params?.test_id;
-  const user = session?.user?.name;
+  const user = session?.user;
   const router = useRouter();
 
   // handle next page

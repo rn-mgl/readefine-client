@@ -15,7 +15,7 @@ const TestRecord = (props) => {
 
   const url = process.env.NEXT_PUBLIC_API_URL;
   const { data: session } = useSession();
-  const user = session?.user?.name;
+  const user = session?.user;
 
   const questionsAndAnswer = testData?.map((q, i) => {
     const isCorrect = q.choice === q.answer;

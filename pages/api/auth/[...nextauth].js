@@ -42,12 +42,8 @@ export const authOptions = {
       },
 
       async authorize(credentials, req) {
-        const { data } = await axios.post(`${url}/auth_client/client_login`, {
-          loginData: credentials,
-        });
-
-        if (data) {
-          const user = { name: data.primary };
+        if (credentials) {
+          const user = credentials;
 
           return user;
         } else {
@@ -83,6 +79,24 @@ export const authOptions = {
   secret: process.env.NEXTAUTH_SECRET,
 
   url: process.env.NEXTAUTH_URL,
+
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.user = user;
+      }
+
+      return token;
+    },
+
+    async session({ session, token }) {
+      if (token.user) {
+        session = { user: token.user };
+      }
+
+      return session;
+    },
+  },
 
   pages: {
     signIn: "/login",

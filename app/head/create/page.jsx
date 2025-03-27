@@ -28,7 +28,7 @@ const Create = () => {
   const { message, setMessageStatus } = useMessage();
   const url = process.env.NEXT_PUBLIC_API_URL;
   const { data: session } = useSession();
-  const user = session?.user?.name;
+  const user = session?.user;
 
   const getAdminCreateActivites = React.useCallback(async () => {
     try {

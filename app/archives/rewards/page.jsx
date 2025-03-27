@@ -32,7 +32,7 @@ const ClientRewards = () => {
   } = useRewardFilters();
 
   const { data: session } = useSession({ required: true });
-  const user = session?.user?.name;
+  const user = session?.user;
   const url = process.env.NEXT_PUBLIC_API_URL;
   const router = useRouter();
 

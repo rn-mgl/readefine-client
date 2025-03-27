@@ -26,7 +26,7 @@ const Update = () => {
   const { message, setMessageStatus } = useMessage();
   const url = process.env.NEXT_PUBLIC_API_URL;
   const { data: session } = useSession();
-  const user = session?.user?.name;
+  const user = session?.user;
 
   const getAdminUpdateActivites = React.useCallback(async () => {
     try {
