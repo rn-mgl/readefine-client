@@ -45,7 +45,6 @@ const Login = () => {
   const { data: session } = useSession();
   const user = session?.user;
 
-  console.log(user);
   // toggle if password can be seen
   const handleVisiblePassword = () => {
     setVisiblePassword((prev) => !prev);
