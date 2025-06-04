@@ -65,7 +65,6 @@ const AdminLogin = () => {
         if (!data.primary.isVerified) {
           router.push("/sending?purpose=verify");
         } else {
-          recordSession();
           const creds = await signIn("credentials", {
             ...data.primary,
             redirect: false,
