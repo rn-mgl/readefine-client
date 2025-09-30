@@ -22,7 +22,7 @@ const SingleReward = () => {
   const { message, setMessageStatus } = useMessage();
 
   const { data: session } = useSession();
-  const url = process.env.API_URL;
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const user = session?.user;
   const params = useParams();
   const rewardId = params?.reward_id;

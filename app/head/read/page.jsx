@@ -24,7 +24,7 @@ const Read = () => {
     handleResourceTypeFilter,
   } = useAdminActivityFilters();
   const { message, setMessageStatus } = useMessage();
-  const url = process.env.API_URL;
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const { data: session } = useSession();
   const user = session?.user;
 
