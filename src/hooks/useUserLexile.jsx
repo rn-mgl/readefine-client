@@ -6,7 +6,7 @@ import { useSession } from "next-auth/react";
 export const useUserLexile = (setMessageStatus) => {
   const [userLexile, setUserLexile] = React.useState(0);
 
-  const url = process.env.NEXT_PUBLIC_API_URL;
+  const url = process.env.API_URL;
   const { data: session } = useSession();
   const user = session?.user;
 

@@ -50,7 +50,7 @@ const SingleStory = () => {
   } = useAudioControls();
 
   const { data: session } = useSession();
-  const url = process.env.NEXT_PUBLIC_API_URL;
+  const url = process.env.API_URL;
   const params = useParams();
   const storyId = params?.story_id;
   const user = session?.user;

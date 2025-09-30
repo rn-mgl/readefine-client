@@ -12,7 +12,7 @@ const Hero = () => {
   const [userCount, setUserCount] = React.useState(0);
   const { loading, setLoadingState } = useLoading(false);
 
-  const url = process.env.NEXT_PUBLIC_API_URL;
+  const url = process.env.API_URL;
 
   const getUserCount = React.useCallback(async () => {
     setLoadingState(true);

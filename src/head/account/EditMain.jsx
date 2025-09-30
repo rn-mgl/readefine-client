@@ -34,7 +34,7 @@ const EditMain = (props) => {
   const { loading, setLoadingState } = useLoading(false);
 
   const { data: session } = useSession();
-  const url = process.env.NEXT_PUBLIC_API_URL;
+  const url = process.env.API_URL;
   const user = session?.user;
 
   const handleHeadData = ({ name, value }) => {

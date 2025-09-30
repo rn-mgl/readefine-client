@@ -9,7 +9,7 @@ export const useFileControls = () => {
   const [audioFile, setAudioFile] = React.useState({ src: "", name: "" });
   const rawAudio = React.useRef(null);
 
-  const url = process.env.NEXT_PUBLIC_API_URL;
+  const url = process.env.API_URL;
   const { data: session } = useSession();
   const user = session?.user;
 
