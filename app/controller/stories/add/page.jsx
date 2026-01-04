@@ -21,6 +21,7 @@ import { useRouter } from "next/navigation";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import { BsArrowLeft } from "react-icons/bs";
 import { IoAddOutline, IoClose } from "react-icons/io5";
+import { nanoid } from "nanoid";
 
 const AddStory = () => {
   const [pages, setPages] = React.useState([
@@ -30,6 +31,7 @@ const AddStory = () => {
       pageContent: "",
       pageImage: { src: null, name: null },
       rawPageImage: null,
+      nanoid: nanoid(),
     },
   ]);
   const [storyFilter, setStoryFilter] = React.useState({
@@ -115,6 +117,7 @@ const AddStory = () => {
   const handleAddPage = () => {
     setPages((prev) => {
       const newPage = {
+        nanoid: nanoid(),
         pageNumber: pages.length + 1,
         pageHeader: "",
         pageContent: "",
@@ -213,7 +216,7 @@ const AddStory = () => {
     .slice(slidePage * pagePerSlide, slidePage * pagePerSlide + pagePerSlide)
     .map((page, i) => {
       return (
-        <React.Fragment key={page.pageNumber}>
+        <React.Fragment key={page.nanoid}>
           <AddStoryCard
             pageNumber={page.pageNumber}
             pageHeader={page.pageHeader}
@@ -240,7 +243,7 @@ const AddStory = () => {
                         ? "bg-prmColor text-white"
                         : "bg-white"
                     } `}
-          key={index}
+          key={nanoid()}
         >
           {index}
         </button>

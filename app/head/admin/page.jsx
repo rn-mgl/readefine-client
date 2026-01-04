@@ -75,7 +75,7 @@ const Admins = () => {
   const mappedAdmins = Admins.map((admin, index) => {
     return (
       <AdminCards
-        key={index}
+        key={admin.admin_id}
         admin={admin}
         adminToDelete={adminToDelete}
         handleAdminToDelete={() =>

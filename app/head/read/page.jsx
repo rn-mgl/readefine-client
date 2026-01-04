@@ -58,7 +58,13 @@ const Read = () => {
   ]);
 
   const mappedActivities = activities.map((activity, index) => {
-    return <ActivityLog key={index} activity={activity} action="read" />;
+    return (
+      <ActivityLog
+        key={activity.activity_id}
+        activity={activity}
+        action="read"
+      />
+    );
   });
 
   React.useEffect(() => {

@@ -22,10 +22,21 @@ import { useParams, useRouter } from "next/navigation";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import { BsArrowLeft } from "react-icons/bs";
 import { IoAddOutline, IoClose } from "react-icons/io5";
+import { nanoid } from "nanoid";
 
 const EditStory = () => {
   const [story, setStory] = React.useState({});
-  const [pages, setPages] = React.useState([]);
+  const [pages, setPages] = React.useState([
+    {
+      page: 1,
+      header: "",
+      content: "",
+      story_id: story.story_id,
+      pageImage: { src: null, name: null },
+      rawPageImage: null,
+      nanoid: nanoid(),
+    },
+  ]);
   const [toDelete, setToDelete] = React.useState([]);
   const [selectedCard, setSelectedCard] = React.useState(0);
   const [slidePage, setSlidePage] = React.useState(0);
@@ -113,6 +124,7 @@ const EditStory = () => {
         story_id: story.story_id,
         pageImage: { src: null, name: null },
         rawPageImage: null,
+        nanoid: nanoid(),
       };
       return [...prev, newPage];
     });
@@ -307,7 +319,7 @@ const EditStory = () => {
         ? "has page image"
         : null;
       return (
-        <React.Fragment key={page.page}>
+        <React.Fragment key={page.page ?? page.nanoid}>
           <EditStoryCard
             pageNumber={page.page}
             pageHeader={page.header}
@@ -336,7 +348,7 @@ const EditStory = () => {
                         ? "bg-prmColor text-white"
                         : "bg-white"
                     } `}
-          key={index}
+          key={nanoid()}
         >
           {index}
         </button>

@@ -68,7 +68,7 @@ const Activities = () => {
   const mappedActivities = activities.map((activity, index) => {
     return (
       <ActivityLog
-        key={index}
+        key={activity.activity_id}
         activity={activity}
         action={activityTypeConversion[activity.activity_type]}
       />
