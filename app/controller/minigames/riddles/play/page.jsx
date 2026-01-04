@@ -19,6 +19,7 @@ import { useAudioControls } from "@/hooks/useAudioControls";
 import { useRiddleStatus } from "@/hooks/useRiddleStatus";
 import Message from "@/components/global/Message";
 import { useMessage } from "@/hooks/useMessage";
+import { nanoid } from "nanoid";
 
 const PlayRiddles = () => {
   const {
@@ -90,7 +91,7 @@ const PlayRiddles = () => {
   const remainingLives = lives.status.map((alive, i) => {
     return (
       <AiFillHeart
-        key={i}
+        key={nanoid()}
         className={` ${
           alive ? "text-prmColor" : "text-neutral-400 animate-shake"
         } t:text-xl`}

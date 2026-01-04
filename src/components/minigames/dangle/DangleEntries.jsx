@@ -1,3 +1,4 @@
+import { nanoid } from "nanoid";
 import React from "react";
 import { IoClose } from "react-icons/io5";
 
@@ -12,10 +13,14 @@ const DangleEntries = (props) => {
 
           return (
             <p
-              className={`${isCorrect ? "bg-prmColor text-accntColor font-bold" : "bg-neutral-200"} ${
+              className={`${
+                isCorrect
+                  ? "bg-prmColor text-accntColor font-bold"
+                  : "bg-neutral-200"
+              } ${
                 isIncluded && "text-prmColor underline underline-offset-2"
               } font-medium text-xs w-8 h-8 rounded-md cstm-flex-col bg`}
-              key={j}
+              key={nanoid()}
             >
               {letter}
             </p>
@@ -27,7 +32,9 @@ const DangleEntries = (props) => {
   return (
     <div className="absolute w-full top-2/4 -translate-y-24">
       <div className="cstm-flex-col w-full">
-        <div className="cstm-flex-col rounded-md w-full gap-2 cstm-flex-col t:w-fit">{entries}</div>
+        <div className="cstm-flex-col rounded-md w-full gap-2 cstm-flex-col t:w-fit">
+          {entries}
+        </div>
       </div>
     </div>
   );

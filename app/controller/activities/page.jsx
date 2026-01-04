@@ -13,6 +13,7 @@ import { useMessage } from "@/src/hooks/useMessage";
 import AdminActivitiesFilter from "@/src/admin/activities/AdminActivitiesFilter";
 import { activityTypeConversion } from "@/src/functions/typeConversion";
 import AdminPageHeader from "@/src/admin/global/PageHeader";
+import { nanoid } from "nanoid";
 
 const Activities = () => {
   const [activities, setActivities] = React.useState([]);
@@ -68,7 +69,7 @@ const Activities = () => {
   const mappedActivities = activities.map((activity, index) => {
     return (
       <ActivityLog
-        key={index}
+        key={activity.activity_id}
         activity={activity}
         action={activityTypeConversion[activity.activity_type]}
       />

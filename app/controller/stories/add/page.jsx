@@ -21,6 +21,7 @@ import { useRouter } from "next/navigation";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import { BsArrowLeft } from "react-icons/bs";
 import { IoAddOutline, IoClose } from "react-icons/io5";
+import { nanoid } from "nanoid";
 
 const AddStory = () => {
   const [pages, setPages] = React.useState([
@@ -240,7 +241,7 @@ const AddStory = () => {
                         ? "bg-prmColor text-white"
                         : "bg-white"
                     } `}
-          key={index}
+          key={nanoid()}
         >
           {index}
         </button>

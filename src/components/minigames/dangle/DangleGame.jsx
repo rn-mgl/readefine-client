@@ -6,21 +6,30 @@ import ActionLabel from "../../global/ActionLabel";
 import DangleEntries from "./DangleEntries";
 
 import { BsArrowLeft, BsFillLightbulbFill } from "react-icons/bs";
+import { nanoid } from "nanoid";
 
 const DangleGame = (props) => {
   const dangles = props.correctWord?.map((c, i) => {
     const latestEntry = props.entryGuesses?.at(-1);
     const isGuessed = latestEntry && latestEntry[i] === c;
     return (
-      <React.Fragment key={i}>
-        <Dangling character={c} isGuessed={isGuessed} isPlaying={props.isPlaying} gameOver={props.gameOver} />
+      <React.Fragment key={nanoid()}>
+        <Dangling
+          character={c}
+          isGuessed={isGuessed}
+          isPlaying={props.isPlaying}
+          gameOver={props.gameOver}
+        />
       </React.Fragment>
     );
   });
 
   return (
     <>
-      <button className="cstm-bg-hover ml-auto absolute top-0 right-0" onClick={props.handleIsPlaying}>
+      <button
+        className="cstm-bg-hover ml-auto absolute top-0 right-0"
+        onClick={props.handleIsPlaying}
+      >
         <BsArrowLeft className="text-black text-xl" />
       </button>
 
@@ -32,14 +41,21 @@ const DangleGame = (props) => {
             <p className="text-prmColor text-xs">{props.timer}</p>
           </div>
 
-          <button onClick={props.handleCanSeeHint} className="cstm-bg-hover relative group">
+          <button
+            onClick={props.handleCanSeeHint}
+            className="cstm-bg-hover relative group"
+          >
             <ActionLabel label="Hint" />
             <BsFillLightbulbFill />
           </button>
         </div>
       </div>
 
-      <div className={`${props.isPlaying ? "mb-auto" : "mb-0"} cstm-flex-row gap-2 absolute -top-52 t:gap-4`}>
+      <div
+        className={`${
+          props.isPlaying ? "mb-auto" : "mb-0"
+        } cstm-flex-row gap-2 absolute -top-52 t:gap-4`}
+      >
         {dangles}
       </div>
 

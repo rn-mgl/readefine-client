@@ -1,11 +1,12 @@
 import React from "react";
 import { BsArrowLeft } from "react-icons/bs";
 import DecipherLetterBlock from "./DecipherLetterBlock";
+import { nanoid } from "nanoid";
 
 const DecipherGame = (props) => {
   const letterBlocks = props.guess?.map((cipher, i) => {
     return (
-      <React.Fragment key={i}>
+      <React.Fragment key={nanoid()}>
         <DecipherLetterBlock
           incrementLetter={() => props.incrementLetter(i)}
           decrementLetter={() => props.decrementLetter(i)}
@@ -19,7 +20,10 @@ const DecipherGame = (props) => {
   return (
     <>
       <div className="absolute top-0 right-0 cstm-flex-col gap-4">
-        <button onClick={props.handleIsPlaying} className="cstm-bg-hover ml-auto">
+        <button
+          onClick={props.handleIsPlaying}
+          className="cstm-bg-hover ml-auto"
+        >
           <BsArrowLeft />
         </button>
         <div className="cstm-flex-col gap-2"> {props.remainingLives}</div>
@@ -28,7 +32,9 @@ const DecipherGame = (props) => {
         </div>
       </div>
 
-      <div className="cstm-flex-row my-auto m-l:gap-2 t:gap-4">{letterBlocks}</div>
+      <div className="cstm-flex-row my-auto m-l:gap-2 t:gap-4">
+        {letterBlocks}
+      </div>
       <div className="cstm-flex-row w-full ">
         <button
           onClick={props.resetGuesses}
