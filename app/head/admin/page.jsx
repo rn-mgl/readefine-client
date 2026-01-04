@@ -10,7 +10,6 @@ import useAdminFilters from "@/src/hooks/useAdminFilters";
 import { useMessage } from "@/src/hooks/useMessage";
 
 import axios from "axios";
-import { nanoid } from "nanoid";
 import { useSession } from "next-auth/react";
 import React from "react";
 import { AiOutlinePlus } from "react-icons/ai";
@@ -76,7 +75,7 @@ const Admins = () => {
   const mappedAdmins = Admins.map((admin, index) => {
     return (
       <AdminCards
-        key={nanoid()}
+        key={index}
         admin={admin}
         adminToDelete={adminToDelete}
         handleAdminToDelete={() =>

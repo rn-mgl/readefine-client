@@ -16,7 +16,6 @@ import { useSession } from "next-auth/react";
 import { useParams, useRouter } from "next/navigation";
 import ActivityLog from "@/src/components/activities/ActivityLog";
 import ActivityCard from "@/src/admin/activities/ActivityCard";
-import { nanoid } from "nanoid";
 
 const Overview = () => {
   const [adminData, setAdminData] = React.useState({});
@@ -149,43 +148,19 @@ const Overview = () => {
   }, [url, user?.token, adminId, setMessageStatus]);
 
   const mappedCreateActivities = createActivities.map((activity, index) => {
-    return (
-      <ActivityLog
-        key={activity.activity_id}
-        activity={activity}
-        action="created"
-      />
-    );
+    return <ActivityLog key={index} activity={activity} action="created" />;
   });
 
   const mappedReadActivities = readActivities.map((activity, index) => {
-    return (
-      <ActivityLog
-        key={activity.activity_id}
-        activity={activity}
-        action="read"
-      />
-    );
+    return <ActivityLog key={index} activity={activity} action="read" />;
   });
 
   const mappedUpdateActivities = updateActivities.map((activity, index) => {
-    return (
-      <ActivityLog
-        key={activity.activity_id}
-        activity={activity}
-        action="updated"
-      />
-    );
+    return <ActivityLog key={index} activity={activity} action="updated" />;
   });
 
   const mappedDeleteActivities = deleteActivities.map((activity, index) => {
-    return (
-      <ActivityLog
-        key={activity.activity_id}
-        activity={activity}
-        action="deleted"
-      />
-    );
+    return <ActivityLog key={index} activity={activity} action="deleted" />;
   });
 
   const mappedSessionActivities = sessionActivities.map((activity, index) => {
@@ -194,7 +169,7 @@ const Overview = () => {
 
     return (
       <ActivityLog
-        key={activity.activity_id}
+        key={index}
         activity={activity}
         action={activity.type === "in" ? "logged in" : "logged out"}
       />

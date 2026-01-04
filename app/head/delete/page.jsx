@@ -59,13 +59,7 @@ const Delete = () => {
   ]);
 
   const mappedActivities = activities.map((activity, index) => {
-    return (
-      <ActivityLog
-        key={activity.activity_id}
-        activity={activity}
-        action="deleted"
-      />
-    );
+    return <ActivityLog key={index} activity={activity} action="deleted" />;
   });
 
   React.useEffect(() => {

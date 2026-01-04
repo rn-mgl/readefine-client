@@ -5,7 +5,6 @@ import SortFilter from "@/components/filter/SortFilter";
 import RangeFilter from "@/components/filter/RangeFilter";
 import SelectFilter from "@/components/filter/SelectFilter";
 import { BiChevronDown } from "react-icons/bi";
-import { nanoid } from "nanoid";
 
 const AdminActivitiesFilter = (props) => {
   const actionTypeLabelValue = [
@@ -18,7 +17,7 @@ const AdminActivitiesFilter = (props) => {
 
   const mappedOptions = actionTypeLabelValue.map((data, index) => {
     return (
-      <option key={nanoid()} value={data.value}>
+      <option key={data.value + index} value={data.value}>
         {data.label}
       </option>
     );

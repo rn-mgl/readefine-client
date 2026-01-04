@@ -1,5 +1,4 @@
 "use client";
-import { nanoid } from "nanoid";
 import React from "react";
 
 const RiddleEntries = (props) => {
@@ -7,7 +6,7 @@ const RiddleEntries = (props) => {
     return (
       <div
         className="cstm-flex-row h-8 w-8 bg-scndColor bg-opacity-20 rounded-md t:w-10 t:h-10 l-s:w-12 l-s:h-12"
-        key={nanoid()}
+        key={i}
       >
         <p className="font-bold text-xs t:text-sm l-s:text-base">{l}</p>
       </div>

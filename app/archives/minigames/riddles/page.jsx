@@ -17,7 +17,6 @@ import { isTokenExpired } from "@/functions/jwtFns";
 import { useAudioControls } from "@/hooks/useAudioControls";
 import { useRiddleStatus } from "@/hooks/useRiddleStatus";
 import { useMessage } from "@/hooks/useMessage";
-import { nanoid } from "nanoid";
 
 const ClientRiddles = () => {
   const {
@@ -121,7 +120,7 @@ const ClientRiddles = () => {
   const remainingLives = lives.status.map((alive, i) => {
     return (
       <AiFillHeart
-        key={nanoid()}
+        key={i}
         className={` ${
           alive ? "text-prmColor" : "text-neutral-400 animate-shake"
         } t:text-xl`}

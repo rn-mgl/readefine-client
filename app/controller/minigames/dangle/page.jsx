@@ -19,7 +19,6 @@ import { isTokenExpired } from "@/functions/jwtFns";
 import { useAudioControls } from "@/hooks/useAudioControls";
 import { useDangleStatus } from "@/hooks/useDangleStatus";
 import { useMessage } from "@/hooks/useMessage";
-import { nanoid } from "nanoid";
 
 const Dangle = () => {
   const {
@@ -98,7 +97,7 @@ const Dangle = () => {
   const remainingLives = lives.status.map((alive, i) => {
     return (
       <AiFillHeart
-        key={nanoid()}
+        key={i}
         className={` ${
           alive ? "text-prmColor" : "text-neutral-400 animate-shake"
         } t:text-xl`}

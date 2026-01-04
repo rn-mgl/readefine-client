@@ -58,13 +58,7 @@ const Update = () => {
   ]);
 
   const mappedActivities = activities.map((activity, index) => {
-    return (
-      <ActivityLog
-        key={activity.activity_id}
-        activity={activity}
-        action="updated"
-      />
-    );
+    return <ActivityLog key={index} activity={activity} action="updated" />;
   });
 
   React.useEffect(() => {

@@ -60,13 +60,7 @@ const Create = () => {
   ]);
 
   const mappedActivities = activities.map((activity, index) => {
-    return (
-      <ActivityLog
-        key={activity.activity_id}
-        activity={activity}
-        action="created"
-      />
-    );
+    return <ActivityLog key={index} activity={activity} action="created" />;
   });
 
   React.useEffect(() => {

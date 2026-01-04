@@ -1,13 +1,9 @@
-import { nanoid } from "nanoid";
 import React from "react";
 
 const RiddleInput = (props) => {
   const blocks = props.guess?.letters.map((c, i) => {
     return (
-      <div
-        className="w-10 h-10 bg-neutral-200 rounded-md cstm-flex-col font-bold"
-        key={nanoid()}
-      >
+      <div className="w-10 h-10 bg-neutral-200 rounded-md cstm-flex-col font-bold" key={i}>
         {c}
       </div>
     );
