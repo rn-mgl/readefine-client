@@ -36,6 +36,7 @@ const SingleTest = () => {
     computeScore,
     setNewTestData,
     setNewQuestions,
+    handeScore,
   } = useTestControls();
   const { accomplishedAchievement, claimNewAchievement, resetAchievement } =
     useReceiveAchievement();
@@ -133,19 +134,6 @@ const SingleTest = () => {
       return;
     }
 
-    // get score
-    const score = computeScore();
-
-    console.log(score);
-
-    // check if passed, do not record if not
-    if (score < 7) {
-      handleIsFinished(true);
-      setHasSubmitted(false);
-      setLoadingState(false);
-      return;
-    }
-
     // add record to db
     try {
       // record test and answers
@@ -154,7 +142,6 @@ const SingleTest = () => {
         {
           selectedChoices,
           testId: testId,
-          score,
           legibleForGrowth,
           lexile: userLexile,
         },
@@ -162,7 +149,18 @@ const SingleTest = () => {
       );
 
       if (data) {
-        if (legibleForGrowth) {
+        if (data?.score) {
+          handeScore(data?.score);
+
+          if (data.score < 7) {
+            handleIsFinished(true);
+            setHasSubmitted(false);
+            setLoadingState(false);
+            return;
+          }
+        }
+
+        if (legibleForGrowth && data?.score >= 7) {
           const lexileAchievement = await updateLexileAchievement(data?.toAdd);
           const testAchievement = await updateTestAchievement();
         }
